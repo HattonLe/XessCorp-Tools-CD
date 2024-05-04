@@ -1,0 +1,149 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - xs40brd.h</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">xs40brd.h</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">xs40brd.h</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','xs40brd_h0','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','xs40brd_h0','_overview',this)" class="tabLinkInActive">Overview</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','xs40brd_h0','_includedfiles',this)" class="tabLinkInActive">Included files</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','xs40brd_h0','_includedby',this)" class="tabLinkInActive">Included by</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_file','xs40brd_h0','_source',this)" class="tabLinkActive">Source</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<pre class="codeExamples">
+/*----------------------------------------------------------------------------------
+  SOFTWARE LICENSE AGREEMENT
+    1.  Permission to use, copy, modify, and distribute this software
+        and its documentation, with or without modification, for any
+        purpose and without fee or royalty is hereby granted, provided
+        that you include the following on ALL copies of the software
+        and documentation or portions thereof, including
+        modifications, that you make:
+
+            a.  The full text of this license in a location viewable to users
+            of the redistributed or derivative work.
+
+            b.  Notice of any changes or modifications to the files,
+            including the date changes were made.
+
+    2.  The name, servicemarks and trademarks of X Engineering
+        Software Systems Corp. may NOT be used in advertising or
+        publicity pertaining to the software without specific, written
+        prior permission.
+
+    3.  Title to copyright in this software and any associated
+        documentation will at all times remain with X Engineering
+        Software Systems Corp.
+
+    4.  THIS SOFTWARE AND DOCUMENTATION IS PROVIDED "AS IS," AND X
+        Engineering Software Systems Corp MAKES NO REPRESENTATIONS OR
+        WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO,
+        WARRANTIES OF MERCHANTABILITY OR FITNESS FOR ANY PARTICULAR
+        PURPOSE OR THAT THE USE OF THE SOFTWARE OR DOCUMENTATION WILL
+        NOT INFRINGE ANY THIRD PARTY PATENTS, COPYRIGHTS, TRADEMARKS
+        OR OTHER RIGHTS.
+
+    5.  X Engineering Software Systems Corp WILL NOT BE LIABLE FOR ANY
+        DAMAGES, INCLUDING BUT NOT LIMITED TO, DIRECT, INDIRECT,
+        SPECIAL OR CONSEQUENTIAL, ARISING OUT OF ANY USE OF THE
+        SOFTWARE OR DOCUMENTATION.
+
+  ©2006 - X Engineering Software Systems Corp.  All rights reserved.
+----------------------------------------------------------------------------------*/
+
+
+#ifndef XS40BOARD_H
+#define XS40BOARD_H
+
+#include "<a href="#" OnFocus="link('_file','xsboard_h0',this)">xsboard.h</a>"
+#include "<a href="#" OnFocus="link('_file','xc4kprt_h0',this)">xc4kprt.h</a>"
+#include "<a href="#" OnFocus="link('_file','oscport_h0',this)">oscport.h</a>"
+#include "<a href="#" OnFocus="link('_file','ramport_h0',this)">ramport.h</a>"
+#include "<a href="#" OnFocus="link('_file','at17prt_h0',this)">at17prt.h</a>"
+
+
+/// Object for manipulating an XS40 Board.
+class <a href="#" OnFocus="link('_class','XS40Board0',this)">XS40Board</a> : public <a href="#" OnFocus="link('_class','XSBoard0',this)">XSBoard</a>
+{
+    public:
+
+    <a href="#" OnFocus="link('_member','XS40Board2569711311',this)">XS40Board</a>(void);
+
+    <a href="#" OnFocus="link('_member','tilde_XS40Board2569711311',this)">~XS40Board</a>(void);
+
+    void <a href="#" OnFocus="link('_member','SetFlags2887301629',this)">SetFlags</a>(unsigned long f);
+
+    unsigned long <a href="#" OnFocus="link('_member','GetFlags2569711311',this)">GetFlags</a>(void);
+
+    bool <a href="#" OnFocus="link('_member','Setup2766865075',this)">Setup</a>(<a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>* err, const char* brdModel, unsigned int lptNum);
+
+    bool <a href="#" OnFocus="link('_member','Configure3913018450',this)">Configure</a>(string&amp; fileName);
+
+    bool <a href="#" OnFocus="link('_member','ConfigureInterface3913018450',this)">ConfigureInterface</a>(string&amp; fileName);
+
+    bool <a href="#" OnFocus="link('_member','DownloadRAM2355595962',this)">DownloadRAM</a>(string&amp; fileName, bool bigEndianBytes, bool bigEndianBits,
+        bool doStart, bool doEnd);
+
+    bool <a href="#" OnFocus="link('_member','UploadRAM1864774155',this)">UploadRAM</a>(string&amp; fileName, const char* format, unsigned int loAddr,
+        unsigned int hiAddr, bool bigEndianBytes, bool bigEndianBits,
+        bool doStart, bool doEnd);
+
+    bool <a href="#" OnFocus="link('_member','ReadRAM2991797115',this)">ReadRAM</a>(unsigned int addr, unsigned int* data, bool bigEndianBytes,
+        bool bigEndianBits);
+
+    bool <a href="#" OnFocus="link('_member','WriteRAM3255651682',this)">WriteRAM</a>(unsigned int addr, unsigned int data,
+        bool bigEndianBytes, bool bigEndianBits);
+
+    bool <a href="#" OnFocus="link('_member','DownloadFlash2355595962',this)">DownloadFlash</a>(string&amp; fileName, bool bigEndianBytes, bool bigEndianBits,
+        bool doStart, bool doEnd);
+
+    bool <a href="#" OnFocus="link('_member','UploadFlash1864774155',this)">UploadFlash</a>(string&amp; fileName, const char* format, unsigned int loAddr,
+        unsigned int hiAddr, bool bigEndianBytes, bool bigEndianBits,
+        bool doStart,bool doEnd);
+
+    bool <a href="#" OnFocus="link('_member','SetFreq1510074495',this)">SetFreq</a>(int div, bool extOscPresent);
+
+    bool <a href="#" OnFocus="link('_member','SetupAudio2832666320',this)">SetupAudio</a>(int *reg);
+
+    bool <a href="#" OnFocus="link('_member','SetupVideoIn3913018450',this)">SetupVideoIn</a>(string&amp; fileName);
+
+    bool <a href="#" OnFocus="link('_member','Test2569711311',this)">Test</a>(void);
+
+
+    private:
+
+    char* <a href="#" OnFocus="link('_member','brdModel239500920',this)">brdModel</a>;         ///&lt; board model
+    unsigned long <a href="#" OnFocus="link('_member','flags239500920',this)">flags</a>; ///&lt; general-purpose flags
+    
+    // Objects that represent devices on the board.
+    <a href="#" OnFocus="link('_class','XC4KPort0',this)">XC4KPort</a> <a href="#" OnFocus="link('_member','fpga239500920',this)">fpga</a>;          ///&lt; main programmable logic device on the board
+    <a href="#" OnFocus="link('_class','OscPort0',this)">OscPort</a> <a href="#" OnFocus="link('_member','osc239500920',this)">osc</a>;          ///&lt; DS1075 programmable oscillator
+    <a href="#" OnFocus="link('_class','RAMPort0',this)">RAMPort</a> <a href="#" OnFocus="link('_member','ram239500920',this)">ram</a>;          ///&lt; SRAM
+    <a href="#" OnFocus="link('_class','AT17Port0',this)">AT17Port</a> <a href="#" OnFocus="link('_member','seeprom239500920',this)">seeprom</a>;      ///&lt; serial EEPROM
+};
+
+#endif
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_file','_source');
+</script>

@@ -1,0 +1,73 @@
+# XST (Creating Lso File) : 
+test_regio.lso
+# xst flow : RunXST
+test_regio.syr
+test_regio.prj
+test_regio.sprj
+test_regio.ana
+test_regio.stx
+test_regio.cmd_log
+test_regio.ngc
+test_regio.ngr
+# Implmentation : Translate
+__projnav/ngdbuild.err
+__projnav/ednTOngd_tcl.rsp
+c:\xesscorp\products\bitstreams\xsa\3s1000\test_regio/_ngo
+test_regio.ngd
+test_regio_ngdbuild.nav
+test_regio.bld
+.untf
+test_regio.cmd_log
+# Implementation : Map
+test_regio_map.ncd
+test_regio.ngm
+test_regio.pcf
+test_regio.nc1
+test_regio.mrp
+test_regio_map.mrp
+test_regio.mdf
+__projnav/map.log
+test_regio.cmd_log
+MAP_NO_GUIDE_FILE_CPF "test_regio"
+# Implmentation : Post-Place & Route Timing
+__projnav/ncdTOtwr_tcl.rsp
+__projnav/posttrc.log
+test_regio.twr
+test_regio.twx
+test_regio.tsi
+test_regio.cmd_log
+# Implmentation : Place & Route
+__projnav/nc1TOncd_tcl.rsp
+test_regio.ncd
+test_regio.par
+test_regio.pad
+test_regio_pad.txt
+test_regio_pad.csv
+test_regio.pad_txt
+test_regio.dly
+reportgen.log
+test_regio.xpi
+test_regio.grf
+test_regio.itr
+test_regio_last_par.ncd
+__projnav/par.log
+test_regio.placed_ncd_tracker
+test_regio.routed_ncd_tracker
+test_regio.cmd_log
+PAR_NO_GUIDE_FILE_CPF "test_regio"
+# Generate Programming File
+__projnav/test_regio_ncdTOut_tcl.rsp
+__projnav/bitgen.rsp
+bitgen.ut
+test_regio.ut
+# Generate Programming File
+test_regio.bgn
+test_regio.rbt
+test_regio.ll
+test_regio.msk
+test_regio.drc
+test_regio.nky
+test_regio.bit
+test_regio.bin
+test_regio.isc
+test_regio.cmd_log

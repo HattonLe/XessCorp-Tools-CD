@@ -1,0 +1,132 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - XC95KPort</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">XC95KPort</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_class','XC95KPort0',this)" class="pathLink">XC95KPort</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">XC95KPort</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_member','XC95KPort503400686','_description',this)" class="tabLinkActive">Description</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','XC95KPort503400686','_source',this)" class="tabLinkInActive">Source</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','XC95KPort503400686','_callgraph',this)" class="tabLinkInActive">Call Graph</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<span class="paragraph1">XC95KPort::XC95KPort</span>
+<span class="padding">( Public Constructor  )</span>
+<div class="paragraph2">Instantiate an XC9500 CPLD object on a given parallel port.</div>
+<div class="padding">&nbsp;</div>
+<table cellspacing=0 cellpadding=0 border=0 class="widthAndBorderTop" height=1>
+<TR><TD height=1 width=100% class="oneLine"></TD></TR></TABLE>
+<div class="paragraph2"><span id="descFunSynExpSpan" style="display:none;visibility:hidden"><a href="javascript:showElement( 'descFunSynColSpan' );javascript:hideElement( 'descFunSynExpSpan' );javascript:showElement( 'descFunSyn' );javascript:setMyCookie( cookieName, 'descFunSyn', 'show' );"><img src="../../common/expand.gif" border=0></a></span><span id="descFunSynColSpan"><a href="javascript:showElement( 'descFunSynExpSpan' );javascript:hideElement( 'descFunSynColSpan' );javascript:hideElement( 'descFunSyn' );javascript:setMyCookie( cookieName, 'descFunSyn', 'hide' );"><img src="../../common/collapse.gif" border=0></a></span>
+Syntax / parameters</div>
+<div id="descFunSyn" class="paddingMembersTableDiv"><table cellspacing=0 cellpadding=0 border=0 class="widthAndBorderMembers">
+<TR VALIGN="top"><TD class="paddingHeadMultiColumn2"><span class="codeFont">XC95KPort(XSError *err, unsigned int portNum, unsigned int invMask, unsigned int posTCK, unsigned int posTMS, unsigned int posTDI, unsigned int posTDO)</span></TD></TR></TABLE>
+<br><table cellspacing=0 cellpadding=0 border=0 class="widthAndBorderMembers">
+<TR VALIGN="top">
+<TD width=20% class="paddingHeadMultiColumn1">Name</TD>
+<TD class="paddingHeadMultiColumn1" nowrap>Type</TD>
+<TD class="paddingHeadMultiColumn1" nowrap>Default</TD>
+<TD width=80% class="paddingHeadMultiColumn2">Description</TD>
+</TR>
+<TR VALIGN="top">
+<TD class="paddingNormal1"><span class="codeFont">err</span></TD>
+<TD class="paddingNormal1" nowrap><span class="codeFont"><a href="#" OnFocus="link('_class','XSError0',this)">XSError</a> * <br>
+</span></TD>
+<TD class="paddingNormal1" nowrap><span class="codeFont">&nbsp;</span></TD>
+<TD class="paddingNormal2">pointer to error reporting object pointer to error reporting object <br>
+</TD>
+</TR>
+<TR VALIGN="top">
+<TD class="paddingNormal1"><span class="codeFont">portNum</span></TD>
+<TD class="paddingNormal1" nowrap><span class="codeFont">unsigned int <br>
+</span></TD>
+<TD class="paddingNormal1" nowrap><span class="codeFont">&nbsp;</span></TD>
+<TD class="paddingNormal2">parallel <a href="#" OnFocus="link('_member','../xsether/port0',this)">port</a> number parallel <a href="#" OnFocus="link('_member','../xsether/port0',this)">port</a> number <br>
+</TD>
+</TR>
+<TR VALIGN="top">
+<TD class="paddingNormal1"><span class="codeFont">invMask</span></TD>
+<TD class="paddingNormal1" nowrap><span class="codeFont">unsigned int <br>
+</span></TD>
+<TD class="paddingNormal1" nowrap><span class="codeFont">&nbsp;</span></TD>
+<TD class="paddingNormal2">inversion mask for the parallel <a href="#" OnFocus="link('_member','../xsether/port0',this)">port</a> inversion mask for the parallel <a href="#" OnFocus="link('_member','../xsether/port0',this)">port</a> <br>
+</TD>
+</TR>
+<TR VALIGN="top">
+<TD class="paddingNormal1"><span class="codeFont">posTCK</span></TD>
+<TD class="paddingNormal1" nowrap><span class="codeFont">unsigned int <br>
+</span></TD>
+<TD class="paddingNormal1" nowrap><span class="codeFont">&nbsp;</span></TD>
+<TD class="paddingNormal2">bit position in parallel <a href="#" OnFocus="link('_member','../xsether/port0',this)">port</a> of TCK pin bit position in parallel <a href="#" OnFocus="link('_member','../xsether/port0',this)">port</a> of TCK pin <br>
+</TD>
+</TR>
+<TR VALIGN="top">
+<TD class="paddingNormal1"><span class="codeFont">posTMS</span></TD>
+<TD class="paddingNormal1" nowrap><span class="codeFont">unsigned int <br>
+</span></TD>
+<TD class="paddingNormal1" nowrap><span class="codeFont">&nbsp;</span></TD>
+<TD class="paddingNormal2">bit position in parallel <a href="#" OnFocus="link('_member','../xsether/port0',this)">port</a> of TMS pin bit position in parallel <a href="#" OnFocus="link('_member','../xsether/port0',this)">port</a> of TMS pin <br>
+</TD>
+</TR>
+<TR VALIGN="top">
+<TD class="paddingNormal1"><span class="codeFont">posTDI</span></TD>
+<TD class="paddingNormal1" nowrap><span class="codeFont">unsigned int <br>
+</span></TD>
+<TD class="paddingNormal1" nowrap><span class="codeFont">&nbsp;</span></TD>
+<TD class="paddingNormal2">bit position in parallel <a href="#" OnFocus="link('_member','../xsether/port0',this)">port</a> of TDI pin bit position in parallel <a href="#" OnFocus="link('_member','../xsether/port0',this)">port</a> of TDI pin <br>
+</TD>
+</TR>
+<TR VALIGN="top">
+<TD class="paddingNormal1"><span class="codeFont">posTDO</span></TD>
+<TD class="paddingNormal1" nowrap><span class="codeFont">unsigned int <br>
+</span></TD>
+<TD class="paddingNormal1" nowrap><span class="codeFont">&nbsp;</span></TD>
+<TD class="paddingNormal2">bit position in parallel <a href="#" OnFocus="link('_member','../xsether/port0',this)">port</a> of TDO pin bit position in parallel <a href="#" OnFocus="link('_member','../xsether/port0',this)">port</a> of TDO pin <br>
+</TD>
+</TR>
+</TABLE>
+</div>
+<div class="paragraph2">Description</div>
+<div id="descDesc" class="paddingMembers">Instantiate an XC9500 CPLD object on a given parallel <a href="#" OnFocus="link('_member','../xsether/port0',this)">port</a>. <br>
+</div>
+<div class="paragraph2"><span id="descOverLExpSpan" style="display:none;visibility:hidden"><a href="javascript:showElement( 'descOverLColSpan' );javascript:hideElement( 'descOverLExpSpan' );javascript:showElement( 'descOverL' );javascript:setMyCookie( cookieName, 'descOverL', 'show' );"><img src="../../common/expand.gif" border=0></a></span><span id="descOverLColSpan"><a href="javascript:showElement( 'descOverLExpSpan' );javascript:hideElement( 'descOverLColSpan' );javascript:hideElement( 'descOverL' );javascript:setMyCookie( cookieName, 'descOverL', 'hide' );"><img src="../../common/collapse.gif" border=0></a></span>
+Variants</div>
+<div id="descOverL" class="paddingMembersTableDiv"><table cellspacing=0 cellpadding=0 border=0 class="widthAndBorderMembers">
+<TR VALIGN="top">
+<TD width=20% class="paddingHeadMultiColumn1">Variants</TD>
+<TD width=80% class="paddingHeadMultiColumn2">Brief description</TD>
+</TR>
+<TR VALIGN="top">
+<TD class="paddingNormal1"><a href="#" OnFocus="link('_member','XC95KPort2569683910',this)">(void)</a></TD>
+<TD class="paddingNormal2">Instantiate an XC9500 CPLD object on a given parallel <a href="#" OnFocus="link('_member','../xsether/port0',this)">port</a>. <br>
+</TD>
+</TR>
+</table>
+</div>
+<div class="padding">&nbsp;</div>
+<table cellspacing=0 cellpadding=0 border=0 class="widthAndBorderTop" height=1>
+<TR><TD height=1 width=100% class="oneLine"></TD></TR></TABLE>
+<div class="paragraph2">Source</div>
+<div class="paddingMembers">The documentation for this Member was generated from the following files:</div>
+<div class="paddingMembers"><LI><a href="#" OnFocus="link('_file','xc95kprt_h0',this)">xc95kprt.h</a><br></div>
+<div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_member','_description');
+</script>

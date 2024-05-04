@@ -1,0 +1,23 @@
+Release 6.3.03i - ngdbuild G.38
+Copyright (c) 1995-2004 Xilinx, Inc.  All rights reserved.
+
+Command Line: ngdbuild -intstyle ise -dd
+c:\xesscorp\products\bitstreams\xsa\3s1000\test_regio/_ngo -i -p
+xc3s1000-ft256-5 test_regio.ngc test_regio.ngd 
+
+Reading NGO file
+"C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/test_regio/test_regio.ngc" ...
+Reading component libraries for design expansion...
+
+Checking timing specifications ...
+Checking expanded design ...
+
+NGDBUILD Design Results Summary:
+  Number of errors:     0
+  Number of warnings:   0
+
+Total memory usage is 38488 kilobytes
+
+Writing NGD file "test_regio.ngd" ...
+
+Writing NGDBUILD log file "test_regio.bld"...

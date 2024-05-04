@@ -1,0 +1,187 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - xcbsdr.cpp</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">xcbsdr.cpp</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">xcbsdr.cpp</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','xcbsdr_cpp0','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','xcbsdr_cpp0','_overview',this)" class="tabLinkInActive">Overview</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','xcbsdr_cpp0','_includedfiles',this)" class="tabLinkInActive">Included files</a></span>
+<span class="tabInActiveGrayout"><span class="tabLinkGrayout">Included by</span></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_file','xcbsdr_cpp0','_source',this)" class="tabLinkActive">Source</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<pre class="codeExamples">
+/*----------------------------------------------------------------------------------
+  SOFTWARE LICENSE AGREEMENT
+    1.  Permission to use, copy, modify, and distribute this software
+        and its documentation, with or without modification, for any
+        purpose and without fee or royalty is hereby granted, provided
+        that you include the following on ALL copies of the software
+        and documentation or portions thereof, including
+        modifications, that you make:
+
+            a.  The full text of this license in a location viewable to users
+            of the redistributed or derivative work.
+
+            b.  Notice of any changes or modifications to the files,
+            including the date changes were made.
+
+    2.  The name, servicemarks and trademarks of X Engineering
+        Software Systems Corp. may NOT be used in advertising or
+        publicity pertaining to the software without specific, written
+        prior permission.
+
+    3.  Title to copyright in this software and any associated
+        documentation will at all times remain with X Engineering
+        Software Systems Corp.
+
+    4.  THIS SOFTWARE AND DOCUMENTATION IS PROVIDED "AS IS," AND X
+        Engineering Software Systems Corp MAKES NO REPRESENTATIONS OR
+        WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO,
+        WARRANTIES OF MERCHANTABILITY OR FITNESS FOR ANY PARTICULAR
+        PURPOSE OR THAT THE USE OF THE SOFTWARE OR DOCUMENTATION WILL
+        NOT INFRINGE ANY THIRD PARTY PATENTS, COPYRIGHTS, TRADEMARKS
+        OR OTHER RIGHTS.
+
+    5.  X Engineering Software Systems Corp WILL NOT BE LIABLE FOR ANY
+        DAMAGES, INCLUDING BUT NOT LIMITED TO, DIRECT, INDIRECT,
+        SPECIAL OR CONSEQUENTIAL, ARISING OUT OF ANY USE OF THE
+        SOFTWARE OR DOCUMENTATION.
+
+  ©2006 - X Engineering Software Systems Corp.  All rights reserved.
+----------------------------------------------------------------------------------*/
+
+
+#include "<a href="#" OnFocus="link('_file','xcbsdr_h0',this)">xcbsdr.h</a>"
+
+
+// The bsdr is partitioned into three-bit segments.  Each three bit segment
+// interfaces to a pin of the FPLD. The bit functions are:
+//      bit 0: controls the output driver of the pin
+//              0 = tristate the output driver
+//              1 = enable the driver
+//      bit 1: stores the value to be output on the pin
+//      bit 2: stores the value read from the pin   
+//
+
+static const int tristate = 0;      // disable pin driver
+static const int enable = 1;        // enable pin driver
+static const int bsdrPinEnable = 0; // pin tristate control bit position offset
+static const int bsdrPinOutput = 1; // pin output bit position offset
+static const int bsdrPinInput  = 2; // pin input bit position offset
+
+
+/// Create a boundary-scan data register.
+<a href="#" OnFocus="link('_member','XCBSDR4112612440',this)">XCBSDR::XCBSDR</a>(unsigned int length,           ///&lt; length of bsdr
+            unsigned int* addressBitPos,    ///&lt; positions of RAM address bits in bsdr
+            unsigned int* dataBitPos,       ///&lt; positions of RAM databus bits in bsdr
+            unsigned int* controlBitPos)    ///&lt; positions of RAM control bits in bsdr
+            : <a href="#" OnFocus="link('_class','Bitstream0',this)">Bitstream</a>(length)
+{
+    int i;
+    for(i=0; i&lt;<a href="#" OnFocus="link('_member','numRAMAddressBits0',this)">numRAMAddressBits</a>; i++)
+        ramAddressBitPos[i] = addressBitPos[i];
+    for(i=0; i&lt;<a href="#" OnFocus="link('_member','numRAMDataBits0',this)">numRAMDataBits</a>; i++)
+        ramDataBitPos[i] = dataBitPos[i];
+    for(i=0; i&lt;<a href="#" OnFocus="link('_member','numRAMControlBits0',this)">numRAMControlBits</a>; i++)
+        ramControlBitPos[i] = controlBitPos[i];
+}
+
+
+/// Place a RAM address into the appropriate position in bsdr bitstream.
+void <a href="#" OnFocus="link('_member','SetRAMAddress451307805',this)">XCBSDR::SetRAMAddress</a>(unsigned int address) ///&lt; RAM address
+{
+    for(int i=0; i&lt;numRAMAddressBits; i++,address&gt;&gt;=1)
+    {
+        // enable the output drivers of the FPLD pin connected to the RAM address pin
+        <a href="#" OnFocus="link('_member','SetBit2908394482',this)">SetBit</a>(ramAddressBitPos[i]+bsdrPinEnable,enable);
+        // set the address bit value on the FPLD pin
+        <a href="#" OnFocus="link('_member','SetBit2908394482',this)">SetBit</a>(ramAddressBitPos[i]+bsdrPinOutput,address&amp;1);
+    }
+}
+
+
+/// Place RAM data into the appropriate position in bsdr bitstream.
+void <a href="#" OnFocus="link('_member','SetRAMData451307805',this)">XCBSDR::SetRAMData</a>(unsigned int data)    ///&lt; RAM data
+{
+    for(int i=0; i&lt;numRAMDataBits; i++,data&gt;&gt;=1)
+    {
+        // enable the output driver of the FPLD pin connected to the RAM data pin
+        <a href="#" OnFocus="link('_member','SetBit2908394482',this)">SetBit</a>(ramDataBitPos[i]+bsdrPinEnable,enable);
+        // set the data bit value on the FPLD pin
+        <a href="#" OnFocus="link('_member','SetBit2908394482',this)">SetBit</a>(ramDataBitPos[i]+bsdrPinOutput,data&amp;1);
+    }
+}
+
+
+/// Set the bits in the bsdr bitstream to tristate the CPLD pins connected to the RAM databus so the RAM can drive it.
+void <a href="#" OnFocus="link('_member','ReadRAMData142801607',this)">XCBSDR::ReadRAMData</a>(void)
+{
+    for(int i=0; i&lt;<a href="#" OnFocus="link('_member','numRAMDataBits0',this)">numRAMDataBits</a>; i++)
+    {
+        // tristate the FPLD pin that drives the RAM data line
+        <a href="#" OnFocus="link('_member','SetBit2908394482',this)">SetBit</a>(ramDataBitPos[i]+bsdrPinEnable,tristate);
+    }
+}
+
+
+/// Extract the RAM data value from the bsdr bitstream.
+///\return the data received from the RAM
+unsigned int <a href="#" OnFocus="link('_member','GetRAMData142801607',this)">XCBSDR::GetRAMData</a>()
+{
+    unsigned int <a href="#" OnFocus="link('_member','../xsatapi/data0',this)">data</a> = 0;
+    for(int i=<a href="#" OnFocus="link('_member','numRAMDataBits0',this)">numRAMDataBits</a>-1; i&gt;=0; i--)
+        <a href="#" OnFocus="link('_member','../xsatapi/data0',this)">data</a> = (<a href="#" OnFocus="link('_member','../xsatapi/data0',this)">data</a>&lt;&lt;1) | ((*this)[<a href="#" OnFocus="link('_member','ramDataBitPos43258',this)">ramDataBitPos</a>[i]+bsdrPinInput] ? 1:0);
+    return <a href="#" OnFocus="link('_member','../xsatapi/data0',this)">data</a>;
+}
+
+
+/// Extract the RAM address value from the bsdr bitstream.
+///\return the RAM address
+unsigned long <a href="#" OnFocus="link('_member','GetRAMAddress142801607',this)">XCBSDR::GetRAMAddress</a>(void)
+{
+    unsigned int address = 0;
+    for(int i=<a href="#" OnFocus="link('_member','numRAMAddressBits0',this)">numRAMAddressBits</a>-1; i&gt;=0; i--)
+        address = (address&lt;&lt;1) | ((*this)[<a href="#" OnFocus="link('_member','ramAddressBitPos43258',this)">ramAddressBitPos</a>[i]+bsdrPinInput] ? 1:0);
+    return address;
+}
+
+
+/// Place RAM control pin levels into the bsdr bitstream.
+void <a href="#" OnFocus="link('_member','SetRAMControls3431548137',this)">XCBSDR::SetRAMControls</a>(unsigned int ce_, ///&lt; RAM chip-enable
+                unsigned int oe_,               ///&lt; RAM output-enable
+                unsigned int we_)               ///&lt; RAM write-enable
+{
+    // set the output drivers of the FPLD pins which drive the RAM control pins
+    <a href="#" OnFocus="link('_member','SetBit2908394482',this)">SetBit</a>(ramControlBitPos[0]+bsdrPinEnable,enable);
+    <a href="#" OnFocus="link('_member','SetBit2908394482',this)">SetBit</a>(ramControlBitPos[1]+bsdrPinEnable,enable);
+    <a href="#" OnFocus="link('_member','SetBit2908394482',this)">SetBit</a>(ramControlBitPos[2]+bsdrPinEnable,enable);
+    // set the control signal levels on the FPLD pins
+    <a href="#" OnFocus="link('_member','SetBit2908394482',this)">SetBit</a>(ramControlBitPos[0]+bsdrPinOutput,ce_);
+    <a href="#" OnFocus="link('_member','SetBit2908394482',this)">SetBit</a>(ramControlBitPos[1]+bsdrPinOutput,oe_);
+    <a href="#" OnFocus="link('_member','SetBit2908394482',this)">SetBit</a>(ramControlBitPos[2]+bsdrPinOutput,we_);
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_file','_source');
+</script>

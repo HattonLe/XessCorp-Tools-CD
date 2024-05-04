@@ -1,0 +1,241 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - osccyprt.cpp</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">osccyprt.cpp</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">osccyprt.cpp</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','osccyprt_cpp0','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','osccyprt_cpp0','_overview',this)" class="tabLinkInActive">Overview</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','osccyprt_cpp0','_includedfiles',this)" class="tabLinkInActive">Included files</a></span>
+<span class="tabInActiveGrayout"><span class="tabLinkGrayout">Included by</span></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_file','osccyprt_cpp0','_source',this)" class="tabLinkActive">Source</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<pre class="codeExamples">
+/*----------------------------------------------------------------------------------
+  SOFTWARE LICENSE AGREEMENT
+    1.  Permission to use, copy, modify, and distribute this software
+        and its documentation, with or without modification, for any
+        purpose and without fee or royalty is hereby granted, provided
+        that you include the following on ALL copies of the software
+        and documentation or portions thereof, including
+        modifications, that you make:
+
+            a.  The full text of this license in a location viewable to users
+            of the redistributed or derivative work.
+
+            b.  Notice of any changes or modifications to the files,
+            including the date changes were made.
+
+    2.  The name, servicemarks and trademarks of X Engineering
+        Software Systems Corp. may NOT be used in advertising or
+        publicity pertaining to the software without specific, written
+        prior permission.
+
+    3.  Title to copyright in this software and any associated
+        documentation will at all times remain with X Engineering
+        Software Systems Corp.
+
+    4.  THIS SOFTWARE AND DOCUMENTATION IS PROVIDED "AS IS," AND X
+        Engineering Software Systems Corp MAKES NO REPRESENTATIONS OR
+        WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO,
+        WARRANTIES OF MERCHANTABILITY OR FITNESS FOR ANY PARTICULAR
+        PURPOSE OR THAT THE USE OF THE SOFTWARE OR DOCUMENTATION WILL
+        NOT INFRINGE ANY THIRD PARTY PATENTS, COPYRIGHTS, TRADEMARKS
+        OR OTHER RIGHTS.
+
+    5.  X Engineering Software Systems Corp WILL NOT BE LIABLE FOR ANY
+        DAMAGES, INCLUDING BUT NOT LIMITED TO, DIRECT, INDIRECT,
+        SPECIAL OR CONSEQUENTIAL, ARISING OUT OF ANY USE OF THE
+        SOFTWARE OR DOCUMENTATION.
+
+  ©2006 - X Engineering Software Systems Corp.  All rights reserved.
+----------------------------------------------------------------------------------*/
+
+
+#include &lt;dos.h&gt;
+
+#include &lt;cstdlib&gt;
+#include &lt;cstdio&gt;
+#include &lt;fstream&gt;
+#include &lt;sstream&gt;
+#include &lt;ctime&gt;
+#include &lt;string&gt;
+using namespace std;
+
+#ifdef WIN32
+#include &lt;afxwin.h&gt;
+#endif
+
+#include "<a href="#" OnFocus="link('_file','osccyprt_h0',this)">osccyprt.h</a>"
+#include "<a href="#" OnFocus="link('_file','utils_h0',this)">utils.h</a>"
+
+
+static const unsigned int <a href="#" OnFocus="link('_member','BitDuration0',this)">BitDuration</a> = 3; // programming bit duration
+
+
+/// Create a Cypress prog. oscillator controller port.
+<a href="#" OnFocus="link('_member','OscCyPort2569710115',this)">OscCyPort::OscCyPort</a>(void)
+{
+    ;
+}
+
+/// Create a Cypress prog. oscillator controller port.
+<a href="#" OnFocus="link('_member','OscCyPort2569710115',this)">OscCyPort::OscCyPort</a>(<a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>* e,   ///&lt; pointer to error reporting object
+                   unsigned int portNum,    ///&lt; parallel port number
+                   unsigned int invMask,    ///&lt; inversion mask for the parallel port
+                   unsigned int pos_oscSCLW, ///&lt; bit position in parallel port of osc. clock write pin
+                   unsigned int pos_oscSDAW, ///&lt; bit position in parallel port of osc. data write pin
+                   unsigned int pos_oscSCLR, ///&lt; bit position in parallel port of osc. clock read pin
+                   unsigned int pos_oscSDAR) ///&lt; bit position in parallel port of osc. data read pin
+{
+    <a href="#" OnFocus="link('_member','Setup503423243',this)">Setup</a>(e,portNum,invMask,pos_oscSCLW,pos_oscSCLR,pos_oscSDAW,pos_oscSDAR);
+}
+
+
+/// Initialize members of the object.
+int <a href="#" OnFocus="link('_member','Setup503423243',this)">OscCyPort::Setup</a>(<a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>* e,   ///&lt; pointer to error reporting object
+                   unsigned int portNum,    ///&lt; parallel port number
+                   unsigned int invMask,    ///&lt; inversion mask for the parallel port
+                   unsigned int pos_oscSCLW, ///&lt; bit position in parallel port of osc. clock write pin
+                   unsigned int pos_oscSDAW, ///&lt; bit position in parallel port of osc. data write pin
+                   unsigned int pos_oscSCLR, ///&lt; bit position in parallel port of osc. clock read pin
+                   unsigned int pos_oscSDAR) ///&lt; bit position in parallel port of osc. data read pin
+{
+    <a href="#" OnFocus="link('_member','posOscSCLW239499924',this)">posOscSCLW</a> = pos_oscSCLW;
+    <a href="#" OnFocus="link('_member','posOscSCLR239499924',this)">posOscSCLR</a> = pos_oscSCLR;
+    <a href="#" OnFocus="link('_member','posOscSDAW239499924',this)">posOscSDAW</a> = pos_oscSDAW;
+    <a href="#" OnFocus="link('_member','posOscSDAR239499924',this)">posOscSDAR</a> = pos_oscSDAR;
+    return <a href="#" OnFocus="link('_member','Setup1745817787',this)">I2CPort::Setup</a>(e,portNum,invMask,pos_oscSCLW,pos_oscSDAW,pos_oscSCLR,pos_oscSDAR,BitDuration);
+}
+
+
+/// Reset the programmable oscillator.
+void <a href="#" OnFocus="link('_member','ResetOsc3916950055',this)">OscCyPort::ResetOsc</a>(string jedecFileName) ///&lt; JEDEC file containing the programming for the Cypress oscillator
+{
+    assert(jedecFileName.length()&gt;0);
+    ifstream is(jedecFileName.c_str());  // open JEDEC file
+    assert(!(is.fail() || is.eof()));
+
+    // char num[10];
+    // string instructions;
+    char c;
+    unsigned cnt = 0;
+    unsigned char byte = 0;
+    int address;
+    bool enable = false;
+    while(!is.eof())
+    {
+        is &gt;&gt; c;
+        if(isspace(c))
+            continue;
+        if(c=='*')
+        {
+            // PromptUser((string)"Found *\n",PROMPT_OKCANCEL);
+            enable = true;
+            continue;
+        }
+        if(enable==false)
+            continue;
+        switch(c)
+        {
+        case '0':
+        case '1':
+            byte = byte*2 + (c-'0');
+            cnt = (cnt+1) % 8;
+            if(cnt==0)
+            {
+                // instructions = "writing ";
+                // sprintf(num,"%02x",byte); instructions += (string)num;
+                // instructions += " to address ";
+                // sprintf(num,"%02x",address); instructions += (string)num;
+                // instructions += "\n";
+                // PromptUser(instructions,PROMPT_OKCANCEL);
+                unsigned char wrBuf[3];
+                unsigned char numWr;
+                wrBuf[0] = (0x69&lt;&lt;1);   // device address with /write-enable bit appended
+                wrBuf[1] = address;     // register address
+                wrBuf[2] = byte;        // data to be written into register
+                numWr = 3;
+                <a href="#" OnFocus="link('_member','WriteBuffer2491703777',this)">WriteBuffer</a>(wrBuf,numWr,0);
+                address++;
+                byte = 0;
+                // PromptUser((string)"Write successful!\n",PROMPT_OKCANCEL);
+            }
+            break;
+        case 'L':
+            is &gt;&gt; dec &gt;&gt; address;
+            address /= 8;
+            cnt = 0;
+            byte = 0;
+            // instructions = "L Address = ";
+            // sprintf(num,"%d",address); instructions += (string)num;
+            // instructions += "\n";
+            // PromptUser(instructions,PROMPT_OKCANCEL);
+            break;
+        default:
+            enable = false;
+            break;
+        }
+    }
+}
+
+
+/// Write a value into a register of the programmable oscillator.
+///\return true if the operation was successful, false if not
+bool <a href="#" OnFocus="link('_member','WriteReg874068745',this)">OscCyPort::WriteReg</a>(unsigned regAddress, ///&lt; address of register in the oscillator 
+                    unsigned value) ///&lt; value to be loaded into the register
+{
+    unsigned char wrBuf[3];
+    wrBuf[0] = (0x69&lt;&lt;1);   // I2C device address with /write-enable bit appended
+    wrBuf[1] = regAddress;  // register address
+    wrBuf[2] = value;       // data to be written into register
+    <a href="#" OnFocus="link('_member','WriteBuffer2491703777',this)">WriteBuffer</a>(wrBuf,3,0);
+    return true;
+}
+
+
+/// Set the programmable oscillator frequency.
+///\return true if the operation was successful, false if not
+bool <a href="#" OnFocus="link('_member','SetOscFrequency3508128959',this)">OscCyPort::SetOscFrequency</a>(int div, ///&lt; value to store in the divisor for the master frequency
+                        string jedecFileName) ///&lt; JEDEC file with default programming for the oscillator
+{
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> = <a href="#" OnFocus="link('_member','GetErr259477277',this)">GetErr</a>();
+    if(div&lt;1)
+    {
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,"Clock divisor must be greater than zero!!\n");
+        return false;
+    }
+    if(div&gt;128)
+    {
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,"Clock divisor must be less than 128!!\n");
+        return false;
+    }
+    
+    <a href="#" OnFocus="link('_member','ResetOsc3916950055',this)">ResetOsc</a>(jedecFileName);
+    <a href="#" OnFocus="link('_member','WriteReg874068745',this)">WriteReg</a>(0x0d,div); // register address for CLKD divider
+    return true;
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_file','_source');
+</script>

@@ -1,0 +1,66 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - FromCharStream</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">FromCharStream</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_class','Bitstream0',this)" class="pathLink">Bitstream</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">FromCharStream</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','FromCharStream1630694954','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_member','FromCharStream1630694954','_source',this)" class="tabLinkActive">Source</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','FromCharStream1630694954','_callgraph',this)" class="tabLinkInActive">Call Graph</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<div class="paragraph2NoTopPadding">Start Line: 464</div>
+<pre class="codeExamples">
+bool <a href="#" OnFocus="link('_member','FromCharStream1630694954',this)">Bitstream::FromCharStream</a>(unsigned int nBits, istream &amp;is, bool reverseBits)
+{
+    <a href="#" OnFocus="link('_member','Resize2805767469',this)">Resize</a>(nBits);  // sets numBits == nBits
+
+    // exit if nothing to do
+    if(<a href="#" OnFocus="link('_member','numBits203865993',this)">numBits</a> == 0)
+        return true;
+
+    // read bit-packed characters and store them in reversed-bit format with MSb in bit position 0
+    unsigned int nChars = (<a href="#" OnFocus="link('_member','numBits203865993',this)">numBits</a>-1) / 8 + 1;
+    unsigned int numWords = NUM_OF_WORDS(numBits);
+    unsigned char byte;
+    for(int i=0; i&lt;numWords; i++)
+    {
+        <a href="#" OnFocus="link('_member','bits203865993',this)">bits</a>[i] = 0;
+        int k = i*<a href="#" OnFocus="link('_member','charsPerLong0',this)">charsPerLong</a>;
+        for(int j=0; (j&lt;<a href="#" OnFocus="link('_member','charsPerLong0',this)">charsPerLong</a>) &amp;&amp; ((k+j)&lt;nChars); j++)
+        {
+            is.read((char*)&amp;byte,1);
+            <a href="#" OnFocus="link('_member','bits203865993',this)">bits</a>[i] |= <a href="#" OnFocus="link('_member','reverseByteBits0',this)">reverseByteBits</a>[byte] &lt;&lt; (j*8);
+        }
+    }
+
+    // since bits are already stored in reversed order, do another reversal if you want them in 
+    // the unreversed order
+    if(!reverseBits)
+        <a href="#" OnFocus="link('_member','Reverse2605346622',this)">Reverse</a>();
+
+    return true;
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_member','_source');
+</script>

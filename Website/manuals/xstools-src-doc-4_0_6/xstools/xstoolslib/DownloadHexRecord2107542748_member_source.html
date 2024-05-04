@@ -1,0 +1,83 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - DownloadHexRecord</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">DownloadHexRecord</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_class','PBusPort0',this)" class="pathLink">PBusPort</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">DownloadHexRecord</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','DownloadHexRecord2107542748','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_member','DownloadHexRecord2107542748','_source',this)" class="tabLinkActive">Source</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','DownloadHexRecord2107542748','_callgraph',this)" class="tabLinkInActive">Call Graph</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<div class="paragraph2NoTopPadding">Start Line: 273</div>
+<pre class="codeExamples">
+bool <a href="#" OnFocus="link('_member','DownloadHexRecord2107542748',this)">PBusPort::DownloadHexRecord</a>(<a href="#" OnFocus="link('_class','HexRecord0',this)">HexRecord</a> &amp;hx, bool bigEndianBytes, bool bigEndianBits)
+{
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> = <a href="#" OnFocus="link('_member','GetErr259477277',this)">GetErr</a>();
+
+    if(!hx.<a href="#" OnFocus="link('_member','IsData2146470179',this)">IsData</a>())  // don't download unless this is data
+        return true;    // no error, just didn't do anything
+
+    // the address has to be right-shifted by one bit for each doubling of the data width.
+    unsigned int addrScale;
+    if(<a href="#" OnFocus="link('_member','dataWidth243780660',this)">dataWidth</a>&lt;=8)
+        addrScale = 0;  // addresses for byte-wide data need no scaling because each byte fits in a hex record byte
+    else if(<a href="#" OnFocus="link('_member','dataWidth243780660',this)">dataWidth</a>&lt;=16)
+        addrScale = 1;  // addresses for 16-bit data are halved because each word takes two bytes in the hex record
+    else if(<a href="#" OnFocus="link('_member','dataWidth243780660',this)">dataWidth</a>&lt;=32)
+        addrScale = 2;  // addresses for 32-bit data are quartered because each word takes four bytes in the hex record
+    else
+        assert(1==0);   // we can't handle data widths &gt; 32 bits
+    unsigned int stride = 1 &lt;&lt; addrScale;
+
+    unsigned int addrMask = ~((1 &lt;&lt; addrScale) - 1);
+
+    if(hx.<a href="#" OnFocus="link('_member','GetLength2146470179',this)">GetLength</a>() % stride)
+    {
+        string msg("Cannot download an odd number of bytes to word-wide bus!\n");
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,msg);
+        return false;
+    }
+    unsigned int <a href="#" OnFocus="link('_member','../xsload/loAddr0',this)">loAddr</a> = hx.<a href="#" OnFocus="link('_member','GetAddress2146470179',this)">GetAddress</a>();
+    if(<a href="#" OnFocus="link('_member','../xsload/loAddr0',this)">loAddr</a> &amp; ~addrMask)
+    {
+        string msg("Cannot download to word-wide bus using an odd byte-starting address!\n");
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,msg);
+        return false;
+    }
+    
+    // load the bytes from a data-type hex record onto the peripheral bus
+    for(unsigned int i=0; i&lt;hx.<a href="#" OnFocus="link('_member','GetLength2146470179',this)">GetLength</a>(); i+=stride)
+    {
+        unsigned int <a href="#" OnFocus="link('_member','../xsatapi/data0',this)">data</a> = 0;  // assemble next data word from hex record
+        for(int j=0; j&lt;stride; j++)
+            <a href="#" OnFocus="link('_member','../xsatapi/data0',this)">data</a> = (<a href="#" OnFocus="link('_member','../xsatapi/data0',this)">data</a>&lt;&lt;8) | (hx[i+j] &amp; 0xFF);
+        if(<a href="#" OnFocus="link('_member','Write18647439',this)">Write</a>((loAddr+i)&gt;&gt;addrScale,data,bigEndianBytes,bigEndianBits,i==0) == false)
+            return false;
+    }
+
+    return true;
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_member','_source');
+</script>

@@ -1,0 +1,165 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - hex.cpp</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">hex.cpp</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">hex.cpp</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','hex_cpp0','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabInActiveGrayout"><span class="tabLinkGrayout">Overview</span></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','hex_cpp0','_includedfiles',this)" class="tabLinkInActive">Included files</a></span>
+<span class="tabInActiveGrayout"><span class="tabLinkGrayout">Included by</span></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_file','hex_cpp0','_source',this)" class="tabLinkActive">Source</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<pre class="codeExamples">
+/*----------------------------------------------------------------------------------
+  SOFTWARE LICENSE AGREEMENT
+    1.  Permission to use, copy, modify, and distribute this software
+        and its documentation, with or without modification, for any
+        purpose and without fee or royalty is hereby granted, provided
+        that you include the following on ALL copies of the software
+        and documentation or portions thereof, including
+        modifications, that you make:
+
+            a.  The full text of this license in a location viewable to users
+            of the redistributed or derivative work.
+
+            b.  Notice of any changes or modifications to the files,
+            including the date changes were made.
+
+    2.  The name, servicemarks and trademarks of X Engineering
+        Software Systems Corp. may NOT be used in advertising or
+        publicity pertaining to the software without specific, written
+        prior permission.
+
+    3.  Title to copyright in this software and any associated
+        documentation will at all times remain with X Engineering
+        Software Systems Corp.
+
+    4.  THIS SOFTWARE AND DOCUMENTATION IS PROVIDED "AS IS," AND X
+        Engineering Software Systems Corp MAKES NO REPRESENTATIONS OR
+        WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO,
+        WARRANTIES OF MERCHANTABILITY OR FITNESS FOR ANY PARTICULAR
+        PURPOSE OR THAT THE USE OF THE SOFTWARE OR DOCUMENTATION WILL
+        NOT INFRINGE ANY THIRD PARTY PATENTS, COPYRIGHTS, TRADEMARKS
+        OR OTHER RIGHTS.
+
+    5.  X Engineering Software Systems Corp WILL NOT BE LIABLE FOR ANY
+        DAMAGES, INCLUDING BUT NOT LIMITED TO, DIRECT, INDIRECT,
+        SPECIAL OR CONSEQUENTIAL, ARISING OUT OF ANY USE OF THE
+        SOFTWARE OR DOCUMENTATION.
+
+  ©2006 - X Engineering Software Systems Corp.  All rights reserved.
+----------------------------------------------------------------------------------*/
+
+
+#include &lt;cassert&gt;
+#include &lt;ctype.h&gt;
+#include &lt;cstdlib&gt;
+#include &lt;iostream&gt;
+#include &lt;iomanip&gt;
+
+#include "<a href="#" OnFocus="link('_file','hex_h0',this)">hex.h</a>"
+#include "<a href="#" OnFocus="link('_file','utils_h0',this)">utils.h</a>"
+
+
+/// Construct a hex number with a given number of hex digits.
+<a href="#" OnFocus="link('_member','Hex3950253585',this)">Hex::Hex</a>(unsigned int l) ///&lt; Number of hex digits in the data
+{
+    <a href="#" OnFocus="link('_member','SetLength3950253585',this)">SetLength</a>(l);    // set number of hex digits in hex number
+    <a href="#" OnFocus="link('_member','SetHex3950253585',this)">SetHex</a>(0);        // initialize hex number to 0
+}
+
+
+/// Set the number of hex digits in the hex number.
+void <a href="#" OnFocus="link('_member','SetLength3950253585',this)">Hex::SetLength</a>(unsigned int l) ///&lt; Number of hex digits in the data
+{
+    assert(sizeof(unsigned int) * 2 &gt;= l);
+    <a href="#" OnFocus="link('_member','length1794',this)">length</a> = l;
+}
+
+
+/// Return the number of hex digits in the hex number.
+unsigned int <a href="#" OnFocus="link('_member','GetLength210160317',this)">Hex::GetLength</a>(void)
+{
+    return <a href="#" OnFocus="link('_member','length1794',this)">length</a>;
+}
+
+
+/// Assign a value to the hex number.
+void <a href="#" OnFocus="link('_member','SetHex3950253585',this)">Hex::SetHex</a>(unsigned int h) ///&lt; value to assign to hex number
+{
+    <a href="#" OnFocus="link('_member','hex1794',this)">hex</a> = h;
+}
+
+
+/// Assign a value to the hex number.
+///\return a reference to the Hex object whose value was updated
+<a href="#" OnFocus="link('_class','Hex0',this)">Hex</a>&amp; <a href="#" OnFocus="link('_member','operatoreq_3950253585',this)">Hex::operator=</a>(unsigned int h) ///&lt; value to assign to hex number
+{
+    <a href="#" OnFocus="link('_member','hex1794',this)">hex</a> = h;
+    return *this;
+}
+
+
+/// Return the value of the hex number.
+unsigned int <a href="#" OnFocus="link('_member','GetHex210160317',this)">Hex::GetHex</a>(void)
+{
+    return <a href="#" OnFocus="link('_member','hex1794',this)">hex</a>;
+}
+
+
+/// Helper function which gets a hex number from an input stream.
+///\return a reference to the input stream
+istream&amp; <a href="#" OnFocus="link('_member','operatorgreat_great_2403082006',this)">operator>> </a>(istream&amp; is,  ///&lt; stream through which a hex number is received
+                    <a href="#" OnFocus="link('_class','Hex0',this)">Hex</a>&amp; n)            ///&lt; Hex object that will receive the data from the stream
+{
+    char buf[100];
+    is &gt;&gt; setw(n.<a href="#" OnFocus="link('_member','GetLength210160317',this)">GetLength</a>()+1) &gt;&gt; buf;
+    n.<a href="#" OnFocus="link('_member','SetHex3950253585',this)">SetHex</a>(0);
+    bool started = false;
+    for(char *p=buf; *p!='\0'; p++)
+    {
+        if(isspace(*p))
+        {
+            if(started) break; // stop once numerals end
+            else continue;     // keep looking for start of numerals
+        }
+        started = true;
+        n.<a href="#" OnFocus="link('_member','SetHex3950253585',this)">SetHex</a>(n.<a href="#" OnFocus="link('_member','GetHex210160317',this)">GetHex</a>()*16 + <a href="#" OnFocus="link('_member','CharToHex49468',this)">CharToHex</a>(*p));
+    }
+    return is;
+}
+
+
+/// Helper function which outputs a hex number to an output stream.
+///\return a reference to the output stream
+ostream&amp; <a href="#" OnFocus="link('_member','operatorless_less_2307103839',this)">operator<< </a>(ostream&amp; os,  ///&lt; stream through which a hex number is sent
+                    <a href="#" OnFocus="link('_class','Hex0',this)">Hex</a>&amp; n)            ///&lt; Hex object whose value is sent through the stream
+{
+    os &lt;&lt; n.<a href="#" OnFocus="link('_member','GetHex210160317',this)">GetHex</a>();
+    return os;
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_file','_source');
+</script>

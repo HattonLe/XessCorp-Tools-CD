@@ -1,0 +1,383 @@
+# XST (Creating Lso File) : 
+test_dualport.lso
+# xst flow : RunXST
+test_dualport.syr
+test_dualport.prj
+test_dualport.sprj
+test_dualport.ana
+test_dualport.stx
+test_dualport.cmd_log
+# XST (Creating Lso File) : 
+test_dualport.lso
+# xst flow : RunXST
+test_dualport.syr
+test_dualport.prj
+test_dualport.sprj
+test_dualport.ana
+test_dualport.stx
+test_dualport.cmd_log
+# XST (Creating Lso File) : 
+test_dualport.lso
+# xst flow : RunXST
+test_dualport.syr
+test_dualport.prj
+test_dualport.sprj
+test_dualport.ana
+test_dualport.stx
+test_dualport.cmd_log
+test_dualport.ngc
+test_dualport.ngr
+# Implmentation : Translate
+__projnav/ngdbuild.err
+__projnav/ednTOngd_tcl.rsp
+c:\temp\bitstreams\xsb\300e\test_dualport/_ngo
+test_dualport.ngd
+test_dualport_ngdbuild.nav
+test_dualport.bld
+test_dualport.ucf.untf
+test_dualport.cmd_log
+# Implementation : Map
+test_dualport_map.ncd
+test_dualport.ngm
+test_dualport.pcf
+test_dualport.nc1
+test_dualport.mrp
+test_dualport_map.mrp
+test_dualport.mdf
+__projnav/map.log
+test_dualport.cmd_log
+MAP_NO_GUIDE_FILE_CPF "test_dualport"
+# Implmentation : Post-Place & Route Timing
+__projnav/ncdTOtwr_tcl.rsp
+__projnav/posttrc.log
+test_dualport.twr
+test_dualport.twx
+test_dualport.tsi
+test_dualport.cmd_log
+# Implmentation : Place & Route
+__projnav/nc1TOncd_tcl.rsp
+test_dualport.ncd
+test_dualport.par
+test_dualport.pad
+test_dualport_pad.txt
+test_dualport_pad.csv
+test_dualport.pad_txt
+test_dualport.dly
+reportgen.log
+test_dualport.xpi
+test_dualport.grf
+test_dualport.itr
+test_dualport_last_par.ncd
+__projnav/par.log
+test_dualport.placed_ncd_tracker
+test_dualport.routed_ncd_tracker
+test_dualport.cmd_log
+PAR_NO_GUIDE_FILE_CPF "test_dualport"
+# Generate Programming File
+__projnav/test_dualport_ncdTOut_tcl.rsp
+__projnav/bitgen.rsp
+bitgen.ut
+test_dualport.ut
+# Generate Programming File
+test_dualport.bgn
+test_dualport.rbt
+test_dualport.ll
+test_dualport.msk
+test_dualport.drc
+test_dualport.nky
+test_dualport.bit
+test_dualport.bin
+test_dualport.isc
+test_dualport.cmd_log
+# XST (Creating Lso File) : 
+test_dualport.lso
+# xst flow : RunXST
+test_dualport.syr
+test_dualport.prj
+test_dualport.sprj
+test_dualport.ana
+test_dualport.stx
+test_dualport.cmd_log
+test_dualport.ngc
+test_dualport.ngr
+# Implmentation : Translate
+__projnav/ngdbuild.err
+__projnav/ednTOngd_tcl.rsp
+c:\temp\bitstreams\xsb\300e\test_dualport/_ngo
+test_dualport.ngd
+test_dualport_ngdbuild.nav
+test_dualport.bld
+test_dualport.ucf.untf
+test_dualport.cmd_log
+# Implementation : Map
+test_dualport_map.ncd
+test_dualport.ngm
+test_dualport.pcf
+test_dualport.nc1
+test_dualport.mrp
+test_dualport_map.mrp
+test_dualport.mdf
+__projnav/map.log
+test_dualport.cmd_log
+MAP_NO_GUIDE_FILE_CPF "test_dualport"
+# Implmentation : Post-Place & Route Timing
+__projnav/ncdTOtwr_tcl.rsp
+__projnav/posttrc.log
+test_dualport.twr
+test_dualport.twx
+test_dualport.tsi
+test_dualport.cmd_log
+# Implmentation : Place & Route
+__projnav/nc1TOncd_tcl.rsp
+test_dualport.ncd
+test_dualport.par
+test_dualport.pad
+test_dualport_pad.txt
+test_dualport_pad.csv
+test_dualport.pad_txt
+test_dualport.dly
+reportgen.log
+test_dualport.xpi
+test_dualport.grf
+test_dualport.itr
+test_dualport_last_par.ncd
+__projnav/par.log
+test_dualport.placed_ncd_tracker
+test_dualport.routed_ncd_tracker
+test_dualport.cmd_log
+PAR_NO_GUIDE_FILE_CPF "test_dualport"
+# Generate Programming File
+__projnav/test_dualport_ncdTOut_tcl.rsp
+__projnav/bitgen.rsp
+bitgen.ut
+test_dualport.ut
+# Generate Programming File
+test_dualport.bgn
+test_dualport.rbt
+test_dualport.ll
+test_dualport.msk
+test_dualport.drc
+test_dualport.nky
+test_dualport.bit
+test_dualport.bin
+test_dualport.isc
+test_dualport.cmd_log
+# XST (Creating Lso File) : 
+test_dualport.lso
+# xst flow : RunXST
+test_dualport.syr
+test_dualport.prj
+test_dualport.sprj
+test_dualport.ana
+test_dualport.stx
+test_dualport.cmd_log
+test_dualport.ngc
+test_dualport.ngr
+# Implmentation : Translate
+__projnav/ngdbuild.err
+__projnav/ednTOngd_tcl.rsp
+c:\temp\bitstreams\xsb\300e\test_dualport/_ngo
+test_dualport.ngd
+test_dualport_ngdbuild.nav
+test_dualport.bld
+test_dualport.ucf.untf
+test_dualport.cmd_log
+# Implementation : Map
+test_dualport_map.ncd
+test_dualport.ngm
+test_dualport.pcf
+test_dualport.nc1
+test_dualport.mrp
+test_dualport_map.mrp
+test_dualport.mdf
+__projnav/map.log
+test_dualport.cmd_log
+MAP_NO_GUIDE_FILE_CPF "test_dualport"
+# Implmentation : Post-Place & Route Timing
+__projnav/ncdTOtwr_tcl.rsp
+__projnav/posttrc.log
+test_dualport.twr
+test_dualport.twx
+test_dualport.tsi
+test_dualport.cmd_log
+# Implmentation : Place & Route
+__projnav/nc1TOncd_tcl.rsp
+test_dualport.ncd
+test_dualport.par
+test_dualport.pad
+test_dualport_pad.txt
+test_dualport_pad.csv
+test_dualport.pad_txt
+test_dualport.dly
+reportgen.log
+test_dualport.xpi
+test_dualport.grf
+test_dualport.itr
+test_dualport_last_par.ncd
+__projnav/par.log
+test_dualport.placed_ncd_tracker
+test_dualport.routed_ncd_tracker
+test_dualport.cmd_log
+PAR_NO_GUIDE_FILE_CPF "test_dualport"
+# Generate Programming File
+__projnav/test_dualport_ncdTOut_tcl.rsp
+__projnav/bitgen.rsp
+bitgen.ut
+test_dualport.ut
+# Generate Programming File
+test_dualport.bgn
+test_dualport.rbt
+test_dualport.ll
+test_dualport.msk
+test_dualport.drc
+test_dualport.nky
+test_dualport.bit
+test_dualport.bin
+test_dualport.isc
+test_dualport.cmd_log
+# XST (Creating Lso File) : 
+test_dualport.lso
+# xst flow : RunXST
+test_dualport.syr
+test_dualport.prj
+test_dualport.sprj
+test_dualport.ana
+test_dualport.stx
+test_dualport.cmd_log
+test_dualport.ngc
+test_dualport.ngr
+# Implmentation : Translate
+__projnav/ngdbuild.err
+__projnav/ednTOngd_tcl.rsp
+c:\temp\bitstreams\xsb\300e\test_dualport/_ngo
+test_dualport.ngd
+test_dualport_ngdbuild.nav
+test_dualport.bld
+test_dualport.ucf.untf
+test_dualport.cmd_log
+# Implementation : Map
+test_dualport_map.ncd
+test_dualport.ngm
+test_dualport.pcf
+test_dualport.nc1
+test_dualport.mrp
+test_dualport_map.mrp
+test_dualport.mdf
+__projnav/map.log
+test_dualport.cmd_log
+MAP_NO_GUIDE_FILE_CPF "test_dualport"
+# Implmentation : Post-Place & Route Timing
+__projnav/ncdTOtwr_tcl.rsp
+__projnav/posttrc.log
+test_dualport.twr
+test_dualport.twx
+test_dualport.tsi
+test_dualport.cmd_log
+# Implmentation : Place & Route
+__projnav/nc1TOncd_tcl.rsp
+test_dualport.ncd
+test_dualport.par
+test_dualport.pad
+test_dualport_pad.txt
+test_dualport_pad.csv
+test_dualport.pad_txt
+test_dualport.dly
+reportgen.log
+test_dualport.xpi
+test_dualport.grf
+test_dualport.itr
+test_dualport_last_par.ncd
+__projnav/par.log
+test_dualport.placed_ncd_tracker
+test_dualport.routed_ncd_tracker
+test_dualport.cmd_log
+PAR_NO_GUIDE_FILE_CPF "test_dualport"
+# Generate Programming File
+__projnav/test_dualport_ncdTOut_tcl.rsp
+__projnav/bitgen.rsp
+bitgen.ut
+test_dualport.ut
+# Generate Programming File
+test_dualport.bgn
+test_dualport.rbt
+test_dualport.ll
+test_dualport.msk
+test_dualport.drc
+test_dualport.nky
+test_dualport.bit
+test_dualport.bin
+test_dualport.isc
+test_dualport.cmd_log
+# XST (Creating Lso File) : 
+test_dualport.lso
+# xst flow : RunXST
+test_dualport.syr
+test_dualport.prj
+test_dualport.sprj
+test_dualport.ana
+test_dualport.stx
+test_dualport.cmd_log
+test_dualport.ngc
+test_dualport.ngr
+# Implmentation : Translate
+__projnav/ngdbuild.err
+__projnav/ednTOngd_tcl.rsp
+c:\temp\bitstreams\xsb\300e\test_dualport/_ngo
+test_dualport.ngd
+test_dualport_ngdbuild.nav
+test_dualport.bld
+test_dualport.ucf.untf
+test_dualport.cmd_log
+# Implementation : Map
+test_dualport_map.ncd
+test_dualport.ngm
+test_dualport.pcf
+test_dualport.nc1
+test_dualport.mrp
+test_dualport_map.mrp
+test_dualport.mdf
+__projnav/map.log
+test_dualport.cmd_log
+MAP_NO_GUIDE_FILE_CPF "test_dualport"
+# Implmentation : Post-Place & Route Timing
+__projnav/ncdTOtwr_tcl.rsp
+__projnav/posttrc.log
+test_dualport.twr
+test_dualport.twx
+test_dualport.tsi
+test_dualport.cmd_log
+# Implmentation : Place & Route
+__projnav/nc1TOncd_tcl.rsp
+test_dualport.ncd
+test_dualport.par
+test_dualport.pad
+test_dualport_pad.txt
+test_dualport_pad.csv
+test_dualport.pad_txt
+test_dualport.dly
+reportgen.log
+test_dualport.xpi
+test_dualport.grf
+test_dualport.itr
+test_dualport_last_par.ncd
+__projnav/par.log
+test_dualport.placed_ncd_tracker
+test_dualport.routed_ncd_tracker
+test_dualport.cmd_log
+PAR_NO_GUIDE_FILE_CPF "test_dualport"
+# Generate Programming File
+__projnav/test_dualport_ncdTOut_tcl.rsp
+__projnav/bitgen.rsp
+bitgen.ut
+test_dualport.ut
+# Generate Programming File
+test_dualport.bgn
+test_dualport.rbt
+test_dualport.ll
+test_dualport.msk
+test_dualport.drc
+test_dualport.nky
+test_dualport.bit
+test_dualport.bin
+test_dualport.isc
+test_dualport.cmd_log

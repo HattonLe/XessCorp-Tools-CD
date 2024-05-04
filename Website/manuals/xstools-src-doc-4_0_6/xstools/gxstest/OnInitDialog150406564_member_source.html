@@ -1,0 +1,107 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - OnInitDialog</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">OnInitDialog</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','gxstest0',this)" class="pathLink">gxstest</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_class','CGxstestDlg0',this)" class="pathLink">CGxstestDlg</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">OnInitDialog</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','OnInitDialog150406564','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_member','OnInitDialog150406564','_source',this)" class="tabLinkActive">Source</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','OnInitDialog150406564','_callgraph',this)" class="tabLinkInActive">Call Graph</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<div class="paragraph2NoTopPadding">Start Line: 143</div>
+<pre class="codeExamples">
+virtual BOOL <a href="#" OnFocus="link('_member','OnInitDialog150406564',this)">CGxstestDlg::OnInitDialog</a>()
+{
+    CDialog::OnInitDialog();
+
+    // Add "About..." menu item to system menu.
+
+    // IDM_ABOUTBOX must be in the system command range.
+    ASSERT((IDM_ABOUTBOX &amp; 0xFFF0) == IDM_ABOUTBOX);
+    ASSERT(IDM_ABOUTBOX &lt; 0xF000);
+
+    CMenu* pSysMenu = GetSystemMenu(FALSE);
+    if (pSysMenu != NULL)
+    {
+        CString strAboutMenu;
+        strAboutMenu.LoadString(IDS_ABOUTBOX);
+        if (!strAboutMenu.IsEmpty())
+        {
+            pSysMenu-&gt;AppendMenu(MF_SEPARATOR);
+            pSysMenu-&gt;AppendMenu(MF_STRING, IDM_ABOUTBOX, strAboutMenu);
+        }
+    }
+
+    // Set the icon for this dialog.  The framework does this automatically
+    //  when the application's main window is not a dialog
+    SetIcon(m_hIcon, TRUE);         // Set big icon
+    SetIcon(m_hIcon, FALSE);        // Set small icon
+    
+    // TODO: Add extra initialization here
+
+    // setup the list of XS Boards in the pulldown list
+    <a href="#" OnFocus="link('_class','../xstoolslib/brdModel_struct0',this)">XSBoardInfo</a>* brdInfo;
+    int numBoards;
+    numBoards = <a href="#" OnFocus="link('_member','../xstoolslib/GetXSBoardInfo2867269968',this)">GetXSBoardInfo</a>(&amp;brdInfo);
+    for(int i=0; i&lt;numBoards; i++)
+        <a href="#" OnFocus="link('_member','m_cmbBoard150406621',this)">m_cmbBoard</a>.AddString(brdInfo[i].brdModel);
+
+    // setup the list of parallel ports in the pulldown list
+    <a href="#" OnFocus="link('_member','m_cmbLpt150406621',this)">m_cmbLpt</a>.AddString("LPT1");
+    <a href="#" OnFocus="link('_member','m_cmbLpt150406621',this)">m_cmbLpt</a>.AddString("LPT2");
+    <a href="#" OnFocus="link('_member','m_cmbLpt150406621',this)">m_cmbLpt</a>.AddString("LPT3");
+
+    // get the last setting for the board type
+    string brdType;
+    if((brdType=<a href="#" OnFocus="link('_member','../xstoolslib/GetXSTOOLSParameter67554305',this)">GetXSTOOLSParameter</a>((string)"BoardType")) == "")
+    { // set the default value if no previous value exists
+        if(<a href="#" OnFocus="link('_member','../xstoolslib/SetXSTOOLSParameter3292873876',this)">SetXSTOOLSParameter</a>((string)"BoardType",(string)brdInfo[0].brdModel) == false)
+        {
+            AfxMessageBox("BoardType value was not set",MB_ICONSTOP);
+            exit(0);
+        }
+        brdType = <a href="#" OnFocus="link('_member','../xstoolslib/GetXSTOOLSParameter67554305',this)">GetXSTOOLSParameter</a>((string)"BoardType");
+        assert(brdType != "");
+    }
+    <a href="#" OnFocus="link('_member','m_cmbBoard150406621',this)">m_cmbBoard</a>.SelectString(-1,(const char*)(brdType.c_str()));
+
+    // get the last setting for the parallel port
+    string lptNum;
+    if((lptNum=<a href="#" OnFocus="link('_member','../xstoolslib/GetXSTOOLSParameter67554305',this)">GetXSTOOLSParameter</a>((string)"LPT")) == "")
+    { // set the default value if no previous value exists
+        if(<a href="#" OnFocus="link('_member','../xstoolslib/SetXSTOOLSParameter3292873876',this)">SetXSTOOLSParameter</a>((string)"LPT",(string)"LPT1") == false)
+        {
+            AfxMessageBox("LPT value was not set",MB_ICONSTOP);
+            exit(0);
+        }
+        lptNum = <a href="#" OnFocus="link('_member','../xstoolslib/GetXSTOOLSParameter67554305',this)">GetXSTOOLSParameter</a>((string)"LPT");
+        assert(lptNum != "");
+    }
+    <a href="#" OnFocus="link('_member','m_cmbLpt150406621',this)">m_cmbLpt</a>.SelectString(-1,(const char*)(lptNum.c_str()));
+    
+    return TRUE;  // return TRUE  unless you set the focus to a control
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_member','_source');
+</script>

@@ -1,0 +1,68 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - map_pin_to_bit</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">map_pin_to_bit</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xsi2c0',this)" class="pathLink">xsi2c</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">map_pin_to_bit</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','map_pin_to_bit171142247','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_member','map_pin_to_bit171142247','_source',this)" class="tabLinkActive">Source</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','map_pin_to_bit171142247','_callgraph',this)" class="tabLinkInActive">Call Graph</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<div class="paragraph2NoTopPadding">Start Line: 208</div>
+<pre class="codeExamples">
+int <a href="#" OnFocus="link('_member','map_pin_to_bit171142247',this)">map_pin_to_bit</a>(unsigned int pin)
+{
+    int map[] = {
+            -1, // illegal
+            16, // C0
+            0,  // D0
+            1,  // D1
+            2,  // D2
+            3,  // D3
+            4,  // D4
+            5,  // D5
+            6,  // D6
+            7,  // D7
+            14, // S6
+            15, // S7
+            13, // S5
+            12, // S4
+            17, // C1
+            11, // S3
+            18, // C2
+            19, // C3
+    };
+
+    if(pin&lt;1 || pin&gt;sizeof(map)/sizeof(int))
+    {
+        <a href="#" OnFocus="link('_member','err0',this)">err</a>.<a href="#" OnFocus="link('_member','../xstoolslib/SetSeverity3409672334',this)">SetSeverity</a>(XSErrorFatal);
+        <a href="#" OnFocus="link('_member','err0',this)">err</a> &lt;&lt; "Illegal parallel port pin was specified!!\n";
+        <a href="#" OnFocus="link('_member','err0',this)">err</a>.<a href="#" OnFocus="link('_member','../xstoolslib/EndMsg60232619',this)">EndMsg</a>();
+    }
+
+    return map[pin];
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_member','_source');
+</script>

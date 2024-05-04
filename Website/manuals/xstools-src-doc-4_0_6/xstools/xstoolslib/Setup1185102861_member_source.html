@@ -1,0 +1,48 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - Setup</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">Setup</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_class','FlashPort0',this)" class="pathLink">FlashPort</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">Setup</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','Setup1185102861','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_member','Setup1185102861','_source',this)" class="tabLinkActive">Source</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','Setup1185102861','_callgraph',this)" class="tabLinkInActive">Call Graph</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<div class="paragraph2NoTopPadding">Start Line: 90</div>
+<pre class="codeExamples">
+int <a href="#" OnFocus="link('_member','Setup1185102861',this)">FlashPort::Setup</a>(<a href="#" OnFocus="link('_class','XSError0',this)">XSError</a> *e, unsigned int portNum, unsigned int invMask, unsigned int pos_reset, unsigned int pos_clk, unsigned int pos_dolsb, unsigned int pos_domsb, unsigned int pos_dilsb, unsigned int pos_dimsb, unsigned int pos_stlsb, unsigned int pos_stmsb)
+{
+    <a href="#" OnFocus="link('_member','posRESET239475346',this)">posRESET</a> = pos_reset;
+    <a href="#" OnFocus="link('_member','posCLK239475346',this)">posCLK</a>   = pos_clk;
+    <a href="#" OnFocus="link('_member','posDOLSB239475346',this)">posDOLSB</a> = pos_dolsb;
+    <a href="#" OnFocus="link('_member','posDOMSB239475346',this)">posDOMSB</a> = pos_domsb;
+    <a href="#" OnFocus="link('_member','posDILSB239475346',this)">posDILSB</a> = pos_dilsb;
+    <a href="#" OnFocus="link('_member','posDIMSB239475346',this)">posDIMSB</a> = pos_dimsb;
+    <a href="#" OnFocus="link('_member','posSTLSB239475346',this)">posSTLSB</a> = pos_stlsb;
+    <a href="#" OnFocus="link('_member','posSTMSB239475346',this)">posSTMSB</a> = pos_stmsb;
+    return <a href="#" OnFocus="link('_member','Setup1571714867',this)">PPort::Setup</a>(e,portNum,invMask);
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_member','_source');
+</script>

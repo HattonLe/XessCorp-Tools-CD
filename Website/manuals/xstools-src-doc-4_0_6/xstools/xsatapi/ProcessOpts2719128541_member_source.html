@@ -1,0 +1,153 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - ProcessOpts</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">ProcessOpts</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xsatapi0',this)" class="pathLink">xsatapi</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">ProcessOpts</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','ProcessOpts2719128541','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_member','ProcessOpts2719128541','_source',this)" class="tabLinkActive">Source</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','ProcessOpts2719128541','_callgraph',this)" class="tabLinkInActive">Call Graph</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<div class="paragraph2NoTopPadding">Start Line: 102</div>
+<pre class="codeExamples">
+bool <a href="#" OnFocus="link('_member','../xsusb/ProcessOpts2719128541',this)">ProcessOpts</a>(int *argc, char **argv)
+{
+    int *numFiles = NULL;   // pointer to number of FPGA/RAM/Flash files
+    int *posFiles = NULL;   // pointer to position of FPGA/RAM/Flash files
+
+    bool ok = true; // no errors yet
+
+    for(int i=1; i&lt; *argc; i++)
+    {
+        int cnt, j;
+        string arg = argv[i];
+        
+        if(arg[0] == '-')  // found an option
+        {
+            <a href="#" OnFocus="link('_member','../xstoolslib/ConvertToUpperCase67554305',this)">ConvertToUpperCase</a>(arg);  // convert option to upper case
+            
+            // ask for help but we don't give much
+            if(arg=="-H" || arg=="-HELP")
+            {
+                <a href="#" OnFocus="link('_member','../xsusb/Usage86416935',this)">Usage</a>(arg);
+                cnt = 1;
+            }
+            
+            // specify the printer port being used
+            else if(arg=="-PORT" || arg=="-P")
+            {
+                sscanf(argv[i+1],"%d",&amp;portNum);
+                if(<a href="#" OnFocus="link('_member','portNum0',this)">portNum</a>&lt;4)
+                    <a href="#" OnFocus="link('_member','lpt0',this)">lpt</a> = (string)"LPT" + (string)(argv[i+1]);
+                else
+                    <a href="#" OnFocus="link('_member','lpt0',this)">lpt</a> = "LPT1";
+                cnt = 2;
+            }
+            
+            // specify the board model number
+            else if(arg=="-BOARD" || arg=="-B")
+            {
+                <a href="#" OnFocus="link('_member','brdModel0',this)">brdModel</a> = argv[i+1];
+                <a href="#" OnFocus="link('_member','../xstoolslib/ConvertToUpperCase67554305',this)">ConvertToUpperCase</a>(brdModel);
+                cnt = 2;
+            }
+            
+            // enable batch operation
+            else if(arg=="-BATCH")
+            {
+                <a href="#" OnFocus="link('_member','doBatch0',this)">doBatch</a> = true;
+                cnt = 1;
+            }
+
+            else if(arg=="-R")
+            {
+                <a href="#" OnFocus="link('_member','operation0',this)">operation</a> = <a href="#" OnFocus="link('_member','READREG0',this)">READREG</a>;
+                sscanf(argv[i+1],"%x",&amp;regaddr);
+                cnt = 2;
+            }
+
+            else if(arg=="-W")
+            {
+                <a href="#" OnFocus="link('_member','operation0',this)">operation</a> = <a href="#" OnFocus="link('_member','WRITEREG0',this)">WRITEREG</a>;
+                sscanf(argv[i+1],"%x",&amp;regaddr);
+                sscanf(argv[i+2],"%x",&amp;data);
+                cnt = 3;
+            }
+
+            else if(arg=="-RS")
+            {
+                <a href="#" OnFocus="link('_member','operation0',this)">operation</a> = <a href="#" OnFocus="link('_member','READSECTOR0',this)">READSECTOR</a>;
+                sscanf(argv[i+1],"%x",&amp;head);
+                sscanf(argv[i+2],"%x",&amp;cyl);
+                sscanf(argv[i+3],"%x",&amp;sect);
+                cnt = 4;
+            }
+
+            else if(arg=="-WS")
+            {
+                <a href="#" OnFocus="link('_member','operation0',this)">operation</a> = <a href="#" OnFocus="link('_member','WRITESECTOR0',this)">WRITESECTOR</a>;
+                sscanf(argv[i+1],"%x",&amp;head);
+                sscanf(argv[i+2],"%x",&amp;cyl);
+                sscanf(argv[i+3],"%x",&amp;sect);
+                sscanf(argv[i+4],"%x",&amp;wrData);
+                cnt = 5;
+            }
+
+            else if(arg=="-T")
+            {
+                <a href="#" OnFocus="link('_member','operation0',this)">operation</a> = <a href="#" OnFocus="link('_member','TEST0',this)">TEST</a>;
+                cnt = 1;
+            }
+
+            // can't figure out what the user wants
+            else
+            {
+                ok = false;
+                <a href="#" OnFocus="link('_member','errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','../xstoolslib/SetSeverity3409672334',this)">SetSeverity</a>(<a href="#" OnFocus="link('_member','../xstoolslib/XSErrorMinor0',this)">XSErrorMinor</a>);
+                <a href="#" OnFocus="link('_member','errMsg0',this)">errMsg</a> &lt;&lt; "unknown option: " &lt;&lt; arg.c_str() &lt;&lt; "\n";
+                <a href="#" OnFocus="link('_member','errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','../xstoolslib/EndMsg60232619',this)">EndMsg</a>();
+                cnt = 1;
+            }
+        }
+        else    // found something which is not an option, so it is must be a file name
+        {
+            ok = false;
+            <a href="#" OnFocus="link('_member','errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','../xstoolslib/SetSeverity3409672334',this)">SetSeverity</a>(<a href="#" OnFocus="link('_member','../xstoolslib/XSErrorMinor0',this)">XSErrorMinor</a>);
+            <a href="#" OnFocus="link('_member','errMsg0',this)">errMsg</a> &lt;&lt; "unknown option: " &lt;&lt; arg.c_str() &lt;&lt; "\n";
+            <a href="#" OnFocus="link('_member','errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','../xstoolslib/EndMsg60232619',this)">EndMsg</a>();
+            cnt = 1;
+        }
+            
+        // remove the processed options from the argument list
+        for(j=i+cnt; j&lt; *argc; j++)
+            argv[j-cnt] = argv[j];
+        *argc -= cnt;
+        i--;
+    }
+
+    return ok;
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_member','_source');
+</script>

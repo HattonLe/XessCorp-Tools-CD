@@ -1,0 +1,102 @@
+XESS GUARANTEE, PRODUCT WARRANTY, AND SOFTWARE LICENSE AGREEMENT
+  30-DAY RETURN GUARANTEE
+    If you find the items you have received don't work, aren't
+    suitable for what you need to do, you don't like them, or for any
+    other reason, you can return them for a full refund (less any
+    shipping charges) WITHIN THIRTY (30) DAYS OF RECEIPT provided:
+
+    *   The items are undamaged.
+
+    *   All non-XESS software packages are unopened and uninstalled.
+
+    So we can credit your account, please enclose a copy of your
+    invoice with the items you are returning. Return the items in
+    their original packaging via UPS or FedEx to:
+
+        XESS Corp. / Returns Dept.
+        2608 Sweetgum Drive
+        Apex NC 27539
+        USA
+
+  PLEASE!!!
+    Record the invoice number from your receipt in the space provided
+    below and keep it in your records. This number is used to track
+    your order in our database and must be supplied when you request
+    assistance from XESS Corp.
+
+    Invoice Number: ___________________________________________
+
+  PRODUCT WARRANTY
+    X Engineering Software Systems Corp. (XESS) warrants that the
+    Product, in the course of its normal use, will be free from
+    defects in material and workmanship for a period of one (1) year
+    and will conform to XESS's specification therefor. This limited
+    warranty shall commence on receipt of the product from XESS. XESS
+    shall have no liability for any Product returned if XESS
+    determines that the asserted defect
+
+    *   is not present, and/or
+
+    *   cannot reasonably be rectified because of damage occurring
+        before XESS receives the Product, and/or
+
+    *   is attributable to misuse, improper installation, alteration,
+        accident or mishandling while in your possession.
+
+    Subject to the limitations specified above, your sole and
+    exclusive warranty shall be, during the period of warranty
+    specified above and at XESS's option, the repair, replacement, or
+    return with refund of the product. The foregoing warranty of XESS
+    shall extend to repaired or replaced Products for the balance of
+    the applicable period of the original warranty or thirty (30) days
+    from the date of shipment of a repaired or replaced Product,
+    whichever is longer.
+
+    THE FOREGOING LIMITED WARRANTY IS XESS'S SOLE WARRANTY AND IS
+    APPLICABLE ONLY TO PRODUCTS SOLD AS NEW. THE REMEDIES PROVIDED
+    HEREIN ARE IN LIEU OF a) ANY AND ALL OTHER REMEDIES AND
+    WARRANTIES, WHETHER EXPRESSED OR IMPLIED OR STATUTORY, INCLUDING
+    BUT NOT LIMITED TO, ANY IMPLIED WARRANTY OF MERCHANTABILITY OR
+    FITNESS FOR A PARTICULAR PURPOSE, AND b) ANY AND ALL OBLIGATIONS
+    AND LIABILITIES OF XESS FOR DAMAGES INCLUDING, BUT NOT LIMITED TO
+    ACCIDENTAL, CONSEQUENTIAL, OR SPECIAL DAMAGES, OR ANY FINANCIAL
+    LOSS, LOST PROFITS OR EXPENSES, OR LOST DATA ARISING OUT OF OR IN
+    CONNECTION WITH THE PURCHASE, USE OR PERFORMANCE OF THE PRODUCT,
+    EVEN IF XESS HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+
+  SOFTWARE LICENSE AGREEMENT
+    1.  Permission to use, copy, modify, and distribute this software
+        and its documentation, with or without modification, for any
+        purpose and without fee or royalty is hereby granted, provided
+        that you include the following on ALL copies of the software
+        and documentation or portions thereof, including
+        modifications, that you make:
+
+            a.  The full text of this license in a location viewable to users
+            of the redistributed or derivative work.
+
+            b.  Notice of any changes or modifications to the files,
+            including the date changes were made.
+
+    2.  The name, servicemarks and trademarks of X Engineering
+        Software Systems Corp. may NOT be used in advertising or
+        publicity pertaining to the software without specific, written
+        prior permission.
+
+    3.  Title to copyright in this software and any associated
+        documentation will at all times remain with X Engineering
+        Software Systems Corp.
+
+    4.  THIS SOFTWARE AND DOCUMENTATION IS PROVIDED "AS IS," AND X
+        Engineering Software Systems Corp MAKES NO REPRESENTATIONS OR
+        WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO,
+        WARRANTIES OF MERCHANTABILITY OR FITNESS FOR ANY PARTICULAR
+        PURPOSE OR THAT THE USE OF THE SOFTWARE OR DOCUMENTATION WILL
+        NOT INFRINGE ANY THIRD PARTY PATENTS, COPYRIGHTS, TRADEMARKS
+        OR OTHER RIGHTS.
+
+    5.  X Engineering Software Systems Corp WILL NOT BE LIABLE FOR ANY
+        DAMAGES, INCLUDING BUT NOT LIMITED TO, DIRECT, INDIRECT,
+        SPECIAL OR CONSEQUENTIAL, ARISING OUT OF ANY USE OF THE
+        SOFTWARE OR DOCUMENTATION.
+

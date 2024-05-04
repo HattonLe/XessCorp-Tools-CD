@@ -1,0 +1,110 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - usbcmd.h</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">usbcmd.h</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">usbcmd.h</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','usbcmd_h0','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','usbcmd_h0','_overview',this)" class="tabLinkInActive">Overview</a></span>
+<span class="tabInActiveGrayout"><span class="tabLinkGrayout">Included files</span></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','usbcmd_h0','_includedby',this)" class="tabLinkInActive">Included by</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_file','usbcmd_h0','_source',this)" class="tabLinkActive">Source</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<pre class="codeExamples">
+/*----------------------------------------------------------------------------------
+  SOFTWARE LICENSE AGREEMENT
+    1.  Permission to use, copy, modify, and distribute this software
+        and its documentation, with or without modification, for any
+        purpose and without fee or royalty is hereby granted, provided
+        that you include the following on ALL copies of the software
+        and documentation or portions thereof, including
+        modifications, that you make:
+
+            a.  The full text of this license in a location viewable to users
+            of the redistributed or derivative work.
+
+            b.  Notice of any changes or modifications to the files,
+            including the date changes were made.
+
+    2.  The name, servicemarks and trademarks of X Engineering
+        Software Systems Corp. may NOT be used in advertising or
+        publicity pertaining to the software without specific, written
+        prior permission.
+
+    3.  Title to copyright in this software and any associated
+        documentation will at all times remain with X Engineering
+        Software Systems Corp.
+
+    4.  THIS SOFTWARE AND DOCUMENTATION IS PROVIDED "AS IS," AND X
+        Engineering Software Systems Corp MAKES NO REPRESENTATIONS OR
+        WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO,
+        WARRANTIES OF MERCHANTABILITY OR FITNESS FOR ANY PARTICULAR
+        PURPOSE OR THAT THE USE OF THE SOFTWARE OR DOCUMENTATION WILL
+        NOT INFRINGE ANY THIRD PARTY PATENTS, COPYRIGHTS, TRADEMARKS
+        OR OTHER RIGHTS.
+
+    5.  X Engineering Software Systems Corp WILL NOT BE LIABLE FOR ANY
+        DAMAGES, INCLUDING BUT NOT LIMITED TO, DIRECT, INDIRECT,
+        SPECIAL OR CONSEQUENTIAL, ARISING OUT OF ANY USE OF THE
+        SOFTWARE OR DOCUMENTATION.
+
+  ©2006 - X Engineering Software Systems Corp.  All rights reserved.
+----------------------------------------------------------------------------------*/
+
+
+#ifndef USBCMD_H
+#define USBCMD_H
+
+/**
+Definitions of commands sent in USB packets to the XSUSB interface.
+*/
+enum <a href="#" OnFocus="link('_member','USBCmd0',this)">USBCmd</a>
+{
+    <a href="#" OnFocus="link('_member','READ_VERSION0',this)">READ_VERSION</a>            = 0x00,
+    /*
+    READ_FLASH              = 0x01,
+    WRITE_FLASH             = 0x02,
+    ERASE_FLASH             = 0x03,
+    READ_EEDATA             = 0x04,
+    WRITE_EEDATA            = 0x05,
+    READ_CONFIG             = 0x06,
+    WRITE_CONFIG            = 0x07,
+    */
+    <a href="#" OnFocus="link('_member','ID_BOARD0',this)">ID_BOARD</a>                = 0x31,
+    <a href="#" OnFocus="link('_member','UPDATE_LED0',this)">UPDATE_LED</a>            = 0x32,
+    <a href="#" OnFocus="link('_member','INFO_CMD0',this)">INFO_CMD</a>                = 0x40, // Get information about the USB interface.
+    <a href="#" OnFocus="link('_member','SET_PORT_BIT_INVERSIONS0',this)">SET_PORT_BIT_INVERSIONS</a>    = 0x42, // Set inversion mask for bits on the JTAG port 
+    <a href="#" OnFocus="link('_member','TMS_TDI_CMD0',this)">TMS_TDI_CMD</a>                = 0x43, // Send a single TMS and TDI bit.
+    <a href="#" OnFocus="link('_member','TMS_TDI_TDO_CMD0',this)">TMS_TDI_TDO_CMD</a>            = 0x44, // Send a single TMS and TDI bit and receive TDO bit.
+    <a href="#" OnFocus="link('_member','TDI_TDO_CMD0',this)">TDI_TDO_CMD</a>                = 0x46, // Send multiple TDI bits and receive multiple TDO bits.
+    <a href="#" OnFocus="link('_member','TDI_CMD0',this)">TDI_CMD</a>                    = 0x48, // Send multiple TDI bits.
+    <a href="#" OnFocus="link('_member','RUNTEST_CMD0',this)">RUNTEST_CMD</a>                = 0x49, // Pulse TCK a given number of times.
+    <a href="#" OnFocus="link('_member','NULL_TDI_CMD0',this)">NULL_TDI_CMD</a>            = 0x50, // Send string of TDI bits.
+    <a href="#" OnFocus="link('_member','RESET0',this)">RESET</a>                = 0xff
+};
+
+#endif
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_file','_source');
+</script>

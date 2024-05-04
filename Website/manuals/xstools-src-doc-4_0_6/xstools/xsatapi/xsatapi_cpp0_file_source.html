@@ -1,0 +1,594 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - xsatapi.cpp</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">xsatapi.cpp</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xsatapi0',this)" class="pathLink">xsatapi</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">xsatapi.cpp</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','xsatapi_cpp0','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','xsatapi_cpp0','_overview',this)" class="tabLinkInActive">Overview</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','xsatapi_cpp0','_includedfiles',this)" class="tabLinkInActive">Included files</a></span>
+<span class="tabInActiveGrayout"><span class="tabLinkGrayout">Included by</span></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_file','xsatapi_cpp0','_source',this)" class="tabLinkActive">Source</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<pre class="codeExamples">
+/*----------------------------------------------------------------------------------
+  SOFTWARE LICENSE AGREEMENT
+    1.  Permission to use, copy, modify, and distribute this software
+        and its documentation, with or without modification, for any
+        purpose and without fee or royalty is hereby granted, provided
+        that you include the following on ALL copies of the software
+        and documentation or portions thereof, including
+        modifications, that you make:
+
+            a.  The full text of this license in a location viewable to users
+            of the redistributed or derivative work.
+
+            b.  Notice of any changes or modifications to the files,
+            including the date changes were made.
+
+    2.  The name, servicemarks and trademarks of X Engineering
+        Software Systems Corp. may NOT be used in advertising or
+        publicity pertaining to the software without specific, written
+        prior permission.
+
+    3.  Title to copyright in this software and any associated
+        documentation will at all times remain with X Engineering
+        Software Systems Corp.
+
+    4.  THIS SOFTWARE AND DOCUMENTATION IS PROVIDED "AS IS," AND X
+        Engineering Software Systems Corp MAKES NO REPRESENTATIONS OR
+        WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO,
+        WARRANTIES OF MERCHANTABILITY OR FITNESS FOR ANY PARTICULAR
+        PURPOSE OR THAT THE USE OF THE SOFTWARE OR DOCUMENTATION WILL
+        NOT INFRINGE ANY THIRD PARTY PATENTS, COPYRIGHTS, TRADEMARKS
+        OR OTHER RIGHTS.
+
+    5.  X Engineering Software Systems Corp WILL NOT BE LIABLE FOR ANY
+        DAMAGES, INCLUDING BUT NOT LIMITED TO, DIRECT, INDIRECT,
+        SPECIAL OR CONSEQUENTIAL, ARISING OUT OF ANY USE OF THE
+        SOFTWARE OR DOCUMENTATION.
+
+  ©2006 - X Engineering Software Systems Corp.  All rights reserved.
+----------------------------------------------------------------------------------*/
+
+
+#include &lt;cstdlib&gt;
+#include &lt;cassert&gt;
+#include &lt;sstream&gt;
+#include &lt;fstream&gt;
+#include &lt;string&gt;
+using namespace std;
+
+#include "<a href="#" OnFocus="link('_file','../xstoolslib/xserror_h0',this)">xserror.h</a>"
+#include "<a href="#" OnFocus="link('_file','../xstoolslib/xsallbrds_h0',this)">xsallbrds.h</a>"
+#include "<a href="#" OnFocus="link('_file','../xstoolslib/utils_h0',this)">utils.h</a>"
+
+
+// version info
+char* <a href="#" OnFocus="link('_member','version0',this)">version</a> = "4.0.6";
+
+// global variables
+<a href="#" OnFocus="link('_class','../xstoolslib/XSError0',this)">XSError</a> <a href="#" OnFocus="link('_member','errMsg0',this)">errMsg</a>(cerr);        // setup error channel
+string <a href="#" OnFocus="link('_member','lpt0',this)">lpt</a>;                    // parallel port identifier
+int <a href="#" OnFocus="link('_member','portNum0',this)">portNum</a> = -1;      // default parallel port number
+string <a href="#" OnFocus="link('_member','brdModel0',this)">brdModel</a>;            // XS Board model number
+<a href="#" OnFocus="link('_class','../xstoolslib/XSBoard0',this)">XSBoard</a>* <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>;
+int <a href="#" OnFocus="link('_member','nBitstreams0',this)">nBitstreams</a> = 0;   // number of FPGA/CPLD bitstream files
+int <a href="#" OnFocus="link('_member','posBitstreams0',this)">posBitstreams</a> = -1;      // position of bitstreams in argument array
+int <a href="#" OnFocus="link('_member','nRAMfiles0',this)">nRAMfiles</a> = 0;           // number of RAM data files
+int <a href="#" OnFocus="link('_member','posRAMfiles0',this)">posRAMfiles</a> = -1;  // position of RAM data files in argument array
+int <a href="#" OnFocus="link('_member','nFlashfiles0',this)">nFlashfiles</a> = 0;       // number of Flash data files
+int <a href="#" OnFocus="link('_member','posFlashfiles0',this)">posFlashfiles</a> = -1;      // position of Flash data files in argument array
+bool <a href="#" OnFocus="link('_member','doBatch0',this)">doBatch</a> = false;  // batch test or requires user confirmation?
+unsigned int <a href="#" OnFocus="link('_member','head0',this)">head</a> = 0;
+unsigned int <a href="#" OnFocus="link('_member','cyl0',this)">cyl</a> = 0;
+unsigned int <a href="#" OnFocus="link('_member','sect0',this)">sect</a> = 0;
+unsigned int <a href="#" OnFocus="link('_member','wrData0',this)">wrData</a> = 0x5A;
+
+
+unsigned int <a href="#" OnFocus="link('_member','regaddr0',this)">regaddr</a>, <a href="#" OnFocus="link('_member','data0',this)">data</a>, <a href="#" OnFocus="link('_member','operation0',this)">operation</a>;
+const unsigned int <a href="#" OnFocus="link('_member','WRITEREG0',this)">WRITEREG</a> = 0x55555555;
+const unsigned int <a href="#" OnFocus="link('_member','READREG0',this)">READREG</a> = 0xAAAAAAAA;
+const unsigned int <a href="#" OnFocus="link('_member','WRITESECTOR0',this)">WRITESECTOR</a> = 0x11111111;
+const unsigned int <a href="#" OnFocus="link('_member','READSECTOR0',this)">READSECTOR</a> = 0xEEEEEEEE;
+const unsigned int <a href="#" OnFocus="link('_member','TEST0',this)">TEST</a>     = 0x44444444;
+
+
+
+// begin methods and functions
+
+// print a string that shows the options and how to use this program.
+void <a href="#" OnFocus="link('_member','Usage86416935',this)">Usage</a>(string progName)
+{
+    cerr &lt;&lt; progName.c_str() 
+        &lt;&lt; "\n\t[-[h|help]]: get help"
+        &lt;&lt; "\n\t[-[p|port] [1|2|3]]: select parallel port"
+        &lt;&lt; "\n\t[-r &lt;reg&gt;]: read data from the register"
+        &lt;&lt; "\n\t[-w &lt;reg&gt; &lt;data&gt;]: write data to the register"
+        &lt;&lt; "\n";
+    cerr &lt;&lt; "Version " &lt;&lt; <a href="#" OnFocus="link('_member','version0',this)">version</a> &lt;&lt; endl;
+}
+
+
+// process the command line options and set the appropriate flags.
+bool <a href="#" OnFocus="link('_member','ProcessOpts2719128541',this)">ProcessOpts</a>(int* argc, char** argv)
+{
+    int *numFiles = NULL;   // pointer to number of FPGA/RAM/Flash files
+    int *posFiles = NULL;   // pointer to position of FPGA/RAM/Flash files
+
+    bool ok = true; // no errors yet
+
+    for(int i=1; i&lt; *argc; i++)
+    {
+        int cnt, j;
+        string arg = argv[i];
+        
+        if(arg[0] == '-')  // found an option
+        {
+            <a href="#" OnFocus="link('_member','../xstoolslib/ConvertToUpperCase67554305',this)">ConvertToUpperCase</a>(arg);  // convert option to upper case
+            
+            // ask for help but we don't give much
+            if(arg=="-H" || arg=="-HELP")
+            {
+                <a href="#" OnFocus="link('_member','Usage86416935',this)">Usage</a>(arg);
+                cnt = 1;
+            }
+            
+            // specify the printer port being used
+            else if(arg=="-PORT" || arg=="-P")
+            {
+                sscanf(argv[i+1],"%d",&amp;portNum);
+                if(<a href="#" OnFocus="link('_member','portNum0',this)">portNum</a>&lt;4)
+                    <a href="#" OnFocus="link('_member','lpt0',this)">lpt</a> = (string)"LPT" + (string)(argv[i+1]);
+                else
+                    <a href="#" OnFocus="link('_member','lpt0',this)">lpt</a> = "LPT1";
+                cnt = 2;
+            }
+            
+            // specify the board model number
+            else if(arg=="-BOARD" || arg=="-B")
+            {
+                <a href="#" OnFocus="link('_member','brdModel0',this)">brdModel</a> = argv[i+1];
+                <a href="#" OnFocus="link('_member','../xstoolslib/ConvertToUpperCase67554305',this)">ConvertToUpperCase</a>(brdModel);
+                cnt = 2;
+            }
+            
+            // enable batch operation
+            else if(arg=="-BATCH")
+            {
+                <a href="#" OnFocus="link('_member','doBatch0',this)">doBatch</a> = true;
+                cnt = 1;
+            }
+
+            else if(arg=="-R")
+            {
+                <a href="#" OnFocus="link('_member','operation0',this)">operation</a> = <a href="#" OnFocus="link('_member','READREG0',this)">READREG</a>;
+                sscanf(argv[i+1],"%x",&amp;regaddr);
+                cnt = 2;
+            }
+
+            else if(arg=="-W")
+            {
+                <a href="#" OnFocus="link('_member','operation0',this)">operation</a> = <a href="#" OnFocus="link('_member','WRITEREG0',this)">WRITEREG</a>;
+                sscanf(argv[i+1],"%x",&amp;regaddr);
+                sscanf(argv[i+2],"%x",&amp;data);
+                cnt = 3;
+            }
+
+            else if(arg=="-RS")
+            {
+                <a href="#" OnFocus="link('_member','operation0',this)">operation</a> = <a href="#" OnFocus="link('_member','READSECTOR0',this)">READSECTOR</a>;
+                sscanf(argv[i+1],"%x",&amp;head);
+                sscanf(argv[i+2],"%x",&amp;cyl);
+                sscanf(argv[i+3],"%x",&amp;sect);
+                cnt = 4;
+            }
+
+            else if(arg=="-WS")
+            {
+                <a href="#" OnFocus="link('_member','operation0',this)">operation</a> = <a href="#" OnFocus="link('_member','WRITESECTOR0',this)">WRITESECTOR</a>;
+                sscanf(argv[i+1],"%x",&amp;head);
+                sscanf(argv[i+2],"%x",&amp;cyl);
+                sscanf(argv[i+3],"%x",&amp;sect);
+                sscanf(argv[i+4],"%x",&amp;wrData);
+                cnt = 5;
+            }
+
+            else if(arg=="-T")
+            {
+                <a href="#" OnFocus="link('_member','operation0',this)">operation</a> = <a href="#" OnFocus="link('_member','TEST0',this)">TEST</a>;
+                cnt = 1;
+            }
+
+            // can't figure out what the user wants
+            else
+            {
+                ok = false;
+                <a href="#" OnFocus="link('_member','errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','../xstoolslib/SetSeverity3409672334',this)">SetSeverity</a>(XSErrorMinor);
+                <a href="#" OnFocus="link('_member','errMsg0',this)">errMsg</a> &lt;&lt; "unknown option: " &lt;&lt; arg.c_str() &lt;&lt; "\n";
+                <a href="#" OnFocus="link('_member','errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','../xstoolslib/EndMsg60232619',this)">EndMsg</a>();
+                cnt = 1;
+            }
+        }
+        else    // found something which is not an option, so it is must be a file name
+        {
+            ok = false;
+            <a href="#" OnFocus="link('_member','errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','../xstoolslib/SetSeverity3409672334',this)">SetSeverity</a>(XSErrorMinor);
+            <a href="#" OnFocus="link('_member','errMsg0',this)">errMsg</a> &lt;&lt; "unknown option: " &lt;&lt; arg.c_str() &lt;&lt; "\n";
+            <a href="#" OnFocus="link('_member','errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','../xstoolslib/EndMsg60232619',this)">EndMsg</a>();
+            cnt = 1;
+        }
+            
+        // remove the processed options from the argument list
+        for(j=i+cnt; j&lt; *argc; j++)
+            argv[j-cnt] = argv[j];
+        *argc -= cnt;
+        i--;
+    }
+
+    return ok;
+}
+
+
+// bit order for commands:
+// CS1# CS0# X X X A2 A1 A0
+const unsigned int <a href="#" OnFocus="link('_member','DEVICE_CONTROL_REG0',this)">DEVICE_CONTROL_REG</a> = 0x46;
+const unsigned int <a href="#" OnFocus="link('_member','SECTOR_COUNT_REG0',this)">SECTOR_COUNT_REG</a> = 0x82;
+const unsigned int <a href="#" OnFocus="link('_member','SECTOR_REG0',this)">SECTOR_REG</a> = 0x83;
+const unsigned int <a href="#" OnFocus="link('_member','CYLINDER_LOW_REG0',this)">CYLINDER_LOW_REG</a> = 0x84;
+const unsigned int <a href="#" OnFocus="link('_member','CYLINDER_HIGH_REG0',this)">CYLINDER_HIGH_REG</a> = 0x85;
+const unsigned int <a href="#" OnFocus="link('_member','DRIVE_HEAD_REG0',this)">DRIVE_HEAD_REG</a> = 0x86;
+const unsigned int <a href="#" OnFocus="link('_member','COMMAND_REG0',this)">COMMAND_REG</a> = 0x87;
+const unsigned int <a href="#" OnFocus="link('_member','STATUS_REG0',this)">STATUS_REG</a> = 0x87;
+const unsigned int <a href="#" OnFocus="link('_member','DATA_REG0',this)">DATA_REG</a> = 0x80;
+const unsigned int <a href="#" OnFocus="link('_member','INTRQ_REG0',this)">INTRQ_REG</a> = 0xC0;
+        
+
+// get INTRQ
+bool <a href="#" OnFocus="link('_member','isINTRQ53616',this)">isINTRQ</a>(void)
+{
+    unsigned int intrq;
+    <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/ReadRAM3707204181',this)">ReadRAM</a>(INTRQ_REG,&amp;intrq,BIG_ENDIAN_BYTES,LITTLE_ENDIAN_BITS);
+    return intrq != 0;
+}
+
+#if 0
+// write contents to disk register */
+bool WriteDiskReg(
+        unsigned int addr,  // address of disk register
+        unsigned int data   // data to be written into disk register
+        )       
+{
+    lptPort-&gt;Out(1,posRESET,posRESET);  // reset the downloading state machine
+    lptPort-&gt;Out(0,posCLK,posCLK);      // force clock low
+    lptPort-&gt;Out(0,posRESET,posRESET);  // release the reset
+    unsigned int statusChk = 0; // set status check to reset state id
+    unsigned int status = lptPort-&gt;In(posSTLSB,posSTMSB) &amp; 0x07;
+    assert(status==statusChk);  // make sure we are in reset state
+    if(status != statusChk)
+        return false;   // error - couldn't reset RAM interface state machine
+
+    int addrWidth = 8;
+    addr |= 0x80;   // write operation has MSB of address set to 1
+    for(int j=addrWidth-4; j&gt;=0; j-=4)
+    {
+        lptPort-&gt;Out((addr&gt;&gt;j)&amp;0xf,posDOLSB,posDOMSB);
+        lptPort-&gt;Out(1,posCLK,posCLK);  // latch 4 address bits into downloading circuit
+        statusChk++;            // increment status check
+        status = lptPort-&gt;In(posSTLSB,posSTMSB) &amp; 0x07;
+        assert(status==statusChk);  // make sure we are in the right state
+        lptPort-&gt;Out(0,posCLK,posCLK);
+    }
+
+    lptPort-&gt;Out(1,posCLK,posCLK);
+    lptPort-&gt;Out(0,posCLK,posCLK);
+    statusChk++;
+    
+    // output the data
+    int dataWidth = 16;
+    for(j=dataWidth-4; j&gt;0; j-=4)
+    {
+        lptPort-&gt;Out((data&gt;&gt;j)&amp;0xf,posDOLSB,posDOMSB);
+        lptPort-&gt;Out(1,posCLK,posCLK);  // latch 4 data bits into downloading circuit
+        statusChk++;            // increment status check
+        status = lptPort-&gt;In(posSTLSB,posSTMSB) &amp; 0x07;
+        assert(status==statusChk);  // make sure we are in the right state
+        // get the last 4 bits out while the clock is high because the
+        // write to RAM will occur when the clock goes low in a few statements 
+        if(j==4)
+            lptPort-&gt;Out(data&amp;0xf,posDOLSB,posDOMSB);
+        lptPort-&gt;Out(0,posCLK,posCLK);
+    }
+    lptPort-&gt;Out(1,posCLK,posCLK);      // terminate RAM write pulse
+    lptPort-&gt;Out(0,posCLK,posCLK);
+    
+    lptPort-&gt;Out(1,posRESET,posRESET);  // reset the downloading state machine
+    lptPort-&gt;Out(0,posRESET,posRESET);  // release the reset
+    statusChk = 0;              // set status check to reset state id
+    status = lptPort-&gt;In(posSTLSB,posSTMSB) &amp; 0x07;
+    assert(status==statusChk);  // make sure we are in reset state
+    if(status != statusChk)
+        return false;   // error - RAM interface state machine not in the right state
+    else
+        return true;
+}
+
+// read contents of a disk register */
+bool ReadDiskReg(
+        unsigned int addr,  // address of disk register
+        unsigned int *data  // data read from disk register
+        )       
+{
+    lptPort-&gt;Out(1,posRESET,posRESET);  // reset the downloading state machine
+    lptPort-&gt;Out(0,posCLK,posCLK);      // force clock low
+    lptPort-&gt;Out(0,posRESET,posRESET);  // release the reset
+    unsigned int statusChk = 0; // set status check to reset state id
+    unsigned int status = lptPort-&gt;In(posSTLSB,posSTMSB) &amp; 0x07;
+    assert(status==statusChk);  // make sure we are in reset state
+    if(status != statusChk)
+        return false;   // error - couldn't reset RAM interface state machine
+
+    int addrWidth = 8;
+    addr &amp;= 0x7F;   // read operation has MSB of address set to 0
+    for(int j=addrWidth-4; j&gt;=0; j-=4)
+    {
+        lptPort-&gt;Out((addr&gt;&gt;j)&amp;0xf,posDOLSB,posDOMSB);
+        lptPort-&gt;Out(1,posCLK,posCLK);  // latch 4 address bits into downloading circuit
+        statusChk++;            // increment status check
+        status = lptPort-&gt;In(posSTLSB,posSTMSB) &amp; 0x07;
+        assert(status==statusChk);  // make sure we are in the right state
+        lptPort-&gt;Out(0,posCLK,posCLK);
+    }
+    
+    // read a 16-bit word
+    int dataWidth = 16;
+    *<a href="#" OnFocus="link('_member','data0',this)">data</a> = 0;
+    for(j=dataWidth-4; j&gt;=0; j-=4)
+    {
+        lptPort-&gt;Out(1,posCLK,posCLK);
+        lptPort-&gt;Out(0,posCLK,posCLK);
+        unsigned nybble = lptPort-&gt;In(posSTLSB,posSTMSB) &amp; 0x0F;
+        *<a href="#" OnFocus="link('_member','data0',this)">data</a> = (*<a href="#" OnFocus="link('_member','data0',this)">data</a>&lt;&lt;4) | nybble;
+    }
+    
+    lptPort-&gt;Out(1,posRESET,posRESET);  // reset the downloading state machine
+    lptPort-&gt;Out(0,posRESET,posRESET);  // release the reset
+    statusChk = 0;              // set status check to reset state id
+    status = lptPort-&gt;In(posSTLSB,posSTMSB) &amp; 0x07;
+    assert(status==statusChk);  // make sure we are in reset state
+    if(status != statusChk)
+        return false;   // error - RAM interface state machine not in the right state
+    else
+        return true;
+}
+#endif
+
+
+int <a href="#" OnFocus="link('_member','main251862569',this)">main</a>( int argc, char **argv )
+{
+    // get the board type used in the most recent invocation of an XSTOOLS utility
+    <a href="#" OnFocus="link('_member','brdModel0',this)">brdModel</a> = <a href="#" OnFocus="link('_member','../xstoolslib/GetXSTOOLSParameter86138908',this)">GetXSTOOLSParameter</a>("BoardType");
+
+    // get the parallel port used in the most recent invocation of an XSTOOLS utility
+    <a href="#" OnFocus="link('_member','lpt0',this)">lpt</a> = <a href="#" OnFocus="link('_member','../xstoolslib/GetXSTOOLSParameter86138908',this)">GetXSTOOLSParameter</a>("LPT");
+    if(<a href="#" OnFocus="link('_member','lpt0',this)">lpt</a> != "")
+    {
+        int n = sscanf(<a href="#" OnFocus="link('_member','lpt0',this)">lpt</a>.c_str()+3,"%d",&amp;<a href="#" OnFocus="link('_member','portNum0',this)">portNum</a>);
+        assert(n != 0);
+    }
+
+    // process command-line options
+    if(<a href="#" OnFocus="link('_member','ProcessOpts2719128541',this)">ProcessOpts</a>(&amp;argc,argv) == false)
+    {
+        <a href="#" OnFocus="link('_member','Usage86416935',this)">Usage</a>(string(argv[0]));
+        return 1;   // exit if error in program options
+    }
+
+    if(<a href="#" OnFocus="link('_member','doBatch0',this)">doBatch</a>)
+    {
+        <a href="#" OnFocus="link('_member','errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','../xstoolslib/EnableBatch66524079',this)">EnableBatch</a>(true);    // turn off error messages
+        <a href="#" OnFocus="link('_member','../xstoolslib/EnableBatch56656',this)">EnableBatch</a>(true);     // turn off user prompts
+    }
+
+    // it's an error if the board model being tested is not specified
+    if(<a href="#" OnFocus="link('_member','brdModel0',this)">brdModel</a> == "")
+    {
+        <a href="#" OnFocus="link('_member','errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','../xstoolslib/SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,"No XS Board model was specified!\n");
+        <a href="#" OnFocus="link('_member','Usage86416935',this)">Usage</a>(string(argv[0]));
+        return 1;
+    }
+
+    // store the model type of the board that was specified
+    <a href="#" OnFocus="link('_member','../xstoolslib/SetXSTOOLSParameter1183990257',this)">SetXSTOOLSParameter</a>("BoardType",<a href="#" OnFocus="link('_member','brdModel0',this)">brdModel</a>.c_str());
+
+    // use LPT1 if no other parallel port was specified
+    if(<a href="#" OnFocus="link('_member','portNum0',this)">portNum</a> == -1)
+    {
+        <a href="#" OnFocus="link('_member','portNum0',this)">portNum</a> = 1;
+        <a href="#" OnFocus="link('_member','lpt0',this)">lpt</a> = "LPT1";
+    }
+
+    // store the parallel port that was specified
+    <a href="#" OnFocus="link('_member','../xstoolslib/SetXSTOOLSParameter1183990257',this)">SetXSTOOLSParameter</a>("LPT",<a href="#" OnFocus="link('_member','lpt0',this)">lpt</a>.c_str());
+
+    // determine the type of XS Board and set the pointer to the board object
+    <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a> = <a href="#" OnFocus="link('_member','../xstoolslib/NewXSBoard189216495',this)">NewXSBoard</a>(<a href="#" OnFocus="link('_member','brdModel0',this)">brdModel</a>.c_str());
+    if(<a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>==NULL)
+    {
+        <a href="#" OnFocus="link('_member','errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','../xstoolslib/SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,"Unknown type of XS Board was specified!\n");
+        return 1;
+    }
+
+    // initialize the board object
+    if(<a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/Setup3588776655',this)">Setup</a>(&amp;errMsg,<a href="#" OnFocus="link('_member','brdModel0',this)">brdModel</a>.c_str(),<a href="#" OnFocus="link('_member','portNum0',this)">portNum</a>) == false)
+    {
+        <a href="#" OnFocus="link('_member','errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','../xstoolslib/SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,"Invalid parallel port was selected!\n");
+        delete <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>;
+        return 1;
+    }
+
+    unsigned int status;
+
+    if(<a href="#" OnFocus="link('_member','operation0',this)">operation</a> == <a href="#" OnFocus="link('_member','WRITEREG0',this)">WRITEREG</a>)
+    {
+        bool opStatus = <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/WriteRAM3747285768',this)">WriteRAM</a>(regaddr,data,BIG_ENDIAN_BYTES,LITTLE_ENDIAN_BITS);
+        if(opStatus == true)
+            cout &lt;&lt; "WRITE: (" &lt;&lt; hex &lt;&lt; <a href="#" OnFocus="link('_member','regaddr0',this)">regaddr</a> &lt;&lt; ") &lt;= " &lt;&lt; hex &lt;&lt; <a href="#" OnFocus="link('_member','data0',this)">data</a> &lt;&lt; "\n";
+        else
+            cout &lt;&lt; "ERROR: write operation failed!!\n";
+    }
+    else if(<a href="#" OnFocus="link('_member','operation0',this)">operation</a> == <a href="#" OnFocus="link('_member','READREG0',this)">READREG</a>)
+    {
+        bool opStatus = <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/ReadRAM3707204181',this)">ReadRAM</a>(regaddr,&amp;data,BIG_ENDIAN_BYTES,LITTLE_ENDIAN_BITS);
+        if(opStatus == true)
+            cout &lt;&lt; "READ: (" &lt;&lt; hex &lt;&lt; <a href="#" OnFocus="link('_member','regaddr0',this)">regaddr</a> &lt;&lt; ") =&gt; " &lt;&lt; hex &lt;&lt; <a href="#" OnFocus="link('_member','data0',this)">data</a> &lt;&lt; "\n";
+        else
+            cout &lt;&lt; "ERROR: read operation failed!!\n";
+    }
+    else if(<a href="#" OnFocus="link('_member','operation0',this)">operation</a> == <a href="#" OnFocus="link('_member','WRITESECTOR0',this)">WRITESECTOR</a>)
+    {
+        /* write sector with data */
+        fprintf(stderr,"Writing (h=%02x, c=%02x, s=%02x) with %04x...\n",head,cyl,sect,wrData);
+        cerr &lt;&lt; "Waiting for drive to go non-busy...\n";
+        for(<a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/ReadRAM3707204181',this)">ReadRAM</a>(STATUS_REG,&amp;status,BIG_ENDIAN_BYTES,LITTLE_ENDIAN_BITS); (status &amp; 0x80); )
+        {
+            //          fprintf(stderr,"Status = %02x\n",status);
+            <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/ReadRAM3707204181',this)">ReadRAM</a>(STATUS_REG,&amp;status,BIG_ENDIAN_BYTES,LITTLE_ENDIAN_BITS);
+        }
+        <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/WriteRAM3747285768',this)">WriteRAM</a>(DEVICE_CONTROL_REG, 0x08,BIG_ENDIAN_BYTES,LITTLE_ENDIAN_BITS);
+        <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/WriteRAM3747285768',this)">WriteRAM</a>(SECTOR_REG, sect,BIG_ENDIAN_BYTES,LITTLE_ENDIAN_BITS);
+        <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/WriteRAM3747285768',this)">WriteRAM</a>(SECTOR_COUNT_REG, 0x01,BIG_ENDIAN_BYTES,LITTLE_ENDIAN_BITS);
+        <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/WriteRAM3747285768',this)">WriteRAM</a>(CYLINDER_LOW_REG, cyl&amp;0xFF,BIG_ENDIAN_BYTES,LITTLE_ENDIAN_BITS);
+        <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/WriteRAM3747285768',this)">WriteRAM</a>(CYLINDER_HIGH_REG, (cyl&gt;&gt;8)&amp;0xFF,BIG_ENDIAN_BYTES,LITTLE_ENDIAN_BITS);
+        <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/WriteRAM3747285768',this)">WriteRAM</a>(DRIVE_HEAD_REG, head,BIG_ENDIAN_BYTES,LITTLE_ENDIAN_BITS);
+        <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/WriteRAM3747285768',this)">WriteRAM</a>(COMMAND_REG, 0x30,BIG_ENDIAN_BYTES,LITTLE_ENDIAN_BITS);
+        cout &lt;&lt; "Reading DRQ...\n";
+        for(<a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/ReadRAM3707204181',this)">ReadRAM</a>(STATUS_REG,&amp;status,BIG_ENDIAN_BYTES,LITTLE_ENDIAN_BITS); !(status &amp; 0x08); )
+        {
+            <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/ReadRAM3707204181',this)">ReadRAM</a>(STATUS_REG,&amp;status,BIG_ENDIAN_BYTES,LITTLE_ENDIAN_BITS);
+            //          cout &lt;&lt; "status = " &lt;&lt; hex &lt;&lt; status &lt;&lt; "\n";
+        }
+        cout &lt;&lt; "Writing data...\n";
+        for(int i=0; i&lt;256; i++)
+            <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/WriteRAM3747285768',this)">WriteRAM</a>(DATA_REG,wrData,BIG_ENDIAN_BYTES,LITTLE_ENDIAN_BITS);
+        cout &lt;&lt; "Waiting for interrupt...\n";
+        while(!<a href="#" OnFocus="link('_member','isINTRQ53616',this)">isINTRQ</a>())
+            ;
+        <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/ReadRAM3707204181',this)">ReadRAM</a>(STATUS_REG,&amp;status,BIG_ENDIAN_BYTES,LITTLE_ENDIAN_BITS);
+        cout &lt;&lt; "Sector write complete\n";
+    }
+    else if(<a href="#" OnFocus="link('_member','operation0',this)">operation</a> ==<a href="#" OnFocus="link('_member','READSECTOR0',this)">READSECTOR</a>)
+    {
+        /* read sector with data */
+        fprintf(stderr,"Reading (h=%02x, c=%02x, s=%02x)...\n",head,cyl,sect);
+        <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/WriteRAM3747285768',this)">WriteRAM</a>(DEVICE_CONTROL_REG, 0x08,BIG_ENDIAN_BYTES,LITTLE_ENDIAN_BITS);
+        <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/WriteRAM3747285768',this)">WriteRAM</a>(SECTOR_REG, sect,BIG_ENDIAN_BYTES,LITTLE_ENDIAN_BITS);
+        <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/WriteRAM3747285768',this)">WriteRAM</a>(SECTOR_COUNT_REG, 0x01,BIG_ENDIAN_BYTES,LITTLE_ENDIAN_BITS);
+        <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/WriteRAM3747285768',this)">WriteRAM</a>(CYLINDER_LOW_REG, cyl&amp;0xFF,BIG_ENDIAN_BYTES,LITTLE_ENDIAN_BITS);
+        <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/WriteRAM3747285768',this)">WriteRAM</a>(CYLINDER_HIGH_REG, (cyl&gt;&gt;8)&amp;0xFF,BIG_ENDIAN_BYTES,LITTLE_ENDIAN_BITS);
+        <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/WriteRAM3747285768',this)">WriteRAM</a>(DRIVE_HEAD_REG, head,BIG_ENDIAN_BYTES,LITTLE_ENDIAN_BITS);
+        <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/WriteRAM3747285768',this)">WriteRAM</a>(COMMAND_REG, 0x20,BIG_ENDIAN_BYTES,LITTLE_ENDIAN_BITS);
+        cout &lt;&lt; "Waiting for interrupt...\n";
+        while(!<a href="#" OnFocus="link('_member','isINTRQ53616',this)">isINTRQ</a>())
+            ;
+        unsigned int d;
+        cout &lt;&lt; "Reading data...\n";
+        for(int i=0; i&lt;256; i++)
+        {
+            <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/ReadRAM3707204181',this)">ReadRAM</a>(DATA_REG,&amp;d,BIG_ENDIAN_BYTES,LITTLE_ENDIAN_BITS);
+            fprintf(stderr,"%04x%c",d,(i+1)%8==0 ? '\n':' ');
+        }
+        <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/ReadRAM3707204181',this)">ReadRAM</a>(STATUS_REG,&amp;status,BIG_ENDIAN_BYTES,LITTLE_ENDIAN_BITS);
+        cout &lt;&lt; "Sector read complete\n";
+    }
+    else if(<a href="#" OnFocus="link('_member','operation0',this)">operation</a> == <a href="#" OnFocus="link('_member','TEST0',this)">TEST</a>)
+    {
+        const unsigned int numSect=7;
+        unsigned int wi;
+        for(wi=1; wi&lt;=numSect; wi++)
+        {
+            /* write sector with data */
+            cerr &lt;&lt; "Writing " &lt;&lt; wi &lt;&lt; " sector...\n";
+            cerr &lt;&lt; "Waiting for drive to go non-busy...\n";
+            for(<a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/ReadRAM3707204181',this)">ReadRAM</a>(STATUS_REG,&amp;status,BIG_ENDIAN_BYTES,LITTLE_ENDIAN_BITS); (status &amp; 0x80); )
+            {
+                //          fprintf(stderr,"Status = %02x\n",status);
+                <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/ReadRAM3707204181',this)">ReadRAM</a>(STATUS_REG,&amp;status,BIG_ENDIAN_BYTES,LITTLE_ENDIAN_BITS);
+            }
+            <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/WriteRAM3747285768',this)">WriteRAM</a>(DEVICE_CONTROL_REG, 0x08,BIG_ENDIAN_BYTES,LITTLE_ENDIAN_BITS);
+            <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/WriteRAM3747285768',this)">WriteRAM</a>(SECTOR_REG, wi,BIG_ENDIAN_BYTES,LITTLE_ENDIAN_BITS);
+            <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/WriteRAM3747285768',this)">WriteRAM</a>(SECTOR_COUNT_REG, 0x01,BIG_ENDIAN_BYTES,LITTLE_ENDIAN_BITS);
+            <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/WriteRAM3747285768',this)">WriteRAM</a>(CYLINDER_LOW_REG, wi,BIG_ENDIAN_BYTES,LITTLE_ENDIAN_BITS);
+            <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/WriteRAM3747285768',this)">WriteRAM</a>(CYLINDER_HIGH_REG, 0x00,BIG_ENDIAN_BYTES,LITTLE_ENDIAN_BITS);
+            <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/WriteRAM3747285768',this)">WriteRAM</a>(DRIVE_HEAD_REG, 0x00,BIG_ENDIAN_BYTES,LITTLE_ENDIAN_BITS);
+            <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/WriteRAM3747285768',this)">WriteRAM</a>(COMMAND_REG, 0x30,BIG_ENDIAN_BYTES,LITTLE_ENDIAN_BITS);
+            cout &lt;&lt; "Reading DRQ...\n";
+            for(<a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/ReadRAM3707204181',this)">ReadRAM</a>(STATUS_REG,&amp;status,BIG_ENDIAN_BYTES,LITTLE_ENDIAN_BITS); !(status &amp; 0x08); )
+            {
+                <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/ReadRAM3707204181',this)">ReadRAM</a>(STATUS_REG,&amp;status,BIG_ENDIAN_BYTES,LITTLE_ENDIAN_BITS);
+                //          cout &lt;&lt; "status = " &lt;&lt; hex &lt;&lt; status &lt;&lt; "\n";
+            }
+            cout &lt;&lt; "Writing data...\n";
+            for(int i=0; i&lt;256; i++)
+                <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/WriteRAM3747285768',this)">WriteRAM</a>(DATA_REG,i*wi,BIG_ENDIAN_BYTES,LITTLE_ENDIAN_BITS);
+            cout &lt;&lt; "Waiting for interrupt...\n";
+            while(!<a href="#" OnFocus="link('_member','isINTRQ53616',this)">isINTRQ</a>())
+                ;
+            <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/ReadRAM3707204181',this)">ReadRAM</a>(STATUS_REG,&amp;status,BIG_ENDIAN_BYTES,LITTLE_ENDIAN_BITS);
+            cout &lt;&lt; "Sector write complete\n";
+        }
+        
+        for(wi=1; wi&lt;=numSect; wi++)
+        {
+            /* read sector with data */
+            cout &lt;&lt; "Reading " &lt;&lt; wi &lt;&lt; " sector...\n";
+            <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/WriteRAM3747285768',this)">WriteRAM</a>(SECTOR_REG, wi,BIG_ENDIAN_BYTES,LITTLE_ENDIAN_BITS);
+            <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/WriteRAM3747285768',this)">WriteRAM</a>(SECTOR_COUNT_REG, 0x01,BIG_ENDIAN_BYTES,LITTLE_ENDIAN_BITS);
+            <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/WriteRAM3747285768',this)">WriteRAM</a>(CYLINDER_LOW_REG, wi,BIG_ENDIAN_BYTES,LITTLE_ENDIAN_BITS);
+            <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/WriteRAM3747285768',this)">WriteRAM</a>(CYLINDER_HIGH_REG, 0x00,BIG_ENDIAN_BYTES,LITTLE_ENDIAN_BITS);
+            <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/WriteRAM3747285768',this)">WriteRAM</a>(DRIVE_HEAD_REG, 0x00,BIG_ENDIAN_BYTES,LITTLE_ENDIAN_BITS);
+            <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/WriteRAM3747285768',this)">WriteRAM</a>(COMMAND_REG, 0x20,BIG_ENDIAN_BYTES,LITTLE_ENDIAN_BITS);
+            cout &lt;&lt; "Waiting for interrupt...\n";
+            while(!<a href="#" OnFocus="link('_member','isINTRQ53616',this)">isINTRQ</a>())
+                ;
+            unsigned int d;
+            cout &lt;&lt; "Reading and checking data...\n";
+            for(int i=0; i&lt;256; i++)
+            {
+                <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/ReadRAM3707204181',this)">ReadRAM</a>(DATA_REG,&amp;d,BIG_ENDIAN_BYTES,LITTLE_ENDIAN_BITS);
+                if(d != i*wi)
+                    fprintf(stderr,"Error: (%02x,%02x) = %04x != %04x\n",wi,i,d,(wi*i)&amp;0xFFFF);
+            }
+            <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/ReadRAM3707204181',this)">ReadRAM</a>(STATUS_REG,&amp;status,BIG_ENDIAN_BYTES,LITTLE_ENDIAN_BITS);
+            cout &lt;&lt; "Sector read complete\n";
+        }
+    }
+    else
+        cout &lt;&lt; "ERROR: no operation performed!!\n";
+
+    return 0;   // 0 indicates a successful download/upload
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_file','_source');
+</script>

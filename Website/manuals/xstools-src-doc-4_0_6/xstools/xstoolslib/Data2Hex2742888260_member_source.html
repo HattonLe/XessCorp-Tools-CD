@@ -1,0 +1,54 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - Data2Hex</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">Data2Hex</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">Data2Hex</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','Data2Hex2742888260','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_member','Data2Hex2742888260','_source',this)" class="tabLinkActive">Source</a></span>
+<span class="tabInActiveGrayout"><span class="tabLinkGrayout">Call Graph</span></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<div class="paragraph2NoTopPadding">Start Line: 790</div>
+<pre class="codeExamples">
+void <a href="#" OnFocus="link('_member','Data2Hex2742888260',this)">Data2Hex</a>(unsigned int data, <a href="#" OnFocus="link('_class','HexRecord0',this)">HexRecord</a> &amp;hx, int start, int numBytes, bool bigEndianBytes, bool bigEndianBits)
+{
+    // If translating data into hex with big-endian byte order, start at higher address and work toward lower address.
+    // Do the opposite if hex is stored in little-endian byte order.
+    int j     = bigEndianBytes ? numBytes-1 : 0; // starting byte position within hex record
+    int j_end = bigEndianBytes ? -1         : numBytes; // ending position within hex record
+    int j_inc = bigEndianBytes ? -1         : 1; // direction from start to end
+    for( ; j!=j_end; j+=j_inc)
+    {
+        // process data from least-significant byte to most-significant byte and store into hex record
+        unsigned int hx_data = <a href="#" OnFocus="link('_member','../xsatapi/data0',this)">data</a> &amp; 0xFF;
+        <a href="#" OnFocus="link('_member','../xsatapi/data0',this)">data</a> &gt;&gt;= 8;
+        // reverse the bits within each byte if the data is to be stored in big-endian bit order
+        if(bigEndianBits)
+            hx_data = <a href="#" OnFocus="link('_member','reverseByteBits0',this)">reverseByteBits</a>[hx_data];
+        hx[start+j] = hx_data;
+    }
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_member','_source');
+</script>

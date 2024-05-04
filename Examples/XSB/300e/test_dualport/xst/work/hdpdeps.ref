@@ -1,0 +1,67 @@
+V1 29
+FL C:/temp/BITSTREAMS/XSB/300e/test_dualport/../../../XS_LIB/memtest.vhd 2005/06/07.19:05:08
+PH work/MEM \
+      FL C:/temp/BITSTREAMS/XSB/300e/test_dualport/../../../XS_LIB/memtest.vhd \
+      PB ieee/STD_LOGIC_1164
+EN work/MEMTEST \
+      FL C:/temp/BITSTREAMS/XSB/300e/test_dualport/../../../XS_LIB/memtest.vhd \
+      PB ieee/STD_LOGIC_1164 PB ieee/STD_LOGIC_UNSIGNED PH ieee/NUMERIC_STD \
+      PB work/COMMON    PH work/RAND
+AR work/MEMTEST/ARCH \
+      FL C:/temp/BITSTREAMS/XSB/300e/test_dualport/../../../XS_LIB/memtest.vhd \
+      EN work/MEMTEST   CP RANDGEN
+FL C:/temp/BITSTREAMS/XSB/300e/test_dualport/../../../XS_LIB/common.vhd 2005/05/17.13:29:40
+PH work/COMMON \
+      FL C:/temp/BITSTREAMS/XSB/300e/test_dualport/../../../XS_LIB/common.vhd \
+      PB ieee/STD_LOGIC_1164 PH ieee/NUMERIC_STD
+PB work/COMMON \
+      FL C:/temp/BITSTREAMS/XSB/300e/test_dualport/../../../XS_LIB/common.vhd \
+      PH work/COMMON    PB ieee/STD_LOGIC_1164 PH ieee/NUMERIC_STD
+FL C:/temp/BITSTREAMS/XSB/300e/test_dualport/test_dualport.vhd 2005/06/17.15:45:11
+EN work/TEST_DUALPORT \
+      FL C:/temp/BITSTREAMS/XSB/300e/test_dualport/test_dualport.vhd \
+      PB ieee/STD_LOGIC_1164 PH work/TEST_DUALPORT_CORE_PCKG PB work/COMMON
+AR work/TEST_DUALPORT/ARCH \
+      FL C:/temp/BITSTREAMS/XSB/300e/test_dualport/test_dualport.vhd \
+      EN work/TEST_DUALPORT CP TEST_DUALPORT_CORE
+FL C:/temp/BITSTREAMS/XSB/300e/test_dualport/../../../XS_LIB/sdramcntl.vhd 2005/06/08.15:58:32
+PH work/SDRAM \
+      FL C:/temp/BITSTREAMS/XSB/300e/test_dualport/../../../XS_LIB/sdramcntl.vhd \
+      PB ieee/STD_LOGIC_1164
+EN work/SDRAMCNTL \
+      FL C:/temp/BITSTREAMS/XSB/300e/test_dualport/../../../XS_LIB/sdramcntl.vhd \
+      PB ieee/STD_LOGIC_1164 PB ieee/STD_LOGIC_UNSIGNED PH ieee/NUMERIC_STD \
+      PB work/COMMON
+AR work/SDRAMCNTL/ARCH \
+      FL C:/temp/BITSTREAMS/XSB/300e/test_dualport/../../../XS_LIB/sdramcntl.vhd \
+      EN work/SDRAMCNTL
+EN work/DUALPORT \
+      FL C:/temp/BITSTREAMS/XSB/300e/test_dualport/../../../XS_LIB/sdramcntl.vhd \
+      PB ieee/STD_LOGIC_1164 PB ieee/STD_LOGIC_UNSIGNED PH ieee/NUMERIC_STD \
+      PB work/COMMON
+AR work/DUALPORT/ARCH \
+      FL C:/temp/BITSTREAMS/XSB/300e/test_dualport/../../../XS_LIB/sdramcntl.vhd \
+      EN work/DUALPORT
+FL C:/temp/BITSTREAMS/XSB/300e/test_dualport/../../XSB_LIB/test_dualport_core.vhd 2005/06/17.15:41:04
+PH work/TEST_DUALPORT_CORE_PCKG \
+      FL C:/temp/BITSTREAMS/XSB/300e/test_dualport/../../XSB_LIB/test_dualport_core.vhd \
+      PB ieee/STD_LOGIC_1164
+EN work/TEST_DUALPORT_CORE \
+      FL C:/temp/BITSTREAMS/XSB/300e/test_dualport/../../XSB_LIB/test_dualport_core.vhd \
+      PB ieee/STD_LOGIC_1164 PB ieee/STD_LOGIC_UNSIGNED PH ieee/NUMERIC_STD \
+      PB work/COMMON    PH work/MEM       PH work/SDRAM
+AR work/TEST_DUALPORT_CORE/ARCH \
+      FL C:/temp/BITSTREAMS/XSB/300e/test_dualport/../../XSB_LIB/test_dualport_core.vhd \
+      EN work/TEST_DUALPORT_CORE CP MEMTEST CP DUALPORT     CP SDRAMCNTL
+FL C:/temp/BITSTREAMS/XSB/300e/test_dualport/../../../XS_LIB/randgen.vhd 2005/05/17.13:29:44
+PH work/RAND \
+      FL C:/temp/BITSTREAMS/XSB/300e/test_dualport/../../../XS_LIB/randgen.vhd \
+      PB ieee/STD_LOGIC_1164 PB ieee/STD_LOGIC_UNSIGNED PH ieee/NUMERIC_STD \
+      PB work/COMMON
+EN work/RANDGEN \
+      FL C:/temp/BITSTREAMS/XSB/300e/test_dualport/../../../XS_LIB/randgen.vhd \
+      PB ieee/STD_LOGIC_1164 PB ieee/STD_LOGIC_UNSIGNED PH ieee/NUMERIC_STD \
+      PB work/COMMON
+AR work/RANDGEN/ARCH \
+      FL C:/temp/BITSTREAMS/XSB/300e/test_dualport/../../../XS_LIB/randgen.vhd \
+      EN work/RANDGEN

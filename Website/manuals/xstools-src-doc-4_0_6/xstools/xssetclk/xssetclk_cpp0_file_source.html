@@ -1,0 +1,276 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - xssetclk.cpp</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">xssetclk.cpp</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xssetclk0',this)" class="pathLink">xssetclk</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">xssetclk.cpp</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','xssetclk_cpp0','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','xssetclk_cpp0','_overview',this)" class="tabLinkInActive">Overview</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','xssetclk_cpp0','_includedfiles',this)" class="tabLinkInActive">Included files</a></span>
+<span class="tabInActiveGrayout"><span class="tabLinkGrayout">Included by</span></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_file','xssetclk_cpp0','_source',this)" class="tabLinkActive">Source</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<pre class="codeExamples">
+/*----------------------------------------------------------------------------------
+  SOFTWARE LICENSE AGREEMENT
+    1.  Permission to use, copy, modify, and distribute this software
+        and its documentation, with or without modification, for any
+        purpose and without fee or royalty is hereby granted, provided
+        that you include the following on ALL copies of the software
+        and documentation or portions thereof, including
+        modifications, that you make:
+
+            a.  The full text of this license in a location viewable to users
+            of the redistributed or derivative work.
+
+            b.  Notice of any changes or modifications to the files,
+            including the date changes were made.
+
+    2.  The name, servicemarks and trademarks of X Engineering
+        Software Systems Corp. may NOT be used in advertising or
+        publicity pertaining to the software without specific, written
+        prior permission.
+
+    3.  Title to copyright in this software and any associated
+        documentation will at all times remain with X Engineering
+        Software Systems Corp.
+
+    4.  THIS SOFTWARE AND DOCUMENTATION IS PROVIDED "AS IS," AND X
+        Engineering Software Systems Corp MAKES NO REPRESENTATIONS OR
+        WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO,
+        WARRANTIES OF MERCHANTABILITY OR FITNESS FOR ANY PARTICULAR
+        PURPOSE OR THAT THE USE OF THE SOFTWARE OR DOCUMENTATION WILL
+        NOT INFRINGE ANY THIRD PARTY PATENTS, COPYRIGHTS, TRADEMARKS
+        OR OTHER RIGHTS.
+
+    5.  X Engineering Software Systems Corp WILL NOT BE LIABLE FOR ANY
+        DAMAGES, INCLUDING BUT NOT LIMITED TO, DIRECT, INDIRECT,
+        SPECIAL OR CONSEQUENTIAL, ARISING OUT OF ANY USE OF THE
+        SOFTWARE OR DOCUMENTATION.
+
+  ©2006 - X Engineering Software Systems Corp.  All rights reserved.
+----------------------------------------------------------------------------------*/
+
+/**
+\unit
+\file
+File containing the main routine and supporting subroutines for the command-line program that sets the board clock frequency of the XESS boards.
+*/
+
+
+#include &lt;ctype.h&gt;
+#include &lt;cassert&gt;
+#include &lt;ctime&gt;
+#include &lt;sstream&gt;
+#include &lt;string&gt;
+using namespace std;
+
+#include "<a href="#" OnFocus="link('_file','../xstoolslib/xserror_h0',this)">xserror.h</a>"
+#include "<a href="#" OnFocus="link('_file','../xstoolslib/xsallbrds_h0',this)">xsallbrds.h</a>"
+#include "<a href="#" OnFocus="link('_file','../xstoolslib/utils_h0',this)">utils.h</a>"
+char* <a href="#" OnFocus="link('_member','../xsatapi/version0',this)">version</a> = "4.0.6"; ///&lt; Version info
+string <a href="#" OnFocus="link('_member','../xsatapi/lpt0',this)">lpt</a>;                    ///&lt; Parallel port identifier
+int <a href="#" OnFocus="link('_member','../xsatapi/portNum0',this)">portNum</a> = -1;          ///&lt; Parallel port number
+string <a href="#" OnFocus="link('_member','../xsatapi/brdModel0',this)">brdModel</a>;            ///&lt; XS Board model number
+int <a href="#" OnFocus="link('_member','divisor0',this)">divisor</a> = 2;           ///&lt; Default divisor for master oscillator frequency
+bool <a href="#" OnFocus="link('_member','externalClk0',this)">externalClk</a> = false;  ///&lt; Enable external master oscillator
+
+
+/// Print a string that shows the options and how to use this program.
+void <a href="#" OnFocus="link('_member','../xsatapi/Usage86416935',this)">Usage</a>(string progName)
+{
+    cerr &lt;&lt; progName.c_str() 
+        &lt;&lt; "\n\t[-[h|help]]: get help"
+        &lt;&lt; "\n\t[-[p|port] [1|2|3]]: select parallel port"
+        &lt;&lt; "\n\t[-[b|board] &lt;type&gt;]: select the board type to test"
+        &lt;&lt; "\n\t[-[d|divisor] &lt;#&gt;]: clock divisor"
+        &lt;&lt; "\n\t[-[e|external]]: use an external clock source"
+        &lt;&lt; "\n";
+    cerr &lt;&lt; "Version " &lt;&lt; <a href="#" OnFocus="link('_member','../xsatapi/version0',this)">version</a> &lt;&lt; endl;
+}
+
+
+/// Process the command line options and set the appropriate flags.
+bool <a href="#" OnFocus="link('_member','../xsatapi/ProcessOpts2719128541',this)">ProcessOpts</a>(int* argc, char** argv)
+{
+    <a href="#" OnFocus="link('_class','../xstoolslib/XSError0',this)">XSError</a> <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>(cerr); // setup error channel
+
+    bool ok = true; // no error yet
+
+    for(int i=1; i&lt; *argc; i++)
+    {
+        int cnt, j;
+        string arg = argv[i];
+        
+        if(arg[0] == '-')  // found an option
+        {
+            <a href="#" OnFocus="link('_member','../xstoolslib/ConvertToUpperCase67554305',this)">ConvertToUpperCase</a>(arg);  // convert option to upper case
+            
+            // ask for help but we don't give much
+            if(arg=="-H" || arg=="-HELP")
+            {
+                <a href="#" OnFocus="link('_member','../xsatapi/Usage86416935',this)">Usage</a>(arg);
+                cnt = 1;
+            }
+            
+            // specify the printer port being used
+            else if(arg=="-PORT" || arg=="-P")
+            {
+                sscanf(argv[i+1],"%d",&amp;portNum);
+                // istrstream argstr(argv[i+1]);
+                // argstr &gt;&gt; portNum;
+                if(<a href="#" OnFocus="link('_member','../xsatapi/portNum0',this)">portNum</a>&lt;4)
+                    <a href="#" OnFocus="link('_member','../xsatapi/lpt0',this)">lpt</a> = (string)"LPT" + (string)(argv[i+1]);
+                else
+                    <a href="#" OnFocus="link('_member','../xsatapi/lpt0',this)">lpt</a> = "LPT1";
+                cnt = 2;
+            }
+            
+            // specify the board model number
+            else if(arg=="-BOARD" || arg=="-B")
+            {
+                <a href="#" OnFocus="link('_member','../xsatapi/brdModel0',this)">brdModel</a> = argv[i+1];
+                <a href="#" OnFocus="link('_member','../xstoolslib/ConvertToUpperCase67554305',this)">ConvertToUpperCase</a>(brdModel);
+                cnt = 2;
+            }
+            
+            // specify the oscillator divisor
+            else if(arg=="-DIVISOR" || arg=="-D")
+            {
+                sscanf(argv[i+1],"%d",&amp;divisor);
+                //istrstream argstr(argv[i+1]);
+                //argstr &gt;&gt; divisor;
+                cnt = 2;
+            }
+            
+            // select an external master oscillator
+            else if(arg=="-E" || arg=="-EXTERNAL")
+            {
+                <a href="#" OnFocus="link('_member','externalClk0',this)">externalClk</a> = true;
+                cnt = 1;
+            }
+            
+            // can't figure out what the user wants
+            else
+            {
+                ok = false;
+                <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','../xstoolslib/SetSeverity3409672334',this)">SetSeverity</a>(XSErrorMinor);
+                <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> &lt;&lt; "unknown option: " &lt;&lt; arg.c_str() &lt;&lt; "\n";
+                <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','../xstoolslib/EndMsg60232619',this)">EndMsg</a>();
+                cnt = 1;
+            }
+        }
+        else    // found something which is not an option, so it is illegal
+        {
+            ok = false;
+            <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','../xstoolslib/SetSeverity3409672334',this)">SetSeverity</a>(XSErrorMinor);
+            <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> &lt;&lt; "unknown option: " &lt;&lt; arg.c_str() &lt;&lt; "\n";
+            <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','../xstoolslib/EndMsg60232619',this)">EndMsg</a>();
+            cnt = 1;
+        }
+            
+        // remove the processed options from the argument list
+        for(j=i+cnt; j&lt; *argc; j++)
+            argv[j-cnt] = argv[j];
+        *argc -= cnt;
+        i--;
+    }
+
+    return ok;
+}
+
+
+/// Main routine.
+/// \return 0 if the clock frequency is set successfully; 1 if some problem occurs.
+int <a href="#" OnFocus="link('_member','../xsatapi/main251862569',this)">main</a>(int argc, char** argv)
+{
+    <a href="#" OnFocus="link('_class','../xstoolslib/XSError0',this)">XSError</a> <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>(cerr); // setup error channel
+
+    // Get the board type used in the most recent invocation of an XSTOOLS utility.
+    <a href="#" OnFocus="link('_member','../xsatapi/brdModel0',this)">brdModel</a> = <a href="#" OnFocus="link('_member','../xstoolslib/GetXSTOOLSParameter86138908',this)">GetXSTOOLSParameter</a>("BoardType");
+
+    // Get the parallel port used in the most recent invocation of an XSTOOLS utility.
+    <a href="#" OnFocus="link('_member','../xsatapi/lpt0',this)">lpt</a> = <a href="#" OnFocus="link('_member','../xstoolslib/GetXSTOOLSParameter86138908',this)">GetXSTOOLSParameter</a>("LPT");
+    if(<a href="#" OnFocus="link('_member','../xsatapi/lpt0',this)">lpt</a> != "")
+    {
+        int n = sscanf(<a href="#" OnFocus="link('_member','../xsatapi/lpt0',this)">lpt</a>.c_str()+3,"%d",&amp;<a href="#" OnFocus="link('_member','../xsatapi/portNum0',this)">portNum</a>);
+        assert(n != 0);
+    }
+
+    // Process command-line options.
+    if(<a href="#" OnFocus="link('_member','../xsatapi/ProcessOpts2719128541',this)">ProcessOpts</a>(&amp;argc,argv) == false)
+    {
+        <a href="#" OnFocus="link('_member','../xsatapi/Usage86416935',this)">Usage</a>(string(argv[0]));
+        return 1;   // exit if error in program options
+    }
+
+    // Report an error if the board model is not specified.
+    if(<a href="#" OnFocus="link('_member','../xsatapi/brdModel0',this)">brdModel</a> == "")
+    {
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','../xstoolslib/SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,"No XS Board model was specified!\n");
+        <a href="#" OnFocus="link('_member','../xsatapi/Usage86416935',this)">Usage</a>(string(argv[0]));
+        return 1;
+    }
+
+    // Store the model type of the board that was specified.
+    <a href="#" OnFocus="link('_member','../xstoolslib/SetXSTOOLSParameter1183990257',this)">SetXSTOOLSParameter</a>("BoardType",<a href="#" OnFocus="link('_member','../xsatapi/brdModel0',this)">brdModel</a>.c_str());
+
+    // Use LPT1 if no other parallel port was specified.
+    if(<a href="#" OnFocus="link('_member','../xsatapi/portNum0',this)">portNum</a> == -1)
+    {
+        <a href="#" OnFocus="link('_member','../xsatapi/portNum0',this)">portNum</a> = 1;
+        <a href="#" OnFocus="link('_member','../xsatapi/lpt0',this)">lpt</a> = "LPT1";
+    }
+
+    // Store the parallel port that was specified.
+    if(<a href="#" OnFocus="link('_member','../xsatapi/portNum0',this)">portNum</a> &lt; 4)
+        <a href="#" OnFocus="link('_member','../xstoolslib/SetXSTOOLSParameter1183990257',this)">SetXSTOOLSParameter</a>("LPT",<a href="#" OnFocus="link('_member','../xsatapi/lpt0',this)">lpt</a>.c_str());
+
+    // Determine the type of XS Board and set the pointer to the board object.
+    <a href="#" OnFocus="link('_class','../xstoolslib/XSBoard0',this)">XSBoard</a>* <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>;
+    <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a> = <a href="#" OnFocus="link('_member','../xstoolslib/NewXSBoard189216495',this)">NewXSBoard</a>(<a href="#" OnFocus="link('_member','../xsatapi/brdModel0',this)">brdModel</a>.c_str());
+    if(<a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>==NULL)
+    {
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','../xstoolslib/SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,"Unknown type of XS Board was specified!\n");
+        return 1;
+    }
+
+    // Initialize the board object.
+    if(<a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/Setup3588776655',this)">Setup</a>(&amp;err,<a href="#" OnFocus="link('_member','../xsatapi/brdModel0',this)">brdModel</a>.c_str(),<a href="#" OnFocus="link('_member','../xsatapi/portNum0',this)">portNum</a>) == false)
+    {
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','../xstoolslib/SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,"Invalid parallel port was selected!\n");
+        delete <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>;
+        return 1;
+    }
+
+    // Set the frequency of the board
+    <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/SetFreq4061522050',this)">SetFreq</a>(divisor,externalClk);
+
+    delete <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>;
+
+    return 0;   // 0 indicates a successful operation
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_file','_source');
+</script>

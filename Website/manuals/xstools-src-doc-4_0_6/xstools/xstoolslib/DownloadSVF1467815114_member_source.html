@@ -1,0 +1,449 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - DownloadSVF</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">DownloadSVF</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_class','JTAGPort0',this)" class="pathLink">JTAGPort</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">DownloadSVF</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','DownloadSVF1467815114','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_member','DownloadSVF1467815114','_source',this)" class="tabLinkActive">Source</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','DownloadSVF1467815114','_callgraph',this)" class="tabLinkInActive">Call Graph</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<div class="paragraph2NoTopPadding">Start Line: 1132</div>
+<pre class="codeExamples">
+bool <a href="#" OnFocus="link('_member','DownloadSVF1467815114',this)">JTAGPort::DownloadSVF</a>(istream &amp;is, string &amp;fileName)
+{
+    <a href="#" OnFocus="link('_member','TAPState0',this)">TAPState</a> endir=<a href="#" OnFocus="link('_member','RunTestIdle0',this)">RunTestIdle</a>, enddr=<a href="#" OnFocus="link('_member','RunTestIdle0',this)">RunTestIdle</a>;
+
+#ifdef DEBUG_SVF
+    long start = clock();
+#endif
+
+    // determine the size of the SVF file
+    is.seekg(0,ios::end);   // move pointer to end of file
+    long svfLength = is.tellg();    // pointer position = position of end of file
+    is.seekg(0,ios::beg);   // return pointer to beginning of file
+
+    char* svfStart = <a href="#" OnFocus="link('_member','LoadFile255246136',this)">LoadFile</a>(is); // is.tellg() stops working correctly after file is loaded into internal memory
+    if(*svfStart == 0)
+    {
+        // file is empty, so there is nothing to do
+        delete svfStart;
+        return false;
+    }
+    char* svf = svfStart;
+
+    // create a downloading progress gauge
+    if(<a href="#" OnFocus="link('_member','progressGauge243771202',this)">progressGauge</a> == NULL)
+    {
+        string desc("Download SVF"), subdesc("Downloading "+<a href="#" OnFocus="link('_member','StripPrefix67554305',this)">StripPrefix</a>(fileName));
+        <a href="#" OnFocus="link('_member','progressGauge243771202',this)">progressGauge</a> = new <a href="#" OnFocus="link('_class','Progress0',this)">Progress</a>(&amp;<a href="#" OnFocus="link('_member','GetErr141716444',this)">GetErr</a>(),desc,subdesc,0,svfLength);
+    }
+
+    <a href="#" OnFocus="link('_member','InitTAP141716444',this)">InitTAP</a>(); // initialize the JTAG state machine
+    <a href="#" OnFocus="link('_member','GoThruTAPSequence1124965842',this)">GoThruTAPSequence</a>(RunTestIdle,-1); // home state for configuration
+    
+    int lineCnt = 0;
+    unsigned long elapsedTime = 0;
+    <a href="#" OnFocus="link('_member','progressGauge243771202',this)">progressGauge</a>-&gt;<a href="#" OnFocus="link('_member','Report2561259521',this)">Report</a>(svf-svfStart); // start progress at 0 which is the beginning of the SVF string
+//  progressGauge-&gt;Report(is.tellg()); // start progress at 0 which is the beginning of the SVF string
+
+    unsigned int currentSecond = clock()/CLOCKS_PER_SEC;
+
+    while(true)
+    {
+        // update progress to the user no more than once per second
+        if((unsigned int)(clock()/CLOCKS_PER_SEC)!=currentSecond)
+        {
+            currentSecond = clock()/CLOCKS_PER_SEC;
+            <a href="#" OnFocus="link('_member','progressGauge243771202',this)">progressGauge</a>-&gt;<a href="#" OnFocus="link('_member','Report2561259521',this)">Report</a>(svf-svfStart);  // SVF string pointer position indicates the current progress
+//          progressGauge-&gt;Report(is.tellg());  // position in stream indicates the current progress
+        }
+
+        // collect one or more lines into a single SVF command
+        char *s = <a href="#" OnFocus="link('_member','GetSVFCmdFromBuffer88236085',this)">GetSVFCmdFromBuffer</a>(&amp;svf);
+        if(s == NULL)
+            break;
+        string svfCmd = s;
+
+#ifdef DEBUG_SVF
+        if(svfCmd.length()&lt;1000)
+        {
+            cout &lt;&lt; "SVFCmd: --" &lt;&lt; svfCmd &lt;&lt; "--\n";
+            cout.flush();
+        }
+#endif
+
+        // remove the first keyword from the command
+        string keywd(<a href="#" OnFocus="link('_member','NextWord255246136',this)">NextWord</a>(svfCmd));
+//      string keywd = NextWord(svfCmd);
+//      string keywd = NextWord(is);
+//      if(is.fail())
+//          break;  // exit if EOF
+        if(keywd == "")
+            continue;   // must be a blank line
+#ifdef DEBUG_SVF
+        cout &lt;&lt; "Keywd: --" &lt;&lt; keywd &lt;&lt; "--\n"; cout.flush();
+#endif
+
+        int status;
+        unsigned long len;
+        static <a href="#" OnFocus="link('_class','Bitstream0',this)">Bitstream</a> hdr(0), hir(0), tdr(0), tir(0), sdr(0), sir(0);
+        
+        if(keywd == "TRST"
+            || keywd == "PIO"
+            || keywd == "PIOMAP"
+            || keywd == "FREQUENCY"
+            )
+        { // these commands have nothing to do with configuration so ignore them
+//          NextCmd(is);
+            continue;
+        }
+
+        else if(keywd == "ENDIR")
+        {
+            string nw = <a href="#" OnFocus="link('_member','NextWord255246136',this)">NextWord</a>(svfCmd);
+//          string nw = NextWord(is);
+            assert(nw != "");
+            endir = <a href="#" OnFocus="link('_member','LabelToTAPState2043650535',this)">LabelToTAPState</a>(nw);
+#ifdef DEBUG_SVF
+            cout &lt;&lt; <a href="#" OnFocus="link('_member','GetTAPStateLabel449122300',this)">GetTAPStateLabel</a>(endir);
+            cout.flush();
+#endif
+//          NextCmd(is);
+            continue;
+        }
+
+        else if(keywd == "ENDDR")
+        {
+            string nw = <a href="#" OnFocus="link('_member','NextWord255246136',this)">NextWord</a>(svfCmd);
+//          string nw = NextWord(is);
+            assert(nw != "");
+            enddr = <a href="#" OnFocus="link('_member','LabelToTAPState2043650535',this)">LabelToTAPState</a>(nw);
+#ifdef DEBUG_SVF
+            cout &lt;&lt; <a href="#" OnFocus="link('_member','GetTAPStateLabel449122300',this)">GetTAPStateLabel</a>(enddr);
+            cout.flush();
+#endif
+//          NextCmd(is);
+            continue;
+        }
+
+        else if(keywd == "STATE")
+        {
+            string s;
+            for(s=<a href="#" OnFocus="link('_member','NextWord255246136',this)">NextWord</a>(svfCmd); s!=""; s=<a href="#" OnFocus="link('_member','NextWord255246136',this)">NextWord</a>(svfCmd))
+//          for(s=NextWord(is); s!=""; s=NextWord(is))
+            {
+#ifdef DEBUG_SVF
+                cout&lt;&lt; " --&gt; " &lt;&lt; s;
+                cout.flush();
+#endif
+                <a href="#" OnFocus="link('_member','GotoTAPState449122300',this)">GotoTAPState</a>(<a href="#" OnFocus="link('_member','LabelToTAPState2043650535',this)">LabelToTAPState</a>(s));
+            }
+#ifdef DEBUG_SVF
+            cout&lt;&lt; "\n";
+            cout.flush();
+#endif
+//          NextCmd(is);
+            continue;
+        }
+        
+        else if(keywd == "HIR")
+        { // initialize the header bits for loading into the IR
+            // get the number of bits in the header
+            status = sscanf(<a href="#" OnFocus="link('_member','NextWord255246136',this)">NextWord</a>(svfCmd).c_str(),"%ld",&amp;len);
+//          status = sscanf(NextWord(is).c_str(),"%ld",&amp;len);
+            assert(status!=0);
+            hir.Resize(len);
+            if(len != 0)
+            {
+                // otherwise look for the TDI bitfield
+                string word;
+                for(word=<a href="#" OnFocus="link('_member','NextWord255246136',this)">NextWord</a>(svfCmd); word!="TDI" &amp;&amp; word!=""; word=<a href="#" OnFocus="link('_member','NextWord255246136',this)">NextWord</a>(svfCmd))
+//              for(word=NextWord(is); word!="TDI" &amp;&amp; word!=""; word=NextWord(is))
+                    ;
+                if(word=="TDI")
+                {
+                    // replace the TDI bits only if the SVF command has a TDI bitfield
+                    word = <a href="#" OnFocus="link('_member','NextWord255246136',this)">NextWord</a>(svfCmd); // get the TDI bits
+                    assert(word[0]=='(');
+                    assert(word[word.length()-1]==')');
+                    hir.FromHexString(len,word.c_str()+1);
+//                  hir.FromHexStream(len,is,false);
+                }
+            }
+#ifdef DEBUG_SVF
+            if(hir.GetLength()&lt;1000)
+                cout &lt;&lt; hir &lt;&lt; "\n";
+            else
+                cout &lt;&lt; "[... " &lt;&lt; hir.GetLength() &lt;&lt; " ...]\n";
+            cout.flush();
+#endif
+//          NextCmd(is);
+            continue;
+        }
+        
+        else if(keywd == "HDR")
+        { // initialize the header bits for loading into the DR
+            // get the number of bits in the header
+            status = sscanf(<a href="#" OnFocus="link('_member','NextWord255246136',this)">NextWord</a>(svfCmd).c_str(),"%ld",&amp;len);
+//          status = sscanf(NextWord(is).c_str(),"%ld",&amp;len);
+            assert(status!=0);
+            hdr.<a href="#" OnFocus="link('_member','Resize2805767469',this)">Resize</a>(len);
+            if(len != 0)
+            {
+                // otherwise look for the TDI bitfield
+                string word;
+                for(word=<a href="#" OnFocus="link('_member','NextWord255246136',this)">NextWord</a>(svfCmd); word!="TDI" &amp;&amp; word!=""; word=<a href="#" OnFocus="link('_member','NextWord255246136',this)">NextWord</a>(svfCmd))
+//              for(word=NextWord(is); word!="TDI" &amp;&amp; word!=""; word=NextWord(is))
+                    ;
+                if(word=="TDI")
+                {
+                    // replace the TDI bits only if the SVF command has a TDI bitfield
+                    word = <a href="#" OnFocus="link('_member','NextWord255246136',this)">NextWord</a>(svfCmd); // get the TDI bits
+                    assert(word[0]=='(');
+                    assert(word[word.length()-1]==')');
+                    hdr.<a href="#" OnFocus="link('_member','FromHexString2822437144',this)">FromHexString</a>(len,word.c_str()+1);
+//                  hdr.FromHexStream(len,is,false);
+                }
+            }
+#ifdef DEBUG_SVF
+            if(hdr.<a href="#" OnFocus="link('_member','GetLength2106616265',this)">GetLength</a>()&lt;1000)
+                cout &lt;&lt; hdr &lt;&lt; "\n";
+            else
+                cout &lt;&lt; "[... " &lt;&lt; hdr.<a href="#" OnFocus="link('_member','GetLength2106616265',this)">GetLength</a>() &lt;&lt; " ...]\n";
+            cout.flush();
+#endif
+//          NextCmd(is);
+            continue;
+        }
+        
+        else if(keywd == "TIR")
+        { // initialize the trailer bits for loading into the IR
+            // get the number of bits in the trailer
+            status = sscanf(<a href="#" OnFocus="link('_member','NextWord255246136',this)">NextWord</a>(svfCmd).c_str(),"%ld",&amp;len);
+//          status = sscanf(NextWord(is).c_str(),"%ld",&amp;len);
+            assert(status!=0);
+            tir.Resize(len);
+            if(len != 0)
+            {
+                // otherwise look for the TDI bitfield
+                string word;
+                for(word=<a href="#" OnFocus="link('_member','NextWord255246136',this)">NextWord</a>(svfCmd); word!="TDI" &amp;&amp; word!=""; word=<a href="#" OnFocus="link('_member','NextWord255246136',this)">NextWord</a>(svfCmd))
+//              for(word=NextWord(is); word!="TDI" &amp;&amp; word!=""; word=NextWord(is))
+                    ;
+                if(word=="TDI")
+                {
+                    // replace the TDI bits only if the SVF command has a TDI bitfield
+                    word = <a href="#" OnFocus="link('_member','NextWord255246136',this)">NextWord</a>(svfCmd); // get the TDI bits
+                    assert(word[0]=='(');
+                    assert(word[word.length()-1]==')');
+                    tir.FromHexString(len,word.c_str()+1);
+//                  tir.FromHexStream(len,is,false);
+                }
+            }
+#ifdef DEBUG_SVF
+            if(tir.GetLength()&lt;1000)
+                cout &lt;&lt; tir &lt;&lt; "\n";
+            else
+                cout &lt;&lt; "[... " &lt;&lt; tir.GetLength() &lt;&lt; " ...]\n";
+            cout.flush();
+#endif
+//          NextCmd(is);
+            continue;
+        }
+        
+        else if(keywd == "TDR")
+        { // initialize the trailer bits for loading into the DR
+            // get the number of bits in the trailer
+            status = sscanf(<a href="#" OnFocus="link('_member','NextWord255246136',this)">NextWord</a>(svfCmd).c_str(),"%ld",&amp;len);
+//          status = sscanf(NextWord(is).c_str(),"%ld",&amp;len);
+            assert(status!=0);
+            tdr.Resize(len);
+            if(len != 0)
+            {
+                // otherwise look for the TDI bitfield
+                string word;
+                for(word=<a href="#" OnFocus="link('_member','NextWord255246136',this)">NextWord</a>(svfCmd); word!="TDI" &amp;&amp; word!=""; word=<a href="#" OnFocus="link('_member','NextWord255246136',this)">NextWord</a>(svfCmd))
+//              for(word=NextWord(is); word!="TDI" &amp;&amp; word!=""; word=NextWord(is))
+                    ;
+                if(word=="TDI")
+                {
+                    // replace the TDI bits only if the SVF command has a TDI bitfield
+                    word = <a href="#" OnFocus="link('_member','NextWord255246136',this)">NextWord</a>(svfCmd); // get the TDI bits
+                    assert(word[0]=='(');
+                    assert(word[word.length()-1]==')');
+                    tdr.FromHexString(len,word.c_str()+1);
+//                  tdr.FromHexStream(len,is,false);
+                }
+            }
+#ifdef DEBUG_SVF
+            if(tdr.GetLength()&lt;1000)
+                cout &lt;&lt; tdr &lt;&lt; "\n";
+            else
+                cout &lt;&lt; "[... " &lt;&lt; tdr.GetLength() &lt;&lt; " ...]\n";
+            cout.flush();
+#endif
+//          NextCmd(is);
+            continue;
+        }
+        
+        else if(keywd == "SIR")
+        { // send a bitstream into the instruction register
+            // get the number of bits in the instruction register
+            status = sscanf(<a href="#" OnFocus="link('_member','NextWord255246136',this)">NextWord</a>(svfCmd).c_str(),"%ld",&amp;len);
+//          status = sscanf(NextWord(is).c_str(),"%ld",&amp;len);
+            assert(status!=0);
+            assert(len&gt;0);
+            <a href="#" OnFocus="link('_class','Bitstream0',this)">Bitstream</a> bs(len); // load TDI bits into this bit stream
+            string word;
+            for(word=<a href="#" OnFocus="link('_member','NextWord255246136',this)">NextWord</a>(svfCmd); word!="TDI" &amp;&amp; word!=""; word=<a href="#" OnFocus="link('_member','NextWord255246136',this)">NextWord</a>(svfCmd))
+//          for(word=NextWord(is); word!="TDI" &amp;&amp; word!=""; word=NextWord(is))
+                ;
+            if(word=="TDI")
+            {
+                word = <a href="#" OnFocus="link('_member','NextWord255246136',this)">NextWord</a>(svfCmd); // get the TDI bits
+                assert(word[0]=='(');
+                assert(word[word.length()-1]==')');
+                sir.FromHexString(len,word.c_str()+1);
+//              sir.FromHexStream(len,is,false);
+            }
+
+            // concatenate header, instruction, and trailer bitstreams
+            bs = hir + sir + tir;
+
+#ifdef DEBUG_SVF
+            if(bs.<a href="#" OnFocus="link('_member','GetLength2106616265',this)">GetLength</a>()&lt;1000)
+                cout &lt;&lt; "SIR " &lt;&lt; len &lt;&lt; " (" &lt;&lt; bs.<a href="#" OnFocus="link('_member','ToHexString2106616265',this)">ToHexString</a>() &lt;&lt; ")" &lt;&lt; endl;
+            else
+                cout &lt;&lt; "SIR " &lt;&lt; len &lt;&lt; " (... " &lt;&lt; bs.<a href="#" OnFocus="link('_member','GetLength2106616265',this)">GetLength</a>() &lt;&lt; " ...)" &lt;&lt; endl;
+            cout.flush();
+#endif
+            // send bitstream into IR and return to idle state
+            <a href="#" OnFocus="link('_member','GotoTAPState449122300',this)">GotoTAPState</a>(ShiftIR);
+            <a href="#" OnFocus="link('_class','Bitstream0',this)">Bitstream</a> null(0);   // zero-length bitstream
+            <a href="#" OnFocus="link('_member','SendRcvBitstream1691161481',this)">SendRcvBitstream</a>(bs,null);
+            <a href="#" OnFocus="link('_member','GotoTAPState449122300',this)">GotoTAPState</a>(endir);
+//          NextCmd(is);
+            continue;
+        }
+        
+        else if(keywd == "SDR")
+        { // send a bitstream into the data register
+            // get the number of bits in the data register
+            status = sscanf(<a href="#" OnFocus="link('_member','NextWord255246136',this)">NextWord</a>(svfCmd).c_str(),"%ld",&amp;len);
+//          status = sscanf(NextWord(is).c_str(),"%ld",&amp;len);
+            assert(status!=0);
+            assert(len&gt;0);
+            <a href="#" OnFocus="link('_class','Bitstream0',this)">Bitstream</a> bs(0); // load TDI bits into this bit stream
+            string word;
+            for(word=<a href="#" OnFocus="link('_member','NextWord255246136',this)">NextWord</a>(svfCmd); word!="TDI" &amp;&amp; word!=""; word=<a href="#" OnFocus="link('_member','NextWord255246136',this)">NextWord</a>(svfCmd))
+//          for(word=NextWord(is); word!="TDI" &amp;&amp; word!=""; word=NextWord(is))
+                ;
+            if(word=="TDI")
+            {
+                word = <a href="#" OnFocus="link('_member','NextWord255246136',this)">NextWord</a>(svfCmd); // get the TDI bits
+                assert(word[0]=='(');
+                assert(word[word.length()-1]==')');
+                sdr.FromHexString(len,word.c_str()+1);
+//              sdr.FromHexStream(len,is,false);
+            }
+
+            // concatenate header, data, and trailer bitstreams
+            bs = hdr + sdr + tdr;
+
+#ifdef DEBUG_SVF
+            if(bs.<a href="#" OnFocus="link('_member','GetLength2106616265',this)">GetLength</a>()&lt;1000)
+                cout &lt;&lt; "SDR " &lt;&lt; len &lt;&lt; " (" &lt;&lt; bs.<a href="#" OnFocus="link('_member','ToHexString2106616265',this)">ToHexString</a>() &lt;&lt; ")" &lt;&lt; endl;
+            else
+                cout &lt;&lt; "SDR " &lt;&lt; len &lt;&lt; " (... " &lt;&lt; bs.<a href="#" OnFocus="link('_member','GetLength2106616265',this)">GetLength</a>() &lt;&lt; " ...)" &lt;&lt; endl;
+            cout.flush();
+#endif
+            // send bitstream into DR and return to Run-Test-Idle state
+#ifdef DEBUG_SVF
+    long sdr_start = clock();
+#endif
+            <a href="#" OnFocus="link('_member','GotoTAPState449122300',this)">GotoTAPState</a>(ShiftDR);
+            <a href="#" OnFocus="link('_class','Bitstream0',this)">Bitstream</a> null(0);   // zero-length bitstream
+            <a href="#" OnFocus="link('_member','SendRcvBitstream1691161481',this)">SendRcvBitstream</a>(bs,null);
+            <a href="#" OnFocus="link('_member','GotoTAPState449122300',this)">GotoTAPState</a>(enddr);
+#ifdef DEBUG_SVF
+    long sdr_finish = clock();
+    cerr &lt;&lt; "elapsed time = " &lt;&lt; (sdr_finish-sdr_start)/(CLOCKS_PER_SEC) &lt;&lt; "\n";
+#endif
+//          NextCmd(is);
+            continue;
+        }
+        
+        else if(keywd == "RUNTEST")
+        { // insert delay while programming takes place
+            // get the number of microseconds to pause while programming the CPLD 
+            status = sscanf(<a href="#" OnFocus="link('_member','NextWord255246136',this)">NextWord</a>(svfCmd).c_str(),"%ld",&amp;len);
+//          status = sscanf(NextWord(is).c_str(),"%ld",&amp;len);
+            assert(status!=0);
+            elapsedTime += len;
+            assert(<a href="#" OnFocus="link('_member','NextWord255246136',this)">NextWord</a>(svfCmd) == "TCK");
+//          assert(NextWord(is) == "TCK");
+            if(<a href="#" OnFocus="link('_member','currentTAPState243771202',this)">currentTAPState</a> == <a href="#" OnFocus="link('_member','TestLogicReset0',this)">TestLogicReset</a>)
+                <a href="#" OnFocus="link('_member','SetTMS822545253',this)">SetTMS</a>(1); // TMS value to stay in RESET state
+            else
+                <a href="#" OnFocus="link('_member','SetTMS822545253',this)">SetTMS</a>(0); // TMS value to stay in IDLE, DRPAUSE or IRPAUSE state
+            <a href="#" OnFocus="link('_member','PulseTCK822545253',this)">PulseTCK</a>(len);
+#ifdef DEBUG_SVF
+            cout &lt;&lt; "delay = " &lt;&lt; len &lt;&lt; " us\n"; cout.flush();
+#endif
+//          NextCmd(is);
+            continue;
+        }
+        
+        // if we get here, then it's some strange junk we don't understand
+        <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a> <a href="#" OnFocus="link('_member','err243771202',this)">err</a> = <a href="#" OnFocus="link('_member','GetErr141716444',this)">GetErr</a>();
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','SetSeverity3409672334',this)">SetSeverity</a>(XSErrorMajor);
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> &lt;&lt; (string)"unknown SVF command: " &lt;&lt; keywd &lt;&lt; (string)"\n";
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','EndMsg60232619',this)">EndMsg</a>();
+        <a href="#" OnFocus="link('_member','InitTAP141716444',this)">InitTAP</a>(); // reset TAP and idle the JTAG logic
+        delete <a href="#" OnFocus="link('_member','progressGauge243771202',this)">progressGauge</a>;
+        <a href="#" OnFocus="link('_member','progressGauge243771202',this)">progressGauge</a> = NULL;
+        delete svfStart;
+        return false;
+    }
+    
+    <a href="#" OnFocus="link('_member','progressGauge243771202',this)">progressGauge</a>-&gt;<a href="#" OnFocus="link('_member','Report2561259521',this)">Report</a>(svf-svfStart); // start progress at 0 which is the beginning of the SVF string
+//  progressGauge-&gt;Report(is.tellg());  // should set gauge to 100%
+    
+#ifdef DEBUG_SVF
+    long finish = clock();
+    cerr &lt;&lt; "elapsed time = " &lt;&lt; (finish-start)/(CLOCKS_PER_SEC) &lt;&lt; "\n";
+    cerr &lt;&lt; "elapsed time = " &lt;&lt; elapsedTime &lt;&lt; " us\n";
+#endif
+    
+    <a href="#" OnFocus="link('_member','InitTAP141716444',this)">InitTAP</a>(); // done so reset TAP and idle the JTAG logic
+    <a href="#" OnFocus="link('_member','InsertDelay359930342',this)">InsertDelay</a>(100,MILLISECONDS); // let the XC9500 chip initialize
+    delete <a href="#" OnFocus="link('_member','progressGauge243771202',this)">progressGauge</a>;
+    <a href="#" OnFocus="link('_member','progressGauge243771202',this)">progressGauge</a> = NULL;
+    delete svfStart;
+    return true;
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_member','_source');
+</script>

@@ -1,0 +1,374 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - xserror.cpp</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">xserror.cpp</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">xserror.cpp</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','xserror_cpp0','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabInActiveGrayout"><span class="tabLinkGrayout">Overview</span></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','xserror_cpp0','_includedfiles',this)" class="tabLinkInActive">Included files</a></span>
+<span class="tabInActiveGrayout"><span class="tabLinkGrayout">Included by</span></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_file','xserror_cpp0','_source',this)" class="tabLinkActive">Source</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<pre class="codeExamples">
+/*----------------------------------------------------------------------------------
+  SOFTWARE LICENSE AGREEMENT
+    1.  Permission to use, copy, modify, and distribute this software
+        and its documentation, with or without modification, for any
+        purpose and without fee or royalty is hereby granted, provided
+        that you include the following on ALL copies of the software
+        and documentation or portions thereof, including
+        modifications, that you make:
+
+            a.  The full text of this license in a location viewable to users
+            of the redistributed or derivative work.
+
+            b.  Notice of any changes or modifications to the files,
+            including the date changes were made.
+
+    2.  The name, servicemarks and trademarks of X Engineering
+        Software Systems Corp. may NOT be used in advertising or
+        publicity pertaining to the software without specific, written
+        prior permission.
+
+    3.  Title to copyright in this software and any associated
+        documentation will at all times remain with X Engineering
+        Software Systems Corp.
+
+    4.  THIS SOFTWARE AND DOCUMENTATION IS PROVIDED "AS IS," AND X
+        Engineering Software Systems Corp MAKES NO REPRESENTATIONS OR
+        WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO,
+        WARRANTIES OF MERCHANTABILITY OR FITNESS FOR ANY PARTICULAR
+        PURPOSE OR THAT THE USE OF THE SOFTWARE OR DOCUMENTATION WILL
+        NOT INFRINGE ANY THIRD PARTY PATENTS, COPYRIGHTS, TRADEMARKS
+        OR OTHER RIGHTS.
+
+    5.  X Engineering Software Systems Corp WILL NOT BE LIABLE FOR ANY
+        DAMAGES, INCLUDING BUT NOT LIMITED TO, DIRECT, INDIRECT,
+        SPECIAL OR CONSEQUENTIAL, ARISING OUT OF ANY USE OF THE
+        SOFTWARE OR DOCUMENTATION.
+
+  ©2006 - X Engineering Software Systems Corp.  All rights reserved.
+----------------------------------------------------------------------------------*/
+
+
+#include &lt;cassert&gt;
+
+#ifdef WIN32
+#include &lt;afxwin.h&gt;
+#endif
+
+#include "<a href="#" OnFocus="link('_file','xserror_h0',this)">xserror.h</a>"
+
+
+/// Create an error object with output going to a stream.
+<a href="#" OnFocus="link('_member','XSError3525118964',this)">XSError::XSError</a>(ostream&amp; s)
+{
+    <a href="#" OnFocus="link('_member','Setup3525118964',this)">Setup</a>(s);
+}
+
+
+/// Initialize an error object.
+void <a href="#" OnFocus="link('_member','Setup3525118964',this)">XSError::Setup</a>(ostream&amp; s)
+{
+    for(<a href="#" OnFocus="link('_member','XSErrorSeverity0',this)">XSErrorSeverity</a> i=<a href="#" OnFocus="link('_member','XSErrorMin0',this)">XSErrorMin</a>; i&lt;<a href="#" OnFocus="link('_member','XSErrorMax0',this)">XSErrorMax</a>; i=(<a href="#" OnFocus="link('_member','XSErrorSeverity0',this)">XSErrorSeverity</a>)((int)i+1))
+        <a href="#" OnFocus="link('_member','SetNumErrors3238870529',this)">SetNumErrors</a>(i,0);
+    <a href="#" OnFocus="link('_member','os511292',this)">os</a> = &amp;s;
+    <a href="#" OnFocus="link('_member','state511292',this)">state</a> = <a href="#" OnFocus="link('_member','XSErrorInitial0',this)">XSErrorInitial</a>;
+    <a href="#" OnFocus="link('_member','severity511292',this)">severity</a> = <a href="#" OnFocus="link('_member','XSErrorNone0',this)">XSErrorNone</a>;
+    <a href="#" OnFocus="link('_member','header511292',this)">header</a> = "";
+    <a href="#" OnFocus="link('_member','storedMsg511292',this)">storedMsg</a> = "";
+    <a href="#" OnFocus="link('_member','batch511292',this)">batch</a> = false;
+}
+
+
+/// Destroy error object.
+<a href="#" OnFocus="link('_member','tilde_XSError60232619',this)">XSError::~XSError</a>(void)
+{
+    ;
+}
+
+
+/// Assign contents of one source error object to another.
+///\return reference to the object whose contents were overwritten.
+<a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','operatoreq_554470356',this)">XSError::operator= </a>(<a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; src)   ///&lt; overwrite the error object with the contents of this one
+{
+    for(<a href="#" OnFocus="link('_member','XSErrorSeverity0',this)">XSErrorSeverity</a> i=<a href="#" OnFocus="link('_member','XSErrorMin0',this)">XSErrorMin</a>; i&lt;<a href="#" OnFocus="link('_member','XSErrorMax0',this)">XSErrorMax</a>; i=(<a href="#" OnFocus="link('_member','XSErrorSeverity0',this)">XSErrorSeverity</a>)((int)i+1))
+        <a href="#" OnFocus="link('_member','SetNumErrors3238870529',this)">SetNumErrors</a>(i,src.<a href="#" OnFocus="link('_member','GetNumErrors1262199531',this)">GetNumErrors</a>(i));
+    <a href="#" OnFocus="link('_member','os511292',this)">os</a> = src.<a href="#" OnFocus="link('_member','os511292',this)">os</a>;
+    <a href="#" OnFocus="link('_member','state511292',this)">state</a> = src.<a href="#" OnFocus="link('_member','state511292',this)">state</a>;
+    <a href="#" OnFocus="link('_member','severity511292',this)">severity</a> = src.<a href="#" OnFocus="link('_member','severity511292',this)">severity</a>;
+    <a href="#" OnFocus="link('_member','header511292',this)">header</a> = src.<a href="#" OnFocus="link('_member','header511292',this)">header</a>;
+    <a href="#" OnFocus="link('_member','storedMsg511292',this)">storedMsg</a> = src.<a href="#" OnFocus="link('_member','storedMsg511292',this)">storedMsg</a>;
+    <a href="#" OnFocus="link('_member','batch511292',this)">batch</a> = src.<a href="#" OnFocus="link('_member','batch511292',this)">batch</a>;
+    return *this;
+}
+
+
+/// Get number of errors of a certain severity that have occurred.
+///\return the number of errors of severity s
+unsigned int <a href="#" OnFocus="link('_member','GetNumErrors1262199531',this)">XSError::GetNumErrors</a>(XSErrorSeverity s /**&lt; severity */ ) const
+{
+    assert(s&gt;=XSErrorMin &amp;&amp; s&lt;XSErrorMax);
+    return <a href="#" OnFocus="link('_member','numErrors511292',this)">numErrors</a>[s];
+}
+
+
+/// Set number of errors of a certain type that have occurred.
+void <a href="#" OnFocus="link('_member','SetNumErrors3238870529',this)">XSError::SetNumErrors</a>(XSErrorSeverity s,    ///&lt; error severity level
+                    unsigned int n)     ///&lt; set number of errors of severity s to this
+{
+    assert(s&gt;=XSErrorMin &amp;&amp; s&lt;XSErrorMax);
+    <a href="#" OnFocus="link('_member','numErrors511292',this)">numErrors</a>[s] = n;
+}
+
+
+/// Returns true if any errors were recorded by this error object.
+///\return true if errors were reported by this object, false otherwise
+bool <a href="#" OnFocus="link('_member','IsError863564933',this)">XSError::IsError</a>(void) const
+{
+    for(<a href="#" OnFocus="link('_member','XSErrorSeverity0',this)">XSErrorSeverity</a> i=<a href="#" OnFocus="link('_member','XSErrorMin0',this)">XSErrorMin</a>; i&lt;<a href="#" OnFocus="link('_member','XSErrorMax0',this)">XSErrorMax</a>; i=(<a href="#" OnFocus="link('_member','XSErrorSeverity0',this)">XSErrorSeverity</a>)((int)i+1))
+        if(<a href="#" OnFocus="link('_member','GetNumErrors1262199531',this)">GetNumErrors</a>(i)) return true; // yes, there were errors
+    return false; // no errors were recorded
+}
+
+
+/// Return the severity of the current error message.
+///\return severity of current error message
+<a href="#" OnFocus="link('_member','XSErrorSeverity0',this)">XSErrorSeverity</a> <a href="#" OnFocus="link('_member','GetSeverity863564933',this)">XSError::GetSeverity</a>(void) const
+{
+    return <a href="#" OnFocus="link('_member','severity511292',this)">severity</a>;
+}
+
+
+/// Set severity of next error message.
+void <a href="#" OnFocus="link('_member','SetSeverity3409672334',this)">XSError::SetSeverity</a>(XSErrorSeverity s)    ///&lt; error severity level
+{
+    <a href="#" OnFocus="link('_member','severity511292',this)">severity</a> = s;
+    switch(<a href="#" OnFocus="link('_member','severity511292',this)">severity</a>)
+    {
+    case <a href="#" OnFocus="link('_member','XSErrorFatal0',this)">XSErrorFatal</a>:
+        *<a href="#" OnFocus="link('_member','os511292',this)">os</a> &lt;&lt; <a href="#" OnFocus="link('_member','GetHeader60232619',this)">GetHeader</a>().c_str() &lt;&lt; " FATAL ERROR: ";
+        <a href="#" OnFocus="link('_member','SetState3952274671',this)">SetState</a>(XSErrorInMessage);
+        break;
+    case <a href="#" OnFocus="link('_member','XSErrorMajor0',this)">XSErrorMajor</a>:
+        *<a href="#" OnFocus="link('_member','os511292',this)">os</a> &lt;&lt; <a href="#" OnFocus="link('_member','GetHeader60232619',this)">GetHeader</a>().c_str() &lt;&lt; " MAJOR ERROR: ";
+        <a href="#" OnFocus="link('_member','os511292',this)">os</a>-&gt;flush();
+        <a href="#" OnFocus="link('_member','SetState3952274671',this)">SetState</a>(XSErrorInMessage);
+        break;
+    case <a href="#" OnFocus="link('_member','XSErrorMinor0',this)">XSErrorMinor</a>:
+        *<a href="#" OnFocus="link('_member','os511292',this)">os</a> &lt;&lt; <a href="#" OnFocus="link('_member','GetHeader60232619',this)">GetHeader</a>().c_str() &lt;&lt; " MINOR ERROR: ";
+        <a href="#" OnFocus="link('_member','os511292',this)">os</a>-&gt;flush();
+        <a href="#" OnFocus="link('_member','SetState3952274671',this)">SetState</a>(XSErrorInMessage);
+        break;
+    case <a href="#" OnFocus="link('_member','XSErrorNone0',this)">XSErrorNone</a>:
+        *<a href="#" OnFocus="link('_member','os511292',this)">os</a> &lt;&lt; <a href="#" OnFocus="link('_member','GetHeader60232619',this)">GetHeader</a>().c_str() &lt;&lt; ": ";
+        <a href="#" OnFocus="link('_member','os511292',this)">os</a>-&gt;flush();
+        <a href="#" OnFocus="link('_member','SetState3952274671',this)">SetState</a>(XSErrorInMessage);
+        break;
+    default:
+        <a href="#" OnFocus="link('_member','SetSeverity3409672334',this)">SetSeverity</a>(XSErrorMinor);
+        *<a href="#" OnFocus="link('_member','os511292',this)">os</a> &lt;&lt; "\nerror severity was incorrectly set!\n";
+        <a href="#" OnFocus="link('_member','os511292',this)">os</a>-&gt;flush();
+        <a href="#" OnFocus="link('_member','EndMsg60232619',this)">EndMsg</a>();
+        break;
+    }
+}
+
+
+/// Get the current state of the error object.
+///\return the current state of the error object
+<a href="#" OnFocus="link('_member','XSErrorState0',this)">XSErrorState</a> <a href="#" OnFocus="link('_member','GetState863564933',this)">XSError::GetState</a>(void) const
+{
+    return <a href="#" OnFocus="link('_member','state511292',this)">state</a>;
+}
+
+
+/// Set the state of the error object
+void <a href="#" OnFocus="link('_member','SetState3952274671',this)">XSError::SetState</a>(XSErrorState s )  ///&lt; desired state of error object
+{
+    <a href="#" OnFocus="link('_member','state511292',this)">state</a> = s;
+}
+
+
+/// Set header string for each error message.
+void <a href="#" OnFocus="link('_member','SetHeader36636122',this)">XSError::SetHeader</a>(string&amp; h)    ///&lt; string containing error message header
+{
+    <a href="#" OnFocus="link('_member','header511292',this)">header</a> = h;
+}
+
+
+/// Get the current error message header.
+///\return reference to error message header string
+string&amp; <a href="#" OnFocus="link('_member','GetHeader60232619',this)">XSError::GetHeader</a>(void)
+{
+    return <a href="#" OnFocus="link('_member','header511292',this)">header</a>;
+}
+
+
+/// Enable batch processing (i.e., disable error messages).
+void <a href="#" OnFocus="link('_member','EnableBatch66524079',this)">XSError::EnableBatch</a>(bool b)   ///&lt; if true, messages are disabled for batch processing
+{
+    <a href="#" OnFocus="link('_member','batch511292',this)">batch</a> = b;   // disable user prompts (i.e. enable batch processing) when true
+}
+
+
+/// End the current error message and clean-up for the next one.
+void <a href="#" OnFocus="link('_member','EndMsg60232619',this)">XSError::EndMsg</a>(void)
+{
+    cerr &lt;&lt; <a href="#" OnFocus="link('_member','storedMsg511292',this)">storedMsg</a>;
+    switch(<a href="#" OnFocus="link('_member','GetSeverity863564933',this)">GetSeverity</a>())
+    {
+    case <a href="#" OnFocus="link('_member','XSErrorFatal0',this)">XSErrorFatal</a>:
+        <a href="#" OnFocus="link('_member','SetNumErrors3238870529',this)">SetNumErrors</a>(XSErrorFatal,<a href="#" OnFocus="link('_member','GetNumErrors1262199531',this)">GetNumErrors</a>(XSErrorFatal)+1);
+        *<a href="#" OnFocus="link('_member','os511292',this)">os</a> &lt;&lt;("Abnormal termination of program\n");
+#ifdef _WINDOWS
+        if(!<a href="#" OnFocus="link('_member','batch511292',this)">batch</a>) AfxMessageBox(<a href="#" OnFocus="link('_member','storedMsg511292',this)">storedMsg</a>.c_str(),MB_ICONSTOP);
+#endif
+        exit(1);
+        break;
+    case <a href="#" OnFocus="link('_member','XSErrorMajor0',this)">XSErrorMajor</a>:
+        <a href="#" OnFocus="link('_member','SetNumErrors3238870529',this)">SetNumErrors</a>(XSErrorMajor,<a href="#" OnFocus="link('_member','GetNumErrors1262199531',this)">GetNumErrors</a>(XSErrorMajor)+1);
+#ifdef _WINDOWS
+        if(!<a href="#" OnFocus="link('_member','batch511292',this)">batch</a>) AfxMessageBox(<a href="#" OnFocus="link('_member','storedMsg511292',this)">storedMsg</a>.c_str(),MB_ICONEXCLAMATION);
+#endif
+        <a href="#" OnFocus="link('_member','storedMsg511292',this)">storedMsg</a> = "";
+        <a href="#" OnFocus="link('_member','SetState3952274671',this)">SetState</a>(XSErrorInitial);
+        break;
+    case <a href="#" OnFocus="link('_member','XSErrorMinor0',this)">XSErrorMinor</a>:
+        <a href="#" OnFocus="link('_member','SetNumErrors3238870529',this)">SetNumErrors</a>(XSErrorMinor,<a href="#" OnFocus="link('_member','GetNumErrors1262199531',this)">GetNumErrors</a>(XSErrorMinor)+1);
+#ifdef _WINDOWS
+        if(!<a href="#" OnFocus="link('_member','batch511292',this)">batch</a>) AfxMessageBox(<a href="#" OnFocus="link('_member','storedMsg511292',this)">storedMsg</a>.c_str(),MB_ICONEXCLAMATION);
+#endif
+        <a href="#" OnFocus="link('_member','storedMsg511292',this)">storedMsg</a> = "";
+        <a href="#" OnFocus="link('_member','SetState3952274671',this)">SetState</a>(XSErrorInitial);
+        break;
+    case <a href="#" OnFocus="link('_member','XSErrorNone0',this)">XSErrorNone</a>:
+        <a href="#" OnFocus="link('_member','SetNumErrors3238870529',this)">SetNumErrors</a>(XSErrorNone,<a href="#" OnFocus="link('_member','GetNumErrors1262199531',this)">GetNumErrors</a>(XSErrorNone)+1);
+#ifdef _WINDOWS
+        if(!<a href="#" OnFocus="link('_member','batch511292',this)">batch</a>) AfxMessageBox(<a href="#" OnFocus="link('_member','storedMsg511292',this)">storedMsg</a>.c_str(),MB_ICONINFORMATION);
+#endif
+        <a href="#" OnFocus="link('_member','storedMsg511292',this)">storedMsg</a> = "";
+        <a href="#" OnFocus="link('_member','SetState3952274671',this)">SetState</a>(XSErrorInitial);
+        break;
+    default:
+        <a href="#" OnFocus="link('_member','SetSeverity3409672334',this)">SetSeverity</a>(XSErrorMinor);
+        *<a href="#" OnFocus="link('_member','os511292',this)">os</a> &lt;&lt; "\nerror severity was not set!\n";
+        <a href="#" OnFocus="link('_member','os511292',this)">os</a>-&gt;flush();
+#ifdef _WINDOWS
+        if(!<a href="#" OnFocus="link('_member','batch511292',this)">batch</a>) AfxMessageBox(<a href="#" OnFocus="link('_member','storedMsg511292',this)">storedMsg</a>.c_str(),MB_ICONINFORMATION);
+#endif
+        <a href="#" OnFocus="link('_member','storedMsg511292',this)">storedMsg</a> = "";
+        <a href="#" OnFocus="link('_member','SetState3952274671',this)">SetState</a>(XSErrorInitial);
+        break;
+    }
+}
+
+
+/// A simple, one-step method for sending an error message.
+void <a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">XSError::SimpleMsg</a>(XSErrorSeverity s,    ///&lt; severity of this error
+                    string&amp; msg)    ///&lt; error message
+{
+    <a href="#" OnFocus="link('_member','SetSeverity3409672334',this)">SetSeverity</a>(s);
+    <a href="#" OnFocus="link('_member','storedMsg511292',this)">storedMsg</a> = <a href="#" OnFocus="link('_member','storedMsg511292',this)">storedMsg</a> + msg;
+    *<a href="#" OnFocus="link('_member','os511292',this)">os</a> &lt;&lt; msg.c_str();
+    <a href="#" OnFocus="link('_member','EndMsg60232619',this)">EndMsg</a>();
+}
+
+
+/// A simple, one-step method for sending an error message.
+void <a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">XSError::SimpleMsg</a>(XSErrorSeverity s,    ///&lt; severity of this error
+                    char* msg)  ///&lt; error message
+{
+    <a href="#" OnFocus="link('_member','SetSeverity3409672334',this)">SetSeverity</a>(s);
+    <a href="#" OnFocus="link('_member','storedMsg511292',this)">storedMsg</a> = <a href="#" OnFocus="link('_member','storedMsg511292',this)">storedMsg</a> + (string)msg;
+    *<a href="#" OnFocus="link('_member','os511292',this)">os</a> &lt;&lt; msg;
+    <a href="#" OnFocus="link('_member','EndMsg60232619',this)">EndMsg</a>();
+}
+
+
+/// Overload &lt;&lt; operator to concatenate an integer to an error message.
+///\return reference to the error object
+<a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','operatorless_less_65475511',this)">XSError::operator<<</a>(long n)  ///&lt; integer to concatenate to error message
+{
+    char num[30];
+    sprintf(num,"%ld",n);
+    <a href="#" OnFocus="link('_member','storedMsg511292',this)">storedMsg</a> = <a href="#" OnFocus="link('_member','storedMsg511292',this)">storedMsg</a> + (string)num;
+    *<a href="#" OnFocus="link('_member','os511292',this)">os</a> &lt;&lt; num;
+    return *this;
+}
+
+
+/// Overload &lt;&lt; operator to concatenate a float to an error message.
+///\return reference to the error object
+<a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','operatorless_less_65475511',this)">XSError::operator<<</a>(float f) ///&lt; float to concatenate to error message
+{
+    char num[30];
+    sprintf(num,"%f",f);
+    <a href="#" OnFocus="link('_member','storedMsg511292',this)">storedMsg</a> = <a href="#" OnFocus="link('_member','storedMsg511292',this)">storedMsg</a> + (string)num;
+    *<a href="#" OnFocus="link('_member','os511292',this)">os</a> &lt;&lt; num;
+    return *this;
+}
+
+
+/// Overload &lt;&lt; operator to concatenate a character string to an error message.
+///\return reference to the error object
+<a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','operatorless_less_65475511',this)">XSError::operator<<</a>(char* msg)   ///&lt; char. string to concatenate to error message
+{
+    <a href="#" OnFocus="link('_member','storedMsg511292',this)">storedMsg</a> = <a href="#" OnFocus="link('_member','storedMsg511292',this)">storedMsg</a> + (string)msg;
+    *<a href="#" OnFocus="link('_member','os511292',this)">os</a> &lt;&lt; msg;
+    return *this;
+}
+
+/*
+/// Overload &lt;&lt; operator to concatenate a string to an error message.
+///\return reference to the error object
+XSError&amp; XSError::operator&lt;&lt;(string&amp; msg)   ///&lt; string to concatenate to error message
+{
+    storedMsg = storedMsg + msg;
+    *os &lt;&lt; msg.c_str();
+    return *this;
+}
+*/
+
+/// Overload &lt;&lt; operator to concatenate a string to an error message.
+///\return reference to the error object
+<a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','operatorless_less_65475511',this)">XSError::operator<<</a>(string msg)  ///&lt; string to concatenate to error message
+{
+    <a href="#" OnFocus="link('_member','storedMsg511292',this)">storedMsg</a> = <a href="#" OnFocus="link('_member','storedMsg511292',this)">storedMsg</a> + msg;
+    *<a href="#" OnFocus="link('_member','os511292',this)">os</a> &lt;&lt; msg.c_str();
+    return *this;
+}
+
+
+/// Overload &lt;&lt; operator to set the output channel for the error object.
+///\return reference to the error object
+<a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','operatorless_less_65475511',this)">XSError::operator<<</a>(ostream&amp; s)  ///&lt; output stream where error messages will be directed
+{
+    *<a href="#" OnFocus="link('_member','os511292',this)">os</a> &lt;&lt; s;
+    return *this;
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_file','_source');
+</script>

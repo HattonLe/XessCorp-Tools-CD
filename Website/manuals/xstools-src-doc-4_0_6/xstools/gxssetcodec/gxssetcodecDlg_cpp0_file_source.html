@@ -1,0 +1,1063 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - gxssetcodecDlg.cpp</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">gxssetcodecDlg.cpp</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','gxssetcodec0',this)" class="pathLink">gxssetcodec</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">gxssetcodecDlg.cpp</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','gxssetcodecDlg_cpp0','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','gxssetcodecDlg_cpp0','_overview',this)" class="tabLinkInActive">Overview</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','gxssetcodecDlg_cpp0','_includedfiles',this)" class="tabLinkInActive">Included files</a></span>
+<span class="tabInActiveGrayout"><span class="tabLinkGrayout">Included by</span></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_file','gxssetcodecDlg_cpp0','_source',this)" class="tabLinkActive">Source</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<pre class="codeExamples">
+/*----------------------------------------------------------------------------------
+  SOFTWARE LICENSE AGREEMENT
+    1.  Permission to use, copy, modify, and distribute this software
+        and its documentation, with or without modification, for any
+        purpose and without fee or royalty is hereby granted, provided
+        that you include the following on ALL copies of the software
+        and documentation or portions thereof, including
+        modifications, that you make:
+
+            a.  The full text of this license in a location viewable to users
+            of the redistributed or derivative work.
+
+            b.  Notice of any changes or modifications to the files,
+            including the date changes were made.
+
+    2.  The name, servicemarks and trademarks of X Engineering
+        Software Systems Corp. may NOT be used in advertising or
+        publicity pertaining to the software without specific, written
+        prior permission.
+
+    3.  Title to copyright in this software and any associated
+        documentation will at all times remain with X Engineering
+        Software Systems Corp.
+
+    4.  THIS SOFTWARE AND DOCUMENTATION IS PROVIDED "AS IS," AND X
+        Engineering Software Systems Corp MAKES NO REPRESENTATIONS OR
+        WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO,
+        WARRANTIES OF MERCHANTABILITY OR FITNESS FOR ANY PARTICULAR
+        PURPOSE OR THAT THE USE OF THE SOFTWARE OR DOCUMENTATION WILL
+        NOT INFRINGE ANY THIRD PARTY PATENTS, COPYRIGHTS, TRADEMARKS
+        OR OTHER RIGHTS.
+
+    5.  X Engineering Software Systems Corp WILL NOT BE LIABLE FOR ANY
+        DAMAGES, INCLUDING BUT NOT LIMITED TO, DIRECT, INDIRECT,
+        SPECIAL OR CONSEQUENTIAL, ARISING OUT OF ANY USE OF THE
+        SOFTWARE OR DOCUMENTATION.
+
+  ©2006 - X Engineering Software Systems Corp.  All rights reserved.
+----------------------------------------------------------------------------------*/
+
+// gxssetcodecDlg.cpp : implementation file
+//
+
+#include "stdafx.h"
+
+#include &lt;afxole.h&gt;
+#include &lt;shlobj.h&gt;
+#include "<a href="#" OnFocus="link('_file','gxssetcodec_h0',this)">gxssetcodec.h</a>"
+#include "<a href="#" OnFocus="link('_file','gxssetcodecDlg_h0',this)">gxssetcodecDlg.h</a>"
+
+#include "<a href="#" OnFocus="link('_file','../xstoolslib/xsallbrds_h0',this)">xsallbrds.h</a>"
+#include "<a href="#" OnFocus="link('_file','../xstoolslib/utils_h0',this)">utils.h</a>"
+#include &lt;time.h&gt;
+#include &lt;assert.h&gt;
+
+#ifdef _DEBUG
+#define new DEBUG_NEW
+#undef THIS_FILE
+static char THIS_FILE[] = __FILE__;
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+// CAboutDlg dialog used for App About
+
+class <a href="#" OnFocus="link('_class','../gxsload/CAboutDlg0',this)">CAboutDlg</a> : public CDialog
+{
+public:
+    <a href="#" OnFocus="link('_member','../gxsload/CAboutDlg253019763',this)">CAboutDlg</a>();
+
+// Dialog Data
+    //{{AFX_DATA(CAboutDlg)
+    enum { <a href="#" OnFocus="link('_member','../gxsload/IDD226793075',this)">IDD</a> = IDD_ABOUTBOX };
+    //}}AFX_DATA
+
+    // ClassWizard generated virtual function overrides
+    //{{AFX_VIRTUAL(CAboutDlg)
+    protected:
+    virtual void <a href="#" OnFocus="link('_member','../gxsload/DoDataExchange2240984102',this)">DoDataExchange</a>(CDataExchange* pDX);    // DDX/DDV support
+    //}}AFX_VIRTUAL
+
+// Implementation
+protected:
+    //{{AFX_MSG(CAboutDlg)
+    //}}AFX_MSG
+    DECLARE_MESSAGE_MAP()
+};
+
+<a href="#" OnFocus="link('_member','../gxsload/CAboutDlg253019763',this)">CAboutDlg::CAboutDlg</a>() : CDialog(<a href="#" OnFocus="link('_class','../gxsload/CAboutDlg0',this)">CAboutDlg</a>::IDD)
+{
+    //{{AFX_DATA_INIT(CAboutDlg)
+    //}}AFX_DATA_INIT
+}
+
+void <a href="#" OnFocus="link('_member','../gxsload/DoDataExchange2240984102',this)">CAboutDlg::DoDataExchange</a>(CDataExchange* pDX)
+{
+    CDialog::DoDataExchange(pDX);
+    //{{AFX_DATA_MAP(CAboutDlg)
+    //}}AFX_DATA_MAP
+}
+
+BEGIN_MESSAGE_MAP(<a href="#" OnFocus="link('_class','../gxsload/CAboutDlg0',this)">CAboutDlg</a>, CDialog)
+    //{{AFX_MSG_MAP(CAboutDlg)
+        // No message handlers
+    //}}AFX_MSG_MAP
+END_MESSAGE_MAP()
+
+/////////////////////////////////////////////////////////////////////////////
+// CGxssetcodecDlg dialog
+
+<a href="#" OnFocus="link('_member','CGxssetcodecDlg3084088304',this)">CGxssetcodecDlg::CGxssetcodecDlg</a>(CWnd* pParent /*=NULL*/)
+    : CDialog(<a href="#" OnFocus="link('_class','CGxssetcodecDlg0',this)">CGxssetcodecDlg</a>::IDD, pParent)
+{
+    //{{AFX_DATA_INIT(CGxssetcodecDlg)
+    m_chkALC = FALSE;
+    m_chkFDIN = FALSE;
+    m_chkFDOUT = FALSE;
+    m_chkFR = FALSE;
+    m_chkPM1 = TRUE;
+    m_chkPM2 = TRUE;
+    m_chkPM3 = FALSE;
+    m_chkZELMIN = FALSE;
+    m_chkPM0 = TRUE;
+    //}}AFX_DATA_INIT
+    // Note that LoadIcon does not require a subsequent DestroyIcon in Win32
+    m_hIcon = AfxGetApp()-&gt;LoadIcon(IDR_MAINFRAME);
+}
+
+void <a href="#" OnFocus="link('_member','DoDataExchange2670854926',this)">CGxssetcodecDlg::DoDataExchange</a>(CDataExchange* pDX)
+{
+    CDialog::DoDataExchange(pDX);
+    //{{AFX_DATA_MAP(CGxssetcodecDlg)
+    DDX_Control(pDX, IDC_CMB_ZTM, m_cmbZTM);
+    DDX_Control(pDX, IDC_CMB_WTM, m_cmbWTM);
+    DDX_Control(pDX, IDC_CMB_SERIALFORMAT, m_cmbSerialformat);
+    DDX_Control(pDX, IDC_CMB_SAMPLINGFREQ, m_cmbSamplingfreq);
+    DDX_Control(pDX, IDC_CMB_REF, m_cmbREF);
+    DDX_Control(pDX, IDC_CMB_RATT, m_cmbRATT);
+    DDX_Control(pDX, IDC_CMB_LTM, m_cmbLTM);
+    DDX_Control(pDX, IDC_CMB_LMTH, m_cmbLMTH);
+    DDX_Control(pDX, IDC_CMB_LMAT, m_cmbLMAT);
+    DDX_Control(pDX, IDC_CMB_IPGA, m_cmbIPGA);
+    DDX_Control(pDX, IDC_CMB_INPUTCHANNEL, m_cmbInputchannel);
+    DDX_Control(pDX, IDC_CMB_FDTM, m_cmbFDTM);
+    DDX_Control(pDX, IDC_CMB_FDATT, m_cmbFDATT);
+    DDX_Control(pDX, IDC_CMB_DEEMPHASIS, m_cmbDeemphasis);
+    DDX_Control(pDX, IDC_CMB_LPT, m_cmbLpt);
+    DDX_Control(pDX, IDC_CMB_BOARD, m_cmbBoard);
+    DDX_Check(pDX, IDC_CHK_ALC, m_chkALC);
+    DDX_Check(pDX, IDC_CHK_FDIN, m_chkFDIN);
+    DDX_Check(pDX, IDC_CHK_FDOUT, m_chkFDOUT);
+    DDX_Check(pDX, IDC_CHK_FR, m_chkFR);
+    DDX_Check(pDX, IDC_CHK_PM1, m_chkPM1);
+    DDX_Check(pDX, IDC_CHK_PM2, m_chkPM2);
+    DDX_Check(pDX, IDC_CHK_PM3, m_chkPM3);
+    DDX_Check(pDX, IDC_CHK_ZELMIN, m_chkZELMIN);
+    DDX_Check(pDX, IDC_CHK_PM0, m_chkPM0);
+    //}}AFX_DATA_MAP
+}
+
+BEGIN_MESSAGE_MAP(<a href="#" OnFocus="link('_class','CGxssetcodecDlg0',this)">CGxssetcodecDlg</a>, CDialog)
+    //{{AFX_MSG_MAP(CGxssetcodecDlg)
+    ON_WM_SYSCOMMAND()
+    ON_WM_PAINT()
+    ON_WM_QUERYDRAGICON()
+    ON_BN_CLICKED(ID_SET, OnSet)
+    ON_CBN_SELCHANGE(IDC_CMB_BOARD, OnSelchangeCmbBoard)
+    ON_CBN_SELCHANGE(IDC_CMB_LPT, OnSelchangeCmbLpt)
+    ON_BN_CLICKED(IDC_CHK_ALC, OnChkAlc)
+    ON_BN_CLICKED(IDC_CHK_FDIN, OnChkFdin)
+    ON_BN_CLICKED(IDC_CHK_FDOUT, OnChkFdout)
+    ON_BN_CLICKED(IDC_CHK_FR, OnChkFr)
+    ON_BN_CLICKED(IDC_CHK_PM0, OnChkPm0)
+    ON_BN_CLICKED(IDC_CHK_PM1, OnChkPm1)
+    ON_BN_CLICKED(IDC_CHK_PM2, OnChkPm2)
+    ON_BN_CLICKED(IDC_CHK_PM3, OnChkPm3)
+    ON_BN_CLICKED(IDC_CHK_ZELMIN, OnChkZelmin)
+    ON_CBN_SELCHANGE(IDC_CMB_DEEMPHASIS, OnSelchangeCmbDeemphasis)
+    ON_CBN_SELCHANGE(IDC_CMB_FDATT, OnSelchangeCmbFdatt)
+    ON_CBN_SELCHANGE(IDC_CMB_FDTM, OnSelchangeCmbFdtm)
+    ON_CBN_SELCHANGE(IDC_CMB_INPUTCHANNEL, OnSelchangeCmbInputchannel)
+    ON_CBN_SELCHANGE(IDC_CMB_IPGA, OnSelchangeCmbIpga)
+    ON_CBN_SELCHANGE(IDC_CMB_LMAT, OnSelchangeCmbLmat)
+    ON_CBN_SELCHANGE(IDC_CMB_LMTH, OnSelchangeCmbLmth)
+    ON_CBN_SELCHANGE(IDC_CMB_LTM, OnSelchangeCmbLtm)
+    ON_CBN_SELCHANGE(IDC_CMB_RATT, OnSelchangeCmbRatt)
+    ON_CBN_SELCHANGE(IDC_CMB_REF, OnSelchangeCmbRef)
+    ON_CBN_SELCHANGE(IDC_CMB_SAMPLINGFREQ, OnSelchangeCmbSamplingfreq)
+    ON_CBN_SELCHANGE(IDC_CMB_SERIALFORMAT, OnSelchangeCmbSerialformat)
+    ON_CBN_SELCHANGE(IDC_CMB_WTM, OnSelchangeCmbWtm)
+    ON_CBN_SELCHANGE(IDC_CMB_ZTM, OnSelchangeCmbZtm)
+    ON_BN_CLICKED(IDC_CHK_PM0, OnChkPm0)
+    //}}AFX_MSG_MAP
+END_MESSAGE_MAP()
+
+/////////////////////////////////////////////////////////////////////////////
+// CGxssetcodecDlg message handlers
+
+BOOL <a href="#" OnFocus="link('_member','OnInitDialog2051007834',this)">CGxssetcodecDlg::OnInitDialog</a>()
+{
+    CDialog::OnInitDialog();
+
+    // Add "About..." menu item to system menu.
+
+    // IDM_ABOUTBOX must be in the system command range.
+    ASSERT((IDM_ABOUTBOX &amp; 0xFFF0) == IDM_ABOUTBOX);
+    ASSERT(IDM_ABOUTBOX &lt; 0xF000);
+
+    CMenu* pSysMenu = GetSystemMenu(FALSE);
+    if (pSysMenu != NULL)
+    {
+        CString strAboutMenu;
+        strAboutMenu.LoadString(IDS_ABOUTBOX);
+        if (!strAboutMenu.IsEmpty())
+        {
+            pSysMenu-&gt;AppendMenu(MF_SEPARATOR);
+            pSysMenu-&gt;AppendMenu(MF_STRING, IDM_ABOUTBOX, strAboutMenu);
+        }
+    }
+
+    // Set the icon for this dialog.  The framework does this automatically
+    //  when the application's main window is not a dialog
+    SetIcon(m_hIcon, TRUE);         // Set big icon
+    SetIcon(m_hIcon, FALSE);        // Set small icon
+    
+    // TODO: Add extra initialization here
+
+    // setup the list of XS Boards in the pulldown list
+    <a href="#" OnFocus="link('_class','../xstoolslib/brdModel_struct0',this)">XSBoardInfo</a>* brdInfo;
+    int numBoards;
+    numBoards = <a href="#" OnFocus="link('_member','../xstoolslib/GetXSBoardInfo2867269968',this)">GetXSBoardInfo</a>(&amp;brdInfo);
+    for(int i=0; i&lt;numBoards; i++)
+        <a href="#" OnFocus="link('_member','m_cmbBoard2050680179',this)">m_cmbBoard</a>.AddString(brdInfo[i].brdModel);
+
+    // setup the list of parallel ports in the pulldown list
+    <a href="#" OnFocus="link('_member','m_cmbLpt2050680179',this)">m_cmbLpt</a>.AddString("LPT1");
+    <a href="#" OnFocus="link('_member','m_cmbLpt2050680179',this)">m_cmbLpt</a>.AddString("LPT2");
+    <a href="#" OnFocus="link('_member','m_cmbLpt2050680179',this)">m_cmbLpt</a>.AddString("LPT3");
+    <a href="#" OnFocus="link('_member','m_cmbLpt2050680179',this)">m_cmbLpt</a>.SelectString(-1,"LPT1");  // select the default parallel port upon startup
+
+    // get the last setting for the board type
+    string brdType;
+    if((brdType=<a href="#" OnFocus="link('_member','../xstoolslib/GetXSTOOLSParameter86138908',this)">GetXSTOOLSParameter</a>((string)"BoardType")) == "")
+    { // set the default value if no previous value exists
+        if(<a href="#" OnFocus="link('_member','../xstoolslib/SetXSTOOLSParameter1183990257',this)">SetXSTOOLSParameter</a>((string)"BoardType",(string)brdInfo[0].brdModel) == false)
+        {
+            AfxMessageBox("BoardType value was not set",MB_ICONSTOP);
+            exit(0);
+        }
+        brdType = <a href="#" OnFocus="link('_member','../xstoolslib/GetXSTOOLSParameter86138908',this)">GetXSTOOLSParameter</a>((string)"BoardType");
+        assert(brdType != "");
+    }
+    <a href="#" OnFocus="link('_member','m_cmbBoard2050680179',this)">m_cmbBoard</a>.SelectString(-1,(const char*)(brdType.c_str()));
+
+    // get the last setting for the parallel port
+    string lptNum;
+    if((lptNum=<a href="#" OnFocus="link('_member','../xstoolslib/GetXSTOOLSParameter86138908',this)">GetXSTOOLSParameter</a>((string)"LPT")) == "")
+    { // set the default value if no previous value exists
+        if(<a href="#" OnFocus="link('_member','../xstoolslib/SetXSTOOLSParameter1183990257',this)">SetXSTOOLSParameter</a>((string)"LPT",(string)"LPT1") == false)
+        {
+            AfxMessageBox("LPT value was not set",MB_ICONSTOP);
+            exit(0);
+        }
+        lptNum = <a href="#" OnFocus="link('_member','../xstoolslib/GetXSTOOLSParameter86138908',this)">GetXSTOOLSParameter</a>((string)"LPT");
+        assert(lptNum != "");
+    }
+    <a href="#" OnFocus="link('_member','m_cmbLpt2050680179',this)">m_cmbLpt</a>.SelectString(-1,(const char*)(lptNum.c_str()));
+
+    <a href="#" OnFocus="link('_member','m_cmbInputchannel2050680179',this)">m_cmbInputchannel</a>.AddString("INT0");
+    <a href="#" OnFocus="link('_member','m_cmbInputchannel2050680179',this)">m_cmbInputchannel</a>.AddString("INT1");
+    <a href="#" OnFocus="link('_member','m_cmbInputchannel2050680179',this)">m_cmbInputchannel</a>.AddString("EXT");
+    <a href="#" OnFocus="link('_member','m_cmbInputchannel2050680179',this)">m_cmbInputchannel</a>.AddString("LINE");
+    <a href="#" OnFocus="link('_member','m_cmbInputchannel2050680179',this)">m_cmbInputchannel</a>.SelectString(-1,"LINE");
+
+    <a href="#" OnFocus="link('_member','m_cmbDeemphasis2050680179',this)">m_cmbDeemphasis</a>.AddString("44 KHz");
+    <a href="#" OnFocus="link('_member','m_cmbDeemphasis2050680179',this)">m_cmbDeemphasis</a>.AddString("OFF");
+    <a href="#" OnFocus="link('_member','m_cmbDeemphasis2050680179',this)">m_cmbDeemphasis</a>.AddString("48 KHz");
+    <a href="#" OnFocus="link('_member','m_cmbDeemphasis2050680179',this)">m_cmbDeemphasis</a>.AddString("32 KHz");
+    <a href="#" OnFocus="link('_member','m_cmbDeemphasis2050680179',this)">m_cmbDeemphasis</a>.SelectString(-1,"OFF");
+
+    <a href="#" OnFocus="link('_member','m_cmbSerialformat2050680179',this)">m_cmbSerialformat</a>.AddString("20M/16L");
+    <a href="#" OnFocus="link('_member','m_cmbSerialformat2050680179',this)">m_cmbSerialformat</a>.AddString("20M/20L");
+    <a href="#" OnFocus="link('_member','m_cmbSerialformat2050680179',this)">m_cmbSerialformat</a>.AddString("20M/20M");
+    <a href="#" OnFocus="link('_member','m_cmbSerialformat2050680179',this)">m_cmbSerialformat</a>.SelectString(-1,"20M/20M");
+
+    <a href="#" OnFocus="link('_member','m_cmbSamplingfreq2050680179',this)">m_cmbSamplingfreq</a>.AddString("32 KHz");
+    <a href="#" OnFocus="link('_member','m_cmbSamplingfreq2050680179',this)">m_cmbSamplingfreq</a>.AddString("48 KHz");
+    <a href="#" OnFocus="link('_member','m_cmbSamplingfreq2050680179',this)">m_cmbSamplingfreq</a>.SelectString(-1,"48 KHz");
+
+    <a href="#" OnFocus="link('_member','m_cmbLTM2050680179',this)">m_cmbLTM</a>.AddString(" 63 us");
+    <a href="#" OnFocus="link('_member','m_cmbLTM2050680179',this)">m_cmbLTM</a>.AddString("125 us");
+    <a href="#" OnFocus="link('_member','m_cmbLTM2050680179',this)">m_cmbLTM</a>.AddString("250 us");
+    <a href="#" OnFocus="link('_member','m_cmbLTM2050680179',this)">m_cmbLTM</a>.AddString("500 us");
+    <a href="#" OnFocus="link('_member','m_cmbLTM2050680179',this)">m_cmbLTM</a>.SelectString(-1,"125 us");
+
+    <a href="#" OnFocus="link('_member','m_cmbWTM2050680179',this)">m_cmbWTM</a>.AddString("  8 ms");
+    <a href="#" OnFocus="link('_member','m_cmbWTM2050680179',this)">m_cmbWTM</a>.AddString(" 16 ms");
+    <a href="#" OnFocus="link('_member','m_cmbWTM2050680179',this)">m_cmbWTM</a>.AddString(" 64 ms");
+    <a href="#" OnFocus="link('_member','m_cmbWTM2050680179',this)">m_cmbWTM</a>.AddString("512 ms");
+    <a href="#" OnFocus="link('_member','m_cmbWTM2050680179',this)">m_cmbWTM</a>.SelectString(-1,"  8 ms");
+
+    <a href="#" OnFocus="link('_member','m_cmbZTM2050680179',this)">m_cmbZTM</a>.AddString("  8 ms");
+    <a href="#" OnFocus="link('_member','m_cmbZTM2050680179',this)">m_cmbZTM</a>.AddString(" 16 ms");
+    <a href="#" OnFocus="link('_member','m_cmbZTM2050680179',this)">m_cmbZTM</a>.AddString(" 64 ms");
+    <a href="#" OnFocus="link('_member','m_cmbZTM2050680179',this)">m_cmbZTM</a>.AddString("512 ms");
+    <a href="#" OnFocus="link('_member','m_cmbZTM2050680179',this)">m_cmbZTM</a>.SelectString(-1,"  8 ms");
+
+    <a href="#" OnFocus="link('_member','m_cmbFDTM2050680179',this)">m_cmbFDTM</a>.AddString("24 ms");
+    <a href="#" OnFocus="link('_member','m_cmbFDTM2050680179',this)">m_cmbFDTM</a>.AddString("32 ms");
+    <a href="#" OnFocus="link('_member','m_cmbFDTM2050680179',this)">m_cmbFDTM</a>.AddString("48 ms");
+    <a href="#" OnFocus="link('_member','m_cmbFDTM2050680179',this)">m_cmbFDTM</a>.AddString("64 ms");
+    <a href="#" OnFocus="link('_member','m_cmbFDTM2050680179',this)">m_cmbFDTM</a>.SelectString(-1,"24 ms");
+
+    <a href="#" OnFocus="link('_member','m_cmbLMTH2050680179',this)">m_cmbLMTH</a>.AddString("&gt; -4dB");
+    <a href="#" OnFocus="link('_member','m_cmbLMTH2050680179',this)">m_cmbLMTH</a>.AddString("&gt; -2dB");
+    <a href="#" OnFocus="link('_member','m_cmbLMTH2050680179',this)">m_cmbLMTH</a>.SelectString(-1,"&gt; -4dB");
+
+    <a href="#" OnFocus="link('_member','m_cmbRATT2050680179',this)">m_cmbRATT</a>.AddString("1");
+    <a href="#" OnFocus="link('_member','m_cmbRATT2050680179',this)">m_cmbRATT</a>.AddString("2");
+    <a href="#" OnFocus="link('_member','m_cmbRATT2050680179',this)">m_cmbRATT</a>.AddString("3");
+    <a href="#" OnFocus="link('_member','m_cmbRATT2050680179',this)">m_cmbRATT</a>.AddString("4");
+    <a href="#" OnFocus="link('_member','m_cmbRATT2050680179',this)">m_cmbRATT</a>.SelectString(-1,"1");
+
+    <a href="#" OnFocus="link('_member','m_cmbFDATT2050680179',this)">m_cmbFDATT</a>.AddString("1");
+    <a href="#" OnFocus="link('_member','m_cmbFDATT2050680179',this)">m_cmbFDATT</a>.AddString("2");
+    <a href="#" OnFocus="link('_member','m_cmbFDATT2050680179',this)">m_cmbFDATT</a>.SelectString(-1,"1");
+
+    <a href="#" OnFocus="link('_member','m_cmbLMAT2050680179',this)">m_cmbLMAT</a>.AddString("1");
+    <a href="#" OnFocus="link('_member','m_cmbLMAT2050680179',this)">m_cmbLMAT</a>.AddString("2");
+    <a href="#" OnFocus="link('_member','m_cmbLMAT2050680179',this)">m_cmbLMAT</a>.AddString("3");
+    <a href="#" OnFocus="link('_member','m_cmbLMAT2050680179',this)">m_cmbLMAT</a>.AddString("4");
+    <a href="#" OnFocus="link('_member','m_cmbLMAT2050680179',this)">m_cmbLMAT</a>.SelectString(-1,"1");
+
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("MUTE");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("-52dB/-74dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("-48dB/-70dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("-44dB/-66dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("-40dB/-62dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("-38dB/-60dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("-36dB/-58dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("-34dB/-56dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("-32dB/-54dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("-30dB/-52dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("-28dB/-50dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("-26dB/-48dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("-24dB/-46dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("-22dB/-44dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("-20dB/-42dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("-18dB/-40dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("-16dB/-38dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("-15dB/-37dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("-14dB/-36dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("-13dB/-35dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("-12dB/-34dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("-11dB/-33dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("-10dB/-32dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString(" -9dB/-31dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("-8.0dB/-30.0dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("-7.5dB/-29.5dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("-7.0dB/-29.0dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("-6.5dB/-28.5dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("-6.0dB/-28.0dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("-5.5dB/-27.5dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("-5.0dB/-27.0dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("-4.5dB/-26.5dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("-4.0dB/-26.0dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("-3.5dB/-25.5dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("-3.0dB/-25.0dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("-2.5dB/-24.5dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("-2.0dB/-24.0dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("-1.5dB/-23.5dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("-1.0dB/-23.0dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("-0.5dB/-22.5dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString(" 0.0dB/-22.0dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString(" 0.5dB/-21.5dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString(" 1.0dB/-21.0dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString(" 1.5dB/-20.5dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString(" 2.0dB/-20.0dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString(" 2.5dB/-19.5dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString(" 3.0dB/-19.0dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString(" 3.5dB/-18.5dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString(" 4.0dB/-18.0dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString(" 4.5dB/-17.5dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString(" 5.0dB/-17.0dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString(" 5.5dB/-16.5dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString(" 6.0dB/-16.0dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString(" 6.5dB/-15.5dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString(" 7.0dB/-15.0dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString(" 7.5dB/-14.5dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString(" 8.0dB/-14.0dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString(" 8.5dB/-13.5dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString(" 9.0dB/-13.0dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString(" 9.5dB/-12.5dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("10.0dB/-12.0dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("10.5dB/-11.5dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("11.0dB/-11.0dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("11.5dB/-10.5dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("12.0dB/-10.0dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("12.5dB/-9.5dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("13.0dB/-9.0dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("13.5dB/-8.5dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("14.0dB/-8.0dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("14.5dB/-7.5dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("15.0dB/-7.0dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("15.5dB/-6.5dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("16.0dB/-6.0dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("16.5dB/-5.5dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("17.0dB/-5.0dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("17.5dB/-4.5dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("18.0dB/-4.0dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("18.5dB/-3.5dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("19.0dB/-3.0dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("19.5dB/-2.5dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("20.0dB/-2.0dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("20.5dB/-1.5dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("21.0dB/-1.0dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("21.5dB/-0.5dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("22.0dB/0.0dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("22.5dB/0.5dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("23.0dB/1.0dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("23.5dB/1.5dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("24.0dB/2.0dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("24.5dB/2.5dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("25.0dB/3.0dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("25.5dB/3.5dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("26.0dB/4.0dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("26.5dB/4.5dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("27.0dB/5.0dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("27.5dB/5.5dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.AddString("28.0dB/6.0dB");
+    <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.SelectString(-1,"22.0dB/0.0dB");
+
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("MUTE");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("-52dB/-74dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("-48dB/-70dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("-44dB/-66dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("-40dB/-62dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("-38dB/-60dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("-36dB/-58dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("-34dB/-56dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("-32dB/-54dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("-30dB/-52dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("-28dB/-50dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("-26dB/-48dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("-24dB/-46dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("-22dB/-44dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("-20dB/-42dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("-18dB/-40dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("-16dB/-38dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("-15dB/-37dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("-14dB/-36dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("-13dB/-35dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("-12dB/-34dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("-11dB/-33dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("-10dB/-32dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString(" -9dB/-31dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("-8.0dB/-30.0dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("-7.5dB/-29.5dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("-7.0dB/-29.0dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("-6.5dB/-28.5dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("-6.0dB/-28.0dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("-5.5dB/-27.5dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("-5.0dB/-27.0dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("-4.5dB/-26.5dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("-4.0dB/-26.0dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("-3.5dB/-25.5dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("-3.0dB/-25.0dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("-2.5dB/-24.5dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("-2.0dB/-24.0dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("-1.5dB/-23.5dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("-1.0dB/-23.0dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("-0.5dB/-22.5dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString(" 0.0dB/-22.0dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString(" 0.5dB/-21.5dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString(" 1.0dB/-21.0dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString(" 1.5dB/-20.5dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString(" 2.0dB/-20.0dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString(" 2.5dB/-19.5dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString(" 3.0dB/-19.0dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString(" 3.5dB/-18.5dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString(" 4.0dB/-18.0dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString(" 4.5dB/-17.5dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString(" 5.0dB/-17.0dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString(" 5.5dB/-16.5dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString(" 6.0dB/-16.0dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString(" 6.5dB/-15.5dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString(" 7.0dB/-15.0dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString(" 7.5dB/-14.5dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString(" 8.0dB/-14.0dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString(" 8.5dB/-13.5dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString(" 9.0dB/-13.0dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString(" 9.5dB/-12.5dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("10.0dB/-12.0dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("10.5dB/-11.5dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("11.0dB/-11.0dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("11.5dB/-10.5dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("12.0dB/-10.0dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("12.5dB/-9.5dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("13.0dB/-9.0dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("13.5dB/-8.5dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("14.0dB/-8.0dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("14.5dB/-7.5dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("15.0dB/-7.0dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("15.5dB/-6.5dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("16.0dB/-6.0dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("16.5dB/-5.5dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("17.0dB/-5.0dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("17.5dB/-4.5dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("18.0dB/-4.0dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("18.5dB/-3.5dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("19.0dB/-3.0dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("19.5dB/-2.5dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("20.0dB/-2.0dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("20.5dB/-1.5dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("21.0dB/-1.0dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("21.5dB/-0.5dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("22.0dB/0.0dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("22.5dB/0.5dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("23.0dB/1.0dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("23.5dB/1.5dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("24.0dB/2.0dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("24.5dB/2.5dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("25.0dB/3.0dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("25.5dB/3.5dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("26.0dB/4.0dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("26.5dB/4.5dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("27.0dB/5.0dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("27.5dB/5.5dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.AddString("28.0dB/6.0dB");
+    <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.SelectString(-1,"22.0dB/0.0dB");
+
+    return TRUE;  // return TRUE  unless you set the focus to a control
+}
+
+void <a href="#" OnFocus="link('_member','OnSysCommand3601446198',this)">CGxssetcodecDlg::OnSysCommand</a>(UINT nID, LPARAM lParam)
+{
+    if ((nID &amp; 0xFFF0) == IDM_ABOUTBOX)
+    {
+        <a href="#" OnFocus="link('_class','../gxsload/CAboutDlg0',this)">CAboutDlg</a> dlgAbout;
+        dlgAbout.DoModal();
+    }
+    else
+    {
+        CDialog::OnSysCommand(nID, lParam);
+    }
+}
+
+// If you add a minimize button to your dialog, you will need the code below
+//  to draw the icon.  For MFC applications using the document/view model,
+//  this is automatically done for you by the framework.
+
+void <a href="#" OnFocus="link('_member','OnPaint2051007834',this)">CGxssetcodecDlg::OnPaint</a>() 
+{
+    if (IsIconic())
+    {
+        CPaintDC dc(this); // device context for painting
+
+        SendMessage(WM_ICONERASEBKGND, (WPARAM) dc.GetSafeHdc(), 0);
+
+        // Center icon in client rectangle
+        int cxIcon = GetSystemMetrics(SM_CXICON);
+        int cyIcon = GetSystemMetrics(SM_CYICON);
+        CRect rect;
+        GetClientRect(&amp;rect);
+        int x = (rect.Width() - cxIcon + 1) / 2;
+        int y = (rect.Height() - cyIcon + 1) / 2;
+
+        // Draw the icon
+        dc.DrawIcon(x, y, m_hIcon);
+    }
+    else
+    {
+        CDialog::OnPaint();
+    }
+}
+
+// The system calls this to obtain the cursor to display while the user drags
+//  the minimized window.
+HCURSOR <a href="#" OnFocus="link('_member','OnQueryDragIcon2051007834',this)">CGxssetcodecDlg::OnQueryDragIcon</a>()
+{
+    return (HCURSOR) <a href="#" OnFocus="link('_member','m_hIcon2050680179',this)">m_hIcon</a>;
+}
+
+
+<a href="#" OnFocus="link('_class','../xstoolslib/XSBoard0',this)">XSBoard</a>* <a href="#" OnFocus="link('_member','brdPtr0',this)">brdPtr</a> = NULL;
+int <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[9];        // audio codec registers
+
+void <a href="#" OnFocus="link('_member','OnSet2051007834',this)">CGxssetcodecDlg::OnSet</a>() 
+{
+    if(<a href="#" OnFocus="link('_member','brdPtr0',this)">brdPtr</a> != NULL)
+    {
+        delete <a href="#" OnFocus="link('_member','brdPtr0',this)">brdPtr</a>;
+        <a href="#" OnFocus="link('_member','brdPtr0',this)">brdPtr</a> = NULL;
+    }
+    
+    <a href="#" OnFocus="link('_class','../xstoolslib/XSError0',this)">XSError</a> <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>(cerr); // setup error channel
+
+    int <a href="#" OnFocus="link('_member','../xsatapi/portNum0',this)">portNum</a> = <a href="#" OnFocus="link('_member','m_cmbLpt2050680179',this)">m_cmbLpt</a>.GetCurSel()+1;  // get parallel port number
+
+    // determine the type of XS Board and set the pointer to the board object
+    CString <a href="#" OnFocus="link('_member','../xsatapi/brdModel0',this)">brdModel</a>;
+    <a href="#" OnFocus="link('_member','m_cmbBoard2050680179',this)">m_cmbBoard</a>.GetLBText(<a href="#" OnFocus="link('_member','m_cmbBoard2050680179',this)">m_cmbBoard</a>.GetCurSel(),<a href="#" OnFocus="link('_member','../xsatapi/brdModel0',this)">brdModel</a>);
+    <a href="#" OnFocus="link('_member','brdPtr0',this)">brdPtr</a> = <a href="#" OnFocus="link('_member','../xstoolslib/NewXSBoard189216495',this)">NewXSBoard</a>(brdModel);
+    if(<a href="#" OnFocus="link('_member','brdPtr0',this)">brdPtr</a>==NULL)
+    {
+        AfxMessageBox("Unknown type of XS Board!", MB_ICONSTOP);
+        return;
+    }
+
+    if(<a href="#" OnFocus="link('_member','brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/Setup3588776655',this)">Setup</a>(&amp;errMsg,LPCTSTR(brdModel),portNum) == false)
+    {
+        AfxMessageBox("Invalid parallel port selected!",MB_ICONSTOP);
+        delete <a href="#" OnFocus="link('_member','brdPtr0',this)">brdPtr</a>;
+        return;
+    }
+
+    CString chan;
+    <a href="#" OnFocus="link('_member','m_cmbInputchannel2050680179',this)">m_cmbInputchannel</a>.GetLBText(<a href="#" OnFocus="link('_member','m_cmbInputchannel2050680179',this)">m_cmbInputchannel</a>.GetCurSel(),chan);
+    if(strncmp((LPCTSTR)chan,"INT0",strlen("INT0"))==0)
+        <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[0] = 1;
+    else if(strncmp((LPCTSTR)chan,"INT1",strlen("INT1"))==0)
+        <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[0] = 2;
+    else if(strncmp((LPCTSTR)chan,"EXT",strlen("EXT"))==0)
+        <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[0] = 4;
+    else if(strncmp((LPCTSTR)chan,"LINE",strlen("LINE"))==0)
+        <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[0] = 8;
+    else
+        <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[0] = 8;
+
+    <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[1] = 0;
+    if(<a href="#" OnFocus="link('_member','m_chkPM02050680179',this)">m_chkPM0</a>==TRUE)
+        <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[1] |= 1;
+    if(<a href="#" OnFocus="link('_member','m_chkPM12050680179',this)">m_chkPM1</a>==TRUE)
+        <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[1] |= 4;
+    if(<a href="#" OnFocus="link('_member','m_chkPM22050680179',this)">m_chkPM2</a>==TRUE)
+        <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[1] |= 16;
+    if(<a href="#" OnFocus="link('_member','m_chkPM32050680179',this)">m_chkPM3</a>==TRUE)
+        <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[1] |= 32;
+
+    int deemph = <a href="#" OnFocus="link('_member','m_cmbDeemphasis2050680179',this)">m_cmbDeemphasis</a>.GetCurSel();
+    int serfmt = <a href="#" OnFocus="link('_member','m_cmbSerialformat2050680179',this)">m_cmbSerialformat</a>.GetCurSel();
+    int sampfreq = <a href="#" OnFocus="link('_member','m_cmbSamplingfreq2050680179',this)">m_cmbSamplingfreq</a>.GetCurSel();
+    <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[2] = (sampfreq&lt;&lt;4) | (serfmt&lt;&lt;2) | (deemph);
+
+    int ltm = <a href="#" OnFocus="link('_member','m_cmbLTM2050680179',this)">m_cmbLTM</a>.GetCurSel();
+    int wtm = <a href="#" OnFocus="link('_member','m_cmbWTM2050680179',this)">m_cmbWTM</a>.GetCurSel();
+    int ztm = <a href="#" OnFocus="link('_member','m_cmbZTM2050680179',this)">m_cmbZTM</a>.GetCurSel();
+    int fdtm = <a href="#" OnFocus="link('_member','m_cmbFDTM2050680179',this)">m_cmbFDTM</a>.GetCurSel();
+    <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[3] = (fdtm&lt;&lt;6) | (ztm&lt;&lt;4) | (wtm&lt;&lt;2) | (ltm);
+
+    int lmth = <a href="#" OnFocus="link('_member','m_cmbLMTH2050680179',this)">m_cmbLMTH</a>.GetCurSel();
+    int ratt = <a href="#" OnFocus="link('_member','m_cmbRATT2050680179',this)">m_cmbRATT</a>.GetCurSel();
+    int fdatt = <a href="#" OnFocus="link('_member','m_cmbFDATT2050680179',this)">m_cmbFDATT</a>.GetCurSel();
+    int lmat = <a href="#" OnFocus="link('_member','m_cmbLMAT2050680179',this)">m_cmbLMAT</a>.GetCurSel();
+    <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[4] = (lmat&lt;&lt;4) | (fdatt&lt;&lt;3) | (ratt&lt;&lt;1) | (lmth);
+
+    <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[5] = <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.GetCurSel();
+
+    <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[6] = 0;
+    if(<a href="#" OnFocus="link('_member','m_chkALC2050680179',this)">m_chkALC</a>==TRUE)
+        <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[6] |= 1;
+    if(<a href="#" OnFocus="link('_member','m_chkFDOUT2050680179',this)">m_chkFDOUT</a>==TRUE)
+        <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[6] |= 2;
+    if(<a href="#" OnFocus="link('_member','m_chkFDIN2050680179',this)">m_chkFDIN</a>==TRUE)
+        <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[6] |= 4;
+    if(<a href="#" OnFocus="link('_member','m_chkFR2050680179',this)">m_chkFR</a>==TRUE)
+        <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[6] |= 16;
+    if(<a href="#" OnFocus="link('_member','m_chkZELMIN2050680179',this)">m_chkZELMIN</a>==TRUE)
+        <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[6] |= 32;
+
+    <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[7] = <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.GetCurSel();
+
+    <a href="#" OnFocus="link('_member','brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/SetFlags2345602696',this)">SetFlags</a>(<a href="#" OnFocus="link('_member','brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/GetFlags60181096',this)">GetFlags</a>() &amp; ~1L);
+    <a href="#" OnFocus="link('_member','brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/SetupAudio37972220',this)">SetupAudio</a>(reg);
+    <a href="#" OnFocus="link('_member','brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/SetFlags2345602696',this)">SetFlags</a>(<a href="#" OnFocus="link('_member','brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/GetFlags60181096',this)">GetFlags</a>() |  1L);
+}
+
+void <a href="#" OnFocus="link('_member','OnSelchangeCmbBoard2051007834',this)">CGxssetcodecDlg::OnSelchangeCmbBoard</a>() 
+{
+    CString <a href="#" OnFocus="link('_member','../xsatapi/brdModel0',this)">brdModel</a>;
+    <a href="#" OnFocus="link('_member','m_cmbBoard2050680179',this)">m_cmbBoard</a>.GetLBText(<a href="#" OnFocus="link('_member','m_cmbBoard2050680179',this)">m_cmbBoard</a>.GetCurSel(),<a href="#" OnFocus="link('_member','../xsatapi/brdModel0',this)">brdModel</a>);
+    <a href="#" OnFocus="link('_member','../xstoolslib/SetXSTOOLSParameter1183990257',this)">SetXSTOOLSParameter</a>((string)"BoardType",(string)LPCTSTR(brdModel));
+}
+
+void <a href="#" OnFocus="link('_member','OnSelchangeCmbLpt2051007834',this)">CGxssetcodecDlg::OnSelchangeCmbLpt</a>() 
+{
+    CString <a href="#" OnFocus="link('_member','../xsatapi/lpt0',this)">lpt</a>;
+    <a href="#" OnFocus="link('_member','m_cmbLpt2050680179',this)">m_cmbLpt</a>.GetLBText(<a href="#" OnFocus="link('_member','m_cmbLpt2050680179',this)">m_cmbLpt</a>.GetCurSel(),<a href="#" OnFocus="link('_member','../xsatapi/lpt0',this)">lpt</a>);
+    <a href="#" OnFocus="link('_member','../xstoolslib/SetXSTOOLSParameter1183990257',this)">SetXSTOOLSParameter</a>((string)"LPT",(string)LPCTSTR(lpt));
+}
+
+void <a href="#" OnFocus="link('_member','OnChkAlc2051007834',this)">CGxssetcodecDlg::OnChkAlc</a>() 
+{
+    // TODO: Add your control notification handler code here
+    <a href="#" OnFocus="link('_member','m_chkALC2050680179',this)">m_chkALC</a> = (<a href="#" OnFocus="link('_member','m_chkALC2050680179',this)">m_chkALC</a>==TRUE) ? FALSE:TRUE;   
+    <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[6] = 0;
+    if(<a href="#" OnFocus="link('_member','m_chkALC2050680179',this)">m_chkALC</a>==TRUE)
+        <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[6] |= 1;
+    if(<a href="#" OnFocus="link('_member','m_chkFDOUT2050680179',this)">m_chkFDOUT</a>==TRUE)
+        <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[6] |= 2;
+    if(<a href="#" OnFocus="link('_member','m_chkFDIN2050680179',this)">m_chkFDIN</a>==TRUE)
+        <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[6] |= 4;
+    if(<a href="#" OnFocus="link('_member','m_chkFR2050680179',this)">m_chkFR</a>==TRUE)
+        <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[6] |= 16;
+    if(<a href="#" OnFocus="link('_member','m_chkZELMIN2050680179',this)">m_chkZELMIN</a>==TRUE)
+        <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[6] |= 32;
+
+    if(<a href="#" OnFocus="link('_member','brdPtr0',this)">brdPtr</a> != NULL)
+        <a href="#" OnFocus="link('_member','brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/SetupAudio37972220',this)">SetupAudio</a>(reg);
+}
+
+void <a href="#" OnFocus="link('_member','OnChkFdin2051007834',this)">CGxssetcodecDlg::OnChkFdin</a>() 
+{
+    // TODO: Add your control notification handler code here
+    <a href="#" OnFocus="link('_member','m_chkFDIN2050680179',this)">m_chkFDIN</a> = (<a href="#" OnFocus="link('_member','m_chkFDIN2050680179',this)">m_chkFDIN</a>==TRUE) ? FALSE:TRUE;   
+    <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[6] = 0;
+    if(<a href="#" OnFocus="link('_member','m_chkALC2050680179',this)">m_chkALC</a>==TRUE)
+        <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[6] |= 1;
+    if(<a href="#" OnFocus="link('_member','m_chkFDOUT2050680179',this)">m_chkFDOUT</a>==TRUE)
+        <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[6] |= 2;
+    if(<a href="#" OnFocus="link('_member','m_chkFDIN2050680179',this)">m_chkFDIN</a>==TRUE)
+        <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[6] |= 4;
+    if(<a href="#" OnFocus="link('_member','m_chkFR2050680179',this)">m_chkFR</a>==TRUE)
+        <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[6] |= 16;
+    if(<a href="#" OnFocus="link('_member','m_chkZELMIN2050680179',this)">m_chkZELMIN</a>==TRUE)
+        <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[6] |= 32;
+
+    if(<a href="#" OnFocus="link('_member','brdPtr0',this)">brdPtr</a> != NULL)
+        <a href="#" OnFocus="link('_member','brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/SetupAudio37972220',this)">SetupAudio</a>(reg);
+}
+
+void <a href="#" OnFocus="link('_member','OnChkFdout2051007834',this)">CGxssetcodecDlg::OnChkFdout</a>() 
+{
+    // TODO: Add your control notification handler code here
+    <a href="#" OnFocus="link('_member','m_chkFDOUT2050680179',this)">m_chkFDOUT</a> = (<a href="#" OnFocus="link('_member','m_chkFDOUT2050680179',this)">m_chkFDOUT</a>==TRUE) ? FALSE:TRUE;   
+    <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[6] = 0;
+    if(<a href="#" OnFocus="link('_member','m_chkALC2050680179',this)">m_chkALC</a>==TRUE)
+        <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[6] |= 1;
+    if(<a href="#" OnFocus="link('_member','m_chkFDOUT2050680179',this)">m_chkFDOUT</a>==TRUE)
+        <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[6] |= 2;
+    if(<a href="#" OnFocus="link('_member','m_chkFDIN2050680179',this)">m_chkFDIN</a>==TRUE)
+        <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[6] |= 4;
+    if(<a href="#" OnFocus="link('_member','m_chkFR2050680179',this)">m_chkFR</a>==TRUE)
+        <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[6] |= 16;
+    if(<a href="#" OnFocus="link('_member','m_chkZELMIN2050680179',this)">m_chkZELMIN</a>==TRUE)
+        <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[6] |= 32;
+
+    if(<a href="#" OnFocus="link('_member','brdPtr0',this)">brdPtr</a> != NULL)
+        <a href="#" OnFocus="link('_member','brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/SetupAudio37972220',this)">SetupAudio</a>(reg);
+}
+
+void <a href="#" OnFocus="link('_member','OnChkFr2051007834',this)">CGxssetcodecDlg::OnChkFr</a>() 
+{
+    // TODO: Add your control notification handler code here
+    <a href="#" OnFocus="link('_member','m_chkFR2050680179',this)">m_chkFR</a> = (<a href="#" OnFocus="link('_member','m_chkFR2050680179',this)">m_chkFR</a>==TRUE) ? FALSE:TRUE;   
+    <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[6] = 0;
+    if(<a href="#" OnFocus="link('_member','m_chkALC2050680179',this)">m_chkALC</a>==TRUE)
+        <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[6] |= 1;
+    if(<a href="#" OnFocus="link('_member','m_chkFDOUT2050680179',this)">m_chkFDOUT</a>==TRUE)
+        <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[6] |= 2;
+    if(<a href="#" OnFocus="link('_member','m_chkFDIN2050680179',this)">m_chkFDIN</a>==TRUE)
+        <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[6] |= 4;
+    if(<a href="#" OnFocus="link('_member','m_chkFR2050680179',this)">m_chkFR</a>==TRUE)
+        <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[6] |= 16;
+    if(<a href="#" OnFocus="link('_member','m_chkZELMIN2050680179',this)">m_chkZELMIN</a>==TRUE)
+        <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[6] |= 32;
+
+    if(<a href="#" OnFocus="link('_member','brdPtr0',this)">brdPtr</a> != NULL)
+        <a href="#" OnFocus="link('_member','brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/SetupAudio37972220',this)">SetupAudio</a>(reg);
+}
+
+void <a href="#" OnFocus="link('_member','OnChkPm02051007834',this)">CGxssetcodecDlg::OnChkPm0</a>() 
+{
+    // TODO: Add your control notification handler code here
+    <a href="#" OnFocus="link('_member','m_chkPM02050680179',this)">m_chkPM0</a> = (<a href="#" OnFocus="link('_member','m_chkPM02050680179',this)">m_chkPM0</a>==TRUE) ? FALSE:TRUE;   
+    <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[1] = 0;
+    if(<a href="#" OnFocus="link('_member','m_chkPM02050680179',this)">m_chkPM0</a>==TRUE)
+        <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[1] |= 1;
+    if(<a href="#" OnFocus="link('_member','m_chkPM12050680179',this)">m_chkPM1</a>==TRUE)
+        <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[1] |= 4;
+    if(<a href="#" OnFocus="link('_member','m_chkPM22050680179',this)">m_chkPM2</a>==TRUE)
+        <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[1] |= 16;
+    if(<a href="#" OnFocus="link('_member','m_chkPM32050680179',this)">m_chkPM3</a>==TRUE)
+        <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[1] |= 32;
+
+    if(<a href="#" OnFocus="link('_member','brdPtr0',this)">brdPtr</a> != NULL)
+        <a href="#" OnFocus="link('_member','brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/SetupAudio37972220',this)">SetupAudio</a>(reg);
+}
+
+void <a href="#" OnFocus="link('_member','OnChkPm12051007834',this)">CGxssetcodecDlg::OnChkPm1</a>() 
+{
+    // TODO: Add your control notification handler code here
+    <a href="#" OnFocus="link('_member','m_chkPM12050680179',this)">m_chkPM1</a> = (<a href="#" OnFocus="link('_member','m_chkPM12050680179',this)">m_chkPM1</a>==TRUE) ? FALSE:TRUE;   
+    <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[1] = 0;
+    if(<a href="#" OnFocus="link('_member','m_chkPM02050680179',this)">m_chkPM0</a>==TRUE)
+        <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[1] |= 1;
+    if(<a href="#" OnFocus="link('_member','m_chkPM12050680179',this)">m_chkPM1</a>==TRUE)
+        <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[1] |= 4;
+    if(<a href="#" OnFocus="link('_member','m_chkPM22050680179',this)">m_chkPM2</a>==TRUE)
+        <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[1] |= 16;
+    if(<a href="#" OnFocus="link('_member','m_chkPM32050680179',this)">m_chkPM3</a>==TRUE)
+        <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[1] |= 32;
+
+    if(<a href="#" OnFocus="link('_member','brdPtr0',this)">brdPtr</a> != NULL)
+        <a href="#" OnFocus="link('_member','brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/SetupAudio37972220',this)">SetupAudio</a>(reg);
+}
+
+void <a href="#" OnFocus="link('_member','OnChkPm22051007834',this)">CGxssetcodecDlg::OnChkPm2</a>() 
+{
+    // TODO: Add your control notification handler code here
+    <a href="#" OnFocus="link('_member','m_chkPM22050680179',this)">m_chkPM2</a> = (<a href="#" OnFocus="link('_member','m_chkPM22050680179',this)">m_chkPM2</a>==TRUE) ? FALSE:TRUE;   
+    <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[1] = 0;
+    if(<a href="#" OnFocus="link('_member','m_chkPM02050680179',this)">m_chkPM0</a>==TRUE)
+        <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[1] |= 1;
+    if(<a href="#" OnFocus="link('_member','m_chkPM12050680179',this)">m_chkPM1</a>==TRUE)
+        <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[1] |= 4;
+    if(<a href="#" OnFocus="link('_member','m_chkPM22050680179',this)">m_chkPM2</a>==TRUE)
+        <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[1] |= 16;
+    if(<a href="#" OnFocus="link('_member','m_chkPM32050680179',this)">m_chkPM3</a>==TRUE)
+        <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[1] |= 32;
+
+    if(<a href="#" OnFocus="link('_member','brdPtr0',this)">brdPtr</a> != NULL)
+        <a href="#" OnFocus="link('_member','brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/SetupAudio37972220',this)">SetupAudio</a>(reg);
+}
+
+void <a href="#" OnFocus="link('_member','OnChkPm32051007834',this)">CGxssetcodecDlg::OnChkPm3</a>() 
+{
+    // TODO: Add your control notification handler code here
+    <a href="#" OnFocus="link('_member','m_chkPM32050680179',this)">m_chkPM3</a> = (<a href="#" OnFocus="link('_member','m_chkPM32050680179',this)">m_chkPM3</a>==TRUE) ? FALSE:TRUE;   
+    <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[1] = 0;
+    if(<a href="#" OnFocus="link('_member','m_chkPM02050680179',this)">m_chkPM0</a>==TRUE)
+        <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[1] |= 1;
+    if(<a href="#" OnFocus="link('_member','m_chkPM12050680179',this)">m_chkPM1</a>==TRUE)
+        <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[1] |= 4;
+    if(<a href="#" OnFocus="link('_member','m_chkPM22050680179',this)">m_chkPM2</a>==TRUE)
+        <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[1] |= 16;
+    if(<a href="#" OnFocus="link('_member','m_chkPM32050680179',this)">m_chkPM3</a>==TRUE)
+        <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[1] |= 32;
+
+    if(<a href="#" OnFocus="link('_member','brdPtr0',this)">brdPtr</a> != NULL)
+        <a href="#" OnFocus="link('_member','brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/SetupAudio37972220',this)">SetupAudio</a>(reg);
+}
+
+void <a href="#" OnFocus="link('_member','OnChkZelmin2051007834',this)">CGxssetcodecDlg::OnChkZelmin</a>() 
+{
+    // TODO: Add your control notification handler code here
+    <a href="#" OnFocus="link('_member','m_chkZELMIN2050680179',this)">m_chkZELMIN</a> = (<a href="#" OnFocus="link('_member','m_chkZELMIN2050680179',this)">m_chkZELMIN</a>==TRUE) ? FALSE:TRUE;   
+    <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[6] = 0;
+    if(<a href="#" OnFocus="link('_member','m_chkALC2050680179',this)">m_chkALC</a>==TRUE)
+        <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[6] |= 1;
+    if(<a href="#" OnFocus="link('_member','m_chkFDOUT2050680179',this)">m_chkFDOUT</a>==TRUE)
+        <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[6] |= 2;
+    if(<a href="#" OnFocus="link('_member','m_chkFDIN2050680179',this)">m_chkFDIN</a>==TRUE)
+        <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[6] |= 4;
+    if(<a href="#" OnFocus="link('_member','m_chkFR2050680179',this)">m_chkFR</a>==TRUE)
+        <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[6] |= 16;
+    if(<a href="#" OnFocus="link('_member','m_chkZELMIN2050680179',this)">m_chkZELMIN</a>==TRUE)
+        <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[6] |= 32;
+
+    if(<a href="#" OnFocus="link('_member','brdPtr0',this)">brdPtr</a> != NULL)
+        <a href="#" OnFocus="link('_member','brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/SetupAudio37972220',this)">SetupAudio</a>(reg);
+}
+
+void <a href="#" OnFocus="link('_member','OnSelchangeCmbDeemphasis2051007834',this)">CGxssetcodecDlg::OnSelchangeCmbDeemphasis</a>() 
+{
+    int deemph = <a href="#" OnFocus="link('_member','m_cmbDeemphasis2050680179',this)">m_cmbDeemphasis</a>.GetCurSel();
+    int serfmt = <a href="#" OnFocus="link('_member','m_cmbSerialformat2050680179',this)">m_cmbSerialformat</a>.GetCurSel();
+    int sampfreq = <a href="#" OnFocus="link('_member','m_cmbSamplingfreq2050680179',this)">m_cmbSamplingfreq</a>.GetCurSel();
+    <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[2] = (sampfreq&lt;&lt;4) | (serfmt&lt;&lt;2) | (deemph);
+
+    if(<a href="#" OnFocus="link('_member','brdPtr0',this)">brdPtr</a> != NULL)
+        <a href="#" OnFocus="link('_member','brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/SetupAudio37972220',this)">SetupAudio</a>(reg);
+}
+
+void <a href="#" OnFocus="link('_member','OnSelchangeCmbFdatt2051007834',this)">CGxssetcodecDlg::OnSelchangeCmbFdatt</a>() 
+{
+    int lmth = <a href="#" OnFocus="link('_member','m_cmbLMTH2050680179',this)">m_cmbLMTH</a>.GetCurSel();
+    int ratt = <a href="#" OnFocus="link('_member','m_cmbRATT2050680179',this)">m_cmbRATT</a>.GetCurSel();
+    int fdatt = <a href="#" OnFocus="link('_member','m_cmbFDATT2050680179',this)">m_cmbFDATT</a>.GetCurSel();
+    int lmat = <a href="#" OnFocus="link('_member','m_cmbLMAT2050680179',this)">m_cmbLMAT</a>.GetCurSel();
+    <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[4] = (lmat&lt;&lt;4) | (fdatt&lt;&lt;3) | (ratt&lt;&lt;1) | (lmth);
+
+    if(<a href="#" OnFocus="link('_member','brdPtr0',this)">brdPtr</a> != NULL)
+        <a href="#" OnFocus="link('_member','brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/SetupAudio37972220',this)">SetupAudio</a>(reg);
+}
+
+void <a href="#" OnFocus="link('_member','OnSelchangeCmbFdtm2051007834',this)">CGxssetcodecDlg::OnSelchangeCmbFdtm</a>() 
+{
+    int ltm = <a href="#" OnFocus="link('_member','m_cmbLTM2050680179',this)">m_cmbLTM</a>.GetCurSel();
+    int wtm = <a href="#" OnFocus="link('_member','m_cmbWTM2050680179',this)">m_cmbWTM</a>.GetCurSel();
+    int ztm = <a href="#" OnFocus="link('_member','m_cmbZTM2050680179',this)">m_cmbZTM</a>.GetCurSel();
+    int fdtm = <a href="#" OnFocus="link('_member','m_cmbFDTM2050680179',this)">m_cmbFDTM</a>.GetCurSel();
+    <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[3] = (fdtm&lt;&lt;6) | (ztm&lt;&lt;4) | (wtm&lt;&lt;2) | (ltm);
+
+    if(<a href="#" OnFocus="link('_member','brdPtr0',this)">brdPtr</a> != NULL)
+        <a href="#" OnFocus="link('_member','brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/SetupAudio37972220',this)">SetupAudio</a>(reg);
+}
+
+void <a href="#" OnFocus="link('_member','OnSelchangeCmbInputchannel2051007834',this)">CGxssetcodecDlg::OnSelchangeCmbInputchannel</a>() 
+{
+    CString chan;
+    <a href="#" OnFocus="link('_member','m_cmbInputchannel2050680179',this)">m_cmbInputchannel</a>.GetLBText(<a href="#" OnFocus="link('_member','m_cmbInputchannel2050680179',this)">m_cmbInputchannel</a>.GetCurSel(),chan);
+    if(strncmp((LPCTSTR)chan,"INT0",strlen("INT0"))==0)
+        <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[0] = 1;
+    else if(strncmp((LPCTSTR)chan,"INT1",strlen("INT1"))==0)
+        <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[0] = 2;
+    else if(strncmp((LPCTSTR)chan,"EXT",strlen("EXT"))==0)
+        <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[0] = 4;
+    else if(strncmp((LPCTSTR)chan,"LINE",strlen("LINE"))==0)
+        <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[0] = 8;
+    else
+        <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[0] = 8;
+
+    if(<a href="#" OnFocus="link('_member','brdPtr0',this)">brdPtr</a> != NULL)
+        <a href="#" OnFocus="link('_member','brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/SetupAudio37972220',this)">SetupAudio</a>(reg);
+}
+
+void <a href="#" OnFocus="link('_member','OnSelchangeCmbIpga2051007834',this)">CGxssetcodecDlg::OnSelchangeCmbIpga</a>() 
+{
+    <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[7] = <a href="#" OnFocus="link('_member','m_cmbIPGA2050680179',this)">m_cmbIPGA</a>.GetCurSel();
+
+    if(<a href="#" OnFocus="link('_member','brdPtr0',this)">brdPtr</a> != NULL)
+        <a href="#" OnFocus="link('_member','brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/SetupAudio37972220',this)">SetupAudio</a>(reg);
+}
+
+void <a href="#" OnFocus="link('_member','OnSelchangeCmbLmat2051007834',this)">CGxssetcodecDlg::OnSelchangeCmbLmat</a>() 
+{
+    int lmth = <a href="#" OnFocus="link('_member','m_cmbLMTH2050680179',this)">m_cmbLMTH</a>.GetCurSel();
+    int ratt = <a href="#" OnFocus="link('_member','m_cmbRATT2050680179',this)">m_cmbRATT</a>.GetCurSel();
+    int fdatt = <a href="#" OnFocus="link('_member','m_cmbFDATT2050680179',this)">m_cmbFDATT</a>.GetCurSel();
+    int lmat = <a href="#" OnFocus="link('_member','m_cmbLMAT2050680179',this)">m_cmbLMAT</a>.GetCurSel();
+    <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[4] = (lmat&lt;&lt;4) | (fdatt&lt;&lt;3) | (ratt&lt;&lt;1) | (lmth);
+
+    if(<a href="#" OnFocus="link('_member','brdPtr0',this)">brdPtr</a> != NULL)
+        <a href="#" OnFocus="link('_member','brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/SetupAudio37972220',this)">SetupAudio</a>(reg);
+}
+
+void <a href="#" OnFocus="link('_member','OnSelchangeCmbLmth2051007834',this)">CGxssetcodecDlg::OnSelchangeCmbLmth</a>() 
+{
+    int lmth = <a href="#" OnFocus="link('_member','m_cmbLMTH2050680179',this)">m_cmbLMTH</a>.GetCurSel();
+    int ratt = <a href="#" OnFocus="link('_member','m_cmbRATT2050680179',this)">m_cmbRATT</a>.GetCurSel();
+    int fdatt = <a href="#" OnFocus="link('_member','m_cmbFDATT2050680179',this)">m_cmbFDATT</a>.GetCurSel();
+    int lmat = <a href="#" OnFocus="link('_member','m_cmbLMAT2050680179',this)">m_cmbLMAT</a>.GetCurSel();
+    <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[4] = (lmat&lt;&lt;4) | (fdatt&lt;&lt;3) | (ratt&lt;&lt;1) | (lmth);
+
+    if(<a href="#" OnFocus="link('_member','brdPtr0',this)">brdPtr</a> != NULL)
+        <a href="#" OnFocus="link('_member','brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/SetupAudio37972220',this)">SetupAudio</a>(reg);
+}
+
+void <a href="#" OnFocus="link('_member','OnSelchangeCmbLtm2051007834',this)">CGxssetcodecDlg::OnSelchangeCmbLtm</a>() 
+{
+    int ltm = <a href="#" OnFocus="link('_member','m_cmbLTM2050680179',this)">m_cmbLTM</a>.GetCurSel();
+    int wtm = <a href="#" OnFocus="link('_member','m_cmbWTM2050680179',this)">m_cmbWTM</a>.GetCurSel();
+    int ztm = <a href="#" OnFocus="link('_member','m_cmbZTM2050680179',this)">m_cmbZTM</a>.GetCurSel();
+    int fdtm = <a href="#" OnFocus="link('_member','m_cmbFDTM2050680179',this)">m_cmbFDTM</a>.GetCurSel();
+    <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[3] = (fdtm&lt;&lt;6) | (ztm&lt;&lt;4) | (wtm&lt;&lt;2) | (ltm);
+
+    if(<a href="#" OnFocus="link('_member','brdPtr0',this)">brdPtr</a> != NULL)
+        <a href="#" OnFocus="link('_member','brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/SetupAudio37972220',this)">SetupAudio</a>(reg);
+}
+
+void <a href="#" OnFocus="link('_member','OnSelchangeCmbRatt2051007834',this)">CGxssetcodecDlg::OnSelchangeCmbRatt</a>() 
+{
+    int lmth = <a href="#" OnFocus="link('_member','m_cmbLMTH2050680179',this)">m_cmbLMTH</a>.GetCurSel();
+    int ratt = <a href="#" OnFocus="link('_member','m_cmbRATT2050680179',this)">m_cmbRATT</a>.GetCurSel();
+    int fdatt = <a href="#" OnFocus="link('_member','m_cmbFDATT2050680179',this)">m_cmbFDATT</a>.GetCurSel();
+    int lmat = <a href="#" OnFocus="link('_member','m_cmbLMAT2050680179',this)">m_cmbLMAT</a>.GetCurSel();
+    <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[4] = (lmat&lt;&lt;4) | (fdatt&lt;&lt;3) | (ratt&lt;&lt;1) | (lmth);
+
+    if(<a href="#" OnFocus="link('_member','brdPtr0',this)">brdPtr</a> != NULL)
+        <a href="#" OnFocus="link('_member','brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/SetupAudio37972220',this)">SetupAudio</a>(reg);
+}
+
+void <a href="#" OnFocus="link('_member','OnSelchangeCmbRef2051007834',this)">CGxssetcodecDlg::OnSelchangeCmbRef</a>() 
+{
+    <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[5] = <a href="#" OnFocus="link('_member','m_cmbREF2050680179',this)">m_cmbREF</a>.GetCurSel();
+
+    if(<a href="#" OnFocus="link('_member','brdPtr0',this)">brdPtr</a> != NULL)
+        <a href="#" OnFocus="link('_member','brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/SetupAudio37972220',this)">SetupAudio</a>(reg);
+}
+
+void <a href="#" OnFocus="link('_member','OnSelchangeCmbSamplingfreq2051007834',this)">CGxssetcodecDlg::OnSelchangeCmbSamplingfreq</a>() 
+{
+    int deemph = <a href="#" OnFocus="link('_member','m_cmbDeemphasis2050680179',this)">m_cmbDeemphasis</a>.GetCurSel();
+    int serfmt = <a href="#" OnFocus="link('_member','m_cmbSerialformat2050680179',this)">m_cmbSerialformat</a>.GetCurSel();
+    int sampfreq = <a href="#" OnFocus="link('_member','m_cmbSamplingfreq2050680179',this)">m_cmbSamplingfreq</a>.GetCurSel();
+    <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[2] = (sampfreq&lt;&lt;4) | (serfmt&lt;&lt;2) | (deemph);
+
+    if(<a href="#" OnFocus="link('_member','brdPtr0',this)">brdPtr</a> != NULL)
+        <a href="#" OnFocus="link('_member','brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/SetupAudio37972220',this)">SetupAudio</a>(reg);
+}
+
+void <a href="#" OnFocus="link('_member','OnSelchangeCmbSerialformat2051007834',this)">CGxssetcodecDlg::OnSelchangeCmbSerialformat</a>() 
+{
+    int deemph = <a href="#" OnFocus="link('_member','m_cmbDeemphasis2050680179',this)">m_cmbDeemphasis</a>.GetCurSel();
+    int serfmt = <a href="#" OnFocus="link('_member','m_cmbSerialformat2050680179',this)">m_cmbSerialformat</a>.GetCurSel();
+    int sampfreq = <a href="#" OnFocus="link('_member','m_cmbSamplingfreq2050680179',this)">m_cmbSamplingfreq</a>.GetCurSel();
+    <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[2] = (sampfreq&lt;&lt;4) | (serfmt&lt;&lt;2) | (deemph);
+
+    if(<a href="#" OnFocus="link('_member','brdPtr0',this)">brdPtr</a> != NULL)
+        <a href="#" OnFocus="link('_member','brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/SetupAudio37972220',this)">SetupAudio</a>(reg);
+}
+
+void <a href="#" OnFocus="link('_member','OnSelchangeCmbWtm2051007834',this)">CGxssetcodecDlg::OnSelchangeCmbWtm</a>() 
+{
+    int ltm = <a href="#" OnFocus="link('_member','m_cmbLTM2050680179',this)">m_cmbLTM</a>.GetCurSel();
+    int wtm = <a href="#" OnFocus="link('_member','m_cmbWTM2050680179',this)">m_cmbWTM</a>.GetCurSel();
+    int ztm = <a href="#" OnFocus="link('_member','m_cmbZTM2050680179',this)">m_cmbZTM</a>.GetCurSel();
+    int fdtm = <a href="#" OnFocus="link('_member','m_cmbFDTM2050680179',this)">m_cmbFDTM</a>.GetCurSel();
+    <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[3] = (fdtm&lt;&lt;6) | (ztm&lt;&lt;4) | (wtm&lt;&lt;2) | (ltm);
+
+    if(<a href="#" OnFocus="link('_member','brdPtr0',this)">brdPtr</a> != NULL)
+        <a href="#" OnFocus="link('_member','brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/SetupAudio37972220',this)">SetupAudio</a>(reg);
+}
+
+void <a href="#" OnFocus="link('_member','OnSelchangeCmbZtm2051007834',this)">CGxssetcodecDlg::OnSelchangeCmbZtm</a>() 
+{
+    int ltm = <a href="#" OnFocus="link('_member','m_cmbLTM2050680179',this)">m_cmbLTM</a>.GetCurSel();
+    int wtm = <a href="#" OnFocus="link('_member','m_cmbWTM2050680179',this)">m_cmbWTM</a>.GetCurSel();
+    int ztm = <a href="#" OnFocus="link('_member','m_cmbZTM2050680179',this)">m_cmbZTM</a>.GetCurSel();
+    int fdtm = <a href="#" OnFocus="link('_member','m_cmbFDTM2050680179',this)">m_cmbFDTM</a>.GetCurSel();
+    <a href="#" OnFocus="link('_member','reg0',this)">reg</a>[3] = (fdtm&lt;&lt;6) | (ztm&lt;&lt;4) | (wtm&lt;&lt;2) | (ltm);
+
+    if(<a href="#" OnFocus="link('_member','brdPtr0',this)">brdPtr</a> != NULL)
+        <a href="#" OnFocus="link('_member','brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/SetupAudio37972220',this)">SetupAudio</a>(reg);
+}
+
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_file','_source');
+</script>

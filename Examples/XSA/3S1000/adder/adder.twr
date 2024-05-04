@@ -1,0 +1,103 @@
+--------------------------------------------------------------------------------
+Release 8.2.03i Trace 
+Copyright (c) 1995-2006 Xilinx, Inc.  All rights reserved.
+
+C:\ISE8\bin\nt\trce.exe -ise
+C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/adder/adder.ise -intstyle ise -e 3
+-l 3 -s 4 -xml adder adder.ncd -o adder.twr adder.pcf -ucf adder.ucf
+
+Design file:              adder.ncd
+Physical constraint file: adder.pcf
+Device,speed:             xc3s1000,-4 (PRODUCTION 1.39 2006-08-18)
+Report level:             error report
+
+Environment Variable      Effect 
+--------------------      ------ 
+NONE                      No environment variables were set
+--------------------------------------------------------------------------------
+
+INFO:Timing:2698 - No timing constraints found, doing default enumeration.
+INFO:Timing:2752 - To get complete path coverage, use the unconstrained paths 
+   option. All paths that are not constrained will be reported in the 
+   unconstrained paths section(s) of the report.
+
+
+
+Data Sheet report:
+-----------------
+All values displayed in nanoseconds (ns)
+
+Pad to Pad
+---------------+---------------+---------+
+Source Pad     |Destination Pad|  Delay  |
+---------------+---------------+---------+
+a<0>           |led<0>         |   13.018|
+a<0>           |led<1>         |   13.369|
+a<0>           |led<2>         |   13.168|
+a<0>           |led<3>         |   14.119|
+a<0>           |led<4>         |   14.222|
+a<0>           |led<5>         |   13.792|
+a<0>           |led<6>         |   13.440|
+a<1>           |led<0>         |   13.498|
+a<1>           |led<1>         |   13.849|
+a<1>           |led<2>         |   13.648|
+a<1>           |led<3>         |   14.599|
+a<1>           |led<4>         |   14.702|
+a<1>           |led<5>         |   14.272|
+a<1>           |led<6>         |   13.920|
+a<2>           |led<0>         |   11.888|
+a<2>           |led<1>         |   12.239|
+a<2>           |led<2>         |   11.965|
+a<2>           |led<3>         |   12.916|
+a<2>           |led<4>         |   13.092|
+a<2>           |led<5>         |   12.589|
+a<2>           |led<6>         |   12.310|
+a<3>           |led<0>         |   11.025|
+a<3>           |led<1>         |   11.376|
+a<3>           |led<2>         |   10.888|
+a<3>           |led<3>         |   11.918|
+a<3>           |led<4>         |   12.229|
+a<3>           |led<5>         |   11.591|
+a<3>           |led<6>         |   11.447|
+b<0>           |led<0>         |   12.704|
+b<0>           |led<1>         |   13.055|
+b<0>           |led<2>         |   12.854|
+b<0>           |led<3>         |   13.805|
+b<0>           |led<4>         |   13.908|
+b<0>           |led<5>         |   13.478|
+b<0>           |led<6>         |   13.126|
+b<1>           |led<0>         |   12.894|
+b<1>           |led<1>         |   13.245|
+b<1>           |led<2>         |   13.044|
+b<1>           |led<3>         |   13.995|
+b<1>           |led<4>         |   14.098|
+b<1>           |led<5>         |   13.668|
+b<1>           |led<6>         |   13.316|
+b<2>           |led<0>         |   12.219|
+b<2>           |led<1>         |   12.570|
+b<2>           |led<2>         |   12.082|
+b<2>           |led<3>         |   13.112|
+b<2>           |led<4>         |   13.423|
+b<2>           |led<5>         |   12.785|
+b<2>           |led<6>         |   12.641|
+b<3>           |led<0>         |   11.069|
+b<3>           |led<1>         |   11.420|
+b<3>           |led<2>         |   10.932|
+b<3>           |led<3>         |   11.962|
+b<3>           |led<4>         |   12.273|
+b<3>           |led<5>         |   11.635|
+b<3>           |led<6>         |   11.491|
+---------------+---------------+---------+
+
+
+Analysis completed Fri Dec 29 14:50:56 2006
+--------------------------------------------------------------------------------
+
+Trace Settings:
+-------------------------
+Trace Settings 
+
+Peak Memory Usage: 114 MB
+
+
+

@@ -1,0 +1,614 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - flashprt.cpp</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">flashprt.cpp</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">flashprt.cpp</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','flashprt_cpp0','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabInActiveGrayout"><span class="tabLinkGrayout">Overview</span></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','flashprt_cpp0','_includedfiles',this)" class="tabLinkInActive">Included files</a></span>
+<span class="tabInActiveGrayout"><span class="tabLinkGrayout">Included by</span></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_file','flashprt_cpp0','_source',this)" class="tabLinkActive">Source</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<pre class="codeExamples">
+/*----------------------------------------------------------------------------------
+  SOFTWARE LICENSE AGREEMENT
+    1.  Permission to use, copy, modify, and distribute this software
+        and its documentation, with or without modification, for any
+        purpose and without fee or royalty is hereby granted, provided
+        that you include the following on ALL copies of the software
+        and documentation or portions thereof, including
+        modifications, that you make:
+
+            a.  The full text of this license in a location viewable to users
+            of the redistributed or derivative work.
+
+            b.  Notice of any changes or modifications to the files,
+            including the date changes were made.
+
+    2.  The name, servicemarks and trademarks of X Engineering
+        Software Systems Corp. may NOT be used in advertising or
+        publicity pertaining to the software without specific, written
+        prior permission.
+
+    3.  Title to copyright in this software and any associated
+        documentation will at all times remain with X Engineering
+        Software Systems Corp.
+
+    4.  THIS SOFTWARE AND DOCUMENTATION IS PROVIDED "AS IS," AND X
+        Engineering Software Systems Corp MAKES NO REPRESENTATIONS OR
+        WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO,
+        WARRANTIES OF MERCHANTABILITY OR FITNESS FOR ANY PARTICULAR
+        PURPOSE OR THAT THE USE OF THE SOFTWARE OR DOCUMENTATION WILL
+        NOT INFRINGE ANY THIRD PARTY PATENTS, COPYRIGHTS, TRADEMARKS
+        OR OTHER RIGHTS.
+
+    5.  X Engineering Software Systems Corp WILL NOT BE LIABLE FOR ANY
+        DAMAGES, INCLUDING BUT NOT LIMITED TO, DIRECT, INDIRECT,
+        SPECIAL OR CONSEQUENTIAL, ARISING OUT OF ANY USE OF THE
+        SOFTWARE OR DOCUMENTATION.
+
+  ©2006 - X Engineering Software Systems Corp.  All rights reserved.
+----------------------------------------------------------------------------------*/
+
+
+#include &lt;fstream&gt;
+#include &lt;cassert&gt;
+
+#include "<a href="#" OnFocus="link('_file','utils_h0',this)">utils.h</a>"
+#include "<a href="#" OnFocus="link('_file','hexrecrd_h0',this)">hexrecrd.h</a>"
+#include "<a href="#" OnFocus="link('_file','flashprt_h0',this)">flashprt.h</a>"
+
+
+/// Create a Flash upload/download port.
+<a href="#" OnFocus="link('_member','FlashPort2569718309',this)">FlashPort::FlashPort</a>(void)
+{
+    <a href="#" OnFocus="link('_member','progressGauge239475346',this)">progressGauge</a> = NULL;
+}
+
+
+/// Create a Flash upload/download port
+<a href="#" OnFocus="link('_member','FlashPort2569718309',this)">FlashPort::FlashPort</a>(<a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>* e,   ///&lt; pointer to error reporting object
+                   unsigned int portNum,    ///&lt; parallel port number
+                   unsigned int invMask,    ///&lt; inversion mask for the parallel port
+                   unsigned int pos_reset,  ///&lt; bit position in parallel port of Flash RESET pin
+                   unsigned int pos_clk,    ///&lt; bit position in parallel port of Flash CLK pin
+                   unsigned int pos_dolsb,  ///&lt; bit position in parallel port of LSB of Flash data-out pin
+                   unsigned int pos_domsb,  ///&lt; bit position in parallel port of MSB of Flash data-out pin
+                   unsigned int pos_dilsb,  ///&lt; bit position in parallel port of LSB of Flash data-in pin
+                   unsigned int pos_dimsb,  ///&lt; bit position in parallel port of MSB of Flash data-in pin
+                   unsigned int pos_stlsb,  ///&lt; bit position in parallel port of LSB of Flash status pin
+                   unsigned int pos_stmsb)  ///&lt; bit position in parallel port of MSB of Flash status pin
+{
+    <a href="#" OnFocus="link('_member','progressGauge239475346',this)">progressGauge</a> = NULL;
+    <a href="#" OnFocus="link('_member','Setup1185102861',this)">Setup</a>(e,portNum,invMask,pos_reset,pos_clk,
+        pos_dolsb,pos_domsb,
+        pos_dilsb,pos_dimsb,
+        pos_stlsb,pos_stmsb);
+}
+
+
+/// Setup a Flash upload/download port.
+int <a href="#" OnFocus="link('_member','Setup1185102861',this)">FlashPort::Setup</a>(<a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>* e,   ///&lt; pointer to error reporting object
+                   unsigned int portNum,    ///&lt; parallel port number
+                   unsigned int invMask,    ///&lt; inversion mask for the parallel port
+                   unsigned int pos_reset,  ///&lt; bit position in parallel port of Flash RESET pin
+                   unsigned int pos_clk,    ///&lt; bit position in parallel port of Flash CLK pin
+                   unsigned int pos_dolsb,  ///&lt; bit position in parallel port of LSB of Flash data-out pin
+                   unsigned int pos_domsb,  ///&lt; bit position in parallel port of MSB of Flash data-out pin
+                   unsigned int pos_dilsb,  ///&lt; bit position in parallel port of LSB of Flash data-in pin
+                   unsigned int pos_dimsb,  ///&lt; bit position in parallel port of MSB of Flash data-in pin
+                   unsigned int pos_stlsb,  ///&lt; bit position in parallel port of LSB of Flash status pin
+                   unsigned int pos_stmsb)  ///&lt; bit position in parallel port of MSB of Flash status pin
+{
+    <a href="#" OnFocus="link('_member','posRESET239475346',this)">posRESET</a> = pos_reset;
+    <a href="#" OnFocus="link('_member','posCLK239475346',this)">posCLK</a>   = pos_clk;
+    <a href="#" OnFocus="link('_member','posDOLSB239475346',this)">posDOLSB</a> = pos_dolsb;
+    <a href="#" OnFocus="link('_member','posDOMSB239475346',this)">posDOMSB</a> = pos_domsb;
+    <a href="#" OnFocus="link('_member','posDILSB239475346',this)">posDILSB</a> = pos_dilsb;
+    <a href="#" OnFocus="link('_member','posDIMSB239475346',this)">posDIMSB</a> = pos_dimsb;
+    <a href="#" OnFocus="link('_member','posSTLSB239475346',this)">posSTLSB</a> = pos_stlsb;
+    <a href="#" OnFocus="link('_member','posSTMSB239475346',this)">posSTMSB</a> = pos_stmsb;
+    return <a href="#" OnFocus="link('_member','Setup1571714867',this)">PPort::Setup</a>(e,portNum,invMask);
+}
+
+
+/// Download the Flash with the contents of a HEX file.
+///\return true if the operation was successful, false otherwise
+bool <a href="#" OnFocus="link('_member','DownloadFlash2788146746',this)">FlashPort::DownloadFlash</a>( string&amp; hexfileName, ///&lt; name of file containing hex data to be programmed into the Flash
+                    bool bigEndianBytes,    ///&lt; if true, data is stored in Flash with most-significant byte at lower address
+                    bool bigEndianBits,     ///&lt; if true, data is stored in Flash with most-significant bit in position 0
+                    bool doErase)           ///&lt; if true, then erase Flash before downloading data from file
+{
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> = <a href="#" OnFocus="link('_member','GetErr259477277',this)">GetErr</a>();
+    
+    if(hexfileName.length()==0)
+        return false;  // stop if no hex file was given
+    
+    ifstream is(hexfileName.c_str());  // otherwise open hex file
+    if(!is || is.fail() || is.eof()!=0)
+    { // error - couldn't open hex file
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','SetSeverity3409672334',this)">SetSeverity</a>(XSErrorMajor);
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> &lt;&lt; "could not open " &lt;&lt; hexfileName.c_str() &lt;&lt; "\n";
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','EndMsg60232619',this)">EndMsg</a>();
+        return false;
+    }
+    
+    // determine the size of the file
+    is.seekg(0,ios::end);   // move pointer to end of file
+    streampos streamEndPos = is.tellg();    // pointer position = position of end of file
+    is.seekg(0,ios::beg);   // return pointer to beginning of file
+
+    string desc("Flash Download"), subdesc("Downloading "+<a href="#" OnFocus="link('_member','StripPrefix67554305',this)">StripPrefix</a>(hexfileName));
+    <a href="#" OnFocus="link('_member','progressGauge239475346',this)">progressGauge</a> = new <a href="#" OnFocus="link('_class','Progress0',this)">Progress</a>(&amp;err,desc,subdesc,0,streamEndPos);
+
+    bool status = <a href="#" OnFocus="link('_member','DownloadFlash2788146746',this)">DownloadFlash</a>(is,bigEndianBytes,bigEndianBits,doErase);
+    
+    delete <a href="#" OnFocus="link('_member','progressGauge239475346',this)">progressGauge</a>;
+    
+    is.close();  // close-up the hex file
+    
+    return status;
+}
+
+
+/// Download the XS Board Flash with the contents arriving through a stream.
+///\return true if the operation was successful, false otherwise
+bool <a href="#" OnFocus="link('_member','DownloadFlash2788146746',this)">FlashPort::DownloadFlash</a>( istream&amp; is, ///&lt; stream through which hex data is received
+                    bool bigEndianBytes,    ///&lt; if true, data is stored in Flash with most-significant byte at lower address
+                    bool bigEndianBits,     ///&lt; if true, data is stored in Flash with most-significant bit in position 0
+                    bool doErase)           ///&lt; if true, then erase Flash before downloading data from file
+{
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> = <a href="#" OnFocus="link('_member','GetErr259477277',this)">GetErr</a>();
+
+    assert(progressGauge != NULL);  //  make sure progress indicator is initialized
+    <a href="#" OnFocus="link('_member','progressGauge239475346',this)">progressGauge</a>-&gt;<a href="#" OnFocus="link('_member','Report2561259521',this)">Report</a>(0);  // start progress indicator at zero
+
+    if(doErase)
+        <a href="#" OnFocus="link('_member','EraseFlash2569718309',this)">EraseFlash</a>(); // erase the entire Flash
+
+    // read hex records from file and place data in the Flash of the board
+    <a href="#" OnFocus="link('_class','HexRecord0',this)">HexRecord</a> hx;
+    while(is.eof()==0)
+    {
+        is &gt;&gt; hx;
+        if(is.eof()!=0)
+            break; // terminate loading loop when stream goes dry
+        if(is.fail() || <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','IsError863564933',this)">IsError</a>())
+        {
+            <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','SetSeverity3409672334',this)">SetSeverity</a>(XSErrorMajor);
+            <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> &lt;&lt; "error reading stream\n";
+            <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','EndMsg60232619',this)">EndMsg</a>();
+            break;
+        }
+        if(hx.<a href="#" OnFocus="link('_member','IsError2146470179',this)">IsError</a>())
+        { // some error in the hex record itself
+            <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','SetSeverity3409672334',this)">SetSeverity</a>(XSErrorMajor);
+            <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> &lt;&lt; "hex record: " &lt;&lt; hx.<a href="#" OnFocus="link('_member','GetErrMsg2146470179',this)">GetErrMsg</a>() &lt;&lt; "\n";
+            <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','EndMsg60232619',this)">EndMsg</a>();
+            break;
+        }
+        else
+        { // send out an indication for each hex record that's loaded
+            <a href="#" OnFocus="link('_member','progressGauge239475346',this)">progressGauge</a>-&gt;<a href="#" OnFocus="link('_member','Report2561259521',this)">Report</a>(is.tellg());
+            if(<a href="#" OnFocus="link('_member','DownloadHexRecordToFlash306234032',this)">DownloadHexRecordToFlash</a>(hx,bigEndianBytes,bigEndianBits) == false)
+                return false;
+        }
+    }
+    <a href="#" OnFocus="link('_member','progressGauge239475346',this)">progressGauge</a>-&gt;<a href="#" OnFocus="link('_member','Report2561259521',this)">Report</a>(is.tellg()); // should set gauge to 100%
+    
+    return <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','IsError863564933',this)">IsError</a>() ? false:true;
+}
+
+
+/// Load Flash data at the addresses given in a hex record.
+///\return true if the operation was successful, false otherwise
+bool <a href="#" OnFocus="link('_member','DownloadHexRecordToFlash306234032',this)">FlashPort::DownloadHexRecordToFlash</a>(
+                    <a href="#" OnFocus="link('_class','HexRecord0',this)">HexRecord</a>&amp; hx,           ///&lt; hex record with data to be programmed into the Flash
+                    bool bigEndianBytes,    ///&lt; if true, data is stored in Flash with most-significant byte at lower address
+                    bool bigEndianBits)     ///&lt; if true, data is stored in Flash with most-significant bit in position 0
+{
+    if(hx.<a href="#" OnFocus="link('_member','IsData2146470179',this)">IsData</a>()) // don't download unless this is Flash data
+    {
+        unsigned int i;
+        unsigned int address = hx.<a href="#" OnFocus="link('_member','GetAddress2146470179',this)">GetAddress</a>();   // get starting address for hex record
+//      for(int j=sizeof(flashBlocks)/sizeof(struct flashBlock)-1; j&gt;=0; j--)
+//      {
+//          unsigned int addresshi = address + hx.GetLength()-1;
+//          if( ((flashBlocks[j].address &lt;= address  ) &amp;&amp; (address   &lt; (flashBlocks[j].address+flashBlocks[j].length))) ||
+//              ((flashBlocks[j].address &lt;= addresshi) &amp;&amp; (addresshi &lt; (flashBlocks[j].address+flashBlocks[j].length))) )
+//          {
+//              if(flashBlocks[j].erased==false)
+//                  EraseFlashBlock(j);
+//          }
+//      }
+        for(i=0; i&lt;hx.<a href="#" OnFocus="link('_member','GetLength2146470179',this)">GetLength</a>(); i++)
+        {
+            if(<a href="#" OnFocus="link('_member','ProgramFlash3255642504',this)">ProgramFlash</a>(address+i,hx[i],bigEndianBytes,bigEndianBits) == false)
+            {
+                int testStatus = 0;
+                int j;
+                for(j=0; j&lt;100; j++)
+                    testStatus += <a href="#" OnFocus="link('_member','Test2569718309',this)">Test</a>();
+                <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> = <a href="#" OnFocus="link('_member','GetErr259477277',this)">GetErr</a>();
+                <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','SetSeverity3409672334',this)">SetSeverity</a>(XSErrorMajor);
+                <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> &lt;&lt; "Failure in DownloadHexRecordToFlash at address " &lt;&lt; (long int)(address+i) &lt;&lt; "\n";
+                <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> &lt;&lt; "Parallel port response factor = " &lt;&lt; (float)testStatus/j &lt;&lt; "\n";
+                <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','EndMsg60232619',this)">EndMsg</a>();
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+
+/// Write a byte to the Flash through the parallel port.
+///\return true if the operation was successful, false otherwise
+bool <a href="#" OnFocus="link('_member','WriteFlashByte3255642504',this)">FlashPort::WriteFlashByte</a>(unsigned int address, ///&lt; address at which to store data
+                    unsigned int data,      ///&lt; data byte to be stored
+                    bool bigEndianBytes,    ///&lt; if true, data is stored in Flash with most-significant byte at lower address
+                    bool bigEndianBits)     ///&lt; if true, data is stored in Flash with most-significant bit in position 0
+{
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posRESET,posRESET);  // reset the downloading state machine
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posCLK,posCLK);      // force clock high
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posRESET,posRESET);  // release the reset
+
+    int status = <a href="#" OnFocus="link('_member','In1210046855',this)">In</a>(posDILSB,posDIMSB);
+//  assert(status==0);
+    if(status != 0)
+        return false;
+
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>((address&gt;&gt;20)&amp;0xf,posDOLSB,posDOMSB);
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posCLK,posCLK);  // latch address bits A23-A20 into downloading circuit
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posCLK,posCLK);
+    
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>((address&gt;&gt;16)&amp;0xf,posDOLSB,posDOMSB);
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posCLK,posCLK);  // latch address bits A19-A16 into downloading circuit
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posCLK,posCLK);
+    
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>((address&gt;&gt;12)&amp;0xf,posDOLSB,posDOMSB);
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posCLK,posCLK);  // latch address bits A15-A12 into downloading circuit
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posCLK,posCLK);
+    
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>((address&gt;&gt; 8)&amp;0xf,posDOLSB,posDOMSB);
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posCLK,posCLK);  // latch address bits A11-A8 into downloading circuit
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posCLK,posCLK);
+    
+    status = <a href="#" OnFocus="link('_member','In1210046855',this)">In</a>(posDILSB,posDIMSB);
+//  assert(status == 1);
+    if(status != 1)
+        return false;
+    
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>((address&gt;&gt; 4)&amp;0xf,posDOLSB,posDOMSB);
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posCLK,posCLK);  // latch address bits A7-A4 into downloading circuit
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posCLK,posCLK);
+    
+    status = <a href="#" OnFocus="link('_member','In1210046855',this)">In</a>(posDILSB,posDIMSB);
+//  assert(status == 2);
+    if(status != 2)
+        return false;
+    
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>( address     &amp;0xf,posDOLSB,posDOMSB);
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posCLK,posCLK);      // latch address bits A3-A0 into downloading circuit
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posCLK,posCLK);
+
+    status = <a href="#" OnFocus="link('_member','In1210046855',this)">In</a>(posDILSB,posDIMSB);
+//  assert(status == 3);
+    if(status != 3)
+        return false;
+
+    <a href="#" OnFocus="link('_member','../xsatapi/data0',this)">data</a> = <a href="#" OnFocus="link('_member','RearrangeData127079845',this)">RearrangeData</a>(data,8,bigEndianBytes,bigEndianBits);
+
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>((data&gt;&gt;4)&amp;0xf,posDOLSB,posDOMSB);
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posCLK,posCLK);  // latch data bits D7-D4 into downloading circuit
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posCLK,posCLK);
+
+    status = <a href="#" OnFocus="link('_member','In1210046855',this)">In</a>(posDILSB,posDIMSB);
+//  assert(status == 4);
+    if(status != 4)
+        return false;
+
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>( data    &amp;0xf,posDOLSB,posDOMSB);
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posCLK,posCLK);  // latch data bits D3-D0 into downloading circuit
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posCLK,posCLK);
+
+    status = <a href="#" OnFocus="link('_member','In1210046855',this)">In</a>(posDILSB,posDIMSB);
+//  assert(status == 0);
+    if(status != 0)
+        return false;
+    else
+        return true;
+}
+
+
+/// Upload data from Flash and store in a file
+///\return true if the operation was successful, false otherwise
+bool <a href="#" OnFocus="link('_member','UploadFlash1014271617',this)">FlashPort::UploadFlash</a>( string&amp; hexfileName, ///&lt; dump uploaded data to this file
+                    const char* format,     ///&lt; hex file format
+                    unsigned long loAddr,   ///&lt; start fetching data from this address
+                    unsigned long hiAddr,   ///&lt; stop at this address
+                    bool bigEndianBytes,    ///&lt; if true, data is stored in Flash with most-significant byte at lower address
+                    bool bigEndianBits)     ///&lt; if true, data is stored in Flash with most-significant bit in position 0
+{
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> = <a href="#" OnFocus="link('_member','GetErr259477277',this)">GetErr</a>();
+    
+    if(hexfileName.length()==0)
+        return false;  // stop if no hex file was given
+    
+    ofstream os(hexfileName.c_str());  // otherwise open hex file
+    if(os.fail() || os.eof()!=0)
+    { // error - couldn't open hex file
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','SetSeverity3409672334',this)">SetSeverity</a>(XSErrorMajor);
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> &lt;&lt; "could not open " &lt;&lt; hexfileName.c_str() &lt;&lt; "\n";
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','EndMsg60232619',this)">EndMsg</a>();
+        return false;
+    }
+    
+    string desc("Flash Upload"), subdesc("Uploading "+(hexfileName));
+    <a href="#" OnFocus="link('_member','progressGauge239475346',this)">progressGauge</a> = new <a href="#" OnFocus="link('_class','Progress0',this)">Progress</a>(&amp;err,desc,subdesc,loAddr,hiAddr);
+    
+    bool status = <a href="#" OnFocus="link('_member','UploadFlash1014271617',this)">UploadFlash</a>(os,format,loAddr,hiAddr,bigEndianBytes,bigEndianBits);
+    
+    delete <a href="#" OnFocus="link('_member','progressGauge239475346',this)">progressGauge</a>;
+
+    os.close();  // close-up the hex file
+    
+    return status;
+}
+
+
+/// Upload the XS Board Flash to a stream.
+///\return true if the operation was successful, false otherwise
+bool <a href="#" OnFocus="link('_member','UploadFlash1014271617',this)">FlashPort::UploadFlash</a>( ostream&amp; os, ///&lt; dump uploaded data to this stream
+                    const char* format,     ///&lt; hex file format
+                    unsigned long loAddr,   ///&lt; start fetching data from this address
+                    unsigned long hiAddr,   ///&lt; stop at this address
+                    bool bigEndianBytes,    ///&lt; if true, data is stored in Flash with most-significant byte at lower address
+                    bool bigEndianBits)     ///&lt; if true, data is stored in Flash with most-significant bit in position 0
+{
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> = <a href="#" OnFocus="link('_member','GetErr259477277',this)">GetErr</a>();
+
+    assert(progressGauge != NULL);  //  make sure progress indicator is initialized
+    <a href="#" OnFocus="link('_member','progressGauge239475346',this)">progressGauge</a>-&gt;<a href="#" OnFocus="link('_member','Report2561259521',this)">Report</a>(0);  // start progress indicator at zero
+    
+    // read hex records from Flash and place data in the hex file
+    <a href="#" OnFocus="link('_class','HexRecord0',this)">HexRecord</a> hx;
+    hx.<a href="#" OnFocus="link('_member','Setup2851010944',this)">Setup</a>(format);
+    unsigned long addr;
+    for(addr=<a href="#" OnFocus="link('_member','../xsload/loAddr0',this)">loAddr</a>; (addr|0xF)&lt;=<a href="#" OnFocus="link('_member','../xsload/hiAddr0',this)">hiAddr</a>; addr=(addr+16)&amp;~0xF)
+    {
+        if(<a href="#" OnFocus="link('_member','UploadHexRecordFromFlash1391970643',this)">UploadHexRecordFromFlash</a>(hx,addr,addr|0xF,bigEndianBytes,bigEndianBits) == false) // get 16 bytes from RAM
+            return false;   // an error occurred while uploading the hex record
+        os &lt;&lt; hx;       // send hex record to output stream
+        <a href="#" OnFocus="link('_member','progressGauge239475346',this)">progressGauge</a>-&gt;<a href="#" OnFocus="link('_member','Report2561259521',this)">Report</a>(addr);   // give feedback on progress
+    }
+
+    if(addr&lt;=<a href="#" OnFocus="link('_member','../xsload/hiAddr0',this)">hiAddr</a>)
+    { // handle the last few bytes of an upload
+        if(<a href="#" OnFocus="link('_member','UploadHexRecordFromFlash1391970643',this)">UploadHexRecordFromFlash</a>(hx,addr,hiAddr,bigEndianBytes,bigEndianBits) == false)
+            return false;   // an error occurred while uploading the hex record
+        os &lt;&lt; hx;       // send hex record to output stream
+    }
+    <a href="#" OnFocus="link('_member','progressGauge239475346',this)">progressGauge</a>-&gt;<a href="#" OnFocus="link('_member','Report2561259521',this)">Report</a>(hiAddr); // should set gauge to 100%
+    
+    return true;
+}
+
+
+/// Get Flash data at the addresses given and store it in a hex record.
+///\return true if the operation was successful, false otherwise
+bool <a href="#" OnFocus="link('_member','UploadHexRecordFromFlash1391970643',this)">FlashPort::UploadHexRecordFromFlash</a>( <a href="#" OnFocus="link('_class','HexRecord0',this)">HexRecord</a>&amp; hx,    ///&lt; hex record to store data in
+                    unsigned long loAddr,   ///&lt; begin upload from this address
+                    unsigned long hiAddr,   ///&lt; end upload at this address
+                    bool bigEndianBytes,    ///&lt; if true, data is stored in Flash with most-significant byte at lower address
+                    bool bigEndianBits)     ///&lt; if true, data is stored in Flash with most-significant bit in position 0
+{
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> = <a href="#" OnFocus="link('_member','GetErr259477277',this)">GetErr</a>();
+
+    hx.<a href="#" OnFocus="link('_member','SetAddress2774302151',this)">SetAddress</a>(loAddr);    // set beginning and ending addresses for the hex record
+    hx.<a href="#" OnFocus="link('_member','SetLength2774302151',this)">SetLength</a>(hiAddr-loAddr+1);
+
+    // process the bytes from a data-type hex record
+    <a href="#" OnFocus="link('_member','ResetFlash2569718309',this)">ResetFlash</a>();
+    unsigned int b;
+    for(unsigned long i=<a href="#" OnFocus="link('_member','../xsload/loAddr0',this)">loAddr</a>; i&lt;=<a href="#" OnFocus="link('_member','../xsload/hiAddr0',this)">hiAddr</a>; i++)
+    {
+        if(<a href="#" OnFocus="link('_member','ReadFlashByte2991806353',this)">ReadFlashByte</a>(i,&amp;b,bigEndianBytes,bigEndianBits) == false)
+        {
+            int testStatus = 0;
+            int j;
+            for(j=0; j&lt;100; j++)
+                testStatus += <a href="#" OnFocus="link('_member','Test2569718309',this)">Test</a>();
+            <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> = <a href="#" OnFocus="link('_member','GetErr259477277',this)">GetErr</a>();
+            <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','SetSeverity3409672334',this)">SetSeverity</a>(XSErrorMajor);
+            <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> &lt;&lt; "Failure in UploadHexRecordToFlash at address " &lt;&lt; (long int)i &lt;&lt; "\n";
+            <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> &lt;&lt; "Parallel port response factor = " &lt;&lt; (float)testStatus/j &lt;&lt; "\n";
+            <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','EndMsg60232619',this)">EndMsg</a>();
+            return false;
+        }
+        hx[i-<a href="#" OnFocus="link('_member','../xsload/loAddr0',this)">loAddr</a>] = <a href="#" OnFocus="link('_member','RearrangeData127079845',this)">RearrangeData</a>(b,8,bigEndianBytes,bigEndianBits);
+    }
+    
+    hx.<a href="#" OnFocus="link('_member','CalcCheckSum2569703380',this)">CalcCheckSum</a>();  // put the checksum into the hex record
+    return true;
+}
+
+
+/// Read a byte from the Flash through the parallel port.
+///\return true if the operation was successful, false otherwise
+bool <a href="#" OnFocus="link('_member','ReadFlashByte2991806353',this)">FlashPort::ReadFlashByte</a>( unsigned int address, ///&lt; address of Flash to be read
+                    unsigned int* b,        ///&lt; pointer to location where data retrieved fromFlash will be stored
+                    bool bigEndianBytes,    ///&lt; if true, data is stored in Flash with most-significant byte at lower address
+                    bool bigEndianBits)     ///&lt; if true, data is stored in Flash with most-significant bit in position 0
+{
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posRESET,posRESET);  // reset the downloading state machine
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posCLK,posCLK);      // force clock high
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posRESET,posRESET);  // release the reset
+
+    int status = <a href="#" OnFocus="link('_member','In1210046855',this)">In</a>(posDILSB,posDIMSB);
+//  assert(status==0);
+    if(status != 0)
+        return false;
+
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>((address&gt;&gt;20)&amp;0xf,posDOLSB,posDOMSB);
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posCLK,posCLK);  // latch address bits A23-A20 into downloading circuit
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posCLK,posCLK);
+    
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>((address&gt;&gt;16)&amp;0xf,posDOLSB,posDOMSB);
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posCLK,posCLK);  // latch address bits A19-A16 into downloading circuit
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posCLK,posCLK);
+    
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>((address&gt;&gt;12)&amp;0xf,posDOLSB,posDOMSB);
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posCLK,posCLK);  // latch address bits A15-A12 into downloading circuit
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posCLK,posCLK);
+    
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>((address&gt;&gt; 8)&amp;0xf,posDOLSB,posDOMSB);
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posCLK,posCLK);  // latch address bits A11-A8 into downloading circuit
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posCLK,posCLK);
+
+    status = <a href="#" OnFocus="link('_member','In1210046855',this)">In</a>(posDILSB,posDIMSB);
+//  assert(status==1);
+    if(status != 1)
+        return false;
+    
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>((address&gt;&gt; 4)&amp;0xf,posDOLSB,posDOMSB);
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posCLK,posCLK);  // latch address bits A7-A4 into downloading circuit
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posCLK,posCLK);
+
+    status = <a href="#" OnFocus="link('_member','In1210046855',this)">In</a>(posDILSB,posDIMSB);
+//  assert(status==2);
+    if(status != 2)
+        return false;
+    
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>( address     &amp;0xf,posDOLSB,posDOMSB);
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posCLK,posCLK);      // latch address bits A3-A0 into downloading circuit
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posCLK,posCLK);
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posCLK,posCLK);
+
+    status = <a href="#" OnFocus="link('_member','In1210046855',this)">In</a>(posDILSB,posDIMSB);
+//  assert(status==3);
+    if(status != 3)
+        return false;
+
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posRESET,posRESET);  // reset the downloading state machine
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posRESET,posRESET);  // release the reset
+
+    status = <a href="#" OnFocus="link('_member','In1210046855',this)">In</a>(posDILSB,posDIMSB);
+//  assert(status==0);
+    if(status != 0)
+        return false;
+
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>((address&gt;&gt;20)&amp;0xf,posDOLSB,posDOMSB);
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posCLK,posCLK);  // latch address bits A23-A20 into downloading circuit
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posCLK,posCLK);
+    // read upper 3 bits of RAM data from previously loaded address
+    unsigned int <a href="#" OnFocus="link('_member','../xsatapi/data0',this)">data</a> = <a href="#" OnFocus="link('_member','In1210046855',this)">In</a>(posDILSB,posDIMSB);    
+
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>((address&gt;&gt;16)&amp;0xf,posDOLSB,posDOMSB);
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posCLK,posCLK);  // latch address bits A19-A16 into downloading circuit
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posCLK,posCLK);
+    // read middle 3 bits of RAM data from previously loaded address
+    <a href="#" OnFocus="link('_member','../xsatapi/data0',this)">data</a> = (<a href="#" OnFocus="link('_member','../xsatapi/data0',this)">data</a>&lt;&lt;3) | (<a href="#" OnFocus="link('_member','In1210046855',this)">In</a>(posDILSB,posDIMSB) &amp; 0x7);
+
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>((address&gt;&gt;12)&amp;0xf,posDOLSB,posDOMSB);
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posCLK,posCLK);  // latch address bits A15-A12 into downloading circuit
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posCLK,posCLK);
+    // read lowest 2 bits of RAM data from previously loaded address
+    <a href="#" OnFocus="link('_member','../xsatapi/data0',this)">data</a> = (<a href="#" OnFocus="link('_member','../xsatapi/data0',this)">data</a>&lt;&lt;2) | (<a href="#" OnFocus="link('_member','In1210046855',this)">In</a>(posDILSB,posDIMSB) &amp; 0x3);
+
+    *b = <a href="#" OnFocus="link('_member','RearrangeData127079845',this)">RearrangeData</a>(data,8,bigEndianBytes,bigEndianBits);
+    return true;
+}
+
+
+/// Test the port that reads/writes the flash to see if it is responding.
+///\return true if the operation was successful, false otherwise
+int <a href="#" OnFocus="link('_member','Test2569718309',this)">FlashPort::Test</a>(void)
+{
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posRESET,posRESET);  // reset the downloading state machine
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posCLK,posCLK);      // force clock high
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posRESET,posRESET);  // release the reset
+
+    int status = <a href="#" OnFocus="link('_member','In1210046855',this)">In</a>(posDILSB,posDIMSB);
+    if(status != 0)
+        return 1;
+
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posDOLSB,posDOMSB);
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posCLK,posCLK);  // latch address bits A23-A20 into downloading circuit
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posCLK,posCLK);
+    
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posDOLSB,posDOMSB);
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posCLK,posCLK);  // latch address bits A19-A16 into downloading circuit
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posCLK,posCLK);
+    
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posDOLSB,posDOMSB);
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posCLK,posCLK);  // latch address bits A15-A12 into downloading circuit
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posCLK,posCLK);
+    
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posDOLSB,posDOMSB);
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posCLK,posCLK);  // latch address bits A11-A8 into downloading circuit
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posCLK,posCLK);
+    
+    status = <a href="#" OnFocus="link('_member','In1210046855',this)">In</a>(posDILSB,posDIMSB);
+    if(status != 1)
+        return 2;
+    
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posDOLSB,posDOMSB);
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posCLK,posCLK);  // latch address bits A7-A4 into downloading circuit
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posCLK,posCLK);
+    
+    status = <a href="#" OnFocus="link('_member','In1210046855',this)">In</a>(posDILSB,posDIMSB);
+    if(status != 2)
+        return 3;
+    
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posDOLSB,posDOMSB);
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posCLK,posCLK);      // latch address bits A3-A0 into downloading circuit
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posCLK,posCLK);
+
+    status = <a href="#" OnFocus="link('_member','In1210046855',this)">In</a>(posDILSB,posDIMSB);
+    if(status != 3)
+        return 4;
+
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posDOLSB,posDOMSB);
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posCLK,posCLK);  // latch data bits D7-D4 into downloading circuit
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posCLK,posCLK);
+
+    status = <a href="#" OnFocus="link('_member','In1210046855',this)">In</a>(posDILSB,posDIMSB);
+    if(status != 4)
+        return 5;
+
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posDOLSB,posDOMSB);
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posCLK,posCLK);  // latch data bits D3-D0 into downloading circuit
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posCLK,posCLK);
+
+    status = <a href="#" OnFocus="link('_member','In1210046855',this)">In</a>(posDILSB,posDIMSB);
+    if(status != 0)
+        return 6;
+    else
+        return 0;  // test successful!!
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_file','_source');
+</script>

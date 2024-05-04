@@ -1,0 +1,6 @@
+# XST flow : Creating project file
+test_regio.prj
+# xst flow : RunXST
+test_regio.prj
+__projnav/test_regio.xst
+./xst

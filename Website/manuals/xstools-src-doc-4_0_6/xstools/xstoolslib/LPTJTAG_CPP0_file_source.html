@@ -1,0 +1,272 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - lptjtag.cpp</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">lptjtag.cpp</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">lptjtag.cpp</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','lptjtag_cpp0','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabInActiveGrayout"><span class="tabLinkGrayout">Overview</span></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','lptjtag_cpp0','_includedfiles',this)" class="tabLinkInActive">Included files</a></span>
+<span class="tabInActiveGrayout"><span class="tabLinkGrayout">Included by</span></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_file','lptjtag_cpp0','_source',this)" class="tabLinkActive">Source</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<pre class="codeExamples">
+/*----------------------------------------------------------------------------------
+  SOFTWARE LICENSE AGREEMENT
+    1.  Permission to use, copy, modify, and distribute this software
+        and its documentation, with or without modification, for any
+        purpose and without fee or royalty is hereby granted, provided
+        that you include the following on ALL copies of the software
+        and documentation or portions thereof, including
+        modifications, that you make:
+
+            a.  The full text of this license in a location viewable to users
+            of the redistributed or derivative work.
+
+            b.  Notice of any changes or modifications to the files,
+            including the date changes were made.
+
+    2.  The name, servicemarks and trademarks of X Engineering
+        Software Systems Corp. may NOT be used in advertising or
+        publicity pertaining to the software without specific, written
+        prior permission.
+
+    3.  Title to copyright in this software and any associated
+        documentation will at all times remain with X Engineering
+        Software Systems Corp.
+
+    4.  THIS SOFTWARE AND DOCUMENTATION IS PROVIDED "AS IS," AND X
+        Engineering Software Systems Corp MAKES NO REPRESENTATIONS OR
+        WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO,
+        WARRANTIES OF MERCHANTABILITY OR FITNESS FOR ANY PARTICULAR
+        PURPOSE OR THAT THE USE OF THE SOFTWARE OR DOCUMENTATION WILL
+        NOT INFRINGE ANY THIRD PARTY PATENTS, COPYRIGHTS, TRADEMARKS
+        OR OTHER RIGHTS.
+
+    5.  X Engineering Software Systems Corp WILL NOT BE LIABLE FOR ANY
+        DAMAGES, INCLUDING BUT NOT LIMITED TO, DIRECT, INDIRECT,
+        SPECIAL OR CONSEQUENTIAL, ARISING OUT OF ANY USE OF THE
+        SOFTWARE OR DOCUMENTATION.
+
+  ©2006 - X Engineering Software Systems Corp.  All rights reserved.
+----------------------------------------------------------------------------------*/
+
+
+#include &lt;string&gt;
+#include &lt;fstream&gt;
+#include &lt;cassert&gt;
+#include &lt;ctime&gt;
+#include &lt;cstdarg&gt;
+using namespace std;
+
+#include "<a href="#" OnFocus="link('_file','utils_h0',this)">utils.h</a>"
+#include "<a href="#" OnFocus="link('_file','lptjtag_h0',this)">lptjtag.h</a>"
+
+// pulse TCK for # of TCK pulses &lt; threshold, otherwise insert a delay without pulsing TCK
+#define DO_DELAY_THRESHOLD  50
+
+
+/// Create a parallel port-based JTAG controller port.
+<a href="#" OnFocus="link('_member','LPTJTAG60045135',this)">LPTJTAG::LPTJTAG</a>(void): <a href="#" OnFocus="link('_class','PPort0',this)">PPort</a>(), <a href="#" OnFocus="link('_class','JTAGPort0',this)">JTAGPort</a>()
+{
+    ;
+}
+
+
+/// Create a parallel port-based JTAG controller port.
+<a href="#" OnFocus="link('_member','LPTJTAG60045135',this)">LPTJTAG::LPTJTAG</a>( <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>* e,  ///&lt; pointer to error reporting object
+                  unsigned int portNum, ///&lt; parallel port number
+                  unsigned int invMask, ///&lt; inversion mask for the parallel port
+                  unsigned int pos_tck, ///&lt; bit position in parallel port of TCK pin
+                  unsigned int pos_tms, ///&lt; bit position in parallel port of TMS pin
+                  unsigned int pos_tdi, ///&lt; bit position in parallel port of TDI pin
+                  unsigned int pos_tdo) ///&lt; bit position in parallel port of TDO pin
+                  : <a href="#" OnFocus="link('_class','PPort0',this)">PPort</a>(e,<a href="#" OnFocus="link('_member','../xsatapi/portNum0',this)">portNum</a>,invMask), <a href="#" OnFocus="link('_class','JTAGPort0',this)">JTAGPort</a>(e)
+{
+    <a href="#" OnFocus="link('_member','Setup2928848075',this)">Setup</a>(e,portNum,invMask,pos_tck,pos_tms,pos_tdi,pos_tdo);
+}
+
+
+/// Setup the parallel port-based JTAG controller port.
+bool <a href="#" OnFocus="link('_member','Setup1927970358',this)">LPTJTAG::Setup</a>(<a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>* e,  ///&lt; pointer to error reporting object
+                   unsigned int portNum,    ///&lt; parallel port number
+                   unsigned int invMask,    ///&lt; inversion mask for the parallel port
+                   unsigned int pos_tck,    ///&lt; bit position in parallel port of TCK pin
+                   unsigned int pos_tms,    ///&lt; bit position in parallel port of TMS pin
+                   unsigned int pos_tdi,    ///&lt; bit position in parallel port of TDI pin
+                   unsigned int pos_tdo)    ///&lt; bit position in parallel port of TDO pin
+{
+    <a href="#" OnFocus="link('_member','posTCK322008',this)">posTCK</a> = pos_tck;
+    <a href="#" OnFocus="link('_member','posTMS322008',this)">posTMS</a> = pos_tms;
+    <a href="#" OnFocus="link('_member','posTDI322008',this)">posTDI</a> = pos_tdi;
+    <a href="#" OnFocus="link('_member','posTDO322008',this)">posTDO</a> = pos_tdo;
+    <a href="#" OnFocus="link('_member','SetTraceOnOff3476357123',this)">SetTraceOnOff</a>(false,cerr);   // don't trace TAP signals
+    <a href="#" OnFocus="link('_member','Setup3091404295',this)">JTAGPort::Setup</a>(e);
+    return <a href="#" OnFocus="link('_member','Setup1571714867',this)">PPort::Setup</a>(e,portNum,invMask); // return non-zero if error occurs
+}
+
+
+/// Set the level on the JTAG TCK pin.
+void <a href="#" OnFocus="link('_member','SetTCK3135730673',this)">LPTJTAG::SetTCK</a>(unsigned int b)
+{
+    <a href="#" OnFocus="link('_member','tckVal243771202',this)">tckVal</a> = b;
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(b,posTCK,posTCK);
+}
+
+
+///&lt; Get the level on the JTAG TCK pin.
+///\return the level on the JTAG TCK pin
+unsigned int <a href="#" OnFocus="link('_member','GetTCK60045135',this)">LPTJTAG::GetTCK</a>(void)
+{
+    <a href="#" OnFocus="link('_member','tckVal243771202',this)">tckVal</a> = <a href="#" OnFocus="link('_member','In1210046855',this)">In</a>(posTCK,posTCK);
+    return <a href="#" OnFocus="link('_member','tckVal243771202',this)">tckVal</a>;
+}
+
+
+/// Output a number of pulses on the JTAG TCK pin.
+void <a href="#" OnFocus="link('_member','PulseTCK3135730673',this)">LPTJTAG::PulseTCK</a>(unsigned int numTCKPulses) ///&lt; number of pulses to generate
+{
+    if(numTCKPulses == 0)
+        return;
+    
+    assert(<a href="#" OnFocus="link('_member','GetTCK60045135',this)">GetTCK</a>()==0);  // quiescent state of TCK should be zero
+    
+    if(<a href="#" OnFocus="link('_member','traceFlag243771202',this)">traceFlag</a>)
+        *<a href="#" OnFocus="link('_member','osTrace243771202',this)">osTrace</a> &lt;&lt; <a href="#" OnFocus="link('_member','GetTAPStateLabel449122300',this)">GetTAPStateLabel</a>(currentTAPState).c_str() &lt;&lt; "\t"
+        &lt;&lt; <a href="#" OnFocus="link('_member','GetTMS60045135',this)">GetTMS</a>() &lt;&lt; " "
+        &lt;&lt; <a href="#" OnFocus="link('_member','GetTDI60045135',this)">GetTDI</a>()   &lt;&lt; " "
+        &lt;&lt; <a href="#" OnFocus="link('_member','GetTDO60045135',this)">GetTDO</a>() &lt;&lt; endl;
+
+    if(numTCKPulses &gt;= DO_DELAY_THRESHOLD)
+        <a href="#" OnFocus="link('_member','InsertDelay359930342',this)">InsertDelay</a>(numTCKPulses,MICROSECONDS);
+    else
+    {
+        <a href="#" OnFocus="link('_member','GetTDO60045135',this)">GetTDO</a>();  // get value on TDO before clock pulse (see SendRcvBit)
+        <a href="#" OnFocus="link('_member','UpdateTAPState822545253',this)">UpdateTAPState</a>(numTCKPulses);
+        for(unsigned int i=numTCKPulses; i&gt;0; i--)
+        {
+            <a href="#" OnFocus="link('_member','SetTCK3135730673',this)">SetTCK</a>(~<a href="#" OnFocus="link('_member','GetTCK60045135',this)">GetTCK</a>());  // toggle TCK output
+            <a href="#" OnFocus="link('_member','SetTCK3135730673',this)">SetTCK</a>(~<a href="#" OnFocus="link('_member','GetTCK60045135',this)">GetTCK</a>());  // toggle it again
+        }
+    }
+}
+
+
+/// Set the level on the JTAG TMS pin.
+void <a href="#" OnFocus="link('_member','SetTMS3135730673',this)">LPTJTAG::SetTMS</a>(unsigned int b)
+{
+    <a href="#" OnFocus="link('_member','tmsVal243771202',this)">tmsVal</a> = b;
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(b,posTMS,posTMS);
+}
+
+
+/// Get the level on the JTAG TMS pin.
+///\return the level on the JTAG TMS pin
+unsigned int <a href="#" OnFocus="link('_member','GetTMS60045135',this)">LPTJTAG::GetTMS</a>(void)
+{
+    <a href="#" OnFocus="link('_member','tmsVal243771202',this)">tmsVal</a> = <a href="#" OnFocus="link('_member','In1210046855',this)">In</a>(posTMS,posTMS);
+    return <a href="#" OnFocus="link('_member','tmsVal243771202',this)">tmsVal</a>;
+}
+
+
+/// Set the level on the JTAG TDI pin.
+void <a href="#" OnFocus="link('_member','SetTDI3135730673',this)">LPTJTAG::SetTDI</a>(unsigned int b)
+{
+    <a href="#" OnFocus="link('_member','tdiVal243771202',this)">tdiVal</a> = b;
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(b,posTDI,posTDI);
+}
+
+
+/// Get the level on the JTAG TDI pin.
+///\return the level on the JTAG TDI pin
+unsigned int <a href="#" OnFocus="link('_member','GetTDI60045135',this)">LPTJTAG::GetTDI</a>(void)
+{
+    <a href="#" OnFocus="link('_member','tdiVal243771202',this)">tdiVal</a> = <a href="#" OnFocus="link('_member','In1210046855',this)">In</a>(posTDI,posTDI);
+    return <a href="#" OnFocus="link('_member','tdiVal243771202',this)">tdiVal</a>;
+}
+
+
+/// Get the level on the JTAG TDO pin.
+///\return the level on the JTAG TDO pin
+unsigned int <a href="#" OnFocus="link('_member','GetTDO60045135',this)">LPTJTAG::GetTDO</a>(void)
+{
+    <a href="#" OnFocus="link('_member','tdoVal243771202',this)">tdoVal</a> = <a href="#" OnFocus="link('_member','In1210046855',this)">In</a>(posTDO,posTDO);
+    return <a href="#" OnFocus="link('_member','tdoVal243771202',this)">tdoVal</a>;
+}
+
+
+#define MAX(a,b)    ((a)&lt;(b)?(b):(a))
+/// Transmit a bitstream through TDI while receiving a bitstream through TDO.
+///
+/// This subroutine assumes the TAP controller state is
+/// Shift-IR or Shift-DR upon entry.  Upon termination, this subroutine
+/// will leave the TAP controller in the Exit1-IR or Exit1-DR state.
+///
+/// Either sendBits or rcvBits can be a zero-length bitstream if you don't
+/// want to transmit or receive bits during a particular call to this subroutine.
+/// For example, you may want to load the BSDR with a bit pattern but
+/// you might not care what data gets shifted out of the BSDR during
+/// the loading.
+///
+///SendBits and RcvBits can point to the same bitstream without causing problems.
+///
+/// The LSB of a bitstream has an index of 0.
+void LPTJTAG::SendRcvBitstream(Bitstream&amp; sendBits, ///&lt; bits to send out TDI pin 
+                    Bitstream&amp; rcvBits) ///&lt; bits received through TDO pin
+{
+    assert(currentTAPState==ShiftIR || currentTAPState==ShiftDR);
+    unsigned int length = MAX(sendBits.GetLength(),rcvBits.GetLength());
+    assert(length&gt;0);
+    
+    // lower the TMS line to make sure the TAP controller stays
+    // in the Shift-IR or Shift-DR state for the first length-1 cycles
+    SetTMS(0);
+
+    for( unsigned int i=0; i&lt;length; i++ )
+    {
+        unsigned int rcvBit;
+        
+        // On the last bit, raise the TMS line so the TAP
+        // controller will move out of the Shift state into
+        // the Exit1 state.
+        if( i==length-1 )
+            SetTMS(1);
+        
+        // send the next bit if the bitstream is not empty
+        if(sendBits.GetLength() &gt; i)
+            rcvBit = SendRcvBit(sendBits[i]);
+        /* else just shift in a zero */
+        else
+            rcvBit = SendRcvBit(0);
+        
+        // store the received bit if the bitstream is not empty
+        if(rcvBits.GetLength() &gt; i)
+            rcvBits.SetBit(i,rcvBit);
+    }
+
+    assert(currentTAPState==Exit1DR || currentTAPState==Exit1IR);
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_file','_source');
+</script>

@@ -1,0 +1,45 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - operator[]</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">operator[]</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_class','Bitstream0',this)" class="pathLink">Bitstream</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">operator[]</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','operatorl_brack_r_brack_2805758212','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_member','operatorl_brack_r_brack_2805758212','_source',this)" class="tabLinkActive">Source</a></span>
+<span class="tabInActiveGrayout"><span class="tabLinkGrayout">Call Graph</span></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<div class="paragraph2NoTopPadding">Start Line: 164</div>
+<pre class="codeExamples">
+unsigned int <a href="#" OnFocus="link('_member','operatorl_brack_r_brack_2805758212',this)">Bitstream::operator[]</a>(unsigned int bitIndex) const
+{
+    unsigned int wordIndex = bitIndex / <a href="#" OnFocus="link('_member','bitsPerLong0',this)">bitsPerLong</a>;   // word containing the bit
+    unsigned int shift     = bitIndex % <a href="#" OnFocus="link('_member','bitsPerLong0',this)">bitsPerLong</a>;   // bit position within word
+    
+    // now get the word and shift it so the requested bit is in the LSB.
+    // Then mask off the rest and return just a 1 or a 0.
+    return ((<a href="#" OnFocus="link('_member','bits203865993',this)">bits</a>[wordIndex]&gt;&gt;shift) &amp; 1L);
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_member','_source');
+</script>

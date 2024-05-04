@@ -1,0 +1,168 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - pport.h</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">pport.h</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">pport.h</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','pport_h0','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','pport_h0','_overview',this)" class="tabLinkInActive">Overview</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','pport_h0','_includedfiles',this)" class="tabLinkInActive">Included files</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','pport_h0','_includedby',this)" class="tabLinkInActive">Included by</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_file','pport_h0','_source',this)" class="tabLinkActive">Source</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<pre class="codeExamples">
+/*----------------------------------------------------------------------------------
+  SOFTWARE LICENSE AGREEMENT
+    1.  Permission to use, copy, modify, and distribute this software
+        and its documentation, with or without modification, for any
+        purpose and without fee or royalty is hereby granted, provided
+        that you include the following on ALL copies of the software
+        and documentation or portions thereof, including
+        modifications, that you make:
+
+            a.  The full text of this license in a location viewable to users
+            of the redistributed or derivative work.
+
+            b.  Notice of any changes or modifications to the files,
+            including the date changes were made.
+
+    2.  The name, servicemarks and trademarks of X Engineering
+        Software Systems Corp. may NOT be used in advertising or
+        publicity pertaining to the software without specific, written
+        prior permission.
+
+    3.  Title to copyright in this software and any associated
+        documentation will at all times remain with X Engineering
+        Software Systems Corp.
+
+    4.  THIS SOFTWARE AND DOCUMENTATION IS PROVIDED "AS IS," AND X
+        Engineering Software Systems Corp MAKES NO REPRESENTATIONS OR
+        WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO,
+        WARRANTIES OF MERCHANTABILITY OR FITNESS FOR ANY PARTICULAR
+        PURPOSE OR THAT THE USE OF THE SOFTWARE OR DOCUMENTATION WILL
+        NOT INFRINGE ANY THIRD PARTY PATENTS, COPYRIGHTS, TRADEMARKS
+        OR OTHER RIGHTS.
+
+    5.  X Engineering Software Systems Corp WILL NOT BE LIABLE FOR ANY
+        DAMAGES, INCLUDING BUT NOT LIMITED TO, DIRECT, INDIRECT,
+        SPECIAL OR CONSEQUENTIAL, ARISING OUT OF ANY USE OF THE
+        SOFTWARE OR DOCUMENTATION.
+
+  ©2006 - X Engineering Software Systems Corp.  All rights reserved.
+----------------------------------------------------------------------------------*/
+
+
+#ifndef PPORT_H
+#define PPORT_H
+
+#include &lt;wtypes.h&gt;
+#include "tvichw32.h"
+#include "ioport.hpp"
+
+using namespace Uniio;
+#include "<a href="#" OnFocus="link('_file','xserror_h0',this)">xserror.h</a>"
+
+
+/**
+Low-level interface to the PC parallel port.
+
+This object handles the parallel port. It lets you set the value of bit 
+fields in the data and control registers of the parallel port, and it 
+lets you get values from bit fields of the status register. These three 
+byte-wide registers are concatenated into a single 24-bit register from 
+which bit fields are extracted using upper and lower indices in the 
+range [0,23]. The PPort object also lets you specify a 24-bit inversion 
+mask to counter the effect of any inverters found in the PC parallel 
+port and/or XS Board hardware. 
+
+The PPort object uses lower-level I/O routines from either the TVICHW32, UNIIO or 
+DLPORTIO DLL libraries and drivers. The TVICHW32 interface is used by 
+default, but the user can select the UNIIO or DLPORTIO routines by setting the 
+appropriate value in the XSTOOLS parameter file. 
+
+The PPort object can be initialized with a parallel port number in the 
+range [1,4] in which case it will fetch the actual hardware address for 
+the parallel port registers from the PC RAM. This address can be 
+overridden by specifying the hardware address in the XSTOOLS parameter 
+file. 
+
+The PPort object will check its operation by verifying that any levels 
+on the parallel port pins match the values it has placed on them. This 
+alerts the PPort object to any problems accessing the parallel port 
+hardware. These checks cease after a set number of I/O operations in 
+order to increase the port throughput. 
+*/
+class <a href="#" OnFocus="link('_class','PPort0',this)">PPort</a>
+{
+    public:
+
+    <a href="#" OnFocus="link('_member','PPort259477277',this)">PPort</a>(void);
+
+    <a href="#" OnFocus="link('_member','PPort259477277',this)">PPort</a>(<a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>* e, unsigned int n, unsigned int invMask);
+
+    <a href="#" OnFocus="link('_member','tilde_PPort259477277',this)">~PPort</a>(void);
+
+    bool <a href="#" OnFocus="link('_member','Setup1571714867',this)">Setup</a>(<a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>* e, unsigned int n, unsigned int invMask);
+
+    void <a href="#" OnFocus="link('_member','SetErr2906956701',this)">SetErr</a>(<a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>* e);
+
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','GetErr259477277',this)">GetErr</a>(void);
+
+    <a href="#" OnFocus="link('_class','PPort0',this)">PPort</a>&amp; <a href="#" OnFocus="link('_member','operatoreq_222307197',this)">operator=</a>(<a href="#" OnFocus="link('_class','PPort0',this)">PPort</a>&amp; src);
+
+    bool <a href="#" OnFocus="link('_member','SetLPTNum190760768',this)">SetLPTNum</a>(unsigned int n);
+
+    unsigned int <a href="#" OnFocus="link('_member','GetLPTNum4017409866',this)">GetLPTNum</a>(void) const;
+
+    void <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(unsigned int v, unsigned int loPos, unsigned int hiPos);
+
+    unsigned int <a href="#" OnFocus="link('_member','In1210046855',this)">In</a>(unsigned int loPos, unsigned int hiPos);
+
+    void <a href="#" OnFocus="link('_member','SetInvMask190760768',this)">SetInvMask</a>(unsigned int mask);
+
+
+    private:
+
+    unsigned char <a href="#" OnFocus="link('_member','Inp103661393',this)">Inp</a>(unsigned short regOffset) const;
+
+    void <a href="#" OnFocus="link('_member','Outp3962489620',this)">Outp</a>(unsigned short regOffset, unsigned char byte);
+
+    IOPort *<a href="#" OnFocus="link('_member','dataPort57972',this)">dataPort</a>;               ///&lt; IO port object for the parallel port data register
+    IOPort *<a href="#" OnFocus="link('_member','controlPort57972',this)">controlPort</a>;           ///&lt; IO port object for the parallel port control register
+    IOPort *<a href="#" OnFocus="link('_member','statusPort57972',this)">statusPort</a>;               ///&lt; IO port object for the parallel port status register
+    static HANDLE <a href="#" OnFocus="link('_member','HW3257972',this)">HW32</a>;             ///&lt; TVICHW32 IO port handle
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>* <a href="#" OnFocus="link('_member','err57972',this)">err</a>;                 ///&lt; error reporting object
+    unsigned int <a href="#" OnFocus="link('_member','num57972',this)">num</a>;              ///&lt; parallel port num 1,2,3,4
+    unsigned int <a href="#" OnFocus="link('_member','address57972',this)">address</a>;          ///&lt; I/O address
+    unsigned int <a href="#" OnFocus="link('_member','invMask57972',this)">invMask</a>;          ///&lt; concatenated inversion mask for data, status, and control
+    unsigned int <a href="#" OnFocus="link('_member','chkCounter57972',this)">chkCounter</a>;      ///&lt; counts the number of initial checks to make on parallel port
+    unsigned int <a href="#" OnFocus="link('_member','IODriverIndex57972',this)">IODriverIndex</a>;      ///&lt; UNIIO, DRIVERLINX, TVICHW32
+    unsigned int <a href="#" OnFocus="link('_member','regvals57972',this)">regvals</a>;          ///&lt; store the values of the parallel port registers
+    unsigned int <a href="#" OnFocus="link('_member','updateCounter57972',this)">updateCounter</a>;      ///&lt; update regvals whenever this counter hits zero
+};
+
+#endif
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_file','_source');
+</script>

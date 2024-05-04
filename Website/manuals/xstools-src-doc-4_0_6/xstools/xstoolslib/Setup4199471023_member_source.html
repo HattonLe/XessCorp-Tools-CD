@@ -1,0 +1,42 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - Setup</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">Setup</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_class','USBJTAG0',this)" class="pathLink">USBJTAG</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">Setup</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','Setup4199471023','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_member','Setup4199471023','_source',this)" class="tabLinkActive">Source</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','Setup4199471023','_callgraph',this)" class="tabLinkInActive">Call Graph</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<div class="paragraph2NoTopPadding">Start Line: 77</div>
+<pre class="codeExamples">
+bool <a href="#" OnFocus="link('_member','Setup4199471023',this)">USBJTAG::Setup</a>(<a href="#" OnFocus="link('_class','XSError0',this)">XSError</a> *e, unsigned int portNum, unsigned int endptNum)
+{
+    <a href="#" OnFocus="link('_member','SetTraceOnOff3476357123',this)">SetTraceOnOff</a>(false,cerr);   // don't trace TAP signals
+    <a href="#" OnFocus="link('_member','Setup4253302659',this)">USBPort::Setup</a>(e,portNum,endptNum);
+    return true;
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_member','_source');
+</script>

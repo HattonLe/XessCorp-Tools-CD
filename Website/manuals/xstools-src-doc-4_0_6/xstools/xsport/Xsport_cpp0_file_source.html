@@ -1,0 +1,263 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - Xsport.cpp</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">Xsport.cpp</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xsport0',this)" class="pathLink">xsport</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">Xsport.cpp</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','Xsport_cpp0','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','Xsport_cpp0','_overview',this)" class="tabLinkInActive">Overview</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','Xsport_cpp0','_includedfiles',this)" class="tabLinkInActive">Included files</a></span>
+<span class="tabInActiveGrayout"><span class="tabLinkGrayout">Included by</span></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_file','Xsport_cpp0','_source',this)" class="tabLinkActive">Source</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<pre class="codeExamples">
+/*----------------------------------------------------------------------------------
+  SOFTWARE LICENSE AGREEMENT
+    1.  Permission to use, copy, modify, and distribute this software
+        and its documentation, with or without modification, for any
+        purpose and without fee or royalty is hereby granted, provided
+        that you include the following on ALL copies of the software
+        and documentation or portions thereof, including
+        modifications, that you make:
+
+            a.  The full text of this license in a location viewable to users
+            of the redistributed or derivative work.
+
+            b.  Notice of any changes or modifications to the files,
+            including the date changes were made.
+
+    2.  The name, servicemarks and trademarks of X Engineering
+        Software Systems Corp. may NOT be used in advertising or
+        publicity pertaining to the software without specific, written
+        prior permission.
+
+    3.  Title to copyright in this software and any associated
+        documentation will at all times remain with X Engineering
+        Software Systems Corp.
+
+    4.  THIS SOFTWARE AND DOCUMENTATION IS PROVIDED "AS IS," AND X
+        Engineering Software Systems Corp MAKES NO REPRESENTATIONS OR
+        WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO,
+        WARRANTIES OF MERCHANTABILITY OR FITNESS FOR ANY PARTICULAR
+        PURPOSE OR THAT THE USE OF THE SOFTWARE OR DOCUMENTATION WILL
+        NOT INFRINGE ANY THIRD PARTY PATENTS, COPYRIGHTS, TRADEMARKS
+        OR OTHER RIGHTS.
+
+    5.  X Engineering Software Systems Corp WILL NOT BE LIABLE FOR ANY
+        DAMAGES, INCLUDING BUT NOT LIMITED TO, DIRECT, INDIRECT,
+        SPECIAL OR CONSEQUENTIAL, ARISING OUT OF ANY USE OF THE
+        SOFTWARE OR DOCUMENTATION.
+
+  ©2006 - X Engineering Software Systems Corp.  All rights reserved.
+----------------------------------------------------------------------------------*/
+
+/**
+\unit
+\file
+File containing the main routine and supporting subroutines for the command-line program that forces bit values onto pins of the XESS boards.
+*/
+
+
+#include &lt;cstdlib&gt;
+#include &lt;cassert&gt;
+#include &lt;sstream&gt;
+#include &lt;fstream&gt;
+#include &lt;string&gt;
+using namespace std;
+
+#include "<a href="#" OnFocus="link('_file','../xstoolslib/xserror_h0',this)">xserror.h</a>"
+#include "<a href="#" OnFocus="link('_file','../xstoolslib/pport_h0',this)">pport.h</a>"
+#include "<a href="#" OnFocus="link('_file','../xstoolslib/utils_h0',this)">utils.h</a>"
+char* <a href="#" OnFocus="link('_member','../xsatapi/version0',this)">version</a> = "4.0.6"; ///&lt; Version info
+string <a href="#" OnFocus="link('_member','../xsatapi/lpt0',this)">lpt</a>;            ///&lt; Parallel port identifier
+int <a href="#" OnFocus="link('_member','../xsatapi/portNum0',this)">portNum</a> = -1;  ///&lt; Parallel port number
+bool <a href="#" OnFocus="link('_member','getStatus0',this)">getStatus</a> = false;  ///&lt; Get value of parallel port status bits
+<a href="#" OnFocus="link('_class','../xstoolslib/XSError0',this)">XSError</a> <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>(cerr); ///&lt; Setup error-reporting channel
+bool <a href="#" OnFocus="link('_member','writeControlBits0',this)">writeControlBits</a> = false; ///&lt; True if bitstring is destined for control bits
+
+
+/// Print a string that shows the options and how to use this program.
+void <a href="#" OnFocus="link('_member','../xsatapi/Usage86416935',this)">Usage</a>(string progName)
+{
+    cerr &lt;&lt; progName.c_str() &lt;&lt; " [-[h|help]] [-[p|port] [1|2|3]] [-[s|status]] &lt;binary number&gt;" &lt;&lt; endl;
+    cerr &lt;&lt; "Version " &lt;&lt; <a href="#" OnFocus="link('_member','../xsatapi/version0',this)">version</a> &lt;&lt; endl;
+}
+
+
+/// Process the command line options and set the appropriate flags.
+bool <a href="#" OnFocus="link('_member','../xsatapi/ProcessOpts2719128541',this)">ProcessOpts</a>(int* argc, char** argv)
+{
+    <a href="#" OnFocus="link('_class','../xstoolslib/XSError0',this)">XSError</a> <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>(cerr); // setup error channel
+
+    bool ok = true; // no error yet
+
+    for(int i=1; i&lt; *argc; i++)
+    {
+        int cnt, j;
+        string arg = argv[i];
+        
+        if(arg[0] == '-')  // found an option
+        {
+            <a href="#" OnFocus="link('_member','../xstoolslib/ConvertToUpperCase67554305',this)">ConvertToUpperCase</a>(arg);  // convert option to upper case
+            
+            // ask for help but we don't give much
+            if(arg=="-H" || arg=="-HELP")
+            {
+                <a href="#" OnFocus="link('_member','../xsatapi/Usage86416935',this)">Usage</a>(arg);
+                cnt = 1;
+            }
+            
+            // specify the printer port being used
+            else if(arg=="-PORT" || arg=="-P")
+            {
+                sscanf(argv[i+1],"%d",&amp;portNum);
+                // istrstream argstr(argv[i+1]);
+                // argstr &gt;&gt; portNum;
+                if(<a href="#" OnFocus="link('_member','../xsatapi/portNum0',this)">portNum</a>&lt;4)
+                    <a href="#" OnFocus="link('_member','../xsatapi/lpt0',this)">lpt</a> = (string)"LPT" + (string)(argv[i+1]);
+                else
+                    <a href="#" OnFocus="link('_member','../xsatapi/lpt0',this)">lpt</a> = "LPT1";
+                cnt = 2;
+            }
+
+            // ask for the value of the parallel port status bits
+            else if(arg=="-STATUS" || arg=="-S")
+            {
+                <a href="#" OnFocus="link('_member','getStatus0',this)">getStatus</a> = true;
+                cnt = 1;
+            }
+            
+            // can't figure out what the user wants
+            else
+            {
+                ok = false;
+                <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','../xstoolslib/SetSeverity3409672334',this)">SetSeverity</a>(XSErrorMinor);
+                <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> &lt;&lt; "unknown option: " &lt;&lt; arg.c_str() &lt;&lt; "\n";
+                <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','../xstoolslib/EndMsg60232619',this)">EndMsg</a>();
+                cnt = 1;
+            }
+        }
+        else    // found something which is not an option, so it must be a bit string
+        { // skip over this argument and leave it in the argument array
+            i++;
+            cnt = 0;
+        }
+            
+        // remove the processed options from the argument list
+        for(j=i+cnt; j&lt; *argc; j++)
+            argv[j-cnt] = argv[j];
+        *argc -= cnt;
+        i--;
+    }
+
+    return ok;
+}
+
+
+/// Main routine.
+/// \return 0 if the bits are output successfully; 1 if some problem occurs.
+int <a href="#" OnFocus="link('_member','../xsatapi/main251862569',this)">main</a>( int argc, char **argv )
+{
+    // Setup error channel.
+    <a href="#" OnFocus="link('_class','../xstoolslib/XSError0',this)">XSError</a> <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>(cerr);
+
+    <a href="#" OnFocus="link('_member','../xsatapi/lpt0',this)">lpt</a> = <a href="#" OnFocus="link('_member','../xstoolslib/GetXSTOOLSParameter86138908',this)">GetXSTOOLSParameter</a>("LPT");
+    if(<a href="#" OnFocus="link('_member','../xsatapi/lpt0',this)">lpt</a> != "")
+    {
+        int n = sscanf(<a href="#" OnFocus="link('_member','../xsatapi/lpt0',this)">lpt</a>.c_str()+3,"%d",&amp;<a href="#" OnFocus="link('_member','../xsatapi/portNum0',this)">portNum</a>);
+        assert(n != 0);
+    }
+    
+    if(<a href="#" OnFocus="link('_member','../xsatapi/ProcessOpts2719128541',this)">ProcessOpts</a>( &amp;argc, argv ) == false)
+    {
+        <a href="#" OnFocus="link('_member','../xsatapi/Usage86416935',this)">Usage</a>(string(argv[0]));
+        return 1;   // exit if error in program options
+    }
+
+    // Use LPT1 if no other parallel port was specified.
+    if(<a href="#" OnFocus="link('_member','../xsatapi/portNum0',this)">portNum</a> == -1)
+    {
+        <a href="#" OnFocus="link('_member','../xsatapi/portNum0',this)">portNum</a> = 1;
+        <a href="#" OnFocus="link('_member','../xsatapi/lpt0',this)">lpt</a> = "LPT1";
+    }
+
+    // Store the parallel port that will be used.
+    if(<a href="#" OnFocus="link('_member','../xsatapi/portNum0',this)">portNum</a> &lt; 4)
+        <a href="#" OnFocus="link('_member','../xstoolslib/SetXSTOOLSParameter1183990257',this)">SetXSTOOLSParameter</a>("LPT",<a href="#" OnFocus="link('_member','../xsatapi/lpt0',this)">lpt</a>.c_str());
+
+    if(argc&lt;2)
+        return 1;   // exit if no binary string of bits
+
+    // Create the parallel port object.
+    <a href="#" OnFocus="link('_class','../xstoolslib/PPort0',this)">PPort</a> <a href="#" OnFocus="link('_member','../xsether/port0',this)">port</a>;
+    if(<a href="#" OnFocus="link('_member','../xsether/port0',this)">port</a>.<a href="#" OnFocus="link('_member','../xstoolslib/Setup1571714867',this)">Setup</a>(&amp;errMsg,portNum,0x3) == false)
+    {
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','../xstoolslib/SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,"Invalid parallel port was selected!\n");
+        return 1;
+    }
+    
+    // Iterate through the string while assigning binary values to the parallel port data bits. 
+    int portValue = <a href="#" OnFocus="link('_member','../xsether/port0',this)">port</a>.<a href="#" OnFocus="link('_member','../xstoolslib/In1210046855',this)">In</a>(0,7); // get current value on parallel port
+    string bits = argv[1];      // get the string of binary bits
+    int i = bits.length()-1;
+    for( unsigned int bitMask=1; (i&gt;=0) &amp;&amp; (bitMask!=256); bitMask&lt;&lt;=1,i-- )
+    {
+        switch( bits[i] )
+        {
+            // binary one is represented by '1', 'h', or 'H'
+        case '1':
+        case 'H':
+        case 'h':
+            portValue |= bitMask;
+            break;
+            // binary zero is represented by '0', 'l', or 'L'
+        case '0':
+        case 'L':
+        case 'l':
+            portValue &amp;= ~bitMask;
+            break;
+            // erroneous binary value if we get here!!
+        default:
+            <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','../xstoolslib/SetSeverity3409672334',this)">SetSeverity</a>(XSErrorMinor);
+            <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a> &lt;&lt; "illegal binary value in " &lt;&lt; bits.c_str() &lt;&lt; "\n";
+            <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','../xstoolslib/EndMsg60232619',this)">EndMsg</a>();
+            break;
+        }
+    }
+    
+    // Exit without changing the parallel port if there was an error.
+    if(<a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','../xstoolslib/IsError863564933',this)">IsError</a>())
+        return 1;   // return 1 if something went wrong
+
+    // output the new value on the parallel port
+    <a href="#" OnFocus="link('_member','../xsether/port0',this)">port</a>.<a href="#" OnFocus="link('_member','../xstoolslib/Out2912582438',this)">Out</a>(portValue,0,7);
+
+    if(<a href="#" OnFocus="link('_member','getStatus0',this)">getStatus</a>)
+        cout &lt;&lt; hex &lt;&lt; <a href="#" OnFocus="link('_member','../xsether/port0',this)">port</a>.<a href="#" OnFocus="link('_member','../xstoolslib/In1210046855',this)">In</a>(11,15) &lt;&lt; "\n";
+
+    return 0;   // return 0 if the operation was successful
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_file','_source');
+</script>

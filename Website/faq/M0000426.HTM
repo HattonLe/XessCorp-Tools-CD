@@ -1,0 +1,348 @@
+<html>
+
+
+<!-- Mirrored from 192.168.0.47/faq/M0000426.HTM by HTTrack Website Copier/3.x [XR&CO'2004], Mon, 04 Dec 2006 16:08:03 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=ISO-8859-1"><!-- /Added by HTTrack -->
+<head>
+<link rel="SHORTCUT ICON" href="../images/xess.ico">
+<title>XS40-005XL serial EEPROM and oscillator programming gremlins</title>
+<meta name="KEYWORDS" content="XESS USER FAQ">
+<meta name="DESCRIPTION" content="XESS User FAQ question &amp; answer.">
+<meta http-equiv="Content-Type" content="text/html">
+<link rel="stylesheet" type="text/css" href="../xess-1.css">
+<meta name="Microsoft Border" content="none, default">
+</head>
+
+<table>
+  <tr>
+    <td class="StdPageLogo">
+    <a href="../index-2.html"><img border="0" src="../images/xess-138x32.bmp"></a>
+<?php 
+			require("../logo.html");
+		?></td>
+    <td class="StdPageNav">
+    <script type="text/javascript" src="xess.js"></script>
+<!-- <script type="text/javascript" src="niftycube_xess.js"></script> -->
+<!-- <script type="text/javascript" src="prototype.js"></script> -->
+<!-- <script type="text/javascript" src="rico.js"></script> -->
+<script type="text/javascript">
+	window.onload=function(){
+		startList("nav");
+		stripe_xess();
+		collapseall();
+		// Nifty("td.StdPageNav","transparent");
+		// Nifty("td.StdPageSidebar","transparent");
+		// Nifty("td.StdPageNavLinks","transparent");
+	};
+	onload=function(){
+		startList("nav");
+		stripe_xess();
+		collapseall();
+		// Nifty("td.StdPageNav","transparent");
+		// Nifty("td.StdPageSidebar","transparent");
+		// Nifty("td.StdPageNavLinks","transparent");
+	};
+</script>
+
+
+
+<table border="0" width="640" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="center" valign="center" width="70%">
+
+<!--
+  -- naviagation bar for browsers with scripting capability
+  -- (make sure there is no whitespace after the '\' on each line and run
+  -- the Javascript console on Firefox to check the syntax.)
+  -->
+<script type="text/javascript">
+nav_text = '\
+  <ul id="nav"> \
+    <li id="first"><a href="../ho04000.html">Products</a> \
+      <ul> \
+        <li><a href="../ho04000.html"><div>Catalog</div></a></li> \
+        <li><a href="../manuals.html"><div>Manuals</div></a></li> \
+        <li><a href="../ho07000.html"><div>Software Downloads</div></a></li> \
+      </ul> \
+    </li> \
+    <li><a href="../help.html">Support</a> \
+      <ul> \
+        <li><a href="../manuals.html" ><div>Product Manuals</div></a></li> \
+        <li><a href="../ho03000.html" ><div>Tutorials</div></a></li> \
+        <li><a href="../ho03000.html" ><div>Application Notes</div></a></li> \
+        <li><a href="../ho03000.html" ><div>Design Examples</div></a></li> \
+        <li><a href="../ho01000.html" ><div>FAQ</div></a></li> \
+        <li><a href="../list_reg.html"><div>User Forum</div></a></li> \
+        <li><a href="../help.html"    ><div>Request Help</div></a></li> \
+      </ul> \
+    </li> \
+    <li><a href="../ho01001.html">Purchasing</a> \
+      <ul> \
+        <li><a href="https://xess.com/xess_int_order.php3"><div>Web Orders</div></a></li> \
+        <li><a href="../ho01001.html"                       ><div>Purchase Orders</div></a></li> \
+        <li><a href="../ho01001.html"                       ><div>Payment Methods</div></a></li> \
+        <li><a href="../xess_int_quote.html"                ><div>Get a Quote</div></a></li> \
+        <li><a href="../xess_int_quote.html"                ><div>Get a Proforma Invoice</div></a></li> \
+        <li><a href="../ho01001.html"                       ><div>How To Buy From Us</div></a></li> \
+      </ul> \
+    </li> \
+    <li id="last"><a href="../index-2.html">XESS</a> \
+      <ul> \
+        <li><a href="../index-2.html"   ><div>Home</div></a></li> \
+        <li><a href="../about_us.html"><div>About Us</div></a></li> \
+        <li><a href="../ho00003.html" ><div>Contact Us</div></a></li> \
+<!-- \
+        <li><a href=""              ><div>Announcements</div></a></li> \
+        <li><a href="../ho00005.html" ><div>Press Releases</div></a></li> \
+--> \
+      </ul> \
+    </li> \
+    <li id="last"><a href="../links.html">Misc.</a> \
+      <ul> \
+        <li><a href="../links.html"><div>Links</div></a></li> \
+      </ul> \
+    </li> \
+  </ul> \
+';
+document.writeln(nav_text);
+</script>
+
+<!--
+  -- naviagation bar for browsers with NO scripting capability
+  -->
+<noscript>
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="14%" align="left">
+    <a href="../ho04000.html"><img border="0" src="../images/menu_arrow.png">Products</a>
+    </td>
+    <td width="16%" align="left">
+    <a href="../ho01001.html"><img border="0" src="../images/menu_arrow.png">How to Buy</a>
+    </td>
+    <td width="11%" align="left">
+    <a href="../help.html"><img border="0" src="../images/menu_arrow.png">Help!</a>
+    </td>
+    <td width="14%" align="left">
+    <a href="../ho03000.html"><img border="0" src="../images/menu_arrow.png">Tutorials</a>
+    </td>
+    <td width="14%" align="left">
+    <a href="../index-2.html"><img border="0" src="../images/menu_arrow.png">Home</a>
+<!--
+    <a href="/ho00005.html"><img border="0" src="/images/menu_arrow.png">Press&nbsp;Rel.</a>
+-->
+    </td>
+  </tr>
+  <tr>
+    <td>
+    <a href="../manuals.html"><img border="0" src="../images/menu_arrow.png">Manuals</a>
+    </td>
+    <td>
+    <a href="../xess_int_quote.html"><img border="0" src="../images/menu_arrow.png">Online Quote</a>
+    </td>
+    <td>
+    <a href="../ho01000.html"><img border="0" src="../images/menu_arrow.png">FAQ</a>
+    </td>
+    <td>
+    <a href="../ho03000.html"><img border="0" src="../images/menu_arrow.png">Examples</a>
+    </td>
+    <td>
+    <a href="../about_us.html">
+    <img border="0" src="../images/menu_arrow.png">About&nbsp;Us</a>
+    </td>
+  </tr>
+  <tr>
+    <td>
+    <a href="../ho07000.html"><img border="0" src="../images/menu_arrow.png">Downloads</a>
+    </td>
+    <td>
+    <a href="https://xess.com/xess_int_order.php3"><img border="0" src="../images/menu_arrow.png">Order Online</a>
+    </td>
+    <td>
+    <a href="../list_reg.html"><img border="0" src="../images/menu_arrow.png">Forum</a>
+    </td>
+    <td>
+    <a href="../links.html"><img border="0" src="../images/menu_arrow.png">Links</a>
+    </td>
+    <td>
+    <a href="../ho00003.html"><img border="0" src="../images/menu_arrow.png">Contact&nbsp;Us</a>
+    </td>
+  </tr>
+</table>
+</noscript>
+
+    </td>
+    <td align="center" valign="center" width="30%" id="srch">
+      <FORM ACTION="http://192.168.0.47/cgi-bin/ksearch/ksearch.cgi" METHOD="GET" NAME="search">
+        <INPUT TYPE="text" value="search" NAME="terms">
+		<input type=image src="../images/search_arrow.png" value="Search">
+      </FORM>
+    </td>
+  </tr>
+</table>
+
+<?php 
+			require("../nav.html");
+		?></td>
+  </tr>
+  <tr>
+
+    <td class="StdPageSidebar">
+    <h1>Question &amp; Answer</h1>
+    <p class="FAQClassification">Classification: </p>
+    <p class="FAQDate">Date: Jun 12, 2001</p>
+    </td>
+
+    <td class="StdPageBody">
+        <h1 class=FAQTitle>XS40-005XL serial EEPROM and oscillator programming gremlins </h1>
+    <div class="FAQ">
+      <h2 class="FAQQuestion">Q:</h2>
+      <div class="FAQQuestion">
+        <p>
+I have an XS40-005XL which has been working fine for several weeks.  I'm using
+it to help prototype and program the configuration EEPROM for a custom board
+that has a 4005XL.  To maintain consistency between the 2 boards I
+reprogrammed
+the XS40 oscillator to 10 MHz (divisor of 10) some time ago, with no problems,
+nor have I had any problems programming EEPROMS (the Atmel 17C256) on the XS40
+and using them in the custom board.  Since yesterday I've noticed some odd
+behavior:</p><p>I can't program the configuration EEPROMS anymore.  GXSLOAD goes through
+the motions and tells me the PROM is programmed, but when I run it on my own
+board, it's clear the program hasn't changed.  I continue to follow the
+instructions for jumper setting provided by GXSLOAD as always.</p>
+
+<p> </p>
+      </div>
+      <h2 class="FAQAnswer">A:</h2>
+      <div class="FAQAnswer">
+        <p>
+The eeprom socket on the XS40 Board is not really intended for use as an eeprom
+programming socket.  I'm not sure how many times you have inserted/removed eeproms
+into the socket, but are you sure you are still getting good connectivity to the
+eeprom pins?</p><p> 
+
+<h2 class="FAQQuestion">Q:</h2> 
+<div class="FAQQuestion"> 
+<p> I can't run the XS40 from the EEPROM anymore.  I configure the jumpers as I
+always have (according to the manual) but nothing happens when I power up the
+board.  This is using a PROM that works fine on the custom board and which has
+the same configuration that works fine when downloaded directly to the XS40.</p> 
+</div> 
+<h2 class="FAQAnswer">A:</h2> 
+<div class="FAQAnswer"> 
+<p> 
+This also points to a problem with the eeprom socket.&nbsp; It could also be one of the FPGA mode pins (M0, M1, M2) is in the wrong state so
+the FPGA isn't entering the master-serial config. mode.  This might indicate a
+problem with the parallel port data pins not driving the mode pins to the correct
+values.</p>
+
+<h2 class="FAQQuestion">Q:</h2> 
+<div class="FAQQuestion"> 
+<p> I can't reprogram the oscillator on the XS40.  GXSSETCLK claims it has
+reprogrammed the clock, but I can see on a scope and through the execution of a
+downloaded configuration that it hasn't changed from 10 MHz.</p> 
+</div> 
+<h2 class="FAQAnswer">A:</h2> 
+<div class="FAQAnswer"> 
+<p> 
+When programming the clock, the board should power up and pin 1 of the DS1075
+clock chip should be at ground.  This indicates it is ready to accept programming
+data.  Then you should see a short burst of programming pulses when you run
+GXSSETCLK.  You might check this with your scope to make sure it is happening.  If
+you don't see the programming pulses, then this would indicate a problem with the
+parallel port data pins.</p><p>Once the DS1075 is reprogrammed and you return the jumper to its normal position,
+you should see the clock on pin 1 of the DS1075 (and pin 13 of the FPGA).</p><p> 
+
+<h2 class="FAQQuestion">Q:</h2> 
+<div class="FAQQuestion"> 
+<p> GXSTEST downloads and runs but doesn't terminate.  Does it assume a 100 MHz
+clock, or doesn't it care?</p>
+
+<p> 
+</div> 
+<h2 class="FAQAnswer">A:</h2> 
+<div class="FAQAnswer"> 
+<p> 
+When you say &quot;doesn't terminate&quot;, do you means that the LEDs on the XS40 Board
+continually flash or that the PC never indicates whether the board passed or
+failed?</p>
+
+<h2 class="FAQQuestion">Q:</h2> 
+<div class="FAQQuestion"> 
+<p> As mentioned in 2, I can still download configurations directly to the
+board and they work fine.  I've been using a 12V supply, with no problems until now.</p><p> 
+</div> 
+<h2 class="FAQAnswer">A:</h2> 
+<div class="FAQAnswer"> 
+<p> 
+That shouldn't cause a problem as long as your current is not too high.  The
+regulators will regulate this down to 5V and 3.3V.</p>
+
+
+
+
+<p> 
+</div> 
+</div> 
+</div> 
+</div> </p>
+      </div>
+    </div>
+    </td>
+  </tr>
+  <tr>
+
+    <td class="StdPageCredits">
+    <a href="mailto:webmaster@xess.com"> webmaster@xess.com</a><br>
+© 1998-2006, XESS Corp.<br> 
+All rights reserved.
+<script src="../../www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-765812-1";
+urchinTracker();
+</script><?php 
+			require("../credits.html");
+		?></td>
+    <td class="StdPageNavLinks">
+        <a href="../ho04000.html">
+    <img border="0" src="../images/menu_arrow.png">Products</a>
+    <a href="../manuals.html">
+    <img border="0" src="../images/menu_arrow.png">Manuals</a>
+    <a href="../ho07000.html">
+    <img border="0" src="../images/menu_arrow.png">Downloads</a>
+    <a href="../ho01001.html">
+    <img border="0" src="../images/menu_arrow.png">How to Buy</a>
+    <a href="../xess_int_quote.html">
+    <img border="0" src="../images/menu_arrow.png">Online Quote</a>
+    <a href="https://xess.com/xess_int_order.php3">
+    <img border="0" src="../images/menu_arrow.png">Order Online</a>
+    <br>
+    <a href="../help.html">
+    <img border="0" src="../images/menu_arrow.png">Help!</a>
+    <a href="../ho01000.html">
+    <img border="0" src="../images/menu_arrow.png">FAQ</a>
+    <a href="../list_reg.html">
+    <img border="0" src="../images/menu_arrow.png">Forum</a>
+    <a href="../ho03000.html">
+    <img border="0" src="../images/menu_arrow.png">Tutorials</a>
+    <a href="../ho03000.html">
+    <img border="0" src="../images/menu_arrow.png">Examples</a>
+    <a href="../links.html">
+    <img border="0" src="../images/menu_arrow.png">Links</a>
+    <a href="../ho00005.html">
+    <a href="../index-2.html">
+    <img border="0" src="../images/menu_arrow.png">Home</a>
+    <a href="../about_us.html">
+    <img border="0" src="../images/menu_arrow.png">About&nbsp;Us</a>
+    <a href="../ho00003.html">
+    <img border="0" src="../images/menu_arrow.png">Contact&nbsp;Us</a>
+<?php 
+			require("../navlinks.html");
+		?></td>
+  </tr>
+</table>
+
+
+<!-- Mirrored from 192.168.0.47/faq/M0000426.HTM by HTTrack Website Copier/3.x [XR&CO'2004], Mon, 04 Dec 2006 16:08:03 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=ISO-8859-1"><!-- /Added by HTTrack -->
+</html>

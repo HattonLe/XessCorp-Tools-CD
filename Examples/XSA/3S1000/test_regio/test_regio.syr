@@ -1,0 +1,455 @@
+Release 6.3.03i - xst G.38
+Copyright (c) 1995-2004 Xilinx, Inc.  All rights reserved.
+--> Parameter TMPDIR set to __projnav
+CPU : 0.00 / 0.44 s | Elapsed : 0.00 / 0.00 s
+ 
+--> Parameter xsthdpdir set to ./xst
+CPU : 0.00 / 0.44 s | Elapsed : 0.00 / 0.00 s
+ 
+--> Reading design: test_regio.prj
+
+TABLE OF CONTENTS
+  1) Synthesis Options Summary
+  2) HDL Compilation
+  3) HDL Analysis
+  4) HDL Synthesis
+  5) Advanced HDL Synthesis
+     5.1) HDL Synthesis Report
+  6) Low Level Synthesis
+  7) Final Report
+     7.1) Device utilization summary
+     7.2) TIMING REPORT
+
+
+=========================================================================
+*                      Synthesis Options Summary                        *
+=========================================================================
+---- Source Parameters
+Input File Name                    : test_regio.prj
+Input Format                       : mixed
+Ignore Synthesis Constraint File   : NO
+Verilog Include Directory          : 
+
+---- Target Parameters
+Output File Name                   : test_regio
+Output Format                      : NGC
+Target Device                      : xc3s1000-5-ft256
+
+---- Source Options
+Top Module Name                    : test_regio
+Automatic FSM Extraction           : YES
+FSM Encoding Algorithm             : Auto
+FSM Style                          : lut
+RAM Extraction                     : Yes
+RAM Style                          : Auto
+ROM Extraction                     : Yes
+ROM Style                          : Auto
+Mux Extraction                     : YES
+Mux Style                          : Auto
+Decoder Extraction                 : YES
+Priority Encoder Extraction        : YES
+Shift Register Extraction          : YES
+Logical Shifter Extraction         : YES
+XOR Collapsing                     : YES
+Resource Sharing                   : YES
+Multiplier Style                   : auto
+Automatic Register Balancing       : No
+
+---- Target Options
+Add IO Buffers                     : YES
+Global Maximum Fanout              : 500
+Add Generic Clock Buffer(BUFG)     : 8
+Register Duplication               : YES
+Equivalent register Removal        : YES
+Slice Packing                      : YES
+Pack IO Registers into IOBs        : auto
+
+---- General Options
+Optimization Goal                  : Speed
+Optimization Effort                : 1
+Keep Hierarchy                     : NO
+Global Optimization                : AllClockNets
+RTL Output                         : Yes
+Write Timing Constraints           : NO
+Hierarchy Separator                : _
+Bus Delimiter                      : <>
+Case Specifier                     : maintain
+Slice Utilization Ratio            : 100
+Slice Utilization Ratio Delta      : 5
+
+---- Other Options
+lso                                : test_regio.lso
+Read Cores                         : YES
+cross_clock_analysis               : NO
+verilog2001                        : YES
+Optimize Instantiated Primitives   : NO
+
+=========================================================================
+
+
+=========================================================================
+*                          HDL Compilation                              *
+=========================================================================
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/test_regio/../../../XS_LIB/userinstr_jtag.vhd in Library work.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/test_regio/../../../XS_LIB/common.vhd in Library work.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/test_regio/../../../XS_LIB/regio_jtag.vhd in Library work.
+Entity <regio_jtag> (Architecture <arch>) compiled.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/test_regio/test_regio.vhd in Library work.
+Entity <test_regio> (Architecture <Behavioral>) compiled.
+
+=========================================================================
+*                            HDL Analysis                               *
+=========================================================================
+Analyzing Entity <test_regio> (Architecture <Behavioral>).
+WARNING:Xst:790 - C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/test_regio/test_regio.vhd line 61: Index value(s) does not match array range, simulation mismatch.
+INFO:Xst:1433 - Contents of array <reg_file> may be accessed with an index that exceeds the array size. This could cause simulation mismatch.
+WARNING:Xst:790 - C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/test_regio/test_regio.vhd line 65: Index value(s) does not match array range, simulation mismatch.
+INFO:Xst:1433 - Contents of array <reg_file> may be accessed with an index that exceeds the array size. This could cause simulation mismatch.
+Entity <test_regio> analyzed. Unit <test_regio> generated.
+
+Analyzing generic Entity <regio_jtag> (Architecture <arch>).
+	FPGA_TYPE = 3
+	RPT_WIDTH = 8
+	ADDR_WIDTH = 4
+	DATA_WIDTH = 16
+INFO:Xst:1304 - Contents of register <tdo<31>> in unit <regio_jtag> never changes during circuit operation. The register is replaced by logic.
+Entity <regio_jtag> analyzed. Unit <regio_jtag> generated.
+
+
+=========================================================================
+*                           HDL Synthesis                               *
+=========================================================================
+
+Synthesizing Unit <regio_jtag>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/test_regio/../../../XS_LIB/regio_jtag.vhd.
+WARNING:Xst:646 - Signal <buff<0>> is assigned but never used.
+    Found 1-bit register for signal <rrd>.
+    Found 1-bit register for signal <rwr>.
+    Found 5-bit adder for signal <$n0239> created at line 211.
+    Found 8-bit subtractor for signal <$n0240> created at line 211.
+    Found 5-bit comparator less for signal <$n0284> created at line 218.
+    Found 5-bit comparator greatequal for signal <$n0285> created at line 221.
+    Found 5-bit comparator less for signal <$n0287> created at line 221.
+    Found 3-bit comparator greatequal for signal <$n0288> created at line 333.
+    Found 3-bit comparator greatequal for signal <$n0289> created at line 314.
+    Found 3-bit comparator less for signal <$n0290> created at line 315.
+    Found 5-bit comparator less for signal <$n0292> created at line 217.
+    Found 5-bit comparator less for signal <$n0295> created at line 246.
+    Found 3-bit adder for signal <$n0304> created at line 317.
+    Found 3-bit comparator less for signal <$n0313> created at line 339.
+    Found 3-bit adder for signal <$n0314> created at line 341.
+    Found 4-bit register for signal <addr>.
+    Found 5-bit register for signal <bit_cntr>.
+    Found 16-bit register for signal <buff>.
+    Found 8-bit register for signal <instr>.
+    Found 1-bit register for signal <rd>.
+    Found 3-bit register for signal <rd_dly>.
+    Found 16-bit register for signal <rd_word>.
+    Found 8-bit register for signal <rw_cntr>.
+    Found 31-bit register for signal <tdo<30:0>>.
+    Found 1-bit register for signal <wr>.
+    Found 3-bit register for signal <wr_dly>.
+    Found 16-bit register for signal <wr_word>.
+    Found 49 1-bit 2-to-1 multiplexers.
+    Summary:
+	inferred 114 D-type flip-flop(s).
+	inferred   4 Adder/Subtracter(s).
+	inferred   9 Comparator(s).
+	inferred  49 Multiplexer(s).
+Unit <regio_jtag> synthesized.
+
+
+Synthesizing Unit <test_regio>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/test_regio/test_regio.vhd.
+WARNING:Xst:646 - Signal <addr_natural<3:2>> is assigned but never used.
+    Found 4x16-bit dual-port block RAM for signal <reg_file>.
+    -----------------------------------------------------------------------
+    | mode               | read-first                          |          |
+    | aspect ratio       | 4-word x 16-bit                     |          |
+    | clock              | connected to signal <clk>           | rise     |
+    | dual clock         | connected to signal <clk>           | rise     |
+    | dual enable        | connected to signal <rd>            | high     |
+    | write enable       | connected to signal <wr>            | high     |
+    | address            | connected to signal <addr_natural<1:0>> |          |
+    | dual address       | connected to signal <addr_natural<1:0>> |          |
+    | data in            | connected to signal <dIn>           |          |
+    | data out           | not connected                       |          |
+    | dual data out      | connected to signal <dOut>          |          |
+    | ram_style          | Auto                                |          |
+    -----------------------------------------------------------------------
+WARNING:Xst:1869 - Due to the nature of the primary and dual address logic for this block RAM, it is highly probable simultaneous access to the same memory cells on the primary and dual port will happen, leading to timing violation (see block RAM documentation for information on conflict situations and their resolution). In order to guarantee correct circuit behavior, please review the RAM description. Alternatively, force the RAM implementation to use distributed resource through the ram_style XST constraint.
+    Found 1-bit register for signal <done>.
+    Summary:
+	inferred   1 RAM(s).
+	inferred   1 D-type flip-flop(s).
+Unit <test_regio> synthesized.
+
+INFO:Xst:1767 - HDL ADVISOR - Resource sharing has identified that some arithmetic operations in this design can share the same physical resources for reduced device utilization. For improved clock frequency you may try to disable resource sharing.
+
+=========================================================================
+*                       Advanced HDL Synthesis                          *
+=========================================================================
+
+Advanced RAM inference ...
+Advanced multiplier inference ...
+Advanced Registered AddSub inference ...
+Dynamic shift register inference ...
+
+=========================================================================
+HDL Synthesis Report
+
+Macro Statistics
+# Block RAMs                       : 1
+ 4x16-bit dual-port block RAM      : 1
+# Adders/Subtractors               : 4
+ 8-bit subtractor                  : 1
+ 3-bit adder                       : 2
+ 5-bit adder                       : 1
+# Registers                        : 59
+ 1-bit register                    : 51
+ 3-bit register                    : 2
+ 16-bit register                   : 2
+ 4-bit register                    : 1
+ 8-bit register                    : 2
+ 5-bit register                    : 1
+# Comparators                      : 9
+ 5-bit comparator less             : 4
+ 3-bit comparator less             : 2
+ 3-bit comparator greatequal       : 2
+ 5-bit comparator greatequal       : 1
+# Multiplexers                     : 19
+ 16-bit 2-to-1 multiplexer         : 2
+ 1-bit 2-to-1 multiplexer          : 17
+
+=========================================================================
+
+=========================================================================
+*                         Low Level Synthesis                           *
+=========================================================================
+WARNING:Xst:1988 - Unit <regio_jtag>: instances <Mcompar__n0290>, <Mcompar__n0289> of unit <LPM_COMPARE_5> and unit <LPM_COMPARE_4> are dual, second instance is removed
+WARNING:Xst:1988 - Unit <regio_jtag>: instances <Mcompar__n0288>, <Mcompar__n0313> of unit <LPM_COMPARE_4> and unit <LPM_COMPARE_5> are dual, second instance is removed
+WARNING:Xst:1988 - Unit <regio_jtag>: instances <Mcompar__n0287>, <Mcompar__n0285> of unit <LPM_COMPARE_3> and unit <LPM_COMPARE_2> are dual, second instance is removed
+
+Optimizing unit <test_regio> ...
+
+Optimizing unit <regio_jtag> ...
+Loading device for application Xst from file '3s1000.nph' in environment C:/ISE6.
+
+Mapping all equations...
+Building and optimizing final netlist ...
+Found area constraint ratio of 100 (+ 5) on block test_regio, actual ratio is 1.
+FlipFlop u1_instr_1 has been replicated 1 time(s)
+FlipFlop u1_instr_0 has been replicated 1 time(s)
+FlipFlop u1_bit_cntr_3 has been replicated 1 time(s)
+FlipFlop u1_bit_cntr_4 has been replicated 1 time(s)
+
+=========================================================================
+*                            Final Report                               *
+=========================================================================
+Final Results
+RTL Top Level Output File Name     : test_regio.ngr
+Top Level Output File Name         : test_regio
+Output Format                      : NGC
+Optimization Goal                  : Speed
+Keep Hierarchy                     : NO
+
+Design Statistics
+# IOs                              : 2
+
+Macro Statistics :
+# RAM                              : 1
+#      4x16-bit dual-port block RAM: 1
+# Registers                        : 59
+#      1-bit register              : 51
+#      16-bit register             : 2
+#      3-bit register              : 2
+#      4-bit register              : 1
+#      5-bit register              : 1
+#      8-bit register              : 2
+# Multiplexers                     : 19
+#      2-to-1 multiplexer          : 19
+# Adders/Subtractors               : 1
+#      8-bit subtractor            : 1
+# Comparators                      : 9
+#      3-bit comparator greatequal : 2
+#      3-bit comparator less       : 2
+#      5-bit comparator greatequal : 1
+#      5-bit comparator less       : 4
+
+Cell Usage :
+# BELS                             : 277
+#      GND                         : 1
+#      LUT1                        : 8
+#      LUT2                        : 13
+#      LUT2_D                      : 5
+#      LUT2_L                      : 10
+#      LUT3                        : 43
+#      LUT3_D                      : 4
+#      LUT3_L                      : 5
+#      LUT4                        : 81
+#      LUT4_D                      : 15
+#      LUT4_L                      : 75
+#      MUXCY                       : 7
+#      MUXF5                       : 1
+#      VCC                         : 1
+#      XORCY                       : 8
+# FlipFlops/Latches                : 118
+#      FDC                         : 10
+#      FDE                         : 107
+#      FDS                         : 1
+# RAMS                             : 1
+#      RAMB16_S36_S36              : 1
+# Clock Buffers                    : 1
+#      BUFGP                       : 1
+# IO Buffers                       : 1
+#      OBUF                        : 1
+# Others                           : 1
+#      BSCAN_SPARTAN3              : 1
+=========================================================================
+
+Device utilization summary:
+---------------------------
+
+Selected Device : 3s1000ft256-5 
+
+ Number of Slices:                     140  out of   7680     1%  
+ Number of Slice Flip Flops:           118  out of  15360     0%  
+ Number of 4 input LUTs:               259  out of  15360     1%  
+ Number of bonded IOBs:                  1  out of    173     0%  
+ Number of BRAMs:                        1  out of     24     4%  
+ Number of GCLKs:                        1  out of      8    12%  
+
+
+=========================================================================
+TIMING REPORT
+
+NOTE: THESE TIMING NUMBERS ARE ONLY A SYNTHESIS ESTIMATE.
+      FOR ACCURATE TIMING INFORMATION PLEASE REFER TO THE TRACE REPORT
+      GENERATED AFTER PLACE-and-ROUTE.
+
+Clock Information:
+------------------
+-----------------------------------+------------------------+-------+
+Clock Signal                       | Clock buffer(FF name)  | Load  |
+-----------------------------------+------------------------+-------+
+clk                                | BUFGP                  | 26    |
+u1_u_bscan:DRCK1                   | NONE                   | 93    |
+-----------------------------------+------------------------+-------+
+
+Timing Summary:
+---------------
+Speed Grade: -5
+
+   Minimum period: 6.816ns (Maximum Frequency: 146.714MHz)
+   Minimum input arrival time before clock: 4.337ns
+   Maximum output required time after clock: 5.495ns
+   Maximum combinational path delay: No path found
+
+Timing Detail:
+--------------
+All values displayed in nanoseconds (ns)
+
+-------------------------------------------------------------------------
+Timing constraint: Default period analysis for Clock 'clk'
+Delay:               4.039ns (Levels of Logic = 2)
+  Source:            u1_rd_dly_1 (FF)
+  Destination:       u1_rd_dly_1 (FF)
+  Source Clock:      clk rising
+  Destination Clock: clk rising
+
+  Data Path: u1_rd_dly_1 to u1_rd_dly_1
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDE:C->Q              9   0.626   0.777  u1_rd_dly_1 (u1_rd_dly_1)
+     LUT3:I0->O            3   0.479   0.577  u1__n02901 (u1__n0290)
+     LUT4:I1->O            3   0.479   0.577  u1__n0450 (u1__n0450)
+     FDE:CE                    0.524          u1_rd_dly_0
+    ----------------------------------------
+    Total                      4.039ns (2.108ns logic, 1.931ns route)
+                                       (52.2% logic, 47.8% route)
+
+-------------------------------------------------------------------------
+Timing constraint: Default period analysis for Clock 'u1_u_bscan:DRCK1'
+Delay:               6.816ns (Levels of Logic = 5)
+  Source:            u1_instr_4 (FF)
+  Destination:       u1_addr_0 (FF)
+  Source Clock:      u1_u_bscan:DRCK1 rising
+  Destination Clock: u1_u_bscan:DRCK1 rising
+
+  Data Path: u1_instr_4 to u1_addr_0
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDC:C->Q             20   0.626   1.137  u1_instr_4 (u1_instr_4)
+     LUT2_D:I0->O         14   0.479   0.925  u1__n04601 (u1__n0460)
+     LUT4_D:I0->O          6   0.479   0.688  u1_Ker81271 (u1_N8129)
+     LUT3:I1->O            1   0.479   0.240  u1_Ker79041_SW4 (N11695)
+     LUT4:I3->O            4   0.479   0.629  u1_Ker77851 (u1_N7787)
+     LUT4_L:I0->LO         1   0.479   0.000  u1__n0230<2>1 (u1__n0230<2>)
+     FDE:D                     0.176          u1_addr_2
+    ----------------------------------------
+    Total                      6.816ns (3.197ns logic, 3.619ns route)
+                                       (46.9% logic, 53.1% route)
+
+-------------------------------------------------------------------------
+Timing constraint: Default OFFSET IN BEFORE for Clock 'u1_u_bscan:DRCK1'
+Offset:              4.337ns (Levels of Logic = 2)
+  Source:            u1_u_bscan:RESET (PAD)
+  Destination:       u1_wr_word_1 (FF)
+  Destination Clock: u1_u_bscan:DRCK1 rising
+
+  Data Path: u1_u_bscan:RESET to u1_wr_word_1
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+    BSCAN_SPARTAN3:RESET   12   0.000   0.865  u1_u_bscan (u1_tap_reset)
+     LUT4:I3->O           16   0.479   0.995  u1_Ker80411 (u1_N8043)
+     LUT3:I0->O           16   0.479   0.995  u1__n01911 (u1__n0191)
+     FDE:CE                    0.524          u1_wr_word_0
+    ----------------------------------------
+    Total                      4.337ns (1.482ns logic, 2.855ns route)
+                                       (34.2% logic, 65.8% route)
+
+-------------------------------------------------------------------------
+Timing constraint: Default OFFSET OUT AFTER for Clock 'clk'
+Offset:              5.495ns (Levels of Logic = 1)
+  Source:            u1_rrd (FF)
+  Destination:       tmp_out (PAD)
+  Source Clock:      clk rising
+
+  Data Path: u1_rrd to tmp_out
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDE:C->Q              4   0.626   0.629  u1_rrd (u1_rrd)
+     OBUF:I->O                 4.240          tmp_out_OBUF (tmp_out)
+    ----------------------------------------
+    Total                      5.495ns (4.866ns logic, 0.629ns route)
+                                       (88.6% logic, 11.4% route)
+
+-------------------------------------------------------------------------
+Timing constraint: Default OFFSET OUT AFTER for Clock 'u1_u_bscan:DRCK1'
+Offset:              0.626ns (Levels of Logic = 0)
+  Source:            u1_tdo_0 (FF)
+  Destination:       u1_u_bscan:TDO1 (PAD)
+  Source Clock:      u1_u_bscan:DRCK1 rising
+
+  Data Path: u1_tdo_0 to u1_u_bscan:TDO1
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDE:C->Q              0   0.626   0.000  u1_tdo_0 (u1_tdo_0)
+    BSCAN_SPARTAN3:TDO1        0.000          u1_u_bscan
+    ----------------------------------------
+    Total                      0.626ns (0.626ns logic, 0.000ns route)
+                                       (100.0% logic, 0.0% route)
+
+=========================================================================
+CPU : 7.63 / 8.47 s | Elapsed : 8.00 / 8.00 s
+ 
+--> 
+
+Total memory usage is 85160 kilobytes
+
+

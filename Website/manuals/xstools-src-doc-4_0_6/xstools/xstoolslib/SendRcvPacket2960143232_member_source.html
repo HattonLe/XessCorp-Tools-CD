@@ -1,0 +1,141 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - SendRcvPacket</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">SendRcvPacket</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_class','USBPort0',this)" class="pathLink">USBPort</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">SendRcvPacket</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','SendRcvPacket2960143232','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_member','SendRcvPacket2960143232','_source',this)" class="tabLinkActive">Source</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','SendRcvPacket2960143232','_callgraph',this)" class="tabLinkInActive">Call Graph</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<div class="paragraph2NoTopPadding">Start Line: 259</div>
+<pre class="codeExamples">
+int <a href="#" OnFocus="link('_member','SendRcvPacket2960143232',this)">USBPort::SendRcvPacket</a>(unsigned char *sendData, unsigned long sendLength, unsigned char *rcvData, unsigned long *rcvLength, bool checkFirstByte)
+{
+    unsigned long sentDataLength;
+    unsigned long expectedRcvLength = *rcvLength;
+    
+    if(<a href="#" OnFocus="link('_member','epOut518908',this)">epOut</a> == INVALID_HANDLE_VALUE || <a href="#" OnFocus="link('_member','epIn518908',this)">epIn</a> == INVALID_HANDLE_VALUE)
+        if(<a href="#" OnFocus="link('_member','Open60241003',this)">Open</a>() == USB_FAILURE)
+        {
+            string msg("Cannot open USB port.");
+            <a href="#" OnFocus="link('_member','GetErr60241003',this)">GetErr</a>().<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMinor,msg);
+            return USB_FAILURE;
+        }
+
+    if(<a href="#" OnFocus="link('_member','epOut518908',this)">epOut</a> != INVALID_HANDLE_VALUE &amp;&amp; <a href="#" OnFocus="link('_member','epIn518908',this)">epIn</a> != INVALID_HANDLE_VALUE)
+    {
+        if(MPUSBWrite(epOut, sendData, sendLength, &amp;sentDataLength, USB_TIMEOUT))
+        {
+            if(rcvData == NULL || expectedRcvLength == 0)
+                return USB_SUCCESS;
+            else
+            {
+                if(MPUSBRead(epIn, rcvData, expectedRcvLength, rcvLength, USB_TIMEOUT))
+                {
+                    if(*rcvLength == expectedRcvLength)
+                    {
+                        if(!checkFirstByte || rcvData[0] == sendData[0])
+                        {
+                            return USB_SUCCESS;
+                        }
+                        else
+                        {
+                            string msg("Command byte in received USB packet does not match.");
+                            <a href="#" OnFocus="link('_member','GetErr60241003',this)">GetErr</a>().<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMinor,msg);
+                            return USB_FAILURE;
+                        }
+                    }
+                    else
+                    {
+                        string msg("Received USB packet is too short.");
+                        <a href="#" OnFocus="link('_member','GetErr60241003',this)">GetErr</a>().<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMinor,msg);
+                        return USB_FAILURE;
+                    }
+                }
+                else
+                {
+                    TCHAR szBuf[80]; 
+                    LPVOID lpMsgBuf;
+                    DWORD dw = GetLastError(); 
+                    
+                    FormatMessage(
+                        FORMAT_MESSAGE_ALLOCATE_BUFFER | 
+                        FORMAT_MESSAGE_FROM_SYSTEM,
+                        NULL,
+                        dw,
+                        MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+                        (LPTSTR) &amp;lpMsgBuf,
+                        0, NULL );
+                    
+                    wsprintf(szBuf, 
+                        "failed with error %d: %s", 
+                        dw, lpMsgBuf); 
+                    
+                    TCHAR <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>[256];
+                    sprintf(errMsg,"MPUSBRead() failed: %s", lpMsgBuf);
+                    string msg(errMsg);
+                    <a href="#" OnFocus="link('_member','GetErr60241003',this)">GetErr</a>().<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMinor,msg);
+                    return USB_FAILURE;
+                }
+            }
+        }
+        else
+        {
+            TCHAR szBuf[80]; 
+            LPVOID lpMsgBuf;
+            DWORD dw = GetLastError(); 
+            
+            FormatMessage(
+                FORMAT_MESSAGE_ALLOCATE_BUFFER | 
+                FORMAT_MESSAGE_FROM_SYSTEM,
+                NULL,
+                dw,
+                MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+                (LPTSTR) &amp;lpMsgBuf,
+                0, NULL );
+            
+            wsprintf(szBuf, 
+                "failed with error %d: %s", 
+                dw, lpMsgBuf); 
+            
+            TCHAR <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>[256];
+            sprintf(errMsg,"MPUSBWrite() failed: %s", lpMsgBuf);
+            string msg(errMsg);
+            <a href="#" OnFocus="link('_member','GetErr60241003',this)">GetErr</a>().<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMinor,msg);
+            return USB_FAILURE;
+        }
+    }
+    else
+    {
+        string msg("Endpoint not open.");
+        <a href="#" OnFocus="link('_member','GetErr60241003',this)">GetErr</a>().<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(<a href="#" OnFocus="link('_member','XSErrorMinor0',this)">XSErrorMinor</a>,msg);
+        return USB_FAILURE;
+    }
+
+    return USB_FAILURE;
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_member','_source');
+</script>

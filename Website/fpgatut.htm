@@ -1,0 +1,345 @@
+<html>
+
+
+<!-- Mirrored from 192.168.0.47/fpgatut.htm by HTTrack Website Copier/3.x [XR&CO'2004], Mon, 04 Dec 2006 16:07:21 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=ISO-8859-1"><!-- /Added by HTTrack -->
+<head>
+<link rel="SHORTCUT ICON" HREF="images/xess.ico">
+<title>What Are CPLDs and FPGAs</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="KEYWORDS" content="XESS, XILINX, XC4000, XC9500, Spartan, FPGA, CPLD, reconfigurable logic, programmable logic, 8051 microcontroller, demo board, evaluation board">
+<meta name="DESCRIPTION" content="XESS Corp develops and sells low-cost XILINX programmable logic + microcontroller boards with tutorials.">
+<link rel="stylesheet" type="text/css" href="xess-1.css">
+<meta name="Microsoft Border" content="none, default">
+</head>
+
+<body>
+
+<table>
+  <!-- MSTableType="nolayout" -->
+  <tr>
+    <td class="StdPageLogo">
+    <a href="index-2.html"><img border="0" src="images/xess-138x32.bmp"></a>
+</td>
+    <td class="StdPageNav">
+    <script type="text/javascript" src="xess.js"></script>
+<!-- <script type="text/javascript" src="niftycube_xess.js"></script> -->
+<!-- <script type="text/javascript" src="prototype.js"></script> -->
+<!-- <script type="text/javascript" src="rico.js"></script> -->
+<script type="text/javascript">
+	window.onload=function(){
+		startList("nav");
+		stripe_xess();
+		collapseall();
+		// Nifty("td.StdPageNav","transparent");
+		// Nifty("td.StdPageSidebar","transparent");
+		// Nifty("td.StdPageNavLinks","transparent");
+	};
+	onload=function(){
+		startList("nav");
+		stripe_xess();
+		collapseall();
+		// Nifty("td.StdPageNav","transparent");
+		// Nifty("td.StdPageSidebar","transparent");
+		// Nifty("td.StdPageNavLinks","transparent");
+	};
+</script>
+
+
+
+<table border="0" width="640" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="center" valign="center" width="70%">
+
+<!--
+  -- naviagation bar for browsers with scripting capability
+  -- (make sure there is no whitespace after the '\' on each line and run
+  -- the Javascript console on Firefox to check the syntax.)
+  -->
+<script type="text/javascript">
+nav_text = '\
+  <ul id="nav"> \
+    <li id="first"><a href="ho04000.html">Products</a> \
+      <ul> \
+        <li><a href="ho04000.html"><div>Catalog</div></a></li> \
+        <li><a href="manuals.html"><div>Manuals</div></a></li> \
+        <li><a href="ho07000.html"><div>Software Downloads</div></a></li> \
+      </ul> \
+    </li> \
+    <li><a href="help.html">Support</a> \
+      <ul> \
+        <li><a href="manuals.html" ><div>Product Manuals</div></a></li> \
+        <li><a href="ho03000.html" ><div>Tutorials</div></a></li> \
+        <li><a href="ho03000.html" ><div>Application Notes</div></a></li> \
+        <li><a href="ho03000.html" ><div>Design Examples</div></a></li> \
+        <li><a href="ho01000.html" ><div>FAQ</div></a></li> \
+        <li><a href="list_reg.html"><div>User Forum</div></a></li> \
+        <li><a href="help.html"    ><div>Request Help</div></a></li> \
+      </ul> \
+    </li> \
+    <li><a href="ho01001.html">Purchasing</a> \
+      <ul> \
+        <li><a href="https://xess.com/xess_int_order.php3"><div>Web Orders</div></a></li> \
+        <li><a href="ho01001.html"                       ><div>Purchase Orders</div></a></li> \
+        <li><a href="ho01001.html"                       ><div>Payment Methods</div></a></li> \
+        <li><a href="xess_int_quote.html"                ><div>Get a Quote</div></a></li> \
+        <li><a href="xess_int_quote.html"                ><div>Get a Proforma Invoice</div></a></li> \
+        <li><a href="ho01001.html"                       ><div>How To Buy From Us</div></a></li> \
+      </ul> \
+    </li> \
+    <li id="last"><a href="index-2.html">XESS</a> \
+      <ul> \
+        <li><a href="index-2.html"   ><div>Home</div></a></li> \
+        <li><a href="about_us.html"><div>About Us</div></a></li> \
+        <li><a href="ho00003.html" ><div>Contact Us</div></a></li> \
+<!-- \
+        <li><a href=""              ><div>Announcements</div></a></li> \
+        <li><a href="ho00005.html" ><div>Press Releases</div></a></li> \
+--> \
+      </ul> \
+    </li> \
+    <li id="last"><a href="links.html">Misc.</a> \
+      <ul> \
+        <li><a href="links.html"><div>Links</div></a></li> \
+      </ul> \
+    </li> \
+  </ul> \
+';
+document.writeln(nav_text);
+</script>
+
+<!--
+  -- naviagation bar for browsers with NO scripting capability
+  -->
+<noscript>
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="14%" align="left">
+    <a href="ho04000.html"><img border="0" src="images/menu_arrow.png">Products</a>
+    </td>
+    <td width="16%" align="left">
+    <a href="ho01001.html"><img border="0" src="images/menu_arrow.png">How to Buy</a>
+    </td>
+    <td width="11%" align="left">
+    <a href="help.html"><img border="0" src="images/menu_arrow.png">Help!</a>
+    </td>
+    <td width="14%" align="left">
+    <a href="ho03000.html"><img border="0" src="images/menu_arrow.png">Tutorials</a>
+    </td>
+    <td width="14%" align="left">
+    <a href="index-2.html"><img border="0" src="images/menu_arrow.png">Home</a>
+<!--
+    <a href="/ho00005.html"><img border="0" src="/images/menu_arrow.png">Press&nbsp;Rel.</a>
+-->
+    </td>
+  </tr>
+  <tr>
+    <td>
+    <a href="manuals.html"><img border="0" src="images/menu_arrow.png">Manuals</a>
+    </td>
+    <td>
+    <a href="xess_int_quote.html"><img border="0" src="images/menu_arrow.png">Online Quote</a>
+    </td>
+    <td>
+    <a href="ho01000.html"><img border="0" src="images/menu_arrow.png">FAQ</a>
+    </td>
+    <td>
+    <a href="ho03000.html"><img border="0" src="images/menu_arrow.png">Examples</a>
+    </td>
+    <td>
+    <a href="about_us.html">
+    <img border="0" src="images/menu_arrow.png">About&nbsp;Us</a>
+    </td>
+  </tr>
+  <tr>
+    <td>
+    <a href="ho07000.html"><img border="0" src="images/menu_arrow.png">Downloads</a>
+    </td>
+    <td>
+    <a href="https://xess.com/xess_int_order.php3"><img border="0" src="images/menu_arrow.png">Order Online</a>
+    </td>
+    <td>
+    <a href="list_reg.html"><img border="0" src="images/menu_arrow.png">Forum</a>
+    </td>
+    <td>
+    <a href="links.html"><img border="0" src="images/menu_arrow.png">Links</a>
+    </td>
+    <td>
+    <a href="ho00003.html"><img border="0" src="images/menu_arrow.png">Contact&nbsp;Us</a>
+    </td>
+  </tr>
+</table>
+</noscript>
+
+    </td>
+    <td align="center" valign="center" width="30%" id="srch">
+      <FORM ACTION="http://192.168.0.47/cgi-bin/ksearch/ksearch.cgi" METHOD="GET" NAME="search">
+        <INPUT TYPE="text" value="search" NAME="terms">
+		<input type=image src="images/search_arrow.png" value="Search">
+      </FORM>
+    </td>
+  </tr>
+</table>
+
+</td>
+  </tr>
+  <tr>
+    <td class="StdPageSidebar">
+    <h1>What Are CPLDs and FPGAs?</h1>
+    <p>As the title says, this is a quick introduction as to what complex programmable 
+    logic devices and field-programmable gate arrays are. </p>
+    </td>
+    <td class="StdPageBody">
+    <p>It&#39;s hard to figure out what our variety of XS Board products do if you don&#39;t 
+    understand what complex programmable logic devices and field-programmable gate 
+    arrays are! This short tutorial will introduce the main concepts of these types 
+    of chips.</p>
+    <p>In the beginning (OK, actually in the 60&#39;s) there was discrete logic. Systems 
+    were built from lots of individual chips with a spaghetti-like maze of wiring 
+    between them. It was difficult to modify such a system after you built it. Heck, 
+    after a week or two it was difficult to remember what each of the chips was 
+    for!</p>
+    <p>Manufacturing such a system took a lot of time because each design change 
+    required that the wiring be redone which usually meant building a new printed 
+    circuit board. The chip makers solved this problem by placing an unconnected 
+    array of AND-OR gates in a single chip called a <i>programmable logic device
+    </i>(PLD). The PLD contained an array of fuses that could be blown open or left 
+    closed to connect various inputs to each AND gate. You could program a PLD with 
+    a set of Boolean sum-of-product equations so it would perform the logic functions 
+    you needed in your system. Since the PLDs could be rewired internally, there 
+    was less of a need to change the printed circuit boards which held them.</p>
+    <p align="center" style="text-align:center">
+    <img width="301" height="213" src="fpgatut_files/image002.gif"> </p>
+    <p>Simple PLDs could only handle up to 10­–20 logic equations, so you couldn&#39;t 
+    fit a very large logic design into just one of them. You had to figure out how 
+    to break your larger designs apart and fit them into a set of PLDs. This was 
+    time-consuming and meant you had to interconnect the PLDs with wires. The wires 
+    were a big no-no because eventually you would make some design change that couldn&#39;t 
+    be handled just by reprogramming the PLDs and then you would have to build a 
+    new circuit board. The chip makers came to the rescue again by building much 
+    larger programmable chips called <i>complex programmable logic devices </i>(CPLDs) 
+    and <i>field-programmable gate arrays </i>(FPGAs). With these, you could essentially 
+    get a complete system onto a single chip.</p>
+    <p>A CPLD contains a bunch of PLD blocks whose inputs and outputs are connected 
+    together by a global interconnection matrix. So a CPLD has two levels of programmability: 
+    each PLD block can be programmed, and then the interconnections between the 
+    PLDs can be programmed.</p>
+    <p>An FPGA takes a different approach. It has a bunch of simple, configurable 
+    logic blocks arranged in an array with interspersed switches that can rearrange 
+    the interconnections between the logic blocks. Each logic block is individually 
+    programmed to perform a logic function (such as AND, OR, XOR, etc.) and then 
+    the switches are programmed to connect the blocks so that the complete logic 
+    functions are implemented.</p>
+    <p align="center" style="text-align:center">
+    <img width="440" height="228" src="fpgatut_files/image004.gif"> </p>
+    <p>CPLD and FPGA manufacturers use a variety of methods to make the connections 
+    between logic blocks. Some make chips with <i>fuses </i>or <i>anti-fuses </i>
+    that are programmed by passing a large current through them. These types of 
+    CPLDs and FPGAs are <i>one-time programmable </i>(OTP) because you can&#39;t rewire 
+    them internally once the fuses are blown. </p>
+    <p>Other manufacturers make the connections using pass transistors that are 
+    opened or closed by storing a charge on their gate electrodes using a high-voltage 
+    pulse. This type of programmable device resembles an EPROM or EEPROM: you can 
+    erase it and then place it in a special programmer socket and reprogram it. 
+    That&#39;s fine unless you have the CPLD or FPGA soldered into a circuit board.</p>
+    <p>Finally, some manufacturers use static RAM or Flash bits to control the pass 
+    transistors for each interconnection. By loading each bit with a 1 or a 0, you 
+    can control whether the switch is closed or opened and, therefore, whether two 
+    logic elements are connected or not. CPLDs and FPGAs built using RAM/Flash switches 
+    can be reprogrammed without removing them from the circuit board. They are often 
+    said to be <i>in-circuit reconfigurable </i>or <i>in-circuit programmable</i>.</p>
+    <p>Regardless of the interconnection method used, you can see that figuring 
+    out which switches to open and close in order to create a logic circuit would 
+    be quite a chore. That&#39;s why the chip manufacturers provide development software 
+    that takes a description of the logic design as input and then outputs a binary 
+    file which configures the switches in a CPLD or FPGA so that it acts like the 
+    design.</p>
+    <p>Implementing a logic design with the FPGA or CPLD development software usually 
+    consists of the following steps (depicted in the figure below):</p>
+    <ol>
+      <li>You enter a description of your logic circuit using a <i>hardware description 
+      language</i> (HDL) such as VHDL or Verilog. You can also draw your design 
+      using a schematic editor.</li>
+      <li>You use a <i>logic synthesizer</i> program to transform the HDL or schematic 
+      into a <i>netlist</i>. The netlist is just a description of the various logic 
+      gates in your design and how they are interconnected.</li>
+      <li>You use the <i>implementation tools</i> to map the logic gates and interconnections 
+      into the FPGA. The configurable logic blocks in the FPGA can be further decomposed 
+      into <i>look-up tables </i>that perform logic operations. The CLBs and LUTs 
+      are interwoven with various <i>routing resources</i>. The mapping tool collects 
+      your netlist gates into groups that fit into the LUTs and then the <i>place 
+      &amp; route tool</i> assigns the gate collections to specific CLBs while opening 
+      or closing the switches in the routing matrices to connect the gates together.</li>
+      <li>Once the implementation phase is complete, a program extracts the state 
+      of the switches in the routing matrices and generates a <i>bitstream</i> where 
+      the ones and zeroes correspond to open or closed switches. (This is a bit 
+      of a simplification, but it will serve for the purposes of this tutorial.)</li>
+      <li>The bitstream is <i>downloaded</i> into a physical FPGA chip (usually 
+      embedded in some larger system such as an XS Board).&nbsp; The electronic switches 
+      in the FPGA open or close in response to the binary bits in the bitstream.&nbsp; 
+      Upon completion of the downloading, the FPGA will perform the operations specified 
+      by your HDL code or schematic.&nbsp; You can apply input signals to the I/O pins 
+      of the FPGA to check the operation of your design.</li>
+    </ol>
+    <p>That&#39;s really all there is to it.&nbsp; Software such as Xilinx Foundation or 
+    WebPACK provides the HDL and schematic editors, logic synthesizer, fitter, and 
+    bitstream generator software.&nbsp; The XSTOOLs from XESS provide utilities for downloading 
+    the bitstream into a CPLD or FPGA contained in an XS Board.</p>
+    <p align="center" style="text-align:center">
+    <img width="553" height="767" src="fpgatut_files/image006.gif"> </p>
+    </td>
+  </tr>
+  <tr>
+    <td class="StdPageCredits">
+    <a href="mailto:webmaster@xess.com"> webmaster@xess.com</a><br>
+© 1998-2006, XESS Corp.<br> 
+All rights reserved.
+<script src="../www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-765812-1";
+urchinTracker();
+</script></td>
+    <td class="StdPageNavLinks">
+        <a href="ho04000.html">
+    <img border="0" src="images/menu_arrow.png">Products</a>
+    <a href="manuals.html">
+    <img border="0" src="images/menu_arrow.png">Manuals</a>
+    <a href="ho07000.html">
+    <img border="0" src="images/menu_arrow.png">Downloads</a>
+    <a href="ho01001.html">
+    <img border="0" src="images/menu_arrow.png">How to Buy</a>
+    <a href="xess_int_quote.html">
+    <img border="0" src="images/menu_arrow.png">Online Quote</a>
+    <a href="https://xess.com/xess_int_order.php3">
+    <img border="0" src="images/menu_arrow.png">Order Online</a>
+    <br>
+    <a href="help.html">
+    <img border="0" src="images/menu_arrow.png">Help!</a>
+    <a href="ho01000.html">
+    <img border="0" src="images/menu_arrow.png">FAQ</a>
+    <a href="list_reg.html">
+    <img border="0" src="images/menu_arrow.png">Forum</a>
+    <a href="ho03000.html">
+    <img border="0" src="images/menu_arrow.png">Tutorials</a>
+    <a href="ho03000.html">
+    <img border="0" src="images/menu_arrow.png">Examples</a>
+    <a href="links.html">
+    <img border="0" src="images/menu_arrow.png">Links</a>
+    <a href="ho00005.html">
+    <a href="index-2.html">
+    <img border="0" src="images/menu_arrow.png">Home</a>
+    <a href="about_us.html">
+    <img border="0" src="images/menu_arrow.png">About&nbsp;Us</a>
+    <a href="ho00003.html">
+    <img border="0" src="images/menu_arrow.png">Contact&nbsp;Us</a>
+</td>
+  </tr>
+</table>
+
+</body>
+
+
+<!-- Mirrored from 192.168.0.47/fpgatut.htm by HTTrack Website Copier/3.x [XR&CO'2004], Mon, 04 Dec 2006 16:07:21 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=ISO-8859-1"><!-- /Added by HTTrack -->
+</html>

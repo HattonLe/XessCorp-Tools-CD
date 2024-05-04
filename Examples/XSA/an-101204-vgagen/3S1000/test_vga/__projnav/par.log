@@ -1,0 +1,3 @@
+Place & Route Module test_vga . . .
+PAR command line: par -w -intstyle ise -ol std -t 1 test_vga_map.ncd test_vga.ncd test_vga.pcf
+PAR completed successfully

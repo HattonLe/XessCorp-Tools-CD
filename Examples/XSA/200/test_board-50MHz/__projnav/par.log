@@ -1,0 +1,3 @@
+Place & Route Module test_board . . .
+PAR command line: par -w -intstyle ise -ol std -t 1 test_board_map.ncd test_board.ncd test_board.pcf
+PAR completed successfully

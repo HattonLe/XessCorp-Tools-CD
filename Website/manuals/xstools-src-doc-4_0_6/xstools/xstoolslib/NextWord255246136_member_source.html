@@ -1,0 +1,84 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - NextWord</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">NextWord</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">NextWord</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','NextWord255246136','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_member','NextWord255246136','_source',this)" class="tabLinkActive">Source</a></span>
+<span class="tabInActiveGrayout"><span class="tabLinkGrayout">Call Graph</span></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<div class="paragraph2NoTopPadding">Start Line: 1049</div>
+<pre class="codeExamples">
+string <a href="#" OnFocus="link('_member','NextWord255246136',this)">NextWord</a>(istream &amp;is)
+{
+    char c, waste[257];
+    string word = "";
+    while(!is.fail())
+    {
+        is.read(&amp;c,1);
+        if(is.fail())
+            break;
+        switch(c)
+        {
+        case '/':
+            if(is.peek()=='/')
+            {
+                is.getline(waste,256);
+                if(word.length() != 0)
+                    return word;
+            }
+            else
+                word = word + c;
+            break;
+
+        case '!':
+            is.getline(waste,256);
+            if(word.length() != 0)
+                return word;
+            break;
+
+        case '\n':
+            break;
+
+        case ' ':
+        case '\t':
+            if(word.length() != 0)
+                return word;
+            break;
+
+        case ';':
+            is.putback(c);
+            return word;
+
+        default:
+            word = word + c;
+            break;
+        }
+    }
+    return word;
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_member','_source');
+</script>

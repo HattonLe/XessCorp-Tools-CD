@@ -1,0 +1,379 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - usbjtag.cpp</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">usbjtag.cpp</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">usbjtag.cpp</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','usbjtag_cpp0','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','usbjtag_cpp0','_overview',this)" class="tabLinkInActive">Overview</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','usbjtag_cpp0','_includedfiles',this)" class="tabLinkInActive">Included files</a></span>
+<span class="tabInActiveGrayout"><span class="tabLinkGrayout">Included by</span></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_file','usbjtag_cpp0','_source',this)" class="tabLinkActive">Source</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<pre class="codeExamples">
+/*----------------------------------------------------------------------------------
+  SOFTWARE LICENSE AGREEMENT
+    1.  Permission to use, copy, modify, and distribute this software
+        and its documentation, with or without modification, for any
+        purpose and without fee or royalty is hereby granted, provided
+        that you include the following on ALL copies of the software
+        and documentation or portions thereof, including
+        modifications, that you make:
+
+            a.  The full text of this license in a location viewable to users
+            of the redistributed or derivative work.
+
+            b.  Notice of any changes or modifications to the files,
+            including the date changes were made.
+
+    2.  The name, servicemarks and trademarks of X Engineering
+        Software Systems Corp. may NOT be used in advertising or
+        publicity pertaining to the software without specific, written
+        prior permission.
+
+    3.  Title to copyright in this software and any associated
+        documentation will at all times remain with X Engineering
+        Software Systems Corp.
+
+    4.  THIS SOFTWARE AND DOCUMENTATION IS PROVIDED "AS IS," AND X
+        Engineering Software Systems Corp MAKES NO REPRESENTATIONS OR
+        WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO,
+        WARRANTIES OF MERCHANTABILITY OR FITNESS FOR ANY PARTICULAR
+        PURPOSE OR THAT THE USE OF THE SOFTWARE OR DOCUMENTATION WILL
+        NOT INFRINGE ANY THIRD PARTY PATENTS, COPYRIGHTS, TRADEMARKS
+        OR OTHER RIGHTS.
+
+    5.  X Engineering Software Systems Corp WILL NOT BE LIABLE FOR ANY
+        DAMAGES, INCLUDING BUT NOT LIMITED TO, DIRECT, INDIRECT,
+        SPECIAL OR CONSEQUENTIAL, ARISING OUT OF ANY USE OF THE
+        SOFTWARE OR DOCUMENTATION.
+
+  ©2006 - X Engineering Software Systems Corp.  All rights reserved.
+----------------------------------------------------------------------------------*/
+
+
+#include &lt;string&gt;
+#include &lt;fstream&gt;
+#include &lt;cassert&gt;
+#include &lt;ctime&gt;
+#include &lt;cstdarg&gt;
+using namespace std;
+
+#include "<a href="#" OnFocus="link('_file','usbjtag_h0',this)">usbjtag.h</a>"
+#include "<a href="#" OnFocus="link('_file','usbcmd_h0',this)">usbcmd.h</a>"
+
+
+static const bool doBulkIO = true;
+
+
+/// Create a USB-based JTAG controller port.
+<a href="#" OnFocus="link('_member','USBJTAG60044848',this)">USBJTAG::USBJTAG</a>(void): <a href="#" OnFocus="link('_class','USBPort0',this)">USBPort</a>(), <a href="#" OnFocus="link('_class','JTAGPort0',this)">JTAGPort</a>()
+{
+    ;
+}
+
+
+/// Create a USB-based JTAG controller port.
+<a href="#" OnFocus="link('_member','USBJTAG60044848',this)">USBJTAG::USBJTAG</a>(<a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>* e,   // pointer to error reporting object
+    unsigned int portNum,   // USB port number
+    unsigned int endptNum       // USB endpoint number
+    ): <a href="#" OnFocus="link('_class','USBPort0',this)">USBPort</a>(e,<a href="#" OnFocus="link('_member','../xsatapi/portNum0',this)">portNum</a>,endptNum), <a href="#" OnFocus="link('_class','JTAGPort0',this)">JTAGPort</a>(e)
+{
+    <a href="#" OnFocus="link('_member','Setup2928848075',this)">Setup</a>(e,portNum,endptNum);
+}
+
+
+/// Initialize the USB-based JTAG controller port.
+bool <a href="#" OnFocus="link('_member','Setup4199471023',this)">USBJTAG::Setup</a>(<a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>* e,  // pointer to error reporting object
+    unsigned int portNum,   // USB port number
+    unsigned int endptNum)  // USB endpoint number
+{
+    <a href="#" OnFocus="link('_member','SetTraceOnOff3476357123',this)">SetTraceOnOff</a>(false,cerr);   // don't trace TAP signals
+    <a href="#" OnFocus="link('_member','Setup4253302659',this)">USBPort::Setup</a>(e,portNum,endptNum);
+    return true;
+}
+
+
+/// Sets the error reporting channel.
+void <a href="#" OnFocus="link('_member','SetErr554675779',this)">USBJTAG::SetErr</a>(<a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>* e)
+{
+    <a href="#" OnFocus="link('_member','SetErr4225963298',this)">JTAGPort::SetErr</a>(e);
+}
+
+
+/// Provides access to the error reporting channel.
+<a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','GetErr60044848',this)">USBJTAG::GetErr</a>(void)
+{
+    return <a href="#" OnFocus="link('_member','GetErr141716444',this)">JTAGPort::GetErr</a>();
+}
+
+
+/// Set the level on the JTAG TCK pin.
+void <a href="#" OnFocus="link('_member','SetTCK3135730318',this)">USBJTAG::SetTCK</a>(unsigned int b)
+{
+    <a href="#" OnFocus="link('_member','tckVal243771202',this)">tckVal</a> = b; // the TCK doesn't really get set here when USB-based device is used
+}
+
+
+/// Get the level on the JTAG TCK pin.
+///\return the level on the JTAG TCK pin
+unsigned int <a href="#" OnFocus="link('_member','GetTCK60044848',this)">USBJTAG::GetTCK</a>(void)
+{
+    return <a href="#" OnFocus="link('_member','tckVal243771202',this)">tckVal</a>;  // just return value in internal TCK storage when a USB-based device is used
+}
+
+
+/// Output a number of pulses on the JTAG TCK pin.
+void <a href="#" OnFocus="link('_member','PulseTCK3135730318',this)">USBJTAG::PulseTCK</a>(unsigned int numTCKPulses) ///&lt; number of pulses to generate
+{
+    if(numTCKPulses == 0)
+        return;
+    
+    assert(<a href="#" OnFocus="link('_member','GetTCK60044848',this)">GetTCK</a>()==0);  // quiescent state of TCK should be zero
+    
+    if(<a href="#" OnFocus="link('_member','traceFlag243771202',this)">traceFlag</a>)
+        *<a href="#" OnFocus="link('_member','osTrace243771202',this)">osTrace</a> &lt;&lt; <a href="#" OnFocus="link('_member','GetTAPStateLabel449122300',this)">GetTAPStateLabel</a>(currentTAPState).c_str() &lt;&lt; "\t"
+        &lt;&lt; <a href="#" OnFocus="link('_member','GetTMS60044848',this)">GetTMS</a>() &lt;&lt; " "
+        &lt;&lt; <a href="#" OnFocus="link('_member','GetTDI60044848',this)">GetTDI</a>()   &lt;&lt; " "
+        &lt;&lt; <a href="#" OnFocus="link('_member','GetTDO60044848',this)">GetTDO</a>() &lt;&lt; endl;
+
+    <a href="#" OnFocus="link('_member','tdoVal243771202',this)">tdoVal</a> = <a href="#" OnFocus="link('_member','SingleIO992449150',this)">SingleIO</a>(<a href="#" OnFocus="link('_member','GetTMS60044848',this)">GetTMS</a>(),<a href="#" OnFocus="link('_member','GetTDI60044848',this)">GetTDI</a>(),1);  // get value on TDO before clock pulse (see SendRcvBit)
+    <a href="#" OnFocus="link('_member','RunTest3135730318',this)">RunTest</a>(numTCKPulses-1);
+    <a href="#" OnFocus="link('_member','UpdateTAPState822545253',this)">UpdateTAPState</a>(numTCKPulses);
+}
+
+
+/// Set the level on the JTAG TMS pin.
+void <a href="#" OnFocus="link('_member','SetTMS3135730318',this)">USBJTAG::SetTMS</a>(unsigned int b)
+{
+    <a href="#" OnFocus="link('_member','tmsVal243771202',this)">tmsVal</a> = b; // the TMS doesn't really get set here when USB-based device is used
+}
+
+
+/// Get the level on the JTAG TMS pin.
+///\return the level on the JTAG TMS pin
+unsigned int <a href="#" OnFocus="link('_member','GetTMS60044848',this)">USBJTAG::GetTMS</a>(void)
+{
+    return <a href="#" OnFocus="link('_member','tmsVal243771202',this)">tmsVal</a>;
+}
+
+
+/// Set the level on the JTAG TDI pin.
+void <a href="#" OnFocus="link('_member','SetTDI3135730318',this)">USBJTAG::SetTDI</a>(unsigned int b)
+{
+    <a href="#" OnFocus="link('_member','tdiVal243771202',this)">tdiVal</a> = b; // the TMS doesn't really get set here when USB-based device is used
+}
+
+
+/// Get the level on the JTAG TDI pin.
+///\return the level on the JTAG TDI pin
+unsigned int <a href="#" OnFocus="link('_member','GetTDI60044848',this)">USBJTAG::GetTDI</a>(void)
+{
+    return <a href="#" OnFocus="link('_member','tdiVal243771202',this)">tdiVal</a>;
+}
+
+
+/// Get the level on the JTAG TDO pin.
+///\return the level on the JTAG TDO pin
+unsigned int <a href="#" OnFocus="link('_member','GetTDO60044848',this)">USBJTAG::GetTDO</a>(void)
+{
+    return <a href="#" OnFocus="link('_member','tdoVal243771202',this)">tdoVal</a>;
+}
+
+
+#define MAX(a,b)    ((a)&lt;(b)?(b):(a))
+/// Transmit a bitstream through TDI while receiving a bitstream through TDO.
+///
+/// This subroutine assumes the TAP controller state is
+/// Shift-IR or Shift-DR upon entry.  Upon termination, this subroutine
+/// will leave the TAP controller in the Exit1-IR or Exit1-DR state.
+///
+/// Either sendBits or rcvBits can be a zero-length bitstream if you don't
+/// want to transmit or receive bits during a particular call to this subroutine.
+/// For example, you may want to load the BSDR with a bit pattern but
+/// you might not care what data gets shifted out of the BSDR during
+/// the loading.
+///
+///SendBits and RcvBits can point to the same bitstream without causing problems.
+///
+/// The LSB of a bitstream has an index of 0.
+void USBJTAG::SendRcvBitstream(Bitstream&amp; sendBits, ///&lt; bits to send out TDI pin 
+                    Bitstream&amp; rcvBits) ///&lt; bits received through TDO pin
+{
+    assert(currentTAPState==ShiftIR || currentTAPState==ShiftDR);
+    unsigned int length = MAX(sendBits.GetLength(),rcvBits.GetLength());
+    assert(length&gt;0);
+    
+    // lower the TMS line to make sure the TAP controller stays
+    // in the Shift-IR or Shift-DR state for the first length-1 cycles
+    SetTMS(0);
+
+    if(doBulkIO)
+    {
+        if(traceFlag)
+            *osTrace &lt;&lt; GetTAPStateLabel(currentTAPState).c_str() &lt;&lt; "\t"
+            &lt;&lt; "TDI:" &lt;&lt; sendBits.GetLength()  &lt;&lt; " "
+            &lt;&lt; "TDO:" &lt;&lt; rcvBits.GetLength() &lt;&lt; endl;
+        
+        // create storage to hold the bits coming out of TDO
+        unsigned char *tdoBits = rcvBits.GetLength()==0 ? NULL : rcvBits.ToCharString();
+
+        // resize sendBits to make it as large as the number of bits that will be read from TDO
+        int sendLength = sendBits.GetLength();
+        if(sendLength&lt;length)
+            sendBits.Resize(length);
+        unsigned char *tdiBits = sendBits.ToCharString();
+        
+        // do the bulk TDI-TDO transfer
+        int status = BulkIO(length,tdiBits,tdoBits);
+        assert(status==0);
+        
+        // convert the TDO bits back into a Bitstream
+        rcvBits.FromCharString(rcvBits.GetLength(),tdoBits);
+        delete tdoBits;
+        
+        // restore sendBits to its original size if needed 
+        if(sendLength&lt;length)
+            sendBits.Resize(sendLength);
+        
+        // TMS is 1 after jtag_bulk_io() completes
+        SetTMS(1);
+        
+        // Set the state to Exit1IR or Exit1DR after jtag_bulk_io() completes
+        if(currentTAPState==<a href="#" OnFocus="link('_member','ShiftIR0',this)">ShiftIR</a>)
+            currentTAPState=<a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>;
+        else // if(currentTAPState==ShiftDR)
+            currentTAPState=<a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>;
+    }
+    else
+        for( unsigned int i=0; i&lt;length; i++ )
+        {
+            unsigned int rcvBit;
+
+            // On the last bit, raise the TMS line so the TAP
+            // controller will move out of the Shift state into
+            // the Exit1 state.
+            if( i==length-1 )
+                SetTMS(1);
+
+            // send the next bit if the bitstream is not empty
+            if(sendBits.GetLength() &gt; i)
+                rcvBit = SendRcvBit(sendBits[i]);
+            /* else just shift in a zero */
+            else
+                rcvBit = SendRcvBit(0);
+
+            // store the received bit if the bitstream is not empty
+            if(rcvBits.GetLength() &gt; i)
+                rcvBits.SetBit(i,rcvBit);
+        }
+
+    assert(currentTAPState==Exit1DR || currentTAPState==Exit1IR);
+}
+
+
+/// Perform a single JTAG transaction: read TDO, set TMS and TDI, and pulse TCK.
+///\return the value read on the TDO pin. 
+int <a href="#" OnFocus="link('_member','SingleIO992449150',this)">USBJTAG::SingleIO</a>(int tms,   ///&lt; level to output on TMS pin
+            int tdi,            ///&lt; level to output on TDI pin
+            int readTDO)        ///&lt; if true, read the level on the TDO pin if true; otherwise, don't read TDO
+{
+    unsigned char tmsTdi[2];
+    tmsTdi[1]= ((tdi &amp; 1) &lt;&lt; 1) | (tms &amp; 1);
+    if(!readTDO)
+    {
+        unsigned long rcvLength = 0;
+        tmsTdi[0] = <a href="#" OnFocus="link('_member','TMS_TDI_CMD0',this)">TMS_TDI_CMD</a>;
+        <a href="#" OnFocus="link('_member','SendRcvPacket2960143232',this)">SendRcvPacket</a>(tmsTdi, 2, NULL, &amp;rcvLength, true);
+        return 0;
+    }
+    else
+    {
+        unsigned char tdo[2];
+        unsigned long rcvLength = 2;
+        tmsTdi[0] = <a href="#" OnFocus="link('_member','TMS_TDI_TDO_CMD0',this)">TMS_TDI_TDO_CMD</a>;
+        <a href="#" OnFocus="link('_member','SendRcvPacket2960143232',this)">SendRcvPacket</a>(tmsTdi, 2, tdo, &amp;rcvLength, true);
+        return (tdo[1]&gt;&gt;2) &amp; 1;
+    }
+}
+
+
+/// Send a number of bits through the TDI pin while (possibly) receiving bits from the TDO pin.
+///\return USB_SUCCESS or USB_FAILURE
+int <a href="#" OnFocus="link('_member','BulkIO2103704430',this)">USBJTAG::BulkIO</a>(unsigned int length,   ///&lt; number of TDI bits to send
+                unsigned char* tdi,         ///&lt; bits to send thru TDI with first bit in bit 0 of tdi[0]
+                unsigned char* tdo)         ///&lt; pointer to array that gets loaded with bits received thru TDO 
+{
+    if(tdo == NULL)
+    {
+        unsigned char cmd[] = {<a href="#" OnFocus="link('_member','TDI_CMD0',this)">TDI_CMD</a>,0,0,0,0};
+        cmd[1] =  length      &amp; 0xff;
+        cmd[2] = (length&gt;&gt; 8) &amp; 0xff;
+        cmd[3] = (length&gt;&gt;16) &amp; 0xff;
+        cmd[4] = (length&gt;&gt;24) &amp; 0xff;
+        unsigned long rcvLength = 0;
+        if(<a href="#" OnFocus="link('_member','SendRcvPacket2960143232',this)">SendRcvPacket</a>(cmd, sizeof(cmd), NULL, &amp;rcvLength, true) == USB_SUCCESS)
+        {
+            rcvLength = 0;
+            return <a href="#" OnFocus="link('_member','SendRcvPacket2960143232',this)">SendRcvPacket</a>(tdi,(length+7)/8, NULL, &amp;rcvLength, false);
+        }
+        return USB_FAILURE;
+    }
+    else
+    {
+        unsigned char cmd[] = {<a href="#" OnFocus="link('_member','TDI_TDO_CMD0',this)">TDI_TDO_CMD</a>,0,0,0,0};
+        cmd[1] =  length      &amp; 0xff;
+        cmd[2] = (length&gt;&gt; 8) &amp; 0xff;
+        cmd[3] = (length&gt;&gt;16) &amp; 0xff;
+        cmd[4] = (length&gt;&gt;24) &amp; 0xff;
+        unsigned long rcvLength = 0;
+        if(<a href="#" OnFocus="link('_member','SendRcvPacket2960143232',this)">SendRcvPacket</a>(cmd, sizeof(cmd), NULL, &amp;rcvLength, true) == USB_SUCCESS)
+        {
+            rcvLength = (length+7)/8;
+            return <a href="#" OnFocus="link('_member','SendRcvPacket2960143232',this)">SendRcvPacket</a>(tdi,(length+7)/8, tdo, &amp;rcvLength, false);
+        }
+        return USB_FAILURE;
+    }
+}
+
+
+/// Perform JTAG RUN-TEST operation by pulsing the TCK pin a number of times.
+///\return USB_SUCCESS or USB_FAILURE
+int <a href="#" OnFocus="link('_member','RunTest3135730318',this)">USBJTAG::RunTest</a>(unsigned int numTCKPulses) ///&lt; number of pulses to generate
+{
+    if(numTCKPulses == 0)
+        return USB_SUCCESS;
+    
+    unsigned char cmd[] = {<a href="#" OnFocus="link('_member','RUNTEST_CMD0',this)">RUNTEST_CMD</a>,0,0,0,0};
+    unsigned char ack[sizeof(cmd)];
+    cmd[1] =  numTCKPulses      &amp; 0xff;
+    cmd[2] = (numTCKPulses&gt;&gt; 8) &amp; 0xff;
+    cmd[3] = (numTCKPulses&gt;&gt;16) &amp; 0xff;
+    cmd[4] = (numTCKPulses&gt;&gt;24) &amp; 0xff;
+    unsigned long ackLength = sizeof(ack);
+    return <a href="#" OnFocus="link('_member','SendRcvPacket2960143232',this)">SendRcvPacket</a>(cmd, sizeof(cmd), ack, &amp;ackLength, true);
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_file','_source');
+</script>

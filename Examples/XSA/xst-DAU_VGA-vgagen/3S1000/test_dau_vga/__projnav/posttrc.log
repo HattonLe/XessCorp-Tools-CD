@@ -1,0 +1,4 @@
+Post Route Timing Report for Module test_vga . . .
+TRACE command line and options:
+trce -intstyle ise -e 3 -l 3 -xml test_vga test_vga.ncd -o test_vga.twr test_vga.pcf
+Post Route Timing Report for Module test_vga : DONE

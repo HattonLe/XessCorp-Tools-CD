@@ -1,0 +1,528 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - pbusport.cpp</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">pbusport.cpp</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">pbusport.cpp</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','pbusport_cpp0','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabInActiveGrayout"><span class="tabLinkGrayout">Overview</span></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','pbusport_cpp0','_includedfiles',this)" class="tabLinkInActive">Included files</a></span>
+<span class="tabInActiveGrayout"><span class="tabLinkGrayout">Included by</span></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_file','pbusport_cpp0','_source',this)" class="tabLinkActive">Source</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<pre class="codeExamples">
+/*----------------------------------------------------------------------------------
+  SOFTWARE LICENSE AGREEMENT
+    1.  Permission to use, copy, modify, and distribute this software
+        and its documentation, with or without modification, for any
+        purpose and without fee or royalty is hereby granted, provided
+        that you include the following on ALL copies of the software
+        and documentation or portions thereof, including
+        modifications, that you make:
+
+            a.  The full text of this license in a location viewable to users
+            of the redistributed or derivative work.
+
+            b.  Notice of any changes or modifications to the files,
+            including the date changes were made.
+
+    2.  The name, servicemarks and trademarks of X Engineering
+        Software Systems Corp. may NOT be used in advertising or
+        publicity pertaining to the software without specific, written
+        prior permission.
+
+    3.  Title to copyright in this software and any associated
+        documentation will at all times remain with X Engineering
+        Software Systems Corp.
+
+    4.  THIS SOFTWARE AND DOCUMENTATION IS PROVIDED "AS IS," AND X
+        Engineering Software Systems Corp MAKES NO REPRESENTATIONS OR
+        WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO,
+        WARRANTIES OF MERCHANTABILITY OR FITNESS FOR ANY PARTICULAR
+        PURPOSE OR THAT THE USE OF THE SOFTWARE OR DOCUMENTATION WILL
+        NOT INFRINGE ANY THIRD PARTY PATENTS, COPYRIGHTS, TRADEMARKS
+        OR OTHER RIGHTS.
+
+    5.  X Engineering Software Systems Corp WILL NOT BE LIABLE FOR ANY
+        DAMAGES, INCLUDING BUT NOT LIMITED TO, DIRECT, INDIRECT,
+        SPECIAL OR CONSEQUENTIAL, ARISING OUT OF ANY USE OF THE
+        SOFTWARE OR DOCUMENTATION.
+
+  ©2006 - X Engineering Software Systems Corp.  All rights reserved.
+----------------------------------------------------------------------------------*/
+
+
+#include &lt;cassert&gt;
+#include &lt;fstream&gt;
+
+#include "<a href="#" OnFocus="link('_file','utils_h0',this)">utils.h</a>"
+#include "<a href="#" OnFocus="link('_file','hexrecrd_h0',this)">hexrecrd.h</a>"
+#include "<a href="#" OnFocus="link('_file','pbusport_h0',this)">pbusport.h</a>"
+
+
+/// Create a peripheral bus upload/download port.
+<a href="#" OnFocus="link('_member','PBusPort141689002',this)">PBusPort::PBusPort</a>(void)
+{
+    ;
+}
+
+
+/// Create a peripheral bus upload/download port.
+<a href="#" OnFocus="link('_member','PBusPort141689002',this)">PBusPort::PBusPort</a>(<a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>* e,   ///&lt; pointer to error reporting object
+                   unsigned int portNum,    ///&lt; parallel port number
+                   unsigned int invMask,    ///&lt; inversion mask for the parallel port
+                   unsigned int pos_reset,  ///&lt; bit position in parallel port of RESET pin
+                   unsigned int pos_clk,    ///&lt; bit position in parallel port of CLK pin
+                   unsigned int pos_dolsb,  ///&lt; bit position in parallel port of LSB of data-out pin
+                   unsigned int pos_domsb,  ///&lt; bit position in parallel port of MSB of data-out pin
+                   unsigned int pos_dilsb,  ///&lt; bit position in parallel port of LSB of data-in pin
+                   unsigned int pos_dimsb,  ///&lt; bit position in parallel port of MSB of data-in pin
+                   unsigned int pos_stlsb,  ///&lt; bit position in parallel port of LSB of status pin
+                   unsigned int pos_stmsb,  ///&lt; bit position in parallel port of MSB of status pin
+                   unsigned int dWidth,     ///&lt; width of data word
+                   unsigned int aWidth)     ///&lt; width of address
+{
+    <a href="#" OnFocus="link('_member','Setup4245388525',this)">Setup</a>(e,portNum,invMask,pos_reset,pos_clk,
+        pos_dolsb,pos_domsb,
+        pos_dilsb,pos_dimsb,
+        pos_stlsb,pos_stmsb,
+        dWidth,aWidth);
+}
+
+
+/// Initialize the object.
+int <a href="#" OnFocus="link('_member','Setup4245388525',this)">PBusPort::Setup</a>(<a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>* e,   ///&lt; pointer to error reporting object
+                   unsigned int portNum,    ///&lt; parallel port number
+                   unsigned int invMask,    ///&lt; inversion mask for the parallel port
+                   unsigned int pos_reset,  ///&lt; bit position in parallel port of RESET pin
+                   unsigned int pos_clk,    ///&lt; bit position in parallel port of CLK pin
+                   unsigned int pos_dolsb,  ///&lt; bit position in parallel port of LSB of data-out pin
+                   unsigned int pos_domsb,  ///&lt; bit position in parallel port of MSB of data-out pin
+                   unsigned int pos_dilsb,  ///&lt; bit position in parallel port of LSB of data-in pin
+                   unsigned int pos_dimsb,  ///&lt; bit position in parallel port of MSB of data-in pin
+                   unsigned int pos_stlsb,  ///&lt; bit position in parallel port of LSB of status pin
+                   unsigned int pos_stmsb,  ///&lt; bit position in parallel port of MSB of status pin
+                   unsigned int dWidth,     ///&lt; width of data word
+                   unsigned int aWidth)     ///&lt; width of address
+{
+    <a href="#" OnFocus="link('_member','progressGauge243780660',this)">progressGauge</a> = NULL;
+    <a href="#" OnFocus="link('_member','posRESET243780660',this)">posRESET</a> = pos_reset;
+    <a href="#" OnFocus="link('_member','posCLK243780660',this)">posCLK</a>   = pos_clk;
+    <a href="#" OnFocus="link('_member','posDOLSB243780660',this)">posDOLSB</a> = pos_dolsb;
+    <a href="#" OnFocus="link('_member','posDOMSB243780660',this)">posDOMSB</a> = pos_domsb;
+    <a href="#" OnFocus="link('_member','posDILSB243780660',this)">posDILSB</a> = pos_dilsb;
+    <a href="#" OnFocus="link('_member','posDIMSB243780660',this)">posDIMSB</a> = pos_dimsb;
+    <a href="#" OnFocus="link('_member','posSTLSB243780660',this)">posSTLSB</a> = pos_stlsb;
+    <a href="#" OnFocus="link('_member','posSTMSB243780660',this)">posSTMSB</a> = pos_stmsb;
+    <a href="#" OnFocus="link('_member','dataWidth243780660',this)">dataWidth</a> = dWidth;
+    <a href="#" OnFocus="link('_member','addrWidth243780660',this)">addrWidth</a> = aWidth;
+    return <a href="#" OnFocus="link('_member','Setup1571714867',this)">PPort::Setup</a>(e,portNum,invMask);
+}
+
+
+/// Download the peripheral bus with the contents of a file.
+///\return true if operation was successful, false if not
+bool <a href="#" OnFocus="link('_member','Download2423321888',this)">PBusPort::Download</a>(string&amp; hexfileName,  ///&lt; file containing data for the device on the peripheral bus
+                bool bigEndianBytes,    ///&lt; if true, data is stored in Flash with most-significant byte at lower address
+                bool bigEndianBits)     ///&lt; if true, data is stored in Flash with most-significant bit in position 0
+{
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> = <a href="#" OnFocus="link('_member','GetErr259477277',this)">GetErr</a>();
+    
+    if(hexfileName.length()==0)
+        return false;  // stop if no hex file was given
+    
+    ifstream is(hexfileName.c_str());  // otherwise open hex file
+    if(!is || is.fail() || is.eof()!=0)
+    { // error - couldn't open hex file
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','SetSeverity3409672334',this)">SetSeverity</a>(XSErrorMajor);
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> &lt;&lt; "could not open " &lt;&lt; hexfileName.c_str() &lt;&lt; "\n";
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','EndMsg60232619',this)">EndMsg</a>();
+        return false;
+    }
+    
+    // determine the size of the file
+    is.seekg(0,ios::end);   // move pointer to end of file
+    streampos streamEndPos = is.tellg();    // pointer position = position of end of file
+    is.seekg(0,ios::beg);   // return pointer to beginning of file
+
+    string desc("RAM Download"), subdesc("Downloading "+<a href="#" OnFocus="link('_member','StripPrefix67554305',this)">StripPrefix</a>(hexfileName));
+    <a href="#" OnFocus="link('_member','progressGauge243780660',this)">progressGauge</a> = new <a href="#" OnFocus="link('_class','Progress0',this)">Progress</a>(&amp;err,desc,subdesc,0,streamEndPos);
+
+    bool status = <a href="#" OnFocus="link('_member','Download2423321888',this)">Download</a>(is,bigEndianBytes,bigEndianBits);
+    
+    delete <a href="#" OnFocus="link('_member','progressGauge243780660',this)">progressGauge</a>;
+    
+    is.close();  // close-up the hex file
+    
+    return status;
+}
+
+
+/// Download the peripheral bus with the contents arriving through a stream.
+///\return true if operation was successful, false if not
+bool <a href="#" OnFocus="link('_member','Download2423321888',this)">PBusPort::Download</a>(istream&amp; is,  ///&lt; input stream that delivers data to be sent to a device on the peripheral bus
+                bool bigEndianBytes,    ///&lt; if true, data is stored in Flash with most-significant byte at lower address
+                bool bigEndianBits)     ///&lt; if true, data is stored in Flash with most-significant bit in position 0
+{
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> = <a href="#" OnFocus="link('_member','GetErr259477277',this)">GetErr</a>();
+
+    assert(progressGauge != NULL);  //  make sure progress indicator is initialized
+    <a href="#" OnFocus="link('_member','progressGauge243780660',this)">progressGauge</a>-&gt;<a href="#" OnFocus="link('_member','Report2561259521',this)">Report</a>(0);      // start progress indicator at zero
+
+    // read hex records from file and place data on the peripheral bus of the board
+    <a href="#" OnFocus="link('_class','HexRecord0',this)">HexRecord</a> hx;
+    while(is.eof()==0)
+    {
+        is &gt;&gt; hx;
+        if(is.eof()!=0)
+            break; // terminate loading loop when stream goes dry
+        if(<a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','IsError863564933',this)">IsError</a>())
+            break;
+        if(is.fail())
+        {
+            <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','SetSeverity3409672334',this)">SetSeverity</a>(XSErrorMajor);
+            <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> &lt;&lt; "error reading stream\n";
+            <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','EndMsg60232619',this)">EndMsg</a>();
+            break;
+        }
+        if(hx.<a href="#" OnFocus="link('_member','IsError2146470179',this)">IsError</a>())
+        { // some error in the hex record itself
+            <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','SetSeverity3409672334',this)">SetSeverity</a>(XSErrorMajor);
+            <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> &lt;&lt; "hex record: " &lt;&lt; hx.<a href="#" OnFocus="link('_member','GetErrMsg2146470179',this)">GetErrMsg</a>() &lt;&lt; "\n";
+            <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','EndMsg60232619',this)">EndMsg</a>();
+            break;
+        }
+        else
+        { // send out an indication for each hex record that's loaded
+            <a href="#" OnFocus="link('_member','progressGauge243780660',this)">progressGauge</a>-&gt;<a href="#" OnFocus="link('_member','Report2561259521',this)">Report</a>(is.tellg());
+            if(<a href="#" OnFocus="link('_member','DownloadHexRecord2107542748',this)">DownloadHexRecord</a>(hx,bigEndianBytes,bigEndianBits) == false) // download hex record
+                return false;   // an error occurred while downloading the hex record
+        }
+    }
+    <a href="#" OnFocus="link('_member','progressGauge243780660',this)">progressGauge</a>-&gt;<a href="#" OnFocus="link('_member','Report2561259521',this)">Report</a>(is.tellg()); // should set gauge to 100%
+    
+    return <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','IsError863564933',this)">IsError</a>() ? false:true;
+}
+
+
+/// Upload the peripheral bus to a file.
+///\return true if operation was successful, false if not
+bool <a href="#" OnFocus="link('_member','Upload3715628431',this)">PBusPort::Upload</a>(string&amp; hexfileName,  ///&lt; dump uploaded data to this file
+                const char* format,     ///&lt; hex file format
+                unsigned long loAddr,   ///&lt; start fetching data from this address
+                unsigned long hiAddr,   ///&lt; stop at this address
+                bool bigEndianBytes,    ///&lt; if true, data is stored in Flash with most-significant byte at lower address
+                bool bigEndianBits)     ///&lt; if true, data is stored in Flash with most-significant bit in position 0
+{
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> = <a href="#" OnFocus="link('_member','GetErr259477277',this)">GetErr</a>();
+    
+    if(hexfileName.length()==0)
+        return false;  // stop if no hex file was given
+    
+    ofstream os(hexfileName.c_str());  // otherwise open hex file
+    if(os.fail() || os.eof()!=0)
+    { // error - couldn't open hex file
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','SetSeverity3409672334',this)">SetSeverity</a>(XSErrorMajor);
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> &lt;&lt; "could not open " &lt;&lt; hexfileName.c_str() &lt;&lt; "\n";
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','EndMsg60232619',this)">EndMsg</a>();
+        return false;
+    }
+    
+    string desc("RAM Upload"), subdesc("Uploading "+<a href="#" OnFocus="link('_member','StripPrefix67554305',this)">StripPrefix</a>(hexfileName));
+    <a href="#" OnFocus="link('_member','progressGauge243780660',this)">progressGauge</a> = new <a href="#" OnFocus="link('_class','Progress0',this)">Progress</a>(&amp;err,desc,subdesc,loAddr,hiAddr);
+    
+    bool status = <a href="#" OnFocus="link('_member','Upload3715628431',this)">Upload</a>(os,format,loAddr,hiAddr,bigEndianBytes,bigEndianBits);
+    
+    delete <a href="#" OnFocus="link('_member','progressGauge243780660',this)">progressGauge</a>;
+
+    os.close();  // close-up the hex file
+
+    return status;
+}
+
+
+/// Upload the peripheral bus to a stream.
+///\return true if operation was successful, false if not
+bool <a href="#" OnFocus="link('_member','Upload3715628431',this)">PBusPort::Upload</a>(ostream&amp; os,      ///&lt; dump uploaded data to this stream
+                const char* format,     ///&lt; hex file format
+                unsigned long loAddr,   ///&lt; start fetching data from this address
+                unsigned long hiAddr,   ///&lt; stop at this address
+                bool bigEndianBytes,    ///&lt; if true, data is stored in Flash with most-significant byte at lower address
+                bool bigEndianBits)     ///&lt; if true, data is stored in Flash with most-significant bit in position 0
+{
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> = <a href="#" OnFocus="link('_member','GetErr259477277',this)">GetErr</a>();
+
+    assert(progressGauge != NULL);  //  make sure progress indicator is initialized
+    <a href="#" OnFocus="link('_member','progressGauge243780660',this)">progressGauge</a>-&gt;<a href="#" OnFocus="link('_member','Report2561259521',this)">Report</a>(0);      // start progress indicator at zero
+    
+    // read hex records from the peripheral bus and place data in the hex file
+    <a href="#" OnFocus="link('_class','HexRecord0',this)">HexRecord</a> hx;
+    hx.<a href="#" OnFocus="link('_member','Setup2851010944',this)">Setup</a>(format);
+    unsigned long addr;
+    for(addr=<a href="#" OnFocus="link('_member','../xsload/loAddr0',this)">loAddr</a>; (addr|0xF)&lt;=<a href="#" OnFocus="link('_member','../xsload/hiAddr0',this)">hiAddr</a>; addr=(addr+16)&amp;~0xF)
+    {
+        if(<a href="#" OnFocus="link('_member','UploadHexRecord1585823064',this)">UploadHexRecord</a>(hx,addr,addr|0xF,bigEndianBytes,bigEndianBits) == false) // get 16 bytes
+            return false;   // an error occurred while uploading the hex record
+        os &lt;&lt; hx;       // send hex record to output stream
+        <a href="#" OnFocus="link('_member','progressGauge243780660',this)">progressGauge</a>-&gt;<a href="#" OnFocus="link('_member','Report2561259521',this)">Report</a>(addr);   // give feedback on progress
+    }
+    if(addr&lt;=<a href="#" OnFocus="link('_member','../xsload/hiAddr0',this)">hiAddr</a>)
+    { // handle the last few bytes of an upload
+        if(<a href="#" OnFocus="link('_member','UploadHexRecord1585823064',this)">UploadHexRecord</a>(hx,addr,hiAddr,bigEndianBytes,bigEndianBits) == false) // get the last few bytes
+            return false;   // an error occurred while uploading the hex record
+        os &lt;&lt; hx;       // send hex record to output stream
+    }
+    <a href="#" OnFocus="link('_member','progressGauge243780660',this)">progressGauge</a>-&gt;<a href="#" OnFocus="link('_member','Report2561259521',this)">Report</a>(hiAddr); // should set gauge to 100%
+    
+    return true;
+}
+
+
+/// Load peripheral bus at the addresses given in a hex record.
+///\return true if operation was successful, false if not
+bool <a href="#" OnFocus="link('_member','DownloadHexRecord2107542748',this)">PBusPort::DownloadHexRecord</a>(<a href="#" OnFocus="link('_class','HexRecord0',this)">HexRecord</a>&amp; hx, ///&lt; hex record containing data to load into device on peripheral bus
+                bool bigEndianBytes,    ///&lt; if true, data is stored in Flash with most-significant byte at lower address
+                bool bigEndianBits)     ///&lt; if true, data is stored in Flash with most-significant bit in position 0
+{
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> = <a href="#" OnFocus="link('_member','GetErr259477277',this)">GetErr</a>();
+
+    if(!hx.<a href="#" OnFocus="link('_member','IsData2146470179',this)">IsData</a>())  // don't download unless this is data
+        return true;    // no error, just didn't do anything
+
+    // the address has to be right-shifted by one bit for each doubling of the data width.
+    unsigned int addrScale;
+    if(<a href="#" OnFocus="link('_member','dataWidth243780660',this)">dataWidth</a>&lt;=8)
+        addrScale = 0;  // addresses for byte-wide data need no scaling because each byte fits in a hex record byte
+    else if(<a href="#" OnFocus="link('_member','dataWidth243780660',this)">dataWidth</a>&lt;=16)
+        addrScale = 1;  // addresses for 16-bit data are halved because each word takes two bytes in the hex record
+    else if(<a href="#" OnFocus="link('_member','dataWidth243780660',this)">dataWidth</a>&lt;=32)
+        addrScale = 2;  // addresses for 32-bit data are quartered because each word takes four bytes in the hex record
+    else
+        assert(1==0);   // we can't handle data widths &gt; 32 bits
+    unsigned int stride = 1 &lt;&lt; addrScale;
+
+    unsigned int addrMask = ~((1 &lt;&lt; addrScale) - 1);
+
+    if(hx.<a href="#" OnFocus="link('_member','GetLength2146470179',this)">GetLength</a>() % stride)
+    {
+        string msg("Cannot download an odd number of bytes to word-wide bus!\n");
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,msg);
+        return false;
+    }
+    unsigned int <a href="#" OnFocus="link('_member','../xsload/loAddr0',this)">loAddr</a> = hx.<a href="#" OnFocus="link('_member','GetAddress2146470179',this)">GetAddress</a>();
+    if(<a href="#" OnFocus="link('_member','../xsload/loAddr0',this)">loAddr</a> &amp; ~addrMask)
+    {
+        string msg("Cannot download to word-wide bus using an odd byte-starting address!\n");
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,msg);
+        return false;
+    }
+    
+    // load the bytes from a data-type hex record onto the peripheral bus
+    for(unsigned int i=0; i&lt;hx.<a href="#" OnFocus="link('_member','GetLength2146470179',this)">GetLength</a>(); i+=stride)
+    {
+        unsigned int <a href="#" OnFocus="link('_member','../xsatapi/data0',this)">data</a> = 0;  // assemble next data word from hex record
+        for(int j=0; j&lt;stride; j++)
+            <a href="#" OnFocus="link('_member','../xsatapi/data0',this)">data</a> = (<a href="#" OnFocus="link('_member','../xsatapi/data0',this)">data</a>&lt;&lt;8) | (hx[i+j] &amp; 0xFF);
+        if(<a href="#" OnFocus="link('_member','Write18647439',this)">Write</a>((loAddr+i)&gt;&gt;addrScale,data,bigEndianBytes,bigEndianBits,i==0) == false)
+            return false;
+    }
+
+    return true;
+}
+
+
+/// Write contents of a single location on the peripheral bus.
+///\return true if operation was successful, false if not
+bool <a href="#" OnFocus="link('_member','Write18647439',this)">PBusPort::Write</a>(unsigned int addr,        ///&lt; address of RAM location
+            unsigned int data,      ///&lt; data to be written into RAM location
+            bool bigEndianBytes,    ///&lt; if true, data is stored in Flash with most-significant byte at lower address
+            bool bigEndianBits,     ///&lt; if true, data is stored in Flash with most-significant bit in position 0
+            bool loadAddress)       ///&lt; true if address has to be loaded first
+{
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> = <a href="#" OnFocus="link('_member','GetErr259477277',this)">GetErr</a>();
+
+    unsigned int statusPortWidth = <a href="#" OnFocus="link('_member','posSTMSB243780660',this)">posSTMSB</a> - <a href="#" OnFocus="link('_member','posSTLSB243780660',this)">posSTLSB</a> + 1;
+    unsigned int inDataPortWidth = <a href="#" OnFocus="link('_member','posDIMSB243780660',this)">posDIMSB</a> - <a href="#" OnFocus="link('_member','posDILSB243780660',this)">posDILSB</a> + 1;
+    unsigned int outDataPortWidth = <a href="#" OnFocus="link('_member','posDOMSB243780660',this)">posDOMSB</a> - <a href="#" OnFocus="link('_member','posDOLSB243780660',this)">posDOLSB</a> + 1;
+    unsigned int statusMask = (1&lt;&lt;statusPortWidth) - 1;
+    unsigned int inDataMask = (1&lt;&lt;inDataPortWidth) - 1;
+    unsigned int outDataMask = (1&lt;&lt;outDataPortWidth) - 1;
+
+
+    unsigned int statusChk = 0; // set status check to reset state id
+    if(loadAddress)
+    {
+        <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posRESET,posRESET);  // reset the downloading state machine
+        <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posRESET,posRESET);  // release the reset
+        
+        // set initial address into the downloading state machine
+        addr |= (1&lt;&lt;27);    // set upper bit of address to signal a write operation
+        for(int j=0; j&lt;<a href="#" OnFocus="link('_member','addrWidth243780660',this)">addrWidth</a>; j+=outDataPortWidth)
+        {
+            unsigned int status = <a href="#" OnFocus="link('_member','In1210046855',this)">In</a>(posSTLSB,posSTMSB);
+            assert(status==(statusChk &amp; statusMask));
+            if(status != (statusChk &amp; statusMask))
+                return false;   // error - peripheral bus interface state machine not in the right state
+            <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>((addr&gt;&gt;j)&amp;outDataMask,posDOLSB,posDOMSB);
+            <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posCLK,posCLK);
+            <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posCLK,posCLK);  // latch address bits into downloading circuit
+            statusChk++;            // increment status check
+        }
+    }
+
+    statusChk = 5;
+    <a href="#" OnFocus="link('_member','../xsatapi/data0',this)">data</a>  = <a href="#" OnFocus="link('_member','RearrangeData127079845',this)">RearrangeData</a>(data,dataWidth,bigEndianBytes,bigEndianBits);
+    for(int j=0; j&lt;<a href="#" OnFocus="link('_member','dataWidth243780660',this)">dataWidth</a>; j+=outDataPortWidth)
+    {
+        unsigned int status = <a href="#" OnFocus="link('_member','In1210046855',this)">In</a>(posSTLSB,posSTMSB);
+        assert(status==(statusChk &amp; statusMask));
+        if(status != (statusChk &amp; statusMask))
+            return false;   // error - peripheral bus interface state machine not in the right state
+        <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>((data&gt;&gt;j)&amp;outDataMask,posDOLSB,posDOMSB);  // send data bits to register
+        <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posCLK,posCLK);
+        <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posCLK,posCLK);  // store data bits into data register
+        statusChk--;            // decrement status check
+    }
+
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posCLK,posCLK);
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posCLK,posCLK);  // latch data from register into RAM
+
+    return true;
+}
+
+
+/// Get data from the peripheral bus at the addresses given and store it in a hex record.
+///\return true if operation was successful, false if not
+bool <a href="#" OnFocus="link('_member','UploadHexRecord1585823064',this)">PBusPort::UploadHexRecord</a>(<a href="#" OnFocus="link('_class','HexRecord0',this)">HexRecord</a>&amp; hx, ///&lt; hex record to store data in
+                unsigned long loAddr,   ///&lt; begin upload from this address
+                unsigned long hiAddr,   ///&lt; end upload at this address
+                bool bigEndianBytes,    ///&lt; if true, data is stored in Flash with most-significant byte at lower address
+                bool bigEndianBits)     ///&lt; if true, data is stored in Flash with most-significant bit in position 0
+{
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> = <a href="#" OnFocus="link('_member','GetErr259477277',this)">GetErr</a>();
+
+    // the address has to be right-shifted by one bit for each doubling of the data width.
+    unsigned int addrScale;
+    if(<a href="#" OnFocus="link('_member','dataWidth243780660',this)">dataWidth</a>&lt;=8)
+        addrScale = 0;  // addresses for byte-wide data need no scaling because each byte fits in a hex record byte
+    else if(<a href="#" OnFocus="link('_member','dataWidth243780660',this)">dataWidth</a>&lt;=16)
+        addrScale = 1;  // addresses for 16-bit data are halved because each word takes two bytes in the hex record
+    else if(<a href="#" OnFocus="link('_member','dataWidth243780660',this)">dataWidth</a>&lt;=32)
+        addrScale = 2;  // addresses for 32-bit data are quartered because each word takes four bytes in the hex record
+    else
+        assert(1==0);   // we can't handle data widths &gt; 32 bits
+    unsigned int stride = 1 &lt;&lt; addrScale;
+
+    unsigned int addrMask = ~((1 &lt;&lt; addrScale) - 1);
+
+    if((<a href="#" OnFocus="link('_member','../xsload/hiAddr0',this)">hiAddr</a>-<a href="#" OnFocus="link('_member','../xsload/loAddr0',this)">loAddr</a>+1) % stride)
+    {
+        string msg("Cannot upload an odd number of bytes from word-wide bus!\n");
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,msg);
+        return false;
+    }
+    if(<a href="#" OnFocus="link('_member','../xsload/loAddr0',this)">loAddr</a> &amp; ~addrMask)
+    {
+        string msg("Cannot upload from word-wide bus using an odd byte-starting address!\n");
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,msg);
+        return false;
+    }
+
+    // clear the lower bits of the address bounds
+    <a href="#" OnFocus="link('_member','../xsload/loAddr0',this)">loAddr</a> = <a href="#" OnFocus="link('_member','../xsload/loAddr0',this)">loAddr</a> &amp; addrMask;
+    <a href="#" OnFocus="link('_member','../xsload/hiAddr0',this)">hiAddr</a> = <a href="#" OnFocus="link('_member','../xsload/hiAddr0',this)">hiAddr</a> &amp; addrMask;
+
+    hx.<a href="#" OnFocus="link('_member','SetAddress2774302151',this)">SetAddress</a>(loAddr);    // set beginning and ending addresses for the hex record
+    hx.<a href="#" OnFocus="link('_member','SetLength2774302151',this)">SetLength</a>(hiAddr-loAddr+stride);
+
+    // process the bytes from a data-type hex record.
+    for(unsigned long i=<a href="#" OnFocus="link('_member','../xsload/loAddr0',this)">loAddr</a>; i&lt;=<a href="#" OnFocus="link('_member','../xsload/hiAddr0',this)">hiAddr</a>; i+=stride)
+    {
+        unsigned int <a href="#" OnFocus="link('_member','../xsatapi/data0',this)">data</a> = 0;
+        if(<a href="#" OnFocus="link('_member','Read1666451122',this)">Read</a>(i&gt;&gt;addrScale,&amp;data,bigEndianBytes,bigEndianBits,i==loAddr) == false)
+            return false;
+        <a href="#" OnFocus="link('_member','Data2Hex2742888260',this)">Data2Hex</a>(data,hx,i-loAddr,dataWidth&gt;&gt;3,BIG_ENDIAN_BYTES,LITTLE_ENDIAN_BITS);
+    }
+    
+    hx.<a href="#" OnFocus="link('_member','CalcCheckSum2569703380',this)">CalcCheckSum</a>();  // put the checksum into the hex record
+
+    return true;
+}
+
+
+/// Read contents of a single location on the peripheral bus.
+///\return true if operation was successful, false if not
+bool <a href="#" OnFocus="link('_member','Read1666451122',this)">PBusPort::Read</a>(unsigned int addr,        ///&lt; address of peripheral bus location
+        unsigned int* data,     ///&lt; data returned from RAM location
+        bool bigEndianBytes,    ///&lt; if true, data is stored in Flash with most-significant byte at lower address
+        bool bigEndianBits,     ///&lt; if true, data is stored in Flash with most-significant bit in position 0
+        bool loadAddress)       ///&lt; true if address has to be loaded first
+{
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> = <a href="#" OnFocus="link('_member','GetErr259477277',this)">GetErr</a>();
+
+    unsigned int statusPortWidth = <a href="#" OnFocus="link('_member','posSTMSB243780660',this)">posSTMSB</a> - <a href="#" OnFocus="link('_member','posSTLSB243780660',this)">posSTLSB</a> + 1;
+    unsigned int inDataPortWidth = <a href="#" OnFocus="link('_member','posDIMSB243780660',this)">posDIMSB</a> - <a href="#" OnFocus="link('_member','posDILSB243780660',this)">posDILSB</a> + 1;
+    unsigned int outDataPortWidth = <a href="#" OnFocus="link('_member','posDOMSB243780660',this)">posDOMSB</a> - <a href="#" OnFocus="link('_member','posDOLSB243780660',this)">posDOLSB</a> + 1;
+    unsigned int statusMask = (1&lt;&lt;statusPortWidth) - 1;
+    unsigned int inDataMask = (1&lt;&lt;inDataPortWidth) - 1;
+    unsigned int outDataMask = (1&lt;&lt;outDataPortWidth) - 1;
+
+    if(loadAddress)
+    {
+        <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posRESET,posRESET);  // reset the downloading state machine
+        <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posRESET,posRESET);  // release the reset
+        
+        // set initial address into the downloading state machine
+        addr &amp;= ~(1&lt;&lt;27);   // clear upper bit of address to signal a read operation
+        unsigned int statusChk = 0; // set status check to reset state id
+        for(int j=0; j&lt;<a href="#" OnFocus="link('_member','addrWidth243780660',this)">addrWidth</a>; j+=outDataPortWidth)
+        {
+            unsigned int status = <a href="#" OnFocus="link('_member','In1210046855',this)">In</a>(posSTLSB,posSTMSB);
+            assert(status==(statusChk &amp; statusMask));
+            if(status != (statusChk &amp; statusMask))
+                return false;   // error - peripheral bus interface state machine not in the right state
+            <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>((addr&gt;&gt;j)&amp;outDataMask,posDOLSB,posDOMSB);
+            <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posCLK,posCLK);
+            <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posCLK,posCLK);  // latch address bits into downloading circuit
+            statusChk++;            // increment status check
+        }
+    }
+
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posCLK,posCLK);
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posCLK,posCLK);  // latch data into register
+
+    unsigned int d=0;   // holds data read from peripheral bus
+    for(int j=0; j&lt;<a href="#" OnFocus="link('_member','dataWidth243780660',this)">dataWidth</a>; j+=inDataPortWidth)
+    {
+        d |= ((<a href="#" OnFocus="link('_member','In1210046855',this)">In</a>(posDILSB,posDIMSB) &amp; inDataMask) &lt;&lt; j); // read bits of data from register
+        <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posCLK,posCLK);
+        <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posCLK,posCLK);  // output next bits of data from register
+    }
+
+    *<a href="#" OnFocus="link('_member','../xsatapi/data0',this)">data</a> = <a href="#" OnFocus="link('_member','RearrangeData127079845',this)">RearrangeData</a>(d,dataWidth,bigEndianBytes,bigEndianBits);
+    return true;
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_file','_source');
+</script>

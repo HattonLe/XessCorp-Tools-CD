@@ -1,0 +1,430 @@
+Project Navigator Auto-Make Log File
+-------------------------------------
+
+
+
+
+Started process "Synthesize".
+
+
+=========================================================================
+*                          HDL Compilation                              *
+=========================================================================
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/test_regio/../../../XS_LIB/userinstr_jtag.vhd in Library work.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/test_regio/../../../XS_LIB/common.vhd in Library work.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/test_regio/../../../XS_LIB/regio_jtag.vhd in Library work.
+Entity <regio_jtag> (Architecture <arch>) compiled.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/test_regio/test_regio.vhd in Library work.
+Entity <test_regio> (Architecture <Behavioral>) compiled.
+
+=========================================================================
+*                            HDL Analysis                               *
+=========================================================================
+Analyzing Entity <test_regio> (Architecture <Behavioral>).
+WARNING:Xst:790 - C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/test_regio/test_regio.vhd line 61: Index value(s) does not match array range, simulation mismatch.
+INFO:Xst:1433 - Contents of array <reg_file> may be accessed with an index that exceeds the array size. This could cause simulation mismatch.
+WARNING:Xst:790 - C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/test_regio/test_regio.vhd line 65: Index value(s) does not match array range, simulation mismatch.
+INFO:Xst:1433 - Contents of array <reg_file> may be accessed with an index that exceeds the array size. This could cause simulation mismatch.
+Entity <test_regio> analyzed. Unit <test_regio> generated.
+
+Analyzing generic Entity <regio_jtag> (Architecture <arch>).
+	FPGA_TYPE = 3
+	RPT_WIDTH = 8
+	ADDR_WIDTH = 4
+	DATA_WIDTH = 16
+INFO:Xst:1304 - Contents of register <tdo<31>> in unit <regio_jtag> never changes during circuit operation. The register is replaced by logic.
+Entity <regio_jtag> analyzed. Unit <regio_jtag> generated.
+
+
+=========================================================================
+*                           HDL Synthesis                               *
+=========================================================================
+
+Synthesizing Unit <regio_jtag>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/test_regio/../../../XS_LIB/regio_jtag.vhd.
+WARNING:Xst:646 - Signal <buff<0>> is assigned but never used.
+    Found 1-bit register for signal <rrd>.
+    Found 1-bit register for signal <rwr>.
+    Found 5-bit adder for signal <$n0239> created at line 211.
+    Found 8-bit subtractor for signal <$n0240> created at line 211.
+    Found 5-bit comparator less for signal <$n0284> created at line 218.
+    Found 5-bit comparator greatequal for signal <$n0285> created at line 221.
+    Found 5-bit comparator less for signal <$n0287> created at line 221.
+    Found 3-bit comparator greatequal for signal <$n0288> created at line 333.
+    Found 3-bit comparator greatequal for signal <$n0289> created at line 314.
+    Found 3-bit comparator less for signal <$n0290> created at line 315.
+    Found 5-bit comparator less for signal <$n0292> created at line 217.
+    Found 5-bit comparator less for signal <$n0295> created at line 246.
+    Found 3-bit adder for signal <$n0304> created at line 317.
+    Found 3-bit comparator less for signal <$n0313> created at line 339.
+    Found 3-bit adder for signal <$n0314> created at line 341.
+    Found 4-bit register for signal <addr>.
+    Found 5-bit register for signal <bit_cntr>.
+    Found 16-bit register for signal <buff>.
+    Found 8-bit register for signal <instr>.
+    Found 1-bit register for signal <rd>.
+    Found 3-bit register for signal <rd_dly>.
+    Found 16-bit register for signal <rd_word>.
+    Found 8-bit register for signal <rw_cntr>.
+    Found 31-bit register for signal <tdo<30:0>>.
+    Found 1-bit register for signal <wr>.
+    Found 3-bit register for signal <wr_dly>.
+    Found 16-bit register for signal <wr_word>.
+    Found 49 1-bit 2-to-1 multiplexers.
+    Summary:
+	inferred 114 D-type flip-flop(s).
+	inferred   4 Adder/Subtracter(s).
+	inferred   9 Comparator(s).
+	inferred  49 Multiplexer(s).
+Unit <regio_jtag> synthesized.
+
+
+Synthesizing Unit <test_regio>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/test_regio/test_regio.vhd.
+WARNING:Xst:646 - Signal <addr_natural<3:2>> is assigned but never used.
+    Found 4x16-bit dual-port block RAM for signal <reg_file>.
+    -----------------------------------------------------------------------
+    | mode               | read-first                          |          |
+    | aspect ratio       | 4-word x 16-bit                     |          |
+    | clock              | connected to signal <clk>           | rise     |
+    | dual clock         | connected to signal <clk>           | rise     |
+    | dual enable        | connected to signal <rd>            | high     |
+    | write enable       | connected to signal <wr>            | high     |
+    | address            | connected to signal <addr_natural<1:0>> |          |
+    | dual address       | connected to signal <addr_natural<1:0>> |          |
+    | data in            | connected to signal <dIn>           |          |
+    | data out           | not connected                       |          |
+    | dual data out      | connected to signal <dOut>          |          |
+    | ram_style          | Auto                                |          |
+    -----------------------------------------------------------------------
+WARNING:Xst:1869 - Due to the nature of the primary and dual address logic for this block RAM, it is highly probable simultaneous access to the same memory cells on the primary and dual port will happen, leading to timing violation (see block RAM documentation for information on conflict situations and their resolution). In order to guarantee correct circuit behavior, please review the RAM description. Alternatively, force the RAM implementation to use distributed resource through the ram_style XST constraint.
+    Found 1-bit register for signal <done>.
+    Summary:
+	inferred   1 RAM(s).
+	inferred   1 D-type flip-flop(s).
+Unit <test_regio> synthesized.
+
+INFO:Xst:1767 - HDL ADVISOR - Resource sharing has identified that some arithmetic operations in this design can share the same physical resources for reduced device utilization. For improved clock frequency you may try to disable resource sharing.
+
+=========================================================================
+*                       Advanced HDL Synthesis                          *
+=========================================================================
+
+Advanced RAM inference ...
+Advanced multiplier inference ...
+Advanced Registered AddSub inference ...
+Dynamic shift register inference ...
+
+=========================================================================
+HDL Synthesis Report
+
+Macro Statistics
+# Block RAMs                       : 1
+ 4x16-bit dual-port block RAM      : 1
+# Adders/Subtractors               : 4
+ 8-bit subtractor                  : 1
+ 3-bit adder                       : 2
+ 5-bit adder                       : 1
+# Registers                        : 59
+ 1-bit register                    : 51
+ 3-bit register                    : 2
+ 16-bit register                   : 2
+ 4-bit register                    : 1
+ 8-bit register                    : 2
+ 5-bit register                    : 1
+# Comparators                      : 9
+ 5-bit comparator less             : 4
+ 3-bit comparator less             : 2
+ 3-bit comparator greatequal       : 2
+ 5-bit comparator greatequal       : 1
+# Multiplexers                     : 19
+ 16-bit 2-to-1 multiplexer         : 2
+ 1-bit 2-to-1 multiplexer          : 17
+
+=========================================================================
+
+=========================================================================
+*                         Low Level Synthesis                           *
+=========================================================================
+WARNING:Xst:1988 - Unit <regio_jtag>: instances <Mcompar__n0290>, <Mcompar__n0289> of unit <LPM_COMPARE_5> and unit <LPM_COMPARE_4> are dual, second instance is removed
+WARNING:Xst:1988 - Unit <regio_jtag>: instances <Mcompar__n0288>, <Mcompar__n0313> of unit <LPM_COMPARE_4> and unit <LPM_COMPARE_5> are dual, second instance is removed
+WARNING:Xst:1988 - Unit <regio_jtag>: instances <Mcompar__n0287>, <Mcompar__n0285> of unit <LPM_COMPARE_3> and unit <LPM_COMPARE_2> are dual, second instance is removed
+
+Optimizing unit <test_regio> ...
+
+Optimizing unit <regio_jtag> ...
+Loading device for application Xst from file '3s1000.nph' in environment C:/ISE6.
+
+Mapping all equations...
+Building and optimizing final netlist ...
+Found area constraint ratio of 100 (+ 5) on block test_regio, actual ratio is 1.
+FlipFlop u1_instr_1 has been replicated 1 time(s)
+FlipFlop u1_instr_0 has been replicated 1 time(s)
+FlipFlop u1_bit_cntr_3 has been replicated 1 time(s)
+FlipFlop u1_bit_cntr_4 has been replicated 1 time(s)
+
+=========================================================================
+*                            Final Report                               *
+=========================================================================
+
+Device utilization summary:
+---------------------------
+
+Selected Device : 3s1000ft256-5 
+
+ Number of Slices:                     140  out of   7680     1%  
+ Number of Slice Flip Flops:           118  out of  15360     0%  
+ Number of 4 input LUTs:               259  out of  15360     1%  
+ Number of bonded IOBs:                  1  out of    173     0%  
+ Number of BRAMs:                        1  out of     24     4%  
+ Number of GCLKs:                        1  out of      8    12%  
+
+
+=========================================================================
+TIMING REPORT
+
+
+Clock Information:
+------------------
+-----------------------------------+------------------------+-------+
+Clock Signal                       | Clock buffer(FF name)  | Load  |
+-----------------------------------+------------------------+-------+
+clk                                | BUFGP                  | 26    |
+u1_u_bscan:DRCK1                   | NONE                   | 93    |
+-----------------------------------+------------------------+-------+
+
+Timing Summary:
+---------------
+Speed Grade: -5
+
+   Minimum period: 6.816ns (Maximum Frequency: 146.714MHz)
+   Minimum input arrival time before clock: 4.337ns
+   Maximum output required time after clock: 5.495ns
+   Maximum combinational path delay: No path found
+
+=========================================================================
+Completed process "Synthesize".
+
+
+
+Started process "Translate".
+
+
+Command Line: ngdbuild -intstyle ise -dd
+c:\xesscorp\products\bitstreams\xsa\3s1000\test_regio/_ngo -i -p
+xc3s1000-ft256-5 test_regio.ngc test_regio.ngd 
+
+Reading NGO file
+"C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/test_regio/test_regio.ngc" ...
+Reading component libraries for design expansion...
+
+Checking timing specifications ...
+Checking expanded design ...
+
+NGDBUILD Design Results Summary:
+  Number of errors:     0
+  Number of warnings:   0
+
+Total memory usage is 38488 kilobytes
+
+Writing NGD file "test_regio.ngd" ...
+
+Writing NGDBUILD log file "test_regio.bld"...
+
+NGDBUILD done.
+Completed process "Translate".
+
+
+
+Started process "Map".
+
+Using target part "3s1000ft256-5".
+Removing unused or disabled logic...
+Running cover...
+Running directed packing...
+Running delay-based LUT packing...
+Running related packing...
+
+Design Summary:
+Number of errors:      0
+Number of warnings:    0
+Logic Utilization:
+  Number of Slice Flip Flops:         118 out of  15,360    1%
+  Number of 4 input LUTs:             258 out of  15,360    1%
+Logic Distribution:
+  Number of occupied Slices:                          149 out of   7,680    1%
+    Number of Slices containing only related logic:     149 out of     149  100%
+    Number of Slices containing unrelated logic:          0 out of     149    0%
+      *See NOTES below for an explanation of the effects of unrelated logic
+Total Number 4 input LUTs:            259 out of  15,360    1%
+  Number used as logic:                258
+  Number used as a route-thru:           1
+  Number of bonded IOBs:                2 out of     173    1%
+  Number of Block RAMs:                1 out of      24    4%
+  Number of GCLKs:                     1 out of       8   12%
+  Number of BSCANs:                    1 out of       1  100%
+
+Total equivalent gate count for design:  68,127
+Additional JTAG gate count for IOBs:  96
+Peak Memory Usage:  84 MB
+
+NOTES:
+
+   Related logic is defined as being logic that shares connectivity -
+   e.g. two LUTs are "related" if they share common inputs.
+   When assembling slices, Map gives priority to combine logic that
+   is related.  Doing so results in the best timing performance.
+
+   Unrelated logic shares no connectivity.  Map will only begin
+   packing unrelated logic into a slice once 99% of the slices are
+   occupied through related logic packing.
+
+   Note that once logic distribution reaches the 99% level through
+   related logic packing, this does not mean the device is completely
+   utilized.  Unrelated logic packing will then begin, continuing until
+   all usable LUTs and FFs are occupied.  Depending on your timing
+   budget, increased levels of unrelated logic packing may adversely
+   affect the overall timing performance of your design.
+
+
+Mapping completed.
+See MAP report file "test_regio_map.mrp" for details.
+Completed process "Map".
+
+Mapping Module test_regio . . .
+MAP command line:
+map -intstyle ise -p xc3s1000-ft256-5 -cm area -pr b -k 4 -c 100 -tx off -o test_regio_map.ncd test_regio.ngd test_regio.pcf
+Mapping Module test_regio: DONE
+
+
+
+Started process "Place & Route".
+
+
+
+
+
+Constraints file: test_regio.pcf
+
+Loading device database for application Par from file "test_regio_map.ncd".
+   "test_regio" is an NCD, version 2.38, device xc3s1000, package ft256, speed
+-5
+Loading device for application Par from file '3s1000.nph' in environment
+C:/ISE6.
+Device speed data version:  ADVANCED 1.35 2004-11-11.
+
+
+Resolving physical constraints.
+Finished resolving physical constraints.
+
+Device utilization summary:
+
+   Number of External IOBs             2 out of 173     1%
+      Number of LOCed External IOBs    0 out of 2       0%
+
+   Number of RAMB16s                   1 out of 24      4%
+   Number of Slices                  149 out of 7680    1%
+
+   Number of BSCANs                    1 out of 1     100%
+   Number of BUFGMUXs                  1 out of 8      12%
+
+
+
+Overall effort level (-ol):   Standard (set by user)
+Placer effort level (-pl):    Standard (set by user)
+Placer cost table entry (-t): 1
+Router effort level (-rl):    Standard (set by user)
+
+
+Phase 1.1
+Phase 1.1 (Checksum:989a09) REAL time: 2 secs 
+
+
+Phase 3.3
+Phase 3.3 (Checksum:1c9c37d) REAL time: 2 secs 
+
+Phase 4.5
+Phase 4.5 (Checksum:26259fc) REAL time: 2 secs 
+
+Phase 5.8
+.........................................................
+Phase 5.8 (Checksum:9b4ba9) REAL time: 2 secs 
+
+Phase 6.5
+Phase 6.5 (Checksum:39386fa) REAL time: 2 secs 
+
+Phase 7.18
+Phase 7.18 (Checksum:42c1d79) REAL time: 2 secs 
+
+Writing design to file test_regio.ncd.
+
+Total REAL time to Placer completion: 2 secs 
+Total CPU time to Placer completion: 1 secs 
+
+
+Phase 1: 1166 unrouted;       REAL time: 2 secs 
+
+Phase 2: 1077 unrouted;       REAL time: 4 secs 
+
+Phase 3: 330 unrouted;       REAL time: 4 secs 
+
+Phase 4: 0 unrouted;       REAL time: 4 secs 
+
+Total REAL time to Router completion: 4 secs 
+Total CPU time to Router completion: 3 secs 
+
+Generating "par" statistics.
+
+**************************
+Generating Clock Report
+**************************
+
++-------------------------+----------+------+------+------------+-------------+
+|        Clock Net        | Resource |Locked|Fanout|Net Skew(ns)|Max Delay(ns)|
++-------------------------+----------+------+------+------------+-------------+
+|         clk_BUFGP       |  BUFGMUX7| No   |   19 |  0.097     |  0.746      |
++-------------------------+----------+------+------+------------+-------------+
+|           u1_drck       |   Local  |      |   62 |  1.217     |  3.370      |
++-------------------------+----------+------+------+------------+-------------+
+
+Generating Pad Report.
+
+All signals are completely routed.
+
+Total REAL time to PAR completion: 4 secs 
+Total CPU time to PAR completion: 3 secs 
+
+Peak Memory Usage:  90 MB
+
+Placement: Completed - No errors found.
+Routing: Completed - No errors found.
+
+Writing design to file test_regio.ncd.
+
+
+PAR done.
+Completed process "Place & Route".
+
+
+Started process "Generate Post-Place & Route Static Timing".
+
+
+Analysis completed Tue Apr 03 20:41:29 2007
+--------------------------------------------------------------------------------
+
+Generating Report ...
+
+Completed process "Generate Post-Place & Route Static Timing".
+
+Place & Route Module test_regio . . .
+PAR command line: par -w -intstyle ise -ol std -t 1 test_regio_map.ncd test_regio.ncd test_regio.pcf
+PAR completed successfully
+
+
+
+
+Started process "Generate Programming File".
+
+Completed process "Generate Programming File".
+
+

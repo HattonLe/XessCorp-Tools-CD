@@ -1,0 +1,218 @@
+Release 6.3.03i Par G.38
+Copyright (c) 1995-2004 Xilinx, Inc.  All rights reserved.
+
+X7::  Mon Feb 05 08:02:20 2007
+
+
+C:/ISE6/bin/nt/par.exe -w -intstyle ise -ol std -t 1 test_vga_map.ncd
+test_vga.ncd test_vga.pcf 
+
+
+Constraints file: test_vga.pcf
+
+Loading device database for application Par from file "test_vga_map.ncd".
+   "test_vga" is an NCD, version 2.38, device xc3s1000, package ft256, speed -4
+Loading device for application Par from file '3s1000.nph' in environment
+C:/ISE6.
+Device speed data version:  PRODUCTION 1.35 2004-11-11.
+
+
+Resolved that IOB <sData<10>> must be placed at site C12.
+Resolved that IOB <sData<11>> must be placed at site B14.
+Resolved that IOB <sData<12>> must be placed at site D14.
+Resolved that IOB <sData<13>> must be placed at site C16.
+Resolved that IOB <sData<14>> must be placed at site F12.
+Resolved that IOB <sData<15>> must be placed at site F13.
+Resolved that IOB <cas_n> must be placed at site A10.
+Resolved that IOB <sync_n> must be placed at site E15.
+Resolved that IOB <ras_n> must be placed at site A9.
+Resolved that IOB <green<3>> must be placed at site F15.
+Resolved that IOB <green<4>> must be placed at site E2.
+Resolved that IOB <green<5>> must be placed at site K16.
+Resolved that IOB <green<6>> must be placed at site E1.
+Resolved that IOB <green<7>> must be placed at site K15.
+Resolved that IOB <green<8>> must be placed at site F3.
+Resolved that IOB <green<9>> must be placed at site G2.
+Resolved that IOB <red<3>> must be placed at site G1.
+Resolved that IOB <red<4>> must be placed at site J1.
+Resolved that IOB <red<5>> must be placed at site G3.
+Resolved that IOB <red<6>> must be placed at site H1.
+Resolved that IOB <red<7>> must be placed at site G4.
+Resolved that IOB <red<8>> must be placed at site H3.
+Resolved that IOB <red<9>> must be placed at site F2.
+Resolved that IOB <clk0> must be placed at site F14.
+Resolved that IOB <rst_n> must be placed at site E11.
+Resolved that IOB <cs_n> must be placed at site B8.
+Resolved that IOB <dqmh> must be placed at site D9.
+Resolved that IOB <dqml> must be placed at site C10.
+Resolved that IOB <sAddr<10>> must be placed at site B6.
+Resolved that IOB <sAddr<11>> must be placed at site C5.
+Resolved that IOB <sAddr<12>> must be placed at site C6.
+Resolved that IOB <vsync_n> must be placed at site T13.
+Resolved that IOB <sclk> must be placed at site E10.
+Resolved that IOB <we_n> must be placed at site B10.
+Resolved that IOB <blue<3>> must be placed at site P12.
+Resolved that IOB <blue<4>> must be placed at site H4.
+Resolved that IOB <blue<5>> must be placed at site M3.
+Resolved that IOB <blue<6>> must be placed at site L5.
+Resolved that IOB <cke> must be placed at site D7.
+Resolved that IOB <blue<7>> must be placed at site N2.
+Resolved that IOB <blue<8>> must be placed at site P2.
+Resolved that IOB <blue<9>> must be placed at site R1.
+Resolved that IOB <clk> must be placed at site T9.
+Resolved that IOB <ba<0>> must be placed at site A7.
+Resolved that IOB <ba<1>> must be placed at site C7.
+Resolved that IOB <hsync_n> must be placed at site N1.
+Resolved that IOB <sAddr<0>> must be placed at site B5.
+Resolved that IOB <sAddr<1>> must be placed at site A4.
+Resolved that IOB <sAddr<2>> must be placed at site B4.
+Resolved that IOB <blank_n> must be placed at site J16.
+Resolved that IOB <sAddr<3>> must be placed at site E6.
+Resolved that IOB <sAddr<4>> must be placed at site E3.
+Resolved that IOB <sAddr<5>> must be placed at site C1.
+Resolved that IOB <sAddr<6>> must be placed at site E4.
+Resolved that IOB <sAddr<7>> must be placed at site D3.
+Resolved that IOB <sAddr<8>> must be placed at site C2.
+Resolved that IOB <sAddr<9>> must be placed at site A3.
+Resolved that IOB <sclkfb> must be placed at site N8.
+Resolved that IOB <sData<0>> must be placed at site C15.
+Resolved that IOB <sData<1>> must be placed at site D12.
+Resolved that IOB <sData<2>> must be placed at site A14.
+Resolved that IOB <sData<3>> must be placed at site B13.
+Resolved that IOB <sData<4>> must be placed at site D11.
+Resolved that IOB <sData<5>> must be placed at site A12.
+Resolved that IOB <sData<6>> must be placed at site C11.
+Resolved that IOB <sData<7>> must be placed at site D10.
+Resolved that IOB <sData<8>> must be placed at site B11.
+Resolved that IOB <sData<9>> must be placed at site B12.
+
+
+Device utilization summary:
+
+   Number of External IOBs            68 out of 173    39%
+      Number of LOCed External IOBs   68 out of 68    100%
+
+   Number of RAMB16s                   1 out of 24      4%
+   Number of Slices                  265 out of 7680    3%
+
+   Number of BUFGMUXs                  1 out of 8      12%
+   Number of DCMs                      2 out of 4      50%
+
+
+
+Overall effort level (-ol):   Standard (set by user)
+Placer effort level (-pl):    Standard (set by user)
+Placer cost table entry (-t): 1
+Router effort level (-rl):    Standard (set by user)
+
+Starting initial Timing Analysis.  REAL time: 0 secs 
+Finished initial Timing Analysis.  REAL time: 3 secs 
+
+
+Phase 1.1
+Phase 1.1 (Checksum:98a1d7) REAL time: 3 secs 
+
+.
+Phase 3.8
+............................
+.
+Phase 3.8 (Checksum:a1758e) REAL time: 4 secs 
+
+Phase 4.5
+Phase 4.5 (Checksum:26259fc) REAL time: 4 secs 
+
+Phase 5.18
+Phase 5.18 (Checksum:2faf07b) REAL time: 5 secs 
+
+Writing design to file test_vga.ncd.
+
+Total REAL time to Placer completion: 5 secs 
+Total CPU time to Placer completion: 4 secs 
+
+
+Phase 1: 1884 unrouted;       REAL time: 5 secs 
+
+Phase 2: 1659 unrouted;       REAL time: 9 secs 
+
+Phase 3: 264 unrouted;       REAL time: 10 secs 
+
+Phase 4: 264 unrouted; (1796)      REAL time: 10 secs 
+
+Phase 5: 311 unrouted; (16)      REAL time: 10 secs 
+
+Phase 6: 314 unrouted; (0)      REAL time: 10 secs 
+
+Phase 7: 0 unrouted; (207)      REAL time: 11 secs 
+
+Total REAL time to Router completion: 11 secs 
+Total CPU time to Router completion: 10 secs 
+
+Generating "par" statistics.
+
+**************************
+Generating Clock Report
+**************************
+
++-------------------------+----------+------+------+------------+-------------+
+|        Clock Net        | Resource |Locked|Fanout|Net Skew(ns)|Max Delay(ns)|
++-------------------------+----------+------+------+------------+-------------+
+|             clk1x       |  BUFGMUX3| No   |  182 |  0.448     |  1.154      |
++-------------------------+----------+------+------+------------+-------------+
+
+
+   The Delay Summary Report
+
+   The SCORE FOR THIS DESIGN is: 1260
+
+
+The NUMBER OF SIGNALS NOT COMPLETELY ROUTED for this design is: 0
+
+   The AVERAGE CONNECTION DELAY for this design is:        1.397
+   The MAXIMUM PIN DELAY IS:                              10.645
+   The AVERAGE CONNECTION DELAY on the 10 WORST NETS is:   5.815
+
+   Listing Pin Delays by value: (nsec)
+
+    d < 2.00   < d < 4.00  < d < 6.00  < d < 8.00  < d < 11.00  d >= 11.00
+   ---------   ---------   ---------   ---------   ---------   ---------
+        1498         280          70          18          18           0
+
+Timing Score: 207
+
+WARNING:Par:62 - Timing constraints have not been met.
+
+Asterisk (*) preceding a constraint indicates it was not met.
+   This may be due to a setup or hold violation.
+
+--------------------------------------------------------------------------------
+  Constraint                                | Requested  | Actual     | Logic 
+                                            |            |            | Levels
+--------------------------------------------------------------------------------
+  TS_clk = PERIOD TIMEGRP "clk"  10 nS   HI | N/A        | N/A        | N/A  
+  GH 50.000000 %                            |            |            |      
+--------------------------------------------------------------------------------
+* TS_u0_int_clk1x = PERIOD TIMEGRP "u0_int_ | 10.000ns   | 10.207ns   | 5    
+  clk1x" TS_clk * 1.000000 HIGH 50.000 %    |            |            |      
+--------------------------------------------------------------------------------
+
+
+1 constraint not met.
+INFO:Timing:2761 - N/A entries in the Constraints list may indicate that the
+   constraint does not cover any paths or that it has no requested value.
+Generating Pad Report.
+
+All signals are completely routed.
+
+Total REAL time to PAR completion: 12 secs 
+Total CPU time to PAR completion: 11 secs 
+
+Peak Memory Usage:  119 MB
+
+Placement: Completed - No errors found.
+Routing: Completed - No errors found.
+Timing: Completed - 1 errors found.
+
+Writing design to file test_vga.ncd.
+
+
+PAR done.

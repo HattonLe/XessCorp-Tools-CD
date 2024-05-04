@@ -1,0 +1,55 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - ToHexString</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">ToHexString</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_class','Bitstream0',this)" class="pathLink">Bitstream</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">ToHexString</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','ToHexString2106616265','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_member','ToHexString2106616265','_source',this)" class="tabLinkActive">Source</a></span>
+<span class="tabInActiveGrayout"><span class="tabLinkGrayout">Call Graph</span></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<div class="paragraph2NoTopPadding">Start Line: 321</div>
+<pre class="codeExamples">
+unsigned char * <a href="#" OnFocus="link('_member','ToHexString2106616265',this)">Bitstream::ToHexString</a>(void) const
+{
+    if(<a href="#" OnFocus="link('_member','numBits203865993',this)">numBits</a> == 0)
+        return (unsigned char*)"";
+    unsigned int numWords = NUM_OF_WORDS(numBits);
+    unsigned int nChars = ((<a href="#" OnFocus="link('_member','numBits203865993',this)">numBits</a>-1) / 4 + 1) + 1;  // extra char to hold '0' string terminator
+    unsigned char *hexString = new unsigned char[nChars];
+    hexString[nChars-1] = 0; // string terminator
+    for(int i=0, k=nChars-2; i&lt;numWords; i++)
+    {
+        unsigned long b = <a href="#" OnFocus="link('_member','bits203865993',this)">bits</a>[i];
+        int j;
+        for(j=0; j&lt;2*charsPerLong &amp;&amp; k&gt;=0; j++,b&gt;&gt;=4,k--)
+            hexString[k] = <a href="#" OnFocus="link('_member','hexChar0',this)">hexChar</a>[b &amp; 0xF];
+        assert( (i&lt;numWords-1 &amp;&amp; j==2*charsPerLong) || (i==numWords-1 &amp;&amp; j&gt;0) );
+        assert( (i&lt;numWords-1 &amp;&amp; k&gt;=0) || (i==numWords-1 &amp;&amp; k&gt;=-1));
+    }
+    return hexString;
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_member','_source');
+</script>

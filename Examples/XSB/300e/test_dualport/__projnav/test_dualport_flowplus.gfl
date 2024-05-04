@@ -1,0 +1,42 @@
+# XST flow : Creating project file
+test_dualport.prj
+# xst flow : RunXST
+test_dualport.prj
+__projnav/test_dualport.xst
+./xst
+# XST flow : Creating project file
+test_dualport.prj
+# xst flow : RunXST
+test_dualport.prj
+__projnav/test_dualport.xst
+./xst
+# XST flow : Creating project file
+test_dualport.prj
+# xst flow : RunXST
+test_dualport.prj
+__projnav/test_dualport.xst
+./xst
+# XST flow : Creating project file
+test_dualport.prj
+# xst flow : RunXST
+test_dualport.prj
+__projnav/test_dualport.xst
+./xst
+# XST flow : Creating project file
+test_dualport.prj
+# xst flow : RunXST
+test_dualport.prj
+__projnav/test_dualport.xst
+./xst
+# XST flow : Creating project file
+test_dualport.prj
+# xst flow : RunXST
+test_dualport.prj
+__projnav/test_dualport.xst
+./xst
+# XST flow : Creating project file
+test_dualport.prj
+# xst flow : RunXST
+test_dualport.prj
+__projnav/test_dualport.xst
+./xst

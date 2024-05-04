@@ -1,0 +1,165 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - Test</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">Test</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_class','XS40Board0',this)" class="pathLink">XS40Board</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">Test</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','Test2569711311','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_member','Test2569711311','_source',this)" class="tabLinkActive">Source</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','Test2569711311','_callgraph',this)" class="tabLinkInActive">Call Graph</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<div class="paragraph2NoTopPadding">Start Line: 640</div>
+<pre class="codeExamples">
+bool <a href="#" OnFocus="link('_member','Test2569711311',this)">XS40Board::Test</a>(void)
+{
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a> = <a href="#" OnFocus="link('_member','fpga239500920',this)">fpga</a>.<a href="#" OnFocus="link('_member','GetErr259477277',this)">GetErr</a>(); // setup error channel
+
+    // use the board model name to find the corresponding index into the list of boards
+    int brdIndex;
+    for(brdIndex=0; brdIndex&lt;<a href="#" OnFocus="link('_member','numBoards0',this)">numBoards</a>; brdIndex++)
+    {
+        if(strcmp(brdModel,brdInfo[brdIndex].brdModel) == 0)
+            break;
+    }
+    if(brdIndex&gt;=<a href="#" OnFocus="link('_member','numBoards0',this)">numBoards</a>)
+    {
+        <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,"Unknown type of XS40 Board!\n");
+        return false;
+    }
+
+    // if there is no diagnostic bitstream file, then this board model does not support diagnostics
+    string msg;
+    if(strlen(brdInfo[brdIndex].testBitstreamFile)==0)
+    {
+        msg = <a href="#" OnFocus="link('_member','brdModel239500920',this)">brdModel</a> + (string)" does not support self-test!!\n";
+        <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,msg);
+        return false;
+    }
+
+    // get the directory where the test interface files are kept
+    const char* xstoolsBinDir = <a href="#" OnFocus="link('_member','FindXSTOOLSBinDir53616',this)">FindXSTOOLSBinDir</a>();
+
+    // concat the file name with the directory to form a complete path to the diagnostic program for the on-board micro
+    string testprogFileName = xstoolsBinDir;
+    testprogFileName += "/";
+    testprogFileName += <a href="#" OnFocus="link('_member','brdInfo0',this)">brdInfo</a>[brdIndex].<a href="#" OnFocus="link('_member','testObjFile1254770407',this)">testObjFile</a>;
+    // download the diagnostic program for the micro to the on-board RAM
+    if(<a href="#" OnFocus="link('_member','DownloadRAM2355595962',this)">DownloadRAM</a>(testprogFileName,BIG_ENDIAN_BYTES,LITTLE_ENDIAN_BITS,true,false) == false)
+    {
+        <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,"Error downloading XS40 Board self-test program!\n");
+        return false;
+    }
+
+    <a href="#" OnFocus="link('_member','fpga239500920',this)">fpga</a>.<a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posTESTRESET,posTESTRESET); // make sure micro is reset as soon as FPGA is configured
+
+    // concat the file name with the directory to form a complete path to the diagnostic interface for the FPGA
+    string bitFileName = xstoolsBinDir;
+    bitFileName += "/";
+    bitFileName += <a href="#" OnFocus="link('_member','brdInfo0',this)">brdInfo</a>[brdIndex].<a href="#" OnFocus="link('_member','testBitstreamFile1254770407',this)">testBitstreamFile</a>;
+    // download the FPGA bitstream that supports the diagnostic program run by the micro
+    if(<a href="#" OnFocus="link('_member','Configure3913018450',this)">Configure</a>(bitFileName) == false)
+    {
+        <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,"Error downloading XS40 Board self-test circuit!\n");
+        return false;
+    }
+
+    // reset the micro and release the reset to start the diagnostic running
+    <a href="#" OnFocus="link('_member','fpga239500920',this)">fpga</a>.<a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posTESTRESET,posTESTRESET); // reset the microcontroller
+    <a href="#" OnFocus="link('_member','InsertDelay359930342',this)">InsertDelay</a>(10,MILLISECONDS);
+    <a href="#" OnFocus="link('_member','fpga239500920',this)">fpga</a>.<a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posTESTRESET,posTESTRESET); // release the microcontroller and do the test
+
+    // display a progress indicator while the diagnostic is running
+    string desc((string)"Testing " + brdModel), subdesc("Testing...");
+    <a href="#" OnFocus="link('_class','Progress0',this)">Progress</a>* progressGauge = new <a href="#" OnFocus="link('_class','Progress0',this)">Progress</a>(&amp;errMsg,desc,subdesc,0,100);
+    int testProgress = 0;
+
+    // Monitor the test status pin to see if the test is still running or not.
+    // While the diagnostic runs, the test status pin pulses at some rate.
+    // The number of pulses within the integration period is counted and one of the following actions is taken:
+    //    1. If the count is ever 0, then the test is done and the board has failed.
+    //    2. If the count increases by a factor of two or more, then the test is done and the board passed.
+    //    3. Otherwise, the test is still running.
+    int prevStatus = <a href="#" OnFocus="link('_member','fpga239500920',this)">fpga</a>.<a href="#" OnFocus="link('_member','In1210046855',this)">In</a>(posTESTSTATUS,posTESTSTATUS);
+    int currStatus;
+    int prevDiff = 0;
+    int currDiff;
+    const float integrationPeriod = 0.5;    // in seconds
+    while(true)
+    {
+        // count the number of pulses on the status pin during the integration period
+        clock_t startTime = clock();
+        clock_t endTime = startTime + integrationPeriod * CLOCKS_PER_SEC;
+        currDiff = 0; // pulse counter starts at 0
+        while(clock()&lt;endTime)
+        {
+            currStatus = <a href="#" OnFocus="link('_member','fpga239500920',this)">fpga</a>.<a href="#" OnFocus="link('_member','In1210046855',this)">In</a>(posTESTSTATUS,posTESTSTATUS);
+            if(currStatus != prevStatus)
+                currDiff++;
+            prevStatus = currStatus;
+        }
+        
+        // update the progress indicator
+        testProgress = testProgress&gt;=100 ? 0 : testProgress+10;
+        progressGauge-&gt;<a href="#" OnFocus="link('_member','Report2561259521',this)">Report</a>(testProgress);
+        
+        if(currDiff == 0)
+        {   // Test is done and the board failed.  Give the user some help.
+            msg = (string)"\nYour " + <a href="#" OnFocus="link('_member','brdModel239500920',this)">brdModel</a> + (string)" failed the test!\n\n";
+            msg += "Check the following:\n";
+            msg += " 1) Is your board connected to the PC parallel port?\n";
+            msg += " 2) Is your PC parallel port in unidirectional mode?\n";
+            msg += " 3) Is your board the only device connected to the parallel port?\n";
+            msg += " 4) Is your board getting power?\n";
+            msg += " 5) Is your board sitting on a non-conductive surface?\n";
+            msg += " 6) Is the programmable oscillator frequency greater than 1 MHz?\n";
+            msg += " 7) Is the shunt on jumper J12 in the osc position?\n";
+            msg += " 8) Is the shunt on jumper J7 in the ext position?\n";
+            msg += " 9) Are the shunts on jumpers J4 and J11?\n";
+            msg += "10) Are the shunts removed from jumpers J6 and J10?\n";
+            <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,msg);
+            delete progressGauge;
+            return false;
+        }
+        else
+        {
+            if((currDiff &gt; 2*prevDiff) &amp;&amp; (prevDiff&gt;0))
+            {   // test is done and the board passed
+                msg = (string)"\nYour " + <a href="#" OnFocus="link('_member','brdModel239500920',this)">brdModel</a> + (string)" passed the test!\n";
+                <a href="#" OnFocus="link('_member','PromptUser2517124797',this)">PromptUser</a>(msg,PROMPT_OK);
+                delete progressGauge;
+                return true;
+            }
+        }
+
+        // the test is still running
+        prevDiff = currDiff;    // save the current number of pulses to compare during the next integration period 
+    }
+    
+    delete progressGauge; // get rid of the progress indicator
+    
+    return false;
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_member','_source');
+</script>

@@ -1,0 +1,117 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - main</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">main</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xsport0',this)" class="pathLink">xsport</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">main</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','main251862569','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_member','main251862569','_source',this)" class="tabLinkActive">Source</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','main251862569','_callgraph',this)" class="tabLinkInActive">Call Graph</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<div class="paragraph2NoTopPadding">Start Line: 147</div>
+<pre class="codeExamples">
+int <a href="#" OnFocus="link('_member','../xsusb/main251862569',this)">main</a>(int argc, char **argv)
+{
+    // Setup error channel.
+    <a href="#" OnFocus="link('_class','../xstoolslib/XSError0',this)">XSError</a> <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>(cerr);
+
+    <a href="#" OnFocus="link('_member','../xsatapi/lpt0',this)">lpt</a> = <a href="#" OnFocus="link('_member','../xstoolslib/GetXSTOOLSParameter67554305',this)">GetXSTOOLSParameter</a>("LPT");
+    if(<a href="#" OnFocus="link('_member','../xsatapi/lpt0',this)">lpt</a> != "")
+    {
+        int n = sscanf(<a href="#" OnFocus="link('_member','../xsatapi/lpt0',this)">lpt</a>.c_str()+3,"%d",&amp;<a href="#" OnFocus="link('_member','../xsatapi/portNum0',this)">portNum</a>);
+        assert(n != 0);
+    }
+    
+    if(<a href="#" OnFocus="link('_member','../xsusb/ProcessOpts2719128541',this)">ProcessOpts</a>( &amp;argc, argv ) == false)
+    {
+        <a href="#" OnFocus="link('_member','../xsusb/Usage86416935',this)">Usage</a>(string(argv[0]));
+        return 1;   // exit if error in program options
+    }
+
+    // Use LPT1 if no other parallel port was specified.
+    if(<a href="#" OnFocus="link('_member','../xsatapi/portNum0',this)">portNum</a> == -1)
+    {
+        <a href="#" OnFocus="link('_member','../xsatapi/portNum0',this)">portNum</a> = 1;
+        <a href="#" OnFocus="link('_member','../xsatapi/lpt0',this)">lpt</a> = "LPT1";
+    }
+
+    // Store the parallel port that will be used.
+    if(<a href="#" OnFocus="link('_member','../xsatapi/portNum0',this)">portNum</a> &lt; 4)
+        <a href="#" OnFocus="link('_member','../xstoolslib/SetXSTOOLSParameter3292873876',this)">SetXSTOOLSParameter</a>("LPT",<a href="#" OnFocus="link('_member','../xsatapi/lpt0',this)">lpt</a>.c_str());
+
+    if(argc&lt;2)
+        return 1;   // exit if no binary string of bits
+
+    // Create the parallel port object.
+    <a href="#" OnFocus="link('_class','../xstoolslib/PPort0',this)">PPort</a> <a href="#" OnFocus="link('_member','../xsether/port0',this)">port</a>;
+    if(<a href="#" OnFocus="link('_member','../xsether/port0',this)">port</a>.<a href="#" OnFocus="link('_member','../xstoolslib/Setup1571714867',this)">Setup</a>(&amp;errMsg,portNum,0x3) == false)
+    {
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','../xstoolslib/SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,"Invalid parallel port was selected!\n");
+        return 1;
+    }
+    
+    // Iterate through the string while assigning binary values to the parallel port data bits. 
+    int portValue = <a href="#" OnFocus="link('_member','../xsether/port0',this)">port</a>.<a href="#" OnFocus="link('_member','../xstoolslib/In1210046855',this)">In</a>(0,7); // get current value on parallel port
+    string bits = argv[1];      // get the string of binary bits
+    int i = bits.length()-1;
+    for( unsigned int bitMask=1; (i&gt;=0) &amp;&amp; (bitMask!=256); bitMask&lt;&lt;=1,i-- )
+    {
+        switch( bits[i] )
+        {
+            // binary one is represented by '1', 'h', or 'H'
+        case '1':
+        case 'H':
+        case 'h':
+            portValue |= bitMask;
+            break;
+            // binary zero is represented by '0', 'l', or 'L'
+        case '0':
+        case 'L':
+        case 'l':
+            portValue &amp;= ~bitMask;
+            break;
+            // erroneous binary value if we get here!!
+        default:
+            <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','../xstoolslib/SetSeverity3409672334',this)">SetSeverity</a>(XSErrorMinor);
+            <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a> &lt;&lt; "illegal binary value in " &lt;&lt; bits.c_str() &lt;&lt; "\n";
+            <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','../xstoolslib/EndMsg60232619',this)">EndMsg</a>();
+            break;
+        }
+    }
+    
+    // Exit without changing the parallel port if there was an error.
+    if(<a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','../xstoolslib/IsError863564933',this)">IsError</a>())
+        return 1;   // return 1 if something went wrong
+
+    // output the new value on the parallel port
+    <a href="#" OnFocus="link('_member','../xsether/port0',this)">port</a>.<a href="#" OnFocus="link('_member','../xstoolslib/Out2912582438',this)">Out</a>(portValue,0,7);
+
+    if(<a href="#" OnFocus="link('_member','getStatus0',this)">getStatus</a>)
+        cout &lt;&lt; hex &lt;&lt; <a href="#" OnFocus="link('_member','../xsether/port0',this)">port</a>.<a href="#" OnFocus="link('_member','../xstoolslib/In1210046855',this)">In</a>(11,15) &lt;&lt; "\n";
+
+    return 0;   // return 0 if the operation was successful
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_member','_source');
+</script>

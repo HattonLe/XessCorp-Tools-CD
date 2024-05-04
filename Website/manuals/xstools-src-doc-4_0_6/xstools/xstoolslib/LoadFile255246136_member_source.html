@@ -1,0 +1,64 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - LoadFile</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">LoadFile</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">LoadFile</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','LoadFile255246136','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_member','LoadFile255246136','_source',this)" class="tabLinkActive">Source</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','LoadFile255246136','_callgraph',this)" class="tabLinkInActive">Call Graph</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<div class="paragraph2NoTopPadding">Start Line: 930</div>
+<pre class="codeExamples">
+char * <a href="#" OnFocus="link('_member','LoadFile255246136',this)">LoadFile</a>(istream &amp;is)
+{
+#ifdef DEBUG_SVF
+    long loadfile_start = clock();
+#endif
+
+    // determine the size of the file
+    is.seekg(0,ios::end);       // move pointer to end of file
+    int length = is.tellg();    // pointer position = position of end of file
+    is.seekg(0,ios::beg);       // return pointer to beginning of file
+
+    char *buffer = new char[length+1];
+    if(buffer==NULL)
+    {
+        <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a> <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>(cerr);
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorFatal,"Unable to allocate enough memory to hold file.");
+    }
+    for(int i=0; i&lt;=length; i++)
+        buffer[i] = 0;
+    is.read(buffer, length);
+
+#ifdef DEBUG_SVF
+    long loadfile_finish = clock();
+    cout &lt;&lt; "Time to load file = " &lt;&lt; (loadfile_finish-loadfile_start)/(CLOCKS_PER_SEC) &lt;&lt; "\n";
+#endif
+
+    return buffer;
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_member','_source');
+</script>

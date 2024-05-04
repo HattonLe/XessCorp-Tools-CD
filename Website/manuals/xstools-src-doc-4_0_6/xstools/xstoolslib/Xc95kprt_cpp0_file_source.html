@@ -1,0 +1,220 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - xc95kprt.cpp</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">xc95kprt.cpp</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">xc95kprt.cpp</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','xc95kprt_cpp0','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabInActiveGrayout"><span class="tabLinkGrayout">Overview</span></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','xc95kprt_cpp0','_includedfiles',this)" class="tabLinkInActive">Included files</a></span>
+<span class="tabInActiveGrayout"><span class="tabLinkGrayout">Included by</span></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_file','xc95kprt_cpp0','_source',this)" class="tabLinkActive">Source</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<pre class="codeExamples">
+/*----------------------------------------------------------------------------------
+  SOFTWARE LICENSE AGREEMENT
+    1.  Permission to use, copy, modify, and distribute this software
+        and its documentation, with or without modification, for any
+        purpose and without fee or royalty is hereby granted, provided
+        that you include the following on ALL copies of the software
+        and documentation or portions thereof, including
+        modifications, that you make:
+
+            a.  The full text of this license in a location viewable to users
+            of the redistributed or derivative work.
+
+            b.  Notice of any changes or modifications to the files,
+            including the date changes were made.
+
+    2.  The name, servicemarks and trademarks of X Engineering
+        Software Systems Corp. may NOT be used in advertising or
+        publicity pertaining to the software without specific, written
+        prior permission.
+
+    3.  Title to copyright in this software and any associated
+        documentation will at all times remain with X Engineering
+        Software Systems Corp.
+
+    4.  THIS SOFTWARE AND DOCUMENTATION IS PROVIDED "AS IS," AND X
+        Engineering Software Systems Corp MAKES NO REPRESENTATIONS OR
+        WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO,
+        WARRANTIES OF MERCHANTABILITY OR FITNESS FOR ANY PARTICULAR
+        PURPOSE OR THAT THE USE OF THE SOFTWARE OR DOCUMENTATION WILL
+        NOT INFRINGE ANY THIRD PARTY PATENTS, COPYRIGHTS, TRADEMARKS
+        OR OTHER RIGHTS.
+
+    5.  X Engineering Software Systems Corp WILL NOT BE LIABLE FOR ANY
+        DAMAGES, INCLUDING BUT NOT LIMITED TO, DIRECT, INDIRECT,
+        SPECIAL OR CONSEQUENTIAL, ARISING OUT OF ANY USE OF THE
+        SOFTWARE OR DOCUMENTATION.
+
+  ©2006 - X Engineering Software Systems Corp.  All rights reserved.
+----------------------------------------------------------------------------------*/
+
+
+#include &lt;cassert&gt;
+#include &lt;fstream&gt;
+#include &lt;iostream&gt;
+#include &lt;ctime&gt;
+#include &lt;string&gt;
+using namespace std;
+
+#include "<a href="#" OnFocus="link('_file','utils_h0',this)">utils.h</a>"
+#include "<a href="#" OnFocus="link('_file','hex_h0',this)">hex.h</a>"
+#include "<a href="#" OnFocus="link('_file','bitstrm_h0',this)">bitstrm.h</a>"
+#include "<a href="#" OnFocus="link('_file','xc95kprt_h0',this)">xc95kprt.h</a>"
+using std::string;
+
+
+/// Instantiate an XC9500 CPLD object on a given parallel port.
+<a href="#" OnFocus="link('_member','XC95KPort2569683910',this)">XC95KPort::XC95KPort</a>(void)
+{
+    ;
+}
+
+
+/// Instantiate an XC9500 CPLD object on a given parallel port.
+<a href="#" OnFocus="link('_member','XC95KPort2569683910',this)">XC95KPort::XC95KPort</a>(<a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>* err, ///&lt; pointer to error reporting object
+           unsigned int portNum,    ///&lt; parallel port number
+           unsigned int invMask,    ///&lt; inversion mask for the parallel port
+           unsigned int posTCK, ///&lt; bit position in parallel port of TCK pin
+           unsigned int posTMS, ///&lt; bit position in parallel port of TMS pin
+           unsigned int posTDI, ///&lt; bit position in parallel port of TDI pin
+           unsigned int posTDO) ///&lt; bit position in parallel port of TDO pin
+{
+    <a href="#" OnFocus="link('_member','Setup503400686',this)">Setup</a>(err,portNum,invMask,posTCK,posTMS,posTDI,posTDO);
+}
+
+
+/// Setup an XC95KPort object on a given parallel port.
+///\return true if the operation was a success, false otherwise
+bool <a href="#" OnFocus="link('_member','Setup503400686',this)">XC95KPort::Setup</a>(<a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>* err,    ///&lt; pointer to error reporting object
+           unsigned int portNum,    ///&lt; parallel port number
+           unsigned int invMask,    ///&lt; inversion mask for the parallel port
+           unsigned int posTCK, ///&lt; bit position in parallel port of TCK pin
+           unsigned int posTMS, ///&lt; bit position in parallel port of TMS pin
+           unsigned int posTDI, ///&lt; bit position in parallel port of TDI pin
+           unsigned int posTDO) ///&lt; bit position in parallel port of TDO pin
+{
+    // return true if setup was successful
+    return <a href="#" OnFocus="link('_member','Setup1927970358',this)">LPTJTAG::Setup</a>(err,portNum,invMask,posTCK,posTMS,posTDI,posTDO);
+}
+
+
+/// Detect the presence and type of the XC9500 CPLD chip on the port.
+///\return the chip identifier
+string <a href="#" OnFocus="link('_member','GetChipID215401329',this)">XC95KPort::GetChipID</a>()
+{
+    <a href="#" OnFocus="link('_class','Bitstream0',this)">Bitstream</a> bsir(8);   // BSIR for sending IDCODE instruction
+    <a href="#" OnFocus="link('_class','Bitstream0',this)">Bitstream</a> bsdr(32);  // BSDR for holding chip ID
+    bsir.<a href="#" OnFocus="link('_member','SetBits2734584593',this)">SetBits</a>(0, 0,1,1,1,1,1,1,1, -1); // IDCODE instruction for reading chip id
+    <a href="#" OnFocus="link('_class','Bitstream0',this)">Bitstream</a> null(0);   // zero-length bitstream
+
+    <a href="#" OnFocus="link('_member','InitTAP141716444',this)">InitTAP</a>();                         // initialize the JTAG TAP controller
+    <a href="#" OnFocus="link('_member','LoadBSIRthenBSDR3423522178',this)">LoadBSIRthenBSDR</a>(bsir,null,bsdr);   // get the ID code from the chip
+    return bsdr.ToString();
+}
+
+
+/// Get the 32-bit USERCODE from the XC9500 CPLD chip
+///\return the usercode
+string <a href="#" OnFocus="link('_member','GetUSERCODE215401329',this)">XC95KPort::GetUSERCODE</a>()
+{
+    <a href="#" OnFocus="link('_class','Bitstream0',this)">Bitstream</a> bsir(8);   // BSIR for sending USERCODE instruction
+    <a href="#" OnFocus="link('_class','Bitstream0',this)">Bitstream</a> bsdr(32);  // BSDR for holding USERCODE
+    bsir.<a href="#" OnFocus="link('_member','SetBits2734584593',this)">SetBits</a>(0, 1,0,1,1,1,1,1,1, -1); // USERCODE instruction for reading USERCODE
+    <a href="#" OnFocus="link('_class','Bitstream0',this)">Bitstream</a> null(0);   // zero-length bitstream
+
+    <a href="#" OnFocus="link('_member','InitTAP141716444',this)">InitTAP</a>();                         // initialize the JTAG TAP controller
+    <a href="#" OnFocus="link('_member','LoadBSIRthenBSDR3423522178',this)">LoadBSIRthenBSDR</a>(bsir,null,bsdr);   // get the ID code from the chip
+//  PromptUser((string)"USERCODE = " + bsdr.ToString() + (string)"\n",PROMPT_OK);
+    return bsdr.ToString();
+}
+
+
+/// Initialize the XC9500 CPLD for configuration through the JTAG interface.
+void <a href="#" OnFocus="link('_member','InitConfigureCPLD2569683910',this)">XC95KPort::InitConfigureCPLD</a>(void)
+{
+    <a href="#" OnFocus="link('_member','InitTAP141716444',this)">InitTAP</a>(); // initialize TAP controller of XC95KPort chip to reset state
+}
+
+
+/// Send out a byte of configuration information to the XC9500 Flash.
+void <a href="#" OnFocus="link('_member','ConfigureCPLD3019441395',this)">XC95KPort::ConfigureCPLD</a>(unsigned char b)  ///&lt; configuration byte
+{
+    // JTAG configuration bytes contain values for both TDI and TMS,
+    // so only four clock pulses are needed per byte
+    for(int i=0; i&lt;4; i++)
+    {
+        <a href="#" OnFocus="link('_member','SetTDI3135730673',this)">SetTDI</a>(b&amp;1);  // byte is sent out LSB first
+        b &gt;&gt;= 1;
+        <a href="#" OnFocus="link('_member','SetTMS3135730673',this)">SetTMS</a>(b&amp;1);
+        b &gt;&gt;= 1;
+        <a href="#" OnFocus="link('_member','PulseTCK3135730673',this)">PulseTCK</a>();
+    }
+}
+
+
+/// Process SVF and send results through JTAG configuration pins.
+///\return true if the operation was a success, false otherwise
+bool <a href="#" OnFocus="link('_member','ConfigureCPLD3019441395',this)">XC95KPort::ConfigureCPLD</a>(istream&amp; is,  ///&lt; stream that delivers SVF
+                    string&amp; fileName)   ///&lt; name of SVF file that the stream is attached to
+{
+    return <a href="#" OnFocus="link('_member','DownloadSVF1467815114',this)">DownloadSVF</a>(is, fileName);
+}
+
+
+/// Configure the CPLD with the bit stream stored in an SVF file.
+///\return true if the operation was a success, false otherwise
+bool <a href="#" OnFocus="link('_member','ConfigureCPLD3019441395',this)">XC95KPort::ConfigureCPLD</a>(string&amp; fileName) ///&lt; file containing SVF
+{
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> = <a href="#" OnFocus="link('_member','GetErr2569683910',this)">GetErr</a>();
+
+    if(<a href="#" OnFocus="link('_member','../xssetsaa711X/fileName0',this)">fileName</a>.length()==0)
+        return false;  // stop if no SVF file was given
+    
+    ifstream is(<a href="#" OnFocus="link('_member','../xssetsaa711X/fileName0',this)">fileName</a>.c_str());  // otherwise open SVF file
+    if(!is || is.fail() || is.eof())
+    { // error - couldn't open file
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','SetSeverity3409672334',this)">SetSeverity</a>(XSErrorMajor);
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> &lt;&lt; "could not open " &lt;&lt; <a href="#" OnFocus="link('_member','../xssetsaa711X/fileName0',this)">fileName</a>.c_str() &lt;&lt; "\n";
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','EndMsg60232619',this)">EndMsg</a>();
+        return false;
+    }
+    
+    // determine the size of the file
+    is.seekg(0,ios::end);   // move pointer to end of file
+    streampos streamEndPos = is.tellg();    // pointer position = position of end of file
+
+    is.seekg(0,ios::beg);   // return pointer to beginning of file
+
+    bool status = <a href="#" OnFocus="link('_member','ConfigureCPLD3019441395',this)">ConfigureCPLD</a>(is, fileName);
+    
+    is.close();  // close-up the hex file
+    
+    return status;
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_file','_source');
+</script>

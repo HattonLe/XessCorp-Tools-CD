@@ -1,0 +1,66 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - SetFreq</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">SetFreq</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_class','XSABoard0',this)" class="pathLink">XSABoard</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">SetFreq</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','SetFreq716610738','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_member','SetFreq716610738','_source',this)" class="tabLinkActive">Source</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','SetFreq716610738','_callgraph',this)" class="tabLinkInActive">Call Graph</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<div class="paragraph2NoTopPadding">Start Line: 737</div>
+<pre class="codeExamples">
+bool <a href="#" OnFocus="link('_member','SetFreq716610738',this)">XSABoard::SetFreq</a>(int div, bool extOscPresent)
+{
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a> = <a href="#" OnFocus="link('_member','fpga210218145',this)">fpga</a>.<a href="#" OnFocus="link('_member','GetErr259477277',this)">GetErr</a>(); // setup error channel
+
+    // give the user some instructions on how to initialize the oscillator for programming
+    string instructions;
+    instructions = "Before setting the XSA Board frequency you must:\n\n";
+    instructions += "1) Remove the power and downloading cable from your XSA Board\n";
+    instructions += "2) Place a shunt on the \"set\" position of jumper J6\n";
+    instructions += "3) Reconnect the power cable\n";
+    instructions += "4) Reconnect the downloading cable\n";
+    instructions += "5) Click on the OK button\n";
+    if(<a href="#" OnFocus="link('_member','PromptUser2517124797',this)">PromptUser</a>(instructions,PROMPT_OKCANCEL) == <a href="#" OnFocus="link('_member','RESPONSE_CANCEL0',this)">RESPONSE_CANCEL</a>)
+        return false;
+
+    // program the oscillator (there is a direct connection between the osc. prog. pin and the parallel port)
+    <a href="#" OnFocus="link('_member','osc210218145',this)">osc</a>.<a href="#" OnFocus="link('_member','SetOscFrequency4061435083',this)">SetOscFrequency</a>(div,extOscPresent);
+
+    // give the user some instructions on how to reset the oscillator so the programming will take effect
+    instructions = "The frequency of your XSA Board has been set!!\n";
+    instructions += "Now do these steps to activate the oscillator:\n\n";
+    instructions += "1) Remove the power and downloading cables from your XSA Board\n";
+    instructions += "2) Move the shunt to the \"osc\" position of jumper J6\n";
+    instructions += "3) Reconnect the power cable\n";
+    instructions += "4) Reconnect the downloading cable\n";
+    instructions += "5) Click on the OK button\n";
+    <a href="#" OnFocus="link('_member','PromptUser2517124797',this)">PromptUser</a>(instructions,PROMPT_OK);
+    
+    return true;
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_member','_source');
+</script>

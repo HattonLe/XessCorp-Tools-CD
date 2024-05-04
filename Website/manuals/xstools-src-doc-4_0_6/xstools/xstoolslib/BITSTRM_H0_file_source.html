@@ -1,0 +1,158 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - bitstrm.h</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">bitstrm.h</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">bitstrm.h</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','bitstrm_h0','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','bitstrm_h0','_overview',this)" class="tabLinkInActive">Overview</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','bitstrm_h0','_includedfiles',this)" class="tabLinkInActive">Included files</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','bitstrm_h0','_includedby',this)" class="tabLinkInActive">Included by</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_file','bitstrm_h0','_source',this)" class="tabLinkActive">Source</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<pre class="codeExamples">
+/*----------------------------------------------------------------------------------
+  SOFTWARE LICENSE AGREEMENT
+    1.  Permission to use, copy, modify, and distribute this software
+        and its documentation, with or without modification, for any
+        purpose and without fee or royalty is hereby granted, provided
+        that you include the following on ALL copies of the software
+        and documentation or portions thereof, including
+        modifications, that you make:
+
+            a.  The full text of this license in a location viewable to users
+            of the redistributed or derivative work.
+
+            b.  Notice of any changes or modifications to the files,
+            including the date changes were made.
+
+    2.  The name, servicemarks and trademarks of X Engineering
+        Software Systems Corp. may NOT be used in advertising or
+        publicity pertaining to the software without specific, written
+        prior permission.
+
+    3.  Title to copyright in this software and any associated
+        documentation will at all times remain with X Engineering
+        Software Systems Corp.
+
+    4.  THIS SOFTWARE AND DOCUMENTATION IS PROVIDED "AS IS," AND X
+        Engineering Software Systems Corp MAKES NO REPRESENTATIONS OR
+        WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO,
+        WARRANTIES OF MERCHANTABILITY OR FITNESS FOR ANY PARTICULAR
+        PURPOSE OR THAT THE USE OF THE SOFTWARE OR DOCUMENTATION WILL
+        NOT INFRINGE ANY THIRD PARTY PATENTS, COPYRIGHTS, TRADEMARKS
+        OR OTHER RIGHTS.
+
+    5.  X Engineering Software Systems Corp WILL NOT BE LIABLE FOR ANY
+        DAMAGES, INCLUDING BUT NOT LIMITED TO, DIRECT, INDIRECT,
+        SPECIAL OR CONSEQUENTIAL, ARISING OUT OF ANY USE OF THE
+        SOFTWARE OR DOCUMENTATION.
+
+  ©2006 - X Engineering Software Systems Corp.  All rights reserved.
+----------------------------------------------------------------------------------*/
+
+
+#ifndef BITSTREAM_H
+#define BITSTREAM_H
+
+#include &lt;iostream&gt;
+#include &lt;string&gt;
+using namespace std;
+
+
+/** 
+Stores and operates upon arbitrary-length strings of binary bits.
+
+This object allows the creation of arbitrary-length binary strings and 
+permits some basic operations on them. It is used primarily for handling 
+the strings of instruction and data register bits that go through the 
+JTAG port. 
+
+*/
+class <a href="#" OnFocus="link('_class','Bitstream0',this)">Bitstream</a>
+{
+    public:
+
+    <a href="#" OnFocus="link('_member','Bitstream2805767469',this)">Bitstream</a>(unsigned int n);
+
+    <a href="#" OnFocus="link('_member','tilde_Bitstream2605346622',this)">~Bitstream</a>(void);
+
+    unsigned int <a href="#" OnFocus="link('_member','GetLength2106616265',this)">GetLength</a>(void) const;
+
+    bool <a href="#" OnFocus="link('_member','Resize2805767469',this)">Resize</a>(unsigned int n);
+
+    bool <a href="#" OnFocus="link('_member','operatoreq_eq_233187935',this)">operator==</a>(<a href="#" OnFocus="link('_class','Bitstream0',this)">Bitstream</a>&amp; b2) const;
+
+    bool <a href="#" OnFocus="link('_member','Subcompare2301990008',this)">Subcompare</a>(unsigned int pos, <a href="#" OnFocus="link('_class','Bitstream0',this)">Bitstream</a>&amp; b2, unsigned int b2Pos) const;
+
+    <a href="#" OnFocus="link('_class','Bitstream0',this)">Bitstream</a>&amp; <a href="#" OnFocus="link('_member','operatoreq_233097660',this)">operator=</a>(<a href="#" OnFocus="link('_class','Bitstream0',this)">Bitstream</a>&amp; b2);
+
+    <a href="#" OnFocus="link('_class','Bitstream0',this)">Bitstream</a>* <a href="#" OnFocus="link('_member','Copy2605346622',this)">Copy</a>(void);
+
+    unsigned int <a href="#" OnFocus="link('_member','operatorl_brack_r_brack_2805758212',this)">operator[]</a>(unsigned int bitIndex) const;
+
+    void <a href="#" OnFocus="link('_member','Clear2605346622',this)">Clear</a>(void);
+
+    void <a href="#" OnFocus="link('_member','SetBit2908394482',this)">SetBit</a>(unsigned int bitIndex, unsigned int val);
+
+    void <a href="#" OnFocus="link('_member','SetBits2734584593',this)">SetBits</a>(unsigned int bitIndex,    int firstBit, ... );
+
+    <a href="#" OnFocus="link('_class','Bitstream0',this)">Bitstream</a>&amp; <a href="#" OnFocus="link('_member','operatorsirq_233187935',this)">operator^</a>(<a href="#" OnFocus="link('_class','Bitstream0',this)">Bitstream</a>&amp; b2) const;
+
+    <a href="#" OnFocus="link('_class','Bitstream0',this)">Bitstream</a>&amp; <a href="#" OnFocus="link('_member','operatorplus_233187935',this)">operator+</a>(<a href="#" OnFocus="link('_class','Bitstream0',this)">Bitstream</a>&amp; b2) const;
+
+    void <a href="#" OnFocus="link('_member','ShiftRight2805767469',this)">ShiftRight</a>(unsigned int rightShift);
+
+    void <a href="#" OnFocus="link('_member','Reverse2605346622',this)">Reverse</a>();
+
+    ostream&amp; <a href="#" OnFocus="link('_member','PrintBits3975311493',this)">PrintBits</a>(ostream&amp; os) const;
+
+    unsigned char* <a href="#" OnFocus="link('_member','ToHexString2106616265',this)">ToHexString</a>(void) const;
+
+    bool <a href="#" OnFocus="link('_member','FromHexString2822437144',this)">FromHexString</a>(unsigned int nBits, const char *hexString);
+
+    bool <a href="#" OnFocus="link('_member','FromHexStream1630694954',this)">FromHexStream</a>(unsigned int nBits, istream&amp; is, bool reverseBits);
+
+    unsigned char* <a href="#" OnFocus="link('_member','ToCharString2106616265',this)">ToCharString</a>(void) const;
+
+    bool <a href="#" OnFocus="link('_member','FromCharString3963816108',this)">FromCharString</a>(unsigned int nBits, const unsigned char *charString);
+
+    bool <a href="#" OnFocus="link('_member','FromCharStream1630694954',this)">FromCharStream</a>(unsigned int nBits, istream&amp; is, bool reverseBits);
+
+    string <a href="#" OnFocus="link('_member','ToString2106616265',this)">ToString</a>(void) const;
+
+    void <a href="#" OnFocus="link('_member','FromString2484475908',this)">FromString</a>(const string s);
+
+    private:
+
+    unsigned int <a href="#" OnFocus="link('_member','numBits203865993',this)">numBits</a>;  ///&lt; number of bits in bitstream
+    unsigned long* <a href="#" OnFocus="link('_member','bits203865993',this)">bits</a>;    ///&lt; storage for bitstream
+};
+
+ostream&amp; <a href="#" OnFocus="link('_member','operatorless_less_2307103839',this)">operator<<</a>(ostream&amp; os, <a href="#" OnFocus="link('_class','Bitstream0',this)">Bitstream</a>&amp; b);
+
+#endif
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_file','_source');
+</script>

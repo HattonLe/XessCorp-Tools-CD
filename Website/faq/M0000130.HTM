@@ -1,0 +1,314 @@
+<html>
+
+
+<!-- Mirrored from 192.168.0.47/faq/M0000130.HTM by HTTrack Website Copier/3.x [XR&CO'2004], Mon, 04 Dec 2006 16:08:19 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=ISO-8859-1"><!-- /Added by HTTrack -->
+<head>
+<link rel="SHORTCUT ICON" href="../images/xess.ico">
+<title>Mapping XSPORT arguments to XS40 Board pins</title>
+<meta name="KEYWORDS" content="XESS USER FAQ">
+<meta name="DESCRIPTION" content="XESS User FAQ question &amp; answer.">
+<meta http-equiv="Content-Type" content="text/html">
+<link rel="stylesheet" type="text/css" href="../xess-1.css">
+<meta name="Microsoft Border" content="none, default">
+</head>
+
+<table>
+  <tr>
+    <td class="StdPageLogo">
+    <a href="../index-2.html"><img border="0" src="../images/xess-138x32.bmp"></a>
+<?php 
+			require("../logo.html");
+		?></td>
+    <td class="StdPageNav">
+    <script type="text/javascript" src="xess.js"></script>
+<!-- <script type="text/javascript" src="niftycube_xess.js"></script> -->
+<!-- <script type="text/javascript" src="prototype.js"></script> -->
+<!-- <script type="text/javascript" src="rico.js"></script> -->
+<script type="text/javascript">
+	window.onload=function(){
+		startList("nav");
+		stripe_xess();
+		collapseall();
+		// Nifty("td.StdPageNav","transparent");
+		// Nifty("td.StdPageSidebar","transparent");
+		// Nifty("td.StdPageNavLinks","transparent");
+	};
+	onload=function(){
+		startList("nav");
+		stripe_xess();
+		collapseall();
+		// Nifty("td.StdPageNav","transparent");
+		// Nifty("td.StdPageSidebar","transparent");
+		// Nifty("td.StdPageNavLinks","transparent");
+	};
+</script>
+
+
+
+<table border="0" width="640" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="center" valign="center" width="70%">
+
+<!--
+  -- naviagation bar for browsers with scripting capability
+  -- (make sure there is no whitespace after the '\' on each line and run
+  -- the Javascript console on Firefox to check the syntax.)
+  -->
+<script type="text/javascript">
+nav_text = '\
+  <ul id="nav"> \
+    <li id="first"><a href="../ho04000.html">Products</a> \
+      <ul> \
+        <li><a href="../ho04000.html"><div>Catalog</div></a></li> \
+        <li><a href="../manuals.html"><div>Manuals</div></a></li> \
+        <li><a href="../ho07000.html"><div>Software Downloads</div></a></li> \
+      </ul> \
+    </li> \
+    <li><a href="../help.html">Support</a> \
+      <ul> \
+        <li><a href="../manuals.html" ><div>Product Manuals</div></a></li> \
+        <li><a href="../ho03000.html" ><div>Tutorials</div></a></li> \
+        <li><a href="../ho03000.html" ><div>Application Notes</div></a></li> \
+        <li><a href="../ho03000.html" ><div>Design Examples</div></a></li> \
+        <li><a href="../ho01000.html" ><div>FAQ</div></a></li> \
+        <li><a href="../list_reg.html"><div>User Forum</div></a></li> \
+        <li><a href="../help.html"    ><div>Request Help</div></a></li> \
+      </ul> \
+    </li> \
+    <li><a href="../ho01001.html">Purchasing</a> \
+      <ul> \
+        <li><a href="https://xess.com/xess_int_order.php3"><div>Web Orders</div></a></li> \
+        <li><a href="../ho01001.html"                       ><div>Purchase Orders</div></a></li> \
+        <li><a href="../ho01001.html"                       ><div>Payment Methods</div></a></li> \
+        <li><a href="../xess_int_quote.html"                ><div>Get a Quote</div></a></li> \
+        <li><a href="../xess_int_quote.html"                ><div>Get a Proforma Invoice</div></a></li> \
+        <li><a href="../ho01001.html"                       ><div>How To Buy From Us</div></a></li> \
+      </ul> \
+    </li> \
+    <li id="last"><a href="../index-2.html">XESS</a> \
+      <ul> \
+        <li><a href="../index-2.html"   ><div>Home</div></a></li> \
+        <li><a href="../about_us.html"><div>About Us</div></a></li> \
+        <li><a href="../ho00003.html" ><div>Contact Us</div></a></li> \
+<!-- \
+        <li><a href=""              ><div>Announcements</div></a></li> \
+        <li><a href="../ho00005.html" ><div>Press Releases</div></a></li> \
+--> \
+      </ul> \
+    </li> \
+    <li id="last"><a href="../links.html">Misc.</a> \
+      <ul> \
+        <li><a href="../links.html"><div>Links</div></a></li> \
+      </ul> \
+    </li> \
+  </ul> \
+';
+document.writeln(nav_text);
+</script>
+
+<!--
+  -- naviagation bar for browsers with NO scripting capability
+  -->
+<noscript>
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="14%" align="left">
+    <a href="../ho04000.html"><img border="0" src="../images/menu_arrow.png">Products</a>
+    </td>
+    <td width="16%" align="left">
+    <a href="../ho01001.html"><img border="0" src="../images/menu_arrow.png">How to Buy</a>
+    </td>
+    <td width="11%" align="left">
+    <a href="../help.html"><img border="0" src="../images/menu_arrow.png">Help!</a>
+    </td>
+    <td width="14%" align="left">
+    <a href="../ho03000.html"><img border="0" src="../images/menu_arrow.png">Tutorials</a>
+    </td>
+    <td width="14%" align="left">
+    <a href="../index-2.html"><img border="0" src="../images/menu_arrow.png">Home</a>
+<!--
+    <a href="/ho00005.html"><img border="0" src="/images/menu_arrow.png">Press&nbsp;Rel.</a>
+-->
+    </td>
+  </tr>
+  <tr>
+    <td>
+    <a href="../manuals.html"><img border="0" src="../images/menu_arrow.png">Manuals</a>
+    </td>
+    <td>
+    <a href="../xess_int_quote.html"><img border="0" src="../images/menu_arrow.png">Online Quote</a>
+    </td>
+    <td>
+    <a href="../ho01000.html"><img border="0" src="../images/menu_arrow.png">FAQ</a>
+    </td>
+    <td>
+    <a href="../ho03000.html"><img border="0" src="../images/menu_arrow.png">Examples</a>
+    </td>
+    <td>
+    <a href="../about_us.html">
+    <img border="0" src="../images/menu_arrow.png">About&nbsp;Us</a>
+    </td>
+  </tr>
+  <tr>
+    <td>
+    <a href="../ho07000.html"><img border="0" src="../images/menu_arrow.png">Downloads</a>
+    </td>
+    <td>
+    <a href="https://xess.com/xess_int_order.php3"><img border="0" src="../images/menu_arrow.png">Order Online</a>
+    </td>
+    <td>
+    <a href="../list_reg.html"><img border="0" src="../images/menu_arrow.png">Forum</a>
+    </td>
+    <td>
+    <a href="../links.html"><img border="0" src="../images/menu_arrow.png">Links</a>
+    </td>
+    <td>
+    <a href="../ho00003.html"><img border="0" src="../images/menu_arrow.png">Contact&nbsp;Us</a>
+    </td>
+  </tr>
+</table>
+</noscript>
+
+    </td>
+    <td align="center" valign="center" width="30%" id="srch">
+      <FORM ACTION="http://192.168.0.47/cgi-bin/ksearch/ksearch.cgi" METHOD="GET" NAME="search">
+        <INPUT TYPE="text" value="search" NAME="terms">
+		<input type=image src="../images/search_arrow.png" value="Search">
+      </FORM>
+    </td>
+  </tr>
+</table>
+
+<?php 
+			require("../nav.html");
+		?></td>
+  </tr>
+  <tr>
+
+    <td class="StdPageSidebar">
+    <h1>Question &amp; Answer</h1>
+    <p class="FAQClassification">Classification: FAQ_CLASSIFICATION</p>
+    <p class="FAQDate">Date: FAQ_DATE</p>
+    </td>
+
+    <td class="StdPageBody">
+        <h1 class=FAQTitle>Mapping XSPORT arguments to XS40 Board pins </h1>
+    <div class="FAQ">
+      <h2 class="FAQQuestion">Q:</h2>
+      <div class="FAQQuestion">
+        <p>
+A class project was to design and implement a simple three input (A,B,C)
+majority tester.  With such a circuit the output(F) is high for the
+following miniterms, 011,101,110,111.  Using the Xilinx Foundation
+series 1.3 software, we find that when the specified pins for A=p47,
+B=p46, and C=p45, the high output for 011 and 101 is missing, with 110
+and 111 high as expected.  Switching to A=p45, B=p46, and C=p47 also
+results in  missing high output for the same terms 011 and 101, with
+110 and 111 high as expected.  This is where it gets really strange.
+If we use A=p46, B=p45, and C=p44, then we get all of the expected
+high outputs.  This same pattern is repeated on several different PCs
+with very different motherboards and CPUs, and several different
+XS40-005XL based boards.</p>
+
+<p> </p>
+      </div>
+      <h2 class="FAQAnswer">A:</h2>
+      <div class="FAQAnswer">
+        <p>You are passing the wrong bit string to XSPORT when you 
+map the inputs of the majority circuit to pins 45, 46, and 47.
+But the bit strings are correct if you use pins 44, 45, and 46.</p>
+
+<p>For the XS40 Board, XSPORT maps the bits to the following positions:</p>
+
+<pre>    XSPORT b7b6b5b4b3b2b1b0
+    b0    pin 44
+    b1    pin 45
+    b2    pin 46
+    b3    pin 47
+    b4    pin 48
+    b5    pin 49
+    b6    pin 32
+    b7    pin 34</pre>
+
+<p>So when you issue the command XSPORT 011, then b2=0, b1=1, and b0=1.  
+This sets pins 44 and 45 high, and pin 46 is driven
+low.  (All the other pins are also driven low.)  If your A, B, and C 
+inputs are mapped to pins 44, 45, and 46, then A=1, B=1,
+and C=0 so the output will be high and the LED will light up.  But if 
+your A, B, and C inputs are mapped to pins 45, 46, and
+47 then your majority circuit receives inputs of A=1, B=0, and 
+C=0 so the LED stays dark.  (Pin 47 is driven high, but this
+pin is not an input to the majority circuit in this case.)  
+If you map the inputs to pins 45, 46, and 47, then you have to use
+the following commands to test it:</p>
+
+<pre>    XSPORT 0000    (C=0,B=0,A=0)
+    XSPORT 0010    (C=0,B=0,A=1)
+    XSPORT 0100    (C=0,B=1,A=0)
+    XSPORT 0110    (C=0,B=1,A=1)
+    XSPORT 1000    (C=1,B=0,A=0)
+    XSPORT 1010    (C=1,B=0,A=1)
+    XSPORT 1100    (C=1,B=1,A=0)
+    XSPORT 1110    (C=1,B=1,A=1)</pre> </p>
+      </div>
+    </div>
+    </td>
+  </tr>
+  <tr>
+
+    <td class="StdPageCredits">
+    <a href="mailto:webmaster@xess.com"> webmaster@xess.com</a><br>
+© 1998-2006, XESS Corp.<br> 
+All rights reserved.
+<script src="../../www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-765812-1";
+urchinTracker();
+</script><?php 
+			require("../credits.html");
+		?></td>
+    <td class="StdPageNavLinks">
+        <a href="../ho04000.html">
+    <img border="0" src="../images/menu_arrow.png">Products</a>
+    <a href="../manuals.html">
+    <img border="0" src="../images/menu_arrow.png">Manuals</a>
+    <a href="../ho07000.html">
+    <img border="0" src="../images/menu_arrow.png">Downloads</a>
+    <a href="../ho01001.html">
+    <img border="0" src="../images/menu_arrow.png">How to Buy</a>
+    <a href="../xess_int_quote.html">
+    <img border="0" src="../images/menu_arrow.png">Online Quote</a>
+    <a href="https://xess.com/xess_int_order.php3">
+    <img border="0" src="../images/menu_arrow.png">Order Online</a>
+    <br>
+    <a href="../help.html">
+    <img border="0" src="../images/menu_arrow.png">Help!</a>
+    <a href="../ho01000.html">
+    <img border="0" src="../images/menu_arrow.png">FAQ</a>
+    <a href="../list_reg.html">
+    <img border="0" src="../images/menu_arrow.png">Forum</a>
+    <a href="../ho03000.html">
+    <img border="0" src="../images/menu_arrow.png">Tutorials</a>
+    <a href="../ho03000.html">
+    <img border="0" src="../images/menu_arrow.png">Examples</a>
+    <a href="../links.html">
+    <img border="0" src="../images/menu_arrow.png">Links</a>
+    <a href="../ho00005.html">
+    <a href="../index-2.html">
+    <img border="0" src="../images/menu_arrow.png">Home</a>
+    <a href="../about_us.html">
+    <img border="0" src="../images/menu_arrow.png">About&nbsp;Us</a>
+    <a href="../ho00003.html">
+    <img border="0" src="../images/menu_arrow.png">Contact&nbsp;Us</a>
+<?php 
+			require("../navlinks.html");
+		?></td>
+  </tr>
+</table>
+
+
+<!-- Mirrored from 192.168.0.47/faq/M0000130.HTM by HTTrack Website Copier/3.x [XR&CO'2004], Mon, 04 Dec 2006 16:08:19 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=ISO-8859-1"><!-- /Added by HTTrack -->
+</html>

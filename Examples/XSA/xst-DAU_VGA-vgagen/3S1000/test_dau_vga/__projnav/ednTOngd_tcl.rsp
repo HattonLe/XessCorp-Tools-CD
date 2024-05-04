@@ -1,0 +1,3 @@
+set ADucfFile {test_vga.ucf}
+set AD {}
+set ADcdcFile {}

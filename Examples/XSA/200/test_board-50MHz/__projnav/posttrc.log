@@ -1,0 +1,4 @@
+Post Route Timing Report for Module test_board . . .
+TRACE command line and options:
+trce -intstyle ise -e 3 -l 3 -xml test_board test_board.ncd -o test_board.twr test_board.pcf
+Post Route Timing Report for Module test_board : DONE

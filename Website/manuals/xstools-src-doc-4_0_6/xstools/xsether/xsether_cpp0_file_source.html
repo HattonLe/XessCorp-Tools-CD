@@ -1,0 +1,758 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - xsether.cpp</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">xsether.cpp</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xsether0',this)" class="pathLink">xsether</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">xsether.cpp</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','xsether_cpp0','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','xsether_cpp0','_overview',this)" class="tabLinkInActive">Overview</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','xsether_cpp0','_includedfiles',this)" class="tabLinkInActive">Included files</a></span>
+<span class="tabInActiveGrayout"><span class="tabLinkGrayout">Included by</span></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_file','xsether_cpp0','_source',this)" class="tabLinkActive">Source</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<pre class="codeExamples">
+/*----------------------------------------------------------------------------------
+  SOFTWARE LICENSE AGREEMENT
+    1.  Permission to use, copy, modify, and distribute this software
+        and its documentation, with or without modification, for any
+        purpose and without fee or royalty is hereby granted, provided
+        that you include the following on ALL copies of the software
+        and documentation or portions thereof, including
+        modifications, that you make:
+
+            a.  The full text of this license in a location viewable to users
+            of the redistributed or derivative work.
+
+            b.  Notice of any changes or modifications to the files,
+            including the date changes were made.
+
+    2.  The name, servicemarks and trademarks of X Engineering
+        Software Systems Corp. may NOT be used in advertising or
+        publicity pertaining to the software without specific, written
+        prior permission.
+
+    3.  Title to copyright in this software and any associated
+        documentation will at all times remain with X Engineering
+        Software Systems Corp.
+
+    4.  THIS SOFTWARE AND DOCUMENTATION IS PROVIDED "AS IS," AND X
+        Engineering Software Systems Corp MAKES NO REPRESENTATIONS OR
+        WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO,
+        WARRANTIES OF MERCHANTABILITY OR FITNESS FOR ANY PARTICULAR
+        PURPOSE OR THAT THE USE OF THE SOFTWARE OR DOCUMENTATION WILL
+        NOT INFRINGE ANY THIRD PARTY PATENTS, COPYRIGHTS, TRADEMARKS
+        OR OTHER RIGHTS.
+
+    5.  X Engineering Software Systems Corp WILL NOT BE LIABLE FOR ANY
+        DAMAGES, INCLUDING BUT NOT LIMITED TO, DIRECT, INDIRECT,
+        SPECIAL OR CONSEQUENTIAL, ARISING OUT OF ANY USE OF THE
+        SOFTWARE OR DOCUMENTATION.
+
+  ©2006 - X Engineering Software Systems Corp.  All rights reserved.
+----------------------------------------------------------------------------------*/
+
+//
+// Command-line XS Board Ethernet test utility
+//
+
+// $Log: xsether.cpp,v $
+
+#include &lt;cstdlib&gt;
+#include &lt;cassert&gt;
+#include &lt;sstream&gt;
+#include &lt;fstream&gt;
+#include &lt;string&gt;
+using namespace std;
+
+#include "<a href="#" OnFocus="link('_file','../xstoolslib/xserror_h0',this)">xserror.h</a>"
+#include "<a href="#" OnFocus="link('_file','../xstoolslib/xsallbrds_h0',this)">xsallbrds.h</a>"
+#include "<a href="#" OnFocus="link('_file','../xstoolslib/utils_h0',this)">utils.h</a>"
+
+// definitions
+#define AX88796_BASE        0x200
+// PAGE0 registers
+#define AX88796_CR          (AX88796_BASE+0x00)
+#define AX88796_PSTART      (AX88796_BASE+0x01)
+#define AX88796_PSTOP       (AX88796_BASE+0x02)
+#define AX88796_BNRY        (AX88796_BASE+0x03)
+#define AX88796_TPSR        (AX88796_BASE+0x04)
+#define AX88796_TSR         (AX88796_BASE+0x04)
+#define AX88796_TBCR0       (AX88796_BASE+0x05)
+#define AX88796_NCR         (AX88796_BASE+0x05)
+#define AX88796_TBCR1       (AX88796_BASE+0x06)
+#define AX88796_CPR         (AX88796_BASE+0x06)
+#define AX88796_ISR         (AX88796_BASE+0x07)
+#define AX88796_RSAR0       (AX88796_BASE+0x08)
+#define AX88796_CRDA0       (AX88796_BASE+0x08)
+#define AX88796_RSAR1       (AX88796_BASE+0x09)
+#define AX88796_CRDA1       (AX88796_BASE+0x09)
+#define AX88796_RBCR0       (AX88796_BASE+0x0A)
+#define AX88796_RBCR1       (AX88796_BASE+0x0B)
+#define AX88796_RCR         (AX88796_BASE+0x0C)
+#define AX88796_RSR         (AX88796_BASE+0x0C)
+#define AX88796_TCR         (AX88796_BASE+0x0D)
+#define AX88796_DCR         (AX88796_BASE+0x0E)
+#define AX88796_IMR         (AX88796_BASE+0x0F)
+#define AX88796_DATAPORT0   (AX88796_BASE+0x10)
+#define AX88796_DATAPORT1   (AX88796_BASE+0x11)
+#define AX88796_IFGS1       (AX88796_BASE+0x12)
+#define AX88796_IFGS2       (AX88796_BASE+0x13)
+#define AX88796_MIIEEPROM   (AX88796_BASE+0x14)
+#define AX88796_TESTR       (AX88796_BASE+0x15)
+#define AX88796_IFG         (AX88796_BASE+0x16)
+#define AX88796_GPOC        (AX88796_BASE+0x17)
+#define AX88796_GPI         (AX88796_BASE+0x17)
+#define AX88796_SPP_D       (AX88796_BASE+0x18)
+#define AX88796_SPP_S       (AX88796_BASE+0x19)
+#define AX88796_SPP_C       (AX88796_BASE+0x1A)
+#define AX88796_RESET       (AX88796_BASE+0x1F)
+// PAGE1 registers
+#define AX88796_PAR0        (AX88796_BASE+0x01)
+#define AX88796_PAR1        (AX88796_BASE+0x02)
+#define AX88796_PAR2        (AX88796_BASE+0x03)
+#define AX88796_PAR3        (AX88796_BASE+0x04)
+#define AX88796_PAR4        (AX88796_BASE+0x05)
+#define AX88796_PAR5        (AX88796_BASE+0x06)
+#define AX88796_CPR_PAGE1   (AX88796_BASE+0x07)
+#define AX88796_MAR0        (AX88796_BASE+0x08)
+#define AX88796_MAR1        (AX88796_BASE+0x09)
+#define AX88796_MAR2        (AX88796_BASE+0x0A)
+#define AX88796_MAR3        (AX88796_BASE+0x0B)
+#define AX88796_MAR4        (AX88796_BASE+0x0C)
+#define AX88796_MAR5        (AX88796_BASE+0x0D)
+#define AX88796_MAR6        (AX88796_BASE+0x0E)
+#define AX88796_MAR7        (AX88796_BASE+0x0F)
+
+// control register definitions
+#define PAGE0           0x00
+#define PAGE1           0x40
+#define ABORT_DMA       0x20
+#define REMOTE_WRITE    0x10
+#define REMOTE_READ     0x08
+#define TRANSMIT_PACKET 0x04
+#define START           0x02
+#define STOP            0x01
+
+// interrupt status register
+#define PRX             0x01
+#define PTX             0x02
+#define RXE             0x04
+#define TXE             0x08
+#define OVW             0x10
+#define CNT             0x20
+#define RDC             0x40
+#define RST             0x80
+
+// interrupt mask register
+#define PRXE            0x01
+#define PTXE            0x02
+#define RXEE            0x04
+#define TXEE            0x08
+#define OVWE            0x10
+#define CNTE            0x20
+#define RDCE            0x40
+
+// data configuration register
+#define WTS             0x01
+#define RDCR            0x80
+
+// transmit configuration register
+#define CRC             0x01
+#define NO_LOOP         0x00
+#define INT_LOOP        0x02
+#define EXT_LOOP        0x04
+#define RLO             0x20
+#define PD              0x40
+#define FDU             0x80
+
+// transmit status register
+//#define   PTX             0x01
+#define COL             0x04
+#define ABT             0x08
+#define OWC             0x80
+
+// receive configuration register
+#define SEP             0x01
+#define AR              0x02
+#define AB              0x04
+#define AM              0x08
+#define PRO             0x10
+#define MON             0x20
+#define INTT            0x40
+
+// receive status register
+#define PRX             0x01
+#define CR              0x02
+#define FAE             0x04
+#define FO              0x08
+#define MPA             0x10
+#define PHY             0x20
+#define DIS             0x40
+
+// MII/EEPROM register
+#define MDC             0x01
+#define MDIR            0x02
+#define MDI             0x04
+#define MDO             0x08
+#define EECS            0x10
+#define EEI             0x20
+#define EEO             0x40
+#define EECLK           0x80
+
+// test register
+#define AUTOD           0x01
+#define RST_B           0x02
+#define RST_10B         0x04
+#define RST_TXB         0x08
+
+// general-purpose input register
+#define I_LINK          0x01
+#define I_DPX           0x02
+#define I_SPD           0x04
+#define GPI0            0x10
+#define GPI1            0x20
+#define GPI2            0x40
+
+// general-purpose output register
+#define GPO0_N          0x01
+#define SEL_INT_PHY     0x10
+#define SEL_EXT_PHY     0x30
+#define PPDSET          0x40
+
+
+
+
+// version info
+char* <a href="#" OnFocus="link('_member','../xsatapi/version0',this)">version</a> = "4.0.6";
+
+// global variables
+<a href="#" OnFocus="link('_class','../xstoolslib/XSError0',this)">XSError</a> <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>(cerr);        // setup error channel
+string <a href="#" OnFocus="link('_member','../xsatapi/lpt0',this)">lpt</a>;                    // parallel port identifier
+int <a href="#" OnFocus="link('_member','../xsatapi/portNum0',this)">portNum</a> = -1;          // default parallel port number
+<a href="#" OnFocus="link('_class','../xstoolslib/PPort0',this)">PPort</a> <a href="#" OnFocus="link('_member','port0',this)">port</a>;
+bool <a href="#" OnFocus="link('_member','doReceive0',this)">doReceive</a> = false;
+bool <a href="#" OnFocus="link('_member','doTransmit0',this)">doTransmit</a> = false;
+bool <a href="#" OnFocus="link('_member','doLoopback0',this)">doLoopback</a> = false;
+bool <a href="#" OnFocus="link('_member','doRAMTest0',this)">doRAMTest</a> = false;
+unsigned int <a href="#" OnFocus="link('_member','numPackets0',this)">numPackets</a> = 0;
+
+
+// begin methods and functions
+
+// print a string that shows the options and how to use this program.
+void <a href="#" OnFocus="link('_member','../xsatapi/Usage86416935',this)">Usage</a>(string progName)
+{
+    cerr &lt;&lt; progName.c_str() 
+        &lt;&lt; "\n\t[-[h|help]]: get help"
+        &lt;&lt; "\n\t[-[p|port] [1|2|3]]: select parallel port"
+        &lt;&lt; "\n\t[-[rt|ramtest]]: test the AX88796 RAM"
+        &lt;&lt; "\n\t[-[rx|receive] &lt;#packets&gt;]: receive a number of packets"
+        &lt;&lt; "\n\t[-[tx|transmit] &lt;#packets&gt;]: transmit a number of packets"
+        &lt;&lt; "\n\t[-[loopback] &lt;#packets&gt;]: loopback a number of packets"
+        &lt;&lt; "\n";
+    cerr &lt;&lt; "Version " &lt;&lt; <a href="#" OnFocus="link('_member','../xsatapi/version0',this)">version</a> &lt;&lt; endl;
+}
+
+
+// process the command line options and set the appropriate flags.
+bool <a href="#" OnFocus="link('_member','../xsatapi/ProcessOpts2719128541',this)">ProcessOpts</a>(int* argc, char** argv)
+{
+    int *numFiles = NULL;   // pointer to number of FPGA/RAM/Flash files
+    int *posFiles = NULL;   // pointer to position of FPGA/RAM/Flash files
+
+    bool ok = true; // no errors yet
+
+    for(int i=1; i&lt; *argc; i++)
+    {
+        int cnt, j;
+        string arg = argv[i];
+        
+        if(arg[0] == '-')  // found an option
+        {
+            <a href="#" OnFocus="link('_member','../xstoolslib/ConvertToUpperCase67554305',this)">ConvertToUpperCase</a>(arg);  // convert option to upper case
+            
+            // ask for help but we don't give much
+            if(arg=="-H" || arg=="-HELP")
+            {
+                <a href="#" OnFocus="link('_member','../xsatapi/Usage86416935',this)">Usage</a>(arg);
+                cnt = 1;
+            }
+            
+            // specify the parallel port being used
+            else if(arg=="-PORT" || arg=="-P")
+            {
+                sscanf(argv[i+1],"%d",&amp;portNum);
+                // istrstream argstr(argv[i+1]);
+                // argstr &gt;&gt; portNum;
+                if(<a href="#" OnFocus="link('_member','../xsatapi/portNum0',this)">portNum</a>&lt;4)
+                    <a href="#" OnFocus="link('_member','../xsatapi/lpt0',this)">lpt</a> = (string)"LPT" + (string)(argv[i+1]);
+                else
+                    <a href="#" OnFocus="link('_member','../xsatapi/lpt0',this)">lpt</a> = "LPT1";
+                cnt = 2;
+            }
+
+            // test RAM
+            else if(arg=="-RT" || arg=="-RAMTEST")
+            {
+                <a href="#" OnFocus="link('_member','doRAMTest0',this)">doRAMTest</a> = true;
+                cnt = 1;
+            }
+
+            // receive a number of packets
+            else if(arg=="-RECEIVE" || arg=="-RX")
+            {
+                <a href="#" OnFocus="link('_member','doReceive0',this)">doReceive</a> = true;
+                sscanf(argv[i+1],"%d",&amp;numPackets);
+                cnt = 2;
+            }
+
+            // transmit a number of packets
+            else if(arg=="-TRANSMIT" || arg=="-TX")
+            {
+                <a href="#" OnFocus="link('_member','doTransmit0',this)">doTransmit</a> = true;
+                sscanf(argv[i+1],"%d",&amp;numPackets);
+                cnt = 2;
+            }
+
+            // loopback a number of packets
+            else if(arg=="-LOOPBACK")
+            {
+                <a href="#" OnFocus="link('_member','doLoopback0',this)">doLoopback</a> = true;
+                sscanf(argv[i+1],"%d",&amp;numPackets);
+                cnt = 2;
+            }
+
+            // can't figure out what the user wants
+            else
+            {
+                ok = false;
+                <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','../xstoolslib/SetSeverity3409672334',this)">SetSeverity</a>(XSErrorMinor);
+                <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a> &lt;&lt; "unknown option: " &lt;&lt; arg.c_str() &lt;&lt; "\n";
+                <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','../xstoolslib/EndMsg60232619',this)">EndMsg</a>();
+                cnt = 1;
+            }
+        }
+        else    // found something which is not an option, so it is must be a file name
+        {
+            ok = false;
+            <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','../xstoolslib/SetSeverity3409672334',this)">SetSeverity</a>(XSErrorMinor);
+            <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a> &lt;&lt; "unknown option: " &lt;&lt; arg.c_str() &lt;&lt; "\n";
+            <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','../xstoolslib/EndMsg60232619',this)">EndMsg</a>();
+            cnt = 1;
+        }
+            
+        // remove the processed options from the argument list
+        for(j=i+cnt; j&lt; *argc; j++)
+            argv[j-cnt] = argv[j];
+        *argc -= cnt;
+        i--;
+    }
+
+    return ok;
+}
+
+
+#define posRESET 0
+#define posCLK   1
+#define posDOLSB 2
+#define posDOMSB 5
+#define posRW    6
+#define posDILSB 11
+#define posDIMSB 14
+#define posSTLSB 11
+#define posSTMSB 14
+#define addrWidth 24
+#define dataWidth 16
+
+// read contents of a single location in RAM */
+bool <a href="#" OnFocus="link('_member','ReadRAM3900533032',this)">ReadRAM</a>(
+        unsigned int addr,  // address of RAM location
+        unsigned int* data  // data returned from RAM location
+        )
+{
+    <a href="#" OnFocus="link('_member','port0',this)">port</a>.<a href="#" OnFocus="link('_member','../xstoolslib/Out2912582438',this)">Out</a>(1,posRW,posRW); // set mode to read
+    <a href="#" OnFocus="link('_member','port0',this)">port</a>.<a href="#" OnFocus="link('_member','../xstoolslib/Out2912582438',this)">Out</a>(1,posRESET,posRESET); // reset the downloading state machine
+    <a href="#" OnFocus="link('_member','port0',this)">port</a>.<a href="#" OnFocus="link('_member','../xstoolslib/Out2912582438',this)">Out</a>(0,posCLK,posCLK);     // force clock low
+    <a href="#" OnFocus="link('_member','port0',this)">port</a>.<a href="#" OnFocus="link('_member','../xstoolslib/Out2912582438',this)">Out</a>(0,posRESET,posRESET); // release the reset
+    unsigned int statusChk = 0; // set status check to reset state id
+    unsigned int status = <a href="#" OnFocus="link('_member','port0',this)">port</a>.<a href="#" OnFocus="link('_member','../xstoolslib/In1210046855',this)">In</a>(posSTLSB,posSTMSB);
+    assert(status==statusChk);  // make sure we are in reset state
+    if(status != statusChk)
+        return false;   // error - RAM interface state machine not in the right state
+
+    // set initial address into the downloading state machine
+    for(int j=addrWidth-4; j&gt;=0; j-=4)
+    {
+        <a href="#" OnFocus="link('_member','port0',this)">port</a>.<a href="#" OnFocus="link('_member','../xstoolslib/Out2912582438',this)">Out</a>((addr&gt;&gt;j)&amp;0xf,posDOLSB,posDOMSB);
+        <a href="#" OnFocus="link('_member','port0',this)">port</a>.<a href="#" OnFocus="link('_member','../xstoolslib/Out2912582438',this)">Out</a>(1,posCLK,posCLK); // latch 4 address bits into downloading circuit
+        statusChk++;            // increment status check but don't check it
+        <a href="#" OnFocus="link('_member','port0',this)">port</a>.<a href="#" OnFocus="link('_member','../xstoolslib/Out2912582438',this)">Out</a>(0,posCLK,posCLK);
+    }
+    status = <a href="#" OnFocus="link('_member','port0',this)">port</a>.<a href="#" OnFocus="link('_member','../xstoolslib/In1210046855',this)">In</a>(posSTLSB,posSTMSB);
+    assert(status==statusChk);
+    if(status != statusChk)
+        return false;   // error - RAM interface state machine not in the right state
+    
+    unsigned int d; // holds data read from RAM
+    int k;
+    d = 0;
+    for(k=dataWidth; k&gt;0; k-=4)
+    {
+        <a href="#" OnFocus="link('_member','port0',this)">port</a>.<a href="#" OnFocus="link('_member','../xstoolslib/Out2912582438',this)">Out</a>(1,posCLK,posCLK); // latch 4 address bits into downloading circuit
+        statusChk++;            // increment status check
+        <a href="#" OnFocus="link('_member','port0',this)">port</a>.<a href="#" OnFocus="link('_member','../xstoolslib/Out2912582438',this)">Out</a>(0,posCLK,posCLK);
+        d = (d&lt;&lt;4) | (<a href="#" OnFocus="link('_member','port0',this)">port</a>.<a href="#" OnFocus="link('_member','../xstoolslib/In1210046855',this)">In</a>(posDILSB,posDIMSB) &amp; 0xf);
+    }
+    <a href="#" OnFocus="link('_member','port0',this)">port</a>.<a href="#" OnFocus="link('_member','../xstoolslib/Out2912582438',this)">Out</a>(1,posRESET,posRESET); // reset the downloading state machine
+    <a href="#" OnFocus="link('_member','port0',this)">port</a>.<a href="#" OnFocus="link('_member','../xstoolslib/Out2912582438',this)">Out</a>(0,posRESET,posRESET); // release the reset
+    statusChk = 0;              // set status check to reset state id
+    status = <a href="#" OnFocus="link('_member','port0',this)">port</a>.<a href="#" OnFocus="link('_member','../xstoolslib/In1210046855',this)">In</a>(posSTLSB,posSTMSB);
+    assert(status==statusChk);  // make sure we are in reset state
+    if(status != statusChk)
+        return false;   // error - RAM interface state machine not in the right state
+
+    *<a href="#" OnFocus="link('_member','../xsatapi/data0',this)">data</a> = d;
+    return true;
+}
+
+// write contents of a single location in RAM */
+bool <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(
+        unsigned int addr,  // address of RAM location
+        unsigned int data   // data to be written into RAM location
+        )       
+{
+    <a href="#" OnFocus="link('_member','port0',this)">port</a>.<a href="#" OnFocus="link('_member','../xstoolslib/Out2912582438',this)">Out</a>(0,posRW,posRW); // set mode to write
+    <a href="#" OnFocus="link('_member','port0',this)">port</a>.<a href="#" OnFocus="link('_member','../xstoolslib/Out2912582438',this)">Out</a>(1,posRESET,posRESET); // reset the downloading state machine
+    <a href="#" OnFocus="link('_member','port0',this)">port</a>.<a href="#" OnFocus="link('_member','../xstoolslib/Out2912582438',this)">Out</a>(0,posCLK,posCLK);     // force clock low
+    <a href="#" OnFocus="link('_member','port0',this)">port</a>.<a href="#" OnFocus="link('_member','../xstoolslib/Out2912582438',this)">Out</a>(0,posRESET,posRESET); // release the reset
+    unsigned int statusChk = 0; // set status check to reset state id
+    unsigned int status = <a href="#" OnFocus="link('_member','port0',this)">port</a>.<a href="#" OnFocus="link('_member','../xstoolslib/In1210046855',this)">In</a>(posSTLSB,posSTMSB);
+    assert(status==statusChk);  // make sure we are in reset state
+    if(status != statusChk)
+        return false;   // error - couldn't reset RAM interface state machine
+    
+    int j;
+    for(j=addrWidth-4; j&gt;=0; j-=4)
+    {
+        <a href="#" OnFocus="link('_member','port0',this)">port</a>.<a href="#" OnFocus="link('_member','../xstoolslib/Out2912582438',this)">Out</a>((addr&gt;&gt;j)&amp;0xf,posDOLSB,posDOMSB);
+        <a href="#" OnFocus="link('_member','port0',this)">port</a>.<a href="#" OnFocus="link('_member','../xstoolslib/Out2912582438',this)">Out</a>(1,posCLK,posCLK); // latch 4 address bits into downloading circuit
+        statusChk++;            // increment status check but don't check it
+        <a href="#" OnFocus="link('_member','port0',this)">port</a>.<a href="#" OnFocus="link('_member','../xstoolslib/Out2912582438',this)">Out</a>(0,posCLK,posCLK);
+    }
+    status = <a href="#" OnFocus="link('_member','port0',this)">port</a>.<a href="#" OnFocus="link('_member','../xstoolslib/In1210046855',this)">In</a>(posSTLSB,posSTMSB);
+    assert(status==statusChk);
+    if(status != statusChk)
+        return false;   // error - RAM interface state machine not in the right state
+    
+    // process the bytes from a data-type hex record
+    unsigned int statusChkSave = statusChk;
+    for(j=dataWidth-4; j&gt;=0; j-=4)
+    {
+        <a href="#" OnFocus="link('_member','port0',this)">port</a>.<a href="#" OnFocus="link('_member','../xstoolslib/Out2912582438',this)">Out</a>((data&gt;&gt;j)&amp;0xf,posDOLSB,posDOMSB);
+        <a href="#" OnFocus="link('_member','port0',this)">port</a>.<a href="#" OnFocus="link('_member','../xstoolslib/Out2912582438',this)">Out</a>(1,posCLK,posCLK); // latch 4 data bits into downloading circuit
+        statusChk++;                // increment to next state id
+        <a href="#" OnFocus="link('_member','port0',this)">port</a>.<a href="#" OnFocus="link('_member','../xstoolslib/Out2912582438',this)">Out</a>(0,posCLK,posCLK);
+        status = <a href="#" OnFocus="link('_member','port0',this)">port</a>.<a href="#" OnFocus="link('_member','../xstoolslib/In1210046855',this)">In</a>(posSTLSB,posSTMSB);
+        assert(status==statusChk);
+        if(status != statusChk)
+            return false;   // error - RAM interface state machine not in the right state
+    }
+    <a href="#" OnFocus="link('_member','port0',this)">port</a>.<a href="#" OnFocus="link('_member','../xstoolslib/Out2912582438',this)">Out</a>(1,posCLK,posCLK);
+    statusChk = 0; // write complete, so should be back at reset
+    <a href="#" OnFocus="link('_member','port0',this)">port</a>.<a href="#" OnFocus="link('_member','../xstoolslib/Out2912582438',this)">Out</a>(0,posCLK,posCLK);
+    status = <a href="#" OnFocus="link('_member','port0',this)">port</a>.<a href="#" OnFocus="link('_member','../xstoolslib/In1210046855',this)">In</a>(posSTLSB,posSTMSB);
+    assert(status==statusChk);
+    if(status != statusChk)
+        return false;   // error - RAM interface state machine not in the right state
+    
+    <a href="#" OnFocus="link('_member','port0',this)">port</a>.<a href="#" OnFocus="link('_member','../xstoolslib/Out2912582438',this)">Out</a>(1,posRESET,posRESET); // reset the downloading state machine
+    <a href="#" OnFocus="link('_member','port0',this)">port</a>.<a href="#" OnFocus="link('_member','../xstoolslib/Out2912582438',this)">Out</a>(0,posRESET,posRESET); // release the reset
+    statusChk = 0;              // set status check to reset state id
+    status = <a href="#" OnFocus="link('_member','port0',this)">port</a>.<a href="#" OnFocus="link('_member','../xstoolslib/In1210046855',this)">In</a>(posSTLSB,posSTMSB);
+    assert(status==statusChk);  // make sure we are in reset state
+    if(status != statusChk)
+        return false;   // error - RAM interface state machine not in the right state
+    else
+        return true;
+}
+
+bool <a href="#" OnFocus="link('_member','SendPacket4287844822',this)">SendPacket</a>(LONGLONG srcAddr, LONGLONG destAddr, unsigned int len, unsigned int *buf)
+{
+//  fprintf(stderr,"SendPacket: preparing packet transmission\n");
+    <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_CR,PAGE0|ABORT_DMA|START); // make sure we're on register page 0
+    <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_RSAR0,0x00);   // go to start of transmit buffer
+    <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_RSAR1,0x70);
+    <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_RBCR0,(len+14)&amp;0xFF);  // # bytes = 6(destAddr) + 6(srcAddr) + 2(len) + len 
+    <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_RBCR1,((len+14)&gt;&gt;8)&amp;0xFF);
+    <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_CR,PAGE0|REMOTE_WRITE|START);  // remote DMA to transmit buffer
+    // create header from destAddr, srcAddr and length
+    unsigned int hdrBuf[14];
+    unsigned int i;
+    for(i=0; i&lt;6; i++)
+        hdrBuf[i] = (destAddr&gt;&gt;(i*8))&amp;0xFF;
+    for(i=0; i&lt;6; i++)
+        hdrBuf[i+6] = (srcAddr&gt;&gt;(i*8))&amp;0xFF;
+    hdrBuf[12] = len&amp;0xFF;
+    hdrBuf[13] = (len&gt;&gt;8)&amp;0xFF;
+    // write header to transmit buffer
+//  fprintf(stderr,"SendPacket: writing packet header\n");
+    for(i=0; i&lt;14; i++)
+        <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_DATAPORT0,hdrBuf[i]);
+    // write buffer to transmit buffer
+//  fprintf(stderr,"SendPacket: writing packet data\n");
+    for(i=0; i&lt;len; i++)
+        <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_DATAPORT0,buf[i]);
+    // setup start of transmit buffer and length
+    <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_TPSR,0x70);
+    <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_TBCR0,(len+14)&amp;0xFF);
+    <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_TBCR1,((len+14)&gt;&gt;8)&amp;0xFF);
+    <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_CR,PAGE0|ABORT_DMA|TRANSMIT_PACKET|START); // transmit packet
+//  fprintf(stderr,"SendPacket: initiating packet transmission\n");
+    return true;
+}
+
+bool <a href="#" OnFocus="link('_member','GetPacket1159289006',this)">GetPacket</a>(unsigned int *len, unsigned int *buf)
+{
+//  fprintf(stderr,"GetPacket: looking for packet\n");
+    unsigned int pstart, pstop, bnry, cpr, ck_cpr, len0, len1, rcvStatus, newBnry;
+    <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_CR,PAGE0|ABORT_DMA|START); // make sure we're on register page 0
+    <a href="#" OnFocus="link('_member','ReadRAM3900533032',this)">ReadRAM</a>(AX88796_PSTART,&amp;pstart);   // get start and stop pages of receive buffer
+    pstart &amp;= 0xFF;
+    <a href="#" OnFocus="link('_member','ReadRAM3900533032',this)">ReadRAM</a>(AX88796_PSTOP,&amp;pstop);
+    pstop &amp;= 0xFF;
+    <a href="#" OnFocus="link('_member','ReadRAM3900533032',this)">ReadRAM</a>(AX88796_BNRY,&amp;bnry);   // get read pointer of receive buffer
+    bnry &amp;= 0xFF;
+    // compare read pointer to write pointer to see if a new packet is available
+    ck_cpr = bnry+1;    // increment read pointer 
+    if(ck_cpr&gt;=pstop)   // wrap-around read pointer if gone past end of receive buffer
+        ck_cpr = pstart;
+    <a href="#" OnFocus="link('_member','ReadRAM3900533032',this)">ReadRAM</a>(AX88796_CPR,&amp;cpr); // get write pointer
+    if(ck_cpr == cpr)   // compare read and write pointers
+        return false;   // return false if no new packet
+//  fprintf(stderr,"GetPacket: pstart=%02x, pstop=%02x, bnry=%02x, cpr=%02x, ck_cpr=%02x\n",pstart,pstop,bnry,cpr,ck_cpr);
+//  fprintf(stderr,"GetPacket: getting packet header\n");
+    // a new packet is available so let's get the 4-byte header
+    <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_RSAR0,0x00);   // point to start of packet
+    <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_RSAR1,ck_cpr);
+    <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_RBCR0,0x04);   // read first four bytes
+    <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_RBCR1,0x00);
+    <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_CR,PAGE0|REMOTE_READ|START);
+    <a href="#" OnFocus="link('_member','ReadRAM3900533032',this)">ReadRAM</a>(AX88796_DATAPORT0,&amp;rcvStatus); // status of received packet
+    rcvStatus &amp;= 0xFF;
+    <a href="#" OnFocus="link('_member','ReadRAM3900533032',this)">ReadRAM</a>(AX88796_DATAPORT0,&amp;newBnry);   // address of next packet in receive buffer
+    newBnry &amp;= 0xFF;
+    <a href="#" OnFocus="link('_member','ReadRAM3900533032',this)">ReadRAM</a>(AX88796_DATAPORT0,&amp;len0);      // length of received packet
+    len0 &amp;= 0xFF;
+    <a href="#" OnFocus="link('_member','ReadRAM3900533032',this)">ReadRAM</a>(AX88796_DATAPORT0,&amp;len1);
+    len1 &amp;= 0xFF;
+//  fprintf(stderr,"GetPacket: rcvStatus=%02x, newBnry=%02x, len0=%02x, len1=%02x\n",rcvStatus,newBnry,len0,len1);
+    <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_CR,PAGE0|ABORT_DMA|START);
+    <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_RSAR0,0x04);   // point to remainder of packet data after header
+    <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_RSAR1,ck_cpr);
+    <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_RBCR0,len0);   // update length of DMA with packet length
+    <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_RBCR1,len1);
+    *len = (len1&lt;&lt;8) + len0;
+//  fprintf(stderr,"GetPacket: length of data packet is %04x (%02x%02x)\n",*len,len1,len0);
+//  fprintf(stderr,"GetPacket: getting packet data\n");
+    <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_CR,PAGE0|REMOTE_READ|START);
+    for(unsigned int i=0; i&lt;*len; i++)  // read received packet from receive buffer
+        <a href="#" OnFocus="link('_member','ReadRAM3900533032',this)">ReadRAM</a>(AX88796_DATAPORT0,&amp;buf[i]);
+    <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_CR,PAGE0|ABORT_DMA|START);
+    newBnry--;
+    if(newBnry&lt;pstart)
+        newBnry = pstop-1;
+    <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_BNRY,newBnry); // update pointer to next received packet
+//  fprintf(stderr,"GetPacket: finished getting packet data\n");
+    return true;
+}
+
+int <a href="#" OnFocus="link('_member','../xsatapi/main251862569',this)">main</a>( int argc, char **argv )
+{
+
+    <a href="#" OnFocus="link('_class','../xstoolslib/XSError0',this)">XSError</a> <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>(cerr); // setup error channel
+
+    <a href="#" OnFocus="link('_member','../xsatapi/lpt0',this)">lpt</a> = <a href="#" OnFocus="link('_member','../xstoolslib/GetXSTOOLSParameter86138908',this)">GetXSTOOLSParameter</a>("LPT");
+    if(<a href="#" OnFocus="link('_member','../xsatapi/lpt0',this)">lpt</a> != "")
+    {
+        int n = sscanf(<a href="#" OnFocus="link('_member','../xsatapi/lpt0',this)">lpt</a>.c_str()+3,"%d",&amp;<a href="#" OnFocus="link('_member','../xsatapi/portNum0',this)">portNum</a>);
+        assert(n != 0);
+    }
+    
+    if(<a href="#" OnFocus="link('_member','../xsatapi/ProcessOpts2719128541',this)">ProcessOpts</a>( &amp;argc, argv ) == false)
+    {
+        <a href="#" OnFocus="link('_member','../xsatapi/Usage86416935',this)">Usage</a>(string(argv[0]));
+        return 1;   // exit if error in program options
+    }
+
+    // use LPT1 if no other parallel port was specified
+    if(<a href="#" OnFocus="link('_member','../xsatapi/portNum0',this)">portNum</a> == -1)
+    {
+        <a href="#" OnFocus="link('_member','../xsatapi/portNum0',this)">portNum</a> = 1;
+        <a href="#" OnFocus="link('_member','../xsatapi/lpt0',this)">lpt</a> = "LPT1";
+    }
+
+    // store the parallel port that will be used
+    if(<a href="#" OnFocus="link('_member','../xsatapi/portNum0',this)">portNum</a> &lt; 4)
+        <a href="#" OnFocus="link('_member','../xstoolslib/SetXSTOOLSParameter1183990257',this)">SetXSTOOLSParameter</a>("LPT",<a href="#" OnFocus="link('_member','../xsatapi/lpt0',this)">lpt</a>.c_str());
+
+    // setup the parallel port object
+    if(<a href="#" OnFocus="link('_member','port0',this)">port</a>.<a href="#" OnFocus="link('_member','../xstoolslib/Setup1571714867',this)">Setup</a>(&amp;errMsg,portNum,0x3) == false)
+    {
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','../xstoolslib/SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,"Invalid parallel port was selected!\n");
+        return 1;
+    }
+
+#define LEN 0xE0
+
+    // first transmitted or received bit of Ethernet address is LSB and proceeds to MSB
+    LONGLONG destAddr, srcAddr;
+    srcAddr     = 0x27393ECCA000;   // ethernet address for X2
+    destAddr    = 0x897801A60E00;   // ethernet address for X1
+
+    unsigned int wrBuf1[LEN], wrBuf2[LEN], rdBuf1[LEN+18], rdBuf3[2000], len1, len3;
+
+    // initialize write buffers
+    int i;
+    for(i=0; i&lt;LEN; i++)
+    {
+        wrBuf1[i] = ~i &amp; 0xFF;
+        wrBuf2[i] = i &amp; 0xFF;
+    }
+
+    // test RAM on AX88796
+    if(<a href="#" OnFocus="link('_member','doRAMTest0',this)">doRAMTest</a>)
+    {
+#define RAMLEN  0x4000
+        unsigned int wrBuf4[RAMLEN], rdBuf4[RAMLEN];
+        for(i=0; i&lt;RAMLEN; i++)
+            wrBuf4[i] = ~i &amp; 0xFF;
+        fprintf(stderr,"Testing AX88796 RAM...\n");
+        <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_CR,PAGE0|ABORT_DMA|STOP);
+        <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_DCR,0x00); // byte-size data
+        <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_RSAR0,0x00);
+        <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_RSAR1,0x40);
+        <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_RBCR0,RAMLEN&amp;0xFF);
+        <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_RBCR1,(RAMLEN&gt;&gt;8)&amp;0xFF);
+        <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_CR,PAGE0|REMOTE_WRITE|START);
+        for(i=0; i&lt;RAMLEN; i++)
+            <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_DATAPORT0,wrBuf4[i]);
+        <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_CR,PAGE0|ABORT_DMA|STOP);
+        <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_RSAR0,0x00);
+        <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_RSAR1,0x40);
+        <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_RBCR0,RAMLEN&amp;0xFF);
+        <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_RBCR1,(RAMLEN&gt;&gt;8)&amp;0xFF);
+        <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_CR,PAGE0|REMOTE_READ|START);
+        for(i=0; i&lt;RAMLEN; i++)
+            <a href="#" OnFocus="link('_member','ReadRAM3900533032',this)">ReadRAM</a>(AX88796_DATAPORT0,&amp;rdBuf4[i]);
+        <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_CR,PAGE0|ABORT_DMA|STOP);
+        bool ramTestOK = true;
+        for(i=0; i&lt;RAMLEN; i++)
+            if((wrBuf4[i] &amp; 0xFF) != (rdBuf4[i] &amp; 0xFF))
+            {
+                fprintf(stdout,"ERROR: wrBuf[%04x] = %02x;\trdBuf[%04x] = %02x\n",i,wrBuf4[i]&amp;0xFF,i,rdBuf4[i]&amp;0xFF);
+                ramTestOK = false;
+            }
+            if(ramTestOK == false)
+            {
+                fprintf(stdout,"AX88796 RAM failed test!!\n");
+                return 1;
+            }
+            else
+                fprintf(stdout,"AX88796 RAM test passed!!\n\n");
+    }
+
+    // setup ethernet source address for the AX88796
+    <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_CR,PAGE1|ABORT_DMA|STOP);
+    <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_PAR0,srcAddr&amp;0xFF);
+    <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_PAR1,(srcAddr&gt;&gt;8)&amp;0xFF);
+    <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_PAR2,(srcAddr&gt;&gt;16)&amp;0xFF);
+    <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_PAR3,(srcAddr&gt;&gt;24)&amp;0xFF);
+    <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_PAR4,(srcAddr&gt;&gt;32)&amp;0xFF);
+    <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_PAR5,(srcAddr&gt;&gt;40)&amp;0xFF);
+    <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_CR,PAGE0|ABORT_DMA|STOP);
+
+    <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_DCR,0x00);     // data format is byte-wide
+    <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_RCR,0x00);     // single-address, does not accept runts and errors
+//  WriteRAM(AX88796_RCR,0x03);     // single-address, accept runts and errors
+    <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_GPOC,0x10);
+    <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_PSTART,0x40);  // receive packet fifo starting address
+    <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_PSTOP,0x60);   // receive packet fifo end address
+    <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_BNRY,0x40);    // packet read pointer
+    <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_CR,PAGE1|ABORT_DMA|STOP);
+    <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_CPR_PAGE1,0x41);   // packet write pointer
+    <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_CR,PAGE0|ABORT_DMA|STOP);
+
+
+    if(<a href="#" OnFocus="link('_member','doTransmit0',this)">doTransmit</a>)
+    {
+        fprintf(stderr,"Transmitting %d packets...\n",numPackets);
+        <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_TCR,0x00);     // half-duplex, no loopback
+        for(unsigned int n=1; n&lt;=<a href="#" OnFocus="link('_member','numPackets0',this)">numPackets</a>; n++)
+        {
+            <a href="#" OnFocus="link('_member','SendPacket4287844822',this)">SendPacket</a>(srcAddr,destAddr,LEN,n%2 ? wrBuf1:wrBuf2);
+            fprintf(stderr,"Sent packet #%d\n",n);
+        }
+    }
+
+    if(<a href="#" OnFocus="link('_member','doReceive0',this)">doReceive</a>)
+    {
+        fprintf(stderr,"Receiving %d packets...\n",numPackets);
+        <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_TCR,0x00);     // half-duplex, no loopback
+        for(unsigned int n=1; n&lt;=<a href="#" OnFocus="link('_member','numPackets0',this)">numPackets</a>; n++)
+        {
+            while(<a href="#" OnFocus="link('_member','GetPacket1159289006',this)">GetPacket</a>(&amp;len3,rdBuf3) == false)
+                ;
+            fprintf(stderr,"Received packet #%d\n",n);
+        }
+        fprintf(stderr,"\nPrinting last received packet:\n");
+        for(unsigned int l=0; l&lt;len3; l++)
+            fprintf(stderr,"rdBuf3[%04x] = %02x\n",l,rdBuf3[l]&amp;0xFF);
+        fprintf(stderr,"Done!!\n");
+    }
+
+    if(<a href="#" OnFocus="link('_member','doLoopback0',this)">doLoopback</a>)
+    {
+        fprintf(stderr,"Loopback %d packets...\n",numPackets);
+        <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_TCR,INT_LOOP);     // half-duplex, enable loopback
+        <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_RCR,0x13);         // promiscuous, accept runts and errors
+        for(unsigned int n=1; n&lt;=<a href="#" OnFocus="link('_member','numPackets0',this)">numPackets</a>; n++)
+        {
+            unsigned int *wrBuf;
+            wrBuf = (n%2) ? wrBuf1 : wrBuf2;
+            <a href="#" OnFocus="link('_member','SendPacket4287844822',this)">SendPacket</a>(srcAddr,destAddr,LEN,wrBuf);
+            fprintf(stderr,"Transmitted loopback packet #%d\n",n);
+            while(<a href="#" OnFocus="link('_member','GetPacket1159289006',this)">GetPacket</a>(&amp;len1,rdBuf1) == false)
+                ;
+            fprintf(stderr,"Received loopback packet #%d\n",n);
+            for(int j=0; j&lt;LEN; j++)
+                if((wrBuf[j] &amp; 0xFF) != (rdBuf1[j+14] &amp; 0xFF))
+                    fprintf(stderr,"\nwrBuf[%04x] = %02x;\trdBuf[%04x] = %02x",j,wrBuf[j]&amp;0xFF,j+14,rdBuf1[j+14]&amp;0xFF);
+        }
+    }
+
+    return 0;
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_file','_source');
+</script>

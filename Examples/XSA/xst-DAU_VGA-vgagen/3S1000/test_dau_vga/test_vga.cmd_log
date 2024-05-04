@@ -1,0 +1,33 @@
+xst -intstyle ise -ifn __projnav/test_vga.xst -ofn test_vga.syr
+xst -intstyle ise -ifn __projnav/test_vga.xst -ofn test_vga.syr
+xst -intstyle ise -ifn __projnav/test_vga.xst -ofn test_vga.syr
+xst -intstyle ise -ifn __projnav/test_vga.xst -ofn test_vga.syr
+xst -intstyle ise -ifn __projnav/test_vga.xst -ofn test_vga.syr
+ngdbuild -intstyle ise -dd c:\xesscorp\products\bitstreams\xsa\xst-dau_vga-vgagen\3s1000\test_vga/_ngo -uc test_vga.ucf  -p xc3s1000-ft256-4 test_vga.ngc test_vga.ngd
+map -intstyle ise -p xc3s1000-ft256-4 -cm area -pr b -k 4 -c 100 -tx off -o test_vga_map.ncd test_vga.ngd test_vga.pcf
+par -w -intstyle ise -ol std -t 1 test_vga_map.ncd test_vga.ncd test_vga.pcf
+trce -intstyle ise -e 3 -l 3 -xml test_vga test_vga.ncd -o test_vga.twr test_vga.pcf
+bitgen -intstyle ise -f test_vga.ut test_vga.ncd
+ngdbuild -intstyle ise -dd c:\xesscorp\products\bitstreams\xsa\xst-dau_vga-vgagen\3s1000\test_vga/_ngo -uc test_vga.ucf  -p xc3s1000-ft256-4 test_vga.ngc test_vga.ngd
+map -intstyle ise -p xc3s1000-ft256-4 -cm area -pr b -k 4 -c 100 -tx off -o test_vga_map.ncd test_vga.ngd test_vga.pcf
+par -w -intstyle ise -ol std -t 1 test_vga_map.ncd test_vga.ncd test_vga.pcf
+trce -intstyle ise -e 3 -l 3 -xml test_vga test_vga.ncd -o test_vga.twr test_vga.pcf
+bitgen -intstyle ise -f test_vga.ut test_vga.ncd
+xst -intstyle ise -ifn __projnav/test_vga.xst -ofn test_vga.syr
+ngdbuild -intstyle ise -dd c:\xesscorp\products\bitstreams\xsa\xst-dau_vga-vgagen\3s1000\test_vga/_ngo -uc test_vga.ucf  -p xc3s1000-ft256-4 test_vga.ngc test_vga.ngd
+map -intstyle ise -p xc3s1000-ft256-4 -cm area -pr b -k 4 -c 100 -tx off -o test_vga_map.ncd test_vga.ngd test_vga.pcf
+par -w -intstyle ise -ol std -t 1 test_vga_map.ncd test_vga.ncd test_vga.pcf
+trce -intstyle ise -e 3 -l 3 -xml test_vga test_vga.ncd -o test_vga.twr test_vga.pcf
+bitgen -intstyle ise -f test_vga.ut test_vga.ncd
+xst -intstyle ise -ifn __projnav/test_vga.xst -ofn test_vga.syr
+ngdbuild -intstyle ise -dd c:\xesscorp\products\bitstreams\xsa\xst-dau_vga-vgagen\3s1000\test_vga/_ngo -uc test_vga.ucf  -p xc3s1000-ft256-4 test_vga.ngc test_vga.ngd
+map -intstyle ise -p xc3s1000-ft256-4 -cm area -pr b -k 4 -c 100 -tx off -o test_vga_map.ncd test_vga.ngd test_vga.pcf
+par -w -intstyle ise -ol std -t 1 test_vga_map.ncd test_vga.ncd test_vga.pcf
+trce -intstyle ise -e 3 -l 3 -xml test_vga test_vga.ncd -o test_vga.twr test_vga.pcf
+bitgen -intstyle ise -f test_vga.ut test_vga.ncd
+xst -intstyle ise -ifn __projnav/test_vga.xst -ofn test_vga.syr
+ngdbuild -intstyle ise -dd c:\xesscorp\products\bitstreams\xsa\xst-dau_vga-vgagen\3s1000\test_vga/_ngo -uc test_vga.ucf  -p xc3s1000-ft256-4 test_vga.ngc test_vga.ngd
+map -intstyle ise -p xc3s1000-ft256-4 -cm area -pr b -k 4 -c 100 -tx off -o test_vga_map.ncd test_vga.ngd test_vga.pcf
+par -w -intstyle ise -ol std -t 1 test_vga_map.ncd test_vga.ncd test_vga.pcf
+trce -intstyle ise -e 3 -l 3 -xml test_vga test_vga.ncd -o test_vga.twr test_vga.pcf
+bitgen -intstyle ise -f test_vga.ut test_vga.ncd

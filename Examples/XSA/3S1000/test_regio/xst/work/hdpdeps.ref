@@ -1,0 +1,33 @@
+V1 15
+FL C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/test_regio/../../../XS_LIB/userinstr_jtag.vhd 2007/04/01.11:25:59
+PH work/USERINSTR_JTAG_PCKG \
+      FL C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/test_regio/../../../XS_LIB/userinstr_jtag.vhd \
+      PB ieee/STD_LOGIC_1164 PH ieee/NUMERIC_STD
+FL C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/test_regio/test_regio.vhd 2007/04/03.20:35:54
+EN work/TEST_REGIO \
+      FL C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/test_regio/test_regio.vhd \
+      PB ieee/STD_LOGIC_1164 PB ieee/STD_LOGIC_ARITH PB ieee/STD_LOGIC_UNSIGNED \
+      PH work/REGIO_JTAG_PCKG PH work/USERINSTR_JTAG_PCKG PH unisim/VCOMPONENTS \
+      PB work/COMMON
+AR work/TEST_REGIO/BEHAVIORAL \
+      FL C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/test_regio/test_regio.vhd \
+      EN work/TEST_REGIO CP REGIO_JTAG
+FL C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/test_regio/../../../XS_LIB/common.vhd 2007/02/20.13:46:54
+PH work/COMMON \
+      FL C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/test_regio/../../../XS_LIB/common.vhd \
+      PB ieee/STD_LOGIC_1164 PH ieee/NUMERIC_STD
+PB work/COMMON \
+      FL C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/test_regio/../../../XS_LIB/common.vhd \
+      PH work/COMMON    PB ieee/STD_LOGIC_1164 PH ieee/NUMERIC_STD
+FL C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/test_regio/../../../XS_LIB/regio_jtag.vhd 2007/04/03.09:15:54
+PH work/REGIO_JTAG_PCKG \
+      FL C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/test_regio/../../../XS_LIB/regio_jtag.vhd \
+      PB ieee/STD_LOGIC_1164 PB ieee/STD_LOGIC_ARITH PB ieee/STD_LOGIC_UNSIGNED \
+      PH work/USERINSTR_JTAG_PCKG PB work/COMMON
+EN work/REGIO_JTAG \
+      FL C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/test_regio/../../../XS_LIB/regio_jtag.vhd \
+      PB ieee/STD_LOGIC_1164 PB ieee/STD_LOGIC_ARITH PB ieee/STD_LOGIC_UNSIGNED \
+      PH work/USERINSTR_JTAG_PCKG PH unisim/VCOMPONENTS PB work/COMMON
+AR work/REGIO_JTAG/ARCH \
+      FL C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/test_regio/../../../XS_LIB/regio_jtag.vhd \
+      EN work/REGIO_JTAG CP BSCAN_SPARTAN3 CP BSCAN_SPARTAN2

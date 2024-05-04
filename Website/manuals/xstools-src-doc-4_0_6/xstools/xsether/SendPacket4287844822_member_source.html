@@ -1,0 +1,70 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - SendPacket</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">SendPacket</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xsether0',this)" class="pathLink">xsether</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">SendPacket</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','SendPacket4287844822','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_member','SendPacket4287844822','_source',this)" class="tabLinkActive">Source</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','SendPacket4287844822','_callgraph',this)" class="tabLinkInActive">Call Graph</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<div class="paragraph2NoTopPadding">Start Line: 467</div>
+<pre class="codeExamples">
+bool <a href="#" OnFocus="link('_member','SendPacket4287844822',this)">SendPacket</a>(LONGLONG srcAddr, LONGLONG destAddr, unsigned int len, unsigned int *buf)
+{
+//  fprintf(stderr,"SendPacket: preparing packet transmission\n");
+    <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_CR,PAGE0|ABORT_DMA|START); // make sure we're on register page 0
+    <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_RSAR0,0x00);   // go to start of transmit buffer
+    <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_RSAR1,0x70);
+    <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_RBCR0,(len+14)&amp;0xFF);  // # bytes = 6(destAddr) + 6(srcAddr) + 2(len) + len 
+    <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_RBCR1,((len+14)&gt;&gt;8)&amp;0xFF);
+    <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_CR,PAGE0|REMOTE_WRITE|START);  // remote DMA to transmit buffer
+    // create header from destAddr, srcAddr and length
+    unsigned int hdrBuf[14];
+    unsigned int i;
+    for(i=0; i&lt;6; i++)
+        hdrBuf[i] = (destAddr&gt;&gt;(i*8))&amp;0xFF;
+    for(i=0; i&lt;6; i++)
+        hdrBuf[i+6] = (srcAddr&gt;&gt;(i*8))&amp;0xFF;
+    hdrBuf[12] = len&amp;0xFF;
+    hdrBuf[13] = (len&gt;&gt;8)&amp;0xFF;
+    // write header to transmit buffer
+//  fprintf(stderr,"SendPacket: writing packet header\n");
+    for(i=0; i&lt;14; i++)
+        <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_DATAPORT0,hdrBuf[i]);
+    // write buffer to transmit buffer
+//  fprintf(stderr,"SendPacket: writing packet data\n");
+    for(i=0; i&lt;len; i++)
+        <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_DATAPORT0,buf[i]);
+    // setup start of transmit buffer and length
+    <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_TPSR,0x70);
+    <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_TBCR0,(len+14)&amp;0xFF);
+    <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_TBCR1,((len+14)&gt;&gt;8)&amp;0xFF);
+    <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_CR,PAGE0|ABORT_DMA|TRANSMIT_PACKET|START); // transmit packet
+//  fprintf(stderr,"SendPacket: initiating packet transmission\n");
+    return true;
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_member','_source');
+</script>

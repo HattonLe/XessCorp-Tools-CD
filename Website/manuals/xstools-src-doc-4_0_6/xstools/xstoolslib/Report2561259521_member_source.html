@@ -1,0 +1,81 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - Report</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">Report</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_class','Progress0',this)" class="pathLink">Progress</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">Report</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','Report2561259521','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_member','Report2561259521','_source',this)" class="tabLinkActive">Source</a></span>
+<span class="tabInActiveGrayout"><span class="tabLinkGrayout">Call Graph</span></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<div class="paragraph2NoTopPadding">Start Line: 109</div>
+<pre class="codeExamples">
+void <a href="#" OnFocus="link('_member','Report2561259521',this)">Progress::Report</a>(float x)
+{
+    if(!<a href="#" OnFocus="link('_member','visible241693846',this)">visible</a>)
+    { // progress indicator is not visible, so make it visible
+        cerr &lt;&lt; "\n" &lt;&lt; <a href="#" OnFocus="link('_member','maintaskDescription241693846',this)">maintaskDescription</a>.c_str() &lt;&lt; ":\n";
+        cerr &lt;&lt; <a href="#" OnFocus="link('_member','subtaskDescription241693846',this)">subtaskDescription</a>.c_str() &lt;&lt; ":";
+#ifdef _WINDOWS
+        CString strWndClass = AfxRegisterWndClass(
+            0,
+            ::LoadCursor(NULL,IDC_ARROW),
+            (HBRUSH)(COLOR_3DFACE+1),
+            0);
+        
+        CWnd* mainWnd = AfxGetMainWnd();
+        CRect mainRect, progRect(0,0,250,80);
+        mainWnd-&gt;GetWindowRect(&amp;mainRect);
+        progRect.OffsetRect(mainRect.TopLeft());
+        progRect.OffsetRect(0,mainRect.Height()+20);
+        CreateEx(0,strWndClass,<a href="#" OnFocus="link('_member','maintaskDescription241693846',this)">maintaskDescription</a>.c_str(),WS_POPUP|WS_CAPTION|WS_VISIBLE,
+            progRect,AfxGetMainWnd(),0,NULL);
+        description.Create(<a href="#" OnFocus="link('_member','subtaskDescription241693846',this)">subtaskDescription</a>.c_str(),WS_CHILD | WS_VISIBLE | SS_LEFT,
+            CRect(10,10,235,25),this,0);
+
+        CFont fntArial;
+        fntArial.CreatePointFont(80, "MS Sans Serif");
+        description.SetFont(&amp;fntArial);
+        description.RedrawWindow();
+
+        ctlProgress.Create(WS_CHILD | WS_VISIBLE | WS_BORDER, CRect(10,30,235,45), this, 0);
+        ctlProgress.SetPos(0);
+        UpdateWindow();
+#endif
+        <a href="#" OnFocus="link('_member','visible241693846',this)">visible</a> = true;    // progress indicator is now visible
+    }
+    
+    <a href="#" OnFocus="link('_member','percentDone241693846',this)">percentDone</a> = (x-<a href="#" OnFocus="link('_member','loBound241693846',this)">loBound</a>)/(<a href="#" OnFocus="link('_member','hiBound241693846',this)">hiBound</a>-<a href="#" OnFocus="link('_member','loBound241693846',this)">loBound</a>) * 100;
+    char msg1[20],msg2[20];
+    sprintf(msg1,"%d%%",(int)percentDone);
+    sprintf(msg2,"%4.4s\010\010\010\010",msg1);
+    cerr &lt;&lt; msg2;
+#ifdef _WINDOWS
+    ctlProgress.SetPos(percentDone);
+    UpdateWindow();
+#endif
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_member','_source');
+</script>

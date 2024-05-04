@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- IMPORTANT: This is an internal file that has been generated
+     by the Xilinx ISE software.  Any direct editing or
+     changes made to this file may result in unpredictable
+     behavior or data corruption.  It is strongly advised that
+     users do not edit the contents of this file. -->
+<messages>
+<msg type="warning" file="Xst" num="753" delta="unknown" >&quot;<arg fmt="%s" index="1">C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/ramintfc_jtag/ramintfc_jtag.vhd</arg>&quot; line <arg fmt="%d" index="2">396</arg>: Unconnected output port &apos;<arg fmt="%s" index="3">clk2x</arg>&apos; of component &apos;<arg fmt="%s" index="4">XSASDRAMCntl</arg>&apos;.
+</msg>
+
+<msg type="warning" file="Xst" num="753" delta="unknown" >&quot;<arg fmt="%s" index="1">C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/ramintfc_jtag/ramintfc_jtag.vhd</arg>&quot; line <arg fmt="%d" index="2">396</arg>: Unconnected output port &apos;<arg fmt="%s" index="3">lock</arg>&apos; of component &apos;<arg fmt="%s" index="4">XSASDRAMCntl</arg>&apos;.
+</msg>
+
+<msg type="warning" file="Xst" num="753" delta="unknown" >&quot;<arg fmt="%s" index="1">C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/ramintfc_jtag/ramintfc_jtag.vhd</arg>&quot; line <arg fmt="%d" index="2">396</arg>: Unconnected output port &apos;<arg fmt="%s" index="3">opBegun</arg>&apos; of component &apos;<arg fmt="%s" index="4">XSASDRAMCntl</arg>&apos;.
+</msg>
+
+<msg type="warning" file="Xst" num="753" delta="unknown" >&quot;<arg fmt="%s" index="1">C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/ramintfc_jtag/ramintfc_jtag.vhd</arg>&quot; line <arg fmt="%d" index="2">396</arg>: Unconnected output port &apos;<arg fmt="%s" index="3">rdPending</arg>&apos; of component &apos;<arg fmt="%s" index="4">XSASDRAMCntl</arg>&apos;.
+</msg>
+
+<msg type="warning" file="Xst" num="753" delta="unknown" >&quot;<arg fmt="%s" index="1">C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/ramintfc_jtag/ramintfc_jtag.vhd</arg>&quot; line <arg fmt="%d" index="2">396</arg>: Unconnected output port &apos;<arg fmt="%s" index="3">rdDone</arg>&apos; of component &apos;<arg fmt="%s" index="4">XSASDRAMCntl</arg>&apos;.
+</msg>
+
+<msg type="warning" file="Xst" num="753" delta="unknown" >&quot;<arg fmt="%s" index="1">C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/ramintfc_jtag/ramintfc_jtag.vhd</arg>&quot; line <arg fmt="%d" index="2">396</arg>: Unconnected output port &apos;<arg fmt="%s" index="3">status</arg>&apos; of component &apos;<arg fmt="%s" index="4">XSASDRAMCntl</arg>&apos;.
+</msg>
+
+<msg type="info" file="Xst" num="1304" delta="unknown" >Contents of register &lt;<arg fmt="%s" index="1">tdo&lt;31&gt;</arg>&gt; in unit &lt;<arg fmt="%s" index="2">ramintfc_jtag</arg>&gt; never changes during circuit operation. The register is replaced by logic.
+</msg>
+
+<msg type="warning" file="Xst" num="1610" delta="unknown" >&quot;<arg fmt="%s" index="1">C:/xesscorp/PRODUCTS/BITSTREAMS/XS_LIB/sdramcntl.vhd</arg>&quot; line <arg fmt="%d" index="2">545</arg>: Width mismatch. &lt;<arg fmt="%s" index="3">sAddr_x</arg>&gt; has a width of <arg fmt="%d" index="4">13</arg> bits but assigned expression is <arg fmt="%d" index="5">12</arg>-bit wide.
+</msg>
+
+<msg type="warning" file="Xst" num="819" delta="unknown" >&quot;<arg fmt="%s" index="1">C:/xesscorp/PRODUCTS/BITSTREAMS/XS_LIB/sdramcntl.vhd</arg>&quot; line <arg fmt="%d" index="2">333</arg>: The following signals are missing in the process sensitivity list:
+<arg fmt="%s" index="3">activeBank_r</arg>.
+</msg>
+
+<msg type="warning" file="Xst" num="647" delta="unknown" >Input &lt;<arg fmt="%s" index="1">hAddr&lt;31:24&gt;</arg>&gt; is never used.
+</msg>
+
+<msg type="warning" file="Xst" num="646" delta="unknown" >Signal &lt;<arg fmt="%s" index="1">col&lt;12&gt;</arg>&gt; is assigned but never used.
+</msg>
+
+<msg type="warning" file="Xst" num="646" delta="unknown" >Signal &lt;<arg fmt="%s" index="1">bankIndex&lt;0&gt;</arg>&gt; is assigned but never used.
+</msg>
+
+<msg type="warning" file="Xst" num="646" delta="unknown" >Signal &lt;<arg fmt="%s" index="1">hDOutOppPhase_r</arg>&gt; is assigned but never used.
+</msg>
+
+<msg type="warning" file="Xst" num="646" delta="unknown" >Signal &lt;<arg fmt="%s" index="1">dllext_rst_n</arg>&gt; is assigned but never used.
+</msg>
+
+<msg type="warning" file="Xst" num="646" delta="unknown" >Signal &lt;<arg fmt="%s" index="1">int_clkdv_b</arg>&gt; is assigned but never used.
+</msg>
+
+<msg type="warning" file="Xst" num="1780" delta="unknown" >Signal &lt;<arg fmt="%s" index="1">lock</arg>&gt; is never used or assigned.
+</msg>
+
+<msg type="warning" file="Xst" num="646" delta="unknown" >Signal &lt;<arg fmt="%s" index="1">buff&lt;0&gt;</arg>&gt; is assigned but never used.
+</msg>
+
+<msg type="info" file="Xst" num="1767" delta="unknown" >HDL ADVISOR - Resource sharing has identified that some arithmetic operations in this design can share the same physical resources for reduced device utilization. For improved clock frequency you may try to disable resource sharing.
+</msg>
+
+<msg type="info" file="Xst" num="2261" delta="unknown" >The FF/Latch &lt;<arg fmt="%s" index="1">sDataDir_r</arg>&gt; in Unit &lt;<arg fmt="%s" index="2">sdramCntl</arg>&gt; is equivalent to the following <arg fmt="%s" index="3">FF/Latch</arg>, which will be removed : <arg fmt="%s" index="4">&lt;wrPipeline_r_0&gt; </arg>
+</msg>
+
+<msg type="warning" file="Xst" num="1291" delta="unknown" >FF/Latch &lt;<arg fmt="%s" index="1">buff_0</arg>&gt; is unconnected in block &lt;<arg fmt="%s" index="2">ramintfc_jtag</arg>&gt;.
+</msg>
+
+<msg type="info" file="Xst" num="2261" delta="unknown" >The FF/Latch &lt;<arg fmt="%s" index="1">s_0</arg>&gt; in Unit &lt;<arg fmt="%s" index="2">ramintfc_jtag</arg>&gt; is equivalent to the following <arg fmt="%s" index="3">FF/Latch</arg>, which will be removed : <arg fmt="%s" index="4">&lt;s_6&gt; </arg>
+</msg>
+
+<msg type="warning" file="Xst" num="1291" delta="unknown" >FF/Latch &lt;<arg fmt="%s" index="1">opBegun_r</arg>&gt; is unconnected in block &lt;<arg fmt="%s" index="2">u1</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="1988" delta="unknown" >Unit &lt;<arg fmt="%s" index="1">ramintfc_jtag</arg>&gt;: instances &lt;<arg fmt="%s" index="2">Mcompar__n0233</arg>&gt;, &lt;<arg fmt="%s" index="3">Mcompar__n0238</arg>&gt; of unit &lt;<arg fmt="%s" index="4">LPM_COMPARE_6</arg>&gt; and unit &lt;<arg fmt="%s" index="5">LPM_COMPARE_8</arg>&gt; are dual, second instance is removed
+</msg>
+
+<msg type="warning" file="Xst" num="1988" delta="unknown" >Unit &lt;<arg fmt="%s" index="1">ramintfc_jtag</arg>&gt;: instances &lt;<arg fmt="%s" index="2">Mcompar__n0236</arg>&gt;, &lt;<arg fmt="%s" index="3">Mcompar__n0239</arg>&gt; of unit &lt;<arg fmt="%s" index="4">LPM_COMPARE_7</arg>&gt; and unit &lt;<arg fmt="%s" index="5">LPM_COMPARE_9</arg>&gt; are dual, second instance is removed
+</msg>
+
+<msg type="warning" file="Xst" num="1988" delta="unknown" >Unit &lt;<arg fmt="%s" index="1">ramintfc_jtag</arg>&gt;: instances &lt;<arg fmt="%s" index="2">Mcompar__n0237</arg>&gt;, &lt;<arg fmt="%s" index="3">Mcompar__n0243</arg>&gt; of unit &lt;<arg fmt="%s" index="4">LPM_COMPARE_7</arg>&gt; and unit &lt;<arg fmt="%s" index="5">LPM_COMPARE_9</arg>&gt; are dual, second instance is removed
+</msg>
+
+<msg type="info" file="Xst" num="2261" delta="unknown" >The FF/Latch &lt;<arg fmt="%s" index="1">cmd_r_0</arg>&gt; in Unit &lt;<arg fmt="%s" index="2">sdramCntl</arg>&gt; is equivalent to the following <arg fmt="%s" index="3">FF/Latch</arg>, which will be removed : <arg fmt="%s" index="4">&lt;cmd_r_1&gt; </arg>
+</msg>
+
+<msg type="warning" file="Xst" num="1710" delta="unknown" >FF/Latch  &lt;<arg fmt="%s" index="1">cmd_r_5</arg>&gt; (without init value) has a constant value of <arg fmt="%d" index="2">0</arg> in block &lt;<arg fmt="%s" index="3">sdramCntl</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="1291" delta="unknown" >FF/Latch &lt;<arg fmt="%s" index="1">u2/u1/opBegun_r</arg>&gt; is unconnected in block &lt;<arg fmt="%s" index="2">ramintfc_jtag</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2036" delta="unknown" >Inserting OBUF on port &lt;<arg fmt="%s" index="1">led_dp</arg>&gt; driven by black box &lt;<arg fmt="%s" index="2">BSCAN_SPARTAN3</arg>&gt;. Possible simulation mismatch.
+</msg>
+
+</messages>

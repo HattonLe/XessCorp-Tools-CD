@@ -1,0 +1,4 @@
+Mapping Module test_bus . . .
+MAP command line:
+map -intstyle ise -p xc2s300e-pq208-6 -cm area -pr b -k 4 -c 100 -tx off -o test_bus_map.ncd test_bus.ngd test_bus.pcf
+Mapping Module test_bus: DONE

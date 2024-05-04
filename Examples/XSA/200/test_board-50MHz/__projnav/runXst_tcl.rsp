@@ -1,0 +1,1 @@
+set allSynthModules {common.MOD randgen.MOD rand.MOD memtest.MOD sdramcntl.MOD sdram.MOD xsasdramcntl.MOD mem.MOD xsasdram.MOD test_board_core.MOD test_board_core_pckg.MOD test_board.MOD}

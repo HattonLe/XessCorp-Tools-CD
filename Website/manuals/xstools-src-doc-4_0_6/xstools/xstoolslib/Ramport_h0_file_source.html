@@ -1,0 +1,176 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - ramport.h</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">ramport.h</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">ramport.h</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','ramport_h0','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','ramport_h0','_overview',this)" class="tabLinkInActive">Overview</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','ramport_h0','_includedfiles',this)" class="tabLinkInActive">Included files</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','ramport_h0','_includedby',this)" class="tabLinkInActive">Included by</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_file','ramport_h0','_source',this)" class="tabLinkActive">Source</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<pre class="codeExamples">
+/*----------------------------------------------------------------------------------
+  SOFTWARE LICENSE AGREEMENT
+    1.  Permission to use, copy, modify, and distribute this software
+        and its documentation, with or without modification, for any
+        purpose and without fee or royalty is hereby granted, provided
+        that you include the following on ALL copies of the software
+        and documentation or portions thereof, including
+        modifications, that you make:
+
+            a.  The full text of this license in a location viewable to users
+            of the redistributed or derivative work.
+
+            b.  Notice of any changes or modifications to the files,
+            including the date changes were made.
+
+    2.  The name, servicemarks and trademarks of X Engineering
+        Software Systems Corp. may NOT be used in advertising or
+        publicity pertaining to the software without specific, written
+        prior permission.
+
+    3.  Title to copyright in this software and any associated
+        documentation will at all times remain with X Engineering
+        Software Systems Corp.
+
+    4.  THIS SOFTWARE AND DOCUMENTATION IS PROVIDED "AS IS," AND X
+        Engineering Software Systems Corp MAKES NO REPRESENTATIONS OR
+        WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO,
+        WARRANTIES OF MERCHANTABILITY OR FITNESS FOR ANY PARTICULAR
+        PURPOSE OR THAT THE USE OF THE SOFTWARE OR DOCUMENTATION WILL
+        NOT INFRINGE ANY THIRD PARTY PATENTS, COPYRIGHTS, TRADEMARKS
+        OR OTHER RIGHTS.
+
+    5.  X Engineering Software Systems Corp WILL NOT BE LIABLE FOR ANY
+        DAMAGES, INCLUDING BUT NOT LIMITED TO, DIRECT, INDIRECT,
+        SPECIAL OR CONSEQUENTIAL, ARISING OUT OF ANY USE OF THE
+        SOFTWARE OR DOCUMENTATION.
+
+  ©2006 - X Engineering Software Systems Corp.  All rights reserved.
+----------------------------------------------------------------------------------*/
+
+
+#ifndef MEMPORT_H
+#define MEMPORT_H
+
+#include "<a href="#" OnFocus="link('_file','progress_h0',this)">progress.h</a>"
+#include "<a href="#" OnFocus="link('_file','pport_h0',this)">pport.h</a>"
+#include "<a href="#" OnFocus="link('_file','hexrecrd_h0',this)">hexrecrd.h</a>"
+
+#define BIG_ENDIAN_BYTES    true
+#define LITTLE_ENDIAN_BYTES false
+#define BIG_ENDIAN_BITS     true
+#define LITTLE_ENDIAN_BITS  false
+//#define ENDIAN_DEFAULTS   BIG_ENDIAN_BYTES,LITTLE_ENDIAN_BITS
+
+
+/**
+Uploading and downloading of hexadecimal records to the RAM on an XS40, XSA, XSB or XSV Board.
+
+This object provides methods for uploading and downloading RAM of 
+varying address and data widths through the XS Board parallel port 
+interface. 
+
+The download method reads hexadecimal data records from Intel, Motorola 
+or XESS HEX files and sends them to the XS Board. Before using this 
+method, the FPGA or CPLD on the XS Board should be programmed with a 
+state machine that manages the passage of the address and data 
+information through the parallel port. The download method partitions 
+the address and data into small bit fields that are passed to the state 
+machine which re-assembles them and then loads the data into the given 
+address location in RAM. The state machine returns an indicator of its 
+current state through the parallel port status lines so the download 
+method can detect any loss of synchronization during the RAM download. 
+
+The upload method works in a similar fashion. It passes an address 
+through the parallel port to the state machine in the XS Board FPGA or 
+CPLD. The data from the given address Flash memory is returned 
+while the upload method is sending the next memory address. 
+
+*/
+class <a href="#" OnFocus="link('_class','RAMPort0',this)">RAMPort</a> : public <a href="#" OnFocus="link('_class','PPort0',this)">PPort</a>
+{
+    public:
+
+    <a href="#" OnFocus="link('_member','RAMPort60241080',this)">RAMPort</a>();
+
+    <a href="#" OnFocus="link('_member','RAMPort60241080',this)">RAMPort</a>(<a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>* e, unsigned int portNum, unsigned int invMask,
+        unsigned int pos_reset, unsigned int pos_clk, unsigned int pos_dolsb,
+        unsigned int pos_domsb, unsigned int pos_dilsb, unsigned int pos_dimsb,
+        unsigned int pos_stlsb, unsigned int pos_stmsb, unsigned int dWidth,
+        unsigned int aWidth);
+
+    int <a href="#" OnFocus="link('_member','Setup2928848075',this)">Setup</a>(<a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>* e, unsigned int portNum, unsigned int invMask,
+        unsigned int pos_reset, unsigned int pos_clk, unsigned int pos_dolsb,
+        unsigned int pos_domsb, unsigned int pos_dilsb, unsigned int pos_dimsb,
+        unsigned int pos_stlsb, unsigned int pos_stmsb, unsigned int dWidth,
+        unsigned int aWidth);
+
+    bool <a href="#" OnFocus="link('_member','DownloadRAM3521986278',this)">DownloadRAM</a>(string&amp; hexfileName, bool bigEndianBytes, bool bigEndianBits);
+
+    bool <a href="#" OnFocus="link('_member','DownloadRAM3521986278',this)">DownloadRAM</a>(istream&amp; is, bool bigEndianBytes, bool bigEndianBits);
+
+    bool <a href="#" OnFocus="link('_member','UploadRAM934319802',this)">UploadRAM</a>(string&amp; hexfileName, const char* format, unsigned long loAddr,
+        unsigned long hiAddr, bool bigEndianBytes, bool bigEndianBits);
+
+    bool <a href="#" OnFocus="link('_member','UploadRAM934319802',this)">UploadRAM</a>(ostream&amp; os, const char* format, unsigned long loAddr,
+        unsigned long hiAddr, bool bigEndianBytes, bool bigEndianBits);
+
+    bool <a href="#" OnFocus="link('_member','DownloadHexRecordToRAM2745562329',this)">DownloadHexRecordToRAM</a>(<a href="#" OnFocus="link('_class','HexRecord0',this)">HexRecord</a>&amp; hx, bool bigEndianBytes, bool bigEndianBits);
+
+    bool <a href="#" OnFocus="link('_member','WriteRAM3747247576',this)">WriteRAM</a>(unsigned int addr, unsigned int data,
+        bool bigEndianBytes, bool bigEndianBits);
+
+    bool <a href="#" OnFocus="link('_member','UploadHexRecordFromRAM493485679',this)">UploadHexRecordFromRAM</a>(<a href="#" OnFocus="link('_class','HexRecord0',this)">HexRecord</a>&amp; hx, unsigned long loAddr, unsigned long hiAddr,
+        bool bigEndianBytes, bool bigEndianBits);
+
+    bool <a href="#" OnFocus="link('_member','ReadRAM3707112581',this)">ReadRAM</a>(unsigned int addr, unsigned int* data,
+        bool bigEndianBytes, bool bigEndianBits);
+
+
+    protected:
+
+    <a href="#" OnFocus="link('_class','Progress0',this)">Progress</a> *<a href="#" OnFocus="link('_member','progressGauge518703',this)">progressGauge</a>; ///&lt; indicates progress of operations
+
+    
+    private:
+
+    unsigned int <a href="#" OnFocus="link('_member','posRESET518703',this)">posRESET</a>;  ///&lt; bit position in parallel port of RAM RESET pin
+    unsigned int <a href="#" OnFocus="link('_member','posCLK518703',this)">posCLK</a>;  ///&lt; bit position in parallel port of RAM CLK pin
+    unsigned int <a href="#" OnFocus="link('_member','posDOLSB518703',this)">posDOLSB</a>;  ///&lt; bit position in parallel port of LSB of RAM data-out pin
+    unsigned int <a href="#" OnFocus="link('_member','posDOMSB518703',this)">posDOMSB</a>;  ///&lt; bit position in parallel port of MSB of RAM data-out pin
+    unsigned int <a href="#" OnFocus="link('_member','posDILSB518703',this)">posDILSB</a>;  ///&lt; bit position in parallel port of LSB of RAM data-in pin
+    unsigned int <a href="#" OnFocus="link('_member','posDIMSB518703',this)">posDIMSB</a>;  ///&lt; bit position in parallel port of MSB of RAM data-in pin
+    unsigned int <a href="#" OnFocus="link('_member','posSTLSB518703',this)">posSTLSB</a>;  ///&lt; bit position in parallel port of LSB of RAM status pin
+    unsigned int <a href="#" OnFocus="link('_member','posSTMSB518703',this)">posSTMSB</a>;  ///&lt; bit position in parallel port of MSB of RAM status pin
+    unsigned int <a href="#" OnFocus="link('_member','dataWidth518703',this)">dataWidth</a>;  ///&lt; width of RAM data
+    unsigned int <a href="#" OnFocus="link('_member','addrWidth518703',this)">addrWidth</a>;  ///&lt; width of RAM address
+};
+
+#endif
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_file','_source');
+</script>

@@ -1,0 +1,77 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - Download</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">Download</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_class','PBusPort0',this)" class="pathLink">PBusPort</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">Download</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','Download1142700455','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_member','Download1142700455','_source',this)" class="tabLinkActive">Source</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','Download1142700455','_callgraph',this)" class="tabLinkInActive">Call Graph</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<div class="paragraph2NoTopPadding">Start Line: 153</div>
+<pre class="codeExamples">
+bool <a href="#" OnFocus="link('_member','Download2423321888',this)">PBusPort::Download</a>(istream &amp;is, bool bigEndianBytes, bool bigEndianBits)
+{
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> = <a href="#" OnFocus="link('_member','GetErr259477277',this)">GetErr</a>();
+
+    assert(progressGauge != NULL);  //  make sure progress indicator is initialized
+    <a href="#" OnFocus="link('_member','progressGauge243780660',this)">progressGauge</a>-&gt;<a href="#" OnFocus="link('_member','Report2561259521',this)">Report</a>(0);      // start progress indicator at zero
+
+    // read hex records from file and place data on the peripheral bus of the board
+    <a href="#" OnFocus="link('_class','HexRecord0',this)">HexRecord</a> hx;
+    while(is.eof()==0)
+    {
+        is &gt;&gt; hx;
+        if(is.eof()!=0)
+            break; // terminate loading loop when stream goes dry
+        if(<a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','IsError863564933',this)">IsError</a>())
+            break;
+        if(is.fail())
+        {
+            <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','SetSeverity3409672334',this)">SetSeverity</a>(XSErrorMajor);
+            <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> &lt;&lt; "error reading stream\n";
+            <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','EndMsg60232619',this)">EndMsg</a>();
+            break;
+        }
+        if(hx.<a href="#" OnFocus="link('_member','IsError2146470179',this)">IsError</a>())
+        { // some error in the hex record itself
+            <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','SetSeverity3409672334',this)">SetSeverity</a>(XSErrorMajor);
+            <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> &lt;&lt; "hex record: " &lt;&lt; hx.<a href="#" OnFocus="link('_member','GetErrMsg2146470179',this)">GetErrMsg</a>() &lt;&lt; "\n";
+            <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','EndMsg60232619',this)">EndMsg</a>();
+            break;
+        }
+        else
+        { // send out an indication for each hex record that's loaded
+            <a href="#" OnFocus="link('_member','progressGauge243780660',this)">progressGauge</a>-&gt;<a href="#" OnFocus="link('_member','Report2561259521',this)">Report</a>(is.tellg());
+            if(<a href="#" OnFocus="link('_member','DownloadHexRecord2107542748',this)">DownloadHexRecord</a>(hx,bigEndianBytes,bigEndianBits) == false) // download hex record
+                return false;   // an error occurred while downloading the hex record
+        }
+    }
+    <a href="#" OnFocus="link('_member','progressGauge243780660',this)">progressGauge</a>-&gt;<a href="#" OnFocus="link('_member','Report2561259521',this)">Report</a>(is.tellg()); // should set gauge to 100%
+    
+    return <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','IsError863564933',this)">IsError</a>() ? false:true;
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_member','_source');
+</script>

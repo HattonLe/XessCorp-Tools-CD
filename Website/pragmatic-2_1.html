@@ -1,0 +1,437 @@
+<html>
+
+
+<!-- Mirrored from 192.168.0.47/pragmatic-2_1.html by HTTrack Website Copier/3.x [XR&CO'2004], Mon, 04 Dec 2006 16:07:22 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=ISO-8859-1"><!-- /Added by HTTrack -->
+<head>
+<link rel="SHORTCUT ICON" HREF="images/xess.ico">
+<title>Pragmatic Logic Design With Xilinx Foundation 2.1i</title>
+<meta name="KEYWORDS" content="Pragmatic Logic Design Foundation 2.1i lab book design examples">
+<meta name="DESCRIPTION" content="This book shows the reader how to construct digital logic circuits using two 
+    types of FPLDs: field programmable gate arrays (FPGAs) and complex programmable logic 
+    devices (CPLDs).">
+<meta http-equiv="Content-Type" content="text/html">
+<link rel="stylesheet" type="text/css" href="xess-1.css">
+<meta name="Microsoft Border" content="none, default">
+</head>
+
+<?php 
+	require('prod_db.html');
+	$product = "PRAGMATIC-2.1i";
+?>
+<table>
+	<!-- MSTableType="nolayout" -->
+	<tr>
+		<td class="StdPageLogo">
+		<a href="index-2.html"><img border="0" src="images/xess-138x32.bmp"></a>
+
+		<?php 
+			require("logo.html");
+		?>
+		</td>
+		<td class="StdPageNav">
+		<script type="text/javascript" src="xess.js"></script>
+<!-- <script type="text/javascript" src="niftycube_xess.js"></script> -->
+<!-- <script type="text/javascript" src="prototype.js"></script> -->
+<!-- <script type="text/javascript" src="rico.js"></script> -->
+<script type="text/javascript">
+	window.onload=function(){
+		startList("nav");
+		stripe_xess();
+		collapseall();
+		// Nifty("td.StdPageNav","transparent");
+		// Nifty("td.StdPageSidebar","transparent");
+		// Nifty("td.StdPageNavLinks","transparent");
+	};
+	onload=function(){
+		startList("nav");
+		stripe_xess();
+		collapseall();
+		// Nifty("td.StdPageNav","transparent");
+		// Nifty("td.StdPageSidebar","transparent");
+		// Nifty("td.StdPageNavLinks","transparent");
+	};
+</script>
+
+
+
+<table border="0" width="640" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="center" valign="center" width="70%">
+
+<!--
+  -- naviagation bar for browsers with scripting capability
+  -- (make sure there is no whitespace after the '\' on each line and run
+  -- the Javascript console on Firefox to check the syntax.)
+  -->
+<script type="text/javascript">
+nav_text = '\
+  <ul id="nav"> \
+    <li id="first"><a href="ho04000.html">Products</a> \
+      <ul> \
+        <li><a href="ho04000.html"><div>Catalog</div></a></li> \
+        <li><a href="manuals.html"><div>Manuals</div></a></li> \
+        <li><a href="ho07000.html"><div>Software Downloads</div></a></li> \
+      </ul> \
+    </li> \
+    <li><a href="help.html">Support</a> \
+      <ul> \
+        <li><a href="manuals.html" ><div>Product Manuals</div></a></li> \
+        <li><a href="ho03000.html" ><div>Tutorials</div></a></li> \
+        <li><a href="ho03000.html" ><div>Application Notes</div></a></li> \
+        <li><a href="ho03000.html" ><div>Design Examples</div></a></li> \
+        <li><a href="ho01000.html" ><div>FAQ</div></a></li> \
+        <li><a href="list_reg.html"><div>User Forum</div></a></li> \
+        <li><a href="help.html"    ><div>Request Help</div></a></li> \
+      </ul> \
+    </li> \
+    <li><a href="ho01001.html">Purchasing</a> \
+      <ul> \
+        <li><a href="https://xess.com/xess_int_order.php3"><div>Web Orders</div></a></li> \
+        <li><a href="ho01001.html"                       ><div>Purchase Orders</div></a></li> \
+        <li><a href="ho01001.html"                       ><div>Payment Methods</div></a></li> \
+        <li><a href="xess_int_quote.html"                ><div>Get a Quote</div></a></li> \
+        <li><a href="xess_int_quote.html"                ><div>Get a Proforma Invoice</div></a></li> \
+        <li><a href="ho01001.html"                       ><div>How To Buy From Us</div></a></li> \
+      </ul> \
+    </li> \
+    <li id="last"><a href="index-2.html">XESS</a> \
+      <ul> \
+        <li><a href="index-2.html"   ><div>Home</div></a></li> \
+        <li><a href="about_us.html"><div>About Us</div></a></li> \
+        <li><a href="ho00003.html" ><div>Contact Us</div></a></li> \
+<!-- \
+        <li><a href=""              ><div>Announcements</div></a></li> \
+        <li><a href="ho00005.html" ><div>Press Releases</div></a></li> \
+--> \
+      </ul> \
+    </li> \
+    <li id="last"><a href="links.html">Misc.</a> \
+      <ul> \
+        <li><a href="links.html"><div>Links</div></a></li> \
+      </ul> \
+    </li> \
+  </ul> \
+';
+document.writeln(nav_text);
+</script>
+
+<!--
+  -- naviagation bar for browsers with NO scripting capability
+  -->
+<noscript>
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="14%" align="left">
+    <a href="ho04000.html"><img border="0" src="images/menu_arrow.png">Products</a>
+    </td>
+    <td width="16%" align="left">
+    <a href="ho01001.html"><img border="0" src="images/menu_arrow.png">How to Buy</a>
+    </td>
+    <td width="11%" align="left">
+    <a href="help.html"><img border="0" src="images/menu_arrow.png">Help!</a>
+    </td>
+    <td width="14%" align="left">
+    <a href="ho03000.html"><img border="0" src="images/menu_arrow.png">Tutorials</a>
+    </td>
+    <td width="14%" align="left">
+    <a href="index-2.html"><img border="0" src="images/menu_arrow.png">Home</a>
+<!--
+    <a href="/ho00005.html"><img border="0" src="/images/menu_arrow.png">Press&nbsp;Rel.</a>
+-->
+    </td>
+  </tr>
+  <tr>
+    <td>
+    <a href="manuals.html"><img border="0" src="images/menu_arrow.png">Manuals</a>
+    </td>
+    <td>
+    <a href="xess_int_quote.html"><img border="0" src="images/menu_arrow.png">Online Quote</a>
+    </td>
+    <td>
+    <a href="ho01000.html"><img border="0" src="images/menu_arrow.png">FAQ</a>
+    </td>
+    <td>
+    <a href="ho03000.html"><img border="0" src="images/menu_arrow.png">Examples</a>
+    </td>
+    <td>
+    <a href="about_us.html">
+    <img border="0" src="images/menu_arrow.png">About&nbsp;Us</a>
+    </td>
+  </tr>
+  <tr>
+    <td>
+    <a href="ho07000.html"><img border="0" src="images/menu_arrow.png">Downloads</a>
+    </td>
+    <td>
+    <a href="https://xess.com/xess_int_order.php3"><img border="0" src="images/menu_arrow.png">Order Online</a>
+    </td>
+    <td>
+    <a href="list_reg.html"><img border="0" src="images/menu_arrow.png">Forum</a>
+    </td>
+    <td>
+    <a href="links.html"><img border="0" src="images/menu_arrow.png">Links</a>
+    </td>
+    <td>
+    <a href="ho00003.html"><img border="0" src="images/menu_arrow.png">Contact&nbsp;Us</a>
+    </td>
+  </tr>
+</table>
+</noscript>
+
+    </td>
+    <td align="center" valign="center" width="30%" id="srch">
+      <FORM ACTION="http://192.168.0.47/cgi-bin/ksearch/ksearch.cgi" METHOD="GET" NAME="search">
+        <INPUT TYPE="text" value="search" NAME="terms">
+		<input type=image src="images/search_arrow.png" value="Search">
+      </FORM>
+    </td>
+  </tr>
+</table>
+
+
+		<?php 
+			require("nav.html");
+		?>
+		</td>
+	</tr>
+	<tr>
+		<td class="StdPageSidebar">
+		<h3 align="left">Pragmatic Logic Design With Xilinx Foundation 2.1i<br>
+		<font size="2"><i>by David Vanden Bout</i></font></h3>
+		<ul>
+			
+      <p align="center">Download the highlighted sections of this book:</p> 
+      <p align="center"> 
+      <a href="Pragmatic-2_1/chap-0-1.pdf">Introduction 
+      &amp; Chapter 1</a><br> 
+      <a href="Pragmatic-2_1/chap-2.pdf">Chapter 2</a><br> 
+      <a href="Pragmatic-2_1/chap-3.pdf">Chapter 3</a><br> 
+      <a href="Pragmatic-2_1/chap-4.pdf">Chapter 4</a><br> 
+      <a href="Pragmatic-2_1/chap-5.pdf">Chapter 5</a><br> 
+      <p align="center" style="border-top-style: solid">Download the design 
+      files for each chapter:</p> 
+      <p align="center"> 
+      <a href="Pragmatic-2_1/dsgn1_1.zip">Chapter 1</a><br> 
+      <a href="Pragmatic-2_1/dsgn2_1.zip">Chapter 2-1</a><br> 
+      <a href="Pragmatic-2_1/dsgn2_2.zip">Chapter 2-2</a><br> 
+      <a href="Pragmatic-2_1/dsgn3_1.zip">Chapter 3-1</a><br> 
+      <a href="Pragmatic-2_1/dsgn3_1a.zip">Chapter 3-1a</a><br> 
+      <a href="Pragmatic-2_1/dsgn3_2.zip">Chapter 3-2</a><br> 
+      <a href="Pragmatic-2_1/dsgn3_3.zip">Chapter 3-3</a><br> 
+      <a href="Pragmatic-2_1/dsgn3_3a.zip">Chapter 3-3a</a><br> 
+      <a href="Pragmatic-2_1/dsgn4_1.zip">Chapter 4-1</a><br> 
+      <a href="Pragmatic-2_1/dsgn4_1a.zip">Chapter 4-1a</a><br> 
+      <a href="Pragmatic-2_1/dsgn5_1.zip">Chapter 5-1</a><br> 
+      <a href="Pragmatic-2_1/dsgn5_2.zip">Chapter 5-2</a><br> 
+      <p align="center">(New chapters are relased as they become available.)</p> 
+    <p align="center"><a href="http://www.adobe.com/products/acrobat/readstep2.html"><b>Download 
+    Adobe Acrobat Reader 4.0 to read these files!</b> 
+    <p align="center"><img border="0" src="images/acroread.gif" width="87" height="30"></a>
+		</ul>
+		<p align="center"><a href="#"></a>
+		</p>
+		</td>
+		<td class="StdPageBody">
+      <p>There are numerous requests on Internet newgroups 
+      that go something like this:</p> 
+      <p>&quot;I am new to using programmable logic like 
+      FPGAs and CPLDs.  How do I start?  Is there a tutorial 
+      and some cheap/free tools I can use to learn more?&quot;</p> 
+      <p>Xilinx has a <a href="prod023.html"> student edition of their Foundation 2.Ii 
+      software</a> so anyone can get a low-cost set of tools for designing with 
+      programmable logic.  This book was 
+      written to give you a gentle introduction to using the Foundation 
+      2.1I software.  This book tries to show you quickly how to use 
+      Foundation 2.1I to do the following:</p> 
+      <ul> 
+        <li> 
+          <p>How to start a project and target it at a 
+          particular type of FPGA or CPLD.</li> 
+        <li> 
+          <p>How to describe a logic circuit using VHDL, 
+          schematics, or both.</li> 
+        <li> 
+          <p>How to simulate your circuit to test its 
+          functions.</li> 
+        <li> 
+          <p>How to synthesize a netlist from your 
+          circuit.</li> 
+        <li> 
+          <p>How to fit the netlist into an FPGA or CPLD.</li> 
+        <li> 
+          <p>How to check the device utilization and 
+          timing.</li> 
+        <li> 
+          <p>How to generate a bitstream for configuring 
+          the FPGA or CPLD.</li> 
+        <li> 
+          <p>How to download the bitstream into the 
+          device.</li> 
+        <li> 
+          <p>How to test the programmed device in an <a href="prod004.html"> XS40</a> 
+          or <a href="prod002.html"> XS95</a> Board.</li> 
+      </ul> 
+      <p>Various combinatorial and sequential logic design 
+      examples will be used to illustrate the design flow.  Along the way you will see how to use many of the tools bundled 
+      into XILINX Foundation 2.1i.  There will not be a great deal of explanation on the theory of operation of the 
+      example circuits or the internal circuitry of the programmable logic 
+      device, but appropriate references to the texts and application notes on 
+      these subjects will be provided.  In short, this is just a tutorial to get you started using the XILINX 
+      Foundation tools.  After you go through this book you can move on to more advanced topics.   
+      The basic concepts introduced in each chapter are shown below:</p> 
+    <table> 
+      <tr> 
+        <td class="title"><p align="center">Pragmatic 
+          Logic Design<br> 
+          With XILINX Foundation 2.1i<br> 
+          Table of Contents</td> 
+      </tr> 
+      <tr> 
+        <td class="evenrow" ><b>1. A 
+          VHDL-Based Design</b></td> 
+      </tr> 
+      <tr> 
+        <td class="oddrow"> 
+          <p style="margin-left: 40; margin-right: 40" class="oddrow"><span class="DescriptionTerm">Chapter 
+          1</span> introduces the Foundation 2.1I software.<span style="mso-spacerun: yes">&nbsp; 
+          </span>In this chapter, you will use Foundation to describe a 
+          combinational circuit with VHDL, synthesize it, simulate it, and then 
+          compile a configuration bitstream that you can download and test with 
+          an evaluation board. 
+        </td> 
+      </tr> 
+      <tr> 
+        <td class="evenrow" ><b>2. A 
+          Schematic-Based Design</b></td> 
+      </tr> 
+      <tr> 
+        <td class="oddrow" > 
+          <p style="margin-left: 40; margin-right: 40"><span class="DescriptionTerm">Chapter 
+          2</span> shows you how to design and implement a counter circuit using 
+          the schematic editor included in the Foundation software.&nbsp; The 
+          use of FPGA Editor and ChipViewer to look at the mapping of the 
+          counter circuit to an FPGA and CPLD is also demonstrated. 
+        </td> 
+      </tr> 
+      <tr> 
+        <td class="evenrow" ><b>3. 
+          Hierarchical and Mixed-Mode Designs</b></td> 
+      </tr> 
+      <tr> 
+        <td class="oddrow" > 
+          <p style="margin-left: 40; margin-right: 40"><span class="DescriptionTerm">Chapter 
+          3</span> discusses how to do hierarchical and mixed-mode designs that 
+          include both schematics and VHDL. 
+        </td> 
+      </tr> 
+      <tr> 
+        <td class="evenrow" ><b>4. State 
+          Machine Design</b></td> 
+      </tr> 
+      <tr> 
+        <td class="oddrow" > 
+          <p class="oddrow" style="margin-left: 40; margin-right: 40"><span class="DescriptionTerm">Chapter 
+          4</span> shows you how to design state machines using VHDL or the 
+          state machine editor included in the Foundation software.</td> 
+      </tr> 
+      <tr> 
+        <td class="evenrow" ><b>5. Using RAM</b></td> 
+      </tr> 
+      <tr> 
+        <td class="oddrow" > 
+          <p style="margin-left: 40; margin-right: 40"><span class="DescriptionTerm">Chapter 
+          7</span> illustrates how to use the internal RAMs in a XILINX FPGA and 
+          how to interface an FPGA or CPLD to an external RAM chip.</td> 
+      </tr> 
+    </table> 
+      <p>All the project files for each design example are provided on 
+      the CDROM.  You should be able 
+      to re-create each design just from following the text, but you can use the 
+      project files in case you have problems or are in a hurry.  Of equal importance, these working examples serve as a 
+      starting point for your own designs and explorations.</p> 
+      <p>After you complete this book will you be an expert 
+      in using programmable logic and the Foundation 2.1I tools?  The answer is a definite NO.   
+      This text is just a starting point. 
+      After you complete this text you will be able to:</p> 
+      <ul> 
+        <li> 
+          <p class="MsoListBullet">Understand the basic structure of the XILINX 
+          XC9500 CPLDs and XC4000 FPGAs and be able to further your 
+          understanding by reading their respective datasheets.</li> 
+        <li> 
+          <p class="MsoListBullet">Understand the basic functions of the 
+          Foundation 2.1I software tools.</li> 
+        <li> 
+          <p class="MsoListBullet">Use Foundation to create, synthesize, 
+          simulate, and compile logic circuits for CPLDs and FPGAs.</li> 
+        <li> 
+          <p class="MsoListBullet">Analyze the performance of your circuit with 
+          respect to a given XILINX CPLD or FPGA.</li> 
+        <li> 
+          <p class="MsoListBullet">Download and test your circuit on an FPGA or 
+          CPLD evaluation board.</li> 
+      </ul> </td>
+	</tr>
+	<tr>
+		<td class="StdPageCredits">
+		<a href="mailto:webmaster@xess.com"> webmaster@xess.com</a><br>
+© 1998-2006, XESS Corp.<br> 
+All rights reserved.
+<script src="../www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-765812-1";
+urchinTracker();
+</script>
+		<?php 
+			require("credits.html");
+		?>
+		</td>
+		<td class="StdPageNavLinks">
+		    <a href="ho04000.html">
+    <img border="0" src="images/menu_arrow.png">Products</a>
+    <a href="manuals.html">
+    <img border="0" src="images/menu_arrow.png">Manuals</a>
+    <a href="ho07000.html">
+    <img border="0" src="images/menu_arrow.png">Downloads</a>
+    <a href="ho01001.html">
+    <img border="0" src="images/menu_arrow.png">How to Buy</a>
+    <a href="xess_int_quote.html">
+    <img border="0" src="images/menu_arrow.png">Online Quote</a>
+    <a href="https://xess.com/xess_int_order.php3">
+    <img border="0" src="images/menu_arrow.png">Order Online</a>
+    <br>
+    <a href="help.html">
+    <img border="0" src="images/menu_arrow.png">Help!</a>
+    <a href="ho01000.html">
+    <img border="0" src="images/menu_arrow.png">FAQ</a>
+    <a href="list_reg.html">
+    <img border="0" src="images/menu_arrow.png">Forum</a>
+    <a href="ho03000.html">
+    <img border="0" src="images/menu_arrow.png">Tutorials</a>
+    <a href="ho03000.html">
+    <img border="0" src="images/menu_arrow.png">Examples</a>
+    <a href="links.html">
+    <img border="0" src="images/menu_arrow.png">Links</a>
+    <a href="ho00005.html">
+    <a href="index-2.html">
+    <img border="0" src="images/menu_arrow.png">Home</a>
+    <a href="about_us.html">
+    <img border="0" src="images/menu_arrow.png">About&nbsp;Us</a>
+    <a href="ho00003.html">
+    <img border="0" src="images/menu_arrow.png">Contact&nbsp;Us</a>
+
+		<?php 
+			require("navlinks.html");
+		?>
+		</td>
+	</tr>
+</table>
+
+</body>
+
+
+<!-- Mirrored from 192.168.0.47/pragmatic-2_1.html by HTTrack Website Copier/3.x [XR&CO'2004], Mon, 04 Dec 2006 16:07:22 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=ISO-8859-1"><!-- /Added by HTTrack -->
+</html>

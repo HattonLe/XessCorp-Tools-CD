@@ -1,0 +1,69 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - WriteReg</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">WriteReg</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_class','AKCodecPort0',this)" class="pathLink">AKCodecPort</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">WriteReg</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','WriteReg2778481820','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_member','WriteReg2778481820','_source',this)" class="tabLinkActive">Source</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','WriteReg2778481820','_callgraph',this)" class="tabLinkInActive">Call Graph</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<div class="paragraph2NoTopPadding">Start Line: 110</div>
+<pre class="codeExamples">
+bool <a href="#" OnFocus="link('_member','WriteReg2778481820',this)">AKCodecPort::WriteReg</a>(int regAddr, int regData)
+{
+    int i;
+    
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posCdcCSNN,posCdcCSNN);  // disable codec
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posCdcCCLK,posCdcCCLK);  // lower codec clock
+
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posCdcCSNN,posCdcCSNN);  // enable codec
+
+    // output the 3-bit write command "111"
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posCdcCDTI,posCdcCDTI);
+    <a href="#" OnFocus="link('_member','PulseCCLK2638701123',this)">PulseCCLK</a>();
+    <a href="#" OnFocus="link('_member','PulseCCLK2638701123',this)">PulseCCLK</a>();
+    <a href="#" OnFocus="link('_member','PulseCCLK2638701123',this)">PulseCCLK</a>();
+
+    // output the 5-bit register address starting with the LSB
+    for(i=0; i&lt;5; i++)
+    {
+        <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>((regAddr&gt;&gt;i)&amp;1,posCdcCDTI,posCdcCDTI);
+        <a href="#" OnFocus="link('_member','PulseCCLK2638701123',this)">PulseCCLK</a>();
+    }
+
+    // output the 8-bit register value starting with the LSB
+    for(i=0; i&lt;8; i++)
+    {
+        <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>((regData&gt;&gt;i)&amp;1,posCdcCDTI,posCdcCDTI);
+        <a href="#" OnFocus="link('_member','PulseCCLK2638701123',this)">PulseCCLK</a>();
+    }
+
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posCdcCSNN,posCdcCSNN);  // disable codec
+
+    return true;
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_member','_source');
+</script>

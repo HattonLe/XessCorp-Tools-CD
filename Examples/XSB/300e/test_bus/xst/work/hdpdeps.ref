@@ -1,0 +1,8 @@
+V1 3
+FL C:/xesscorp/PRODUCTS/BITSTREAMS/XSB/300e/test_bus/test_bus.vhd 2005/06/20.16:52:14
+EN work/TEST_BUS \
+      FL C:/xesscorp/PRODUCTS/BITSTREAMS/XSB/300e/test_bus/test_bus.vhd \
+      PB ieee/STD_LOGIC_1164 PB ieee/STD_LOGIC_UNSIGNED
+AR work/TEST_BUS/ARCH \
+      FL C:/xesscorp/PRODUCTS/BITSTREAMS/XSB/300e/test_bus/test_bus.vhd \
+      EN work/TEST_BUS

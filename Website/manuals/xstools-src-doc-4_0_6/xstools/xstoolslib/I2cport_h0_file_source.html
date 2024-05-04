@@ -1,0 +1,161 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - i2cport.h</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">i2cport.h</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">i2cport.h</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','i2cport_h0','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','i2cport_h0','_overview',this)" class="tabLinkInActive">Overview</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','i2cport_h0','_includedfiles',this)" class="tabLinkInActive">Included files</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','i2cport_h0','_includedby',this)" class="tabLinkInActive">Included by</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_file','i2cport_h0','_source',this)" class="tabLinkActive">Source</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<pre class="codeExamples">
+/*----------------------------------------------------------------------------------
+  SOFTWARE LICENSE AGREEMENT
+    1.  Permission to use, copy, modify, and distribute this software
+        and its documentation, with or without modification, for any
+        purpose and without fee or royalty is hereby granted, provided
+        that you include the following on ALL copies of the software
+        and documentation or portions thereof, including
+        modifications, that you make:
+
+            a.  The full text of this license in a location viewable to users
+            of the redistributed or derivative work.
+
+            b.  Notice of any changes or modifications to the files,
+            including the date changes were made.
+
+    2.  The name, servicemarks and trademarks of X Engineering
+        Software Systems Corp. may NOT be used in advertising or
+        publicity pertaining to the software without specific, written
+        prior permission.
+
+    3.  Title to copyright in this software and any associated
+        documentation will at all times remain with X Engineering
+        Software Systems Corp.
+
+    4.  THIS SOFTWARE AND DOCUMENTATION IS PROVIDED "AS IS," AND X
+        Engineering Software Systems Corp MAKES NO REPRESENTATIONS OR
+        WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO,
+        WARRANTIES OF MERCHANTABILITY OR FITNESS FOR ANY PARTICULAR
+        PURPOSE OR THAT THE USE OF THE SOFTWARE OR DOCUMENTATION WILL
+        NOT INFRINGE ANY THIRD PARTY PATENTS, COPYRIGHTS, TRADEMARKS
+        OR OTHER RIGHTS.
+
+    5.  X Engineering Software Systems Corp WILL NOT BE LIABLE FOR ANY
+        DAMAGES, INCLUDING BUT NOT LIMITED TO, DIRECT, INDIRECT,
+        SPECIAL OR CONSEQUENTIAL, ARISING OUT OF ANY USE OF THE
+        SOFTWARE OR DOCUMENTATION.
+
+  ©2006 - X Engineering Software Systems Corp.  All rights reserved.
+----------------------------------------------------------------------------------*/
+
+
+#ifndef I2CPORT_H
+#define I2CPORT_H
+
+#include "<a href="#" OnFocus="link('_file','pport_h0',this)">pport.h</a>"
+
+
+/**
+Performs master reads and writes of registers in devices on an I2C bus.
+
+This object performs I2C bus transactions over a parallel port.
+It lets you read and write registers of a device at a given address on an I2C bus.
+
+*/
+class <a href="#" OnFocus="link('_class','I2CPort0',this)">I2CPort</a> : public <a href="#" OnFocus="link('_class','PPort0',this)">PPort</a>
+{
+    public:
+
+    <a href="#" OnFocus="link('_member','I2CPort60241061',this)">I2CPort</a>();
+
+    <a href="#" OnFocus="link('_member','I2CPort60241061',this)">I2CPort</a>(<a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>* e,
+        unsigned int portNum, 
+        unsigned int invMask,       
+        unsigned int sclwPosArg, 
+        unsigned int sdawPosArg, 
+        unsigned int sclrPosArg, 
+        unsigned int sdarPosArg, 
+        unsigned int bitDurArg);
+
+    int <a href="#" OnFocus="link('_member','Setup1745817787',this)">Setup</a>(<a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>* e, 
+        unsigned int portNum, 
+        unsigned int invMask,       
+        unsigned int sclwPosArg, 
+        unsigned int sdawPosArg, 
+        unsigned int sclrPosArg, 
+        unsigned int sdarPosArg, 
+        unsigned int bitDurArg);
+
+    void <a href="#" OnFocus="link('_member','SetSCL3135533083',this)">SetSCL</a>(unsigned int bit);
+
+    unsigned int <a href="#" OnFocus="link('_member','GetSCL84404763',this)">GetSCL</a>();
+
+    void <a href="#" OnFocus="link('_member','PulseSCL60241061',this)">PulseSCL</a>(void);
+
+    void <a href="#" OnFocus="link('_member','SetSDA3135533083',this)">SetSDA</a>(unsigned int bit);
+
+    unsigned int <a href="#" OnFocus="link('_member','GetSDA84404763',this)">GetSDA</a>();
+
+    void <a href="#" OnFocus="link('_member','StartTransfer84404763',this)">StartTransfer</a>();
+
+    void <a href="#" OnFocus="link('_member','WriteBit3135533083',this)">WriteBit</a>(unsigned int bit);
+
+    unsigned int <a href="#" OnFocus="link('_member','ReadBit60241061',this)">ReadBit</a>(void);
+
+    void <a href="#" OnFocus="link('_member','WriteAck3135533083',this)">WriteAck</a>(unsigned int ack);
+
+    unsigned int <a href="#" OnFocus="link('_member','ReadAck84404763',this)">ReadAck</a>();
+
+    void <a href="#" OnFocus="link('_member','StopTransfer84404763',this)">StopTransfer</a>();
+
+    void <a href="#" OnFocus="link('_member','WriteByte3135533083',this)">WriteByte</a>(unsigned int byte);
+
+    unsigned int <a href="#" OnFocus="link('_member','ReadByte66532513',this)">ReadByte</a>(bool doAck);
+
+    void <a href="#" OnFocus="link('_member','WriteBuffer2491703777',this)">WriteBuffer</a>(unsigned char* buffer, unsigned int numBytes1, ...);
+
+    void <a href="#" OnFocus="link('_member','ReadBuffer461448834',this)">ReadBuffer</a>(unsigned int numWriteBytes, unsigned char* wrBuffer,
+        unsigned int numReadBytes, unsigned char* rdBuffer);
+
+    void <a href="#" OnFocus="link('_member','WriteReg389920113',this)">WriteReg</a>(unsigned char devAddr, unsigned char regAddr, unsigned char regData);
+
+    void <a href="#" OnFocus="link('_member','ReadReg494774107',this)">ReadReg</a>(unsigned char devAddr, unsigned char regAddr, unsigned char* regData);
+
+
+    private:
+    
+    unsigned int <a href="#" OnFocus="link('_member','sclwPos518706',this)">sclwPos</a>;
+    unsigned int <a href="#" OnFocus="link('_member','sdawPos518706',this)">sdawPos</a>;
+    unsigned int <a href="#" OnFocus="link('_member','sclrPos518706',this)">sclrPos</a>;
+    unsigned int <a href="#" OnFocus="link('_member','sdarPos518706',this)">sdarPos</a>;
+    unsigned int <a href="#" OnFocus="link('_member','bitDur518706',this)">bitDur</a>;
+};
+
+#endif
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_file','_source');
+</script>

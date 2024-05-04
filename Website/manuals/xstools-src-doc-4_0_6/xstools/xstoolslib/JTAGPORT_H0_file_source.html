@@ -1,0 +1,217 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - jtagport.h</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">jtagport.h</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">jtagport.h</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','jtagport_h0','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','jtagport_h0','_overview',this)" class="tabLinkInActive">Overview</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','jtagport_h0','_includedfiles',this)" class="tabLinkInActive">Included files</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','jtagport_h0','_includedby',this)" class="tabLinkInActive">Included by</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_file','jtagport_h0','_source',this)" class="tabLinkActive">Source</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<pre class="codeExamples">
+/*----------------------------------------------------------------------------------
+  SOFTWARE LICENSE AGREEMENT
+    1.  Permission to use, copy, modify, and distribute this software
+        and its documentation, with or without modification, for any
+        purpose and without fee or royalty is hereby granted, provided
+        that you include the following on ALL copies of the software
+        and documentation or portions thereof, including
+        modifications, that you make:
+
+            a.  The full text of this license in a location viewable to users
+            of the redistributed or derivative work.
+
+            b.  Notice of any changes or modifications to the files,
+            including the date changes were made.
+
+    2.  The name, servicemarks and trademarks of X Engineering
+        Software Systems Corp. may NOT be used in advertising or
+        publicity pertaining to the software without specific, written
+        prior permission.
+
+    3.  Title to copyright in this software and any associated
+        documentation will at all times remain with X Engineering
+        Software Systems Corp.
+
+    4.  THIS SOFTWARE AND DOCUMENTATION IS PROVIDED "AS IS," AND X
+        Engineering Software Systems Corp MAKES NO REPRESENTATIONS OR
+        WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO,
+        WARRANTIES OF MERCHANTABILITY OR FITNESS FOR ANY PARTICULAR
+        PURPOSE OR THAT THE USE OF THE SOFTWARE OR DOCUMENTATION WILL
+        NOT INFRINGE ANY THIRD PARTY PATENTS, COPYRIGHTS, TRADEMARKS
+        OR OTHER RIGHTS.
+
+    5.  X Engineering Software Systems Corp WILL NOT BE LIABLE FOR ANY
+        DAMAGES, INCLUDING BUT NOT LIMITED TO, DIRECT, INDIRECT,
+        SPECIAL OR CONSEQUENTIAL, ARISING OUT OF ANY USE OF THE
+        SOFTWARE OR DOCUMENTATION.
+
+  ©2006 - X Engineering Software Systems Corp.  All rights reserved.
+----------------------------------------------------------------------------------*/
+
+
+#ifndef JTAGPORT_H
+#define JTAGPORT_H
+
+
+#include "<a href="#" OnFocus="link('_file','xserror_h0',this)">xserror.h</a>"
+#include "<a href="#" OnFocus="link('_file','bitstrm_h0',this)">bitstrm.h</a>"
+#include "<a href="#" OnFocus="link('_file','progress_h0',this)">progress.h</a>"
+
+
+/// Identifiers for all possible TAP states.
+typedef enum
+{
+    <a href="#" OnFocus="link('_member','TestLogicReset0',this)">TestLogicReset</a>=0, ///&lt; Test-Logic-Reset TAP state 
+    <a href="#" OnFocus="link('_member','RunTestIdle0',this)">RunTestIdle</a>=1, ///&lt; Run-Test/Idle TAP state
+    <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>=2, ///&lt; Select-DR-Scan TAP state
+    <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>=3, ///&lt; Select-IR-Scan TAP state
+    <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>=4, ///&lt; Capture-DR TAP state
+    <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>=5, ///&lt; Capture-IR TAP state
+    <a href="#" OnFocus="link('_member','ShiftDR0',this)">ShiftDR</a>=6,     ///&lt; Shift-DR TAP state
+    <a href="#" OnFocus="link('_member','ShiftIR0',this)">ShiftIR</a>=7,     ///&lt; Shift-IR TAP state
+    <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>=8,     ///&lt; Exit1-DR TAP state
+    <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>=9,     ///&lt; Exit1-IR TAP state
+    <a href="#" OnFocus="link('_member','PauseDR0',this)">PauseDR</a>=10,        ///&lt; Pause-DR TAP state
+    <a href="#" OnFocus="link('_member','PauseIR0',this)">PauseIR</a>=11,        ///&lt; Pause-IR TAP state
+    <a href="#" OnFocus="link('_member','Exit2DR0',this)">Exit2DR</a>=12,        ///&lt; Exit2-DR TAP state
+    <a href="#" OnFocus="link('_member','Exit2IR0',this)">Exit2IR</a>=13,        ///&lt; Exit2-IR TAP state
+    <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>=14,    ///&lt; Update-DR TAP state
+    <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>=15,    ///&lt; Update-IR TAP state
+    <a href="#" OnFocus="link('_member','InvalidTAPState0',this)">InvalidTAPState</a>=16 ///&lt; Invalid TAP state
+}<a href="#" OnFocus="link('_member','TAPState0',this)">TAPState</a>;
+
+
+/**
+ Low-level and high-level JTAG operations.
+ 
+This object provides JTAG capabilities. It stores the 
+state of the JTAG TAP state machine and updates the state as the TMS and 
+TCK signals change state. It provides methods that make it easier to 
+move between states of the TAP machine and to access the boundary scan 
+instruction and data registers.
+
+This object will be inherited along with either the parallel port or USB port object to
+provide JTAG capabilities to an actual physical port.
+
+*/
+class <a href="#" OnFocus="link('_class','JTAGPort0',this)">JTAGPort</a>
+{
+    public:
+
+    <a href="#" OnFocus="link('_member','JTAGPort141716444',this)">JTAGPort</a>();
+
+    <a href="#" OnFocus="link('_member','JTAGPort141716444',this)">JTAGPort</a>(<a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>* e);
+
+    bool <a href="#" OnFocus="link('_member','Setup3091404295',this)">Setup</a>(<a href="#" OnFocus="link('_class','XSError0',this)">XSError</a> *e, bool traceOnFlag = false, ostream&amp; traceOstream = cerr);
+
+    void <a href="#" OnFocus="link('_member','SetErr4225963298',this)">SetErr</a>(<a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>* e);
+
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','GetErr141716444',this)">GetErr</a>(void);
+
+    /// Set the level on the JTAG TCK pin.
+    virtual void <a href="#" OnFocus="link('_member','SetTCK822545253',this)">SetTCK</a>(unsigned int b) = 0;
+
+    /// Get the level on the JTAG TCK pin.
+    ///\return the level on the JTAG TCK pin
+    virtual unsigned int <a href="#" OnFocus="link('_member','GetTCK141716444',this)">GetTCK</a>(void) = 0;
+
+    /// Output a number of pulses on the JTAG TCK pin.
+    virtual void <a href="#" OnFocus="link('_member','PulseTCK822545253',this)">PulseTCK</a>(unsigned int numTCKPulses=1) = 0;
+
+    /// Set the level on the JTAG TMS pin.
+    virtual void <a href="#" OnFocus="link('_member','SetTMS822545253',this)">SetTMS</a>(unsigned int b) = 0;
+
+    /// Get the level on the JTAG TMS pin.
+    ///\return the level on the JTAG TMS pin
+    virtual unsigned int <a href="#" OnFocus="link('_member','GetTMS141716444',this)">GetTMS</a>(void) = 0;
+
+    /// Set the level on the JTAG TDI pin.
+    virtual void <a href="#" OnFocus="link('_member','SetTDI822545253',this)">SetTDI</a>(unsigned int b) = 0;
+
+    /// Get the level on the JTAG TDI pin.
+    ///\return the level on the JTAG TDI pin
+    virtual unsigned int <a href="#" OnFocus="link('_member','GetTDI141716444',this)">GetTDI</a>(void) = 0;
+
+    /// Get the level on the JTAG TDO pin.
+    ///\return the level on the JTAG TDO pin
+    virtual unsigned int <a href="#" OnFocus="link('_member','GetTDO141716444',this)">GetTDO</a>(void) = 0;
+
+    void <a href="#" OnFocus="link('_member','InitTAP141716444',this)">InitTAP</a>(void);
+
+    void <a href="#" OnFocus="link('_member','SetTraceOnOff3476357123',this)">SetTraceOnOff</a>(bool f, ostream&amp; os);
+
+    string <a href="#" OnFocus="link('_member','GetTAPStateLabel449122300',this)">GetTAPStateLabel</a>(TAPState s);
+
+    <a href="#" OnFocus="link('_member','TAPState0',this)">TAPState</a> <a href="#" OnFocus="link('_member','LabelToTAPState2043650535',this)">LabelToTAPState</a>(string label);
+
+    void <a href="#" OnFocus="link('_member','UpdateTAPState822545253',this)">UpdateTAPState</a>(unsigned int numTCKPulses=1);
+
+    void <a href="#" OnFocus="link('_member','GotoNextTAPState449122300',this)">GotoNextTAPState</a>(TAPState nextState);
+
+    void <a href="#" OnFocus="link('_member','GoThruTAPSequence1124965842',this)">GoThruTAPSequence</a>(TAPState nextState, ...);
+
+    void <a href="#" OnFocus="link('_member','GotoTAPState449122300',this)">GotoTAPState</a>(TAPState finalState);
+
+    bool <a href="#" OnFocus="link('_member','TAPPathsOK141716444',this)">TAPPathsOK</a>(void);
+
+    unsigned int <a href="#" OnFocus="link('_member','SendRcvBit822545253',this)">SendRcvBit</a>(unsigned int sendBit);
+
+    /// Output a bitstream through TDI while receiving a bitstream through TDO.
+    virtual void <a href="#" OnFocus="link('_member','SendRcvBitstream1691161481',this)">SendRcvBitstream</a>(<a href="#" OnFocus="link('_class','Bitstream0',this)">Bitstream</a>&amp; sendBits, <a href="#" OnFocus="link('_class','Bitstream0',this)">Bitstream</a>&amp; rcvBits) = 0;
+
+    void <a href="#" OnFocus="link('_member','LoadBSIRthenBSDR3423522178',this)">LoadBSIRthenBSDR</a>(<a href="#" OnFocus="link('_class','Bitstream0',this)">Bitstream</a>&amp; instruction, <a href="#" OnFocus="link('_class','Bitstream0',this)">Bitstream</a>&amp; send, <a href="#" OnFocus="link('_class','Bitstream0',this)">Bitstream</a>&amp; recv);
+
+    bool <a href="#" OnFocus="link('_member','DownloadSVF1467815114',this)">DownloadSVF</a>(istream&amp; is, string&amp; fileName);
+
+    bool <a href="#" OnFocus="link('_member','DownloadSVF1467815114',this)">DownloadSVF</a>(string&amp; fileName);
+
+    bool <a href="#" OnFocus="link('_member','DownloadBitstream435844928',this)">DownloadBitstream</a>(istream&amp; is);
+
+    bool <a href="#" OnFocus="link('_member','DownloadBitstream435844928',this)">DownloadBitstream</a>(string&amp; fileName);
+
+
+    protected:
+
+    <a href="#" OnFocus="link('_member','TAPState0',this)">TAPState</a> <a href="#" OnFocus="link('_member','currentTAPState243771202',this)">currentTAPState</a>;  ///&lt; state of Test Access Port
+    bool <a href="#" OnFocus="link('_member','traceFlag243771202',this)">traceFlag</a>;              ///&lt; trace JTAG states on/off
+    ostream* <a href="#" OnFocus="link('_member','osTrace243771202',this)">osTrace</a>;          ///&lt; output stream for trace info
+    unsigned int <a href="#" OnFocus="link('_member','tckVal243771202',this)">tckVal</a>;          ///&lt; current value of TCK signal
+    unsigned int <a href="#" OnFocus="link('_member','tmsVal243771202',this)">tmsVal</a>;          ///&lt; current value of TMS signal
+    unsigned int <a href="#" OnFocus="link('_member','tdiVal243771202',this)">tdiVal</a>;          ///&lt; current value of TDI signal
+    unsigned int <a href="#" OnFocus="link('_member','tdoVal243771202',this)">tdoVal</a>;          ///&lt; current value of TDO signal
+
+
+    private:
+
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>        *<a href="#" OnFocus="link('_member','err243771202',this)">err</a>;          ///&lt; error-reporting object
+    <a href="#" OnFocus="link('_class','Progress0',this)">Progress</a>    *<a href="#" OnFocus="link('_member','progressGauge243771202',this)">progressGauge</a>;  ///&lt; indicates progress of operations
+};
+
+#endif
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_file','_source');
+</script>

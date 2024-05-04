@@ -1,0 +1,3192 @@
+Project Navigator Auto-Make Log File
+-------------------------------------
+
+
+
+
+Started process "Synthesize".
+
+
+=========================================================================
+*                          HDL Compilation                              *
+=========================================================================
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/common.vhd in Library work.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/sdramcntl.vhd in Library work.
+Entity <sdramCntl> (Architecture <arch>) compiled.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/xsasdramcntl.vhd in Library work.
+Entity <XSASDRAMCntl> (Architecture <arch>) compiled.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/vga.vhd in Library work.
+ERROR:HDLParsers:1202 - C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/vga.vhd Line 90. Redeclaration of symbol pixel_clk.
+Entity <sync> (Architecture <sync_arch>) compiled.
+Entity <fifo_cc> (Architecture <arch>) compiled.
+--> 
+
+Total memory usage is 51804 kilobytes
+
+
+ERROR: XST failed
+Process "Synthesize" did not complete.
+
+
+Project Navigator Auto-Make Log File
+-------------------------------------
+
+
+
+
+Started process "Synthesize".
+
+
+=========================================================================
+*                          HDL Compilation                              *
+=========================================================================
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/common.vhd in Library work.
+Architecture common of Entity common is up to date.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/sdramcntl.vhd in Library work.
+Architecture arch of Entity sdramcntl is up to date.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/xsasdramcntl.vhd in Library work.
+Architecture arch of Entity xsasdramcntl is up to date.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/vga.vhd in Library work.
+Entity <vga> (Architecture <vga_arch>) compiled.
+Entity <sync> (Architecture <sync_arch>) compiled.
+Entity <fifo_cc> (Architecture <arch>) compiled.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/test_vga.vhd in Library work.
+ERROR:HDLParsers:3312 - C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/test_vga.vhd Line 152. Undefined symbol 'blank_i'.
+ERROR:HDLParsers:1209 - C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/test_vga.vhd Line 152. blank_i: Undefined symbol (last report in this block)
+ERROR:HDLParsers:164 - C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/test_vga.vhd Line 152. parse error, unexpected SEMICOLON, expecting COMMA or CLOSEPAR
+--> 
+
+Total memory usage is 51804 kilobytes
+
+
+ERROR: XST failed
+Process "Synthesize" did not complete.
+
+
+Project Navigator Auto-Make Log File
+-------------------------------------
+
+
+
+
+Started process "Synthesize".
+
+
+=========================================================================
+*                          HDL Compilation                              *
+=========================================================================
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/common.vhd in Library work.
+Architecture common of Entity common is up to date.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/sdramcntl.vhd in Library work.
+Architecture arch of Entity sdramcntl is up to date.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/xsasdramcntl.vhd in Library work.
+Architecture arch of Entity xsasdramcntl is up to date.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/vga.vhd in Library work.
+Architecture vga_arch of Entity vga is up to date.
+Architecture sync_arch of Entity sync is up to date.
+Architecture arch of Entity fifo_cc is up to date.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/test_vga.vhd in Library work.
+ERROR:HDLParsers:164 - C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/test_vga.vhd Line 153. parse error, unexpected SEMICOLON, expecting COMMA or CLOSEPAR
+--> 
+
+Total memory usage is 51804 kilobytes
+
+
+ERROR: XST failed
+Process "Synthesize" did not complete.
+
+
+Project Navigator Auto-Make Log File
+-------------------------------------
+
+
+
+
+Started process "Synthesize".
+
+
+=========================================================================
+*                          HDL Compilation                              *
+=========================================================================
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/common.vhd in Library work.
+Architecture common of Entity common is up to date.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/sdramcntl.vhd in Library work.
+Architecture arch of Entity sdramcntl is up to date.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/xsasdramcntl.vhd in Library work.
+Architecture arch of Entity xsasdramcntl is up to date.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/vga.vhd in Library work.
+Architecture vga_arch of Entity vga is up to date.
+Architecture sync_arch of Entity sync is up to date.
+Architecture arch of Entity fifo_cc is up to date.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/test_vga.vhd in Library work.
+Entity <test_vga> (Architecture <arch>) compiled.
+
+=========================================================================
+*                            HDL Analysis                               *
+=========================================================================
+Analyzing Entity <test_vga> (Architecture <arch>).
+WARNING:Xst:753 - C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/test_vga.vhd line 91: Unconnected output port 'bufclk' of component 'XSASDRAMCntl'.
+WARNING:Xst:753 - C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/test_vga.vhd line 91: Unconnected output port 'clk2x' of component 'XSASDRAMCntl'.
+WARNING:Xst:753 - C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/test_vga.vhd line 91: Unconnected output port 'lock' of component 'XSASDRAMCntl'.
+WARNING:Xst:753 - C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/test_vga.vhd line 91: Unconnected output port 'opBegun' of component 'XSASDRAMCntl'.
+WARNING:Xst:753 - C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/test_vga.vhd line 91: Unconnected output port 'rdPending' of component 'XSASDRAMCntl'.
+WARNING:Xst:753 - C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/test_vga.vhd line 91: Unconnected output port 'done' of component 'XSASDRAMCntl'.
+WARNING:Xst:753 - C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/test_vga.vhd line 91: Unconnected output port 'status' of component 'XSASDRAMCntl'.
+Entity <test_vga> analyzed. Unit <test_vga> generated.
+
+Analyzing generic Entity <XSASDRAMCntl> (Architecture <arch>).
+	FREQ = 100000
+	PIPE_EN = <u>1
+	MAX_NOP = 1000000
+	DATA_WIDTH = 16
+	NROWS = 8192
+	NCOLS = 512
+	HADDR_WIDTH = 24
+	SADDR_WIDTH = 13
+Entity <XSASDRAMCntl> analyzed. Unit <XSASDRAMCntl> generated.
+
+Analyzing generic Entity <sdramCntl> (Architecture <arch>).
+	FREQ = 100000
+	IN_PHASE = <u>1
+	PIPE_EN = <u>1
+	MAX_NOP = 1000000
+	DATA_WIDTH = 16
+	NROWS = 8192
+	NCOLS = 512
+	HADDR_WIDTH = 24
+	SADDR_WIDTH = 13
+Entity <sdramCntl> analyzed. Unit <sdramCntl> generated.
+
+Analyzing generic Entity <vga> (Architecture <vga_arch>).
+	FREQ = 100000
+	CLK_DIV = 2
+	PIXEL_WIDTH = 8
+	PIXELS_PER_LINE = 800
+	LINES_PER_FRAME = 600
+	NUM_RGB_BITS = 3
+	FIT_TO_SCREEN = <u>1
+WARNING:Xst:753 - C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/vga.vhd line 163: Unconnected output port 'full' of component 'fifo_cc'.
+WARNING:Xst:753 - C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/vga.vhd line 163: Unconnected output port 'empty' of component 'fifo_cc'.
+Entity <vga> analyzed. Unit <vga> generated.
+
+Analyzing Entity <fifo_cc> (Architecture <arch>).
+Entity <fifo_cc> analyzed. Unit <fifo_cc> generated.
+
+Analyzing generic Entity <sync> (Architecture <sync_arch>).
+	FREQ = 50000
+	PERIOD = 23
+	START = 17
+	WIDTH = 4
+	VISIBLE = 800
+Entity <sync> analyzed. Unit <sync> generated.
+
+Analyzing generic Entity <sync> (Architecture <sync_arch>).
+	FREQ = 43
+	PERIOD = 15224
+	START = 14140
+	WIDTH = 64
+	VISIBLE = 600
+Entity <sync> analyzed. Unit <sync0> generated.
+
+
+=========================================================================
+*                           HDL Synthesis                               *
+=========================================================================
+INFO:Xst:1304 - Contents of register <sDataDir_x> in unit <sdramCntl> never changes during circuit operation. The register is replaced by logic.
+INFO:Xst:1304 - Contents of register <wrPipeline_x<0>> in unit <sdramCntl> never changes during circuit operation. The register is replaced by logic.
+INFO:Xst:1304 - Contents of register <sData_r> in unit <sdramCntl> never changes during circuit operation. The register is replaced by logic.
+INFO:Xst:1304 - Contents of register <sDataDir_r> in unit <sdramCntl> never changes during circuit operation. The register is replaced by logic.
+
+Synthesizing Unit <sync0>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/vga.vhd.
+    Found 16-bit adder for signal <$n0006> created at line 428.
+    Found 1-bit register for signal <blank_r>.
+    Found 16-bit register for signal <cnt_r>.
+    Found 1-bit register for signal <gate_r>.
+    Found 1-bit register for signal <sync_r>.
+    Summary:
+	inferred  19 D-type flip-flop(s).
+	inferred   1 Adder/Subtracter(s).
+Unit <sync0> synthesized.
+
+
+Synthesizing Unit <sync>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/vga.vhd.
+    Found 16-bit adder for signal <$n0006> created at line 428.
+    Found 1-bit register for signal <blank_r>.
+    Found 16-bit register for signal <cnt_r>.
+    Found 1-bit register for signal <gate_r>.
+    Found 1-bit register for signal <sync_r>.
+    Summary:
+	inferred  19 D-type flip-flop(s).
+	inferred   1 Adder/Subtracter(s).
+Unit <sync> synthesized.
+
+
+Synthesizing Unit <fifo_cc>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/vga.vhd.
+    Found 8-bit updown counter for signal <level_i>.
+    Found 8-bit up counter for signal <rd_addr>.
+    Found 8-bit up counter for signal <wr_addr>.
+    Summary:
+	inferred   3 Counter(s).
+Unit <fifo_cc> synthesized.
+
+
+Synthesizing Unit <sdramCntl>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/sdramcntl.vhd.
+WARNING:Xst:646 - Signal <col<12>> is assigned but never used.
+WARNING:Xst:646 - Signal <hDOutOppPhase_r> is assigned but never used.
+    Found finite state machine <FSM_0> for signal <state_r>.
+    -----------------------------------------------------------------------
+    | States             | 8                                              |
+    | Transitions        | 25                                             |
+    | Inputs             | 9                                              |
+    | Outputs            | 8                                              |
+    | Clock              | clk (rising_edge)                              |
+    | Clock enable       | $n0096 (negative)                              |
+    | Reset              | rst (positive)                                 |
+    | Reset type         | asynchronous                                   |
+    | Reset State        | initwait                                       |
+    | Power Up State     | initwait                                       |
+    | Encoding           | automatic                                      |
+    | Implementation     | LUT                                            |
+    -----------------------------------------------------------------------
+    Found 14-bit subtractor for signal <$n0114>.
+    Found 14-bit adder for signal <$n0118> created at line 405.
+    Found 20-bit adder for signal <$n0127> created at line 360.
+    Found 10-bit subtractor for signal <$n0129> created at line 400.
+    Found 3-bit subtractor for signal <$n0130> created at line 376.
+    Found 2-bit subtractor for signal <$n0131> created at line 389.
+    Found 15-bit subtractor for signal <$n0132> created at line 411.
+    Found 13-bit comparator not equal for signal <$n0133> created at line 343.
+    Found 2-bit comparator not equal for signal <$n0134> created at line 343.
+    Found 2-bit register for signal <activeBank_r>.
+    Found 1-bit register for signal <activeFlag_r>.
+    Found 13-bit register for signal <activeRow_r>.
+    Found 2-bit register for signal <ba_r>.
+    Found 1-bit register for signal <cke_r>.
+    Found 6-bit register for signal <cmd_r>.
+    Found 16-bit register for signal <hDOut_r>.
+    Found 20-bit register for signal <nopCntr_r>.
+    Found 1-bit register for signal <opBegun_r>.
+    Found 3-bit register for signal <rasTimer_r>.
+    Found 5-bit register for signal <rdPipeline_r>.
+    Found 10-bit register for signal <refTimer_r>.
+    Found 14-bit register for signal <rfshCntr_r>.
+    Found 13-bit register for signal <sAddr_r>.
+    Found 15-bit register for signal <timer_r>.
+    Found 1-bit register for signal <wrPipeline_r<0>>.
+    Found 2-bit register for signal <wrTimer_r>.
+    Found 28 1-bit 2-to-1 multiplexers.
+    Summary:
+	inferred   1 Finite State Machine(s).
+	inferred 109 D-type flip-flop(s).
+	inferred   7 Adder/Subtracter(s).
+	inferred   2 Comparator(s).
+	inferred  28 Multiplexer(s).
+Unit <sdramCntl> synthesized.
+
+
+Synthesizing Unit <vga>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/vga.vhd.
+WARNING:Xst:646 - Signal <fifo_level<2:0>> is assigned but never used.
+WARNING:Xst:646 - Signal <line_cnt> is assigned but never used.
+WARNING:Xst:646 - Signal <pixel_cnt<15:1>> is assigned but never used.
+    Found 1-bit register for signal <pixel_clk>.
+    Found 8-bit comparator less for signal <$n0011> created at line 153.
+    Found 3-bit register for signal <blank_r>.
+    Found 1-bit register for signal <cke>.
+    Found 8-bit up counter for signal <clk_div_cnt>.
+    Found 1-bit register for signal <eof_r>.
+    Found 3-bit register for signal <hsync_r>.
+    Found 16-bit register for signal <pixel_data_r>.
+    Found 1-bit register for signal <rd_r>.
+    Found 9-bit register for signal <rgb_r>.
+    Found 16 1-bit 2-to-1 multiplexers.
+    Summary:
+	inferred   1 Counter(s).
+	inferred  35 D-type flip-flop(s).
+	inferred   1 Comparator(s).
+	inferred  16 Multiplexer(s).
+Unit <vga> synthesized.
+
+
+Synthesizing Unit <XSASDRAMCntl>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/xsasdramcntl.vhd.
+    Found 16-bit tristate buffer for signal <sData>.
+    Summary:
+	inferred  16 Tristate(s).
+Unit <XSASDRAMCntl> synthesized.
+
+
+Synthesizing Unit <test_vga>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/test_vga.vhd.
+    Found 24-bit up counter for signal <address>.
+    Summary:
+	inferred   1 Counter(s).
+Unit <test_vga> synthesized.
+
+INFO:Xst:1767 - HDL ADVISOR - Resource sharing has identified that some arithmetic operations in this design can share the same physical resources for reduced device utilization. For improved clock frequency you may try to disable resource sharing.
+
+=========================================================================
+*                       Advanced HDL Synthesis                          *
+=========================================================================
+
+Advanced RAM inference ...
+Advanced multiplier inference ...
+Advanced Registered AddSub inference ...
+Selecting encoding for FSM_0 ...
+Optimizing FSM <FSM_0> on signal <state_r> with one-hot encoding.
+Dynamic shift register inference ...
+
+=========================================================================
+HDL Synthesis Report
+
+Macro Statistics
+# FSMs                             : 1
+# Adders/Subtractors               : 9
+ 15-bit subtractor                 : 1
+ 10-bit subtractor                 : 1
+ 20-bit adder                      : 1
+ 14-bit adder                      : 1
+ 14-bit subtractor                 : 1
+ 16-bit adder                      : 2
+ 2-bit subtractor                  : 1
+ 3-bit subtractor                  : 1
+# Counters                         : 5
+ 8-bit up counter                  : 3
+ 24-bit up counter                 : 1
+ 8-bit updown counter              : 1
+# Registers                        : 41
+ 9-bit register                    : 1
+ 3-bit register                    : 3
+ 1-bit register                    : 22
+ 13-bit register                   : 2
+ 5-bit register                    : 1
+ 20-bit register                   : 1
+ 2-bit register                    : 3
+ 15-bit register                   : 1
+ 14-bit register                   : 1
+ 16-bit register                   : 4
+ 6-bit register                    : 1
+ 10-bit register                   : 1
+# Comparators                      : 3
+ 8-bit comparator less             : 1
+ 13-bit comparator not equal       : 1
+ 2-bit comparator not equal        : 1
+# Multiplexers                     : 3
+ 16-bit 2-to-1 multiplexer         : 1
+ 14-bit 2-to-1 multiplexer         : 2
+# Tristates                        : 1
+ 16-bit tristate buffer            : 1
+
+=========================================================================
+
+=========================================================================
+*                         Low Level Synthesis                           *
+=========================================================================
+WARNING:Xst:1710 - FF/Latch  <wrPipeline_r_0> (without init value) is constant in block <sdramCntl>.
+WARNING:Xst:1710 - FF/Latch  <rgb_r_3> (without init value) is constant in block <vga>.
+WARNING:Xst:1291 - FF/Latch <opBegun_r> is unconnected in block <u1>.
+WARNING:Xst:1710 - FF/Latch  <cmd_r_5> (without init value) is constant in block <sdramCntl>.
+
+Optimizing unit <test_vga> ...
+
+Optimizing unit <sync> ...
+
+Optimizing unit <sync0> ...
+
+Optimizing unit <sdramCntl> ...
+WARNING:Xst:1710 - FF/Latch  <wrTimer_r_1> (without init value) is constant in block <sdramCntl>.
+WARNING:Xst:1710 - FF/Latch  <wrTimer_r_0> (without init value) is constant in block <sdramCntl>.
+
+Optimizing unit <fifo_cc> ...
+
+Optimizing unit <vga> ...
+Loading device for application Xst from file '3s1000.nph' in environment C:/ISE6.
+
+Mapping all equations...
+WARNING:Xst:637 - Naming conflict between signal rst of unit fifo and signal fifo_rst of unit vga : renaming fifo_rst to fifo_rst1.
+WARNING:Xst:637 - Naming conflict between signal level<7> of unit fifo and signal fifo_level<7> of unit vga : renaming fifo_level<7> to fifo_level<7>1.
+WARNING:Xst:637 - Naming conflict between signal level<6> of unit fifo and signal fifo_level<6> of unit vga : renaming fifo_level<6> to fifo_level<6>1.
+WARNING:Xst:637 - Naming conflict between signal level<5> of unit fifo and signal fifo_level<5> of unit vga : renaming fifo_level<5> to fifo_level<5>1.
+WARNING:Xst:637 - Naming conflict between signal level<4> of unit fifo and signal fifo_level<4> of unit vga : renaming fifo_level<4> to fifo_level<4>1.
+WARNING:Xst:637 - Naming conflict between signal level<3> of unit fifo and signal fifo_level<3> of unit vga : renaming fifo_level<3> to fifo_level<3>1.
+WARNING:Xst:1291 - FF/Latch <u0_u1_opBegun_r> is unconnected in block <test_vga>.
+Building and optimizing final netlist ...
+Register u0_u1_cmd_r_0 equivalent to u0_u1_cmd_r_1 has been removed
+Found area constraint ratio of 100 (+ 5) on block test_vga, actual ratio is 3.
+FlipFlop u1_cke has been replicated 1 time(s)
+
+=========================================================================
+*                            Final Report                               *
+=========================================================================
+
+Device utilization summary:
+---------------------------
+
+Selected Device : 3s1000ft256-4 
+
+ Number of Slices:                     260  out of   7680     3%  
+ Number of Slice Flip Flops:           256  out of  15360     1%  
+ Number of 4 input LUTs:               465  out of  15360     3%  
+ Number of bonded IOBs:                 68  out of    173    39%  
+ Number of BRAMs:                        1  out of     24     4%  
+ Number of GCLKs:                        2  out of      8    25%  
+
+
+=========================================================================
+TIMING REPORT
+
+
+Clock Information:
+------------------
+-----------------------------------+------------------------+-------+
+Clock Signal                       | Clock buffer(FF name)  | Load  |
+-----------------------------------+------------------------+-------+
+clk                                | u0_dllint:CLK0         | 257   |
+-----------------------------------+------------------------+-------+
+
+Timing Summary:
+---------------
+Speed Grade: -4
+
+   Minimum period: 7.003ns (Maximum Frequency: 142.796MHz)
+   Minimum input arrival time before clock: 3.109ns
+   Maximum output required time after clock: 6.626ns
+   Maximum combinational path delay: No path found
+
+=========================================================================
+Completed process "Synthesize".
+
+
+
+Project Navigator Auto-Make Log File
+-------------------------------------
+
+
+
+
+Started process "Synthesize".
+
+
+=========================================================================
+*                          HDL Compilation                              *
+=========================================================================
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/common.vhd in Library work.
+Architecture common of Entity common is up to date.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/sdramcntl.vhd in Library work.
+Architecture arch of Entity sdramcntl is up to date.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/xsasdramcntl.vhd in Library work.
+Architecture arch of Entity xsasdramcntl is up to date.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/vga.vhd in Library work.
+Architecture vga_arch of Entity vga is up to date.
+Architecture sync_arch of Entity sync is up to date.
+Architecture arch of Entity fifo_cc is up to date.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/test_vga.vhd in Library work.
+Entity <test_vga> (Architecture <arch>) compiled.
+
+=========================================================================
+*                            HDL Analysis                               *
+=========================================================================
+Analyzing Entity <test_vga> (Architecture <arch>).
+WARNING:Xst:753 - C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/test_vga.vhd line 91: Unconnected output port 'bufclk' of component 'XSASDRAMCntl'.
+WARNING:Xst:753 - C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/test_vga.vhd line 91: Unconnected output port 'clk2x' of component 'XSASDRAMCntl'.
+WARNING:Xst:753 - C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/test_vga.vhd line 91: Unconnected output port 'lock' of component 'XSASDRAMCntl'.
+WARNING:Xst:753 - C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/test_vga.vhd line 91: Unconnected output port 'opBegun' of component 'XSASDRAMCntl'.
+WARNING:Xst:753 - C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/test_vga.vhd line 91: Unconnected output port 'rdPending' of component 'XSASDRAMCntl'.
+WARNING:Xst:753 - C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/test_vga.vhd line 91: Unconnected output port 'done' of component 'XSASDRAMCntl'.
+WARNING:Xst:753 - C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/test_vga.vhd line 91: Unconnected output port 'status' of component 'XSASDRAMCntl'.
+Entity <test_vga> analyzed. Unit <test_vga> generated.
+
+Analyzing generic Entity <XSASDRAMCntl> (Architecture <arch>).
+	FREQ = 100000
+	PIPE_EN = <u>1
+	MAX_NOP = 1000000
+	DATA_WIDTH = 16
+	NROWS = 8192
+	NCOLS = 512
+	HADDR_WIDTH = 24
+	SADDR_WIDTH = 13
+Entity <XSASDRAMCntl> analyzed. Unit <XSASDRAMCntl> generated.
+
+Analyzing generic Entity <sdramCntl> (Architecture <arch>).
+	FREQ = 100000
+	IN_PHASE = <u>1
+	PIPE_EN = <u>1
+	MAX_NOP = 1000000
+	DATA_WIDTH = 16
+	NROWS = 8192
+	NCOLS = 512
+	HADDR_WIDTH = 24
+	SADDR_WIDTH = 13
+Entity <sdramCntl> analyzed. Unit <sdramCntl> generated.
+
+Analyzing generic Entity <vga> (Architecture <vga_arch>).
+	FREQ = 100000
+	CLK_DIV = 2
+	PIXEL_WIDTH = 8
+	PIXELS_PER_LINE = 800
+	LINES_PER_FRAME = 600
+	NUM_RGB_BITS = 3
+	FIT_TO_SCREEN = <u>1
+WARNING:Xst:753 - C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/vga.vhd line 163: Unconnected output port 'full' of component 'fifo_cc'.
+WARNING:Xst:753 - C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/vga.vhd line 163: Unconnected output port 'empty' of component 'fifo_cc'.
+Entity <vga> analyzed. Unit <vga> generated.
+
+Analyzing Entity <fifo_cc> (Architecture <arch>).
+Entity <fifo_cc> analyzed. Unit <fifo_cc> generated.
+
+Analyzing generic Entity <sync> (Architecture <sync_arch>).
+	FREQ = 50000
+	PERIOD = 23
+	START = 17
+	WIDTH = 4
+	VISIBLE = 800
+Entity <sync> analyzed. Unit <sync> generated.
+
+Analyzing generic Entity <sync> (Architecture <sync_arch>).
+	FREQ = 43
+	PERIOD = 15224
+	START = 14140
+	WIDTH = 64
+	VISIBLE = 600
+Entity <sync> analyzed. Unit <sync0> generated.
+
+
+=========================================================================
+*                           HDL Synthesis                               *
+=========================================================================
+INFO:Xst:1304 - Contents of register <sDataDir_x> in unit <sdramCntl> never changes during circuit operation. The register is replaced by logic.
+INFO:Xst:1304 - Contents of register <wrPipeline_x<0>> in unit <sdramCntl> never changes during circuit operation. The register is replaced by logic.
+INFO:Xst:1304 - Contents of register <sData_r> in unit <sdramCntl> never changes during circuit operation. The register is replaced by logic.
+INFO:Xst:1304 - Contents of register <sDataDir_r> in unit <sdramCntl> never changes during circuit operation. The register is replaced by logic.
+
+Synthesizing Unit <sync0>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/vga.vhd.
+    Found 16-bit adder for signal <$n0006> created at line 428.
+    Found 1-bit register for signal <blank_r>.
+    Found 16-bit register for signal <cnt_r>.
+    Found 1-bit register for signal <gate_r>.
+    Found 1-bit register for signal <sync_r>.
+    Summary:
+	inferred  19 D-type flip-flop(s).
+	inferred   1 Adder/Subtracter(s).
+Unit <sync0> synthesized.
+
+
+Synthesizing Unit <sync>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/vga.vhd.
+    Found 16-bit adder for signal <$n0006> created at line 428.
+    Found 1-bit register for signal <blank_r>.
+    Found 16-bit register for signal <cnt_r>.
+    Found 1-bit register for signal <gate_r>.
+    Found 1-bit register for signal <sync_r>.
+    Summary:
+	inferred  19 D-type flip-flop(s).
+	inferred   1 Adder/Subtracter(s).
+Unit <sync> synthesized.
+
+
+Synthesizing Unit <fifo_cc>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/vga.vhd.
+    Found 8-bit updown counter for signal <level_i>.
+    Found 8-bit up counter for signal <rd_addr>.
+    Found 8-bit up counter for signal <wr_addr>.
+    Summary:
+	inferred   3 Counter(s).
+Unit <fifo_cc> synthesized.
+
+
+Synthesizing Unit <sdramCntl>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/sdramcntl.vhd.
+WARNING:Xst:646 - Signal <col<12>> is assigned but never used.
+WARNING:Xst:646 - Signal <hDOutOppPhase_r> is assigned but never used.
+    Found finite state machine <FSM_0> for signal <state_r>.
+    -----------------------------------------------------------------------
+    | States             | 8                                              |
+    | Transitions        | 25                                             |
+    | Inputs             | 9                                              |
+    | Outputs            | 8                                              |
+    | Clock              | clk (rising_edge)                              |
+    | Clock enable       | $n0096 (negative)                              |
+    | Reset              | rst (positive)                                 |
+    | Reset type         | asynchronous                                   |
+    | Reset State        | initwait                                       |
+    | Power Up State     | initwait                                       |
+    | Encoding           | automatic                                      |
+    | Implementation     | LUT                                            |
+    -----------------------------------------------------------------------
+    Found 14-bit subtractor for signal <$n0114>.
+    Found 14-bit adder for signal <$n0118> created at line 405.
+    Found 20-bit adder for signal <$n0127> created at line 360.
+    Found 10-bit subtractor for signal <$n0129> created at line 400.
+    Found 3-bit subtractor for signal <$n0130> created at line 376.
+    Found 2-bit subtractor for signal <$n0131> created at line 389.
+    Found 15-bit subtractor for signal <$n0132> created at line 411.
+    Found 13-bit comparator not equal for signal <$n0133> created at line 343.
+    Found 2-bit comparator not equal for signal <$n0134> created at line 343.
+    Found 2-bit register for signal <activeBank_r>.
+    Found 1-bit register for signal <activeFlag_r>.
+    Found 13-bit register for signal <activeRow_r>.
+    Found 2-bit register for signal <ba_r>.
+    Found 1-bit register for signal <cke_r>.
+    Found 6-bit register for signal <cmd_r>.
+    Found 16-bit register for signal <hDOut_r>.
+    Found 20-bit register for signal <nopCntr_r>.
+    Found 1-bit register for signal <opBegun_r>.
+    Found 3-bit register for signal <rasTimer_r>.
+    Found 5-bit register for signal <rdPipeline_r>.
+    Found 10-bit register for signal <refTimer_r>.
+    Found 14-bit register for signal <rfshCntr_r>.
+    Found 13-bit register for signal <sAddr_r>.
+    Found 15-bit register for signal <timer_r>.
+    Found 1-bit register for signal <wrPipeline_r<0>>.
+    Found 2-bit register for signal <wrTimer_r>.
+    Found 28 1-bit 2-to-1 multiplexers.
+    Summary:
+	inferred   1 Finite State Machine(s).
+	inferred 109 D-type flip-flop(s).
+	inferred   7 Adder/Subtracter(s).
+	inferred   2 Comparator(s).
+	inferred  28 Multiplexer(s).
+Unit <sdramCntl> synthesized.
+
+
+Synthesizing Unit <vga>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/vga.vhd.
+WARNING:Xst:646 - Signal <fifo_level<2:0>> is assigned but never used.
+WARNING:Xst:646 - Signal <line_cnt> is assigned but never used.
+WARNING:Xst:646 - Signal <pixel_cnt<15:1>> is assigned but never used.
+    Found 1-bit register for signal <pixel_clk>.
+    Found 8-bit comparator less for signal <$n0011> created at line 153.
+    Found 3-bit register for signal <blank_r>.
+    Found 1-bit register for signal <cke>.
+    Found 8-bit up counter for signal <clk_div_cnt>.
+    Found 1-bit register for signal <eof_r>.
+    Found 3-bit register for signal <hsync_r>.
+    Found 16-bit register for signal <pixel_data_r>.
+    Found 1-bit register for signal <rd_r>.
+    Found 9-bit register for signal <rgb_r>.
+    Found 16 1-bit 2-to-1 multiplexers.
+    Summary:
+	inferred   1 Counter(s).
+	inferred  35 D-type flip-flop(s).
+	inferred   1 Comparator(s).
+	inferred  16 Multiplexer(s).
+Unit <vga> synthesized.
+
+
+Synthesizing Unit <XSASDRAMCntl>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/xsasdramcntl.vhd.
+    Found 16-bit tristate buffer for signal <sData>.
+    Summary:
+	inferred  16 Tristate(s).
+Unit <XSASDRAMCntl> synthesized.
+
+
+Synthesizing Unit <test_vga>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/test_vga.vhd.
+    Found 24-bit up counter for signal <address>.
+    Summary:
+	inferred   1 Counter(s).
+Unit <test_vga> synthesized.
+
+INFO:Xst:1767 - HDL ADVISOR - Resource sharing has identified that some arithmetic operations in this design can share the same physical resources for reduced device utilization. For improved clock frequency you may try to disable resource sharing.
+
+=========================================================================
+*                       Advanced HDL Synthesis                          *
+=========================================================================
+
+Advanced RAM inference ...
+Advanced multiplier inference ...
+Advanced Registered AddSub inference ...
+Selecting encoding for FSM_0 ...
+Optimizing FSM <FSM_0> on signal <state_r> with one-hot encoding.
+Dynamic shift register inference ...
+
+=========================================================================
+HDL Synthesis Report
+
+Macro Statistics
+# FSMs                             : 1
+# Adders/Subtractors               : 9
+ 15-bit subtractor                 : 1
+ 10-bit subtractor                 : 1
+ 20-bit adder                      : 1
+ 14-bit adder                      : 1
+ 14-bit subtractor                 : 1
+ 16-bit adder                      : 2
+ 2-bit subtractor                  : 1
+ 3-bit subtractor                  : 1
+# Counters                         : 5
+ 8-bit up counter                  : 3
+ 24-bit up counter                 : 1
+ 8-bit updown counter              : 1
+# Registers                        : 41
+ 9-bit register                    : 1
+ 3-bit register                    : 3
+ 1-bit register                    : 22
+ 13-bit register                   : 2
+ 5-bit register                    : 1
+ 20-bit register                   : 1
+ 2-bit register                    : 3
+ 15-bit register                   : 1
+ 14-bit register                   : 1
+ 16-bit register                   : 4
+ 6-bit register                    : 1
+ 10-bit register                   : 1
+# Comparators                      : 3
+ 8-bit comparator less             : 1
+ 13-bit comparator not equal       : 1
+ 2-bit comparator not equal        : 1
+# Multiplexers                     : 3
+ 16-bit 2-to-1 multiplexer         : 1
+ 14-bit 2-to-1 multiplexer         : 2
+# Tristates                        : 1
+ 16-bit tristate buffer            : 1
+
+=========================================================================
+
+=========================================================================
+*                         Low Level Synthesis                           *
+=========================================================================
+WARNING:Xst:1710 - FF/Latch  <wrPipeline_r_0> (without init value) is constant in block <sdramCntl>.
+WARNING:Xst:1710 - FF/Latch  <rgb_r_3> (without init value) is constant in block <vga>.
+WARNING:Xst:1291 - FF/Latch <opBegun_r> is unconnected in block <u1>.
+WARNING:Xst:1710 - FF/Latch  <cmd_r_5> (without init value) is constant in block <sdramCntl>.
+
+Optimizing unit <test_vga> ...
+
+Optimizing unit <sync> ...
+
+Optimizing unit <sync0> ...
+
+Optimizing unit <sdramCntl> ...
+WARNING:Xst:1710 - FF/Latch  <wrTimer_r_1> (without init value) is constant in block <sdramCntl>.
+WARNING:Xst:1710 - FF/Latch  <wrTimer_r_0> (without init value) is constant in block <sdramCntl>.
+
+Optimizing unit <fifo_cc> ...
+
+Optimizing unit <vga> ...
+Loading device for application Xst from file '3s1000.nph' in environment C:/ISE6.
+
+Mapping all equations...
+WARNING:Xst:637 - Naming conflict between signal rst of unit fifo and signal fifo_rst of unit vga : renaming fifo_rst to fifo_rst1.
+WARNING:Xst:637 - Naming conflict between signal level<7> of unit fifo and signal fifo_level<7> of unit vga : renaming fifo_level<7> to fifo_level<7>1.
+WARNING:Xst:637 - Naming conflict between signal level<6> of unit fifo and signal fifo_level<6> of unit vga : renaming fifo_level<6> to fifo_level<6>1.
+WARNING:Xst:637 - Naming conflict between signal level<5> of unit fifo and signal fifo_level<5> of unit vga : renaming fifo_level<5> to fifo_level<5>1.
+WARNING:Xst:637 - Naming conflict between signal level<4> of unit fifo and signal fifo_level<4> of unit vga : renaming fifo_level<4> to fifo_level<4>1.
+WARNING:Xst:637 - Naming conflict between signal level<3> of unit fifo and signal fifo_level<3> of unit vga : renaming fifo_level<3> to fifo_level<3>1.
+WARNING:Xst:1291 - FF/Latch <u0_u1_opBegun_r> is unconnected in block <test_vga>.
+Building and optimizing final netlist ...
+Register u0_u1_cmd_r_0 equivalent to u0_u1_cmd_r_1 has been removed
+Found area constraint ratio of 100 (+ 5) on block test_vga, actual ratio is 3.
+FlipFlop u1_cke has been replicated 1 time(s)
+
+=========================================================================
+*                            Final Report                               *
+=========================================================================
+
+Device utilization summary:
+---------------------------
+
+Selected Device : 3s1000ft256-4 
+
+ Number of Slices:                     260  out of   7680     3%  
+ Number of Slice Flip Flops:           256  out of  15360     1%  
+ Number of 4 input LUTs:               465  out of  15360     3%  
+ Number of bonded IOBs:                 68  out of    173    39%  
+ Number of BRAMs:                        1  out of     24     4%  
+ Number of GCLKs:                        2  out of      8    25%  
+
+
+=========================================================================
+TIMING REPORT
+
+
+Clock Information:
+------------------
+-----------------------------------+------------------------+-------+
+Clock Signal                       | Clock buffer(FF name)  | Load  |
+-----------------------------------+------------------------+-------+
+clk                                | u0_dllint:CLK0         | 257   |
+-----------------------------------+------------------------+-------+
+
+Timing Summary:
+---------------
+Speed Grade: -4
+
+   Minimum period: 7.003ns (Maximum Frequency: 142.796MHz)
+   Minimum input arrival time before clock: 3.109ns
+   Maximum output required time after clock: 6.626ns
+   Maximum combinational path delay: No path found
+
+=========================================================================
+Completed process "Synthesize".
+
+
+
+Started process "Translate".
+
+
+Command Line: ngdbuild -intstyle ise -dd
+c:\xesscorp\products\bitstreams\xsa\xst-dau_vga-vgagen\3s1000\test_vga/_ngo -uc
+test_vga.ucf -p xc3s1000-ft256-4 test_vga.ngc test_vga.ngd 
+
+Reading NGO file
+"C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/test_vga
+.ngc" ...
+Reading component libraries for design expansion...
+
+Annotating constraints to design from file "test_vga.ucf" ...
+
+Checking timing specifications ...
+   <none> (no matching synchronous elements driven by DCM outputs)
+   CLK0: TS_u0_int_clk1x=PERIOD u0_int_clk1x TS_clk*1.000000 HIGH 50.000000%
+Checking expanded design ...
+
+NGDBUILD Design Results Summary:
+  Number of errors:     0
+  Number of warnings:   0
+
+Total memory usage is 41560 kilobytes
+
+Writing NGD file "test_vga.ngd" ...
+
+Writing NGDBUILD log file "test_vga.bld"...
+
+NGDBUILD done.
+Completed process "Translate".
+
+
+
+Started process "Map".
+
+Using target part "3s1000ft256-4".
+Removing unused or disabled logic...
+Running cover...
+Running directed packing...
+Running delay-based LUT packing...
+Running related packing...
+
+Design Summary:
+Number of errors:      0
+Number of warnings:    1
+Logic Utilization:
+  Number of Slice Flip Flops:         211 out of  15,360    1%
+  Number of 4 input LUTs:             361 out of  15,360    2%
+Logic Distribution:
+  Number of occupied Slices:                          262 out of   7,680    3%
+    Number of Slices containing only related logic:     262 out of     262  100%
+    Number of Slices containing unrelated logic:          0 out of     262    0%
+      *See NOTES below for an explanation of the effects of unrelated logic
+Total Number 4 input LUTs:            467 out of  15,360    3%
+  Number used as logic:                361
+  Number used as a route-thru:         106
+  Number of bonded IOBs:               68 out of     173   39%
+    IOB Flip Flops:                    45
+  Number of Block RAMs:                1 out of      24    4%
+  Number of GCLKs:                     1 out of       8   12%
+  Number of DCMs:                      2 out of       4   50%
+
+Total equivalent gate count for design:  84,689
+Additional JTAG gate count for IOBs:  3,264
+Peak Memory Usage:  88 MB
+
+NOTES:
+
+   Related logic is defined as being logic that shares connectivity -
+   e.g. two LUTs are "related" if they share common inputs.
+   When assembling slices, Map gives priority to combine logic that
+   is related.  Doing so results in the best timing performance.
+
+   Unrelated logic shares no connectivity.  Map will only begin
+   packing unrelated logic into a slice once 99% of the slices are
+   occupied through related logic packing.
+
+   Note that once logic distribution reaches the 99% level through
+   related logic packing, this does not mean the device is completely
+   utilized.  Unrelated logic packing will then begin, continuing until
+   all usable LUTs and FFs are occupied.  Depending on your timing
+   budget, increased levels of unrelated logic packing may adversely
+   affect the overall timing performance of your design.
+
+
+Mapping completed.
+See MAP report file "test_vga_map.mrp" for details.
+Completed process "Map".
+
+Mapping Module test_vga . . .
+MAP command line:
+map -intstyle ise -p xc3s1000-ft256-4 -cm area -pr b -k 4 -c 100 -tx off -o test_vga_map.ncd test_vga.ngd test_vga.pcf
+Mapping Module test_vga: DONE
+
+
+
+Started process "Place & Route".
+
+
+
+
+
+Constraints file: test_vga.pcf
+
+Loading device database for application Par from file "test_vga_map.ncd".
+   "test_vga" is an NCD, version 2.38, device xc3s1000, package ft256, speed -4
+Loading device for application Par from file '3s1000.nph' in environment
+C:/ISE6.
+Device speed data version:  PRODUCTION 1.35 2004-11-11.
+
+
+Resolving physical constraints.
+Finished resolving physical constraints.
+
+Device utilization summary:
+
+   Number of External IOBs            68 out of 173    39%
+      Number of LOCed External IOBs   68 out of 68    100%
+
+   Number of RAMB16s                   1 out of 24      4%
+   Number of Slices                  262 out of 7680    3%
+
+   Number of BUFGMUXs                  1 out of 8      12%
+   Number of DCMs                      2 out of 4      50%
+
+
+
+Overall effort level (-ol):   Standard (set by user)
+Placer effort level (-pl):    Standard (set by user)
+Placer cost table entry (-t): 1
+Router effort level (-rl):    Standard (set by user)
+
+Starting initial Timing Analysis.  REAL time: 0 secs 
+Finished initial Timing Analysis.  REAL time: 2 secs 
+
+
+Phase 1.1
+Phase 1.1 (Checksum:98a1b6) REAL time: 3 secs 
+
+.
+Phase 3.8
+....................................
+.
+Phase 3.8 (Checksum:a2e529) REAL time: 3 secs 
+
+Phase 4.5
+Phase 4.5 (Checksum:26259fc) REAL time: 3 secs 
+
+Phase 5.18
+Phase 5.18 (Checksum:2faf07b) REAL time: 4 secs 
+
+Writing design to file test_vga.ncd.
+
+Total REAL time to Placer completion: 4 secs 
+Total CPU time to Placer completion: 4 secs 
+
+
+Phase 1: 1880 unrouted;       REAL time: 4 secs 
+
+Phase 2: 1654 unrouted;       REAL time: 8 secs 
+
+Phase 3: 242 unrouted;       REAL time: 9 secs 
+
+Phase 4: 242 unrouted; (11156)      REAL time: 9 secs 
+
+Phase 5: 376 unrouted; (874)      REAL time: 9 secs 
+
+Phase 6: 378 unrouted; (874)      REAL time: 9 secs 
+
+Phase 7: 0 unrouted; (1708)      REAL time: 10 secs 
+
+Total REAL time to Router completion: 10 secs 
+Total CPU time to Router completion: 10 secs 
+
+Generating "par" statistics.
+
+**************************
+Generating Clock Report
+**************************
+
++-------------------------+----------+------+------+------------+-------------+
+|        Clock Net        | Resource |Locked|Fanout|Net Skew(ns)|Max Delay(ns)|
++-------------------------+----------+------+------+------------+-------------+
+|             clk1x       |  BUFGMUX3| No   |  176 |  0.446     |  1.146      |
++-------------------------+----------+------+------+------------+-------------+
+
+Timing Score: 1708
+
+WARNING:Par:62 - Timing constraints have not been met.
+
+Asterisk (*) preceding a constraint indicates it was not met.
+   This may be due to a setup or hold violation.
+
+--------------------------------------------------------------------------------
+  Constraint                                | Requested  | Actual     | Logic 
+                                            |            |            | Levels
+--------------------------------------------------------------------------------
+  TS_clk = PERIOD TIMEGRP "clk"  10 nS   HI | N/A        | N/A        | N/A  
+  GH 50.000000 %                            |            |            |      
+--------------------------------------------------------------------------------
+* TS_u0_int_clk1x = PERIOD TIMEGRP "u0_int_ | 10.000ns   | 10.518ns   | 5    
+  clk1x" TS_clk * 1.000000 HIGH 50.000 %    |            |            |      
+--------------------------------------------------------------------------------
+
+
+1 constraint not met.
+INFO:Timing:2761 - N/A entries in the Constraints list may indicate that the
+   constraint does not cover any paths or that it has no requested value.
+Generating Pad Report.
+
+All signals are completely routed.
+
+Total REAL time to PAR completion: 11 secs 
+Total CPU time to PAR completion: 11 secs 
+
+Peak Memory Usage:  119 MB
+
+Placement: Completed - No errors found.
+Routing: Completed - No errors found.
+Timing: Completed - 5 errors found.
+
+Writing design to file test_vga.ncd.
+
+
+PAR done.
+Completed process "Place & Route".
+
+
+Started process "Generate Post-Place & Route Static Timing".
+
+
+Analysis completed Sun Feb 04 09:27:51 2007
+--------------------------------------------------------------------------------
+
+Generating Report ...
+
+Completed process "Generate Post-Place & Route Static Timing".
+
+Place & Route Module test_vga . . .
+PAR command line: par -w -intstyle ise -ol std -t 1 test_vga_map.ncd test_vga.ncd test_vga.pcf
+PAR completed successfully
+
+
+
+
+Started process "Generate Programming File".
+
+Completed process "Generate Programming File".
+
+
+
+Project Navigator Auto-Make Log File
+-------------------------------------
+
+
+Started process "Translate".
+
+
+Command Line: ngdbuild -intstyle ise -dd
+c:\xesscorp\products\bitstreams\xsa\xst-dau_vga-vgagen\3s1000\test_vga/_ngo -uc
+test_vga.ucf -p xc3s1000-ft256-4 test_vga.ngc test_vga.ngd 
+
+Reading NGO file
+"C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/test_vga
+.ngc" ...
+Reading component libraries for design expansion...
+
+Annotating constraints to design from file "test_vga.ucf" ...
+
+Checking timing specifications ...
+   <none> (no matching synchronous elements driven by DCM outputs)
+   CLK0: TS_u0_int_clk1x=PERIOD u0_int_clk1x TS_clk*1.000000 HIGH 50.000000%
+Checking expanded design ...
+
+NGDBUILD Design Results Summary:
+  Number of errors:     0
+  Number of warnings:   0
+
+Total memory usage is 41560 kilobytes
+
+Writing NGD file "test_vga.ngd" ...
+
+Writing NGDBUILD log file "test_vga.bld"...
+
+NGDBUILD done.
+Completed process "Translate".
+
+
+
+Started process "Map".
+
+Using target part "3s1000ft256-4".
+Removing unused or disabled logic...
+Running cover...
+Running directed packing...
+Running delay-based LUT packing...
+Running related packing...
+
+Design Summary:
+Number of errors:      0
+Number of warnings:    1
+Logic Utilization:
+  Number of Slice Flip Flops:         211 out of  15,360    1%
+  Number of 4 input LUTs:             361 out of  15,360    2%
+Logic Distribution:
+  Number of occupied Slices:                          262 out of   7,680    3%
+    Number of Slices containing only related logic:     262 out of     262  100%
+    Number of Slices containing unrelated logic:          0 out of     262    0%
+      *See NOTES below for an explanation of the effects of unrelated logic
+Total Number 4 input LUTs:            467 out of  15,360    3%
+  Number used as logic:                361
+  Number used as a route-thru:         106
+  Number of bonded IOBs:               68 out of     173   39%
+    IOB Flip Flops:                    45
+  Number of Block RAMs:                1 out of      24    4%
+  Number of GCLKs:                     1 out of       8   12%
+  Number of DCMs:                      2 out of       4   50%
+
+Total equivalent gate count for design:  84,689
+Additional JTAG gate count for IOBs:  3,264
+Peak Memory Usage:  88 MB
+
+NOTES:
+
+   Related logic is defined as being logic that shares connectivity -
+   e.g. two LUTs are "related" if they share common inputs.
+   When assembling slices, Map gives priority to combine logic that
+   is related.  Doing so results in the best timing performance.
+
+   Unrelated logic shares no connectivity.  Map will only begin
+   packing unrelated logic into a slice once 99% of the slices are
+   occupied through related logic packing.
+
+   Note that once logic distribution reaches the 99% level through
+   related logic packing, this does not mean the device is completely
+   utilized.  Unrelated logic packing will then begin, continuing until
+   all usable LUTs and FFs are occupied.  Depending on your timing
+   budget, increased levels of unrelated logic packing may adversely
+   affect the overall timing performance of your design.
+
+
+Mapping completed.
+See MAP report file "test_vga_map.mrp" for details.
+Completed process "Map".
+
+Mapping Module test_vga . . .
+MAP command line:
+map -intstyle ise -p xc3s1000-ft256-4 -cm area -pr b -k 4 -c 100 -tx off -o test_vga_map.ncd test_vga.ngd test_vga.pcf
+Mapping Module test_vga: DONE
+
+
+
+Started process "Place & Route".
+
+
+
+
+
+Constraints file: test_vga.pcf
+
+Loading device database for application Par from file "test_vga_map.ncd".
+   "test_vga" is an NCD, version 2.38, device xc3s1000, package ft256, speed -4
+Loading device for application Par from file '3s1000.nph' in environment
+C:/ISE6.
+Device speed data version:  PRODUCTION 1.35 2004-11-11.
+
+
+Resolving physical constraints.
+Finished resolving physical constraints.
+
+Device utilization summary:
+
+   Number of External IOBs            68 out of 173    39%
+      Number of LOCed External IOBs   68 out of 68    100%
+
+   Number of RAMB16s                   1 out of 24      4%
+   Number of Slices                  262 out of 7680    3%
+
+   Number of BUFGMUXs                  1 out of 8      12%
+   Number of DCMs                      2 out of 4      50%
+
+
+
+Overall effort level (-ol):   Standard (set by user)
+Placer effort level (-pl):    Standard (set by user)
+Placer cost table entry (-t): 1
+Router effort level (-rl):    Standard (set by user)
+
+Starting initial Timing Analysis.  REAL time: 0 secs 
+Finished initial Timing Analysis.  REAL time: 3 secs 
+
+
+Phase 1.1
+Phase 1.1 (Checksum:98a1b6) REAL time: 4 secs 
+
+.
+Phase 3.8
+....
+.
+Phase 3.8 (Checksum:9f50ee) REAL time: 4 secs 
+
+Phase 4.5
+Phase 4.5 (Checksum:26259fc) REAL time: 4 secs 
+
+Phase 5.18
+Phase 5.18 (Checksum:2faf07b) REAL time: 5 secs 
+
+Writing design to file test_vga.ncd.
+
+Total REAL time to Placer completion: 6 secs 
+Total CPU time to Placer completion: 4 secs 
+
+
+Phase 1: 1880 unrouted;       REAL time: 6 secs 
+
+Phase 2: 1654 unrouted;       REAL time: 10 secs 
+
+Phase 3: 246 unrouted;       REAL time: 10 secs 
+
+Phase 4: 246 unrouted; (11764)      REAL time: 11 secs 
+
+Phase 5: 270 unrouted; (0)      REAL time: 11 secs 
+
+Phase 6: 270 unrouted; (0)      REAL time: 11 secs 
+
+Phase 7: 0 unrouted; (0)      REAL time: 12 secs 
+
+Total REAL time to Router completion: 12 secs 
+Total CPU time to Router completion: 11 secs 
+
+Generating "par" statistics.
+
+**************************
+Generating Clock Report
+**************************
+
++-------------------------+----------+------+------+------------+-------------+
+|        Clock Net        | Resource |Locked|Fanout|Net Skew(ns)|Max Delay(ns)|
++-------------------------+----------+------+------+------------+-------------+
+|             clk1x       |  BUFGMUX3| No   |  176 |  0.446     |  1.146      |
++-------------------------+----------+------+------+------------+-------------+
+
+Timing Score: 0
+
+Asterisk (*) preceding a constraint indicates it was not met.
+   This may be due to a setup or hold violation.
+
+--------------------------------------------------------------------------------
+  Constraint                                | Requested  | Actual     | Logic 
+                                            |            |            | Levels
+--------------------------------------------------------------------------------
+  TS_clk = PERIOD TIMEGRP "clk"  10 nS   HI | N/A        | N/A        | N/A  
+  GH 50.000000 %                            |            |            |      
+--------------------------------------------------------------------------------
+  TS_u0_int_clk1x = PERIOD TIMEGRP "u0_int_ | 10.000ns   | 9.902ns    | 4    
+  clk1x" TS_clk * 1.000000 HIGH 50.000 %    |            |            |      
+--------------------------------------------------------------------------------
+
+
+All constraints were met.
+INFO:Timing:2761 - N/A entries in the Constraints list may indicate that the
+   constraint does not cover any paths or that it has no requested value.
+Generating Pad Report.
+
+All signals are completely routed.
+
+Total REAL time to PAR completion: 13 secs 
+Total CPU time to PAR completion: 11 secs 
+
+Peak Memory Usage:  119 MB
+
+Placement: Completed - No errors found.
+Routing: Completed - No errors found.
+Timing: Completed - No errors found.
+
+Writing design to file test_vga.ncd.
+
+
+PAR done.
+Completed process "Place & Route".
+
+
+Started process "Generate Post-Place & Route Static Timing".
+
+
+Analysis completed Sun Feb 04 10:10:32 2007
+--------------------------------------------------------------------------------
+
+Generating Report ...
+
+Completed process "Generate Post-Place & Route Static Timing".
+
+Place & Route Module test_vga . . .
+PAR command line: par -w -intstyle ise -ol std -t 1 test_vga_map.ncd test_vga.ncd test_vga.pcf
+PAR completed successfully
+
+
+
+
+Started process "Generate Programming File".
+
+Completed process "Generate Programming File".
+
+
+
+Project Navigator Auto-Make Log File
+-------------------------------------
+
+
+
+
+Started process "Synthesize".
+
+
+=========================================================================
+*                          HDL Compilation                              *
+=========================================================================
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/common.vhd in Library work.
+Architecture common of Entity common is up to date.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/sdramcntl.vhd in Library work.
+Architecture arch of Entity sdramcntl is up to date.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/xsasdramcntl.vhd in Library work.
+Architecture arch of Entity xsasdramcntl is up to date.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/vga.vhd in Library work.
+Entity <vga> (Architecture <vga_arch>) compiled.
+Entity <sync> (Architecture <sync_arch>) compiled.
+Entity <fifo_cc> (Architecture <arch>) compiled.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/test_vga.vhd in Library work.
+Architecture arch of Entity test_vga is up to date.
+
+=========================================================================
+*                            HDL Analysis                               *
+=========================================================================
+Analyzing Entity <test_vga> (Architecture <arch>).
+WARNING:Xst:753 - C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/test_vga.vhd line 91: Unconnected output port 'bufclk' of component 'XSASDRAMCntl'.
+WARNING:Xst:753 - C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/test_vga.vhd line 91: Unconnected output port 'clk2x' of component 'XSASDRAMCntl'.
+WARNING:Xst:753 - C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/test_vga.vhd line 91: Unconnected output port 'lock' of component 'XSASDRAMCntl'.
+WARNING:Xst:753 - C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/test_vga.vhd line 91: Unconnected output port 'opBegun' of component 'XSASDRAMCntl'.
+WARNING:Xst:753 - C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/test_vga.vhd line 91: Unconnected output port 'rdPending' of component 'XSASDRAMCntl'.
+WARNING:Xst:753 - C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/test_vga.vhd line 91: Unconnected output port 'done' of component 'XSASDRAMCntl'.
+WARNING:Xst:753 - C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/test_vga.vhd line 91: Unconnected output port 'status' of component 'XSASDRAMCntl'.
+Entity <test_vga> analyzed. Unit <test_vga> generated.
+
+Analyzing generic Entity <XSASDRAMCntl> (Architecture <arch>).
+	FREQ = 100000
+	PIPE_EN = <u>1
+	MAX_NOP = 1000000
+	DATA_WIDTH = 16
+	NROWS = 8192
+	NCOLS = 512
+	HADDR_WIDTH = 24
+	SADDR_WIDTH = 13
+Entity <XSASDRAMCntl> analyzed. Unit <XSASDRAMCntl> generated.
+
+Analyzing generic Entity <sdramCntl> (Architecture <arch>).
+	FREQ = 100000
+	IN_PHASE = <u>1
+	PIPE_EN = <u>1
+	MAX_NOP = 1000000
+	DATA_WIDTH = 16
+	NROWS = 8192
+	NCOLS = 512
+	HADDR_WIDTH = 24
+	SADDR_WIDTH = 13
+Entity <sdramCntl> analyzed. Unit <sdramCntl> generated.
+
+Analyzing generic Entity <vga> (Architecture <vga_arch>).
+	FREQ = 100000
+	CLK_DIV = 2
+	PIXEL_WIDTH = 8
+	PIXELS_PER_LINE = 800
+	LINES_PER_FRAME = 600
+	NUM_RGB_BITS = 3
+	FIT_TO_SCREEN = <u>1
+WARNING:Xst:753 - C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/vga.vhd line 163: Unconnected output port 'full' of component 'fifo_cc'.
+WARNING:Xst:753 - C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/vga.vhd line 163: Unconnected output port 'empty' of component 'fifo_cc'.
+Entity <vga> analyzed. Unit <vga> generated.
+
+Analyzing Entity <fifo_cc> (Architecture <arch>).
+Entity <fifo_cc> analyzed. Unit <fifo_cc> generated.
+
+Analyzing generic Entity <sync> (Architecture <sync_arch>).
+	FREQ = 50000
+	PERIOD = 23
+	START = 17
+	WIDTH = 4
+	VISIBLE = 800
+Entity <sync> analyzed. Unit <sync> generated.
+
+Analyzing generic Entity <sync> (Architecture <sync_arch>).
+	FREQ = 43
+	PERIOD = 15224
+	START = 14140
+	WIDTH = 64
+	VISIBLE = 600
+Entity <sync> analyzed. Unit <sync0> generated.
+
+
+=========================================================================
+*                           HDL Synthesis                               *
+=========================================================================
+INFO:Xst:1304 - Contents of register <sDataDir_x> in unit <sdramCntl> never changes during circuit operation. The register is replaced by logic.
+INFO:Xst:1304 - Contents of register <wrPipeline_x<0>> in unit <sdramCntl> never changes during circuit operation. The register is replaced by logic.
+INFO:Xst:1304 - Contents of register <sData_r> in unit <sdramCntl> never changes during circuit operation. The register is replaced by logic.
+INFO:Xst:1304 - Contents of register <sDataDir_r> in unit <sdramCntl> never changes during circuit operation. The register is replaced by logic.
+
+Synthesizing Unit <sync0>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/vga.vhd.
+    Found 16-bit adder for signal <$n0006> created at line 428.
+    Found 1-bit register for signal <blank_r>.
+    Found 16-bit register for signal <cnt_r>.
+    Found 1-bit register for signal <gate_r>.
+    Found 1-bit register for signal <sync_r>.
+    Summary:
+	inferred  19 D-type flip-flop(s).
+	inferred   1 Adder/Subtracter(s).
+Unit <sync0> synthesized.
+
+
+Synthesizing Unit <sync>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/vga.vhd.
+    Found 16-bit adder for signal <$n0006> created at line 428.
+    Found 1-bit register for signal <blank_r>.
+    Found 16-bit register for signal <cnt_r>.
+    Found 1-bit register for signal <gate_r>.
+    Found 1-bit register for signal <sync_r>.
+    Summary:
+	inferred  19 D-type flip-flop(s).
+	inferred   1 Adder/Subtracter(s).
+Unit <sync> synthesized.
+
+
+Synthesizing Unit <fifo_cc>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/vga.vhd.
+    Found 8-bit updown counter for signal <level_i>.
+    Found 8-bit up counter for signal <rd_addr>.
+    Found 8-bit up counter for signal <wr_addr>.
+    Summary:
+	inferred   3 Counter(s).
+Unit <fifo_cc> synthesized.
+
+
+Synthesizing Unit <sdramCntl>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/sdramcntl.vhd.
+WARNING:Xst:646 - Signal <col<12>> is assigned but never used.
+WARNING:Xst:646 - Signal <hDOutOppPhase_r> is assigned but never used.
+    Found finite state machine <FSM_0> for signal <state_r>.
+    -----------------------------------------------------------------------
+    | States             | 8                                              |
+    | Transitions        | 25                                             |
+    | Inputs             | 9                                              |
+    | Outputs            | 8                                              |
+    | Clock              | clk (rising_edge)                              |
+    | Clock enable       | $n0096 (negative)                              |
+    | Reset              | rst (positive)                                 |
+    | Reset type         | asynchronous                                   |
+    | Reset State        | initwait                                       |
+    | Power Up State     | initwait                                       |
+    | Encoding           | automatic                                      |
+    | Implementation     | LUT                                            |
+    -----------------------------------------------------------------------
+    Found 14-bit subtractor for signal <$n0114>.
+    Found 14-bit adder for signal <$n0118> created at line 405.
+    Found 20-bit adder for signal <$n0127> created at line 360.
+    Found 10-bit subtractor for signal <$n0129> created at line 400.
+    Found 3-bit subtractor for signal <$n0130> created at line 376.
+    Found 2-bit subtractor for signal <$n0131> created at line 389.
+    Found 15-bit subtractor for signal <$n0132> created at line 411.
+    Found 13-bit comparator not equal for signal <$n0133> created at line 343.
+    Found 2-bit comparator not equal for signal <$n0134> created at line 343.
+    Found 2-bit register for signal <activeBank_r>.
+    Found 1-bit register for signal <activeFlag_r>.
+    Found 13-bit register for signal <activeRow_r>.
+    Found 2-bit register for signal <ba_r>.
+    Found 1-bit register for signal <cke_r>.
+    Found 6-bit register for signal <cmd_r>.
+    Found 16-bit register for signal <hDOut_r>.
+    Found 20-bit register for signal <nopCntr_r>.
+    Found 1-bit register for signal <opBegun_r>.
+    Found 3-bit register for signal <rasTimer_r>.
+    Found 5-bit register for signal <rdPipeline_r>.
+    Found 10-bit register for signal <refTimer_r>.
+    Found 14-bit register for signal <rfshCntr_r>.
+    Found 13-bit register for signal <sAddr_r>.
+    Found 15-bit register for signal <timer_r>.
+    Found 1-bit register for signal <wrPipeline_r<0>>.
+    Found 2-bit register for signal <wrTimer_r>.
+    Found 28 1-bit 2-to-1 multiplexers.
+    Summary:
+	inferred   1 Finite State Machine(s).
+	inferred 109 D-type flip-flop(s).
+	inferred   7 Adder/Subtracter(s).
+	inferred   2 Comparator(s).
+	inferred  28 Multiplexer(s).
+Unit <sdramCntl> synthesized.
+
+
+Synthesizing Unit <vga>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/vga.vhd.
+WARNING:Xst:646 - Signal <fifo_level<2:0>> is assigned but never used.
+WARNING:Xst:646 - Signal <line_cnt> is assigned but never used.
+WARNING:Xst:646 - Signal <pixel_cnt<15:1>> is assigned but never used.
+    Found 1-bit register for signal <pixel_clk>.
+    Found 8-bit comparator less for signal <$n0011> created at line 153.
+    Found 3-bit register for signal <blank_r>.
+    Found 1-bit register for signal <cke>.
+    Found 8-bit up counter for signal <clk_div_cnt>.
+    Found 1-bit register for signal <eof_r>.
+    Found 3-bit register for signal <hsync_r>.
+    Found 16-bit register for signal <pixel_data_r>.
+    Found 1-bit register for signal <rd_r>.
+    Found 9-bit register for signal <rgb_r>.
+    Found 16 1-bit 2-to-1 multiplexers.
+    Summary:
+	inferred   1 Counter(s).
+	inferred  35 D-type flip-flop(s).
+	inferred   1 Comparator(s).
+	inferred  16 Multiplexer(s).
+Unit <vga> synthesized.
+
+
+Synthesizing Unit <XSASDRAMCntl>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/xsasdramcntl.vhd.
+    Found 16-bit tristate buffer for signal <sData>.
+    Summary:
+	inferred  16 Tristate(s).
+Unit <XSASDRAMCntl> synthesized.
+
+
+Synthesizing Unit <test_vga>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/test_vga.vhd.
+    Found 24-bit up counter for signal <address>.
+    Summary:
+	inferred   1 Counter(s).
+Unit <test_vga> synthesized.
+
+INFO:Xst:1767 - HDL ADVISOR - Resource sharing has identified that some arithmetic operations in this design can share the same physical resources for reduced device utilization. For improved clock frequency you may try to disable resource sharing.
+
+=========================================================================
+*                       Advanced HDL Synthesis                          *
+=========================================================================
+
+Advanced RAM inference ...
+Advanced multiplier inference ...
+Advanced Registered AddSub inference ...
+Selecting encoding for FSM_0 ...
+Optimizing FSM <FSM_0> on signal <state_r> with one-hot encoding.
+Dynamic shift register inference ...
+
+=========================================================================
+HDL Synthesis Report
+
+Macro Statistics
+# FSMs                             : 1
+# Adders/Subtractors               : 9
+ 15-bit subtractor                 : 1
+ 10-bit subtractor                 : 1
+ 20-bit adder                      : 1
+ 14-bit adder                      : 1
+ 14-bit subtractor                 : 1
+ 16-bit adder                      : 2
+ 2-bit subtractor                  : 1
+ 3-bit subtractor                  : 1
+# Counters                         : 5
+ 8-bit up counter                  : 3
+ 24-bit up counter                 : 1
+ 8-bit updown counter              : 1
+# Registers                        : 41
+ 9-bit register                    : 1
+ 3-bit register                    : 3
+ 1-bit register                    : 22
+ 13-bit register                   : 2
+ 5-bit register                    : 1
+ 20-bit register                   : 1
+ 2-bit register                    : 3
+ 15-bit register                   : 1
+ 14-bit register                   : 1
+ 16-bit register                   : 4
+ 6-bit register                    : 1
+ 10-bit register                   : 1
+# Comparators                      : 3
+ 8-bit comparator less             : 1
+ 13-bit comparator not equal       : 1
+ 2-bit comparator not equal        : 1
+# Multiplexers                     : 3
+ 16-bit 2-to-1 multiplexer         : 1
+ 14-bit 2-to-1 multiplexer         : 2
+# Tristates                        : 1
+ 16-bit tristate buffer            : 1
+
+=========================================================================
+
+=========================================================================
+*                         Low Level Synthesis                           *
+=========================================================================
+WARNING:Xst:1710 - FF/Latch  <wrPipeline_r_0> (without init value) is constant in block <sdramCntl>.
+WARNING:Xst:1710 - FF/Latch  <rgb_r_3> (without init value) is constant in block <vga>.
+WARNING:Xst:1291 - FF/Latch <opBegun_r> is unconnected in block <u1>.
+WARNING:Xst:1710 - FF/Latch  <cmd_r_5> (without init value) is constant in block <sdramCntl>.
+
+Optimizing unit <test_vga> ...
+
+Optimizing unit <sync> ...
+
+Optimizing unit <sync0> ...
+
+Optimizing unit <sdramCntl> ...
+WARNING:Xst:1710 - FF/Latch  <wrTimer_r_1> (without init value) is constant in block <sdramCntl>.
+WARNING:Xst:1710 - FF/Latch  <wrTimer_r_0> (without init value) is constant in block <sdramCntl>.
+
+Optimizing unit <fifo_cc> ...
+
+Optimizing unit <vga> ...
+Loading device for application Xst from file '3s1000.nph' in environment C:/ISE6.
+
+Mapping all equations...
+WARNING:Xst:637 - Naming conflict between signal rst of unit fifo and signal fifo_rst of unit vga : renaming fifo_rst to fifo_rst1.
+WARNING:Xst:637 - Naming conflict between signal level<7> of unit fifo and signal fifo_level<7> of unit vga : renaming fifo_level<7> to fifo_level<7>1.
+WARNING:Xst:637 - Naming conflict between signal level<6> of unit fifo and signal fifo_level<6> of unit vga : renaming fifo_level<6> to fifo_level<6>1.
+WARNING:Xst:637 - Naming conflict between signal level<5> of unit fifo and signal fifo_level<5> of unit vga : renaming fifo_level<5> to fifo_level<5>1.
+WARNING:Xst:637 - Naming conflict between signal level<4> of unit fifo and signal fifo_level<4> of unit vga : renaming fifo_level<4> to fifo_level<4>1.
+WARNING:Xst:637 - Naming conflict between signal level<3> of unit fifo and signal fifo_level<3> of unit vga : renaming fifo_level<3> to fifo_level<3>1.
+WARNING:Xst:1291 - FF/Latch <u0_u1_opBegun_r> is unconnected in block <test_vga>.
+Building and optimizing final netlist ...
+Register u0_u1_cmd_r_0 equivalent to u0_u1_cmd_r_1 has been removed
+Found area constraint ratio of 100 (+ 5) on block test_vga, actual ratio is 3.
+FlipFlop u1_cke has been replicated 1 time(s)
+
+=========================================================================
+*                            Final Report                               *
+=========================================================================
+
+Device utilization summary:
+---------------------------
+
+Selected Device : 3s1000ft256-4 
+
+ Number of Slices:                     260  out of   7680     3%  
+ Number of Slice Flip Flops:           256  out of  15360     1%  
+ Number of 4 input LUTs:               462  out of  15360     3%  
+ Number of bonded IOBs:                 68  out of    173    39%  
+ Number of BRAMs:                        1  out of     24     4%  
+ Number of GCLKs:                        2  out of      8    25%  
+
+
+=========================================================================
+TIMING REPORT
+
+
+Clock Information:
+------------------
+-----------------------------------+------------------------+-------+
+Clock Signal                       | Clock buffer(FF name)  | Load  |
+-----------------------------------+------------------------+-------+
+clk                                | u0_dllint:CLK0         | 257   |
+-----------------------------------+------------------------+-------+
+
+Timing Summary:
+---------------
+Speed Grade: -4
+
+   Minimum period: 7.003ns (Maximum Frequency: 142.796MHz)
+   Minimum input arrival time before clock: 3.109ns
+   Maximum output required time after clock: 6.626ns
+   Maximum combinational path delay: No path found
+
+=========================================================================
+Completed process "Synthesize".
+
+
+
+Started process "Translate".
+
+
+Command Line: ngdbuild -intstyle ise -dd
+c:\xesscorp\products\bitstreams\xsa\xst-dau_vga-vgagen\3s1000\test_vga/_ngo -uc
+test_vga.ucf -p xc3s1000-ft256-4 test_vga.ngc test_vga.ngd 
+
+Reading NGO file
+"C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/test_vga
+.ngc" ...
+Reading component libraries for design expansion...
+
+Annotating constraints to design from file "test_vga.ucf" ...
+
+Checking timing specifications ...
+   <none> (no matching synchronous elements driven by DCM outputs)
+   CLK0: TS_u0_int_clk1x=PERIOD u0_int_clk1x TS_clk*1.000000 HIGH 50.000000%
+Checking expanded design ...
+
+NGDBUILD Design Results Summary:
+  Number of errors:     0
+  Number of warnings:   0
+
+Total memory usage is 41560 kilobytes
+
+Writing NGD file "test_vga.ngd" ...
+
+Writing NGDBUILD log file "test_vga.bld"...
+
+NGDBUILD done.
+Completed process "Translate".
+
+
+
+Started process "Map".
+
+Using target part "3s1000ft256-4".
+Removing unused or disabled logic...
+Running cover...
+Running directed packing...
+Running delay-based LUT packing...
+Running related packing...
+
+Design Summary:
+Number of errors:      0
+Number of warnings:    1
+Logic Utilization:
+  Number of Slice Flip Flops:         211 out of  15,360    1%
+  Number of 4 input LUTs:             358 out of  15,360    2%
+Logic Distribution:
+  Number of occupied Slices:                          262 out of   7,680    3%
+    Number of Slices containing only related logic:     262 out of     262  100%
+    Number of Slices containing unrelated logic:          0 out of     262    0%
+      *See NOTES below for an explanation of the effects of unrelated logic
+Total Number 4 input LUTs:            467 out of  15,360    3%
+  Number used as logic:                358
+  Number used as a route-thru:         109
+  Number of bonded IOBs:               68 out of     173   39%
+    IOB Flip Flops:                    45
+  Number of Block RAMs:                1 out of      24    4%
+  Number of GCLKs:                     1 out of       8   12%
+  Number of DCMs:                      2 out of       4   50%
+
+Total equivalent gate count for design:  84,671
+Additional JTAG gate count for IOBs:  3,264
+Peak Memory Usage:  87 MB
+
+NOTES:
+
+   Related logic is defined as being logic that shares connectivity -
+   e.g. two LUTs are "related" if they share common inputs.
+   When assembling slices, Map gives priority to combine logic that
+   is related.  Doing so results in the best timing performance.
+
+   Unrelated logic shares no connectivity.  Map will only begin
+   packing unrelated logic into a slice once 99% of the slices are
+   occupied through related logic packing.
+
+   Note that once logic distribution reaches the 99% level through
+   related logic packing, this does not mean the device is completely
+   utilized.  Unrelated logic packing will then begin, continuing until
+   all usable LUTs and FFs are occupied.  Depending on your timing
+   budget, increased levels of unrelated logic packing may adversely
+   affect the overall timing performance of your design.
+
+
+Mapping completed.
+See MAP report file "test_vga_map.mrp" for details.
+Completed process "Map".
+
+Mapping Module test_vga . . .
+MAP command line:
+map -intstyle ise -p xc3s1000-ft256-4 -cm area -pr b -k 4 -c 100 -tx off -o test_vga_map.ncd test_vga.ngd test_vga.pcf
+Mapping Module test_vga: DONE
+
+
+
+Started process "Place & Route".
+
+
+
+
+
+Constraints file: test_vga.pcf
+
+Loading device database for application Par from file "test_vga_map.ncd".
+   "test_vga" is an NCD, version 2.38, device xc3s1000, package ft256, speed -4
+Loading device for application Par from file '3s1000.nph' in environment
+C:/ISE6.
+Device speed data version:  PRODUCTION 1.35 2004-11-11.
+
+
+Resolving physical constraints.
+Finished resolving physical constraints.
+
+Device utilization summary:
+
+   Number of External IOBs            68 out of 173    39%
+      Number of LOCed External IOBs   68 out of 68    100%
+
+   Number of RAMB16s                   1 out of 24      4%
+   Number of Slices                  262 out of 7680    3%
+
+   Number of BUFGMUXs                  1 out of 8      12%
+   Number of DCMs                      2 out of 4      50%
+
+
+
+Overall effort level (-ol):   Standard (set by user)
+Placer effort level (-pl):    Standard (set by user)
+Placer cost table entry (-t): 1
+Router effort level (-rl):    Standard (set by user)
+
+Starting initial Timing Analysis.  REAL time: 0 secs 
+Finished initial Timing Analysis.  REAL time: 3 secs 
+
+
+Phase 1.1
+Phase 1.1 (Checksum:98a1b6) REAL time: 3 secs 
+
+.
+Phase 3.8
+.....
+.
+Phase 3.8 (Checksum:9f0e43) REAL time: 4 secs 
+
+Phase 4.5
+Phase 4.5 (Checksum:26259fc) REAL time: 4 secs 
+
+Phase 5.18
+Phase 5.18 (Checksum:2faf07b) REAL time: 4 secs 
+
+Writing design to file test_vga.ncd.
+
+Total REAL time to Placer completion: 4 secs 
+Total CPU time to Placer completion: 4 secs 
+
+
+Phase 1: 1876 unrouted;       REAL time: 5 secs 
+
+Phase 2: 1650 unrouted;       REAL time: 9 secs 
+
+Phase 3: 218 unrouted;       REAL time: 9 secs 
+
+Phase 4: 218 unrouted; (5481)      REAL time: 9 secs 
+
+Phase 5: 228 unrouted; (27)      REAL time: 9 secs 
+
+Phase 6: 232 unrouted; (0)      REAL time: 9 secs 
+
+Phase 7: 0 unrouted; (0)      REAL time: 10 secs 
+
+Total REAL time to Router completion: 10 secs 
+Total CPU time to Router completion: 9 secs 
+
+Generating "par" statistics.
+
+**************************
+Generating Clock Report
+**************************
+
++-------------------------+----------+------+------+------------+-------------+
+|        Clock Net        | Resource |Locked|Fanout|Net Skew(ns)|Max Delay(ns)|
++-------------------------+----------+------+------+------------+-------------+
+|             clk1x       |  BUFGMUX3| No   |  176 |  0.445     |  1.146      |
++-------------------------+----------+------+------+------------+-------------+
+
+Timing Score: 0
+
+Asterisk (*) preceding a constraint indicates it was not met.
+   This may be due to a setup or hold violation.
+
+--------------------------------------------------------------------------------
+  Constraint                                | Requested  | Actual     | Logic 
+                                            |            |            | Levels
+--------------------------------------------------------------------------------
+  TS_clk = PERIOD TIMEGRP "clk"  10 nS   HI | N/A        | N/A        | N/A  
+  GH 50.000000 %                            |            |            |      
+--------------------------------------------------------------------------------
+  TS_u0_int_clk1x = PERIOD TIMEGRP "u0_int_ | 10.000ns   | 9.887ns    | 6    
+  clk1x" TS_clk * 1.000000 HIGH 50.000 %    |            |            |      
+--------------------------------------------------------------------------------
+
+
+All constraints were met.
+INFO:Timing:2761 - N/A entries in the Constraints list may indicate that the
+   constraint does not cover any paths or that it has no requested value.
+Generating Pad Report.
+
+All signals are completely routed.
+
+Total REAL time to PAR completion: 11 secs 
+Total CPU time to PAR completion: 10 secs 
+
+Peak Memory Usage:  119 MB
+
+Placement: Completed - No errors found.
+Routing: Completed - No errors found.
+Timing: Completed - No errors found.
+
+Writing design to file test_vga.ncd.
+
+
+PAR done.
+Completed process "Place & Route".
+
+
+Started process "Generate Post-Place & Route Static Timing".
+
+
+Analysis completed Sun Feb 04 10:19:13 2007
+--------------------------------------------------------------------------------
+
+Generating Report ...
+
+Completed process "Generate Post-Place & Route Static Timing".
+
+Place & Route Module test_vga . . .
+PAR command line: par -w -intstyle ise -ol std -t 1 test_vga_map.ncd test_vga.ncd test_vga.pcf
+PAR completed successfully
+
+
+
+
+Started process "Generate Programming File".
+
+Completed process "Generate Programming File".
+
+
+
+Project Navigator Auto-Make Log File
+-------------------------------------
+
+
+
+
+Started process "Synthesize".
+
+
+=========================================================================
+*                          HDL Compilation                              *
+=========================================================================
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/common.vhd in Library work.
+Architecture common of Entity common is up to date.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/sdramcntl.vhd in Library work.
+Architecture arch of Entity sdramcntl is up to date.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/xsasdramcntl.vhd in Library work.
+Architecture arch of Entity xsasdramcntl is up to date.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/vga.vhd in Library work.
+Architecture vga_arch of Entity vga is up to date.
+Architecture sync_arch of Entity sync is up to date.
+Architecture arch of Entity fifo_cc is up to date.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/test_vga.vhd in Library work.
+Entity <test_vga> (Architecture <arch>) compiled.
+
+=========================================================================
+*                            HDL Analysis                               *
+=========================================================================
+Analyzing Entity <test_vga> (Architecture <arch>).
+WARNING:Xst:753 - C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/test_vga.vhd line 91: Unconnected output port 'bufclk' of component 'XSASDRAMCntl'.
+WARNING:Xst:753 - C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/test_vga.vhd line 91: Unconnected output port 'clk2x' of component 'XSASDRAMCntl'.
+WARNING:Xst:753 - C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/test_vga.vhd line 91: Unconnected output port 'lock' of component 'XSASDRAMCntl'.
+WARNING:Xst:753 - C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/test_vga.vhd line 91: Unconnected output port 'opBegun' of component 'XSASDRAMCntl'.
+WARNING:Xst:753 - C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/test_vga.vhd line 91: Unconnected output port 'rdPending' of component 'XSASDRAMCntl'.
+WARNING:Xst:753 - C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/test_vga.vhd line 91: Unconnected output port 'done' of component 'XSASDRAMCntl'.
+WARNING:Xst:753 - C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/test_vga.vhd line 91: Unconnected output port 'status' of component 'XSASDRAMCntl'.
+Entity <test_vga> analyzed. Unit <test_vga> generated.
+
+Analyzing generic Entity <XSASDRAMCntl> (Architecture <arch>).
+	FREQ = 100000
+	PIPE_EN = <u>1
+	MAX_NOP = 1000000
+	DATA_WIDTH = 16
+	NROWS = 8192
+	NCOLS = 512
+	HADDR_WIDTH = 24
+	SADDR_WIDTH = 13
+Entity <XSASDRAMCntl> analyzed. Unit <XSASDRAMCntl> generated.
+
+Analyzing generic Entity <sdramCntl> (Architecture <arch>).
+	FREQ = 100000
+	IN_PHASE = <u>1
+	PIPE_EN = <u>1
+	MAX_NOP = 1000000
+	DATA_WIDTH = 16
+	NROWS = 8192
+	NCOLS = 512
+	HADDR_WIDTH = 24
+	SADDR_WIDTH = 13
+Entity <sdramCntl> analyzed. Unit <sdramCntl> generated.
+
+Analyzing generic Entity <vga> (Architecture <vga_arch>).
+	FREQ = 100000
+	CLK_DIV = 2
+	PIXEL_WIDTH = 16
+	PIXELS_PER_LINE = 800
+	LINES_PER_FRAME = 600
+	NUM_RGB_BITS = 5
+	FIT_TO_SCREEN = <u>1
+WARNING:Xst:753 - C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/vga.vhd line 163: Unconnected output port 'full' of component 'fifo_cc'.
+WARNING:Xst:753 - C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/vga.vhd line 163: Unconnected output port 'empty' of component 'fifo_cc'.
+WARNING:Xst:1610 - C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/vga.vhd line 344: Width mismatch. <rgb_x> has a width of 15 bits but assigned expression is 9-bit wide.
+Entity <vga> analyzed. Unit <vga> generated.
+
+Analyzing Entity <fifo_cc> (Architecture <arch>).
+Entity <fifo_cc> analyzed. Unit <fifo_cc> generated.
+
+Analyzing generic Entity <sync> (Architecture <sync_arch>).
+	FREQ = 50000
+	PERIOD = 23
+	START = 17
+	WIDTH = 4
+	VISIBLE = 800
+Entity <sync> analyzed. Unit <sync> generated.
+
+Analyzing generic Entity <sync> (Architecture <sync_arch>).
+	FREQ = 43
+	PERIOD = 15224
+	START = 14140
+	WIDTH = 64
+	VISIBLE = 600
+Entity <sync> analyzed. Unit <sync0> generated.
+
+
+=========================================================================
+*                           HDL Synthesis                               *
+=========================================================================
+INFO:Xst:1304 - Contents of register <sDataDir_x> in unit <sdramCntl> never changes during circuit operation. The register is replaced by logic.
+INFO:Xst:1304 - Contents of register <wrPipeline_x<0>> in unit <sdramCntl> never changes during circuit operation. The register is replaced by logic.
+INFO:Xst:1304 - Contents of register <sData_r> in unit <sdramCntl> never changes during circuit operation. The register is replaced by logic.
+INFO:Xst:1304 - Contents of register <sDataDir_r> in unit <sdramCntl> never changes during circuit operation. The register is replaced by logic.
+
+Synthesizing Unit <sync0>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/vga.vhd.
+    Found 16-bit adder for signal <$n0006> created at line 428.
+    Found 1-bit register for signal <blank_r>.
+    Found 16-bit register for signal <cnt_r>.
+    Found 1-bit register for signal <gate_r>.
+    Found 1-bit register for signal <sync_r>.
+    Summary:
+	inferred  19 D-type flip-flop(s).
+	inferred   1 Adder/Subtracter(s).
+Unit <sync0> synthesized.
+
+
+Synthesizing Unit <sync>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/vga.vhd.
+    Found 16-bit adder for signal <$n0006> created at line 428.
+    Found 1-bit register for signal <blank_r>.
+    Found 16-bit register for signal <cnt_r>.
+    Found 1-bit register for signal <gate_r>.
+    Found 1-bit register for signal <sync_r>.
+    Summary:
+	inferred  19 D-type flip-flop(s).
+	inferred   1 Adder/Subtracter(s).
+Unit <sync> synthesized.
+
+
+Synthesizing Unit <fifo_cc>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/vga.vhd.
+    Found 8-bit updown counter for signal <level_i>.
+    Found 8-bit up counter for signal <rd_addr>.
+    Found 8-bit up counter for signal <wr_addr>.
+    Summary:
+	inferred   3 Counter(s).
+Unit <fifo_cc> synthesized.
+
+
+Synthesizing Unit <sdramCntl>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/sdramcntl.vhd.
+WARNING:Xst:646 - Signal <col<12>> is assigned but never used.
+WARNING:Xst:646 - Signal <hDOutOppPhase_r> is assigned but never used.
+    Found finite state machine <FSM_0> for signal <state_r>.
+    -----------------------------------------------------------------------
+    | States             | 8                                              |
+    | Transitions        | 25                                             |
+    | Inputs             | 9                                              |
+    | Outputs            | 8                                              |
+    | Clock              | clk (rising_edge)                              |
+    | Clock enable       | $n0096 (negative)                              |
+    | Reset              | rst (positive)                                 |
+    | Reset type         | asynchronous                                   |
+    | Reset State        | initwait                                       |
+    | Power Up State     | initwait                                       |
+    | Encoding           | automatic                                      |
+    | Implementation     | LUT                                            |
+    -----------------------------------------------------------------------
+    Found 14-bit subtractor for signal <$n0114>.
+    Found 14-bit adder for signal <$n0118> created at line 405.
+    Found 20-bit adder for signal <$n0127> created at line 360.
+    Found 10-bit subtractor for signal <$n0129> created at line 400.
+    Found 3-bit subtractor for signal <$n0130> created at line 376.
+    Found 2-bit subtractor for signal <$n0131> created at line 389.
+    Found 15-bit subtractor for signal <$n0132> created at line 411.
+    Found 13-bit comparator not equal for signal <$n0133> created at line 343.
+    Found 2-bit comparator not equal for signal <$n0134> created at line 343.
+    Found 2-bit register for signal <activeBank_r>.
+    Found 1-bit register for signal <activeFlag_r>.
+    Found 13-bit register for signal <activeRow_r>.
+    Found 2-bit register for signal <ba_r>.
+    Found 1-bit register for signal <cke_r>.
+    Found 6-bit register for signal <cmd_r>.
+    Found 16-bit register for signal <hDOut_r>.
+    Found 20-bit register for signal <nopCntr_r>.
+    Found 1-bit register for signal <opBegun_r>.
+    Found 3-bit register for signal <rasTimer_r>.
+    Found 5-bit register for signal <rdPipeline_r>.
+    Found 10-bit register for signal <refTimer_r>.
+    Found 14-bit register for signal <rfshCntr_r>.
+    Found 13-bit register for signal <sAddr_r>.
+    Found 15-bit register for signal <timer_r>.
+    Found 1-bit register for signal <wrPipeline_r<0>>.
+    Found 2-bit register for signal <wrTimer_r>.
+    Found 28 1-bit 2-to-1 multiplexers.
+    Summary:
+	inferred   1 Finite State Machine(s).
+	inferred 109 D-type flip-flop(s).
+	inferred   7 Adder/Subtracter(s).
+	inferred   2 Comparator(s).
+	inferred  28 Multiplexer(s).
+Unit <sdramCntl> synthesized.
+
+
+Synthesizing Unit <vga>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/vga.vhd.
+WARNING:Xst:646 - Signal <fifo_level<2:0>> is assigned but never used.
+WARNING:Xst:646 - Signal <line_cnt> is assigned but never used.
+WARNING:Xst:646 - Signal <pixel_cnt> is assigned but never used.
+WARNING:Xst:646 - Signal <pixel<15:9>> is assigned but never used.
+    Found 1-bit register for signal <pixel_clk>.
+    Found 8-bit comparator less for signal <$n0010> created at line 153.
+    Found 3-bit register for signal <blank_r>.
+    Found 1-bit register for signal <cke>.
+    Found 8-bit up counter for signal <clk_div_cnt>.
+    Found 1-bit register for signal <eof_r>.
+    Found 3-bit register for signal <hsync_r>.
+    Found 16-bit register for signal <pixel_data_r>.
+    Found 1-bit register for signal <rd_r>.
+    Found 15-bit register for signal <rgb_r>.
+    Summary:
+	inferred   1 Counter(s).
+	inferred  41 D-type flip-flop(s).
+	inferred   1 Comparator(s).
+Unit <vga> synthesized.
+
+
+Synthesizing Unit <XSASDRAMCntl>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/xsasdramcntl.vhd.
+    Found 16-bit tristate buffer for signal <sData>.
+    Summary:
+	inferred  16 Tristate(s).
+Unit <XSASDRAMCntl> synthesized.
+
+
+Synthesizing Unit <test_vga>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/test_vga.vhd.
+    Found 24-bit up counter for signal <address>.
+    Summary:
+	inferred   1 Counter(s).
+Unit <test_vga> synthesized.
+
+INFO:Xst:1767 - HDL ADVISOR - Resource sharing has identified that some arithmetic operations in this design can share the same physical resources for reduced device utilization. For improved clock frequency you may try to disable resource sharing.
+
+=========================================================================
+*                       Advanced HDL Synthesis                          *
+=========================================================================
+
+Advanced RAM inference ...
+Advanced multiplier inference ...
+Advanced Registered AddSub inference ...
+Selecting encoding for FSM_0 ...
+Optimizing FSM <FSM_0> on signal <state_r> with one-hot encoding.
+Dynamic shift register inference ...
+
+=========================================================================
+HDL Synthesis Report
+
+Macro Statistics
+# FSMs                             : 1
+# Adders/Subtractors               : 9
+ 15-bit subtractor                 : 1
+ 10-bit subtractor                 : 1
+ 20-bit adder                      : 1
+ 14-bit adder                      : 1
+ 14-bit subtractor                 : 1
+ 16-bit adder                      : 2
+ 2-bit subtractor                  : 1
+ 3-bit subtractor                  : 1
+# Counters                         : 5
+ 8-bit up counter                  : 3
+ 24-bit up counter                 : 1
+ 8-bit updown counter              : 1
+# Registers                        : 41
+ 15-bit register                   : 2
+ 3-bit register                    : 3
+ 1-bit register                    : 22
+ 13-bit register                   : 2
+ 5-bit register                    : 1
+ 20-bit register                   : 1
+ 2-bit register                    : 3
+ 14-bit register                   : 1
+ 16-bit register                   : 4
+ 6-bit register                    : 1
+ 10-bit register                   : 1
+# Comparators                      : 3
+ 8-bit comparator less             : 1
+ 13-bit comparator not equal       : 1
+ 2-bit comparator not equal        : 1
+# Multiplexers                     : 2
+ 14-bit 2-to-1 multiplexer         : 2
+# Tristates                        : 1
+ 16-bit tristate buffer            : 1
+
+=========================================================================
+
+=========================================================================
+*                         Low Level Synthesis                           *
+=========================================================================
+WARNING:Xst:1710 - FF/Latch  <wrPipeline_r_0> (without init value) is constant in block <sdramCntl>.
+WARNING:Xst:1710 - FF/Latch  <rgb_r_14> (without init value) is constant in block <vga>.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch  <rgb_r_9> (without init value) is constant in block <vga>.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch  <rgb_r_10> (without init value) is constant in block <vga>.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch  <rgb_r_11> (without init value) is constant in block <vga>.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch  <rgb_r_12> (without init value) is constant in block <vga>.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch  <rgb_r_13> (without init value) is constant in block <vga>.
+WARNING:Xst:1291 - FF/Latch <pixel_data_r_15> is unconnected in block <vga>.
+WARNING:Xst:1291 - FF/Latch <pixel_data_r_9> is unconnected in block <vga>.
+WARNING:Xst:1291 - FF/Latch <pixel_data_r_10> is unconnected in block <vga>.
+WARNING:Xst:1291 - FF/Latch <pixel_data_r_11> is unconnected in block <vga>.
+WARNING:Xst:1291 - FF/Latch <pixel_data_r_12> is unconnected in block <vga>.
+WARNING:Xst:1291 - FF/Latch <pixel_data_r_13> is unconnected in block <vga>.
+WARNING:Xst:1291 - FF/Latch <pixel_data_r_14> is unconnected in block <vga>.
+WARNING:Xst:1291 - FF/Latch <opBegun_r> is unconnected in block <u1>.
+WARNING:Xst:1710 - FF/Latch  <cmd_r_5> (without init value) is constant in block <sdramCntl>.
+
+Optimizing unit <test_vga> ...
+
+Optimizing unit <sync> ...
+
+Optimizing unit <sync0> ...
+
+Optimizing unit <sdramCntl> ...
+WARNING:Xst:1710 - FF/Latch  <wrTimer_r_1> (without init value) is constant in block <sdramCntl>.
+WARNING:Xst:1710 - FF/Latch  <wrTimer_r_0> (without init value) is constant in block <sdramCntl>.
+
+Optimizing unit <fifo_cc> ...
+
+Optimizing unit <vga> ...
+Loading device for application Xst from file '3s1000.nph' in environment C:/ISE6.
+
+Mapping all equations...
+WARNING:Xst:637 - Naming conflict between signal rst of unit fifo and signal fifo_rst of unit vga : renaming fifo_rst to fifo_rst1.
+WARNING:Xst:637 - Naming conflict between signal level<7> of unit fifo and signal fifo_level<7> of unit vga : renaming fifo_level<7> to fifo_level<7>1.
+WARNING:Xst:637 - Naming conflict between signal level<6> of unit fifo and signal fifo_level<6> of unit vga : renaming fifo_level<6> to fifo_level<6>1.
+WARNING:Xst:637 - Naming conflict between signal level<5> of unit fifo and signal fifo_level<5> of unit vga : renaming fifo_level<5> to fifo_level<5>1.
+WARNING:Xst:637 - Naming conflict between signal level<4> of unit fifo and signal fifo_level<4> of unit vga : renaming fifo_level<4> to fifo_level<4>1.
+WARNING:Xst:637 - Naming conflict between signal level<3> of unit fifo and signal fifo_level<3> of unit vga : renaming fifo_level<3> to fifo_level<3>1.
+WARNING:Xst:1291 - FF/Latch <u0_u1_opBegun_r> is unconnected in block <test_vga>.
+Building and optimizing final netlist ...
+Register u0_u1_cmd_r_0 equivalent to u0_u1_cmd_r_1 has been removed
+Found area constraint ratio of 100 (+ 5) on block test_vga, actual ratio is 3.
+FlipFlop u1_cke has been replicated 1 time(s)
+
+=========================================================================
+*                            Final Report                               *
+=========================================================================
+
+Device utilization summary:
+---------------------------
+
+Selected Device : 3s1000ft256-4 
+
+ Number of Slices:                     252  out of   7680     3%  
+ Number of Slice Flip Flops:           250  out of  15360     1%  
+ Number of 4 input LUTs:               448  out of  15360     2%  
+ Number of bonded IOBs:                 68  out of    173    39%  
+ Number of BRAMs:                        1  out of     24     4%  
+ Number of GCLKs:                        2  out of      8    25%  
+
+
+=========================================================================
+TIMING REPORT
+
+
+Clock Information:
+------------------
+-----------------------------------+------------------------+-------+
+Clock Signal                       | Clock buffer(FF name)  | Load  |
+-----------------------------------+------------------------+-------+
+clk                                | u0_dllint:CLK0         | 251   |
+-----------------------------------+------------------------+-------+
+
+Timing Summary:
+---------------
+Speed Grade: -4
+
+   Minimum period: 7.003ns (Maximum Frequency: 142.796MHz)
+   Minimum input arrival time before clock: 3.109ns
+   Maximum output required time after clock: 6.626ns
+   Maximum combinational path delay: No path found
+
+=========================================================================
+Completed process "Synthesize".
+
+
+
+Started process "Translate".
+
+
+Command Line: ngdbuild -intstyle ise -dd
+c:\xesscorp\products\bitstreams\xsa\xst-dau_vga-vgagen\3s1000\test_vga/_ngo -uc
+test_vga.ucf -p xc3s1000-ft256-4 test_vga.ngc test_vga.ngd 
+
+Reading NGO file
+"C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/test_vga
+.ngc" ...
+Reading component libraries for design expansion...
+
+Annotating constraints to design from file "test_vga.ucf" ...
+
+Checking timing specifications ...
+   <none> (no matching synchronous elements driven by DCM outputs)
+   CLK0: TS_u0_int_clk1x=PERIOD u0_int_clk1x TS_clk*1.000000 HIGH 50.000000%
+Checking expanded design ...
+
+NGDBUILD Design Results Summary:
+  Number of errors:     0
+  Number of warnings:   0
+
+Total memory usage is 41560 kilobytes
+
+Writing NGD file "test_vga.ngd" ...
+
+Writing NGDBUILD log file "test_vga.bld"...
+
+NGDBUILD done.
+Completed process "Translate".
+
+
+
+Started process "Map".
+
+Using target part "3s1000ft256-4".
+Removing unused or disabled logic...
+Running cover...
+Running directed packing...
+Running delay-based LUT packing...
+Running related packing...
+
+Design Summary:
+Number of errors:      0
+Number of warnings:    1
+Logic Utilization:
+  Number of Slice Flip Flops:         204 out of  15,360    1%
+  Number of 4 input LUTs:             344 out of  15,360    2%
+Logic Distribution:
+  Number of occupied Slices:                          259 out of   7,680    3%
+    Number of Slices containing only related logic:     259 out of     259  100%
+    Number of Slices containing unrelated logic:          0 out of     259    0%
+      *See NOTES below for an explanation of the effects of unrelated logic
+Total Number 4 input LUTs:            453 out of  15,360    2%
+  Number used as logic:                344
+  Number used as a route-thru:         109
+  Number of bonded IOBs:               68 out of     173   39%
+    IOB Flip Flops:                    46
+  Number of Block RAMs:                1 out of      24    4%
+  Number of GCLKs:                     1 out of       8   12%
+  Number of DCMs:                      2 out of       4   50%
+
+Total equivalent gate count for design:  84,539
+Additional JTAG gate count for IOBs:  3,264
+Peak Memory Usage:  87 MB
+
+NOTES:
+
+   Related logic is defined as being logic that shares connectivity -
+   e.g. two LUTs are "related" if they share common inputs.
+   When assembling slices, Map gives priority to combine logic that
+   is related.  Doing so results in the best timing performance.
+
+   Unrelated logic shares no connectivity.  Map will only begin
+   packing unrelated logic into a slice once 99% of the slices are
+   occupied through related logic packing.
+
+   Note that once logic distribution reaches the 99% level through
+   related logic packing, this does not mean the device is completely
+   utilized.  Unrelated logic packing will then begin, continuing until
+   all usable LUTs and FFs are occupied.  Depending on your timing
+   budget, increased levels of unrelated logic packing may adversely
+   affect the overall timing performance of your design.
+
+
+Mapping completed.
+See MAP report file "test_vga_map.mrp" for details.
+Completed process "Map".
+
+Mapping Module test_vga . . .
+MAP command line:
+map -intstyle ise -p xc3s1000-ft256-4 -cm area -pr b -k 4 -c 100 -tx off -o test_vga_map.ncd test_vga.ngd test_vga.pcf
+Mapping Module test_vga: DONE
+
+
+
+Started process "Place & Route".
+
+
+
+
+
+Constraints file: test_vga.pcf
+
+Loading device database for application Par from file "test_vga_map.ncd".
+   "test_vga" is an NCD, version 2.38, device xc3s1000, package ft256, speed -4
+Loading device for application Par from file '3s1000.nph' in environment
+C:/ISE6.
+Device speed data version:  PRODUCTION 1.35 2004-11-11.
+
+
+Resolving physical constraints.
+Finished resolving physical constraints.
+
+Device utilization summary:
+
+   Number of External IOBs            68 out of 173    39%
+      Number of LOCed External IOBs   68 out of 68    100%
+
+   Number of RAMB16s                   1 out of 24      4%
+   Number of Slices                  259 out of 7680    3%
+
+   Number of BUFGMUXs                  1 out of 8      12%
+   Number of DCMs                      2 out of 4      50%
+
+
+
+Overall effort level (-ol):   Standard (set by user)
+Placer effort level (-pl):    Standard (set by user)
+Placer cost table entry (-t): 1
+Router effort level (-rl):    Standard (set by user)
+
+Starting initial Timing Analysis.  REAL time: 0 secs 
+Finished initial Timing Analysis.  REAL time: 3 secs 
+
+
+Phase 1.1
+Phase 1.1 (Checksum:98a195) REAL time: 4 secs 
+
+.
+Phase 3.8
+.......
+.
+Phase 3.8 (Checksum:9eeaa6) REAL time: 4 secs 
+
+Phase 4.5
+Phase 4.5 (Checksum:26259fc) REAL time: 4 secs 
+
+Phase 5.18
+Phase 5.18 (Checksum:2faf07b) REAL time: 5 secs 
+
+Writing design to file test_vga.ncd.
+
+Total REAL time to Placer completion: 5 secs 
+Total CPU time to Placer completion: 4 secs 
+
+
+Phase 1: 1839 unrouted;       REAL time: 6 secs 
+
+Phase 2: 1617 unrouted;       REAL time: 10 secs 
+
+Phase 3: 263 unrouted;       REAL time: 10 secs 
+
+Phase 4: 263 unrouted; (13571)      REAL time: 10 secs 
+
+Phase 5: 261 unrouted; (0)      REAL time: 11 secs 
+
+Phase 6: 273 unrouted; (0)      REAL time: 11 secs 
+
+Phase 7: 0 unrouted; (0)      REAL time: 11 secs 
+
+Total REAL time to Router completion: 12 secs 
+Total CPU time to Router completion: 10 secs 
+
+Generating "par" statistics.
+
+**************************
+Generating Clock Report
+**************************
+
++-------------------------+----------+------+------+------------+-------------+
+|        Clock Net        | Resource |Locked|Fanout|Net Skew(ns)|Max Delay(ns)|
++-------------------------+----------+------+------+------------+-------------+
+|             clk1x       |  BUFGMUX3| No   |  173 |  0.430     |  1.132      |
++-------------------------+----------+------+------+------------+-------------+
+
+Timing Score: 0
+
+Asterisk (*) preceding a constraint indicates it was not met.
+   This may be due to a setup or hold violation.
+
+--------------------------------------------------------------------------------
+  Constraint                                | Requested  | Actual     | Logic 
+                                            |            |            | Levels
+--------------------------------------------------------------------------------
+  TS_clk = PERIOD TIMEGRP "clk"  10 nS   HI | N/A        | N/A        | N/A  
+  GH 50.000000 %                            |            |            |      
+--------------------------------------------------------------------------------
+  TS_u0_int_clk1x = PERIOD TIMEGRP "u0_int_ | 10.000ns   | 9.795ns    | 4    
+  clk1x" TS_clk * 1.000000 HIGH 50.000 %    |            |            |      
+--------------------------------------------------------------------------------
+
+
+All constraints were met.
+INFO:Timing:2761 - N/A entries in the Constraints list may indicate that the
+   constraint does not cover any paths or that it has no requested value.
+Generating Pad Report.
+
+All signals are completely routed.
+
+Total REAL time to PAR completion: 12 secs 
+Total CPU time to PAR completion: 10 secs 
+
+Peak Memory Usage:  119 MB
+
+Placement: Completed - No errors found.
+Routing: Completed - No errors found.
+Timing: Completed - No errors found.
+
+Writing design to file test_vga.ncd.
+
+
+PAR done.
+Completed process "Place & Route".
+
+
+Started process "Generate Post-Place & Route Static Timing".
+
+
+Analysis completed Mon Feb 05 07:39:48 2007
+--------------------------------------------------------------------------------
+
+Generating Report ...
+
+Completed process "Generate Post-Place & Route Static Timing".
+
+Place & Route Module test_vga . . .
+PAR command line: par -w -intstyle ise -ol std -t 1 test_vga_map.ncd test_vga.ncd test_vga.pcf
+PAR completed successfully
+
+
+
+
+Started process "Generate Programming File".
+
+Completed process "Generate Programming File".
+
+
+
+Project Navigator Auto-Make Log File
+-------------------------------------
+
+
+
+
+Started process "Synthesize".
+
+
+=========================================================================
+*                          HDL Compilation                              *
+=========================================================================
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/common.vhd in Library work.
+Architecture common of Entity common is up to date.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/sdramcntl.vhd in Library work.
+Architecture arch of Entity sdramcntl is up to date.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/xsasdramcntl.vhd in Library work.
+Architecture arch of Entity xsasdramcntl is up to date.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/vga.vhd in Library work.
+Entity <vga> (Architecture <vga_arch>) compiled.
+Entity <sync> (Architecture <sync_arch>) compiled.
+Entity <fifo_cc> (Architecture <arch>) compiled.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/test_vga.vhd in Library work.
+Architecture arch of Entity test_vga is up to date.
+
+=========================================================================
+*                            HDL Analysis                               *
+=========================================================================
+Analyzing Entity <test_vga> (Architecture <arch>).
+WARNING:Xst:753 - C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/test_vga.vhd line 91: Unconnected output port 'bufclk' of component 'XSASDRAMCntl'.
+WARNING:Xst:753 - C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/test_vga.vhd line 91: Unconnected output port 'clk2x' of component 'XSASDRAMCntl'.
+WARNING:Xst:753 - C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/test_vga.vhd line 91: Unconnected output port 'lock' of component 'XSASDRAMCntl'.
+WARNING:Xst:753 - C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/test_vga.vhd line 91: Unconnected output port 'opBegun' of component 'XSASDRAMCntl'.
+WARNING:Xst:753 - C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/test_vga.vhd line 91: Unconnected output port 'rdPending' of component 'XSASDRAMCntl'.
+WARNING:Xst:753 - C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/test_vga.vhd line 91: Unconnected output port 'done' of component 'XSASDRAMCntl'.
+WARNING:Xst:753 - C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/test_vga.vhd line 91: Unconnected output port 'status' of component 'XSASDRAMCntl'.
+Entity <test_vga> analyzed. Unit <test_vga> generated.
+
+Analyzing generic Entity <XSASDRAMCntl> (Architecture <arch>).
+	FREQ = 100000
+	PIPE_EN = <u>1
+	MAX_NOP = 1000000
+	DATA_WIDTH = 16
+	NROWS = 8192
+	NCOLS = 512
+	HADDR_WIDTH = 24
+	SADDR_WIDTH = 13
+Entity <XSASDRAMCntl> analyzed. Unit <XSASDRAMCntl> generated.
+
+Analyzing generic Entity <sdramCntl> (Architecture <arch>).
+	FREQ = 100000
+	IN_PHASE = <u>1
+	PIPE_EN = <u>1
+	MAX_NOP = 1000000
+	DATA_WIDTH = 16
+	NROWS = 8192
+	NCOLS = 512
+	HADDR_WIDTH = 24
+	SADDR_WIDTH = 13
+Entity <sdramCntl> analyzed. Unit <sdramCntl> generated.
+
+Analyzing generic Entity <vga> (Architecture <vga_arch>).
+	FREQ = 100000
+	CLK_DIV = 2
+	PIXEL_WIDTH = 16
+	PIXELS_PER_LINE = 800
+	LINES_PER_FRAME = 600
+	NUM_RGB_BITS = 5
+	FIT_TO_SCREEN = <u>1
+WARNING:Xst:753 - C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/vga.vhd line 163: Unconnected output port 'full' of component 'fifo_cc'.
+WARNING:Xst:753 - C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/vga.vhd line 163: Unconnected output port 'empty' of component 'fifo_cc'.
+Entity <vga> analyzed. Unit <vga> generated.
+
+Analyzing Entity <fifo_cc> (Architecture <arch>).
+Entity <fifo_cc> analyzed. Unit <fifo_cc> generated.
+
+Analyzing generic Entity <sync> (Architecture <sync_arch>).
+	FREQ = 50000
+	PERIOD = 23
+	START = 17
+	WIDTH = 4
+	VISIBLE = 800
+Entity <sync> analyzed. Unit <sync> generated.
+
+Analyzing generic Entity <sync> (Architecture <sync_arch>).
+	FREQ = 43
+	PERIOD = 15224
+	START = 14140
+	WIDTH = 64
+	VISIBLE = 600
+Entity <sync> analyzed. Unit <sync0> generated.
+
+
+=========================================================================
+*                           HDL Synthesis                               *
+=========================================================================
+INFO:Xst:1304 - Contents of register <sDataDir_x> in unit <sdramCntl> never changes during circuit operation. The register is replaced by logic.
+INFO:Xst:1304 - Contents of register <wrPipeline_x<0>> in unit <sdramCntl> never changes during circuit operation. The register is replaced by logic.
+INFO:Xst:1304 - Contents of register <sData_r> in unit <sdramCntl> never changes during circuit operation. The register is replaced by logic.
+INFO:Xst:1304 - Contents of register <sDataDir_r> in unit <sdramCntl> never changes during circuit operation. The register is replaced by logic.
+
+Synthesizing Unit <sync0>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/vga.vhd.
+    Found 16-bit adder for signal <$n0006> created at line 429.
+    Found 1-bit register for signal <blank_r>.
+    Found 16-bit register for signal <cnt_r>.
+    Found 1-bit register for signal <gate_r>.
+    Found 1-bit register for signal <sync_r>.
+    Summary:
+	inferred  19 D-type flip-flop(s).
+	inferred   1 Adder/Subtracter(s).
+Unit <sync0> synthesized.
+
+
+Synthesizing Unit <sync>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/vga.vhd.
+    Found 16-bit adder for signal <$n0006> created at line 429.
+    Found 1-bit register for signal <blank_r>.
+    Found 16-bit register for signal <cnt_r>.
+    Found 1-bit register for signal <gate_r>.
+    Found 1-bit register for signal <sync_r>.
+    Summary:
+	inferred  19 D-type flip-flop(s).
+	inferred   1 Adder/Subtracter(s).
+Unit <sync> synthesized.
+
+
+Synthesizing Unit <fifo_cc>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/vga.vhd.
+    Found 8-bit updown counter for signal <level_i>.
+    Found 8-bit up counter for signal <rd_addr>.
+    Found 8-bit up counter for signal <wr_addr>.
+    Summary:
+	inferred   3 Counter(s).
+Unit <fifo_cc> synthesized.
+
+
+Synthesizing Unit <sdramCntl>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/sdramcntl.vhd.
+WARNING:Xst:646 - Signal <col<12>> is assigned but never used.
+WARNING:Xst:646 - Signal <hDOutOppPhase_r> is assigned but never used.
+    Found finite state machine <FSM_0> for signal <state_r>.
+    -----------------------------------------------------------------------
+    | States             | 8                                              |
+    | Transitions        | 25                                             |
+    | Inputs             | 9                                              |
+    | Outputs            | 8                                              |
+    | Clock              | clk (rising_edge)                              |
+    | Clock enable       | $n0096 (negative)                              |
+    | Reset              | rst (positive)                                 |
+    | Reset type         | asynchronous                                   |
+    | Reset State        | initwait                                       |
+    | Power Up State     | initwait                                       |
+    | Encoding           | automatic                                      |
+    | Implementation     | LUT                                            |
+    -----------------------------------------------------------------------
+    Found 14-bit subtractor for signal <$n0114>.
+    Found 14-bit adder for signal <$n0118> created at line 405.
+    Found 20-bit adder for signal <$n0127> created at line 360.
+    Found 10-bit subtractor for signal <$n0129> created at line 400.
+    Found 3-bit subtractor for signal <$n0130> created at line 376.
+    Found 2-bit subtractor for signal <$n0131> created at line 389.
+    Found 15-bit subtractor for signal <$n0132> created at line 411.
+    Found 13-bit comparator not equal for signal <$n0133> created at line 343.
+    Found 2-bit comparator not equal for signal <$n0134> created at line 343.
+    Found 2-bit register for signal <activeBank_r>.
+    Found 1-bit register for signal <activeFlag_r>.
+    Found 13-bit register for signal <activeRow_r>.
+    Found 2-bit register for signal <ba_r>.
+    Found 1-bit register for signal <cke_r>.
+    Found 6-bit register for signal <cmd_r>.
+    Found 16-bit register for signal <hDOut_r>.
+    Found 20-bit register for signal <nopCntr_r>.
+    Found 1-bit register for signal <opBegun_r>.
+    Found 3-bit register for signal <rasTimer_r>.
+    Found 5-bit register for signal <rdPipeline_r>.
+    Found 10-bit register for signal <refTimer_r>.
+    Found 14-bit register for signal <rfshCntr_r>.
+    Found 13-bit register for signal <sAddr_r>.
+    Found 15-bit register for signal <timer_r>.
+    Found 1-bit register for signal <wrPipeline_r<0>>.
+    Found 2-bit register for signal <wrTimer_r>.
+    Found 28 1-bit 2-to-1 multiplexers.
+    Summary:
+	inferred   1 Finite State Machine(s).
+	inferred 109 D-type flip-flop(s).
+	inferred   7 Adder/Subtracter(s).
+	inferred   2 Comparator(s).
+	inferred  28 Multiplexer(s).
+Unit <sdramCntl> synthesized.
+
+
+Synthesizing Unit <vga>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/vga.vhd.
+WARNING:Xst:646 - Signal <fifo_level<2:0>> is assigned but never used.
+WARNING:Xst:646 - Signal <line_cnt> is assigned but never used.
+WARNING:Xst:646 - Signal <pixel_cnt> is assigned but never used.
+WARNING:Xst:646 - Signal <pixel<15>> is assigned but never used.
+    Found 1-bit register for signal <pixel_clk>.
+    Found 8-bit comparator less for signal <$n0010> created at line 153.
+    Found 3-bit register for signal <blank_r>.
+    Found 1-bit register for signal <cke>.
+    Found 8-bit up counter for signal <clk_div_cnt>.
+    Found 1-bit register for signal <eof_r>.
+    Found 3-bit register for signal <hsync_r>.
+    Found 16-bit register for signal <pixel_data_r>.
+    Found 1-bit register for signal <rd_r>.
+    Found 15-bit register for signal <rgb_r>.
+    Summary:
+	inferred   1 Counter(s).
+	inferred  41 D-type flip-flop(s).
+	inferred   1 Comparator(s).
+Unit <vga> synthesized.
+
+
+Synthesizing Unit <XSASDRAMCntl>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/xsasdramcntl.vhd.
+    Found 16-bit tristate buffer for signal <sData>.
+    Summary:
+	inferred  16 Tristate(s).
+Unit <XSASDRAMCntl> synthesized.
+
+
+Synthesizing Unit <test_vga>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/test_vga.vhd.
+    Found 24-bit up counter for signal <address>.
+    Summary:
+	inferred   1 Counter(s).
+Unit <test_vga> synthesized.
+
+INFO:Xst:1767 - HDL ADVISOR - Resource sharing has identified that some arithmetic operations in this design can share the same physical resources for reduced device utilization. For improved clock frequency you may try to disable resource sharing.
+
+=========================================================================
+*                       Advanced HDL Synthesis                          *
+=========================================================================
+
+Advanced RAM inference ...
+Advanced multiplier inference ...
+Advanced Registered AddSub inference ...
+Selecting encoding for FSM_0 ...
+Optimizing FSM <FSM_0> on signal <state_r> with one-hot encoding.
+Dynamic shift register inference ...
+
+=========================================================================
+HDL Synthesis Report
+
+Macro Statistics
+# FSMs                             : 1
+# Adders/Subtractors               : 9
+ 15-bit subtractor                 : 1
+ 10-bit subtractor                 : 1
+ 20-bit adder                      : 1
+ 14-bit adder                      : 1
+ 14-bit subtractor                 : 1
+ 16-bit adder                      : 2
+ 2-bit subtractor                  : 1
+ 3-bit subtractor                  : 1
+# Counters                         : 5
+ 8-bit up counter                  : 3
+ 24-bit up counter                 : 1
+ 8-bit updown counter              : 1
+# Registers                        : 41
+ 15-bit register                   : 2
+ 3-bit register                    : 3
+ 1-bit register                    : 22
+ 13-bit register                   : 2
+ 5-bit register                    : 1
+ 20-bit register                   : 1
+ 2-bit register                    : 3
+ 14-bit register                   : 1
+ 16-bit register                   : 4
+ 6-bit register                    : 1
+ 10-bit register                   : 1
+# Comparators                      : 3
+ 8-bit comparator less             : 1
+ 13-bit comparator not equal       : 1
+ 2-bit comparator not equal        : 1
+# Multiplexers                     : 2
+ 14-bit 2-to-1 multiplexer         : 2
+# Tristates                        : 1
+ 16-bit tristate buffer            : 1
+
+=========================================================================
+
+=========================================================================
+*                         Low Level Synthesis                           *
+=========================================================================
+WARNING:Xst:1710 - FF/Latch  <wrPipeline_r_0> (without init value) is constant in block <sdramCntl>.
+WARNING:Xst:1291 - FF/Latch <pixel_data_r_15> is unconnected in block <vga>.
+WARNING:Xst:1291 - FF/Latch <opBegun_r> is unconnected in block <u1>.
+WARNING:Xst:1710 - FF/Latch  <cmd_r_5> (without init value) is constant in block <sdramCntl>.
+
+Optimizing unit <test_vga> ...
+
+Optimizing unit <sync> ...
+
+Optimizing unit <sync0> ...
+
+Optimizing unit <sdramCntl> ...
+WARNING:Xst:1710 - FF/Latch  <wrTimer_r_1> (without init value) is constant in block <sdramCntl>.
+WARNING:Xst:1710 - FF/Latch  <wrTimer_r_0> (without init value) is constant in block <sdramCntl>.
+
+Optimizing unit <fifo_cc> ...
+
+Optimizing unit <vga> ...
+Loading device for application Xst from file '3s1000.nph' in environment C:/ISE6.
+
+Mapping all equations...
+WARNING:Xst:637 - Naming conflict between signal rst of unit fifo and signal fifo_rst of unit vga : renaming fifo_rst to fifo_rst1.
+WARNING:Xst:637 - Naming conflict between signal level<7> of unit fifo and signal fifo_level<7> of unit vga : renaming fifo_level<7> to fifo_level<7>1.
+WARNING:Xst:637 - Naming conflict between signal level<6> of unit fifo and signal fifo_level<6> of unit vga : renaming fifo_level<6> to fifo_level<6>1.
+WARNING:Xst:637 - Naming conflict between signal level<5> of unit fifo and signal fifo_level<5> of unit vga : renaming fifo_level<5> to fifo_level<5>1.
+WARNING:Xst:637 - Naming conflict between signal level<4> of unit fifo and signal fifo_level<4> of unit vga : renaming fifo_level<4> to fifo_level<4>1.
+WARNING:Xst:637 - Naming conflict between signal level<3> of unit fifo and signal fifo_level<3> of unit vga : renaming fifo_level<3> to fifo_level<3>1.
+WARNING:Xst:1291 - FF/Latch <u0_u1_opBegun_r> is unconnected in block <test_vga>.
+Building and optimizing final netlist ...
+Register u0_u1_cmd_r_0 equivalent to u0_u1_cmd_r_1 has been removed
+Found area constraint ratio of 100 (+ 5) on block test_vga, actual ratio is 3.
+FlipFlop u1_cke has been replicated 1 time(s)
+
+=========================================================================
+*                            Final Report                               *
+=========================================================================
+
+Device utilization summary:
+---------------------------
+
+Selected Device : 3s1000ft256-4 
+
+ Number of Slices:                     255  out of   7680     3%  
+ Number of Slice Flip Flops:           262  out of  15360     1%  
+ Number of 4 input LUTs:               454  out of  15360     2%  
+ Number of bonded IOBs:                 68  out of    173    39%  
+ Number of BRAMs:                        1  out of     24     4%  
+ Number of GCLKs:                        2  out of      8    25%  
+
+
+=========================================================================
+TIMING REPORT
+
+
+Clock Information:
+------------------
+-----------------------------------+------------------------+-------+
+Clock Signal                       | Clock buffer(FF name)  | Load  |
+-----------------------------------+------------------------+-------+
+clk                                | u0_dllint:CLK0         | 263   |
+-----------------------------------+------------------------+-------+
+
+Timing Summary:
+---------------
+Speed Grade: -4
+
+   Minimum period: 7.003ns (Maximum Frequency: 142.796MHz)
+   Minimum input arrival time before clock: 3.109ns
+   Maximum output required time after clock: 6.626ns
+   Maximum combinational path delay: No path found
+
+=========================================================================
+Completed process "Synthesize".
+
+
+
+Started process "Translate".
+
+
+Command Line: ngdbuild -intstyle ise -dd
+c:\xesscorp\products\bitstreams\xsa\xst-dau_vga-vgagen\3s1000\test_vga/_ngo -uc
+test_vga.ucf -p xc3s1000-ft256-4 test_vga.ngc test_vga.ngd 
+
+Reading NGO file
+"C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/test_vga
+.ngc" ...
+Reading component libraries for design expansion...
+
+Annotating constraints to design from file "test_vga.ucf" ...
+
+Checking timing specifications ...
+   <none> (no matching synchronous elements driven by DCM outputs)
+   CLK0: TS_u0_int_clk1x=PERIOD u0_int_clk1x TS_clk*1.000000 HIGH 50.000000%
+Checking expanded design ...
+
+NGDBUILD Design Results Summary:
+  Number of errors:     0
+  Number of warnings:   0
+
+Total memory usage is 41560 kilobytes
+
+Writing NGD file "test_vga.ngd" ...
+
+Writing NGDBUILD log file "test_vga.bld"...
+
+NGDBUILD done.
+Completed process "Translate".
+
+
+
+Started process "Map".
+
+Using target part "3s1000ft256-4".
+Removing unused or disabled logic...
+Running cover...
+Running directed packing...
+Running delay-based LUT packing...
+Running related packing...
+
+Design Summary:
+Number of errors:      0
+Number of warnings:    1
+Logic Utilization:
+  Number of Slice Flip Flops:         210 out of  15,360    1%
+  Number of 4 input LUTs:             350 out of  15,360    2%
+Logic Distribution:
+  Number of occupied Slices:                          265 out of   7,680    3%
+    Number of Slices containing only related logic:     265 out of     265  100%
+    Number of Slices containing unrelated logic:          0 out of     265    0%
+      *See NOTES below for an explanation of the effects of unrelated logic
+Total Number 4 input LUTs:            459 out of  15,360    2%
+  Number used as logic:                350
+  Number used as a route-thru:         109
+  Number of bonded IOBs:               68 out of     173   39%
+    IOB Flip Flops:                    52
+  Number of Block RAMs:                1 out of      24    4%
+  Number of GCLKs:                     1 out of       8   12%
+  Number of DCMs:                      2 out of       4   50%
+
+Total equivalent gate count for design:  84,671
+Additional JTAG gate count for IOBs:  3,264
+Peak Memory Usage:  87 MB
+
+NOTES:
+
+   Related logic is defined as being logic that shares connectivity -
+   e.g. two LUTs are "related" if they share common inputs.
+   When assembling slices, Map gives priority to combine logic that
+   is related.  Doing so results in the best timing performance.
+
+   Unrelated logic shares no connectivity.  Map will only begin
+   packing unrelated logic into a slice once 99% of the slices are
+   occupied through related logic packing.
+
+   Note that once logic distribution reaches the 99% level through
+   related logic packing, this does not mean the device is completely
+   utilized.  Unrelated logic packing will then begin, continuing until
+   all usable LUTs and FFs are occupied.  Depending on your timing
+   budget, increased levels of unrelated logic packing may adversely
+   affect the overall timing performance of your design.
+
+
+Mapping completed.
+See MAP report file "test_vga_map.mrp" for details.
+Completed process "Map".
+
+Mapping Module test_vga . . .
+MAP command line:
+map -intstyle ise -p xc3s1000-ft256-4 -cm area -pr b -k 4 -c 100 -tx off -o test_vga_map.ncd test_vga.ngd test_vga.pcf
+Mapping Module test_vga: DONE
+
+
+
+Started process "Place & Route".
+
+
+
+
+
+Constraints file: test_vga.pcf
+
+Loading device database for application Par from file "test_vga_map.ncd".
+   "test_vga" is an NCD, version 2.38, device xc3s1000, package ft256, speed -4
+Loading device for application Par from file '3s1000.nph' in environment
+C:/ISE6.
+Device speed data version:  PRODUCTION 1.35 2004-11-11.
+
+
+Resolving physical constraints.
+Finished resolving physical constraints.
+
+Device utilization summary:
+
+   Number of External IOBs            68 out of 173    39%
+      Number of LOCed External IOBs   68 out of 68    100%
+
+   Number of RAMB16s                   1 out of 24      4%
+   Number of Slices                  265 out of 7680    3%
+
+   Number of BUFGMUXs                  1 out of 8      12%
+   Number of DCMs                      2 out of 4      50%
+
+
+
+Overall effort level (-ol):   Standard (set by user)
+Placer effort level (-pl):    Standard (set by user)
+Placer cost table entry (-t): 1
+Router effort level (-rl):    Standard (set by user)
+
+Starting initial Timing Analysis.  REAL time: 0 secs 
+Finished initial Timing Analysis.  REAL time: 3 secs 
+
+
+Phase 1.1
+Phase 1.1 (Checksum:98a1d7) REAL time: 3 secs 
+
+.
+Phase 3.8
+............................
+.
+Phase 3.8 (Checksum:a1758e) REAL time: 4 secs 
+
+Phase 4.5
+Phase 4.5 (Checksum:26259fc) REAL time: 4 secs 
+
+Phase 5.18
+Phase 5.18 (Checksum:2faf07b) REAL time: 5 secs 
+
+Writing design to file test_vga.ncd.
+
+Total REAL time to Placer completion: 5 secs 
+Total CPU time to Placer completion: 4 secs 
+
+
+Phase 1: 1884 unrouted;       REAL time: 5 secs 
+
+Phase 2: 1659 unrouted;       REAL time: 9 secs 
+
+Phase 3: 264 unrouted;       REAL time: 10 secs 
+
+Phase 4: 264 unrouted; (1796)      REAL time: 10 secs 
+
+Phase 5: 311 unrouted; (16)      REAL time: 10 secs 
+
+Phase 6: 314 unrouted; (0)      REAL time: 10 secs 
+
+Phase 7: 0 unrouted; (207)      REAL time: 11 secs 
+
+Total REAL time to Router completion: 11 secs 
+Total CPU time to Router completion: 10 secs 
+
+Generating "par" statistics.
+
+**************************
+Generating Clock Report
+**************************
+
++-------------------------+----------+------+------+------------+-------------+
+|        Clock Net        | Resource |Locked|Fanout|Net Skew(ns)|Max Delay(ns)|
++-------------------------+----------+------+------+------------+-------------+
+|             clk1x       |  BUFGMUX3| No   |  182 |  0.448     |  1.154      |
++-------------------------+----------+------+------+------------+-------------+
+
+Timing Score: 207
+
+WARNING:Par:62 - Timing constraints have not been met.
+
+Asterisk (*) preceding a constraint indicates it was not met.
+   This may be due to a setup or hold violation.
+
+--------------------------------------------------------------------------------
+  Constraint                                | Requested  | Actual     | Logic 
+                                            |            |            | Levels
+--------------------------------------------------------------------------------
+  TS_clk = PERIOD TIMEGRP "clk"  10 nS   HI | N/A        | N/A        | N/A  
+  GH 50.000000 %                            |            |            |      
+--------------------------------------------------------------------------------
+* TS_u0_int_clk1x = PERIOD TIMEGRP "u0_int_ | 10.000ns   | 10.207ns   | 5    
+  clk1x" TS_clk * 1.000000 HIGH 50.000 %    |            |            |      
+--------------------------------------------------------------------------------
+
+
+1 constraint not met.
+INFO:Timing:2761 - N/A entries in the Constraints list may indicate that the
+   constraint does not cover any paths or that it has no requested value.
+Generating Pad Report.
+
+All signals are completely routed.
+
+Total REAL time to PAR completion: 12 secs 
+Total CPU time to PAR completion: 11 secs 
+
+Peak Memory Usage:  119 MB
+
+Placement: Completed - No errors found.
+Routing: Completed - No errors found.
+Timing: Completed - 1 errors found.
+
+Writing design to file test_vga.ncd.
+
+
+PAR done.
+Completed process "Place & Route".
+
+
+Started process "Generate Post-Place & Route Static Timing".
+
+
+Analysis completed Mon Feb 05 08:02:34 2007
+--------------------------------------------------------------------------------
+
+Generating Report ...
+
+Completed process "Generate Post-Place & Route Static Timing".
+
+Place & Route Module test_vga . . .
+PAR command line: par -w -intstyle ise -ol std -t 1 test_vga_map.ncd test_vga.ncd test_vga.pcf
+PAR completed successfully
+
+
+
+
+Started process "Generate Programming File".
+
+Completed process "Generate Programming File".
+
+

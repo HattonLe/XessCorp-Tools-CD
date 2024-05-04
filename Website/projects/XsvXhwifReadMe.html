@@ -1,0 +1,170 @@
+
+<html>
+<!-- $Header: /devl/xcs/repo/env/Jobs/JBits2/doc/XHWIF/XsvXhwifReadMe.html,v 1.1 2001/03/15 00:24:54 prasanna Exp $ --> 
+
+<!-- Mirrored from 192.168.0.47/projects/XsvXhwifReadMe.html by HTTrack Website Copier/3.x [XR&CO'2004], Mon, 04 Dec 2006 16:07:47 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=ISO-8859-1"><!-- /Added by HTTrack -->
+<head>
+<title>Instructions for Running JBits SDK on XESS XSV board </title>
+</head>
+
+<body bgcolor="#ffffff">
+
+<basefont face="Arial,Helvetica,SansSerif">
+
+<font face="Arial,Helvetica,SansSerif">
+
+
+<h1> Instructions for Running JBits SDK on XESS XSV board</h1>
+<hr noshade align=left size = 10>
+
+This document provides special instructions needed to run <em>JBits</em> SDK on the XSV board from XESS Corp.
+<p>
+<UL>
+<LI><A HREF=#fileinfo>File Information</A>
+<LI><A HREF=#checklist>Check List</A>
+</UL>
+<FONT COLOR = "#CC0000"><B> WARNING: Xilinx Inc is not responsible for damage caused by improper installation of the board.
+</B></FONT>
+<HR>
+<p>
+<A NAME=fileinfo>
+<H3>File Information</H3>
+Below find the files needed to execute <em>JBits</em> tools on the XSV board.
+<OL>
+  <LI> <em>xsv.class </em>
+<p>
+This is the XHWIF interface. If you have installed JBits 2.6 or any higher version this file would have been installed under com/xilinx/XHWIF/Boards by the installer.
+<p>
+This interface defaults for XCV800 device and HQ240. If your board has a different
+device or/and package, say for example XCV300 and PQ240, then all you have to do to support that particular device and package is to create a class, say, xsv300 as shown below. 
+
+<blockquote>
+<code>
+  package  com.xilinx.XHWIF.Boards; 
+<p>
+  import  com.xilinx.JBits.Virtex.Devices; <br>
+  import  com.xilinx.XHWIF.XHWIF; <br>
+
+<p>    
+
+  /** <br>
+  ** <br>
+  **  This is the interface to support XESS board to support devices <br>
+  **  other than the default device (XCV800) on XESS board 
+  **  <br>
+  ** <br>
+  **  See the comments in <em>XHWIF.java</em> for a description of the <br>
+  **  functions in this class. <br>
+  ** <br>
+  */ 
+<p>
+  public class xsv300 extends xsv { 
+<p>
+  /*  The parameters below define the system */ 
+
+<br>
+  private final static int boardxsv300[] = {Devices.XCV300}; <br>
+  private final static int boardxsvpkg[] = {Devices.PQ240}; <br>
+<p>    
+  /*<br>
+  **  This constructor sets the device type for XESS XCV300 device <br>
+  **  Change the device according to your system  <br>
+  */ 
+<p>
+  public   xsv300() { <br>
+&nbsp;&nbsp;&nbsp;   devType = boardxsv300;<br> 
+&nbsp;&nbsp;&nbsp;   pkgType = boardxsvpkg; <br>
+  } 
+<p>
+
+};  /* end class */ 
+</blockquote>
+</code>
+
+  The above example is given for XCV300 device with a PQ240 package but change it to
+  with whatever your system has. Compile and place this class file under
+  com/xilinx/XHWIF/Boards. This would enable xsv.class file to support your device and package. 
+    
+<p>
+  <LI> <em>xsvJNI.dll </em>
+<p>
+  This is the native interface needed for XHWIF interface to talk to the board. Place this under winnt/system32 for Win NT machine. If not placing under winnt/system32 make sure that this is placed under some directory pointed by the system path environment variable. 
+    
+<p>
+  <LI> <em>vir.svf </em>
+<p>
+  This is the NEW CPLD interface that would be needed by the XESS board to support
+  JBits. This has to be downloaded to the CPLD using the Load utility provided by
+  XESS. 
+<p>
+  Apart from this you have to REMOVE shunt from J36 jumper, when using JBits SDK with the XESS board. J36 jumper provides the clock for the FPGA using the on-board oscillator. But if you are single stepping the clock using BoardScope or XHWIF this SHOULD NOT be used AT ALL. If J36 is present and if you are trying to single step using Boardscope or XWIF then it will cause a contention on the CLOCK line and may damage the device and board. 
+    
+</OL>
+<HR>
+<A NAME=checklist>
+<H3>  Check List </H3>
+<OL>
+  <LI> Remove shunt from J36 jumper 
+  <LI> Download the New CPLD interface 
+  <LI> Place the Native Interface(xsvJNI.dll) in the menitoned directory 
+  <LI> Place the xsv.class file in the mentioned directory. 
+  <LI>If needed, to support the device on your board, create the class file as shown
+  in the example and place that in the mentioned directory. 
+  <LI> Download NULL bitstream as a test case using XHWIF's main() routine. The command is shown below.
+</OL>
+<blockquote>
+<code>
+java com.xilinx.XHWIF.XHWIF -xsv infile.bit
+</code>
+</blockquote>
+The main() in XHWIF has a bunch of test routines. It does a full configuration and readback of 1000 words and tests the clock by sending clock step. Alternatively you can try Boardscope to download the Bit file and check it. The command is shown below.
+<blockquote>
+<code>
+java RunBoardScope -xsv 
+</code>
+</blockquote>
+<p>
+If you have created an additional class file, say for example, xsv300.class, to support the device and package specific to your board, then the example command to test the interface is shown below:
+<blockquote>
+<code>
+java com.xilinx.XHWIF.XHWIF -xsv300 infile.bit
+<p>
+java RunBoardScope -xsv300 
+</code>
+</blockquote>
+
+  FYI, It usually takes(for XCV800) about 2-3 min for download and 2-3 min for
+  readback.
+
+<p>
+<FONT COLOR = "#CC0000"><B> WARNING: Xilinx Inc is not responsible for damage caused by improper installation of the board.
+</B></FONT>
+
+
+
+<p>
+<hr noshade align=left size=10>
+<p>
+
+<address>
+Xilinx<br>
+2100 Logic Drive<br>
+San Jose, CA  95124-3450<br>
+Email:  <a href="mailto:JBits@xilinx.com">
+        JBits@xilinx.com</a>
+Last updated:  14 March 2001
+</address>
+
+</font>
+
+</body>
+
+
+<!-- Mirrored from 192.168.0.47/projects/XsvXhwifReadMe.html by HTTrack Website Copier/3.x [XR&CO'2004], Mon, 04 Dec 2006 16:07:47 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=ISO-8859-1"><!-- /Added by HTTrack -->
+</html>
+
+
+
+

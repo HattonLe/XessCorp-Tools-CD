@@ -1,0 +1,134 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - gxssetclkDlg.h</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">gxssetclkDlg.h</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','gxssetclk0',this)" class="pathLink">gxssetclk</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">gxssetclkDlg.h</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','gxssetclkDlg_h0','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','gxssetclkDlg_h0','_overview',this)" class="tabLinkInActive">Overview</a></span>
+<span class="tabInActiveGrayout"><span class="tabLinkGrayout">Included files</span></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','gxssetclkDlg_h0','_includedby',this)" class="tabLinkInActive">Included by</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_file','gxssetclkDlg_h0','_source',this)" class="tabLinkActive">Source</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<pre class="codeExamples">
+/*----------------------------------------------------------------------------------
+  SOFTWARE LICENSE AGREEMENT
+    1.  Permission to use, copy, modify, and distribute this software
+        and its documentation, with or without modification, for any
+        purpose and without fee or royalty is hereby granted, provided
+        that you include the following on ALL copies of the software
+        and documentation or portions thereof, including
+        modifications, that you make:
+
+            a.  The full text of this license in a location viewable to users
+            of the redistributed or derivative work.
+
+            b.  Notice of any changes or modifications to the files,
+            including the date changes were made.
+
+    2.  The name, servicemarks and trademarks of X Engineering
+        Software Systems Corp. may NOT be used in advertising or
+        publicity pertaining to the software without specific, written
+        prior permission.
+
+    3.  Title to copyright in this software and any associated
+        documentation will at all times remain with X Engineering
+        Software Systems Corp.
+
+    4.  THIS SOFTWARE AND DOCUMENTATION IS PROVIDED "AS IS," AND X
+        Engineering Software Systems Corp MAKES NO REPRESENTATIONS OR
+        WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO,
+        WARRANTIES OF MERCHANTABILITY OR FITNESS FOR ANY PARTICULAR
+        PURPOSE OR THAT THE USE OF THE SOFTWARE OR DOCUMENTATION WILL
+        NOT INFRINGE ANY THIRD PARTY PATENTS, COPYRIGHTS, TRADEMARKS
+        OR OTHER RIGHTS.
+
+    5.  X Engineering Software Systems Corp WILL NOT BE LIABLE FOR ANY
+        DAMAGES, INCLUDING BUT NOT LIMITED TO, DIRECT, INDIRECT,
+        SPECIAL OR CONSEQUENTIAL, ARISING OUT OF ANY USE OF THE
+        SOFTWARE OR DOCUMENTATION.
+
+  ©2006 - X Engineering Software Systems Corp.  All rights reserved.
+----------------------------------------------------------------------------------*/
+
+// gxssetclkDlg.h : header file
+//
+
+#if !defined(AFX_GXSSETCLKDLG_H__5EBA40F6_7332_11D3_9A38_00A0CC3E3927__INCLUDED_)
+#define AFX_GXSSETCLKDLG_H__5EBA40F6_7332_11D3_9A38_00A0CC3E3927__INCLUDED_
+
+#if _MSC_VER &gt;= 1000
+#pragma once
+#endif // _MSC_VER &gt;= 1000
+
+/////////////////////////////////////////////////////////////////////////////
+// CGxssetclkDlg dialog
+
+class <a href="#" OnFocus="link('_class','CGxssetclkDlg0',this)">CGxssetclkDlg</a> : public CDialog
+{
+// Construction
+public:
+    <a href="#" OnFocus="link('_member','CGxssetclkDlg1826658570',this)">CGxssetclkDlg</a>(CWnd* pParent = NULL); // standard constructor
+
+// Dialog Data
+    //{{AFX_DATA(CGxssetclkDlg)
+    enum { <a href="#" OnFocus="link('_member','IDD136805197',this)">IDD</a> = IDD_GXSSETCLK_DIALOG };
+    CStatic <a href="#" OnFocus="link('_member','m_staticStatus136805197',this)">m_staticStatus</a>;
+    CEdit   <a href="#" OnFocus="link('_member','m_editFreq136805197',this)">m_editFreq</a>;
+    CComboBox   <a href="#" OnFocus="link('_member','m_cmbLpt136805197',this)">m_cmbLpt</a>;
+    CComboBox   <a href="#" OnFocus="link('_member','m_cmbBoard136805197',this)">m_cmbBoard</a>;
+    BOOL    <a href="#" OnFocus="link('_member','m_chkExtClk136805197',this)">m_chkExtClk</a>;
+    //}}AFX_DATA
+
+    // ClassWizard generated virtual function overrides
+    //{{AFX_VIRTUAL(CGxssetclkDlg)
+    protected:
+    virtual void <a href="#" OnFocus="link('_member','DoDataExchange2661562302',this)">DoDataExchange</a>(CDataExchange* pDX);  // DDX/DDV support
+    //}}AFX_VIRTUAL
+
+// Implementation
+protected:
+    HICON <a href="#" OnFocus="link('_member','m_hIcon136805197',this)">m_hIcon</a>;
+
+    // Generated message map functions
+    //{{AFX_MSG(CGxssetclkDlg)
+    virtual BOOL <a href="#" OnFocus="link('_member','OnInitDialog2552396621',this)">OnInitDialog</a>();
+    afx_msg void <a href="#" OnFocus="link('_member','OnSysCommand2316780430',this)">OnSysCommand</a>(UINT nID, LPARAM lParam);
+    afx_msg void <a href="#" OnFocus="link('_member','OnPaint2552396621',this)">OnPaint</a>();
+    afx_msg HCURSOR <a href="#" OnFocus="link('_member','OnQueryDragIcon2552396621',this)">OnQueryDragIcon</a>();
+    afx_msg void <a href="#" OnFocus="link('_member','OnSet2552396621',this)">OnSet</a>();
+    afx_msg void <a href="#" OnFocus="link('_member','OnChkExtclk2552396621',this)">OnChkExtclk</a>();
+    afx_msg void <a href="#" OnFocus="link('_member','OnSelchangeCmbBoard2552396621',this)">OnSelchangeCmbBoard</a>();
+    afx_msg void <a href="#" OnFocus="link('_member','OnSelchangeCmbLpt2552396621',this)">OnSelchangeCmbLpt</a>();
+    //}}AFX_MSG
+    DECLARE_MESSAGE_MAP()
+};
+
+//{{AFX_INSERT_LOCATION}}
+// Microsoft Developer Studio will insert additional declarations immediately before the previous line.
+
+#endif // !defined(AFX_GXSSETCLKDLG_H__5EBA40F6_7332_11D3_9A38_00A0CC3E3927__INCLUDED_)
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_file','_source');
+</script>

@@ -1,0 +1,118 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - saa711x.h</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">saa711x.h</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">saa711x.h</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','saa711x_h0','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','saa711x_h0','_overview',this)" class="tabLinkInActive">Overview</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','saa711x_h0','_includedfiles',this)" class="tabLinkInActive">Included files</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','saa711x_h0','_includedby',this)" class="tabLinkInActive">Included by</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_file','saa711x_h0','_source',this)" class="tabLinkActive">Source</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<pre class="codeExamples">
+/*----------------------------------------------------------------------------------
+  SOFTWARE LICENSE AGREEMENT
+    1.  Permission to use, copy, modify, and distribute this software
+        and its documentation, with or without modification, for any
+        purpose and without fee or royalty is hereby granted, provided
+        that you include the following on ALL copies of the software
+        and documentation or portions thereof, including
+        modifications, that you make:
+
+            a.  The full text of this license in a location viewable to users
+            of the redistributed or derivative work.
+
+            b.  Notice of any changes or modifications to the files,
+            including the date changes were made.
+
+    2.  The name, servicemarks and trademarks of X Engineering
+        Software Systems Corp. may NOT be used in advertising or
+        publicity pertaining to the software without specific, written
+        prior permission.
+
+    3.  Title to copyright in this software and any associated
+        documentation will at all times remain with X Engineering
+        Software Systems Corp.
+
+    4.  THIS SOFTWARE AND DOCUMENTATION IS PROVIDED "AS IS," AND X
+        Engineering Software Systems Corp MAKES NO REPRESENTATIONS OR
+        WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO,
+        WARRANTIES OF MERCHANTABILITY OR FITNESS FOR ANY PARTICULAR
+        PURPOSE OR THAT THE USE OF THE SOFTWARE OR DOCUMENTATION WILL
+        NOT INFRINGE ANY THIRD PARTY PATENTS, COPYRIGHTS, TRADEMARKS
+        OR OTHER RIGHTS.
+
+    5.  X Engineering Software Systems Corp WILL NOT BE LIABLE FOR ANY
+        DAMAGES, INCLUDING BUT NOT LIMITED TO, DIRECT, INDIRECT,
+        SPECIAL OR CONSEQUENTIAL, ARISING OUT OF ANY USE OF THE
+        SOFTWARE OR DOCUMENTATION.
+
+  ©2006 - X Engineering Software Systems Corp.  All rights reserved.
+----------------------------------------------------------------------------------*/
+
+
+#ifndef SAA711X_H
+#define SAA711X_H
+
+#include &lt;cassert&gt;
+#include &lt;cstdarg&gt;
+#include &lt;string&gt;
+using namespace std;
+
+#include "<a href="#" OnFocus="link('_file','i2cport_h0',this)">i2cport.h</a>"
+
+
+/**
+Reads and writes the registers of the SAA711X video codec through an I2C bus interface.
+*/
+class <a href="#" OnFocus="link('_class','SAA711X0',this)">SAA711X</a> : <a href="#" OnFocus="link('_class','I2CPort0',this)">I2CPort</a>
+{
+    public:
+
+    <a href="#" OnFocus="link('_member','SAA711X60109383',this)">SAA711X</a>(void);
+
+    <a href="#" OnFocus="link('_member','SAA711X60109383',this)">SAA711X</a>(<a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>* e, unsigned int portNum, unsigned int invMask,
+        unsigned int pos_saaSCLW, unsigned int pos_saaSDAW,
+        unsigned int pos_saaSCLR, unsigned int pos_saaSDAR);
+
+    int <a href="#" OnFocus="link('_member','Setup1928035134',this)">Setup</a>(<a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>* e, unsigned int portNum, unsigned int invMask,
+        unsigned int pos_saaSCLW, unsigned int pos_saaSDAW,
+        unsigned int pos_saaSCLR, unsigned int pos_saaSDAR);
+
+    bool <a href="#" OnFocus="link('_member','Configure36512822',this)">Configure</a>(string&amp; fileName);
+
+    
+    private:
+
+    unsigned int <a href="#" OnFocus="link('_member','posSAASCLW388304',this)">posSAASCLW</a>; ///&lt; position of prog. osc. clock write pin
+    unsigned int <a href="#" OnFocus="link('_member','posSAASCLR388304',this)">posSAASCLR</a>; ///&lt; position of prog. osc. clock read pin
+    unsigned int <a href="#" OnFocus="link('_member','posSAASDAW388304',this)">posSAASDAW</a>; ///&lt; position of prog. osc. data write pin
+    unsigned int <a href="#" OnFocus="link('_member','posSAASDAR388304',this)">posSAASDAR</a>; ///&lt; position of prog. osc. data read pin
+};
+
+#endif
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_file','_source');
+</script>

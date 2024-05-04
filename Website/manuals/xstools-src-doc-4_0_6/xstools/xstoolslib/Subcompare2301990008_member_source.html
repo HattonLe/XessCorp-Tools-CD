@@ -1,0 +1,48 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - Subcompare</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">Subcompare</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_class','Bitstream0',this)" class="pathLink">Bitstream</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">Subcompare</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','Subcompare2301990008','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_member','Subcompare2301990008','_source',this)" class="tabLinkActive">Source</a></span>
+<span class="tabInActiveGrayout"><span class="tabLinkGrayout">Call Graph</span></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<div class="paragraph2NoTopPadding">Start Line: 122</div>
+<pre class="codeExamples">
+bool <a href="#" OnFocus="link('_member','Subcompare2301990008',this)">Bitstream::Subcompare</a>(unsigned int pos, <a href="#" OnFocus="link('_class','Bitstream0',this)">Bitstream</a> &amp;b2, unsigned int b2Pos) const
+{
+    assert(pos&lt;numBits);       // field 1 goes from pos -&gt; numBits
+    assert(b2Pos&lt;b2.numBits);   // field 2 goes from b2pos -&gt; b2.<a href="#" OnFocus="link('_member','numBits203865993',this)">numBits</a>
+    if(numBits-pos &gt; b2.<a href="#" OnFocus="link('_member','numBits203865993',this)">numBits</a>-b2Pos)
+        return false;     // no match - field 1 longer than field 2
+    unsigned int i,j;
+    for(i=pos, j=b2Pos; i&lt;numBits; i++,j++)
+        if((*this)[i]!=b2[j])
+            return false;   // no match - one or more bits don't match
+        return true;    // got through the whole thing, so streams match
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_member','_source');
+</script>

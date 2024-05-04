@@ -1,0 +1,62 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - GetTAPStateLabel</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">GetTAPStateLabel</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_class','JTAGPort0',this)" class="pathLink">JTAGPort</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">GetTAPStateLabel</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','GetTAPStateLabel449122300','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_member','GetTAPStateLabel449122300','_source',this)" class="tabLinkActive">Source</a></span>
+<span class="tabInActiveGrayout"><span class="tabLinkGrayout">Call Graph</span></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<div class="paragraph2NoTopPadding">Start Line: 696</div>
+<pre class="codeExamples">
+string <a href="#" OnFocus="link('_member','GetTAPStateLabel449122300',this)">JTAGPort::GetTAPStateLabel</a>(TAPState s)
+{
+    switch(s)
+    {
+    case <a href="#" OnFocus="link('_member','TestLogicReset0',this)">TestLogicReset</a>:  return string("Test-Logic-Reset");
+    case <a href="#" OnFocus="link('_member','RunTestIdle0',this)">RunTestIdle</a>:     return string("Run-Test/Idle");
+    case <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>:    return string("Select_DR-Scan");
+    case <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>:    return string("Select_IR-Scan");
+    case <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>:       return string("Capture-DR");
+    case <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>:       return string("Capture-IR");
+    case <a href="#" OnFocus="link('_member','ShiftDR0',this)">ShiftDR</a>:         return string("Shift-DR");
+    case <a href="#" OnFocus="link('_member','ShiftIR0',this)">ShiftIR</a>:         return string("Shift-IR");
+    case <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>:         return string("Exit1-DR");
+    case <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>:         return string("Exit1-IR");
+    case <a href="#" OnFocus="link('_member','PauseDR0',this)">PauseDR</a>:         return string("Pause-DR");
+    case <a href="#" OnFocus="link('_member','PauseIR0',this)">PauseIR</a>:         return string("Pause-IR");
+    case <a href="#" OnFocus="link('_member','Exit2DR0',this)">Exit2DR</a>:         return string("Exit2-DR");
+    case <a href="#" OnFocus="link('_member','Exit2IR0',this)">Exit2IR</a>:         return string("Exit2-IR");
+    case <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>:        return string("Update-DR");
+    case <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>:        return string("Update-IR");
+    case <a href="#" OnFocus="link('_member','InvalidTAPState0',this)">InvalidTAPState</a>:
+    default:
+        assert(true==false);  // should never get here!!
+    }
+    return string("Unknown TAP state");
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_member','_source');
+</script>

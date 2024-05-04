@@ -1,0 +1,137 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - utils.h</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">utils.h</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">utils.h</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','utils_h0','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','utils_h0','_overview',this)" class="tabLinkInActive">Overview</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','utils_h0','_includedfiles',this)" class="tabLinkInActive">Included files</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','utils_h0','_includedby',this)" class="tabLinkInActive">Included by</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_file','utils_h0','_source',this)" class="tabLinkActive">Source</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<pre class="codeExamples">
+/*----------------------------------------------------------------------------------
+  SOFTWARE LICENSE AGREEMENT
+    1.  Permission to use, copy, modify, and distribute this software
+        and its documentation, with or without modification, for any
+        purpose and without fee or royalty is hereby granted, provided
+        that you include the following on ALL copies of the software
+        and documentation or portions thereof, including
+        modifications, that you make:
+
+            a.  The full text of this license in a location viewable to users
+            of the redistributed or derivative work.
+
+            b.  Notice of any changes or modifications to the files,
+            including the date changes were made.
+
+    2.  The name, servicemarks and trademarks of X Engineering
+        Software Systems Corp. may NOT be used in advertising or
+        publicity pertaining to the software without specific, written
+        prior permission.
+
+    3.  Title to copyright in this software and any associated
+        documentation will at all times remain with X Engineering
+        Software Systems Corp.
+
+    4.  THIS SOFTWARE AND DOCUMENTATION IS PROVIDED "AS IS," AND X
+        Engineering Software Systems Corp MAKES NO REPRESENTATIONS OR
+        WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO,
+        WARRANTIES OF MERCHANTABILITY OR FITNESS FOR ANY PARTICULAR
+        PURPOSE OR THAT THE USE OF THE SOFTWARE OR DOCUMENTATION WILL
+        NOT INFRINGE ANY THIRD PARTY PATENTS, COPYRIGHTS, TRADEMARKS
+        OR OTHER RIGHTS.
+
+    5.  X Engineering Software Systems Corp WILL NOT BE LIABLE FOR ANY
+        DAMAGES, INCLUDING BUT NOT LIMITED TO, DIRECT, INDIRECT,
+        SPECIAL OR CONSEQUENTIAL, ARISING OUT OF ANY USE OF THE
+        SOFTWARE OR DOCUMENTATION.
+
+  ©2006 - X Engineering Software Systems Corp.  All rights reserved.
+----------------------------------------------------------------------------------*/
+
+///\unit
+
+#ifndef UTILS_H
+#define UTILS_H
+
+#include &lt;string&gt;
+using namespace std;
+
+#include "<a href="#" OnFocus="link('_file','hexrecrd_h0',this)">hexrecrd.h</a>"
+#include "<a href="#" OnFocus="link('_file','xsboard_h0',this)">xsboard.h</a>"
+
+const unsigned int <a href="#" OnFocus="link('_member','MILLISECONDS0',this)">MILLISECONDS</a> = 1000;
+const unsigned int <a href="#" OnFocus="link('_member','MICROSECONDS0',this)">MICROSECONDS</a> = 1;
+const unsigned int <a href="#" OnFocus="link('_member','NANOSECONDS0',this)">NANOSECONDS</a>  = 0;
+
+enum{<a href="#" OnFocus="link('_member','PROMPT_OK0',this)">PROMPT_OK</a>,<a href="#" OnFocus="link('_member','PROMPT_OKCANCEL0',this)">PROMPT_OKCANCEL</a>};
+enum{<a href="#" OnFocus="link('_member','RESPONSE_CONTINUE0',this)">RESPONSE_CONTINUE</a>,<a href="#" OnFocus="link('_member','RESPONSE_CANCEL0',this)">RESPONSE_CANCEL</a>};
+
+/// Structure to hold information about XESS boards.
+typedef struct <a href="#" OnFocus="link('_class','brdModel_struct0',this)">brdModel_struct</a>
+{
+    char* <a href="#" OnFocus="link('_member','brdModel1254770407',this)">brdModel</a>;                 ///&lt; XS Board model identifier
+    char* <a href="#" OnFocus="link('_member','chipType1254770407',this)">chipType</a>;                 ///&lt; identifier for main programmable chip on board
+    int   <a href="#" OnFocus="link('_member','invMask1254770407',this)">invMask</a>;                 ///&lt; mask for inverting signals going through the parallel port
+    char* <a href="#" OnFocus="link('_member','dwnldIntfcBitstreamFile1254770407',this)">dwnldIntfcBitstreamFile</a>; ///&lt; standard interface for downloading/uploading bitstreams and RAM data
+    char* <a href="#" OnFocus="link('_member','ramBitstreamFile1254770407',this)">ramBitstreamFile</a>;         ///&lt; RAM upload/download interface bistream file
+    char* <a href="#" OnFocus="link('_member','oscBitstreamFile1254770407',this)">oscBitstreamFile</a>;         ///&lt; programmable oscillator interface bitstream file
+    char* <a href="#" OnFocus="link('_member','eraseBitstreamFile1254770407',this)">eraseBitstreamFile</a>;     ///&lt; erase file for interface CPLD on board
+    char* <a href="#" OnFocus="link('_member','flashBitstreamFile1254770407',this)">flashBitstreamFile</a>;     ///&lt; Flash/SEEPROM upload/download interface bitstream file
+    char* <a href="#" OnFocus="link('_member','flashConfigBitstreamFile1254770407',this)">flashConfigBitstreamFile</a>; ///&lt; configure FPGA from flash bitstream file
+    char* <a href="#" OnFocus="link('_member','testIntfcBitstreamFile1254770407',this)">testIntfcBitstreamFile</a>; ///&lt; test interface bitstream file
+    char* <a href="#" OnFocus="link('_member','testBitstreamFile1254770407',this)">testBitstreamFile</a>;     ///&lt; board test bitstream file
+    char* <a href="#" OnFocus="link('_member','testObjFile1254770407',this)">testObjFile</a>;             ///&lt; board test program object file
+} <a href="#" OnFocus="link('_class','brdModel_struct0',this)">XSBoardInfo</a>; 
+
+extern const unsigned char <a href="#" OnFocus="link('_member','reverseByteBits0',this)">reverseByteBits</a>[];
+
+unsigned int <a href="#" OnFocus="link('_member','CharToHex49468',this)">CharToHex</a>(char c);
+string&amp; <a href="#" OnFocus="link('_member','ConvertToUpperCase67554305',this)">ConvertToUpperCase</a>(string&amp; s);
+string&amp; <a href="#" OnFocus="link('_member','StripSuffix67554305',this)">StripSuffix</a>(string&amp; fileName);
+string <a href="#" OnFocus="link('_member','GetSuffix67554305',this)">GetSuffix</a>(string&amp; fileName);
+string&amp; <a href="#" OnFocus="link('_member','StripPrefix67554305',this)">StripPrefix</a>(string&amp; fileName);
+string <a href="#" OnFocus="link('_member','GetPrefix67554305',this)">GetPrefix</a>(string&amp; fileName);
+long unsigned int <a href="#" OnFocus="link('_member','GetInteger1332633361',this)">GetInteger</a>(istream&amp; is, int len=2);
+bool <a href="#" OnFocus="link('_member','ScanForField2849822024',this)">ScanForField</a>(istream&amp; is, unsigned char searchType);
+void <a href="#" OnFocus="link('_member','InsertDelay359930342',this)">InsertDelay</a>(unsigned long d, unsigned int time_units);
+void <a href="#" OnFocus="link('_member','EnableBatch56656',this)">EnableBatch</a>(bool b);
+int <a href="#" OnFocus="link('_member','PromptUser2517124797',this)">PromptUser</a>(string&amp; msg, int action);
+const char* <a href="#" OnFocus="link('_member','FindXSTOOLSBinDir53616',this)">FindXSTOOLSBinDir</a>(void);
+bool <a href="#" OnFocus="link('_member','SetXSTOOLSParameter1183990257',this)">SetXSTOOLSParameter</a>(char *name, const char *value);
+bool <a href="#" OnFocus="link('_member','SetXSTOOLSParameter1183990257',this)">SetXSTOOLSParameter</a>(string&amp; name, string&amp; value);
+string <a href="#" OnFocus="link('_member','GetXSTOOLSParameter86138908',this)">GetXSTOOLSParameter</a>(char *name);
+string <a href="#" OnFocus="link('_member','GetXSTOOLSParameter86138908',this)">GetXSTOOLSParameter</a>(string&amp; name);
+int <a href="#" OnFocus="link('_member','GetXSBoardInfo2867269968',this)">GetXSBoardInfo</a>(<a href="#" OnFocus="link('_class','brdModel_struct0',this)">XSBoardInfo</a>** bInfo);
+<a href="#" OnFocus="link('_class','XSBoard0',this)">XSBoard</a>* <a href="#" OnFocus="link('_member','NewXSBoard189216495',this)">NewXSBoard</a>(const char* boardModelName);
+unsigned int <a href="#" OnFocus="link('_member','Hex2Data1322513901',this)">Hex2Data</a>(<a href="#" OnFocus="link('_class','HexRecord0',this)">HexRecord</a>&amp; hx, int start, int numBytes, bool bigEndianBytes, bool bigEndianBits);
+void <a href="#" OnFocus="link('_member','Data2Hex2742888260',this)">Data2Hex</a>(unsigned int data, <a href="#" OnFocus="link('_class','HexRecord0',this)">HexRecord</a>&amp; hx, int start, int numBytes, bool bigEndianBytes, bool bigEndianBits);
+unsigned int <a href="#" OnFocus="link('_member','RearrangeData127079845',this)">RearrangeData</a>(unsigned int data, unsigned int numBits, bool bigEndianBytes, bool bigEndianBits);
+
+#endif
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_file','_source');
+</script>

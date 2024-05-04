@@ -1,0 +1,44 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - RearrangeData</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">RearrangeData</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">RearrangeData</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','RearrangeData127079845','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_member','RearrangeData127079845','_source',this)" class="tabLinkActive">Source</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','RearrangeData127079845','_callgraph',this)" class="tabLinkInActive">Call Graph</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<div class="paragraph2NoTopPadding">Start Line: 814</div>
+<pre class="codeExamples">
+unsigned int <a href="#" OnFocus="link('_member','RearrangeData127079845',this)">RearrangeData</a>(unsigned int data, unsigned int numBits, bool bigEndianBytes, bool bigEndianBits)
+{
+    unsigned int numBytes = (numBits+7) / 8;    // 0 bits=&gt;0 bytes; 1..8 bits=&gt;1 byte; 9..17 bits=&gt;2 bytes...
+    <a href="#" OnFocus="link('_class','HexRecord0',this)">HexRecord</a> hx;
+    hx.<a href="#" OnFocus="link('_member','SetLength2774302151',this)">SetLength</a>(numBytes);
+    <a href="#" OnFocus="link('_member','Data2Hex2742888260',this)">Data2Hex</a>(data,hx,0,numBytes,BIG_ENDIAN_BYTES,LITTLE_ENDIAN_BITS); // convert data to hex
+    return <a href="#" OnFocus="link('_member','Hex2Data1322513901',this)">Hex2Data</a>(hx,0,numBytes,bigEndianBytes,bigEndianBits); // convert back into data with the desired bit and byte order
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_member','_source');
+</script>

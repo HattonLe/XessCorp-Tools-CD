@@ -1,0 +1,49 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - DisplayBtnData</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">DisplayBtnData</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','gxsport0',this)" class="pathLink">gxsport</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_class','CGxsportDlg0',this)" class="pathLink">CGxsportDlg</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">DisplayBtnData</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','DisplayBtnData4245494786','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_member','DisplayBtnData4245494786','_source',this)" class="tabLinkActive">Source</a></span>
+<span class="tabInActiveGrayout"><span class="tabLinkGrayout">Call Graph</span></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<div class="paragraph2NoTopPadding">Start Line: 293</div>
+<pre class="codeExamples">
+void <a href="#" OnFocus="link('_member','DisplayBtnData4245494786',this)">CGxsportDlg::DisplayBtnData</a>(unsigned int data)
+{
+    ASSERT(data&gt;=0 &amp;&amp; data&lt;=255);
+    int i;
+    for(i=0; i&lt;8; i++,data&gt;&gt;=1)
+    {
+        if((<a href="#" OnFocus="link('_member','../xsatapi/data0',this)">data</a>&amp;1) == 0)
+            <a href="#" OnFocus="link('_member','dataBtn150410393',this)">dataBtn</a>[i]-&gt;SetWindowText("0");
+        else
+            <a href="#" OnFocus="link('_member','dataBtn150410393',this)">dataBtn</a>[i]-&gt;SetWindowText("1");
+    }
+
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_member','_source');
+</script>

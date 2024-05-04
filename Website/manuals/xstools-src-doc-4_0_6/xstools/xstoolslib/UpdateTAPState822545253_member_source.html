@@ -1,0 +1,43 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - UpdateTAPState</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">UpdateTAPState</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_class','JTAGPort0',this)" class="pathLink">JTAGPort</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">UpdateTAPState</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','UpdateTAPState822545253','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_member','UpdateTAPState822545253','_source',this)" class="tabLinkActive">Source</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','UpdateTAPState822545253','_callgraph',this)" class="tabLinkInActive">Call Graph</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<div class="paragraph2NoTopPadding">Start Line: 787</div>
+<pre class="codeExamples">
+void <a href="#" OnFocus="link('_member','UpdateTAPState822545253',this)">JTAGPort::UpdateTAPState</a>(unsigned int numTCKPulses=1)
+{
+    assert(currentTAPState&gt;=TestLogicReset &amp;&amp; currentTAPState&lt;=UpdateIR);
+    unsigned int tms = <a href="#" OnFocus="link('_member','GetTMS141716444',this)">GetTMS</a>();
+    for(unsigned int i=numTCKPulses; i&gt;0; i--)
+        <a href="#" OnFocus="link('_member','currentTAPState243771202',this)">currentTAPState</a> = <a href="#" OnFocus="link('_member','nextTAPState0',this)">nextTAPState</a>[<a href="#" OnFocus="link('_member','currentTAPState243771202',this)">currentTAPState</a>][tms];
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_member','_source');
+</script>

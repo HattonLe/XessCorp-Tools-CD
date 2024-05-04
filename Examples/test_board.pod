@@ -1,0 +1,164 @@
+=pod
+
+=head1 SDRAM CONTROLLER
+
+These are the design files for the SDRAM controller core and the surrounding application that
+uses the core to test the SDRAM on the XESS FPGA boards.
+
+You can find application notes about the SDRAM controller at
+http://www.xess.com/ho03000.html.
+
+=head1 APPLICATION DIRECTORY TREE
+
+  top ---+
+         |
+         +--- XS_LIB
+         |
+         +--- XSA ---+
+         |           |
+         |           +---XSA_LIB
+         |           |
+         |           +---50  -----+
+         |           |            |
+         |           |            +--- test_board
+         |           |
+         |           +---100 -----+
+         |           |            |
+         |           |            +--- test_board
+         |           |
+         |           +---200 -----+
+         |           |            |
+         |           |            +--- test_board
+         |           |
+         |           +---3S1000---+
+         |                        |
+         |                        +--- test_board
+         |            
+         +--- XSB ---+
+                     |
+                     +---XSB_LIB
+                     |
+                     +---300E-----+
+                                  |
+                                  +--- test_board
+                     
+The content of each subdirectory is listed below. 
+
+=over
+
+=item * XS_LIB
+
+This directory stores the VHDL files for all cores that are applicable to all models
+of XESS FPGA boards.  This includes the SDRAM controller core.
+
+=item * XSA
+
+This directory stores all the project directories for all the models of XSA Boards.
+
+=item * XSA_LIB
+
+This directory stores the VHDL files for all cores that have been customized for the
+XSA Boards.  This includes the SDRAM controller core and the core for testing the SDRAM.
+
+=item * 50, 100, 200, 3S1000
+
+Each of these directories stores the project directories for a particular model of
+XSA Board: XSA-50, XSA-100, XSA-200 or XSA-3S1000.
+
+=item * XSB
+
+This directory stores all the project directories for all the models of XSB Boards.
+
+=item * XSB_LIB
+
+This directory stores the VHDL files for all cores that have been customized for the
+XSB Boards.  This includes the core for testing the SDRAM.
+
+=item * 300E
+
+Each of these directories stores the project directories for a particular model of
+XSB Board: XSB-300E.
+
+=item * test_board:
+
+This directory contains a test_board.vhd file that instantiates the SDRAM test module
+for a particular model of XESS FPGA board.  The test_board.ucf file stores the appropriate
+pin assignments for the board.  The test_board.npl file allows you to rebuild the application
+using WebPACK.  The resulting test_board.bit file can be downloaded to the FPGA board to
+test the SDRAM.
+
+=back
+
+
+=head1 AUTHOR
+
+Dave Vanden Bout, X Engineering Software Systems Corp.
+
+Send bug reports to bugs@xess.com.
+
+
+=head1 COPYRIGHT AND LICENSE
+
+Copyright 2005 by X Engineering Software Systems Corporation.
+
+These applications can be freely distributed and modified
+as long as you do not remove the attributions to the author or his employer.
+
+
+=head1 HISTORY
+
+=item Version 1.4 - 07/12/05
+
+=over
+
+=item *
+
+Added CLK_DIV generic parameter to set divisor for the SDRAM and clk1x clocks.
+
+=item *
+
+Added MULTIPLE_ACTIVE_ROWS generic paramter to enable/disable the circuitry that stores the active
+row in each SDRAM bank.
+
+=back
+
+=item Version 1.3 - 06/27/05
+
+=over
+
+=item *
+
+All SDRAM controller I/O signals are now of type std_logic or std_logic_vector.
+
+=item *
+
+Each bank in the SDRAM now has an independent active row.
+
+=back
+
+=item Version 1.2 - 04/22/04
+
+=over
+
+=item *
+
+Pipelined read/write operations are now supported.
+
+=back
+
+=item Version 1.1 - 03/17/04
+
+  
+
+=item Version 1.0 - 09/27/01
+
+=over
+
+=item *
+
+Initial revision.
+
+=back
+
+
+=cut

@@ -1,0 +1,91 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - SetRecordType</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">SetRecordType</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_class','HexRecord0',this)" class="pathLink">HexRecord</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">SetRecordType</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','SetRecordType4230118567','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_member','SetRecordType4230118567','_source',this)" class="tabLinkActive">Source</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','SetRecordType4230118567','_callgraph',this)" class="tabLinkInActive">Call Graph</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<div class="paragraph2NoTopPadding">Start Line: 149</div>
+<pre class="codeExamples">
+void <a href="#" OnFocus="link('_member','SetRecordType4230118567',this)">HexRecord::SetRecordType</a>(HexRecordType t)
+{
+    <a href="#" OnFocus="link('_member','recordType239492963',this)">recordType</a> = t;
+
+    // set the address mask according to the type of hex record
+    switch(<a href="#" OnFocus="link('_member','recordType239492963',this)">recordType</a>)
+    {
+    case <a href="#" OnFocus="link('_member','MotoDataWith16BitAddressRecord0',this)">MotoDataWith16BitAddressRecord</a>:
+    case <a href="#" OnFocus="link('_member','MotoEndWith16BitAddressRecord0',this)">MotoEndWith16BitAddressRecord</a>:
+        <a href="#" OnFocus="link('_member','segmented239492963',this)">segmented</a> = false;
+        <a href="#" OnFocus="link('_member','mask239492963',this)">mask</a> = 0x0000FFFF;
+        break;
+    case <a href="#" OnFocus="link('_member','MotoDataWith24BitAddressRecord0',this)">MotoDataWith24BitAddressRecord</a>:
+    case <a href="#" OnFocus="link('_member','MotoEndWith24BitAddressRecord0',this)">MotoEndWith24BitAddressRecord</a>:
+        <a href="#" OnFocus="link('_member','segmented239492963',this)">segmented</a> = false;
+        <a href="#" OnFocus="link('_member','mask239492963',this)">mask</a> = 0x00FFFFFF;
+        break;
+    case <a href="#" OnFocus="link('_member','MotoStartRecord0',this)">MotoStartRecord</a>:
+    case <a href="#" OnFocus="link('_member','MotoDataWith32BitAddressRecord0',this)">MotoDataWith32BitAddressRecord</a>:
+    case <a href="#" OnFocus="link('_member','MotoEndWith32BitAddressRecord0',this)">MotoEndWith32BitAddressRecord</a>:
+        <a href="#" OnFocus="link('_member','segmented239492963',this)">segmented</a> = false;
+        <a href="#" OnFocus="link('_member','mask239492963',this)">mask</a> = 0xFFFFFFFF;
+        break;
+    case <a href="#" OnFocus="link('_member','XESSDataWith16BitAddressRecord0',this)">XESSDataWith16BitAddressRecord</a>:
+        <a href="#" OnFocus="link('_member','segmented239492963',this)">segmented</a> = false;
+        <a href="#" OnFocus="link('_member','mask239492963',this)">mask</a> = 0x0000FFFF;
+        break;
+    case <a href="#" OnFocus="link('_member','XESSDataWith24BitAddressRecord0',this)">XESSDataWith24BitAddressRecord</a>:
+        <a href="#" OnFocus="link('_member','segmented239492963',this)">segmented</a> = false;
+        <a href="#" OnFocus="link('_member','mask239492963',this)">mask</a> = 0x00FFFFFF;
+        break;
+    case <a href="#" OnFocus="link('_member','XESSDataWith32BitAddressRecord0',this)">XESSDataWith32BitAddressRecord</a>:
+        <a href="#" OnFocus="link('_member','segmented239492963',this)">segmented</a> = false;
+        <a href="#" OnFocus="link('_member','mask239492963',this)">mask</a> = 0xFFFFFFFF;
+        break;
+    case <a href="#" OnFocus="link('_member','IntelExtSegAddressRecord0',this)">IntelExtSegAddressRecord</a>:
+        <a href="#" OnFocus="link('_member','segmented239492963',this)">segmented</a> = true;
+        <a href="#" OnFocus="link('_member','mask239492963',this)">mask</a> = 0x0000FFFF;
+        break;
+    case <a href="#" OnFocus="link('_member','IntelExtLinAddressRecord0',this)">IntelExtLinAddressRecord</a>:
+        <a href="#" OnFocus="link('_member','segmented239492963',this)">segmented</a> = false;
+        <a href="#" OnFocus="link('_member','mask239492963',this)">mask</a> = 0x0000FFFF;
+        break;
+    case <a href="#" OnFocus="link('_member','IntelDataRecord0',this)">IntelDataRecord</a>:
+    case <a href="#" OnFocus="link('_member','IntelEOFRecord0',this)">IntelEOFRecord</a>:
+    case <a href="#" OnFocus="link('_member','IntelStartSegAddressRecord0',this)">IntelStartSegAddressRecord</a>:
+    case <a href="#" OnFocus="link('_member','IntelStartLinAddressRecord0',this)">IntelStartLinAddressRecord</a>:
+        // segmented flag should be set by another record       
+        <a href="#" OnFocus="link('_member','mask239492963',this)">mask</a> = 0x0000FFFF;
+        break;
+    default:
+        <a href="#" OnFocus="link('_member','mask239492963',this)">mask</a> = 0xFFFFFFFF;
+        break;
+    }
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_member','_source');
+</script>

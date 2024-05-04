@@ -1,0 +1,94 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - ReadBuffer</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">ReadBuffer</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_class','I2CPort0',this)" class="pathLink">I2CPort</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">ReadBuffer</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_member','ReadBuffer461448834','_description',this)" class="tabLinkActive">Description</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','ReadBuffer461448834','_source',this)" class="tabLinkInActive">Source</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','ReadBuffer461448834','_callgraph',this)" class="tabLinkInActive">Call Graph</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<span class="paragraph1">I2CPort::ReadBuffer</span>
+<span class="padding">( Public Method  )</span>
+<div class="paragraph2">Receive a sequence of bytes over the I2C bus.</div>
+<div class="padding">&nbsp;</div>
+<table cellspacing=0 cellpadding=0 border=0 class="widthAndBorderTop" height=1>
+<TR><TD height=1 width=100% class="oneLine"></TD></TR></TABLE>
+<div class="paragraph2"><span id="descFunSynExpSpan" style="display:none;visibility:hidden"><a href="javascript:showElement( 'descFunSynColSpan' );javascript:hideElement( 'descFunSynExpSpan' );javascript:showElement( 'descFunSyn' );javascript:setMyCookie( cookieName, 'descFunSyn', 'show' );"><img src="../../common/expand.gif" border=0></a></span><span id="descFunSynColSpan"><a href="javascript:showElement( 'descFunSynExpSpan' );javascript:hideElement( 'descFunSynColSpan' );javascript:hideElement( 'descFunSyn' );javascript:setMyCookie( cookieName, 'descFunSyn', 'hide' );"><img src="../../common/collapse.gif" border=0></a></span>
+Syntax / parameters</div>
+<div id="descFunSyn" class="paddingMembersTableDiv"><table cellspacing=0 cellpadding=0 border=0 class="widthAndBorderMembers">
+<TR VALIGN="top"><TD class="paddingHeadMultiColumn2"><span class="codeFont">void ReadBuffer(unsigned int numWriteBytes, unsigned char *wrBuffer, unsigned int numReadBytes, unsigned char *rdBuffer)</span></TD></TR></TABLE>
+<br><table cellspacing=0 cellpadding=0 border=0 class="widthAndBorderMembers">
+<TR VALIGN="top">
+<TD width=20% class="paddingHeadMultiColumn1">Name</TD>
+<TD class="paddingHeadMultiColumn1" nowrap>Type</TD>
+<TD class="paddingHeadMultiColumn1" nowrap>Default</TD>
+<TD width=80% class="paddingHeadMultiColumn2">Description</TD>
+</TR>
+<TR VALIGN="top">
+<TD class="paddingNormal1"><span class="codeFont">numWriteBytes</span></TD>
+<TD class="paddingNormal1" nowrap><span class="codeFont">unsigned int <br>
+</span></TD>
+<TD class="paddingNormal1" nowrap><span class="codeFont">&nbsp;</span></TD>
+<TD class="paddingNormal2">number of bytes to send number of bytes to send <br>
+</TD>
+</TR>
+<TR VALIGN="top">
+<TD class="paddingNormal1"><span class="codeFont">wrBuffer</span></TD>
+<TD class="paddingNormal1" nowrap><span class="codeFont">unsigned char * <br>
+</span></TD>
+<TD class="paddingNormal1" nowrap><span class="codeFont">&nbsp;</span></TD>
+<TD class="paddingNormal2">buffer with <a href="#" OnFocus="link('_member','../xsusb/data0',this)">data</a> to write to device buffer with <a href="#" OnFocus="link('_member','../xsusb/data0',this)">data</a> to write to device <br>
+</TD>
+</TR>
+<TR VALIGN="top">
+<TD class="paddingNormal1"><span class="codeFont">numReadBytes</span></TD>
+<TD class="paddingNormal1" nowrap><span class="codeFont">unsigned int <br>
+</span></TD>
+<TD class="paddingNormal1" nowrap><span class="codeFont">&nbsp;</span></TD>
+<TD class="paddingNormal2">number of bytes to receive number of bytes to receive <br>
+</TD>
+</TR>
+<TR VALIGN="top">
+<TD class="paddingNormal1"><span class="codeFont">rdBuffer</span></TD>
+<TD class="paddingNormal1" nowrap><span class="codeFont">unsigned char * <br>
+</span></TD>
+<TD class="paddingNormal1" nowrap><span class="codeFont">&nbsp;</span></TD>
+<TD class="paddingNormal2">pointer to buffer for received <a href="#" OnFocus="link('_member','../xsusb/data0',this)">data</a> pointer to buffer for received <a href="#" OnFocus="link('_member','../xsusb/data0',this)">data</a> <br>
+</TD>
+</TR>
+</TABLE>
+</div>
+<div class="paragraph2">Description</div>
+<div id="descDesc" class="paddingMembers">Receive a sequence of bytes over the I2C bus. send <a href="#" OnFocus="link('_member','../xsusb/data0',this)">data</a> to device receive <a href="#" OnFocus="link('_member','../xsusb/data0',this)">data</a> from device in response to previous transmission <br>
+</div>
+<div class="padding">&nbsp;</div>
+<table cellspacing=0 cellpadding=0 border=0 class="widthAndBorderTop" height=1>
+<TR><TD height=1 width=100% class="oneLine"></TD></TR></TABLE>
+<div class="paragraph2">Source</div>
+<div class="paddingMembers">The documentation for this Member was generated from the following files:</div>
+<div class="paddingMembers"><LI><a href="#" OnFocus="link('_file','i2cport_h0',this)">i2cport.h</a><br></div>
+<div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_member','_description');
+</script>

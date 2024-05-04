@@ -1,0 +1,229 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - xsboard.h</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">xsboard.h</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">xsboard.h</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','xsboard_h0','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','xsboard_h0','_overview',this)" class="tabLinkInActive">Overview</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','xsboard_h0','_includedfiles',this)" class="tabLinkInActive">Included files</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','xsboard_h0','_includedby',this)" class="tabLinkInActive">Included by</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_file','xsboard_h0','_source',this)" class="tabLinkActive">Source</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<pre class="codeExamples">
+/*----------------------------------------------------------------------------------
+  SOFTWARE LICENSE AGREEMENT
+    1.  Permission to use, copy, modify, and distribute this software
+        and its documentation, with or without modification, for any
+        purpose and without fee or royalty is hereby granted, provided
+        that you include the following on ALL copies of the software
+        and documentation or portions thereof, including
+        modifications, that you make:
+
+            a.  The full text of this license in a location viewable to users
+            of the redistributed or derivative work.
+
+            b.  Notice of any changes or modifications to the files,
+            including the date changes were made.
+
+    2.  The name, servicemarks and trademarks of X Engineering
+        Software Systems Corp. may NOT be used in advertising or
+        publicity pertaining to the software without specific, written
+        prior permission.
+
+    3.  Title to copyright in this software and any associated
+        documentation will at all times remain with X Engineering
+        Software Systems Corp.
+
+    4.  THIS SOFTWARE AND DOCUMENTATION IS PROVIDED "AS IS," AND X
+        Engineering Software Systems Corp MAKES NO REPRESENTATIONS OR
+        WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO,
+        WARRANTIES OF MERCHANTABILITY OR FITNESS FOR ANY PARTICULAR
+        PURPOSE OR THAT THE USE OF THE SOFTWARE OR DOCUMENTATION WILL
+        NOT INFRINGE ANY THIRD PARTY PATENTS, COPYRIGHTS, TRADEMARKS
+        OR OTHER RIGHTS.
+
+    5.  X Engineering Software Systems Corp WILL NOT BE LIABLE FOR ANY
+        DAMAGES, INCLUDING BUT NOT LIMITED TO, DIRECT, INDIRECT,
+        SPECIAL OR CONSEQUENTIAL, ARISING OUT OF ANY USE OF THE
+        SOFTWARE OR DOCUMENTATION.
+
+  ©2006 - X Engineering Software Systems Corp.  All rights reserved.
+----------------------------------------------------------------------------------*/
+
+
+#ifndef XSBOARD_H
+#define XSBOARD_H
+
+#include &lt;string&gt;
+using namespace std;
+
+#include "<a href="#" OnFocus="link('_file','xserror_h0',this)">xserror.h</a>"
+
+
+/// A virtual object that contains pointers to the base methods provided by all the XS Board objects.
+///
+/// This is a virtual class from which the object classes for all the XESS Board classes are derived. 
+/// This class provides virtual methods that all the derived classes must support.
+class <a href="#" OnFocus="link('_class','XSBoard0',this)">XSBoard</a>
+{
+    public:
+
+    /// Destroy an XESS board object.
+    virtual <a href="#" OnFocus="link('_member','tilde_XSBoard60181096',this)">~XSBoard</a>(void) {};
+
+    /// Setup an object for an XESS board.
+    /// This method initializes the various objects contained in the XESS Board object as indicated by the string that identifies the board model. 
+    /// All communication with the XESS Board will occur through the given parallel port. 
+    /// Any errors that occur during setup will be reported through the given error-reporting channel. 
+    ///\return true if the operation was successful, false otherwise
+    virtual bool <a href="#" OnFocus="link('_member','Setup3588776655',this)">Setup</a>(<a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>* err,    ///&lt; error reporting object
+        const char* brdModel,           ///&lt; model of XESS Board
+        unsigned int lptNum)            ///&lt; number of parallel port connected to board
+        = 0;
+        
+    /// Check the interface chip ID and make sure it is the correct XC95 CPLD for the particular type of board.
+    ///\return true if the CPLD chip ID is correct, false if not
+    bool <a href="#" OnFocus="link('_member','CheckChipID60181096',this)">CheckChipID</a>(void);
+
+    /// Set values for flags in the XESS board object.
+    virtual void <a href="#" OnFocus="link('_member','SetFlags2345602696',this)">SetFlags</a>(unsigned long f)  ///&lt; flag value
+        = 0;
+
+    /// Get flag values from the XESS board object.
+    ///\return flag value
+    virtual unsigned long <a href="#" OnFocus="link('_member','GetFlags60181096',this)">GetFlags</a>(void)
+        = 0;
+
+    /// Load a configuration bitstream into the FPGA.
+    /// This method downloads the configuration bitstream in the given file into the main programmable device on the XESS Board. 
+    ///\return true if the operation was successful, false otherwise
+    virtual bool <a href="#" OnFocus="link('_member','Configure36592665',this)">Configure</a>(string&amp; fileName) ///&lt; FPGA config. bitstream file
+        = 0;
+
+    /// Load a configuration bitstream into the interface CPLD.
+    /// This method downloads the configuration bitstream in the given file into the programmable device that manages the parallel port interface on the XESS Board. 
+    ///\return true if the operation was successful, false otherwise
+    virtual bool <a href="#" OnFocus="link('_member','ConfigureInterface36592665',this)">ConfigureInterface</a>(string&amp; fileName) ///&lt; FPGA config. bitstream file
+        = 0;
+
+    /// Download hex file into RAM on the XESS board.
+    /// This method downloads a HEX data file in Intel, Motorola or XESS format into the RAM on the XESS Board. 
+    /// Because multiple HEX files may be downloaded, boolean parameters are provided to indicate if the given file is the 
+    /// first or last in the sequence so that initialization and shutdown procedures can be activated accordingly. 
+    ///\return true if the operation was successful, false otherwise
+    virtual bool <a href="#" OnFocus="link('_member','DownloadRAM785046615',this)">DownloadRAM</a>(string&amp; fileName, ///&lt; EXO, MCS or XES hex data file
+            bool bigEndianBytes,    ///&lt; if true, data is stored in RAM with most-significant byte at lower address
+            bool bigEndianBits,     ///&lt; if true, data is stored in RAM with most-significant bit in position 0
+            bool doStart,           ///&lt; if true, perform startup operations for RAM downloads
+            bool doEnd)             ///&lt; if true, perform terminating operations for RAM downloads
+        = 0;
+
+    /// Upload XESS board RAM from loAddr to hiAddr into a hex file.
+    /// This method uploads data between the upper and lower addresses (inclusive) from the XESS Board RAM and stores it in a 
+    /// HEX file in Intel, Motorola or XESS format.
+    ///\return true if the operation was successful, false otherwise
+    virtual bool <a href="#" OnFocus="link('_member','UploadRAM1330229625',this)">UploadRAM</a>(string&amp; fileName, ///&lt; store uploaded data in this EXO, MCS or XES hex file
+            const char* format,     ///&lt; select hex file format - Intel mcs, Moto exo, or XESS xes
+            unsigned int loAddr,    ///&lt; lower address of RAM data (inclusive)
+            unsigned int hiAddr,    ///&lt; upper address of RAM data (inclusive)
+            bool bigEndianBytes,    ///&lt; if true, data is stored in RAM with most-significant byte at lower address
+            bool bigEndianBits,     ///&lt; if true, data is stored in RAM with most-significant bit in position 0
+            bool doStart,           ///&lt; Perform startup operations for RAM uploads
+            bool doEnd)             ///&lt; Perform terminating operations for RAM uploads
+        = 0;
+
+    /// Read contents of a single location in RAM.
+    ///\return true if the operation was successful, false otherwise
+    virtual bool <a href="#" OnFocus="link('_member','ReadRAM3707204181',this)">ReadRAM</a>(unsigned int addr,    ///&lt; address of RAM location
+            unsigned int* data,     ///&lt; loaded with data returned from RAM location
+            bool bigEndianBytes,    ///&lt; if true, data is stored in RAM with most-significant byte at lower address
+            bool bigEndianBits)     ///&lt; if true, data is stored in RAM with most-significant bit in position 0
+        = 0;
+
+    /// Write contents of a single location in RAM.
+    ///\return true if the operation was successful, false otherwise
+    virtual bool <a href="#" OnFocus="link('_member','WriteRAM3747285768',this)">WriteRAM</a>(unsigned int addr,    ///&lt; address of RAM location
+            unsigned int data,      ///&lt; data to be written into RAM location
+            bool bigEndianBytes,    ///&lt; if true, data is stored in RAM with most-significant byte at lower address
+            bool bigEndianBits)     ///&lt; if true, data is stored in RAM with most-significant bit in position 0
+        = 0;
+
+    /// Download hex file into Flash on the XESS board.
+    /// This method downloads a HEX data file in Intel, Motorola or XESS format into the Flash memory on the XESS Board. 
+    /// Because multiple HEX files may be downloaded, boolean parameters are provided to indicate if the given file is the first 
+    /// or last in the sequence so that initialization and shutdown procedures can be activated accordingly. 
+    ///\return true if the operation was successful, false otherwise
+    virtual bool <a href="#" OnFocus="link('_member','DownloadFlash785046615',this)">DownloadFlash</a>(string&amp; fileName, ///&lt; EXO, MCS or XES hex data file
+            bool bigEndianBytes,    ///&lt; if true, data is stored in Flash with most-significant byte at lower address
+            bool bigEndianBits,     ///&lt; if true, data is stored in Flash with most-significant bit in position 0
+            bool doStart,           ///&lt; perform startup operations for Flash downloads
+            bool doEnd)             ///&lt; perform terminating operations for Flash downloads
+        = 0;
+
+    /// Upload XESS board Flash from loAddr to hiAddr into a hex file.
+    /// This method uploads data between the upper and lower addresses (inclusive) from the XESS Board Flash and stores it in a 
+    /// HEX file in Intel, Motorola or XESS format. 
+    ///\return true if the operation was successful, false otherwise
+    virtual bool <a href="#" OnFocus="link('_member','UploadFlash1330229625',this)">UploadFlash</a>(
+        string&amp; fileName,   ///&lt; store uploaded data in this EXO, MCS or XES hex file
+        const char* format,     ///&lt; select hex file format - Intel mcs, Moto exo, or XESS xes
+        unsigned int loAddr,    ///&lt; lower address of RAM data (inclusive)
+        unsigned int hiAddr,    ///&lt; upper address of RAM data (inclusive)
+        bool bigEndianBytes,    ///&lt; if true, data is stored in RAM with most-significant byte at lower address
+        bool bigEndianBits,     ///&lt; if true, data is stored in RAM with most-significant bit in position 0
+        bool doStart,           ///&lt; perform startup operations for Flash uploads
+        bool doEnd)             ///&lt; perform terminating operations for Flash uploads
+        = 0;
+
+    /// Program the oscillator frequency.
+    /// This method sets the divisor of the programmable oscillator on the XESS Board. 
+    /// The internal master oscillator is divided by this parameter to arrive at the clock frequency that is output to the rest of the  XESS Board circuitry. 
+    /// An external clock source is used as the master oscillator if the extOscPresent parameter is true. 
+    ///\return true if the operation was successful, false otherwise
+    virtual bool <a href="#" OnFocus="link('_member','SetFreq4061522050',this)">SetFreq</a>(int div,  ///&lt; divisor for master frequency
+        bool extOscPresent) ///&lt; if true, master frequency arrives from external source, otherwise use internal oscillator
+        = 0;
+
+    /// Program the control registers of the audio codec.
+    ///\return true if the operation was successful, false otherwise
+    virtual bool <a href="#" OnFocus="link('_member','SetupAudio37972220',this)">SetupAudio</a>(int *reg) ///&lt; array of values to load into registers
+        = 0;
+
+    /// Setup the registers of the video input decoder.
+    ///\return true if the operation was successful, false otherwise
+    virtual bool <a href="#" OnFocus="link('_member','SetupVideoIn36592665',this)">SetupVideoIn</a>(string&amp; fileName) ///&lt; file containing values to load into video decoder registers
+        = 0;
+
+    /// Run diagnostic on XESS board.
+    /// This method executes a diagnostic test routine on the XESS Board and returns true if the test passes and false if the test detects a problem.
+    ///\return true if the XESS board passed the diagnostic, false otherwise
+    virtual bool <a href="#" OnFocus="link('_member','Test60181096',this)">Test</a>(void)
+        = 0;
+};
+
+#endif
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_file','_source');
+</script>

@@ -1,0 +1,4 @@
+Post Route Timing Report for Module test_regio . . .
+TRACE command line and options:
+trce -intstyle ise -e 3 -l 3 -xml test_regio test_regio.ncd -o test_regio.twr test_regio.pcf
+Post Route Timing Report for Module test_regio : DONE

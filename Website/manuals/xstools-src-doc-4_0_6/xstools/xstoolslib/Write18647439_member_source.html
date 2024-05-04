@@ -1,0 +1,88 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - Write</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">Write</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_class','PBusPort0',this)" class="pathLink">PBusPort</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">Write</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','Write18647439','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_member','Write18647439','_source',this)" class="tabLinkActive">Source</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','Write18647439','_callgraph',this)" class="tabLinkInActive">Call Graph</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<div class="paragraph2NoTopPadding">Start Line: 328</div>
+<pre class="codeExamples">
+bool <a href="#" OnFocus="link('_member','Write18647439',this)">PBusPort::Write</a>(unsigned int addr, unsigned int data, bool bigEndianBytes, bool bigEndianBits, bool loadAddress=true)
+{
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> = <a href="#" OnFocus="link('_member','GetErr259477277',this)">GetErr</a>();
+
+    unsigned int statusPortWidth = <a href="#" OnFocus="link('_member','posSTMSB243780660',this)">posSTMSB</a> - <a href="#" OnFocus="link('_member','posSTLSB243780660',this)">posSTLSB</a> + 1;
+    unsigned int inDataPortWidth = <a href="#" OnFocus="link('_member','posDIMSB243780660',this)">posDIMSB</a> - <a href="#" OnFocus="link('_member','posDILSB243780660',this)">posDILSB</a> + 1;
+    unsigned int outDataPortWidth = <a href="#" OnFocus="link('_member','posDOMSB243780660',this)">posDOMSB</a> - <a href="#" OnFocus="link('_member','posDOLSB243780660',this)">posDOLSB</a> + 1;
+    unsigned int statusMask = (1&lt;&lt;statusPortWidth) - 1;
+    unsigned int inDataMask = (1&lt;&lt;inDataPortWidth) - 1;
+    unsigned int outDataMask = (1&lt;&lt;outDataPortWidth) - 1;
+
+
+    unsigned int statusChk = 0; // set status check to reset state id
+    if(loadAddress)
+    {
+        <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posRESET,posRESET);  // reset the downloading state machine
+        <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posRESET,posRESET);  // release the reset
+        
+        // set initial address into the downloading state machine
+        addr |= (1&lt;&lt;27);    // set upper bit of address to signal a write operation
+        for(int j=0; j&lt;<a href="#" OnFocus="link('_member','addrWidth243780660',this)">addrWidth</a>; j+=outDataPortWidth)
+        {
+            unsigned int status = <a href="#" OnFocus="link('_member','In1210046855',this)">In</a>(posSTLSB,posSTMSB);
+            assert(status==(statusChk &amp; statusMask));
+            if(status != (statusChk &amp; statusMask))
+                return false;   // error - peripheral bus interface state machine not in the right state
+            <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>((addr&gt;&gt;j)&amp;outDataMask,posDOLSB,posDOMSB);
+            <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posCLK,posCLK);
+            <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posCLK,posCLK);  // latch address bits into downloading circuit
+            statusChk++;            // increment status check
+        }
+    }
+
+    statusChk = 5;
+    <a href="#" OnFocus="link('_member','../xsatapi/data0',this)">data</a>  = <a href="#" OnFocus="link('_member','RearrangeData127079845',this)">RearrangeData</a>(data,dataWidth,bigEndianBytes,bigEndianBits);
+    for(int j=0; j&lt;<a href="#" OnFocus="link('_member','dataWidth243780660',this)">dataWidth</a>; j+=outDataPortWidth)
+    {
+        unsigned int status = <a href="#" OnFocus="link('_member','In1210046855',this)">In</a>(posSTLSB,posSTMSB);
+        assert(status==(statusChk &amp; statusMask));
+        if(status != (statusChk &amp; statusMask))
+            return false;   // error - peripheral bus interface state machine not in the right state
+        <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>((data&gt;&gt;j)&amp;outDataMask,posDOLSB,posDOMSB);  // send data bits to register
+        <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posCLK,posCLK);
+        <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posCLK,posCLK);  // store data bits into data register
+        statusChk--;            // decrement status check
+    }
+
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posCLK,posCLK);
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posCLK,posCLK);  // latch data from register into RAM
+
+    return true;
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_member','_source');
+</script>

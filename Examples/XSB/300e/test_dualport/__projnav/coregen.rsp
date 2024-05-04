@@ -1,0 +1,5 @@
+NEWPROJECT .
+SETPROJECT .
+SET BusFormat = BusFormatAngleBracketNotRipped
+SETXIPCPORTHOST 2730
+XIPCPJSENDCORES spartan2e

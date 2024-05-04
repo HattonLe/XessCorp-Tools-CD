@@ -1,0 +1,78 @@
+README for Wavelet Codec 
+
+Projectorganisation: 
+
+All projects have been designed with Xilinx ISE3.x using XST Technology
+for synthesizing. If FPGA Express is used the results are not usable. 
+
+There are different Projects solving different tasks. The main projects
+are: WVT_USB1 (Wavelettransformation and USB transmittor) IWVT_USB1
+(Inverse Wavelettransformation, Wavelettransformation and USB receiver) 
+
+For each project there is a directory with its name containing the
+corresponding ucf-file and a working bit-file. The vhdl-code wich is
+used by different projects is stored in the CODE-directory. In addition
+every project directory has an own code-directory with additional code
+for the project. If there is the same filename in the main CODE
+directory and the project code directory you must use the file in the
+project code directory. 
+
+Documentation: 
+
+The german Documentation is found in the pdf file
+"FPGA_WaveletTransformation.pdf". This is my Diplomathesis and contains
+more then only the descripton of the vhdl code. The implementation of
+the wavelettransformation core is discussed in chapter 4. You will find
+block-diagrams on page 22 and the following. The USB-Transmission is
+discussed in chapter 6 (page 51 and the following). There is a further
+pdf "Zusammenfassung.pdf" containing an overview and a top-level
+block-diagram with USB-transmission. Table 5 (page 34) and table 11
+(page 57) are explaining the vhdl-files and function. 
+
+Technical overview: 
+
+The implementation uses a 5-3 Wavelet (part of the jpeg2000 standard)
+for the wavelet-transformation. The arithmetic is designed for 8-bits
+using modulo operations, so the transformed image still uses 8 Bits
+(integer WVT with constant dynamic). This is only allowing lossless
+compression. For the transmission the USB Port of the XSV-Board is used
+(bitrate 10Mbps). The design only uses the physical layer of USB, there
+are no higher layers implemented. Compression is done through an
+entropie-coder, using a table optimated for the integer WVT. For
+grabbing an image I use the frame-grabber design provided by XESS. With
+this design an image is read from a videocamera. The design should work
+with european and american standards. Thi visualize the images there is
+the vga-port used. This is also done by an example design from XESS. To
+initialize the video-decoder you have to run a batch file wich uses the
+parallel-port to emulate a i2c bus. The name of the batch file is
+'saasetup.bat', you also need the 'saa7113.exe'. Both files are in the
+Saa7113 directory. Further information about the framegrabber and vga
+output can be found on the XESS homepage. To control the grabbing,
+transformation and transmission I use the pushbuttons. The function of
+the pushbuttons is explained in the top-level vhdl files.(WVT_USB1.vhdl,
+IWVT_USB1.vhdl) 
+
+The design has to be run with 50 MHz clockrate. 
+
+Background: 
+
+I have designed this wavelet-transformation and compression codec during
+my diploma thesis for a bachelors degree at university of applied
+science St.Gallen, switzerland. The time to do the diploma thesis was
+limited to four weeks. Because of that the testing of the codec was not
+very intensive, and of course there may be some problems unsolved. For
+me this was the first time I used vhdl, so there may be some not very
+well designed parts because of the lack of experience. With our boards
+the WVT_USB1 and IWVT_USB1 works pretty fine. But I have only tried it
+on three different XSV-300 Boards. 
+
+Contact: 
+
+Daniel Bachofen or Prof. Björn Schaltegger University of Applied Science
+FHS St.Gallen Institute for Mechatronics and Informationtechnologie
+Tellstrasse 2 CH-9000 St.Gallen Tel. ++41 71 220 37 29 Fax. ++41 71 220
+37 05 
+
+daniel.bachofen@fhsg.ch 
+
+22.11.01 Daniel Bachofen

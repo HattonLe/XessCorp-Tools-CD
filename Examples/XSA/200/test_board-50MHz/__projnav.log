@@ -1,0 +1,3748 @@
+Project Navigator Auto-Make Log File
+-------------------------------------
+
+
+
+
+Started process "Synthesize".
+
+
+=========================================================================
+*                          HDL Compilation                              *
+=========================================================================
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../../XS_LIB/common.vhd in Library work.
+Architecture common of Entity common is up to date.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../../XS_LIB/sdramcntl.vhd in Library work.
+Architecture arch of Entity sdramcntl is up to date.
+Architecture arch of Entity dualport is up to date.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../../XS_LIB/randgen.vhd in Library work.
+Architecture arch of Entity randgen is up to date.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../../XS_LIB/memtest.vhd in Library work.
+Architecture arch of Entity memtest is up to date.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../XSA_LIB/xsasdramcntl.vhd in Library work.
+Architecture arch of Entity xsasdramcntl is up to date.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../XSA_LIB/test_board_core.vhd in Library work.
+Architecture arch of Entity test_board_core is up to date.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/test_board.vhd in Library work.
+Architecture arch of Entity test_board is up to date.
+
+=========================================================================
+*                            HDL Analysis                               *
+=========================================================================
+Analyzing Entity <test_board> (Architecture <arch>).
+Entity <test_board> analyzed. Unit <test_board> generated.
+
+Analyzing generic Entity <test_board_core> (Architecture <arch>).
+	FREQ = 100000
+	PIPE_EN = <u>1
+	DATA_WIDTH = 16
+	SADDR_WIDTH = 13
+	NROWS = 8192
+	NCOLS = 512
+	BEG_ADDR = 0
+	END_ADDR = 16777215
+	BEG_TEST = 0
+	END_TEST = 16777215
+    Set user-defined property "INIT =  1" for signal <rst_i>.
+WARNING:Xst:753 - C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../XSA_LIB/test_board_core.vhd line 243: Unconnected output port 'clk2x' of component 'XSASDRAMCntl'.
+WARNING:Xst:753 - C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../XSA_LIB/test_board_core.vhd line 243: Unconnected output port 'status' of component 'XSASDRAMCntl'.
+Entity <test_board_core> analyzed. Unit <test_board_core> generated.
+
+Analyzing generic Entity <memTest> (Architecture <arch>).
+	PIPE_EN = <u>1
+	DATA_WIDTH = 16
+	ADDR_WIDTH = 24
+	BEG_TEST = 0
+	END_TEST = 16777215
+Entity <memTest> analyzed. Unit <memTest> generated.
+
+Analyzing generic Entity <randGen> (Architecture <arch>).
+	DATA_WIDTH = 16
+Entity <randGen> analyzed. Unit <randGen> generated.
+
+Analyzing generic Entity <XSASDRAMCntl> (Architecture <arch>).
+	FREQ = 100000
+	CLK_DIV = 1.000000
+	PIPE_EN = <u>1
+	MAX_NOP = 10000
+	MULTIPLE_ACTIVE_ROWS = <u>1
+	DATA_WIDTH = 16
+	NROWS = 8192
+	NCOLS = 512
+	HADDR_WIDTH = 24
+	SADDR_WIDTH = 13
+Entity <XSASDRAMCntl> analyzed. Unit <XSASDRAMCntl> generated.
+
+Analyzing generic Entity <sdramCntl> (Architecture <arch>).
+	FREQ = 100000
+	IN_PHASE = <u>1
+	PIPE_EN = <u>1
+	MAX_NOP = 10000
+	MULTIPLE_ACTIVE_ROWS = <u>1
+	DATA_WIDTH = 16
+	NROWS = 8192
+	NCOLS = 512
+	HADDR_WIDTH = 24
+	SADDR_WIDTH = 13
+WARNING:Xst:819 - C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../../XS_LIB/sdramcntl.vhd line 333: The following signals are missing in the process sensitivity list:
+   activeBank_r, ba_r.
+Entity <sdramCntl> analyzed. Unit <sdramCntl> generated.
+
+
+=========================================================================
+*                           HDL Synthesis                               *
+=========================================================================
+
+Synthesizing Unit <sdramCntl>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../../XS_LIB/sdramcntl.vhd.
+WARNING:Xst:646 - Signal <col<12>> is assigned but never used.
+    Found finite state machine <FSM_0> for signal <state_r>.
+    -----------------------------------------------------------------------
+    | States             | 8                                              |
+    | Transitions        | 32                                             |
+    | Inputs             | 11                                             |
+    | Outputs            | 8                                              |
+    | Clock              | clk (rising_edge)                              |
+    | Clock enable       | $n0154 (negative)                              |
+    | Reset              | rst (positive)                                 |
+    | Reset type         | asynchronous                                   |
+    | Reset State        | initwait                                       |
+    | Power Up State     | initwait                                       |
+    | Encoding           | automatic                                      |
+    | Implementation     | LUT                                            |
+    -----------------------------------------------------------------------
+    Found 1-bit 4-to-1 multiplexer for signal <$n0001> created at line 422.
+    Found 13-bit 4-to-1 multiplexer for signal <$n0153> created at line 422.
+    Found 2-bit comparator equal for signal <$n0157> created at line 603.
+    Found 14-bit subtractor for signal <$n0176>.
+    Found 14-bit adder for signal <$n0181> created at line 484.
+    Found 14-bit adder for signal <$n0197> created at line 439.
+    Found 10-bit subtractor for signal <$n0199> created at line 479.
+    Found 3-bit subtractor for signal <$n0200> created at line 455.
+    Found 2-bit subtractor for signal <$n0205> created at line 468.
+    Found 15-bit subtractor for signal <$n0206> created at line 490.
+    Found 13-bit comparator not equal for signal <$n0207> created at line 422.
+    Found 1-bit register for signal <activeBank_r>.
+    Found 4-bit register for signal <activeFlag_r>.
+    Found 52-bit register for signal <activeRow_r>.
+    Found 2-bit register for signal <ba_r>.
+    Found 1-bit register for signal <cke_r>.
+    Found 6-bit register for signal <cmd_r>.
+    Found 16-bit register for signal <hDOut_r>.
+    Found 16-bit register for signal <hDOutOppPhase_r>.
+    Found 14-bit register for signal <nopCntr_r>.
+    Found 1-bit register for signal <opBegun_r>.
+    Found 3-bit register for signal <rasTimer_r>.
+    Found 5-bit register for signal <rdPipeline_r>.
+    Found 10-bit register for signal <refTimer_r>.
+    Found 14-bit register for signal <rfshCntr_r>.
+    Found 13-bit register for signal <sAddr_r>.
+    Found 16-bit register for signal <sData_r>.
+    Found 1-bit register for signal <sDataDir_r>.
+    Found 15-bit register for signal <timer_r>.
+    Found 1-bit register for signal <wrPipeline_r<0>>.
+    Found 2-bit register for signal <wrTimer_r>.
+    Found 61 1-bit 2-to-1 multiplexers.
+    Summary:
+	inferred   1 Finite State Machine(s).
+	inferred 177 D-type flip-flop(s).
+	inferred   7 Adder/Subtracter(s).
+	inferred   2 Comparator(s).
+	inferred  78 Multiplexer(s).
+Unit <sdramCntl> synthesized.
+
+
+Synthesizing Unit <randGen>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../../XS_LIB/randgen.vhd.
+    Found 1-bit xor4 for signal <new_bit>.
+    Found 16-bit register for signal <r_r>.
+    Summary:
+	inferred  16 D-type flip-flop(s).
+	inferred   1 Xor(s).
+Unit <randGen> synthesized.
+
+
+Synthesizing Unit <XSASDRAMCntl>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../XSA_LIB/xsasdramcntl.vhd.
+WARNING:Xst:646 - Signal <dllext_rst_n> is assigned but never used.
+WARNING:Xst:646 - Signal <int_clkdv_b> is assigned but never used.
+    Found 16-bit tristate buffer for signal <sData>.
+    Summary:
+	inferred  16 Tristate(s).
+Unit <XSASDRAMCntl> synthesized.
+
+
+Synthesizing Unit <memTest>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../../XS_LIB/memtest.vhd.
+    Found finite state machine <FSM_1> for signal <state_r>.
+    -----------------------------------------------------------------------
+    | States             | 5                                              |
+    | Transitions        | 10                                             |
+    | Inputs             | 5                                              |
+    | Outputs            | 6                                              |
+    | Clock              | clk (rising_edge)                              |
+    | Reset              | rst (positive)                                 |
+    | Reset type         | synchronous                                    |
+    | Reset State        | init                                           |
+    | Power Up State     | init                                           |
+    | Encoding           | automatic                                      |
+    | Implementation     | LUT                                            |
+    -----------------------------------------------------------------------
+    Found 24-bit adder for signal <$n0029> created at line 151.
+    Found 16-bit comparator not equal for signal <$n0032> created at line 204.
+    Found 24-bit register for signal <addr_r>.
+    Found 1-bit register for signal <err_r>.
+    Summary:
+	inferred   1 Finite State Machine(s).
+	inferred  25 D-type flip-flop(s).
+	inferred   1 Adder/Subtracter(s).
+	inferred   1 Comparator(s).
+Unit <memTest> synthesized.
+
+
+Synthesizing Unit <test_board_core>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../XSA_LIB/test_board_core.vhd.
+WARNING:Xst:646 - Signal <begun> is assigned but never used.
+WARNING:Xst:1780 - Signal <dataOut> is never used or assigned.
+WARNING:Xst:1780 - Signal <dataIn> is never used or assigned.
+WARNING:Xst:646 - Signal <done> is assigned but never used.
+    Found 23-bit up counter for signal <divCnt>.
+    Found 1-bit register for signal <rst_i>.
+    Found 2-bit register for signal <syncButton>.
+    Summary:
+	inferred   1 Counter(s).
+	inferred   3 D-type flip-flop(s).
+Unit <test_board_core> synthesized.
+
+
+Synthesizing Unit <test_board>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/test_board.vhd.
+WARNING:Xst:1306 - Output <pps<5:3>> is never assigned.
+Unit <test_board> synthesized.
+
+INFO:Xst:1767 - HDL ADVISOR - Resource sharing has identified that some arithmetic operations in this design can share the same physical resources for reduced device utilization. For improved clock frequency you may try to disable resource sharing.
+
+=========================================================================
+*                       Advanced HDL Synthesis                          *
+=========================================================================
+
+Advanced RAM inference ...
+Advanced multiplier inference ...
+Advanced Registered AddSub inference ...
+Selecting encoding for FSM_1 ...
+Optimizing FSM <FSM_1> on signal <state_r> with one-hot encoding.
+Selecting encoding for FSM_0 ...
+Optimizing FSM <FSM_0> on signal <state_r> with one-hot encoding.
+Dynamic shift register inference ...
+
+=========================================================================
+HDL Synthesis Report
+
+Macro Statistics
+# FSMs                             : 2
+# Adders/Subtractors               : 8
+ 24-bit adder                      : 1
+ 15-bit subtractor                 : 1
+ 10-bit subtractor                 : 1
+ 14-bit adder                      : 2
+ 14-bit subtractor                 : 1
+ 2-bit subtractor                  : 1
+ 3-bit subtractor                  : 1
+# Counters                         : 1
+ 23-bit up counter                 : 1
+# Registers                        : 41
+ 1-bit register                    : 22
+ 24-bit register                   : 1
+ 16-bit register                   : 3
+ 13-bit register                   : 5
+ 2-bit register                    : 2
+ 5-bit register                    : 1
+ 14-bit register                   : 2
+ 3-bit register                    : 1
+ 15-bit register                   : 1
+ 4-bit register                    : 1
+ 6-bit register                    : 1
+ 10-bit register                   : 1
+# Comparators                      : 3
+ 16-bit comparator not equal       : 1
+ 13-bit comparator not equal       : 1
+ 2-bit comparator equal            : 1
+# Multiplexers                     : 8
+ 1-bit 2-to-1 multiplexer          : 4
+ 1-bit 4-to-1 multiplexer          : 1
+ 14-bit 2-to-1 multiplexer         : 2
+ 13-bit 4-to-1 multiplexer         : 1
+# Tristates                        : 1
+ 16-bit tristate buffer            : 1
+# Xors                             : 1
+ 1-bit xor4                        : 1
+
+=========================================================================
+
+=========================================================================
+*                         Low Level Synthesis                           *
+=========================================================================
+WARNING:Xst:1426 - The value init of the FF/Latch activeBank_r hinder the constant cleaning in the block sdramCntl.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1291 - FF/Latch <wrPipeline_r_0> is unconnected in block <u1>.
+WARNING:Xst:1291 - FF/Latch <opBegun_r> is unconnected in block <u1>.
+WARNING:Xst:1710 - FF/Latch  <cmd_r_5> (without init value) is constant in block <sdramCntl>.
+WARNING:Xst:1291 - FF/Latch <u0_divCnt_22> is unconnected in block <test_board>.
+WARNING:Xst:1291 - FF/Latch <u0_divCnt_17> is unconnected in block <test_board>.
+WARNING:Xst:1291 - FF/Latch <u0_divCnt_18> is unconnected in block <test_board>.
+WARNING:Xst:1291 - FF/Latch <u0_divCnt_19> is unconnected in block <test_board>.
+WARNING:Xst:1291 - FF/Latch <u0_divCnt_20> is unconnected in block <test_board>.
+WARNING:Xst:1291 - FF/Latch <u0_divCnt_21> is unconnected in block <test_board>.
+
+Optimizing unit <test_board> ...
+
+Optimizing unit <randGen> ...
+
+Optimizing unit <memTest> ...
+
+Optimizing unit <sdramCntl> ...
+Loading device for application Xst from file 'v200.nph' in environment C:/ISE.
+
+Mapping all equations...
+WARNING:Xst:1291 - FF/Latch <u0_u1_u1_wrPipeline_r_0> is unconnected in block <test_board>.
+WARNING:Xst:1291 - FF/Latch <u0_u1_u1_opBegun_r> is unconnected in block <test_board>.
+Building and optimizing final netlist ...
+Register u0_u1_u1_cmd_r_1 equivalent to u0_u1_u1_cmd_r_0 has been removed
+Found area constraint ratio of 100 (+ 5) on block test_board, actual ratio is 11.
+FlipFlop u0_fast_memtest_state_r_FFd4 has been replicated 1 time(s)
+FlipFlop u0_fast_memtest_state_r_FFd3 has been replicated 1 time(s)
+FlipFlop u0_fast_memtest_addr_r_23 has been replicated 2 time(s)
+FlipFlop u0_fast_memtest_addr_r_22 has been replicated 1 time(s)
+FlipFlop u0_rst_i has been replicated 6 time(s)
+
+=========================================================================
+*                            Final Report                               *
+=========================================================================
+
+Device utilization summary:
+---------------------------
+
+Selected Device : 2s200fg256-5 
+
+ Number of Slices:                     286  out of   2352    12%  
+ Number of Slice Flip Flops:           258  out of   4704     5%  
+ Number of 4 input LUTs:               494  out of   4704    10%  
+ Number of bonded IOBs:                 51  out of    180    28%  
+ Number of GCLKs:                        3  out of      4    75%  
+
+
+=========================================================================
+TIMING REPORT
+
+
+Clock Information:
+------------------
+-----------------------------------+------------------------+-------+
+Clock Signal                       | Clock buffer(FF name)  | Load  |
+-----------------------------------+------------------------+-------+
+clk                                | u0_u1_dllint:CLK0      | 259   |
+-----------------------------------+------------------------+-------+
+
+Timing Summary:
+---------------
+Speed Grade: -5
+
+   Minimum period: 16.618ns (Maximum Frequency: 60.176MHz)
+   Minimum input arrival time before clock: 2.857ns
+   Maximum output required time after clock: 14.455ns
+   Maximum combinational path delay: No path found
+
+=========================================================================
+Completed process "Synthesize".
+
+
+
+Started process "Translate".
+
+
+Command Line: ngdbuild -intstyle ise -dd
+c:\xesscorp\products\bitstreams\xsa\200\test_board-50mhz/_ngo -uc test_board.ucf
+-p xc2s200-fg256-5 test_board.ngc test_board.ngd 
+
+Reading NGO file
+"C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/test_board.ngc" ...
+Reading component libraries for design expansion...
+
+Annotating constraints to design from file "test_board.ucf" ...
+
+Checking timing specifications ...
+   <none> (no matching synchronous elements driven by CLKDLL outputs)
+   CLK0: TS_u0_u1_int_clk1x=PERIOD u0_u1_int_clk1x TS_clk*1.000000 HIGH
+50.000000%
+Checking expanded design ...
+
+NGDBUILD Design Results Summary:
+  Number of errors:     0
+  Number of warnings:   0
+
+Total memory usage is 39264 kilobytes
+
+Writing NGD file "test_board.ngd" ...
+
+Writing NGDBUILD log file "test_board.bld"...
+
+NGDBUILD done.
+Completed process "Translate".
+
+
+
+Started process "Map".
+
+Using target part "2s200fg256-5".
+Removing unused or disabled logic...
+Running cover...
+Running directed packing...
+Running delay-based LUT packing...
+Running related packing...
+
+Design Summary:
+Number of errors:      0
+Number of warnings:    0
+Logic Utilization:
+  Number of Slice Flip Flops:       225 out of  4,704    4%
+  Number of 4 input LUTs:           422 out of  4,704    8%
+Logic Distribution:
+    Number of occupied Slices:                         300 out of  2,352   12%
+    Number of Slices containing only related logic:    300 out of    300  100%
+    Number of Slices containing unrelated logic:         0 out of    300    0%
+        *See NOTES below for an explanation of the effects of unrelated logic
+Total Number 4 input LUTs:          490 out of  4,704   10%
+      Number used as logic:                       422
+      Number used as a route-thru:                 68
+   Number of bonded IOBs:            49 out of    176   27%
+      IOB Flip Flops:                              33
+   Number of GCLKs:                   1 out of      4   25%
+   Number of GCLKIOBs:                2 out of      4   50%
+   Number of DLLs:                    2 out of      4   50%
+
+Total equivalent gate count for design:  19,346
+Additional JTAG gate count for IOBs:  2,448
+Peak Memory Usage:  66 MB
+
+NOTES:
+
+   Related logic is defined as being logic that shares connectivity -
+   e.g. two LUTs are "related" if they share common inputs.
+   When assembling slices, Map gives priority to combine logic that
+   is related.  Doing so results in the best timing performance.
+
+   Unrelated logic shares no connectivity.  Map will only begin
+   packing unrelated logic into a slice once 99% of the slices are
+   occupied through related logic packing.
+
+   Note that once logic distribution reaches the 99% level through
+   related logic packing, this does not mean the device is completely
+   utilized.  Unrelated logic packing will then begin, continuing until
+   all usable LUTs and FFs are occupied.  Depending on your timing
+   budget, increased levels of unrelated logic packing may adversely
+   affect the overall timing performance of your design.
+
+
+Mapping completed.
+See MAP report file "test_board_map.mrp" for details.
+Completed process "Map".
+
+Mapping Module test_board . . .
+MAP command line:
+map -intstyle ise -p xc2s200-fg256-5 -cm area -pr b -k 4 -c 100 -tx off -o test_board_map.ncd test_board.ngd test_board.pcf
+Mapping Module test_board: DONE
+
+
+
+Started process "Place & Route".
+
+
+
+
+
+Constraints file: test_board.pcf
+
+Loading device database for application Par from file "test_board_map.ncd".
+   "test_board" is an NCD, version 2.38, device xc2s200, package fg256, speed -5
+Loading device for application Par from file 'v200.nph' in environment C:/ISE.
+Device speed data version:  PRODUCTION 1.27 2004-06-25.
+
+
+Resolving physical constraints.
+Finished resolving physical constraints.
+
+Device utilization summary:
+
+   Number of External GCLKIOBs         2 out of 4      50%
+   Number of External IOBs            49 out of 176    27%
+      Number of LOCed External IOBs   49 out of 49    100%
+
+   Number of SLICEs                  300 out of 2352   12%
+
+   Number of DLLs                      2 out of 4      50%
+   Number of GCLKs                     1 out of 4      25%
+
+
+
+Overall effort level (-ol):   Standard (set by user)
+Placer effort level (-pl):    Standard (set by user)
+Placer cost table entry (-t): 1
+Router effort level (-rl):    Standard (set by user)
+
+Starting initial Timing Analysis.  REAL time: 0 secs 
+Finished initial Timing Analysis.  REAL time: 0 secs 
+
+
+Phase 1.1
+Phase 1.1 (Checksum:98a363) REAL time: 0 secs 
+
+Phase 2.23
+ERROR:Place - Could not find an automatic placement for the following
+   components:
+      clk of type GCLK IOB is placed at B8
+      u0_u1_dllint of type DLL is unplaced
+      u0_u1_dllext of type DLL is unplaced
+      u0_u1_int_clk1x_buf of type GCLK BUFFER is unplaced
+      sclkfb of type GCLK IOB is placed at N8
+   Xilinx requires using locate constraints to preplace such connected
+   GCLK/GCLKIO/DLL components.
+Phase 2.23 (Checksum:1312cfe) REAL time: 0 secs 
+
+Total REAL time to Placer completion: 0 secs 
+Total CPU time to Placer completion: 1 secs 
+
+
+Generating "par" statistics.
+
+Timing Score: 0
+
+Asterisk (*) preceding a constraint indicates it was not met.
+   This may be due to a setup or hold violation.
+
+--------------------------------------------------------------------------------
+  Constraint                                | Requested  | Actual     | Logic 
+                                            |            |            | Levels
+--------------------------------------------------------------------------------
+  TS_clk = PERIOD TIMEGRP "clk"  10 nS   HI | 10.000ns   | 4.834ns    | 9    
+  GH 50.000000 %                            |            |            |      
+--------------------------------------------------------------------------------
+  TS_u0_u1_int_clk1x = PERIOD TIMEGRP "u0_u | 10.000ns   | 8.543ns    | 8    
+  1_int_clk1x" TS_clk * 1.000000 HIGH  50.0 |            |            |      
+  00 %                                      |            |            |      
+--------------------------------------------------------------------------------
+
+
+All constraints were met.
+Generating Pad Report.
+
+629 signals are not completely routed.
+
+WARNING:Par:100 - Design is not completely routed.
+
+Total REAL time to PAR completion: 2 secs 
+Total CPU time to PAR completion: 2 secs 
+
+Peak Memory Usage:  57 MB
+
+Placement: Completed - errors found.
+Routing: Completed - errors found.
+Timing: Completed - No errors found.
+
+Writing design to file test_board.ncd.
+
+
+PAR done.
+ERROR: PAR failed
+Process "Place & Route" did not complete.
+
+Place & Route Module test_board . . .
+PAR command line: par -w -intstyle ise -ol std -t 1 test_board_map.ncd test_board.ncd test_board.pcf
+ERROR: PAR failed
+Reason: 
+
+
+Project Navigator Auto-Make Log File
+-------------------------------------
+
+
+
+
+Started process "Synthesize".
+
+
+=========================================================================
+*                          HDL Compilation                              *
+=========================================================================
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../../XS_LIB/common.vhd in Library work.
+Architecture common of Entity common is up to date.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../../XS_LIB/sdramcntl.vhd in Library work.
+Architecture arch of Entity sdramcntl is up to date.
+Architecture arch of Entity dualport is up to date.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../../XS_LIB/randgen.vhd in Library work.
+Architecture arch of Entity randgen is up to date.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../../XS_LIB/memtest.vhd in Library work.
+Architecture arch of Entity memtest is up to date.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../XSA_LIB/xsasdramcntl.vhd in Library work.
+Architecture arch of Entity xsasdramcntl is up to date.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../XSA_LIB/test_board_core.vhd in Library work.
+Architecture arch of Entity test_board_core is up to date.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/test_board.vhd in Library work.
+Entity <test_board> (Architecture <arch>) compiled.
+
+=========================================================================
+*                            HDL Analysis                               *
+=========================================================================
+Analyzing Entity <test_board> (Architecture <arch>).
+Entity <test_board> analyzed. Unit <test_board> generated.
+
+Analyzing generic Entity <test_board_core> (Architecture <arch>).
+	FREQ = 50000
+	PIPE_EN = <u>1
+	DATA_WIDTH = 16
+	SADDR_WIDTH = 13
+	NROWS = 8192
+	NCOLS = 512
+	BEG_ADDR = 0
+	END_ADDR = 16777215
+	BEG_TEST = 0
+	END_TEST = 16777215
+    Set user-defined property "INIT =  1" for signal <rst_i>.
+WARNING:Xst:753 - C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../XSA_LIB/test_board_core.vhd line 243: Unconnected output port 'clk2x' of component 'XSASDRAMCntl'.
+WARNING:Xst:753 - C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../XSA_LIB/test_board_core.vhd line 243: Unconnected output port 'status' of component 'XSASDRAMCntl'.
+Entity <test_board_core> analyzed. Unit <test_board_core> generated.
+
+Analyzing generic Entity <memTest> (Architecture <arch>).
+	PIPE_EN = <u>1
+	DATA_WIDTH = 16
+	ADDR_WIDTH = 24
+	BEG_TEST = 0
+	END_TEST = 16777215
+Entity <memTest> analyzed. Unit <memTest> generated.
+
+Analyzing generic Entity <randGen> (Architecture <arch>).
+	DATA_WIDTH = 16
+Entity <randGen> analyzed. Unit <randGen> generated.
+
+Analyzing generic Entity <XSASDRAMCntl> (Architecture <arch>).
+	FREQ = 50000
+	CLK_DIV = 1.000000
+	PIPE_EN = <u>1
+	MAX_NOP = 10000
+	MULTIPLE_ACTIVE_ROWS = <u>1
+	DATA_WIDTH = 16
+	NROWS = 8192
+	NCOLS = 512
+	HADDR_WIDTH = 24
+	SADDR_WIDTH = 13
+Entity <XSASDRAMCntl> analyzed. Unit <XSASDRAMCntl> generated.
+
+Analyzing generic Entity <sdramCntl> (Architecture <arch>).
+	FREQ = 50000
+	IN_PHASE = <u>1
+	PIPE_EN = <u>1
+	MAX_NOP = 10000
+	MULTIPLE_ACTIVE_ROWS = <u>1
+	DATA_WIDTH = 16
+	NROWS = 8192
+	NCOLS = 512
+	HADDR_WIDTH = 24
+	SADDR_WIDTH = 13
+WARNING:Xst:819 - C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../../XS_LIB/sdramcntl.vhd line 333: The following signals are missing in the process sensitivity list:
+   activeBank_r, ba_r.
+Entity <sdramCntl> analyzed. Unit <sdramCntl> generated.
+
+
+=========================================================================
+*                           HDL Synthesis                               *
+=========================================================================
+
+Synthesizing Unit <sdramCntl>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../../XS_LIB/sdramcntl.vhd.
+WARNING:Xst:646 - Signal <col<12>> is assigned but never used.
+    Found finite state machine <FSM_0> for signal <state_r>.
+    -----------------------------------------------------------------------
+    | States             | 8                                              |
+    | Transitions        | 32                                             |
+    | Inputs             | 11                                             |
+    | Outputs            | 8                                              |
+    | Clock              | clk (rising_edge)                              |
+    | Clock enable       | $n0154 (negative)                              |
+    | Reset              | rst (positive)                                 |
+    | Reset type         | asynchronous                                   |
+    | Reset State        | initwait                                       |
+    | Power Up State     | initwait                                       |
+    | Encoding           | automatic                                      |
+    | Implementation     | LUT                                            |
+    -----------------------------------------------------------------------
+    Found 1-bit 4-to-1 multiplexer for signal <$n0001> created at line 422.
+    Found 13-bit 4-to-1 multiplexer for signal <$n0153> created at line 422.
+    Found 2-bit comparator equal for signal <$n0157> created at line 603.
+    Found 14-bit subtractor for signal <$n0176>.
+    Found 14-bit adder for signal <$n0180> created at line 484.
+    Found 14-bit adder for signal <$n0196> created at line 439.
+    Found 9-bit subtractor for signal <$n0198> created at line 479.
+    Found 2-bit subtractor for signal <$n0199> created at line 455.
+    Found 14-bit subtractor for signal <$n0204> created at line 490.
+    Found 13-bit comparator not equal for signal <$n0205> created at line 422.
+    Found 1-bit register for signal <activeBank_r>.
+    Found 4-bit register for signal <activeFlag_r>.
+    Found 52-bit register for signal <activeRow_r>.
+    Found 2-bit register for signal <ba_r>.
+    Found 1-bit register for signal <cke_r>.
+    Found 6-bit register for signal <cmd_r>.
+    Found 16-bit register for signal <hDOut_r>.
+    Found 16-bit register for signal <hDOutOppPhase_r>.
+    Found 14-bit register for signal <nopCntr_r>.
+    Found 1-bit register for signal <opBegun_r>.
+    Found 2-bit register for signal <rasTimer_r>.
+    Found 5-bit register for signal <rdPipeline_r>.
+    Found 9-bit register for signal <refTimer_r>.
+    Found 14-bit register for signal <rfshCntr_r>.
+    Found 13-bit register for signal <sAddr_r>.
+    Found 16-bit register for signal <sData_r>.
+    Found 1-bit register for signal <sDataDir_r>.
+    Found 14-bit register for signal <timer_r>.
+    Found 1-bit register for signal <wrPipeline_r<0>>.
+    Found 1-bit register for signal <wrTimer_r<0>>.
+    Found 61 1-bit 2-to-1 multiplexers.
+    Summary:
+	inferred   1 Finite State Machine(s).
+	inferred 174 D-type flip-flop(s).
+	inferred   6 Adder/Subtracter(s).
+	inferred   2 Comparator(s).
+	inferred  78 Multiplexer(s).
+Unit <sdramCntl> synthesized.
+
+
+Synthesizing Unit <randGen>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../../XS_LIB/randgen.vhd.
+    Found 1-bit xor4 for signal <new_bit>.
+    Found 16-bit register for signal <r_r>.
+    Summary:
+	inferred  16 D-type flip-flop(s).
+	inferred   1 Xor(s).
+Unit <randGen> synthesized.
+
+
+Synthesizing Unit <XSASDRAMCntl>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../XSA_LIB/xsasdramcntl.vhd.
+WARNING:Xst:646 - Signal <dllext_rst_n> is assigned but never used.
+WARNING:Xst:646 - Signal <int_clkdv_b> is assigned but never used.
+    Found 16-bit tristate buffer for signal <sData>.
+    Summary:
+	inferred  16 Tristate(s).
+Unit <XSASDRAMCntl> synthesized.
+
+
+Synthesizing Unit <memTest>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../../XS_LIB/memtest.vhd.
+    Found finite state machine <FSM_1> for signal <state_r>.
+    -----------------------------------------------------------------------
+    | States             | 5                                              |
+    | Transitions        | 10                                             |
+    | Inputs             | 5                                              |
+    | Outputs            | 6                                              |
+    | Clock              | clk (rising_edge)                              |
+    | Reset              | rst (positive)                                 |
+    | Reset type         | synchronous                                    |
+    | Reset State        | init                                           |
+    | Power Up State     | init                                           |
+    | Encoding           | automatic                                      |
+    | Implementation     | LUT                                            |
+    -----------------------------------------------------------------------
+    Found 24-bit adder for signal <$n0029> created at line 151.
+    Found 16-bit comparator not equal for signal <$n0032> created at line 204.
+    Found 24-bit register for signal <addr_r>.
+    Found 1-bit register for signal <err_r>.
+    Summary:
+	inferred   1 Finite State Machine(s).
+	inferred  25 D-type flip-flop(s).
+	inferred   1 Adder/Subtracter(s).
+	inferred   1 Comparator(s).
+Unit <memTest> synthesized.
+
+
+Synthesizing Unit <test_board_core>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../XSA_LIB/test_board_core.vhd.
+WARNING:Xst:646 - Signal <begun> is assigned but never used.
+WARNING:Xst:1780 - Signal <dataOut> is never used or assigned.
+WARNING:Xst:1780 - Signal <dataIn> is never used or assigned.
+WARNING:Xst:646 - Signal <done> is assigned but never used.
+    Found 23-bit up counter for signal <divCnt>.
+    Found 1-bit register for signal <rst_i>.
+    Found 2-bit register for signal <syncButton>.
+    Summary:
+	inferred   1 Counter(s).
+	inferred   3 D-type flip-flop(s).
+Unit <test_board_core> synthesized.
+
+
+Synthesizing Unit <test_board>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/test_board.vhd.
+WARNING:Xst:1306 - Output <pps<5:3>> is never assigned.
+Unit <test_board> synthesized.
+
+INFO:Xst:1767 - HDL ADVISOR - Resource sharing has identified that some arithmetic operations in this design can share the same physical resources for reduced device utilization. For improved clock frequency you may try to disable resource sharing.
+
+=========================================================================
+*                       Advanced HDL Synthesis                          *
+=========================================================================
+
+Advanced RAM inference ...
+Advanced multiplier inference ...
+Advanced Registered AddSub inference ...
+Selecting encoding for FSM_1 ...
+Optimizing FSM <FSM_1> on signal <state_r> with one-hot encoding.
+Selecting encoding for FSM_0 ...
+Optimizing FSM <FSM_0> on signal <state_r> with one-hot encoding.
+Dynamic shift register inference ...
+
+=========================================================================
+HDL Synthesis Report
+
+Macro Statistics
+# FSMs                             : 2
+# Adders/Subtractors               : 7
+ 24-bit adder                      : 1
+ 14-bit subtractor                 : 2
+ 9-bit subtractor                  : 1
+ 14-bit adder                      : 2
+ 2-bit subtractor                  : 1
+# Counters                         : 1
+ 23-bit up counter                 : 1
+# Registers                        : 41
+ 1-bit register                    : 23
+ 24-bit register                   : 1
+ 16-bit register                   : 3
+ 13-bit register                   : 5
+ 2-bit register                    : 2
+ 5-bit register                    : 1
+ 14-bit register                   : 3
+ 4-bit register                    : 1
+ 6-bit register                    : 1
+ 9-bit register                    : 1
+# Comparators                      : 3
+ 16-bit comparator not equal       : 1
+ 13-bit comparator not equal       : 1
+ 2-bit comparator equal            : 1
+# Multiplexers                     : 8
+ 1-bit 2-to-1 multiplexer          : 4
+ 1-bit 4-to-1 multiplexer          : 1
+ 14-bit 2-to-1 multiplexer         : 2
+ 13-bit 4-to-1 multiplexer         : 1
+# Tristates                        : 1
+ 16-bit tristate buffer            : 1
+# Xors                             : 1
+ 1-bit xor4                        : 1
+
+=========================================================================
+
+=========================================================================
+*                         Low Level Synthesis                           *
+=========================================================================
+WARNING:Xst:1426 - The value init of the FF/Latch activeBank_r hinder the constant cleaning in the block sdramCntl.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1291 - FF/Latch <wrPipeline_r_0> is unconnected in block <u1>.
+WARNING:Xst:1291 - FF/Latch <opBegun_r> is unconnected in block <u1>.
+WARNING:Xst:1710 - FF/Latch  <cmd_r_5> (without init value) is constant in block <sdramCntl>.
+WARNING:Xst:1291 - FF/Latch <u0_divCnt_22> is unconnected in block <test_board>.
+WARNING:Xst:1291 - FF/Latch <u0_divCnt_17> is unconnected in block <test_board>.
+WARNING:Xst:1291 - FF/Latch <u0_divCnt_18> is unconnected in block <test_board>.
+WARNING:Xst:1291 - FF/Latch <u0_divCnt_19> is unconnected in block <test_board>.
+WARNING:Xst:1291 - FF/Latch <u0_divCnt_20> is unconnected in block <test_board>.
+WARNING:Xst:1291 - FF/Latch <u0_divCnt_21> is unconnected in block <test_board>.
+
+Optimizing unit <test_board> ...
+
+Optimizing unit <randGen> ...
+
+Optimizing unit <memTest> ...
+
+Optimizing unit <sdramCntl> ...
+Loading device for application Xst from file 'v200.nph' in environment C:/ISE.
+
+Mapping all equations...
+WARNING:Xst:1291 - FF/Latch <u0_u1_u1_wrPipeline_r_0> is unconnected in block <test_board>.
+WARNING:Xst:1291 - FF/Latch <u0_u1_u1_opBegun_r> is unconnected in block <test_board>.
+Building and optimizing final netlist ...
+Register u0_u1_u1_sDataDir_r equivalent to u0_u1_u1_wrTimer_r_0 has been removed
+Register u0_u1_u1_cmd_r_1 equivalent to u0_u1_u1_cmd_r_0 has been removed
+Found area constraint ratio of 100 (+ 5) on block test_board, actual ratio is 11.
+FlipFlop u0_rst_i has been replicated 6 time(s)
+FlipFlop u0_fast_memtest_state_r_FFd4 has been replicated 1 time(s)
+FlipFlop u0_fast_memtest_state_r_FFd3 has been replicated 2 time(s)
+FlipFlop u0_fast_memtest_addr_r_23 has been replicated 2 time(s)
+FlipFlop u0_fast_memtest_addr_r_22 has been replicated 1 time(s)
+
+=========================================================================
+*                            Final Report                               *
+=========================================================================
+
+Device utilization summary:
+---------------------------
+
+Selected Device : 2s200fg256-5 
+
+ Number of Slices:                     284  out of   2352    12%  
+ Number of Slice Flip Flops:           254  out of   4704     5%  
+ Number of 4 input LUTs:               476  out of   4704    10%  
+ Number of bonded IOBs:                 51  out of    180    28%  
+ Number of GCLKs:                        3  out of      4    75%  
+
+
+=========================================================================
+TIMING REPORT
+
+
+Clock Information:
+------------------
+-----------------------------------+------------------------+-------+
+Clock Signal                       | Clock buffer(FF name)  | Load  |
+-----------------------------------+------------------------+-------+
+clk                                | u0_u1_dllint:CLK0      | 255   |
+-----------------------------------+------------------------+-------+
+
+Timing Summary:
+---------------
+Speed Grade: -5
+
+   Minimum period: 16.478ns (Maximum Frequency: 60.687MHz)
+   Minimum input arrival time before clock: 2.857ns
+   Maximum output required time after clock: 14.455ns
+   Maximum combinational path delay: No path found
+
+=========================================================================
+Completed process "Synthesize".
+
+
+
+Started process "Translate".
+
+
+Command Line: ngdbuild -intstyle ise -dd
+c:\xesscorp\products\bitstreams\xsa\200\test_board-50mhz/_ngo -uc test_board.ucf
+-p xc2s200-fg256-5 test_board.ngc test_board.ngd 
+
+Reading NGO file
+"C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/test_board.ngc" ...
+Reading component libraries for design expansion...
+
+Annotating constraints to design from file "test_board.ucf" ...
+
+Checking timing specifications ...
+Checking expanded design ...
+
+NGDBUILD Design Results Summary:
+  Number of errors:     0
+  Number of warnings:   0
+
+Total memory usage is 38240 kilobytes
+
+Writing NGD file "test_board.ngd" ...
+
+Writing NGDBUILD log file "test_board.bld"...
+
+NGDBUILD done.
+Completed process "Translate".
+
+
+
+Started process "Map".
+
+Using target part "2s200fg256-5".
+Removing unused or disabled logic...
+Running cover...
+Running directed packing...
+Running delay-based LUT packing...
+Running related packing...
+
+Design Summary:
+Number of errors:      0
+Number of warnings:    0
+Logic Utilization:
+  Number of Slice Flip Flops:       221 out of  4,704    4%
+  Number of 4 input LUTs:           405 out of  4,704    8%
+Logic Distribution:
+    Number of occupied Slices:                         292 out of  2,352   12%
+    Number of Slices containing only related logic:    292 out of    292  100%
+    Number of Slices containing unrelated logic:         0 out of    292    0%
+        *See NOTES below for an explanation of the effects of unrelated logic
+Total Number 4 input LUTs:          473 out of  4,704   10%
+      Number used as logic:                       405
+      Number used as a route-thru:                 68
+   Number of bonded IOBs:            49 out of    176   27%
+      IOB Flip Flops:                              33
+   Number of GCLKs:                   1 out of      4   25%
+   Number of GCLKIOBs:                2 out of      4   50%
+   Number of DLLs:                    2 out of      4   50%
+
+Total equivalent gate count for design:  19,203
+Additional JTAG gate count for IOBs:  2,448
+Peak Memory Usage:  65 MB
+
+NOTES:
+
+   Related logic is defined as being logic that shares connectivity -
+   e.g. two LUTs are "related" if they share common inputs.
+   When assembling slices, Map gives priority to combine logic that
+   is related.  Doing so results in the best timing performance.
+
+   Unrelated logic shares no connectivity.  Map will only begin
+   packing unrelated logic into a slice once 99% of the slices are
+   occupied through related logic packing.
+
+   Note that once logic distribution reaches the 99% level through
+   related logic packing, this does not mean the device is completely
+   utilized.  Unrelated logic packing will then begin, continuing until
+   all usable LUTs and FFs are occupied.  Depending on your timing
+   budget, increased levels of unrelated logic packing may adversely
+   affect the overall timing performance of your design.
+
+
+Mapping completed.
+See MAP report file "test_board_map.mrp" for details.
+Completed process "Map".
+
+Mapping Module test_board . . .
+MAP command line:
+map -intstyle ise -p xc2s200-fg256-5 -cm area -pr b -k 4 -c 100 -tx off -o test_board_map.ncd test_board.ngd test_board.pcf
+Mapping Module test_board: DONE
+
+
+
+Started process "Place & Route".
+
+
+
+
+
+Constraints file: test_board.pcf
+
+Loading device database for application Par from file "test_board_map.ncd".
+   "test_board" is an NCD, version 2.38, device xc2s200, package fg256, speed -5
+Loading device for application Par from file 'v200.nph' in environment C:/ISE.
+Device speed data version:  PRODUCTION 1.27 2004-06-25.
+
+
+Resolving physical constraints.
+Finished resolving physical constraints.
+
+Device utilization summary:
+
+   Number of External GCLKIOBs         2 out of 4      50%
+   Number of External IOBs            49 out of 176    27%
+      Number of LOCed External IOBs   49 out of 49    100%
+
+   Number of SLICEs                  292 out of 2352   12%
+
+   Number of DLLs                      2 out of 4      50%
+   Number of GCLKs                     1 out of 4      25%
+
+
+
+Overall effort level (-ol):   Standard (set by user)
+Placer effort level (-pl):    Standard (set by user)
+Placer cost table entry (-t): 1
+Router effort level (-rl):    Standard (set by user)
+
+
+Phase 1.1
+Phase 1.1 (Checksum:98a1f1) REAL time: 0 secs 
+
+Phase 2.23
+ERROR:Place - Could not find an automatic placement for the following
+   components:
+      clk of type GCLK IOB is placed at B8
+      u0_u1_dllint of type DLL is unplaced
+      u0_u1_dllext of type DLL is unplaced
+      u0_u1_int_clk1x_buf of type GCLK BUFFER is unplaced
+      sclkfb of type GCLK IOB is placed at N8
+   Xilinx requires using locate constraints to preplace such connected
+   GCLK/GCLKIO/DLL components.
+Phase 2.23 (Checksum:1312cfe) REAL time: 0 secs 
+
+Total REAL time to Placer completion: 0 secs 
+Total CPU time to Placer completion: 0 secs 
+
+
+Generating "par" statistics.
+
+Generating Pad Report.
+
+610 signals are not completely routed.
+
+WARNING:Par:100 - Design is not completely routed.
+
+Total REAL time to PAR completion: 2 secs 
+Total CPU time to PAR completion: 1 secs 
+
+Peak Memory Usage:  49 MB
+
+Placement: Completed - errors found.
+Routing: Completed - errors found.
+
+Writing design to file test_board.ncd.
+
+
+PAR done.
+ERROR: PAR failed
+Process "Place & Route" did not complete.
+
+Place & Route Module test_board . . .
+PAR command line: par -w -intstyle ise -ol std -t 1 test_board_map.ncd test_board.ncd test_board.pcf
+ERROR: PAR failed
+Reason: 
+
+
+Project Navigator Auto-Make Log File
+-------------------------------------
+
+
+
+
+Started process "Synthesize".
+
+
+=========================================================================
+*                          HDL Compilation                              *
+=========================================================================
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../../XS_LIB/common.vhd in Library work.
+Architecture common of Entity common is up to date.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../../XS_LIB/sdramcntl.vhd in Library work.
+Architecture arch of Entity sdramcntl is up to date.
+Architecture arch of Entity dualport is up to date.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../../XS_LIB/randgen.vhd in Library work.
+Architecture arch of Entity randgen is up to date.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../../XS_LIB/memtest.vhd in Library work.
+Architecture arch of Entity memtest is up to date.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../XSA_LIB/xsasdramcntl.vhd in Library work.
+Architecture arch of Entity xsasdramcntl is up to date.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../XSA_LIB/test_board_core.vhd in Library work.
+Architecture arch of Entity test_board_core is up to date.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/test_board.vhd in Library work.
+ERROR:HDLParsers:850 - C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/test_board.vhd Line 35. Formal port CLK_DIV does not exist in Component 'test_board_core'.
+--> 
+
+Total memory usage is 49564 kilobytes
+
+
+ERROR: XST failed
+Process "Synthesize" did not complete.
+
+
+Project Navigator Auto-Make Log File
+-------------------------------------
+
+
+
+
+Started process "Synthesize".
+
+
+=========================================================================
+*                          HDL Compilation                              *
+=========================================================================
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../../XS_LIB/common.vhd in Library work.
+Architecture common of Entity common is up to date.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../../XS_LIB/sdramcntl.vhd in Library work.
+Architecture arch of Entity sdramcntl is up to date.
+Architecture arch of Entity dualport is up to date.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../../XS_LIB/randgen.vhd in Library work.
+Architecture arch of Entity randgen is up to date.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../../XS_LIB/memtest.vhd in Library work.
+Architecture arch of Entity memtest is up to date.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../XSA_LIB/xsasdramcntl.vhd in Library work.
+Architecture arch of Entity xsasdramcntl is up to date.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../XSA_LIB/test_board_core.vhd in Library work.
+Entity <test_board_core> (Architecture <arch>) compiled.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/test_board.vhd in Library work.
+Entity <test_board> (Architecture <arch>) compiled.
+
+=========================================================================
+*                            HDL Analysis                               *
+=========================================================================
+Analyzing Entity <test_board> (Architecture <arch>).
+Entity <test_board> analyzed. Unit <test_board> generated.
+
+Analyzing generic Entity <test_board_core> (Architecture <arch>).
+	FREQ = 100000
+	CLK_DIV = 2.000000
+	PIPE_EN = <u>1
+	DATA_WIDTH = 16
+	SADDR_WIDTH = 13
+	NROWS = 8192
+	NCOLS = 512
+	BEG_ADDR = 0
+	END_ADDR = 16777215
+	BEG_TEST = 0
+	END_TEST = 16777215
+    Set user-defined property "INIT =  1" for signal <rst_i>.
+WARNING:Xst:753 - C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../XSA_LIB/test_board_core.vhd line 245: Unconnected output port 'clk2x' of component 'XSASDRAMCntl'.
+WARNING:Xst:753 - C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../XSA_LIB/test_board_core.vhd line 245: Unconnected output port 'status' of component 'XSASDRAMCntl'.
+Entity <test_board_core> analyzed. Unit <test_board_core> generated.
+
+Analyzing generic Entity <memTest> (Architecture <arch>).
+	PIPE_EN = <u>1
+	DATA_WIDTH = 16
+	ADDR_WIDTH = 24
+	BEG_TEST = 0
+	END_TEST = 16777215
+Entity <memTest> analyzed. Unit <memTest> generated.
+
+Analyzing generic Entity <randGen> (Architecture <arch>).
+	DATA_WIDTH = 16
+Entity <randGen> analyzed. Unit <randGen> generated.
+
+Analyzing generic Entity <XSASDRAMCntl> (Architecture <arch>).
+	FREQ = 100000
+	CLK_DIV = 2.000000
+	PIPE_EN = <u>1
+	MAX_NOP = 10000
+	MULTIPLE_ACTIVE_ROWS = <u>1
+	DATA_WIDTH = 16
+	NROWS = 8192
+	NCOLS = 512
+	HADDR_WIDTH = 24
+	SADDR_WIDTH = 13
+Entity <XSASDRAMCntl> analyzed. Unit <XSASDRAMCntl> generated.
+
+Analyzing generic Entity <sdramCntl> (Architecture <arch>).
+	FREQ = 200000
+	IN_PHASE = <u>1
+	PIPE_EN = <u>1
+	MAX_NOP = 10000
+	MULTIPLE_ACTIVE_ROWS = <u>1
+	DATA_WIDTH = 16
+	NROWS = 8192
+	NCOLS = 512
+	HADDR_WIDTH = 24
+	SADDR_WIDTH = 13
+WARNING:Xst:819 - C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../../XS_LIB/sdramcntl.vhd line 333: The following signals are missing in the process sensitivity list:
+   activeBank_r, ba_r.
+Entity <sdramCntl> analyzed. Unit <sdramCntl> generated.
+
+
+=========================================================================
+*                           HDL Synthesis                               *
+=========================================================================
+
+Synthesizing Unit <sdramCntl>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../../XS_LIB/sdramcntl.vhd.
+WARNING:Xst:646 - Signal <col<12>> is assigned but never used.
+    Found finite state machine <FSM_0> for signal <state_r>.
+    -----------------------------------------------------------------------
+    | States             | 8                                              |
+    | Transitions        | 32                                             |
+    | Inputs             | 11                                             |
+    | Outputs            | 8                                              |
+    | Clock              | clk (rising_edge)                              |
+    | Clock enable       | $n0154 (negative)                              |
+    | Reset              | rst (positive)                                 |
+    | Reset type         | asynchronous                                   |
+    | Reset State        | initwait                                       |
+    | Power Up State     | initwait                                       |
+    | Encoding           | automatic                                      |
+    | Implementation     | LUT                                            |
+    -----------------------------------------------------------------------
+    Found 1-bit 4-to-1 multiplexer for signal <$n0001> created at line 422.
+    Found 13-bit 4-to-1 multiplexer for signal <$n0153> created at line 422.
+    Found 2-bit comparator equal for signal <$n0157> created at line 603.
+    Found 14-bit subtractor for signal <$n0176>.
+    Found 14-bit adder for signal <$n0181> created at line 484.
+    Found 14-bit adder for signal <$n0197> created at line 439.
+    Found 11-bit subtractor for signal <$n0199> created at line 479.
+    Found 4-bit subtractor for signal <$n0200> created at line 455.
+    Found 3-bit subtractor for signal <$n0205> created at line 468.
+    Found 16-bit subtractor for signal <$n0206> created at line 490.
+    Found 13-bit comparator not equal for signal <$n0207> created at line 422.
+    Found 1-bit register for signal <activeBank_r>.
+    Found 4-bit register for signal <activeFlag_r>.
+    Found 52-bit register for signal <activeRow_r>.
+    Found 2-bit register for signal <ba_r>.
+    Found 1-bit register for signal <cke_r>.
+    Found 6-bit register for signal <cmd_r>.
+    Found 16-bit register for signal <hDOut_r>.
+    Found 16-bit register for signal <hDOutOppPhase_r>.
+    Found 14-bit register for signal <nopCntr_r>.
+    Found 1-bit register for signal <opBegun_r>.
+    Found 4-bit register for signal <rasTimer_r>.
+    Found 5-bit register for signal <rdPipeline_r>.
+    Found 11-bit register for signal <refTimer_r>.
+    Found 14-bit register for signal <rfshCntr_r>.
+    Found 13-bit register for signal <sAddr_r>.
+    Found 16-bit register for signal <sData_r>.
+    Found 1-bit register for signal <sDataDir_r>.
+    Found 16-bit register for signal <timer_r>.
+    Found 1-bit register for signal <wrPipeline_r<0>>.
+    Found 3-bit register for signal <wrTimer_r>.
+    Found 61 1-bit 2-to-1 multiplexers.
+    Summary:
+	inferred   1 Finite State Machine(s).
+	inferred 180 D-type flip-flop(s).
+	inferred   7 Adder/Subtracter(s).
+	inferred   2 Comparator(s).
+	inferred  78 Multiplexer(s).
+Unit <sdramCntl> synthesized.
+
+
+Synthesizing Unit <randGen>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../../XS_LIB/randgen.vhd.
+    Found 1-bit xor4 for signal <new_bit>.
+    Found 16-bit register for signal <r_r>.
+    Summary:
+	inferred  16 D-type flip-flop(s).
+	inferred   1 Xor(s).
+Unit <randGen> synthesized.
+
+
+Synthesizing Unit <XSASDRAMCntl>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../XSA_LIB/xsasdramcntl.vhd.
+WARNING:Xst:646 - Signal <dllext_rst_n> is assigned but never used.
+    Found 16-bit tristate buffer for signal <sData>.
+    Summary:
+	inferred  16 Tristate(s).
+Unit <XSASDRAMCntl> synthesized.
+
+
+Synthesizing Unit <memTest>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../../XS_LIB/memtest.vhd.
+    Found finite state machine <FSM_1> for signal <state_r>.
+    -----------------------------------------------------------------------
+    | States             | 5                                              |
+    | Transitions        | 10                                             |
+    | Inputs             | 5                                              |
+    | Outputs            | 6                                              |
+    | Clock              | clk (rising_edge)                              |
+    | Reset              | rst (positive)                                 |
+    | Reset type         | synchronous                                    |
+    | Reset State        | init                                           |
+    | Power Up State     | init                                           |
+    | Encoding           | automatic                                      |
+    | Implementation     | LUT                                            |
+    -----------------------------------------------------------------------
+    Found 24-bit adder for signal <$n0029> created at line 151.
+    Found 16-bit comparator not equal for signal <$n0032> created at line 204.
+    Found 24-bit register for signal <addr_r>.
+    Found 1-bit register for signal <err_r>.
+    Summary:
+	inferred   1 Finite State Machine(s).
+	inferred  25 D-type flip-flop(s).
+	inferred   1 Adder/Subtracter(s).
+	inferred   1 Comparator(s).
+Unit <memTest> synthesized.
+
+
+Synthesizing Unit <test_board_core>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../XSA_LIB/test_board_core.vhd.
+WARNING:Xst:646 - Signal <begun> is assigned but never used.
+WARNING:Xst:1780 - Signal <dataOut> is never used or assigned.
+WARNING:Xst:1780 - Signal <dataIn> is never used or assigned.
+WARNING:Xst:646 - Signal <done> is assigned but never used.
+    Found 23-bit up counter for signal <divCnt>.
+    Found 1-bit register for signal <rst_i>.
+    Found 2-bit register for signal <syncButton>.
+    Summary:
+	inferred   1 Counter(s).
+	inferred   3 D-type flip-flop(s).
+Unit <test_board_core> synthesized.
+
+
+Synthesizing Unit <test_board>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/test_board.vhd.
+WARNING:Xst:1306 - Output <pps<5:3>> is never assigned.
+Unit <test_board> synthesized.
+
+INFO:Xst:1767 - HDL ADVISOR - Resource sharing has identified that some arithmetic operations in this design can share the same physical resources for reduced device utilization. For improved clock frequency you may try to disable resource sharing.
+
+=========================================================================
+*                       Advanced HDL Synthesis                          *
+=========================================================================
+
+Advanced RAM inference ...
+Advanced multiplier inference ...
+Advanced Registered AddSub inference ...
+Selecting encoding for FSM_1 ...
+Optimizing FSM <FSM_1> on signal <state_r> with one-hot encoding.
+Selecting encoding for FSM_0 ...
+Optimizing FSM <FSM_0> on signal <state_r> with one-hot encoding.
+Dynamic shift register inference ...
+
+=========================================================================
+HDL Synthesis Report
+
+Macro Statistics
+# FSMs                             : 2
+# Adders/Subtractors               : 8
+ 24-bit adder                      : 1
+ 16-bit subtractor                 : 1
+ 4-bit subtractor                  : 1
+ 11-bit subtractor                 : 1
+ 14-bit adder                      : 2
+ 14-bit subtractor                 : 1
+ 3-bit subtractor                  : 1
+# Counters                         : 1
+ 23-bit up counter                 : 1
+# Registers                        : 41
+ 1-bit register                    : 22
+ 24-bit register                   : 1
+ 16-bit register                   : 4
+ 13-bit register                   : 5
+ 2-bit register                    : 1
+ 5-bit register                    : 1
+ 14-bit register                   : 2
+ 3-bit register                    : 1
+ 4-bit register                    : 2
+ 6-bit register                    : 1
+ 11-bit register                   : 1
+# Comparators                      : 3
+ 16-bit comparator not equal       : 1
+ 13-bit comparator not equal       : 1
+ 2-bit comparator equal            : 1
+# Multiplexers                     : 8
+ 1-bit 2-to-1 multiplexer          : 4
+ 1-bit 4-to-1 multiplexer          : 1
+ 14-bit 2-to-1 multiplexer         : 2
+ 13-bit 4-to-1 multiplexer         : 1
+# Tristates                        : 1
+ 16-bit tristate buffer            : 1
+# Xors                             : 1
+ 1-bit xor4                        : 1
+
+=========================================================================
+
+=========================================================================
+*                         Low Level Synthesis                           *
+=========================================================================
+WARNING:Xst:1426 - The value init of the FF/Latch activeBank_r hinder the constant cleaning in the block sdramCntl.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1291 - FF/Latch <wrPipeline_r_0> is unconnected in block <u1>.
+WARNING:Xst:1291 - FF/Latch <opBegun_r> is unconnected in block <u1>.
+WARNING:Xst:1710 - FF/Latch  <cmd_r_5> (without init value) is constant in block <sdramCntl>.
+WARNING:Xst:1291 - FF/Latch <u0_divCnt_22> is unconnected in block <test_board>.
+WARNING:Xst:1291 - FF/Latch <u0_divCnt_17> is unconnected in block <test_board>.
+WARNING:Xst:1291 - FF/Latch <u0_divCnt_18> is unconnected in block <test_board>.
+WARNING:Xst:1291 - FF/Latch <u0_divCnt_19> is unconnected in block <test_board>.
+WARNING:Xst:1291 - FF/Latch <u0_divCnt_20> is unconnected in block <test_board>.
+WARNING:Xst:1291 - FF/Latch <u0_divCnt_21> is unconnected in block <test_board>.
+
+Optimizing unit <test_board> ...
+
+Optimizing unit <randGen> ...
+
+Optimizing unit <memTest> ...
+
+Optimizing unit <sdramCntl> ...
+Loading device for application Xst from file 'v200.nph' in environment C:/ISE.
+
+Mapping all equations...
+WARNING:Xst:1291 - FF/Latch <u0_u1_u1_wrPipeline_r_0> is unconnected in block <test_board>.
+WARNING:Xst:1291 - FF/Latch <u0_u1_u1_opBegun_r> is unconnected in block <test_board>.
+Building and optimizing final netlist ...
+Register u0_u1_u1_cmd_r_1 equivalent to u0_u1_u1_cmd_r_0 has been removed
+Found area constraint ratio of 100 (+ 5) on block test_board, actual ratio is 11.
+FlipFlop u0_rst_i has been replicated 1 time(s)
+FlipFlop u0_rst_i has been replicated 6 time(s)
+FlipFlop u0_fast_memtest_addr_r_23 has been replicated 2 time(s)
+FlipFlop u0_fast_memtest_addr_r_22 has been replicated 1 time(s)
+FlipFlop u0_fast_memtest_state_r_FFd3 has been replicated 1 time(s)
+FlipFlop u0_fast_memtest_state_r_FFd4 has been replicated 1 time(s)
+
+=========================================================================
+*                            Final Report                               *
+=========================================================================
+
+Device utilization summary:
+---------------------------
+
+Selected Device : 2s200fg256-5 
+
+ Number of Slices:                     261  out of   2352    11%  
+ Number of Slice Flip Flops:           263  out of   4704     5%  
+ Number of 4 input LUTs:               463  out of   4704     9%  
+ Number of bonded IOBs:                 51  out of    180    28%  
+ Number of GCLKs:                        3  out of      4    75%  
+
+
+=========================================================================
+TIMING REPORT
+
+
+Clock Information:
+------------------
+-----------------------------------+------------------------+-------+
+Clock Signal                       | Clock buffer(FF name)  | Load  |
+-----------------------------------+------------------------+-------+
+clk                                | u0_u1_dllint:CLKDV     | 237   |
+clk                                | IBUFG                  | 27    |
+-----------------------------------+------------------------+-------+
+
+Timing Summary:
+---------------
+Speed Grade: -5
+
+   Minimum period: 10.269ns (Maximum Frequency: 97.380MHz)
+   Minimum input arrival time before clock: 2.857ns
+   Maximum output required time after clock: 14.205ns
+   Maximum combinational path delay: No path found
+
+=========================================================================
+Completed process "Synthesize".
+
+
+
+Started process "Translate".
+
+
+Command Line: ngdbuild -intstyle ise -dd
+c:\xesscorp\products\bitstreams\xsa\200\test_board-50mhz/_ngo -uc test_board.ucf
+-p xc2s200-fg256-5 test_board.ngc test_board.ngd 
+
+Reading NGO file
+"C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/test_board.ngc" ...
+Reading component libraries for design expansion...
+
+Annotating constraints to design from file "test_board.ucf" ...
+
+Checking timing specifications ...
+   CLKDV: TS_u0_u1_int_clkdv=PERIOD u0_u1_int_clkdv TS_clk*2.000000 HIGH
+50.000000%
+   <none> (no matching synchronous elements driven by CLKDLL outputs)
+Checking expanded design ...
+
+NGDBUILD Design Results Summary:
+  Number of errors:     0
+  Number of warnings:   0
+
+Total memory usage is 38240 kilobytes
+
+Writing NGD file "test_board.ngd" ...
+
+Writing NGDBUILD log file "test_board.bld"...
+
+NGDBUILD done.
+Completed process "Translate".
+
+
+
+Started process "Map".
+
+Using target part "2s200fg256-5".
+Removing unused or disabled logic...
+Running cover...
+Running directed packing...
+Running delay-based LUT packing...
+Running related packing...
+
+Design Summary:
+Number of errors:      0
+Number of warnings:    0
+Logic Utilization:
+  Number of Slice Flip Flops:       230 out of  4,704    4%
+  Number of 4 input LUTs:           390 out of  4,704    8%
+Logic Distribution:
+    Number of occupied Slices:                         285 out of  2,352   12%
+    Number of Slices containing only related logic:    285 out of    285  100%
+    Number of Slices containing unrelated logic:         0 out of    285    0%
+        *See NOTES below for an explanation of the effects of unrelated logic
+Total Number 4 input LUTs:          458 out of  4,704    9%
+      Number used as logic:                       390
+      Number used as a route-thru:                 68
+   Number of bonded IOBs:            49 out of    176   27%
+      IOB Flip Flops:                              33
+   Number of GCLKs:                   2 out of      4   50%
+   Number of GCLKIOBs:                2 out of      4   50%
+   Number of DLLs:                    2 out of      4   50%
+
+Total equivalent gate count for design:  19,215
+Additional JTAG gate count for IOBs:  2,448
+Peak Memory Usage:  66 MB
+
+NOTES:
+
+   Related logic is defined as being logic that shares connectivity -
+   e.g. two LUTs are "related" if they share common inputs.
+   When assembling slices, Map gives priority to combine logic that
+   is related.  Doing so results in the best timing performance.
+
+   Unrelated logic shares no connectivity.  Map will only begin
+   packing unrelated logic into a slice once 99% of the slices are
+   occupied through related logic packing.
+
+   Note that once logic distribution reaches the 99% level through
+   related logic packing, this does not mean the device is completely
+   utilized.  Unrelated logic packing will then begin, continuing until
+   all usable LUTs and FFs are occupied.  Depending on your timing
+   budget, increased levels of unrelated logic packing may adversely
+   affect the overall timing performance of your design.
+
+
+Mapping completed.
+See MAP report file "test_board_map.mrp" for details.
+Completed process "Map".
+
+Mapping Module test_board . . .
+MAP command line:
+map -intstyle ise -p xc2s200-fg256-5 -cm area -pr b -k 4 -c 100 -tx off -o test_board_map.ncd test_board.ngd test_board.pcf
+Mapping Module test_board: DONE
+
+
+
+Started process "Place & Route".
+
+
+
+
+
+Constraints file: test_board.pcf
+
+Loading device database for application Par from file "test_board_map.ncd".
+   "test_board" is an NCD, version 2.38, device xc2s200, package fg256, speed -5
+Loading device for application Par from file 'v200.nph' in environment C:/ISE.
+Device speed data version:  PRODUCTION 1.27 2004-06-25.
+
+
+Resolving physical constraints.
+Finished resolving physical constraints.
+
+Device utilization summary:
+
+   Number of External GCLKIOBs         2 out of 4      50%
+   Number of External IOBs            49 out of 176    27%
+      Number of LOCed External IOBs   49 out of 49    100%
+
+   Number of SLICEs                  285 out of 2352   12%
+
+   Number of DLLs                      2 out of 4      50%
+   Number of GCLKs                     2 out of 4      50%
+
+
+
+Overall effort level (-ol):   Standard (set by user)
+Placer effort level (-pl):    Standard (set by user)
+Placer cost table entry (-t): 1
+Router effort level (-rl):    Standard (set by user)
+
+Starting initial Timing Analysis.  REAL time: 0 secs 
+Finished initial Timing Analysis.  REAL time: 0 secs 
+
+
+Phase 1.1
+Phase 1.1 (Checksum:98a2be) REAL time: 0 secs 
+
+Phase 2.23
+Phase 2.23 (Checksum:1312cfe) REAL time: 0 secs 
+
+Phase 3.3
+Phase 3.3 (Checksum:1c9c37d) REAL time: 0 secs 
+
+Phase 4.5
+Phase 4.5 (Checksum:26259fc) REAL time: 0 secs 
+
+Phase 5.8
+............
+..
+Phase 5.8 (Checksum:a06ae4) REAL time: 2 secs 
+
+Phase 6.5
+Phase 6.5 (Checksum:39386fa) REAL time: 2 secs 
+
+Phase 7.18
+Phase 7.18 (Checksum:42c1d79) REAL time: 3 secs 
+
+Writing design to file test_board.ncd.
+
+Total REAL time to Placer completion: 3 secs 
+Total CPU time to Placer completion: 2 secs 
+
+
+Phase 1: 1964 unrouted;       REAL time: 3 secs 
+
+Phase 2: 1772 unrouted;       REAL time: 14 secs 
+
+Phase 3: 416 unrouted;       REAL time: 14 secs 
+
+Phase 4: 416 unrouted; (60464)      REAL time: 14 secs 
+
+Phase 5: 485 unrouted; (36620)      REAL time: 15 secs 
+
+Phase 6: 502 unrouted; (31082)      REAL time: 15 secs 
+
+Phase 7: 0 unrouted; (32037)      REAL time: 19 secs 
+
+Writing design to file test_board.ncd.
+
+Phase 8: 0 unrouted; (18709)      REAL time: 23 secs 
+
+Phase 9: 0 unrouted; (14753)      REAL time: 26 secs 
+
+Phase 10: 0 unrouted; (14753)      REAL time: 28 secs 
+
+Writing design to file test_board.ncd.
+
+Phase 11: 0 unrouted; (14753)      REAL time: 29 secs 
+
+Phase 12: 0 unrouted; (14753)      REAL time: 33 secs 
+
+Total REAL time to Router completion: 33 secs 
+Total CPU time to Router completion: 32 secs 
+
+Generating "par" statistics.
+
+**************************
+Generating Clock Report
+**************************
+
++----------------------------+----------+--------+------------+-------------+
+|         Clock Net          | Resource | Fanout |Net Skew(ns)|Max Delay(ns)|
++----------------------------+----------+--------+------------+-------------+
+|          u0_clk_i          |  Global  |  161   |  0.213     |  0.760      |
++----------------------------+----------+--------+------------+-------------+
+|          u0_clk_b          |Low-Skew  |   17   |  0.436     |  5.243      |
++----------------------------+----------+--------+------------+-------------+
+
+Timing Score: 14753
+
+WARNING:Par:62 - Timing constraints have not been met.
+
+Asterisk (*) preceding a constraint indicates it was not met.
+   This may be due to a setup or hold violation.
+
+--------------------------------------------------------------------------------
+  Constraint                                | Requested  | Actual     | Logic 
+                                            |            |            | Levels
+--------------------------------------------------------------------------------
+  TS_clk = PERIOD TIMEGRP "clk"  10 nS   HI | 10.000ns   | 5.707ns    | 9    
+  GH 50.000000 %                            |            |            |      
+--------------------------------------------------------------------------------
+* TS_u0_u1_int_clkdv = PERIOD TIMEGRP "u0_u | 20.000ns   | 21.912ns   | 3    
+  1_int_clkdv" TS_clk * 2.000000 HIGH  50.0 |            |            |      
+  00 %                                      |            |            |      
+--------------------------------------------------------------------------------
+
+
+1 constraint not met.
+Generating Pad Report.
+
+All signals are completely routed.
+
+Total REAL time to PAR completion: 34 secs 
+Total CPU time to PAR completion: 33 secs 
+
+Peak Memory Usage:  71 MB
+
+Placement: Completed - No errors found.
+Routing: Completed - No errors found.
+Timing: Completed - 35 errors found.
+
+Writing design to file test_board.ncd.
+
+
+PAR done.
+Completed process "Place & Route".
+
+
+Started process "Generate Post-Place & Route Static Timing".
+
+WARNING:SpeedCalc:42 - Cannot find referenced model "bel_d_min_period".  This
+   generally indicates that there is an inconsistency between versions of the
+   speed and device data files.  Please check to ensure that the XILINX
+   environment variable is set correctly, if the MYXILINX variable is set, make
+   sure that it is pointing to patch files that are compatable with the version
+   of software that the XILINX variable points to.
+WARNING:SpeedCalc:42 - Cannot find referenced model "bel_d_min_period".  This
+   generally indicates that there is an inconsistency between versions of the
+   speed and device data files.  Please check to ensure that the XILINX
+   environment variable is set correctly, if the MYXILINX variable is set, make
+   sure that it is pointing to patch files that are compatable with the version
+   of software that the XILINX variable points to.
+
+Analysis completed Mon Feb 13 15:25:10 2006
+--------------------------------------------------------------------------------
+
+Generating Report ...
+
+Completed process "Generate Post-Place & Route Static Timing".
+
+Place & Route Module test_board . . .
+PAR command line: par -w -intstyle ise -ol std -t 1 test_board_map.ncd test_board.ncd test_board.pcf
+PAR completed successfully
+
+
+
+
+Started process "Generate Programming File".
+
+Completed process "Generate Programming File".
+
+
+
+Project Navigator Auto-Make Log File
+-------------------------------------
+
+
+
+
+Started process "Synthesize".
+
+
+=========================================================================
+*                          HDL Compilation                              *
+=========================================================================
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../../XS_LIB/common.vhd in Library work.
+Architecture common of Entity common is up to date.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../../XS_LIB/sdramcntl.vhd in Library work.
+Architecture arch of Entity sdramcntl is up to date.
+Architecture arch of Entity dualport is up to date.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../../XS_LIB/randgen.vhd in Library work.
+Architecture arch of Entity randgen is up to date.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../../XS_LIB/memtest.vhd in Library work.
+Architecture arch of Entity memtest is up to date.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../XSA_LIB/xsasdramcntl.vhd in Library work.
+Architecture arch of Entity xsasdramcntl is up to date.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../XSA_LIB/test_board_core.vhd in Library work.
+Entity <test_board_core> (Architecture <arch>) compiled.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/test_board.vhd in Library work.
+Entity <test_board> (Architecture <arch>) compiled.
+
+=========================================================================
+*                            HDL Analysis                               *
+=========================================================================
+Analyzing Entity <test_board> (Architecture <arch>).
+Entity <test_board> analyzed. Unit <test_board> generated.
+
+Analyzing generic Entity <test_board_core> (Architecture <arch>).
+	FREQ = 20000
+	CLK_DIV = 2.000000
+	PIPE_EN = <u>1
+	DATA_WIDTH = 16
+	SADDR_WIDTH = 13
+	NROWS = 8192
+	NCOLS = 512
+	BEG_ADDR = 0
+	END_ADDR = 16777215
+	BEG_TEST = 0
+	END_TEST = 16777215
+    Set user-defined property "INIT =  1" for signal <rst_i>.
+WARNING:Xst:753 - C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../XSA_LIB/test_board_core.vhd line 245: Unconnected output port 'clk2x' of component 'XSASDRAMCntl'.
+WARNING:Xst:753 - C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../XSA_LIB/test_board_core.vhd line 245: Unconnected output port 'status' of component 'XSASDRAMCntl'.
+Entity <test_board_core> analyzed. Unit <test_board_core> generated.
+
+Analyzing generic Entity <memTest> (Architecture <arch>).
+	PIPE_EN = <u>1
+	DATA_WIDTH = 16
+	ADDR_WIDTH = 24
+	BEG_TEST = 0
+	END_TEST = 16777215
+Entity <memTest> analyzed. Unit <memTest> generated.
+
+Analyzing generic Entity <randGen> (Architecture <arch>).
+	DATA_WIDTH = 16
+Entity <randGen> analyzed. Unit <randGen> generated.
+
+Analyzing generic Entity <XSASDRAMCntl> (Architecture <arch>).
+	FREQ = 20000
+	CLK_DIV = 2.000000
+	PIPE_EN = <u>1
+	MAX_NOP = 10000
+	MULTIPLE_ACTIVE_ROWS = <u>1
+	DATA_WIDTH = 16
+	NROWS = 8192
+	NCOLS = 512
+	HADDR_WIDTH = 24
+	SADDR_WIDTH = 13
+Entity <XSASDRAMCntl> analyzed. Unit <XSASDRAMCntl> generated.
+
+Analyzing generic Entity <sdramCntl> (Architecture <arch>).
+	FREQ = 20000
+	IN_PHASE = <u>0
+	PIPE_EN = <u>1
+	MAX_NOP = 10000
+	MULTIPLE_ACTIVE_ROWS = <u>1
+	DATA_WIDTH = 16
+	NROWS = 8192
+	NCOLS = 512
+	HADDR_WIDTH = 24
+	SADDR_WIDTH = 13
+WARNING:Xst:819 - C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../../XS_LIB/sdramcntl.vhd line 333: The following signals are missing in the process sensitivity list:
+   activeBank_r, ba_r.
+Entity <sdramCntl> analyzed. Unit <sdramCntl> generated.
+
+
+=========================================================================
+*                           HDL Synthesis                               *
+=========================================================================
+
+Synthesizing Unit <sdramCntl>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../../XS_LIB/sdramcntl.vhd.
+WARNING:Xst:646 - Signal <col<12>> is assigned but never used.
+    Found finite state machine <FSM_0> for signal <state_r>.
+    -----------------------------------------------------------------------
+    | States             | 8                                              |
+    | Transitions        | 30                                             |
+    | Inputs             | 10                                             |
+    | Outputs            | 8                                              |
+    | Clock              | clk (rising_edge)                              |
+    | Clock enable       | $n0154 (negative)                              |
+    | Reset              | rst (positive)                                 |
+    | Reset type         | asynchronous                                   |
+    | Reset State        | initwait                                       |
+    | Power Up State     | initwait                                       |
+    | Encoding           | automatic                                      |
+    | Implementation     | LUT                                            |
+    -----------------------------------------------------------------------
+    Found 1-bit 4-to-1 multiplexer for signal <$n0001> created at line 422.
+    Found 13-bit 4-to-1 multiplexer for signal <$n0153> created at line 422.
+    Found 2-bit comparator equal for signal <$n0157> created at line 603.
+    Found 14-bit subtractor for signal <$n0177>.
+    Found 14-bit adder for signal <$n0180> created at line 484.
+    Found 14-bit adder for signal <$n0196> created at line 439.
+    Found 8-bit subtractor for signal <$n0198> created at line 479.
+    Found 12-bit subtractor for signal <$n0203> created at line 490.
+    Found 13-bit comparator not equal for signal <$n0204> created at line 422.
+    Found 1-bit register for signal <activeBank_r>.
+    Found 4-bit register for signal <activeFlag_r>.
+    Found 52-bit register for signal <activeRow_r>.
+    Found 2-bit register for signal <ba_r>.
+    Found 1-bit register for signal <cke_r>.
+    Found 6-bit register for signal <cmd_r>.
+    Found 16-bit register for signal <hDOut_r>.
+    Found 16-bit register for signal <hDOutOppPhase_r>.
+    Found 14-bit register for signal <nopCntr_r>.
+    Found 1-bit register for signal <opBegun_r>.
+    Found 1-bit register for signal <rasTimer_r<0>>.
+    Found 5-bit register for signal <rdPipeline_r>.
+    Found 8-bit register for signal <refTimer_r>.
+    Found 14-bit register for signal <rfshCntr_r>.
+    Found 13-bit register for signal <sAddr_r>.
+    Found 16-bit register for signal <sData_r>.
+    Found 1-bit register for signal <sDataDir_r>.
+    Found 12-bit register for signal <timer_r>.
+    Found 1-bit register for signal <wrPipeline_r<0>>.
+    Found 1-bit register for signal <wrTimer_r<0>>.
+    Found 61 1-bit 2-to-1 multiplexers.
+    Summary:
+	inferred   1 Finite State Machine(s).
+	inferred 171 D-type flip-flop(s).
+	inferred   5 Adder/Subtracter(s).
+	inferred   2 Comparator(s).
+	inferred  78 Multiplexer(s).
+Unit <sdramCntl> synthesized.
+
+
+Synthesizing Unit <randGen>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../../XS_LIB/randgen.vhd.
+    Found 1-bit xor4 for signal <new_bit>.
+    Found 16-bit register for signal <r_r>.
+    Summary:
+	inferred  16 D-type flip-flop(s).
+	inferred   1 Xor(s).
+Unit <randGen> synthesized.
+
+
+Synthesizing Unit <XSASDRAMCntl>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../XSA_LIB/xsasdramcntl.vhd.
+WARNING:Xst:647 - Input <sclkfb> is never used.
+WARNING:Xst:1780 - Signal <int_clkdv> is never used or assigned.
+WARNING:Xst:1780 - Signal <dllext_rst_n> is never used or assigned.
+WARNING:Xst:1780 - Signal <sclkfb_b> is never used or assigned.
+WARNING:Xst:1780 - Signal <int_clk2x_b> is never used or assigned.
+WARNING:Xst:1780 - Signal <ext_lock> is never used or assigned.
+WARNING:Xst:1780 - Signal <int_clk1x_b> is never used or assigned.
+WARNING:Xst:1780 - Signal <int_clk1x> is never used or assigned.
+WARNING:Xst:1780 - Signal <int_clk2x> is never used or assigned.
+WARNING:Xst:1780 - Signal <int_clkdv_b> is never used or assigned.
+WARNING:Xst:1780 - Signal <ext_clk1x> is never used or assigned.
+WARNING:Xst:1780 - Signal <dllext_rst> is never used or assigned.
+WARNING:Xst:1780 - Signal <int_lock> is never used or assigned.
+    Found 16-bit tristate buffer for signal <sData>.
+    Summary:
+	inferred  16 Tristate(s).
+Unit <XSASDRAMCntl> synthesized.
+
+
+Synthesizing Unit <memTest>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../../XS_LIB/memtest.vhd.
+    Found finite state machine <FSM_1> for signal <state_r>.
+    -----------------------------------------------------------------------
+    | States             | 5                                              |
+    | Transitions        | 10                                             |
+    | Inputs             | 5                                              |
+    | Outputs            | 6                                              |
+    | Clock              | clk (rising_edge)                              |
+    | Reset              | rst (positive)                                 |
+    | Reset type         | synchronous                                    |
+    | Reset State        | init                                           |
+    | Power Up State     | init                                           |
+    | Encoding           | automatic                                      |
+    | Implementation     | LUT                                            |
+    -----------------------------------------------------------------------
+    Found 24-bit adder for signal <$n0029> created at line 151.
+    Found 16-bit comparator not equal for signal <$n0032> created at line 204.
+    Found 24-bit register for signal <addr_r>.
+    Found 1-bit register for signal <err_r>.
+    Summary:
+	inferred   1 Finite State Machine(s).
+	inferred  25 D-type flip-flop(s).
+	inferred   1 Adder/Subtracter(s).
+	inferred   1 Comparator(s).
+Unit <memTest> synthesized.
+
+
+Synthesizing Unit <test_board_core>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../XSA_LIB/test_board_core.vhd.
+WARNING:Xst:646 - Signal <begun> is assigned but never used.
+WARNING:Xst:1780 - Signal <dataOut> is never used or assigned.
+WARNING:Xst:1780 - Signal <dataIn> is never used or assigned.
+WARNING:Xst:646 - Signal <done> is assigned but never used.
+    Found 23-bit up counter for signal <divCnt>.
+    Found 1-bit register for signal <rst_i>.
+    Found 2-bit register for signal <syncButton>.
+    Summary:
+	inferred   1 Counter(s).
+	inferred   3 D-type flip-flop(s).
+Unit <test_board_core> synthesized.
+
+
+Synthesizing Unit <test_board>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/test_board.vhd.
+WARNING:Xst:1306 - Output <pps<5:3>> is never assigned.
+Unit <test_board> synthesized.
+
+INFO:Xst:1767 - HDL ADVISOR - Resource sharing has identified that some arithmetic operations in this design can share the same physical resources for reduced device utilization. For improved clock frequency you may try to disable resource sharing.
+
+=========================================================================
+*                       Advanced HDL Synthesis                          *
+=========================================================================
+
+Advanced RAM inference ...
+Advanced multiplier inference ...
+Advanced Registered AddSub inference ...
+Selecting encoding for FSM_1 ...
+Optimizing FSM <FSM_1> on signal <state_r> with one-hot encoding.
+Selecting encoding for FSM_0 ...
+Optimizing FSM <FSM_0> on signal <state_r> with one-hot encoding.
+Dynamic shift register inference ...
+
+=========================================================================
+HDL Synthesis Report
+
+Macro Statistics
+# FSMs                             : 2
+# Adders/Subtractors               : 6
+ 24-bit adder                      : 1
+ 12-bit subtractor                 : 1
+ 8-bit subtractor                  : 1
+ 14-bit adder                      : 2
+ 14-bit subtractor                 : 1
+# Counters                         : 1
+ 23-bit up counter                 : 1
+# Registers                        : 42
+ 1-bit register                    : 24
+ 24-bit register                   : 1
+ 16-bit register                   : 4
+ 13-bit register                   : 5
+ 2-bit register                    : 1
+ 5-bit register                    : 1
+ 14-bit register                   : 2
+ 12-bit register                   : 1
+ 4-bit register                    : 1
+ 6-bit register                    : 1
+ 8-bit register                    : 1
+# Comparators                      : 3
+ 16-bit comparator not equal       : 1
+ 13-bit comparator not equal       : 1
+ 2-bit comparator equal            : 1
+# Multiplexers                     : 8
+ 1-bit 2-to-1 multiplexer          : 4
+ 1-bit 4-to-1 multiplexer          : 1
+ 14-bit 2-to-1 multiplexer         : 2
+ 13-bit 4-to-1 multiplexer         : 1
+# Tristates                        : 1
+ 16-bit tristate buffer            : 1
+# Xors                             : 1
+ 1-bit xor4                        : 1
+
+=========================================================================
+
+=========================================================================
+*                         Low Level Synthesis                           *
+=========================================================================
+WARNING:Xst:1426 - The value init of the FF/Latch activeBank_r hinder the constant cleaning in the block sdramCntl.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1291 - FF/Latch <wrPipeline_r_0> is unconnected in block <u1>.
+WARNING:Xst:1291 - FF/Latch <opBegun_r> is unconnected in block <u1>.
+WARNING:Xst:1710 - FF/Latch  <cmd_r_5> (without init value) is constant in block <sdramCntl>.
+WARNING:Xst:1291 - FF/Latch <u0_divCnt_22> is unconnected in block <test_board>.
+WARNING:Xst:1291 - FF/Latch <u0_divCnt_17> is unconnected in block <test_board>.
+WARNING:Xst:1291 - FF/Latch <u0_divCnt_18> is unconnected in block <test_board>.
+WARNING:Xst:1291 - FF/Latch <u0_divCnt_19> is unconnected in block <test_board>.
+WARNING:Xst:1291 - FF/Latch <u0_divCnt_20> is unconnected in block <test_board>.
+WARNING:Xst:1291 - FF/Latch <u0_divCnt_21> is unconnected in block <test_board>.
+
+Optimizing unit <test_board> ...
+
+Optimizing unit <randGen> ...
+
+Optimizing unit <memTest> ...
+
+Optimizing unit <sdramCntl> ...
+Loading device for application Xst from file 'v200.nph' in environment C:/ISE.
+
+Mapping all equations...
+WARNING:Xst:1291 - FF/Latch <u0_u1_u1_wrPipeline_r_0> is unconnected in block <test_board>.
+WARNING:Xst:1291 - FF/Latch <u0_u1_u1_opBegun_r> is unconnected in block <test_board>.
+Building and optimizing final netlist ...
+Register u0_u1_u1_sDataDir_r equivalent to u0_u1_u1_wrTimer_r_0 has been removed
+Register u0_u1_u1_cmd_r_1 equivalent to u0_u1_u1_cmd_r_0 has been removed
+Found area constraint ratio of 100 (+ 5) on block test_board, actual ratio is 11.
+FlipFlop u0_u1_u1_rdPipeline_r_1 has been replicated 1 time(s)
+FlipFlop u0_fast_memtest_addr_r_23 has been replicated 2 time(s)
+FlipFlop u0_fast_memtest_addr_r_22 has been replicated 1 time(s)
+FlipFlop u0_rst_i has been replicated 7 time(s)
+FlipFlop u0_fast_memtest_state_r_FFd3 has been replicated 1 time(s)
+FlipFlop u0_fast_memtest_state_r_FFd4 has been replicated 1 time(s)
+FlipFlop u0_u1_u1_state_r_FFd4 has been replicated 1 time(s)
+FlipFlop u0_fast_memtest_state_r_FFd4 has been replicated 1 time(s)
+
+=========================================================================
+*                            Final Report                               *
+=========================================================================
+
+Device utilization summary:
+---------------------------
+
+Selected Device : 2s200fg256-5 
+
+ Number of Slices:                     278  out of   2352    11%  
+ Number of Slice Flip Flops:           269  out of   4704     5%  
+ Number of 4 input LUTs:               453  out of   4704     9%  
+ Number of bonded IOBs:                 50  out of    180    27%  
+
+
+=========================================================================
+TIMING REPORT
+
+
+Clock Information:
+------------------
+-----------------------------------+------------------------+-------+
+Clock Signal                       | Clock buffer(FF name)  | Load  |
+-----------------------------------+------------------------+-------+
+clk                                | IBUFG                  | 269   |
+-----------------------------------+------------------------+-------+
+
+Timing Summary:
+---------------
+Speed Grade: -5
+
+   Minimum period: 16.219ns (Maximum Frequency: 61.656MHz)
+   Minimum input arrival time before clock: 2.857ns
+   Maximum output required time after clock: 14.155ns
+   Maximum combinational path delay: 15.757ns
+
+=========================================================================
+Completed process "Synthesize".
+
+
+
+Started process "Translate".
+
+
+Command Line: ngdbuild -intstyle ise -dd
+c:\xesscorp\products\bitstreams\xsa\200\test_board-50mhz/_ngo -uc test_board.ucf
+-p xc2s200-fg256-5 test_board.ngc test_board.ngd 
+
+Reading NGO file
+"C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/test_board.ngc" ...
+Reading component libraries for design expansion...
+
+Annotating constraints to design from file "test_board.ucf" ...
+ERROR:NgdBuild:755 - Line 10 in 'test_board.ucf': Could not find net(s) 'sclkfb'
+   in the design.  To suppress this error specify the correct net name or remove
+   the constraint.  The 'Ignore I\O constraints on Invalid Object Names'
+   property can also be set ( -aul switch for command line users).
+ERROR:Parsers:11 - Encountered unrecognized constraint while parsing.
+ERROR:NgdBuild:19 - Errors found while parsing constraint file "test_board.ucf".
+
+Writing NGDBUILD log file "test_board.bld"...
+ERROR: NGDBUILD failed
+Process "Translate" did not complete.
+
+
+Project Navigator Auto-Make Log File
+-------------------------------------
+
+
+Started process "Translate".
+
+
+Command Line: ngdbuild -intstyle ise -dd
+c:\xesscorp\products\bitstreams\xsa\200\test_board-50mhz/_ngo -uc test_board.ucf
+-p xc2s200-fg256-5 test_board.ngc test_board.ngd 
+
+Reading NGO file
+"C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/test_board.ngc" ...
+Reading component libraries for design expansion...
+
+Annotating constraints to design from file "test_board.ucf" ...
+
+Checking timing specifications ...
+WARNING:XdmHelpers:662 - Period specification "TS_clk" references the TNM group
+   "clk", which contains both pads and synchronous elements. The timing analyzer
+   will ignore the pads for this specification. You might want to use a
+   qualifier (e.g. "FFS") on the TNM property to remove the pads from this
+   group.
+Checking expanded design ...
+
+NGDBUILD Design Results Summary:
+  Number of errors:     0
+  Number of warnings:   1
+
+Total memory usage is 39264 kilobytes
+
+Writing NGD file "test_board.ngd" ...
+
+Writing NGDBUILD log file "test_board.bld"...
+
+NGDBUILD done.
+Completed process "Translate".
+
+
+
+Started process "Map".
+
+Using target part "2s200fg256-5".
+Removing unused or disabled logic...
+Running cover...
+Running directed packing...
+Running delay-based LUT packing...
+Running related packing...
+
+Design Summary:
+Number of errors:      0
+Number of warnings:    3
+Logic Utilization:
+  Number of Slice Flip Flops:       236 out of  4,704    5%
+  Number of 4 input LUTs:           383 out of  4,704    8%
+Logic Distribution:
+    Number of occupied Slices:                         294 out of  2,352   12%
+    Number of Slices containing only related logic:    294 out of    294  100%
+    Number of Slices containing unrelated logic:         0 out of    294    0%
+        *See NOTES below for an explanation of the effects of unrelated logic
+Total Number 4 input LUTs:          451 out of  4,704    9%
+      Number used as logic:                       383
+      Number used as a route-thru:                 68
+   Number of bonded IOBs:            49 out of    176   27%
+      IOB Flip Flops:                              33
+   Number of GCLKIOBs:                1 out of      4   25%
+
+Total equivalent gate count for design:  5,173
+Additional JTAG gate count for IOBs:  2,400
+Peak Memory Usage:  66 MB
+
+NOTES:
+
+   Related logic is defined as being logic that shares connectivity -
+   e.g. two LUTs are "related" if they share common inputs.
+   When assembling slices, Map gives priority to combine logic that
+   is related.  Doing so results in the best timing performance.
+
+   Unrelated logic shares no connectivity.  Map will only begin
+   packing unrelated logic into a slice once 99% of the slices are
+   occupied through related logic packing.
+
+   Note that once logic distribution reaches the 99% level through
+   related logic packing, this does not mean the device is completely
+   utilized.  Unrelated logic packing will then begin, continuing until
+   all usable LUTs and FFs are occupied.  Depending on your timing
+   budget, increased levels of unrelated logic packing may adversely
+   affect the overall timing performance of your design.
+
+
+Mapping completed.
+See MAP report file "test_board_map.mrp" for details.
+Completed process "Map".
+
+Mapping Module test_board . . .
+MAP command line:
+map -intstyle ise -p xc2s200-fg256-5 -cm area -pr b -k 4 -c 100 -tx off -o test_board_map.ncd test_board.ngd test_board.pcf
+Mapping Module test_board: DONE
+
+
+
+Started process "Place & Route".
+
+
+
+
+
+Constraints file: test_board.pcf
+
+Loading device database for application Par from file "test_board_map.ncd".
+   "test_board" is an NCD, version 2.38, device xc2s200, package fg256, speed -5
+Loading device for application Par from file 'v200.nph' in environment C:/ISE.
+Device speed data version:  PRODUCTION 1.27 2004-06-25.
+
+
+Resolving physical constraints.
+Finished resolving physical constraints.
+
+Device utilization summary:
+
+   Number of External GCLKIOBs         1 out of 4      25%
+   Number of External IOBs            49 out of 176    27%
+      Number of LOCed External IOBs   49 out of 49    100%
+
+   Number of SLICEs                  294 out of 2352   12%
+
+
+
+
+Overall effort level (-ol):   Standard (set by user)
+Placer effort level (-pl):    Standard (set by user)
+Placer cost table entry (-t): 1
+Router effort level (-rl):    Standard (set by user)
+
+Starting initial Timing Analysis.  REAL time: 0 secs 
+Finished initial Timing Analysis.  REAL time: 0 secs 
+
+
+Phase 1.1
+Phase 1.1 (Checksum:989fa7) REAL time: 0 secs 
+
+Phase 2.23
+Phase 2.23 (Checksum:1312cfe) REAL time: 0 secs 
+
+Phase 3.3
+Phase 3.3 (Checksum:1c9c37d) REAL time: 0 secs 
+
+Phase 4.5
+Phase 4.5 (Checksum:26259fc) REAL time: 0 secs 
+
+Phase 5.8
+.........
+...
+Phase 5.8 (Checksum:aa8e16) REAL time: 2 secs 
+
+Phase 6.5
+Phase 6.5 (Checksum:39386fa) REAL time: 2 secs 
+
+Phase 7.18
+Phase 7.18 (Checksum:42c1d79) REAL time: 3 secs 
+
+Writing design to file test_board.ncd.
+
+Total REAL time to Placer completion: 3 secs 
+Total CPU time to Placer completion: 3 secs 
+
+
+Phase 1: 1964 unrouted;       REAL time: 3 secs 
+
+Phase 2: 1844 unrouted;       REAL time: 14 secs 
+
+Phase 3: 447 unrouted;       REAL time: 14 secs 
+
+Phase 4: 447 unrouted; (1637991)      REAL time: 14 secs 
+
+Phase 5: 1393 unrouted; (1351214)      REAL time: 19 secs 
+
+Phase 6: 1427 unrouted; (1353881)      REAL time: 20 secs 
+
+WARNING:Route - There is atleast one timing constraint that cannot be met.
+   Router will continue and provide a valid routed design. Consequentially, due
+   to timing constraints, the router will not be able to achieve an overall
+   optimum solution
+Phase 7: 0 unrouted; (1353881)      REAL time: 23 secs 
+
+Total REAL time to Router completion: 24 secs 
+Total CPU time to Router completion: 23 secs 
+
+Generating "par" statistics.
+
+**************************
+Generating Clock Report
+**************************
+
++----------------------------+----------+--------+------------+-------------+
+|         Clock Net          | Resource | Fanout |Net Skew(ns)|Max Delay(ns)|
++----------------------------+----------+--------+------------+-------------+
+|          u0_clk_b          |Low-Skew  |   58   |  0.936     |  5.051      |
++----------------------------+----------+--------+------------+-------------+
+|     u0_u1_clkin_2          |   Local  |   59   |  3.038     |  4.982      |
++----------------------------+----------+--------+------------+-------------+
+|     u0_u1_clkin_1          |   Local  |   63   |  3.169     |  5.189      |
++----------------------------+----------+--------+------------+-------------+
+
+Timing Score: 1665083
+
+WARNING:Par:62 - Timing constraints have not been met.
+
+Asterisk (*) preceding a constraint indicates it was not met.
+   This may be due to a setup or hold violation.
+
+--------------------------------------------------------------------------------
+  Constraint                                | Requested  | Actual     | Logic 
+                                            |            |            | Levels
+--------------------------------------------------------------------------------
+* TS_clk = PERIOD TIMEGRP "clk"  10 nS   HI | 10.000ns   | 22.356ns   | 6    
+  GH 50.000000 %                            |            |            |      
+--------------------------------------------------------------------------------
+
+
+1 constraint not met.
+Generating Pad Report.
+
+All signals are completely routed.
+
+Total REAL time to PAR completion: 24 secs 
+Total CPU time to PAR completion: 24 secs 
+
+Peak Memory Usage:  72 MB
+
+Placement: Completed - No errors found.
+Routing: Completed - No errors found.
+Timing: Completed - 341 errors found.
+
+Writing design to file test_board.ncd.
+
+
+PAR done.
+Completed process "Place & Route".
+
+
+Started process "Generate Post-Place & Route Static Timing".
+
+WARNING:SpeedCalc:42 - Cannot find referenced model "bel_d_min_period".  This
+   generally indicates that there is an inconsistency between versions of the
+   speed and device data files.  Please check to ensure that the XILINX
+   environment variable is set correctly, if the MYXILINX variable is set, make
+   sure that it is pointing to patch files that are compatable with the version
+   of software that the XILINX variable points to.
+WARNING:SpeedCalc:42 - Cannot find referenced model "bel_d_min_period".  This
+   generally indicates that there is an inconsistency between versions of the
+   speed and device data files.  Please check to ensure that the XILINX
+   environment variable is set correctly, if the MYXILINX variable is set, make
+   sure that it is pointing to patch files that are compatable with the version
+   of software that the XILINX variable points to.
+
+Analysis completed Mon Feb 13 15:35:55 2006
+--------------------------------------------------------------------------------
+
+Generating Report ...
+
+Completed process "Generate Post-Place & Route Static Timing".
+
+Place & Route Module test_board . . .
+PAR command line: par -w -intstyle ise -ol std -t 1 test_board_map.ncd test_board.ncd test_board.pcf
+PAR completed successfully
+
+
+
+
+Started process "Generate Programming File".
+
+WARNING:DesignRules:372 - Netcheck: Gated clock. Clock net u0_u1_clkin_2 is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:DesignRules:372 - Netcheck: Gated clock. Clock net u0_u1_clkin_1 is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+Completed process "Generate Programming File".
+
+
+
+Project Navigator Auto-Make Log File
+-------------------------------------
+
+
+
+
+Started process "Synthesize".
+
+
+=========================================================================
+*                          HDL Compilation                              *
+=========================================================================
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../../XS_LIB/common.vhd in Library work.
+Architecture common of Entity common is up to date.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../../XS_LIB/sdramcntl.vhd in Library work.
+Architecture arch of Entity sdramcntl is up to date.
+Architecture arch of Entity dualport is up to date.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../../XS_LIB/randgen.vhd in Library work.
+Architecture arch of Entity randgen is up to date.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../../XS_LIB/memtest.vhd in Library work.
+Architecture arch of Entity memtest is up to date.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../XSA_LIB/xsasdramcntl.vhd in Library work.
+Architecture arch of Entity xsasdramcntl is up to date.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../XSA_LIB/test_board_core.vhd in Library work.
+Architecture arch of Entity test_board_core is up to date.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/test_board.vhd in Library work.
+Entity <test_board> (Architecture <arch>) compiled.
+
+=========================================================================
+*                            HDL Analysis                               *
+=========================================================================
+Analyzing Entity <test_board> (Architecture <arch>).
+Entity <test_board> analyzed. Unit <test_board> generated.
+
+Analyzing generic Entity <test_board_core> (Architecture <arch>).
+	FREQ = 100000
+	CLK_DIV = 8.000000
+	PIPE_EN = <u>1
+	DATA_WIDTH = 16
+	SADDR_WIDTH = 13
+	NROWS = 8192
+	NCOLS = 512
+	BEG_ADDR = 0
+	END_ADDR = 16777215
+	BEG_TEST = 0
+	END_TEST = 16777215
+    Set user-defined property "INIT =  1" for signal <rst_i>.
+WARNING:Xst:753 - C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../XSA_LIB/test_board_core.vhd line 245: Unconnected output port 'clk2x' of component 'XSASDRAMCntl'.
+WARNING:Xst:753 - C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../XSA_LIB/test_board_core.vhd line 245: Unconnected output port 'status' of component 'XSASDRAMCntl'.
+Entity <test_board_core> analyzed. Unit <test_board_core> generated.
+
+Analyzing generic Entity <memTest> (Architecture <arch>).
+	PIPE_EN = <u>1
+	DATA_WIDTH = 16
+	ADDR_WIDTH = 24
+	BEG_TEST = 0
+	END_TEST = 16777215
+Entity <memTest> analyzed. Unit <memTest> generated.
+
+Analyzing generic Entity <randGen> (Architecture <arch>).
+	DATA_WIDTH = 16
+Entity <randGen> analyzed. Unit <randGen> generated.
+
+Analyzing generic Entity <XSASDRAMCntl> (Architecture <arch>).
+	FREQ = 100000
+	CLK_DIV = 8.000000
+	PIPE_EN = <u>1
+	MAX_NOP = 10000
+	MULTIPLE_ACTIVE_ROWS = <u>1
+	DATA_WIDTH = 16
+	NROWS = 8192
+	NCOLS = 512
+	HADDR_WIDTH = 24
+	SADDR_WIDTH = 13
+Entity <XSASDRAMCntl> analyzed. Unit <XSASDRAMCntl> generated.
+
+Analyzing generic Entity <sdramCntl> (Architecture <arch>).
+	FREQ = 100000
+	IN_PHASE = <u>0
+	PIPE_EN = <u>1
+	MAX_NOP = 10000
+	MULTIPLE_ACTIVE_ROWS = <u>1
+	DATA_WIDTH = 16
+	NROWS = 8192
+	NCOLS = 512
+	HADDR_WIDTH = 24
+	SADDR_WIDTH = 13
+WARNING:Xst:819 - C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../../XS_LIB/sdramcntl.vhd line 333: The following signals are missing in the process sensitivity list:
+   activeBank_r, ba_r.
+Entity <sdramCntl> analyzed. Unit <sdramCntl> generated.
+
+
+=========================================================================
+*                           HDL Synthesis                               *
+=========================================================================
+
+Synthesizing Unit <sdramCntl>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../../XS_LIB/sdramcntl.vhd.
+WARNING:Xst:646 - Signal <col<12>> is assigned but never used.
+    Found finite state machine <FSM_0> for signal <state_r>.
+    -----------------------------------------------------------------------
+    | States             | 8                                              |
+    | Transitions        | 30                                             |
+    | Inputs             | 10                                             |
+    | Outputs            | 8                                              |
+    | Clock              | clk (rising_edge)                              |
+    | Clock enable       | $n0154 (negative)                              |
+    | Reset              | rst (positive)                                 |
+    | Reset type         | asynchronous                                   |
+    | Reset State        | initwait                                       |
+    | Power Up State     | initwait                                       |
+    | Encoding           | automatic                                      |
+    | Implementation     | LUT                                            |
+    -----------------------------------------------------------------------
+    Found 1-bit 4-to-1 multiplexer for signal <$n0001> created at line 422.
+    Found 13-bit 4-to-1 multiplexer for signal <$n0153> created at line 422.
+    Found 2-bit comparator equal for signal <$n0157> created at line 603.
+    Found 14-bit subtractor for signal <$n0176>.
+    Found 14-bit adder for signal <$n0181> created at line 484.
+    Found 14-bit adder for signal <$n0197> created at line 439.
+    Found 10-bit subtractor for signal <$n0199> created at line 479.
+    Found 3-bit subtractor for signal <$n0200> created at line 455.
+    Found 2-bit subtractor for signal <$n0205> created at line 468.
+    Found 15-bit subtractor for signal <$n0206> created at line 490.
+    Found 13-bit comparator not equal for signal <$n0207> created at line 422.
+    Found 1-bit register for signal <activeBank_r>.
+    Found 4-bit register for signal <activeFlag_r>.
+    Found 52-bit register for signal <activeRow_r>.
+    Found 2-bit register for signal <ba_r>.
+    Found 1-bit register for signal <cke_r>.
+    Found 6-bit register for signal <cmd_r>.
+    Found 16-bit register for signal <hDOut_r>.
+    Found 16-bit register for signal <hDOutOppPhase_r>.
+    Found 14-bit register for signal <nopCntr_r>.
+    Found 1-bit register for signal <opBegun_r>.
+    Found 3-bit register for signal <rasTimer_r>.
+    Found 5-bit register for signal <rdPipeline_r>.
+    Found 10-bit register for signal <refTimer_r>.
+    Found 14-bit register for signal <rfshCntr_r>.
+    Found 13-bit register for signal <sAddr_r>.
+    Found 16-bit register for signal <sData_r>.
+    Found 1-bit register for signal <sDataDir_r>.
+    Found 15-bit register for signal <timer_r>.
+    Found 1-bit register for signal <wrPipeline_r<0>>.
+    Found 2-bit register for signal <wrTimer_r>.
+    Found 61 1-bit 2-to-1 multiplexers.
+    Summary:
+	inferred   1 Finite State Machine(s).
+	inferred 177 D-type flip-flop(s).
+	inferred   7 Adder/Subtracter(s).
+	inferred   2 Comparator(s).
+	inferred  78 Multiplexer(s).
+Unit <sdramCntl> synthesized.
+
+
+Synthesizing Unit <randGen>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../../XS_LIB/randgen.vhd.
+    Found 1-bit xor4 for signal <new_bit>.
+    Found 16-bit register for signal <r_r>.
+    Summary:
+	inferred  16 D-type flip-flop(s).
+	inferred   1 Xor(s).
+Unit <randGen> synthesized.
+
+
+Synthesizing Unit <XSASDRAMCntl>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../XSA_LIB/xsasdramcntl.vhd.
+WARNING:Xst:647 - Input <sclkfb> is never used.
+WARNING:Xst:1780 - Signal <int_clkdv> is never used or assigned.
+WARNING:Xst:1780 - Signal <dllext_rst_n> is never used or assigned.
+WARNING:Xst:1780 - Signal <sclkfb_b> is never used or assigned.
+WARNING:Xst:1780 - Signal <int_clk2x_b> is never used or assigned.
+WARNING:Xst:1780 - Signal <ext_lock> is never used or assigned.
+WARNING:Xst:1780 - Signal <int_clk1x_b> is never used or assigned.
+WARNING:Xst:1780 - Signal <int_clk1x> is never used or assigned.
+WARNING:Xst:1780 - Signal <int_clk2x> is never used or assigned.
+WARNING:Xst:1780 - Signal <int_clkdv_b> is never used or assigned.
+WARNING:Xst:1780 - Signal <ext_clk1x> is never used or assigned.
+WARNING:Xst:1780 - Signal <dllext_rst> is never used or assigned.
+WARNING:Xst:1780 - Signal <int_lock> is never used or assigned.
+    Found 16-bit tristate buffer for signal <sData>.
+    Summary:
+	inferred  16 Tristate(s).
+Unit <XSASDRAMCntl> synthesized.
+
+
+Synthesizing Unit <memTest>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../../XS_LIB/memtest.vhd.
+    Found finite state machine <FSM_1> for signal <state_r>.
+    -----------------------------------------------------------------------
+    | States             | 5                                              |
+    | Transitions        | 10                                             |
+    | Inputs             | 5                                              |
+    | Outputs            | 6                                              |
+    | Clock              | clk (rising_edge)                              |
+    | Reset              | rst (positive)                                 |
+    | Reset type         | synchronous                                    |
+    | Reset State        | init                                           |
+    | Power Up State     | init                                           |
+    | Encoding           | automatic                                      |
+    | Implementation     | LUT                                            |
+    -----------------------------------------------------------------------
+    Found 24-bit adder for signal <$n0029> created at line 151.
+    Found 16-bit comparator not equal for signal <$n0032> created at line 204.
+    Found 24-bit register for signal <addr_r>.
+    Found 1-bit register for signal <err_r>.
+    Summary:
+	inferred   1 Finite State Machine(s).
+	inferred  25 D-type flip-flop(s).
+	inferred   1 Adder/Subtracter(s).
+	inferred   1 Comparator(s).
+Unit <memTest> synthesized.
+
+
+Synthesizing Unit <test_board_core>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../XSA_LIB/test_board_core.vhd.
+WARNING:Xst:646 - Signal <begun> is assigned but never used.
+WARNING:Xst:1780 - Signal <dataOut> is never used or assigned.
+WARNING:Xst:1780 - Signal <dataIn> is never used or assigned.
+WARNING:Xst:646 - Signal <done> is assigned but never used.
+    Found 23-bit up counter for signal <divCnt>.
+    Found 1-bit register for signal <rst_i>.
+    Found 2-bit register for signal <syncButton>.
+    Summary:
+	inferred   1 Counter(s).
+	inferred   3 D-type flip-flop(s).
+Unit <test_board_core> synthesized.
+
+
+Synthesizing Unit <test_board>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/test_board.vhd.
+WARNING:Xst:1306 - Output <pps<5:3>> is never assigned.
+Unit <test_board> synthesized.
+
+INFO:Xst:1767 - HDL ADVISOR - Resource sharing has identified that some arithmetic operations in this design can share the same physical resources for reduced device utilization. For improved clock frequency you may try to disable resource sharing.
+
+=========================================================================
+*                       Advanced HDL Synthesis                          *
+=========================================================================
+
+Advanced RAM inference ...
+Advanced multiplier inference ...
+Advanced Registered AddSub inference ...
+Selecting encoding for FSM_1 ...
+Optimizing FSM <FSM_1> on signal <state_r> with one-hot encoding.
+Selecting encoding for FSM_0 ...
+Optimizing FSM <FSM_0> on signal <state_r> with one-hot encoding.
+Dynamic shift register inference ...
+
+=========================================================================
+HDL Synthesis Report
+
+Macro Statistics
+# FSMs                             : 2
+# Adders/Subtractors               : 8
+ 24-bit adder                      : 1
+ 15-bit subtractor                 : 1
+ 10-bit subtractor                 : 1
+ 14-bit adder                      : 2
+ 14-bit subtractor                 : 1
+ 2-bit subtractor                  : 1
+ 3-bit subtractor                  : 1
+# Counters                         : 1
+ 23-bit up counter                 : 1
+# Registers                        : 42
+ 1-bit register                    : 22
+ 24-bit register                   : 1
+ 16-bit register                   : 4
+ 13-bit register                   : 5
+ 2-bit register                    : 2
+ 5-bit register                    : 1
+ 14-bit register                   : 2
+ 3-bit register                    : 1
+ 15-bit register                   : 1
+ 4-bit register                    : 1
+ 6-bit register                    : 1
+ 10-bit register                   : 1
+# Comparators                      : 3
+ 16-bit comparator not equal       : 1
+ 13-bit comparator not equal       : 1
+ 2-bit comparator equal            : 1
+# Multiplexers                     : 8
+ 1-bit 2-to-1 multiplexer          : 4
+ 1-bit 4-to-1 multiplexer          : 1
+ 14-bit 2-to-1 multiplexer         : 2
+ 13-bit 4-to-1 multiplexer         : 1
+# Tristates                        : 1
+ 16-bit tristate buffer            : 1
+# Xors                             : 1
+ 1-bit xor4                        : 1
+
+=========================================================================
+
+=========================================================================
+*                         Low Level Synthesis                           *
+=========================================================================
+WARNING:Xst:1426 - The value init of the FF/Latch activeBank_r hinder the constant cleaning in the block sdramCntl.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1291 - FF/Latch <wrPipeline_r_0> is unconnected in block <u1>.
+WARNING:Xst:1291 - FF/Latch <opBegun_r> is unconnected in block <u1>.
+WARNING:Xst:1710 - FF/Latch  <cmd_r_5> (without init value) is constant in block <sdramCntl>.
+WARNING:Xst:1291 - FF/Latch <u0_divCnt_22> is unconnected in block <test_board>.
+WARNING:Xst:1291 - FF/Latch <u0_divCnt_17> is unconnected in block <test_board>.
+WARNING:Xst:1291 - FF/Latch <u0_divCnt_18> is unconnected in block <test_board>.
+WARNING:Xst:1291 - FF/Latch <u0_divCnt_19> is unconnected in block <test_board>.
+WARNING:Xst:1291 - FF/Latch <u0_divCnt_20> is unconnected in block <test_board>.
+WARNING:Xst:1291 - FF/Latch <u0_divCnt_21> is unconnected in block <test_board>.
+
+Optimizing unit <test_board> ...
+
+Optimizing unit <randGen> ...
+
+Optimizing unit <memTest> ...
+
+Optimizing unit <sdramCntl> ...
+Loading device for application Xst from file 'v200.nph' in environment C:/ISE.
+
+Mapping all equations...
+WARNING:Xst:1291 - FF/Latch <u0_u1_u1_wrPipeline_r_0> is unconnected in block <test_board>.
+WARNING:Xst:1291 - FF/Latch <u0_u1_u1_opBegun_r> is unconnected in block <test_board>.
+Building and optimizing final netlist ...
+Register u0_u1_u1_cmd_r_1 equivalent to u0_u1_u1_cmd_r_0 has been removed
+Found area constraint ratio of 100 (+ 5) on block test_board, actual ratio is 11.
+FlipFlop u0_rst_i has been replicated 7 time(s)
+FlipFlop u0_u1_u1_rdPipeline_r_1 has been replicated 1 time(s)
+FlipFlop u0_fast_memtest_state_r_FFd3 has been replicated 1 time(s)
+FlipFlop u0_fast_memtest_state_r_FFd4 has been replicated 1 time(s)
+FlipFlop u0_fast_memtest_addr_r_23 has been replicated 2 time(s)
+FlipFlop u0_fast_memtest_addr_r_22 has been replicated 1 time(s)
+FlipFlop u0_u1_u1_state_r_FFd4 has been replicated 1 time(s)
+
+=========================================================================
+*                            Final Report                               *
+=========================================================================
+
+Device utilization summary:
+---------------------------
+
+Selected Device : 2s200fg256-5 
+
+ Number of Slices:                     295  out of   2352    12%  
+ Number of Slice Flip Flops:           277  out of   4704     5%  
+ Number of 4 input LUTs:               477  out of   4704    10%  
+ Number of bonded IOBs:                 50  out of    180    27%  
+
+
+=========================================================================
+TIMING REPORT
+
+
+Clock Information:
+------------------
+-----------------------------------+------------------------+-------+
+Clock Signal                       | Clock buffer(FF name)  | Load  |
+-----------------------------------+------------------------+-------+
+clk                                | IBUFG                  | 277   |
+-----------------------------------+------------------------+-------+
+
+Timing Summary:
+---------------
+Speed Grade: -5
+
+   Minimum period: 16.568ns (Maximum Frequency: 60.357MHz)
+   Minimum input arrival time before clock: 2.857ns
+   Maximum output required time after clock: 14.805ns
+   Maximum combinational path delay: 15.907ns
+
+=========================================================================
+Completed process "Synthesize".
+
+
+
+Started process "Translate".
+
+
+Command Line: ngdbuild -intstyle ise -dd
+c:\xesscorp\products\bitstreams\xsa\200\test_board-50mhz/_ngo -uc test_board.ucf
+-p xc2s200-fg256-5 test_board.ngc test_board.ngd 
+
+Reading NGO file
+"C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/test_board.ngc" ...
+Reading component libraries for design expansion...
+
+Annotating constraints to design from file "test_board.ucf" ...
+
+Checking timing specifications ...
+WARNING:XdmHelpers:662 - Period specification "TS_clk" references the TNM group
+   "clk", which contains both pads and synchronous elements. The timing analyzer
+   will ignore the pads for this specification. You might want to use a
+   qualifier (e.g. "FFS") on the TNM property to remove the pads from this
+   group.
+Checking expanded design ...
+
+NGDBUILD Design Results Summary:
+  Number of errors:     0
+  Number of warnings:   1
+
+Total memory usage is 39264 kilobytes
+
+Writing NGD file "test_board.ngd" ...
+
+Writing NGDBUILD log file "test_board.bld"...
+
+NGDBUILD done.
+Completed process "Translate".
+
+
+
+Started process "Map".
+
+Using target part "2s200fg256-5".
+Removing unused or disabled logic...
+Running cover...
+Running directed packing...
+Running delay-based LUT packing...
+Running related packing...
+
+Design Summary:
+Number of errors:      0
+Number of warnings:    3
+Logic Utilization:
+  Number of Slice Flip Flops:       244 out of  4,704    5%
+  Number of 4 input LUTs:           408 out of  4,704    8%
+Logic Distribution:
+    Number of occupied Slices:                         307 out of  2,352   13%
+    Number of Slices containing only related logic:    307 out of    307  100%
+    Number of Slices containing unrelated logic:         0 out of    307    0%
+        *See NOTES below for an explanation of the effects of unrelated logic
+Total Number 4 input LUTs:          476 out of  4,704   10%
+      Number used as logic:                       408
+      Number used as a route-thru:                 68
+   Number of bonded IOBs:            49 out of    176   27%
+      IOB Flip Flops:                              33
+   Number of GCLKIOBs:                1 out of      4   25%
+
+Total equivalent gate count for design:  5,417
+Additional JTAG gate count for IOBs:  2,400
+Peak Memory Usage:  65 MB
+
+NOTES:
+
+   Related logic is defined as being logic that shares connectivity -
+   e.g. two LUTs are "related" if they share common inputs.
+   When assembling slices, Map gives priority to combine logic that
+   is related.  Doing so results in the best timing performance.
+
+   Unrelated logic shares no connectivity.  Map will only begin
+   packing unrelated logic into a slice once 99% of the slices are
+   occupied through related logic packing.
+
+   Note that once logic distribution reaches the 99% level through
+   related logic packing, this does not mean the device is completely
+   utilized.  Unrelated logic packing will then begin, continuing until
+   all usable LUTs and FFs are occupied.  Depending on your timing
+   budget, increased levels of unrelated logic packing may adversely
+   affect the overall timing performance of your design.
+
+
+Mapping completed.
+See MAP report file "test_board_map.mrp" for details.
+Completed process "Map".
+
+Mapping Module test_board . . .
+MAP command line:
+map -intstyle ise -p xc2s200-fg256-5 -cm area -pr b -k 4 -c 100 -tx off -o test_board_map.ncd test_board.ngd test_board.pcf
+Mapping Module test_board: DONE
+
+
+
+Started process "Place & Route".
+
+
+
+
+
+Constraints file: test_board.pcf
+
+Loading device database for application Par from file "test_board_map.ncd".
+   "test_board" is an NCD, version 2.38, device xc2s200, package fg256, speed -5
+Loading device for application Par from file 'v200.nph' in environment C:/ISE.
+Device speed data version:  PRODUCTION 1.27 2004-06-25.
+
+
+Resolving physical constraints.
+Finished resolving physical constraints.
+
+Device utilization summary:
+
+   Number of External GCLKIOBs         1 out of 4      25%
+   Number of External IOBs            49 out of 176    27%
+      Number of LOCed External IOBs   49 out of 49    100%
+
+   Number of SLICEs                  307 out of 2352   13%
+
+
+
+
+Overall effort level (-ol):   Standard (set by user)
+Placer effort level (-pl):    Standard (set by user)
+Placer cost table entry (-t): 1
+Router effort level (-rl):    Standard (set by user)
+
+Starting initial Timing Analysis.  REAL time: 0 secs 
+Finished initial Timing Analysis.  REAL time: 0 secs 
+
+
+Phase 1.1
+Phase 1.1 (Checksum:98a126) REAL time: 0 secs 
+
+Phase 2.23
+Phase 2.23 (Checksum:1312cfe) REAL time: 0 secs 
+
+Phase 3.3
+Phase 3.3 (Checksum:1c9c37d) REAL time: 0 secs 
+
+Phase 4.5
+Phase 4.5 (Checksum:26259fc) REAL time: 0 secs 
+
+Phase 5.8
+........
+...
+Phase 5.8 (Checksum:aa2403) REAL time: 2 secs 
+
+Phase 6.5
+Phase 6.5 (Checksum:39386fa) REAL time: 2 secs 
+
+Phase 7.18
+Phase 7.18 (Checksum:42c1d79) REAL time: 3 secs 
+
+Writing design to file test_board.ncd.
+
+Total REAL time to Placer completion: 4 secs 
+Total CPU time to Placer completion: 3 secs 
+
+
+Phase 1: 2048 unrouted;       REAL time: 4 secs 
+
+Phase 2: 1919 unrouted;       REAL time: 14 secs 
+
+Phase 3: 472 unrouted;       REAL time: 15 secs 
+
+Phase 4: 472 unrouted; (1379777)      REAL time: 15 secs 
+
+Phase 5: 1395 unrouted; (1044610)      REAL time: 20 secs 
+
+Phase 6: 1452 unrouted; (1034303)      REAL time: 20 secs 
+
+WARNING:Route - There is atleast one timing constraint that cannot be met.
+   Router will continue and provide a valid routed design. Consequentially, due
+   to timing constraints, the router will not be able to achieve an overall
+   optimum solution
+Phase 7: 0 unrouted; (1034303)      REAL time: 24 secs 
+
+Total REAL time to Router completion: 25 secs 
+Total CPU time to Router completion: 22 secs 
+
+Generating "par" statistics.
+
+**************************
+Generating Clock Report
+**************************
+
++----------------------------+----------+--------+------------+-------------+
+|         Clock Net          | Resource | Fanout |Net Skew(ns)|Max Delay(ns)|
++----------------------------+----------+--------+------------+-------------+
+|          u0_clk_b          |Low-Skew  |   58   |  1.028     |  5.641      |
++----------------------------+----------+--------+------------+-------------+
+|     u0_u1_clkin_2          |   Local  |   61   |  4.603     |  6.265      |
++----------------------------+----------+--------+------------+-------------+
+|     u0_u1_clkin_1          |   Local  |   72   |  3.639     |  4.849      |
++----------------------------+----------+--------+------------+-------------+
+
+Timing Score: 1355747
+
+WARNING:Par:62 - Timing constraints have not been met.
+
+Asterisk (*) preceding a constraint indicates it was not met.
+   This may be due to a setup or hold violation.
+
+--------------------------------------------------------------------------------
+  Constraint                                | Requested  | Actual     | Logic 
+                                            |            |            | Levels
+--------------------------------------------------------------------------------
+* TS_clk = PERIOD TIMEGRP "clk"  10 nS   HI | 10.000ns   | 20.146ns   | 6    
+  GH 50.000000 %                            |            |            |      
+--------------------------------------------------------------------------------
+
+
+1 constraint not met.
+Generating Pad Report.
+
+All signals are completely routed.
+
+Total REAL time to PAR completion: 25 secs 
+Total CPU time to PAR completion: 23 secs 
+
+Peak Memory Usage:  72 MB
+
+Placement: Completed - No errors found.
+Routing: Completed - No errors found.
+Timing: Completed - 318 errors found.
+
+Writing design to file test_board.ncd.
+
+
+PAR done.
+Completed process "Place & Route".
+
+
+Started process "Generate Post-Place & Route Static Timing".
+
+WARNING:SpeedCalc:42 - Cannot find referenced model "bel_d_min_period".  This
+   generally indicates that there is an inconsistency between versions of the
+   speed and device data files.  Please check to ensure that the XILINX
+   environment variable is set correctly, if the MYXILINX variable is set, make
+   sure that it is pointing to patch files that are compatable with the version
+   of software that the XILINX variable points to.
+WARNING:SpeedCalc:42 - Cannot find referenced model "bel_d_min_period".  This
+   generally indicates that there is an inconsistency between versions of the
+   speed and device data files.  Please check to ensure that the XILINX
+   environment variable is set correctly, if the MYXILINX variable is set, make
+   sure that it is pointing to patch files that are compatable with the version
+   of software that the XILINX variable points to.
+
+Analysis completed Mon Feb 13 15:39:26 2006
+--------------------------------------------------------------------------------
+
+Generating Report ...
+
+Completed process "Generate Post-Place & Route Static Timing".
+
+Place & Route Module test_board . . .
+PAR command line: par -w -intstyle ise -ol std -t 1 test_board_map.ncd test_board.ncd test_board.pcf
+PAR completed successfully
+
+
+
+
+Started process "Generate Programming File".
+
+WARNING:DesignRules:372 - Netcheck: Gated clock. Clock net u0_u1_clkin_2 is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:DesignRules:372 - Netcheck: Gated clock. Clock net u0_u1_clkin_1 is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+Completed process "Generate Programming File".
+
+
+
+Project Navigator Auto-Make Log File
+-------------------------------------
+
+
+
+
+Started process "Synthesize".
+
+
+=========================================================================
+*                          HDL Compilation                              *
+=========================================================================
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../../XS_LIB/common.vhd in Library work.
+Architecture common of Entity common is up to date.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../../XS_LIB/sdramcntl.vhd in Library work.
+Architecture arch of Entity sdramcntl is up to date.
+Architecture arch of Entity dualport is up to date.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../../XS_LIB/randgen.vhd in Library work.
+Architecture arch of Entity randgen is up to date.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../../XS_LIB/memtest.vhd in Library work.
+Architecture arch of Entity memtest is up to date.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../XSA_LIB/xsasdramcntl.vhd in Library work.
+Architecture arch of Entity xsasdramcntl is up to date.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../XSA_LIB/test_board_core.vhd in Library work.
+Architecture arch of Entity test_board_core is up to date.
+Compiling vhdl file C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/test_board.vhd in Library work.
+Entity <test_board> (Architecture <arch>) compiled.
+
+=========================================================================
+*                            HDL Analysis                               *
+=========================================================================
+Analyzing Entity <test_board> (Architecture <arch>).
+Entity <test_board> analyzed. Unit <test_board> generated.
+
+Analyzing generic Entity <test_board_core> (Architecture <arch>).
+	FREQ = 50000
+	CLK_DIV = 4.000000
+	PIPE_EN = <u>1
+	DATA_WIDTH = 16
+	SADDR_WIDTH = 13
+	NROWS = 8192
+	NCOLS = 512
+	BEG_ADDR = 0
+	END_ADDR = 16777215
+	BEG_TEST = 0
+	END_TEST = 16777215
+    Set user-defined property "INIT =  1" for signal <rst_i>.
+WARNING:Xst:753 - C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../XSA_LIB/test_board_core.vhd line 245: Unconnected output port 'clk2x' of component 'XSASDRAMCntl'.
+WARNING:Xst:753 - C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../XSA_LIB/test_board_core.vhd line 245: Unconnected output port 'status' of component 'XSASDRAMCntl'.
+Entity <test_board_core> analyzed. Unit <test_board_core> generated.
+
+Analyzing generic Entity <memTest> (Architecture <arch>).
+	PIPE_EN = <u>1
+	DATA_WIDTH = 16
+	ADDR_WIDTH = 24
+	BEG_TEST = 0
+	END_TEST = 16777215
+Entity <memTest> analyzed. Unit <memTest> generated.
+
+Analyzing generic Entity <randGen> (Architecture <arch>).
+	DATA_WIDTH = 16
+Entity <randGen> analyzed. Unit <randGen> generated.
+
+Analyzing generic Entity <XSASDRAMCntl> (Architecture <arch>).
+	FREQ = 50000
+	CLK_DIV = 4.000000
+	PIPE_EN = <u>1
+	MAX_NOP = 10000
+	MULTIPLE_ACTIVE_ROWS = <u>1
+	DATA_WIDTH = 16
+	NROWS = 8192
+	NCOLS = 512
+	HADDR_WIDTH = 24
+	SADDR_WIDTH = 13
+Entity <XSASDRAMCntl> analyzed. Unit <XSASDRAMCntl> generated.
+
+Analyzing generic Entity <sdramCntl> (Architecture <arch>).
+	FREQ = 50000
+	IN_PHASE = <u>0
+	PIPE_EN = <u>1
+	MAX_NOP = 10000
+	MULTIPLE_ACTIVE_ROWS = <u>1
+	DATA_WIDTH = 16
+	NROWS = 8192
+	NCOLS = 512
+	HADDR_WIDTH = 24
+	SADDR_WIDTH = 13
+WARNING:Xst:819 - C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../../XS_LIB/sdramcntl.vhd line 333: The following signals are missing in the process sensitivity list:
+   activeBank_r, ba_r.
+Entity <sdramCntl> analyzed. Unit <sdramCntl> generated.
+
+
+=========================================================================
+*                           HDL Synthesis                               *
+=========================================================================
+
+Synthesizing Unit <sdramCntl>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../../XS_LIB/sdramcntl.vhd.
+WARNING:Xst:646 - Signal <col<12>> is assigned but never used.
+    Found finite state machine <FSM_0> for signal <state_r>.
+    -----------------------------------------------------------------------
+    | States             | 8                                              |
+    | Transitions        | 30                                             |
+    | Inputs             | 10                                             |
+    | Outputs            | 8                                              |
+    | Clock              | clk (rising_edge)                              |
+    | Clock enable       | $n0154 (negative)                              |
+    | Reset              | rst (positive)                                 |
+    | Reset type         | asynchronous                                   |
+    | Reset State        | initwait                                       |
+    | Power Up State     | initwait                                       |
+    | Encoding           | automatic                                      |
+    | Implementation     | LUT                                            |
+    -----------------------------------------------------------------------
+    Found 1-bit 4-to-1 multiplexer for signal <$n0001> created at line 422.
+    Found 13-bit 4-to-1 multiplexer for signal <$n0153> created at line 422.
+    Found 2-bit comparator equal for signal <$n0157> created at line 603.
+    Found 14-bit subtractor for signal <$n0176>.
+    Found 14-bit adder for signal <$n0180> created at line 484.
+    Found 14-bit adder for signal <$n0196> created at line 439.
+    Found 9-bit subtractor for signal <$n0198> created at line 479.
+    Found 2-bit subtractor for signal <$n0199> created at line 455.
+    Found 14-bit subtractor for signal <$n0204> created at line 490.
+    Found 13-bit comparator not equal for signal <$n0205> created at line 422.
+    Found 1-bit register for signal <activeBank_r>.
+    Found 4-bit register for signal <activeFlag_r>.
+    Found 52-bit register for signal <activeRow_r>.
+    Found 2-bit register for signal <ba_r>.
+    Found 1-bit register for signal <cke_r>.
+    Found 6-bit register for signal <cmd_r>.
+    Found 16-bit register for signal <hDOut_r>.
+    Found 16-bit register for signal <hDOutOppPhase_r>.
+    Found 14-bit register for signal <nopCntr_r>.
+    Found 1-bit register for signal <opBegun_r>.
+    Found 2-bit register for signal <rasTimer_r>.
+    Found 5-bit register for signal <rdPipeline_r>.
+    Found 9-bit register for signal <refTimer_r>.
+    Found 14-bit register for signal <rfshCntr_r>.
+    Found 13-bit register for signal <sAddr_r>.
+    Found 16-bit register for signal <sData_r>.
+    Found 1-bit register for signal <sDataDir_r>.
+    Found 14-bit register for signal <timer_r>.
+    Found 1-bit register for signal <wrPipeline_r<0>>.
+    Found 1-bit register for signal <wrTimer_r<0>>.
+    Found 61 1-bit 2-to-1 multiplexers.
+    Summary:
+	inferred   1 Finite State Machine(s).
+	inferred 174 D-type flip-flop(s).
+	inferred   6 Adder/Subtracter(s).
+	inferred   2 Comparator(s).
+	inferred  78 Multiplexer(s).
+Unit <sdramCntl> synthesized.
+
+
+Synthesizing Unit <randGen>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../../XS_LIB/randgen.vhd.
+    Found 1-bit xor4 for signal <new_bit>.
+    Found 16-bit register for signal <r_r>.
+    Summary:
+	inferred  16 D-type flip-flop(s).
+	inferred   1 Xor(s).
+Unit <randGen> synthesized.
+
+
+Synthesizing Unit <XSASDRAMCntl>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../XSA_LIB/xsasdramcntl.vhd.
+WARNING:Xst:647 - Input <sclkfb> is never used.
+WARNING:Xst:1780 - Signal <int_clkdv> is never used or assigned.
+WARNING:Xst:1780 - Signal <dllext_rst_n> is never used or assigned.
+WARNING:Xst:1780 - Signal <sclkfb_b> is never used or assigned.
+WARNING:Xst:1780 - Signal <int_clk2x_b> is never used or assigned.
+WARNING:Xst:1780 - Signal <ext_lock> is never used or assigned.
+WARNING:Xst:1780 - Signal <int_clk1x_b> is never used or assigned.
+WARNING:Xst:1780 - Signal <int_clk1x> is never used or assigned.
+WARNING:Xst:1780 - Signal <int_clk2x> is never used or assigned.
+WARNING:Xst:1780 - Signal <int_clkdv_b> is never used or assigned.
+WARNING:Xst:1780 - Signal <ext_clk1x> is never used or assigned.
+WARNING:Xst:1780 - Signal <dllext_rst> is never used or assigned.
+WARNING:Xst:1780 - Signal <int_lock> is never used or assigned.
+    Found 16-bit tristate buffer for signal <sData>.
+    Summary:
+	inferred  16 Tristate(s).
+Unit <XSASDRAMCntl> synthesized.
+
+
+Synthesizing Unit <memTest>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../../XS_LIB/memtest.vhd.
+    Found finite state machine <FSM_1> for signal <state_r>.
+    -----------------------------------------------------------------------
+    | States             | 5                                              |
+    | Transitions        | 10                                             |
+    | Inputs             | 5                                              |
+    | Outputs            | 6                                              |
+    | Clock              | clk (rising_edge)                              |
+    | Reset              | rst (positive)                                 |
+    | Reset type         | synchronous                                    |
+    | Reset State        | init                                           |
+    | Power Up State     | init                                           |
+    | Encoding           | automatic                                      |
+    | Implementation     | LUT                                            |
+    -----------------------------------------------------------------------
+    Found 24-bit adder for signal <$n0029> created at line 151.
+    Found 16-bit comparator not equal for signal <$n0032> created at line 204.
+    Found 24-bit register for signal <addr_r>.
+    Found 1-bit register for signal <err_r>.
+    Summary:
+	inferred   1 Finite State Machine(s).
+	inferred  25 D-type flip-flop(s).
+	inferred   1 Adder/Subtracter(s).
+	inferred   1 Comparator(s).
+Unit <memTest> synthesized.
+
+
+Synthesizing Unit <test_board_core>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/../../XSA_LIB/test_board_core.vhd.
+WARNING:Xst:646 - Signal <begun> is assigned but never used.
+WARNING:Xst:1780 - Signal <dataOut> is never used or assigned.
+WARNING:Xst:1780 - Signal <dataIn> is never used or assigned.
+WARNING:Xst:646 - Signal <done> is assigned but never used.
+    Found 23-bit up counter for signal <divCnt>.
+    Found 1-bit register for signal <rst_i>.
+    Found 2-bit register for signal <syncButton>.
+    Summary:
+	inferred   1 Counter(s).
+	inferred   3 D-type flip-flop(s).
+Unit <test_board_core> synthesized.
+
+
+Synthesizing Unit <test_board>.
+    Related source file is C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/test_board.vhd.
+WARNING:Xst:1306 - Output <pps<5:3>> is never assigned.
+Unit <test_board> synthesized.
+
+INFO:Xst:1767 - HDL ADVISOR - Resource sharing has identified that some arithmetic operations in this design can share the same physical resources for reduced device utilization. For improved clock frequency you may try to disable resource sharing.
+
+=========================================================================
+*                       Advanced HDL Synthesis                          *
+=========================================================================
+
+Advanced RAM inference ...
+Advanced multiplier inference ...
+Advanced Registered AddSub inference ...
+Selecting encoding for FSM_1 ...
+Optimizing FSM <FSM_1> on signal <state_r> with one-hot encoding.
+Selecting encoding for FSM_0 ...
+Optimizing FSM <FSM_0> on signal <state_r> with one-hot encoding.
+Dynamic shift register inference ...
+
+=========================================================================
+HDL Synthesis Report
+
+Macro Statistics
+# FSMs                             : 2
+# Adders/Subtractors               : 7
+ 24-bit adder                      : 1
+ 14-bit subtractor                 : 2
+ 9-bit subtractor                  : 1
+ 14-bit adder                      : 2
+ 2-bit subtractor                  : 1
+# Counters                         : 1
+ 23-bit up counter                 : 1
+# Registers                        : 42
+ 1-bit register                    : 23
+ 24-bit register                   : 1
+ 16-bit register                   : 4
+ 13-bit register                   : 5
+ 2-bit register                    : 2
+ 5-bit register                    : 1
+ 14-bit register                   : 3
+ 4-bit register                    : 1
+ 6-bit register                    : 1
+ 9-bit register                    : 1
+# Comparators                      : 3
+ 16-bit comparator not equal       : 1
+ 13-bit comparator not equal       : 1
+ 2-bit comparator equal            : 1
+# Multiplexers                     : 8
+ 1-bit 2-to-1 multiplexer          : 4
+ 1-bit 4-to-1 multiplexer          : 1
+ 14-bit 2-to-1 multiplexer         : 2
+ 13-bit 4-to-1 multiplexer         : 1
+# Tristates                        : 1
+ 16-bit tristate buffer            : 1
+# Xors                             : 1
+ 1-bit xor4                        : 1
+
+=========================================================================
+
+=========================================================================
+*                         Low Level Synthesis                           *
+=========================================================================
+WARNING:Xst:1426 - The value init of the FF/Latch activeBank_r hinder the constant cleaning in the block sdramCntl.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1291 - FF/Latch <wrPipeline_r_0> is unconnected in block <u1>.
+WARNING:Xst:1291 - FF/Latch <opBegun_r> is unconnected in block <u1>.
+WARNING:Xst:1710 - FF/Latch  <cmd_r_5> (without init value) is constant in block <sdramCntl>.
+WARNING:Xst:1291 - FF/Latch <u0_divCnt_22> is unconnected in block <test_board>.
+WARNING:Xst:1291 - FF/Latch <u0_divCnt_17> is unconnected in block <test_board>.
+WARNING:Xst:1291 - FF/Latch <u0_divCnt_18> is unconnected in block <test_board>.
+WARNING:Xst:1291 - FF/Latch <u0_divCnt_19> is unconnected in block <test_board>.
+WARNING:Xst:1291 - FF/Latch <u0_divCnt_20> is unconnected in block <test_board>.
+WARNING:Xst:1291 - FF/Latch <u0_divCnt_21> is unconnected in block <test_board>.
+
+Optimizing unit <test_board> ...
+
+Optimizing unit <randGen> ...
+
+Optimizing unit <memTest> ...
+
+Optimizing unit <sdramCntl> ...
+Loading device for application Xst from file 'v200.nph' in environment C:/ISE.
+
+Mapping all equations...
+WARNING:Xst:1291 - FF/Latch <u0_u1_u1_wrPipeline_r_0> is unconnected in block <test_board>.
+WARNING:Xst:1291 - FF/Latch <u0_u1_u1_opBegun_r> is unconnected in block <test_board>.
+Building and optimizing final netlist ...
+Register u0_u1_u1_sDataDir_r equivalent to u0_u1_u1_wrTimer_r_0 has been removed
+Register u0_u1_u1_cmd_r_1 equivalent to u0_u1_u1_cmd_r_0 has been removed
+Found area constraint ratio of 100 (+ 5) on block test_board, actual ratio is 11.
+FlipFlop u0_rst_i has been replicated 7 time(s)
+FlipFlop u0_u1_u1_rdPipeline_r_1 has been replicated 1 time(s)
+FlipFlop u0_fast_memtest_addr_r_23 has been replicated 2 time(s)
+FlipFlop u0_fast_memtest_addr_r_22 has been replicated 1 time(s)
+FlipFlop u0_fast_memtest_state_r_FFd3 has been replicated 1 time(s)
+FlipFlop u0_fast_memtest_state_r_FFd4 has been replicated 1 time(s)
+FlipFlop u0_u1_u1_state_r_FFd4 has been replicated 1 time(s)
+
+=========================================================================
+*                            Final Report                               *
+=========================================================================
+
+Device utilization summary:
+---------------------------
+
+Selected Device : 2s200fg256-5 
+
+ Number of Slices:                     285  out of   2352    12%  
+ Number of Slice Flip Flops:           272  out of   4704     5%  
+ Number of 4 input LUTs:               459  out of   4704     9%  
+ Number of bonded IOBs:                 50  out of    180    27%  
+
+
+=========================================================================
+TIMING REPORT
+
+
+Clock Information:
+------------------
+-----------------------------------+------------------------+-------+
+Clock Signal                       | Clock buffer(FF name)  | Load  |
+-----------------------------------+------------------------+-------+
+clk                                | IBUFG                  | 272   |
+-----------------------------------+------------------------+-------+
+
+Timing Summary:
+---------------
+Speed Grade: -5
+
+   Minimum period: 16.468ns (Maximum Frequency: 60.724MHz)
+   Minimum input arrival time before clock: 2.857ns
+   Maximum output required time after clock: 14.355ns
+   Maximum combinational path delay: 15.807ns
+
+=========================================================================
+Completed process "Synthesize".
+
+
+
+Started process "Translate".
+
+
+Command Line: ngdbuild -intstyle ise -dd
+c:\xesscorp\products\bitstreams\xsa\200\test_board-50mhz/_ngo -uc test_board.ucf
+-p xc2s200-fg256-5 test_board.ngc test_board.ngd 
+
+Reading NGO file
+"C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/200/test_board-50MHz/test_board.ngc" ...
+Reading component libraries for design expansion...
+
+Annotating constraints to design from file "test_board.ucf" ...
+
+Checking timing specifications ...
+WARNING:XdmHelpers:662 - Period specification "TS_clk" references the TNM group
+   "clk", which contains both pads and synchronous elements. The timing analyzer
+   will ignore the pads for this specification. You might want to use a
+   qualifier (e.g. "FFS") on the TNM property to remove the pads from this
+   group.
+Checking expanded design ...
+
+NGDBUILD Design Results Summary:
+  Number of errors:     0
+  Number of warnings:   1
+
+Total memory usage is 39264 kilobytes
+
+Writing NGD file "test_board.ngd" ...
+
+Writing NGDBUILD log file "test_board.bld"...
+
+NGDBUILD done.
+Completed process "Translate".
+
+
+
+Started process "Map".
+
+Using target part "2s200fg256-5".
+Removing unused or disabled logic...
+Running cover...
+Running directed packing...
+Running delay-based LUT packing...
+Running related packing...
+
+Design Summary:
+Number of errors:      0
+Number of warnings:    3
+Logic Utilization:
+  Number of Slice Flip Flops:       239 out of  4,704    5%
+  Number of 4 input LUTs:           390 out of  4,704    8%
+Logic Distribution:
+    Number of occupied Slices:                         299 out of  2,352   12%
+    Number of Slices containing only related logic:    299 out of    299  100%
+    Number of Slices containing unrelated logic:         0 out of    299    0%
+        *See NOTES below for an explanation of the effects of unrelated logic
+Total Number 4 input LUTs:          458 out of  4,704    9%
+      Number used as logic:                       390
+      Number used as a route-thru:                 68
+   Number of bonded IOBs:            49 out of    176   27%
+      IOB Flip Flops:                              33
+   Number of GCLKIOBs:                1 out of      4   25%
+
+Total equivalent gate count for design:  5,257
+Additional JTAG gate count for IOBs:  2,400
+Peak Memory Usage:  66 MB
+
+NOTES:
+
+   Related logic is defined as being logic that shares connectivity -
+   e.g. two LUTs are "related" if they share common inputs.
+   When assembling slices, Map gives priority to combine logic that
+   is related.  Doing so results in the best timing performance.
+
+   Unrelated logic shares no connectivity.  Map will only begin
+   packing unrelated logic into a slice once 99% of the slices are
+   occupied through related logic packing.
+
+   Note that once logic distribution reaches the 99% level through
+   related logic packing, this does not mean the device is completely
+   utilized.  Unrelated logic packing will then begin, continuing until
+   all usable LUTs and FFs are occupied.  Depending on your timing
+   budget, increased levels of unrelated logic packing may adversely
+   affect the overall timing performance of your design.
+
+
+Mapping completed.
+See MAP report file "test_board_map.mrp" for details.
+Completed process "Map".
+
+Mapping Module test_board . . .
+MAP command line:
+map -intstyle ise -p xc2s200-fg256-5 -cm area -pr b -k 4 -c 100 -tx off -o test_board_map.ncd test_board.ngd test_board.pcf
+Mapping Module test_board: DONE
+
+
+
+Started process "Place & Route".
+
+
+
+
+
+Constraints file: test_board.pcf
+
+Loading device database for application Par from file "test_board_map.ncd".
+   "test_board" is an NCD, version 2.38, device xc2s200, package fg256, speed -5
+Loading device for application Par from file 'v200.nph' in environment C:/ISE.
+Device speed data version:  PRODUCTION 1.27 2004-06-25.
+
+
+Resolving physical constraints.
+Finished resolving physical constraints.
+
+Device utilization summary:
+
+   Number of External GCLKIOBs         1 out of 4      25%
+   Number of External IOBs            49 out of 176    27%
+      Number of LOCed External IOBs   49 out of 49    100%
+
+   Number of SLICEs                  299 out of 2352   12%
+
+
+
+
+Overall effort level (-ol):   Standard (set by user)
+Placer effort level (-pl):    Standard (set by user)
+Placer cost table entry (-t): 1
+Router effort level (-rl):    Standard (set by user)
+
+Starting initial Timing Analysis.  REAL time: 0 secs 
+Finished initial Timing Analysis.  REAL time: 0 secs 
+
+
+Phase 1.1
+Phase 1.1 (Checksum:989fbf) REAL time: 0 secs 
+
+Phase 2.23
+Phase 2.23 (Checksum:1312cfe) REAL time: 0 secs 
+
+Phase 3.3
+Phase 3.3 (Checksum:1c9c37d) REAL time: 0 secs 
+
+Phase 4.5
+Phase 4.5 (Checksum:26259fc) REAL time: 0 secs 
+
+Phase 5.8
+................
+..
+Phase 5.8 (Checksum:aa44a1) REAL time: 2 secs 
+
+Phase 6.5
+Phase 6.5 (Checksum:39386fa) REAL time: 2 secs 
+
+Phase 7.18
+Phase 7.18 (Checksum:42c1d79) REAL time: 3 secs 
+
+Writing design to file test_board.ncd.
+
+Total REAL time to Placer completion: 3 secs 
+Total CPU time to Placer completion: 3 secs 
+
+
+Phase 1: 1954 unrouted;       REAL time: 4 secs 
+
+Phase 2: 1830 unrouted;       REAL time: 14 secs 
+
+Phase 3: 460 unrouted;       REAL time: 14 secs 
+
+Phase 4: 460 unrouted; (1264678)      REAL time: 15 secs 
+
+Phase 5: 1410 unrouted; (975503)      REAL time: 20 secs 
+
+Phase 6: 1432 unrouted; (960697)      REAL time: 20 secs 
+
+WARNING:Route - There is atleast one timing constraint that cannot be met.
+   Router will continue and provide a valid routed design. Consequentially, due
+   to timing constraints, the router will not be able to achieve an overall
+   optimum solution
+Phase 7: 0 unrouted; (960697)      REAL time: 24 secs 
+
+Total REAL time to Router completion: 24 secs 
+Total CPU time to Router completion: 23 secs 
+
+Generating "par" statistics.
+
+**************************
+Generating Clock Report
+**************************
+
++----------------------------+----------+--------+------------+-------------+
+|         Clock Net          | Resource | Fanout |Net Skew(ns)|Max Delay(ns)|
++----------------------------+----------+--------+------------+-------------+
+|          u0_clk_b          |Low-Skew  |   57   |  0.782     |  4.979      |
++----------------------------+----------+--------+------------+-------------+
+|     u0_u1_clkin_2          |   Local  |   59   |  3.918     |  5.939      |
++----------------------------+----------+--------+------------+-------------+
+|     u0_u1_clkin_1          |   Local  |   63   |  2.913     |  4.399      |
++----------------------------+----------+--------+------------+-------------+
+
+Timing Score: 1215765
+
+WARNING:Par:62 - Timing constraints have not been met.
+
+Asterisk (*) preceding a constraint indicates it was not met.
+   This may be due to a setup or hold violation.
+
+--------------------------------------------------------------------------------
+  Constraint                                | Requested  | Actual     | Logic 
+                                            |            |            | Levels
+--------------------------------------------------------------------------------
+* TS_clk = PERIOD TIMEGRP "clk"  10 nS   HI | 10.000ns   | 19.317ns   | 7    
+  GH 50.000000 %                            |            |            |      
+--------------------------------------------------------------------------------
+
+
+1 constraint not met.
+Generating Pad Report.
+
+All signals are completely routed.
+
+Total REAL time to PAR completion: 25 secs 
+Total CPU time to PAR completion: 24 secs 
+
+Peak Memory Usage:  72 MB
+
+Placement: Completed - No errors found.
+Routing: Completed - No errors found.
+Timing: Completed - 320 errors found.
+
+Writing design to file test_board.ncd.
+
+
+PAR done.
+Completed process "Place & Route".
+
+
+Started process "Generate Post-Place & Route Static Timing".
+
+WARNING:SpeedCalc:42 - Cannot find referenced model "bel_d_min_period".  This
+   generally indicates that there is an inconsistency between versions of the
+   speed and device data files.  Please check to ensure that the XILINX
+   environment variable is set correctly, if the MYXILINX variable is set, make
+   sure that it is pointing to patch files that are compatable with the version
+   of software that the XILINX variable points to.
+WARNING:SpeedCalc:42 - Cannot find referenced model "bel_d_min_period".  This
+   generally indicates that there is an inconsistency between versions of the
+   speed and device data files.  Please check to ensure that the XILINX
+   environment variable is set correctly, if the MYXILINX variable is set, make
+   sure that it is pointing to patch files that are compatable with the version
+   of software that the XILINX variable points to.
+
+Analysis completed Mon Feb 13 15:51:57 2006
+--------------------------------------------------------------------------------
+
+Generating Report ...
+
+Completed process "Generate Post-Place & Route Static Timing".
+
+Place & Route Module test_board . . .
+PAR command line: par -w -intstyle ise -ol std -t 1 test_board_map.ncd test_board.ncd test_board.pcf
+PAR completed successfully
+
+
+
+
+Started process "Generate Programming File".
+
+WARNING:DesignRules:372 - Netcheck: Gated clock. Clock net u0_u1_clkin_2 is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:DesignRules:372 - Netcheck: Gated clock. Clock net u0_u1_clkin_1 is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+Completed process "Generate Programming File".
+
+

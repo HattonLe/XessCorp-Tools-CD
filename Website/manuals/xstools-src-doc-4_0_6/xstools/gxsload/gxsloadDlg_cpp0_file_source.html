@@ -1,0 +1,883 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - gxsloadDlg.cpp</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">gxsloadDlg.cpp</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','gxsload0',this)" class="pathLink">gxsload</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">gxsloadDlg.cpp</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','gxsloadDlg_cpp0','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','gxsloadDlg_cpp0','_overview',this)" class="tabLinkInActive">Overview</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','gxsloadDlg_cpp0','_includedfiles',this)" class="tabLinkInActive">Included files</a></span>
+<span class="tabInActiveGrayout"><span class="tabLinkGrayout">Included by</span></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_file','gxsloadDlg_cpp0','_source',this)" class="tabLinkActive">Source</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<pre class="codeExamples">
+/*----------------------------------------------------------------------------------
+  SOFTWARE LICENSE AGREEMENT
+    1.  Permission to use, copy, modify, and distribute this software
+        and its documentation, with or without modification, for any
+        purpose and without fee or royalty is hereby granted, provided
+        that you include the following on ALL copies of the software
+        and documentation or portions thereof, including
+        modifications, that you make:
+
+            a.  The full text of this license in a location viewable to users
+            of the redistributed or derivative work.
+
+            b.  Notice of any changes or modifications to the files,
+            including the date changes were made.
+
+    2.  The name, servicemarks and trademarks of X Engineering
+        Software Systems Corp. may NOT be used in advertising or
+        publicity pertaining to the software without specific, written
+        prior permission.
+
+    3.  Title to copyright in this software and any associated
+        documentation will at all times remain with X Engineering
+        Software Systems Corp.
+
+    4.  THIS SOFTWARE AND DOCUMENTATION IS PROVIDED "AS IS," AND X
+        Engineering Software Systems Corp MAKES NO REPRESENTATIONS OR
+        WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO,
+        WARRANTIES OF MERCHANTABILITY OR FITNESS FOR ANY PARTICULAR
+        PURPOSE OR THAT THE USE OF THE SOFTWARE OR DOCUMENTATION WILL
+        NOT INFRINGE ANY THIRD PARTY PATENTS, COPYRIGHTS, TRADEMARKS
+        OR OTHER RIGHTS.
+
+    5.  X Engineering Software Systems Corp WILL NOT BE LIABLE FOR ANY
+        DAMAGES, INCLUDING BUT NOT LIMITED TO, DIRECT, INDIRECT,
+        SPECIAL OR CONSEQUENTIAL, ARISING OUT OF ANY USE OF THE
+        SOFTWARE OR DOCUMENTATION.
+
+  ©2006 - X Engineering Software Systems Corp.  All rights reserved.
+----------------------------------------------------------------------------------*/
+
+// gxsloadDlg.cpp : implementation file
+//
+
+
+#include &lt;afxole.h&gt;
+#include &lt;shlobj.h&gt;
+
+#include "<a href="#" OnFocus="link('_file','../xstoolslib/xsallbrds_h0',this)">xsallbrds.h</a>"
+#include "<a href="#" OnFocus="link('_file','../xstoolslib/utils_h0',this)">utils.h</a>"
+#include "<a href="#" OnFocus="link('_file','../xstoolslib/progress_h0',this)">progress.h</a>"
+#include "stdafx.h"
+#include "<a href="#" OnFocus="link('_file','gxsload_h0',this)">gxsload.h</a>"
+#include "gxsloaddlg.h"
+
+#ifdef _DEBUG
+#define new DEBUG_NEW
+#undef THIS_FILE
+static char THIS_FILE[] = __FILE__;
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+// CAboutDlg dialog used for App About
+
+class <a href="#" OnFocus="link('_class','CAboutDlg0',this)">CAboutDlg</a> : public CDialog
+{
+public:
+    <a href="#" OnFocus="link('_member','CAboutDlg253019763',this)">CAboutDlg</a>();
+
+// Dialog Data
+    //{{AFX_DATA(CAboutDlg)
+    enum { <a href="#" OnFocus="link('_member','IDD226793075',this)">IDD</a> = IDD_ABOUTBOX };
+    //}}AFX_DATA
+
+    // ClassWizard generated virtual function overrides
+    //{{AFX_VIRTUAL(CAboutDlg)
+    protected:
+    virtual void <a href="#" OnFocus="link('_member','DoDataExchange2240984102',this)">DoDataExchange</a>(CDataExchange* pDX);    // DDX/DDV support
+    //}}AFX_VIRTUAL
+
+// Implementation
+protected:
+    //{{AFX_MSG(CAboutDlg)
+    //}}AFX_MSG
+    DECLARE_MESSAGE_MAP()
+};
+
+<a href="#" OnFocus="link('_member','CAboutDlg253019763',this)">CAboutDlg::CAboutDlg</a>() : CDialog(<a href="#" OnFocus="link('_class','CAboutDlg0',this)">CAboutDlg</a>::IDD)
+{
+    //{{AFX_DATA_INIT(CAboutDlg)
+    //}}AFX_DATA_INIT
+}
+
+void <a href="#" OnFocus="link('_member','DoDataExchange2240984102',this)">CAboutDlg::DoDataExchange</a>(CDataExchange* pDX)
+{
+    CDialog::DoDataExchange(pDX);
+    //{{AFX_DATA_MAP(CAboutDlg)
+    //}}AFX_DATA_MAP
+}
+
+BEGIN_MESSAGE_MAP(<a href="#" OnFocus="link('_class','CAboutDlg0',this)">CAboutDlg</a>, CDialog)
+    //{{AFX_MSG_MAP(CAboutDlg)
+        // No message handlers
+    //}}AFX_MSG_MAP
+END_MESSAGE_MAP()
+
+/////////////////////////////////////////////////////////////////////////////
+// CGxsloadDlg dialog
+
+<a href="#" OnFocus="link('_member','CGxsloadDlg3936634406',this)">CGxsloadDlg::CGxsloadDlg</a>(CWnd* pParent /*=NULL*/)
+    : CDialog(<a href="#" OnFocus="link('_class','CGxsloadDlg0',this)">CGxsloadDlg</a>::IDD, pParent)
+{
+    //{{AFX_DATA_INIT(CGxsloadDlg)
+    //}}AFX_DATA_INIT
+    // Note that LoadIcon does not require a subsequent DestroyIcon in Win32
+    m_hIcon = AfxGetApp()-&gt;LoadIcon(IDR_MAINFRAME);
+}
+
+void <a href="#" OnFocus="link('_member','DoDataExchange3495731066',this)">CGxsloadDlg::DoDataExchange</a>(CDataExchange* pDX)
+{
+    CDialog::DoDataExchange(pDX);
+    //{{AFX_DATA_MAP(CGxsloadDlg)
+    DDX_Control(pDX, IDC_RAMINTFCDOWNLOAD, m_ramIntfcDownload);
+    DDX_Control(pDX, IDC_FLASHINTFCDOWNLOAD, m_flashIntfcDownload);
+    DDX_Control(pDX, IDC_FLASHFILE, m_flashFile);
+    DDX_Control(pDX, IDC_RAMLOADDR, m_ramLoAddr);
+    DDX_Control(pDX, IDC_RAMHIADDR, m_ramHiAddr);
+    DDX_Control(pDX, IDC_RAMFORMAT, m_ramFormat);
+    DDX_Control(pDX, IDC_RAMFILE, m_ramFile);
+    DDX_Control(pDX, IDC_FLASHLOADDR, m_flashLoAddr);
+    DDX_Control(pDX, IDC_FLASHHIADDR, m_flashHiAddr);
+    DDX_Control(pDX, IDC_FLASHFORMAT, m_flashFormat);
+    DDX_Control(pDX, IDC_LIST_NONVOL, m_lstNONVOL);
+    DDX_Control(pDX, IDC_BTN_LOAD, m_btnLoad);
+    DDX_Control(pDX, IDC_LIST_RAM, m_lstRAM);
+    DDX_Control(pDX, IDC_LIST_FPLD, m_lstFPLD);
+    DDX_Control(pDX, IDC_CMB_BOARD, m_cmbBoard);
+    DDX_Control(pDX, IDC_CMB_LPT, m_cmbLpt);
+    //}}AFX_DATA_MAP
+}
+
+BEGIN_MESSAGE_MAP(<a href="#" OnFocus="link('_class','CGxsloadDlg0',this)">CGxsloadDlg</a>, CDialog)
+    //{{AFX_MSG_MAP(CGxsloadDlg)
+    ON_WM_SYSCOMMAND()
+    ON_WM_PAINT()
+    ON_WM_QUERYDRAGICON()
+    ON_BN_CLICKED(IDC_BTN_LOAD, OnBtnLoad)
+    ON_WM_LBUTTONDOWN()
+    ON_LBN_SELCHANGE(IDC_LIST_FPLD, OnSelchangeLstFiles)
+    ON_LBN_DBLCLK(IDC_LIST_FPLD, OnDblclkListFpld)
+    ON_CBN_SELCHANGE(IDC_CMB_BOARD, OnSelchangeCmbBoard)
+    ON_CBN_SELCHANGE(IDC_CMB_LPT, OnSelchangeCmbLpt)
+    ON_CBN_SELCHANGE(IDC_FLASHFORMAT, OnSelchangeFlashformat)
+    ON_CBN_SELCHANGE(IDC_RAMFORMAT, OnSelchangeRamformat)
+    ON_WM_DROPFILES()
+    ON_LBN_SELCHANGE(IDC_LIST_NONVOL, OnSelchangeLstFiles)
+    ON_LBN_SELCHANGE(IDC_LIST_RAM, OnSelchangeLstFiles)
+    //}}AFX_MSG_MAP
+END_MESSAGE_MAP()
+
+/////////////////////////////////////////////////////////////////////////////
+// CGxsloadDlg message handlers
+
+BOOL <a href="#" OnFocus="link('_member','OnInitDialog183903484',this)">CGxsloadDlg::OnInitDialog</a>()
+{
+    CDialog::OnInitDialog();
+
+    // initialize for drag-and-drop operations
+    OleInitialize(NULL);
+
+    // Add "About..." menu item to system menu.
+
+    // IDM_ABOUTBOX must be in the system command range.
+    ASSERT((IDM_ABOUTBOX &amp; 0xFFF0) == IDM_ABOUTBOX);
+    ASSERT(IDM_ABOUTBOX &lt; 0xF000);
+
+    CMenu* pSysMenu = GetSystemMenu(FALSE);
+    if (pSysMenu != NULL)
+    {
+        CString strAboutMenu;
+        strAboutMenu.LoadString(IDS_ABOUTBOX);
+        if (!strAboutMenu.IsEmpty())
+        {
+            pSysMenu-&gt;AppendMenu(MF_SEPARATOR);
+            pSysMenu-&gt;AppendMenu(MF_STRING, IDM_ABOUTBOX, strAboutMenu);
+        }
+    }
+
+    // Set the icon for this dialog.  The framework does this automatically
+    //  when the application's main window is not a dialog
+    SetIcon(m_hIcon, TRUE);         // Set big icon
+    SetIcon(m_hIcon, FALSE);        // Set small icon
+    
+    // setup the list of XS Boards in the pulldown list
+    <a href="#" OnFocus="link('_class','../xstoolslib/brdModel_struct0',this)">XSBoardInfo</a>* brdInfo;
+    int numBoards;
+    numBoards = <a href="#" OnFocus="link('_member','../xstoolslib/GetXSBoardInfo2867269968',this)">GetXSBoardInfo</a>(&amp;brdInfo);
+    for(int i=0; i&lt;numBoards; i++)
+        <a href="#" OnFocus="link('_member','m_cmbBoard183903365',this)">m_cmbBoard</a>.AddString(brdInfo[i].brdModel);
+
+    // setup the list of parallel ports in the pulldown list
+    <a href="#" OnFocus="link('_member','m_cmbLpt183903365',this)">m_cmbLpt</a>.AddString("LPT1");
+    <a href="#" OnFocus="link('_member','m_cmbLpt183903365',this)">m_cmbLpt</a>.AddString("LPT2");
+    <a href="#" OnFocus="link('_member','m_cmbLpt183903365',this)">m_cmbLpt</a>.AddString("LPT3");
+
+    // setup the list of Flash file formats in the pulldown list
+    <a href="#" OnFocus="link('_member','m_flashFormat183903365',this)">m_flashFormat</a>.AddString("HEX");
+    <a href="#" OnFocus="link('_member','m_flashFormat183903365',this)">m_flashFormat</a>.AddString("MCS");
+    <a href="#" OnFocus="link('_member','m_flashFormat183903365',this)">m_flashFormat</a>.AddString("EXO-16");
+    <a href="#" OnFocus="link('_member','m_flashFormat183903365',this)">m_flashFormat</a>.AddString("EXO-24");
+    <a href="#" OnFocus="link('_member','m_flashFormat183903365',this)">m_flashFormat</a>.AddString("EXO-32");
+    <a href="#" OnFocus="link('_member','m_flashFormat183903365',this)">m_flashFormat</a>.AddString("XESS-16");
+    <a href="#" OnFocus="link('_member','m_flashFormat183903365',this)">m_flashFormat</a>.AddString("XESS-24");
+    <a href="#" OnFocus="link('_member','m_flashFormat183903365',this)">m_flashFormat</a>.AddString("XESS-32");
+    <a href="#" OnFocus="link('_member','m_flashFormat183903365',this)">m_flashFormat</a>.SelectString(-1,"HEX");  // select the default Flash file format upon 
+
+    // setup the list of Flash file formats in the pulldown list
+    <a href="#" OnFocus="link('_member','m_ramFormat183903365',this)">m_ramFormat</a>.AddString("HEX");
+    <a href="#" OnFocus="link('_member','m_ramFormat183903365',this)">m_ramFormat</a>.AddString("MCS");
+    <a href="#" OnFocus="link('_member','m_ramFormat183903365',this)">m_ramFormat</a>.AddString("EXO-16");
+    <a href="#" OnFocus="link('_member','m_ramFormat183903365',this)">m_ramFormat</a>.AddString("EXO-24");
+    <a href="#" OnFocus="link('_member','m_ramFormat183903365',this)">m_ramFormat</a>.AddString("EXO-32");
+    <a href="#" OnFocus="link('_member','m_ramFormat183903365',this)">m_ramFormat</a>.AddString("XESS-16");
+    <a href="#" OnFocus="link('_member','m_ramFormat183903365',this)">m_ramFormat</a>.AddString("XESS-24");
+    <a href="#" OnFocus="link('_member','m_ramFormat183903365',this)">m_ramFormat</a>.AddString("XESS-32");
+    <a href="#" OnFocus="link('_member','m_ramFormat183903365',this)">m_ramFormat</a>.SelectString(-1,"HEX");  // select the default Flash file format upon startup
+
+    // get the last setting for the board type
+    string brdType;
+    if((brdType=<a href="#" OnFocus="link('_member','../xstoolslib/GetXSTOOLSParameter86138908',this)">GetXSTOOLSParameter</a>((string)"BoardType")) == "")
+    { // set the default value if no previous value exists
+        if(<a href="#" OnFocus="link('_member','../xstoolslib/SetXSTOOLSParameter1183990257',this)">SetXSTOOLSParameter</a>((string)"BoardType",(string)brdInfo[0].brdModel) == false)
+        {
+            AfxMessageBox("BoardType value was not set",MB_ICONSTOP);
+            exit(0);
+        }
+        brdType = <a href="#" OnFocus="link('_member','../xstoolslib/GetXSTOOLSParameter86138908',this)">GetXSTOOLSParameter</a>((string)"BoardType");
+        assert(brdType != "");
+    }
+    <a href="#" OnFocus="link('_member','m_cmbBoard183903365',this)">m_cmbBoard</a>.SelectString(-1,(const char*)(brdType.c_str()));
+
+    // get the last setting for the parallel port
+    string lptNum;
+    if((lptNum=<a href="#" OnFocus="link('_member','../xstoolslib/GetXSTOOLSParameter86138908',this)">GetXSTOOLSParameter</a>((string)"LPT")) == "")
+    { // set the default value if no previous value exists
+        if(<a href="#" OnFocus="link('_member','../xstoolslib/SetXSTOOLSParameter1183990257',this)">SetXSTOOLSParameter</a>((string)"LPT",(string)"LPT1") == false)
+        {
+            AfxMessageBox("LPT value was not set",MB_ICONSTOP);
+            exit(0);
+        }
+        lptNum = <a href="#" OnFocus="link('_member','../xstoolslib/GetXSTOOLSParameter86138908',this)">GetXSTOOLSParameter</a>((string)"LPT");
+        assert(lptNum != "");
+    }
+    <a href="#" OnFocus="link('_member','m_cmbLpt183903365',this)">m_cmbLpt</a>.SelectString(-1,(const char*)(lptNum.c_str()));
+
+    // get the last setting for the Flash upload format from the registry
+    string flashFmt;
+    if((flashFmt=<a href="#" OnFocus="link('_member','../xstoolslib/GetXSTOOLSParameter86138908',this)">GetXSTOOLSParameter</a>((string)"FlashFormat")) == "")
+    { // set the default value if no previous value exists
+        if(<a href="#" OnFocus="link('_member','../xstoolslib/SetXSTOOLSParameter1183990257',this)">SetXSTOOLSParameter</a>((string)"FlashFormat",(string)"HEX") == false)
+        {
+            AfxMessageBox("Flash upload format value was not set",MB_ICONSTOP);
+            exit(0);
+        }
+        flashFmt = <a href="#" OnFocus="link('_member','../xstoolslib/GetXSTOOLSParameter86138908',this)">GetXSTOOLSParameter</a>((string)"FlashFormat");
+        assert(flashFmt != "");
+    }
+    <a href="#" OnFocus="link('_member','m_flashFormat183903365',this)">m_flashFormat</a>.SelectString(-1,(const char*)(flashFmt.c_str()));
+    <a href="#" OnFocus="link('_member','m_flashIntfcDownload183903365',this)">m_flashIntfcDownload</a>.SetCheck(1);
+
+    // get the last setting for the RAM upload format from the registry
+    string ramFmt;
+    if((ramFmt=<a href="#" OnFocus="link('_member','../xstoolslib/GetXSTOOLSParameter86138908',this)">GetXSTOOLSParameter</a>((string)"RAMFormat")) == "")
+    { // set the default value if no previous value exists
+        if(<a href="#" OnFocus="link('_member','../xstoolslib/SetXSTOOLSParameter1183990257',this)">SetXSTOOLSParameter</a>((string)"RAMFormat",(string)"HEX") == false)
+        {
+            AfxMessageBox("RAM upload format value was not set",MB_ICONSTOP);
+            exit(0);
+        }
+        ramFmt = <a href="#" OnFocus="link('_member','../xstoolslib/GetXSTOOLSParameter86138908',this)">GetXSTOOLSParameter</a>((string)"RAMFormat");
+        assert(ramFmt != "");
+    }
+    <a href="#" OnFocus="link('_member','m_ramFormat183903365',this)">m_ramFormat</a>.SelectString(-1,(const char*)(ramFmt.c_str()));
+    <a href="#" OnFocus="link('_member','m_ramIntfcDownload183903365',this)">m_ramIntfcDownload</a>.SetCheck(1);
+
+    <a href="#" OnFocus="link('_member','m_btnLoad183903365',this)">m_btnLoad</a>.EnableWindow(FALSE);   // no files selected, so no way to reload
+    
+    return TRUE;  // return TRUE  unless you set the focus to a control
+}
+
+void <a href="#" OnFocus="link('_member','OnSelchangeCmbBoard183903484',this)">CGxsloadDlg::OnSelchangeCmbBoard</a>() 
+{
+    CString <a href="#" OnFocus="link('_member','../xsatapi/brdModel0',this)">brdModel</a>;
+    <a href="#" OnFocus="link('_member','m_cmbBoard183903365',this)">m_cmbBoard</a>.GetLBText(<a href="#" OnFocus="link('_member','m_cmbBoard183903365',this)">m_cmbBoard</a>.GetCurSel(),<a href="#" OnFocus="link('_member','../xsatapi/brdModel0',this)">brdModel</a>);
+    <a href="#" OnFocus="link('_member','../xstoolslib/SetXSTOOLSParameter1183990257',this)">SetXSTOOLSParameter</a>((string)"BoardType",(string)LPCTSTR(brdModel));
+}
+
+void <a href="#" OnFocus="link('_member','OnSelchangeCmbLpt183903484',this)">CGxsloadDlg::OnSelchangeCmbLpt</a>() 
+{
+    CString <a href="#" OnFocus="link('_member','../xsatapi/lpt0',this)">lpt</a>;
+    <a href="#" OnFocus="link('_member','m_cmbLpt183903365',this)">m_cmbLpt</a>.GetLBText(<a href="#" OnFocus="link('_member','m_cmbLpt183903365',this)">m_cmbLpt</a>.GetCurSel(),<a href="#" OnFocus="link('_member','../xsatapi/lpt0',this)">lpt</a>);
+    <a href="#" OnFocus="link('_member','../xstoolslib/SetXSTOOLSParameter1183990257',this)">SetXSTOOLSParameter</a>((string)"LPT",(string)LPCTSTR(lpt));
+}
+
+void <a href="#" OnFocus="link('_member','OnSelchangeFlashformat183903484',this)">CGxsloadDlg::OnSelchangeFlashformat</a>() 
+{
+    CString fmt;
+    <a href="#" OnFocus="link('_member','m_flashFormat183903365',this)">m_flashFormat</a>.GetLBText(<a href="#" OnFocus="link('_member','m_flashFormat183903365',this)">m_flashFormat</a>.GetCurSel(),fmt);
+    <a href="#" OnFocus="link('_member','../xstoolslib/SetXSTOOLSParameter1183990257',this)">SetXSTOOLSParameter</a>((string)"FlashFormat",(string)LPCTSTR(fmt));
+}
+
+void <a href="#" OnFocus="link('_member','OnSelchangeRamformat183903484',this)">CGxsloadDlg::OnSelchangeRamformat</a>() 
+{
+    CString fmt;
+    <a href="#" OnFocus="link('_member','m_ramFormat183903365',this)">m_ramFormat</a>.GetLBText(<a href="#" OnFocus="link('_member','m_ramFormat183903365',this)">m_ramFormat</a>.GetCurSel(),fmt);
+    <a href="#" OnFocus="link('_member','../xstoolslib/SetXSTOOLSParameter1183990257',this)">SetXSTOOLSParameter</a>((string)"RAMFormat",(string)LPCTSTR(fmt));
+}
+
+void <a href="#" OnFocus="link('_member','OnSysCommand1089575332',this)">CGxsloadDlg::OnSysCommand</a>(UINT nID, LPARAM lParam)
+{
+    if ((nID &amp; 0xFFF0) == IDM_ABOUTBOX)
+    {
+        <a href="#" OnFocus="link('_class','CAboutDlg0',this)">CAboutDlg</a> dlgAbout;
+        dlgAbout.DoModal();
+    }
+    else
+    {
+        CDialog::OnSysCommand(nID, lParam);
+    }
+}
+
+// If you add a minimize button to your dialog, you will need the code below
+//  to draw the icon.  For MFC applications using the document/view model,
+//  this is automatically done for you by the framework.
+
+void <a href="#" OnFocus="link('_member','OnPaint183903484',this)">CGxsloadDlg::OnPaint</a>() 
+{
+    if (IsIconic())
+    {
+        CPaintDC dc(this); // device context for painting
+
+        SendMessage(WM_ICONERASEBKGND, (WPARAM) dc.GetSafeHdc(), 0);
+
+        // Center icon in client rectangle
+        int cxIcon = GetSystemMetrics(SM_CXICON);
+        int cyIcon = GetSystemMetrics(SM_CYICON);
+        CRect rect;
+        GetClientRect(&amp;rect);
+        int x = (rect.Width() - cxIcon + 1) / 2;
+        int y = (rect.Height() - cyIcon + 1) / 2;
+
+        // Draw the icon
+        dc.DrawIcon(x, y, m_hIcon);
+    }
+    else
+    {
+        CDialog::OnPaint();
+    }
+}
+
+// The system calls this to obtain the cursor to display while the user drags
+//  the minimized window.
+HCURSOR <a href="#" OnFocus="link('_member','OnQueryDragIcon183903484',this)">CGxsloadDlg::OnQueryDragIcon</a>()
+{
+    return (HCURSOR) <a href="#" OnFocus="link('_member','m_hIcon183903365',this)">m_hIcon</a>;
+}
+
+
+void <a href="#" OnFocus="link('_member','OnBtnLoad183903484',this)">CGxsloadDlg::OnBtnLoad</a>() 
+{
+    <a href="#" OnFocus="link('_member','DownloadSelectedFiles2599896202',this)">DownloadSelectedFiles</a>();
+}
+
+
+void <a href="#" OnFocus="link('_member','DownloadSelectedFiles2599896202',this)">CGxsloadDlg::DownloadSelectedFiles</a>()
+{
+    
+    <a href="#" OnFocus="link('_class','../xstoolslib/XSError0',this)">XSError</a> <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>(cerr); // setup error channel
+
+    // exit if no files selected for downloading
+    if(<a href="#" OnFocus="link('_member','m_lstFPLD183903365',this)">m_lstFPLD</a>.GetSelCount()==0 &amp;&amp; <a href="#" OnFocus="link('_member','m_lstRAM183903365',this)">m_lstRAM</a>.GetSelCount()==0 &amp;&amp; <a href="#" OnFocus="link('_member','m_lstNONVOL183903365',this)">m_lstNONVOL</a>.GetSelCount()==0)
+    {
+        AfxMessageBox("No files selected to download!", MB_ICONSTOP);
+        return;
+    }
+
+    int <a href="#" OnFocus="link('_member','../xsatapi/portNum0',this)">portNum</a> = <a href="#" OnFocus="link('_member','m_cmbLpt183903365',this)">m_cmbLpt</a>.GetCurSel()+1;  // get parallel port number
+
+    // determine the type of XS Board and set the pointer to the board object
+    <a href="#" OnFocus="link('_class','../xstoolslib/XSBoard0',this)">XSBoard</a>* <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>;
+    CString <a href="#" OnFocus="link('_member','../xsatapi/brdModel0',this)">brdModel</a>;
+    <a href="#" OnFocus="link('_member','m_cmbBoard183903365',this)">m_cmbBoard</a>.GetLBText(<a href="#" OnFocus="link('_member','m_cmbBoard183903365',this)">m_cmbBoard</a>.GetCurSel(),<a href="#" OnFocus="link('_member','../xsatapi/brdModel0',this)">brdModel</a>);
+    <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a> = <a href="#" OnFocus="link('_member','../xstoolslib/NewXSBoard189216495',this)">NewXSBoard</a>(brdModel);
+    if(<a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>==NULL)
+    {
+        AfxMessageBox("Unknown type of XS Board!", MB_ICONSTOP);
+        return;
+    }
+
+    if(<a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/Setup3588776655',this)">Setup</a>(&amp;errMsg,LPCTSTR(brdModel),portNum) == false)
+    {
+        AfxMessageBox("Invalid parallel port selected!",MB_ICONSTOP);
+        delete <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>;
+        return;
+    }
+
+    // if any files in the RAM list are selected, then download them into RAM
+    if(<a href="#" OnFocus="link('_member','m_lstRAM183903365',this)">m_lstRAM</a>.GetSelCount() != 0)
+    {
+        bool ramIntfcDownload = (<a href="#" OnFocus="link('_member','m_ramIntfcDownload183903365',this)">m_ramIntfcDownload</a>.GetCheck()==BST_CHECKED);
+        int index[10];  // holds the indices of selected files
+        int numFiles = <a href="#" OnFocus="link('_member','m_lstRAM183903365',this)">m_lstRAM</a>.GetSelItems(10,index);  // get indices of selected files
+        char <a href="#" OnFocus="link('_member','../xssetsaa711X/fileName0',this)">fileName</a>[MAX_PATH];
+        for(int i=0; i&lt;numFiles; i++)
+        {
+            string dirAndFileName;
+            dirAndFileName = *(string*)(<a href="#" OnFocus="link('_member','m_lstRAM183903365',this)">m_lstRAM</a>.GetItemDataPtr(index[i]));
+            <a href="#" OnFocus="link('_member','m_lstRAM183903365',this)">m_lstRAM</a>.GetText(index[i],fileName);
+            dirAndFileName += "/";
+            dirAndFileName += <a href="#" OnFocus="link('_member','../xssetsaa711X/fileName0',this)">fileName</a>;
+            if(<a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/DownloadRAM785046615',this)">DownloadRAM</a>(dirAndFileName, ENDIAN_DEFAULTS, (i==0)&amp;&amp;ramIntfcDownload, i==numFiles-1) == false)
+            {
+                string instructions = "An error occurred while downloading to the RAM\n\nContinue?";
+                if(<a href="#" OnFocus="link('_member','../xstoolslib/PromptUser2517124797',this)">PromptUser</a>(instructions,PROMPT_OKCANCEL) == <a href="#" OnFocus="link('_member','../xstoolslib/RESPONSE_CANCEL0',this)">RESPONSE_CANCEL</a>)
+                {
+                    delete <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>;
+                    return;
+                }
+            }
+            else if(<a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','../xstoolslib/IsError863564933',this)">IsError</a>())
+            {
+                string instructions = "An error occurred while downloading to the RAM\n\nContinue?";
+                if(<a href="#" OnFocus="link('_member','../xstoolslib/PromptUser2517124797',this)">PromptUser</a>(instructions,PROMPT_OKCANCEL) == <a href="#" OnFocus="link('_member','../xstoolslib/RESPONSE_CANCEL0',this)">RESPONSE_CANCEL</a>)
+                {
+                    delete <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>;
+                    return;
+                }
+            }
+        }
+    }
+
+    // if any files in the FlashEEPROM list are selected, then download them into Flash/EEPROM
+    if(<a href="#" OnFocus="link('_member','m_lstNONVOL183903365',this)">m_lstNONVOL</a>.GetSelCount() != 0)
+    {
+        bool flashIntfcDownload = (<a href="#" OnFocus="link('_member','m_flashIntfcDownload183903365',this)">m_flashIntfcDownload</a>.GetCheck()==BST_CHECKED);
+        int index[10];  // holds the indices of selected files
+        int numFiles = <a href="#" OnFocus="link('_member','m_lstNONVOL183903365',this)">m_lstNONVOL</a>.GetSelItems(10,index);  // get indices of selected files
+        char <a href="#" OnFocus="link('_member','../xssetsaa711X/fileName0',this)">fileName</a>[MAX_PATH];
+        for(int i=0; i&lt;numFiles; i++)
+        {
+            string dirAndFileName;
+            dirAndFileName = *(string*)(<a href="#" OnFocus="link('_member','m_lstNONVOL183903365',this)">m_lstNONVOL</a>.GetItemDataPtr(index[i]));
+            <a href="#" OnFocus="link('_member','m_lstNONVOL183903365',this)">m_lstNONVOL</a>.GetText(index[i],fileName);
+            dirAndFileName += "/";
+            dirAndFileName += <a href="#" OnFocus="link('_member','../xssetsaa711X/fileName0',this)">fileName</a>;
+            if(<a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/DownloadFlash785046615',this)">DownloadFlash</a>(dirAndFileName, ENDIAN_DEFAULTS, (i==0)&amp;&amp;flashIntfcDownload, i==numFiles-1) == false)
+            {
+                string instructions = "An error occurred while downloading to the Flash\n\nContinue?";
+                if(<a href="#" OnFocus="link('_member','../xstoolslib/PromptUser2517124797',this)">PromptUser</a>(instructions,PROMPT_OKCANCEL) == <a href="#" OnFocus="link('_member','../xstoolslib/RESPONSE_CANCEL0',this)">RESPONSE_CANCEL</a>)
+                {
+                    delete <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>;
+                    return;
+                }
+            }
+            else if(<a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','../xstoolslib/IsError863564933',this)">IsError</a>())
+            {
+                string instructions = "An error occurred while downloading to the Flash\n\nContinue?";
+                if(<a href="#" OnFocus="link('_member','../xstoolslib/PromptUser2517124797',this)">PromptUser</a>(instructions,PROMPT_OKCANCEL) == <a href="#" OnFocus="link('_member','../xstoolslib/RESPONSE_CANCEL0',this)">RESPONSE_CANCEL</a>)
+                {
+                    delete <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>;
+                    return;
+                }
+            }
+        }
+    }
+
+    // if any file in the FPGA/CPLD list is selected, then download it into RAM
+    if(<a href="#" OnFocus="link('_member','m_lstFPLD183903365',this)">m_lstFPLD</a>.GetCurSel() != LB_ERR)
+    {
+        char <a href="#" OnFocus="link('_member','../xssetsaa711X/fileName0',this)">fileName</a>[MAX_PATH];
+        int i = <a href="#" OnFocus="link('_member','m_lstFPLD183903365',this)">m_lstFPLD</a>.GetCurSel();
+        string dirAndFileName = *(string*)(<a href="#" OnFocus="link('_member','m_lstFPLD183903365',this)">m_lstFPLD</a>.GetItemDataPtr(i));
+        <a href="#" OnFocus="link('_member','m_lstFPLD183903365',this)">m_lstFPLD</a>.GetText(i,fileName);
+        dirAndFileName += "/";
+        dirAndFileName += <a href="#" OnFocus="link('_member','../xssetsaa711X/fileName0',this)">fileName</a>;
+        if(<a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/Configure36592665',this)">Configure</a>(dirAndFileName) == false)
+        {
+            delete <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>;
+            return;
+        }
+        else if(<a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','../xstoolslib/IsError863564933',this)">IsError</a>())
+        {
+            delete <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>;
+            return;
+        }
+    }
+
+    delete <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>;
+}
+
+// place dragged files into a list of files which are available for downloading
+void <a href="#" OnFocus="link('_member','OnDropFiles715474125',this)">CGxsloadDlg::OnDropFiles</a>(HDROP hDropInfo)
+{
+    // determine which list box the files are dropped into
+    POINT dropPoint;
+    if(::DragQueryPoint(hDropInfo,&amp;dropPoint) == 0)
+        return; // dropped outside of client area so do nothing
+
+    // determine which list box the files were dropped into
+    enum {FPLD,RAM,NONVOL} listType;
+    CListBox* fileListBox;
+    WINDOWPLACEMENT wFPLD, wRAM, wNONVOL;
+    <a href="#" OnFocus="link('_member','m_lstFPLD183903365',this)">m_lstFPLD</a>.GetWindowPlacement(&amp;wFPLD);
+    <a href="#" OnFocus="link('_member','m_lstRAM183903365',this)">m_lstRAM</a>.GetWindowPlacement(&amp;wRAM);
+    <a href="#" OnFocus="link('_member','m_lstNONVOL183903365',this)">m_lstNONVOL</a>.GetWindowPlacement(&amp;wNONVOL);
+    if(wFPLD.rcNormalPosition.left&lt;=dropPoint.x &amp;&amp; dropPoint.x&lt;=wFPLD.rcNormalPosition.right &amp;&amp;
+        wFPLD.rcNormalPosition.top&lt;=dropPoint.y &amp;&amp; dropPoint.y&lt;=wFPLD.rcNormalPosition.bottom)
+    {
+        fileListBox = &amp;<a href="#" OnFocus="link('_member','m_lstFPLD183903365',this)">m_lstFPLD</a>;
+        listType = FPLD;
+    }
+    else if(wRAM.rcNormalPosition.left&lt;=dropPoint.x &amp;&amp; dropPoint.x&lt;=wRAM.rcNormalPosition.right &amp;&amp;
+        wRAM.rcNormalPosition.top&lt;=dropPoint.y &amp;&amp; dropPoint.y&lt;=wRAM.rcNormalPosition.bottom)
+
+    {
+        fileListBox = &amp;<a href="#" OnFocus="link('_member','m_lstRAM183903365',this)">m_lstRAM</a>;
+        listType = RAM;
+    }
+    else if(wNONVOL.rcNormalPosition.left&lt;=dropPoint.x &amp;&amp; dropPoint.x&lt;=wNONVOL.rcNormalPosition.right &amp;&amp;
+        wNONVOL.rcNormalPosition.top&lt;=dropPoint.y &amp;&amp; dropPoint.y&lt;=wNONVOL.rcNormalPosition.bottom)
+    {
+        fileListBox = &amp;<a href="#" OnFocus="link('_member','m_lstNONVOL183903365',this)">m_lstNONVOL</a>;
+        listType = NONVOL;
+    }
+    else
+        return; // dropped outside of file list boxes so do nothing
+
+    
+    int numFiles = ::DragQueryFile(hDropInfo, (UINT) -1, NULL, 0); // # of dropped files
+    int i;
+    for(i=numFiles-1; i&gt;=0; i--)
+    {
+        // get the name of the next dropped file
+        char <a href="#" OnFocus="link('_member','../xssetsaa711X/fileName0',this)">fileName</a>[MAX_PATH];
+        ::DragQueryFile(hDropInfo,i,<a href="#" OnFocus="link('_member','../xssetsaa711X/fileName0',this)">fileName</a>,sizeof(<a href="#" OnFocus="link('_member','../xssetsaa711X/fileName0',this)">fileName</a>));
+
+        // make the file name into a string
+        string* file = new string(fileName);
+
+        // check the file name a suffix of a downloadable file
+        string suffix = <a href="#" OnFocus="link('_member','../xstoolslib/GetSuffix67554305',this)">GetSuffix</a>(*file);
+        for( int l=suffix.length()-1; l&gt;=0; l--)
+            suffix[l] = toupper(suffix[l]);
+        if( (listType==FPLD   &amp;&amp; (suffix!="BIT" &amp;&amp; suffix!="SVF")) ||
+            (listType==RAM    &amp;&amp; (suffix!="HEX" &amp;&amp; suffix!="EXO" &amp;&amp; suffix!="XES" &amp;&amp; suffix!="MCS")) ||
+            (listType==NONVOL &amp;&amp; (suffix!="HEX" &amp;&amp; suffix!="EXO" &amp;&amp; suffix!="XES" &amp;&amp; suffix!="MCS" &amp;&amp; suffix!="BIT"))
+            )
+        {
+            numFiles--; // decrement the number of downloadable files
+            continue;   // skip non-downloadable files
+        }
+
+        // get the directory path to the downloadable file
+        string* dir = new string;
+        *dir = <a href="#" OnFocus="link('_member','../xstoolslib/GetPrefix67554305',this)">GetPrefix</a>(*file);
+
+        // get the base file name
+        <a href="#" OnFocus="link('_member','../xstoolslib/StripPrefix67554305',this)">StripPrefix</a>(*file);
+
+        // show the base file name in the list box and associate a
+        // pointer to the directory path with the list item
+        fileListBox-&gt;InsertString(0,file-&gt;data());
+        fileListBox-&gt;SetItemDataPtr(0,dir);
+    }
+    ::DragFinish(hDropInfo);
+
+    if(numFiles&lt;=0)
+    {
+        AfxMessageBox("No downloadable files dropped!!",MB_ICONSTOP);
+        return;
+    }
+
+    // deselect all files ...
+    if(fileListBox-&gt;SetSel(-1,FALSE) == LB_ERR)
+        fileListBox-&gt;SetCurSel(-1);  // do this if the list box allows only a single selection
+    // then select the newly added downloadable files
+    if(numFiles&lt;2)
+    {
+        if(fileListBox-&gt;SetSel(0,TRUE) == LB_ERR)
+            fileListBox-&gt;SetCurSel(0);  // do this if the list box allows only a single selection
+    }
+    else if(fileListBox-&gt;SelItemRange(TRUE,0,numFiles-1) == LB_ERR)
+            fileListBox-&gt;SetCurSel(0);  // do this if the list box allows only a single selection
+
+    <a href="#" OnFocus="link('_member','OnSelchangeLstFiles183903484',this)">OnSelchangeLstFiles</a>();
+}
+
+void <a href="#" OnFocus="link('_member','OnSelchangeLstFiles183903484',this)">CGxsloadDlg::OnSelchangeLstFiles</a>() 
+{
+    // disable load button if no files selected for downloading
+    if(<a href="#" OnFocus="link('_member','m_lstFPLD183903365',this)">m_lstFPLD</a>.GetCurSel()==LB_ERR &amp;&amp; <a href="#" OnFocus="link('_member','m_lstRAM183903365',this)">m_lstRAM</a>.GetSelCount()==0 &amp;&amp; <a href="#" OnFocus="link('_member','m_lstNONVOL183903365',this)">m_lstNONVOL</a>.GetSelCount()==0)
+        <a href="#" OnFocus="link('_member','m_btnLoad183903365',this)">m_btnLoad</a>.EnableWindow(FALSE);
+    else
+        <a href="#" OnFocus="link('_member','m_btnLoad183903365',this)">m_btnLoad</a>.EnableWindow(TRUE);
+}
+
+
+void <a href="#" OnFocus="link('_member','OnDblclkListFpld183903484',this)">CGxsloadDlg::OnDblclkListFpld</a>() 
+{
+    // double-clicking an entry in the FPGA/CPLD list will deselect it
+    CListBox* fileListBox;
+    fileListBox = &amp;<a href="#" OnFocus="link('_member','m_lstFPLD183903365',this)">m_lstFPLD</a>;
+    fileListBox-&gt;SetCurSel(-1);
+    <a href="#" OnFocus="link('_member','OnSelchangeLstFiles183903484',this)">OnSelchangeLstFiles</a>();
+}
+
+
+enum {<a href="#" OnFocus="link('_member','RAMSOURCE0',this)">RAMSOURCE</a>, <a href="#" OnFocus="link('_member','FLASHSOURCE0',this)">FLASHSOURCE</a>};
+
+bool <a href="#" OnFocus="link('_member','UploadFile1258210492',this)">CGxsloadDlg::UploadFile</a>(int source)
+{
+    
+    <a href="#" OnFocus="link('_class','../xstoolslib/XSError0',this)">XSError</a> <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>(cerr); // setup error channel
+
+    int <a href="#" OnFocus="link('_member','../xsatapi/portNum0',this)">portNum</a> = <a href="#" OnFocus="link('_member','m_cmbLpt183903365',this)">m_cmbLpt</a>.GetCurSel()+1;  // get parallel port number
+
+    // determine the type of XS Board and set the pointer to the board object
+    <a href="#" OnFocus="link('_class','../xstoolslib/XSBoard0',this)">XSBoard</a>* <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>;
+    CString <a href="#" OnFocus="link('_member','../xsatapi/brdModel0',this)">brdModel</a>;
+    <a href="#" OnFocus="link('_member','m_cmbBoard183903365',this)">m_cmbBoard</a>.GetLBText(<a href="#" OnFocus="link('_member','m_cmbBoard183903365',this)">m_cmbBoard</a>.GetCurSel(),<a href="#" OnFocus="link('_member','../xsatapi/brdModel0',this)">brdModel</a>);
+    <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a> = <a href="#" OnFocus="link('_member','../xstoolslib/NewXSBoard189216495',this)">NewXSBoard</a>(brdModel);
+    if(<a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>==NULL)
+    {
+        AfxMessageBox("Unknown type of XS Board!", MB_ICONSTOP);
+        return false;
+    }
+
+    if(<a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/Setup3588776655',this)">Setup</a>(&amp;errMsg,LPCTSTR(brdModel),portNum) == false)
+    {
+        AfxMessageBox("Invalid parallel port selected!",MB_ICONSTOP);
+        delete <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>;
+        return false;
+    }
+
+    if(source==<a href="#" OnFocus="link('_member','RAMSOURCE0',this)">RAMSOURCE</a>)
+    {
+        char s[100], tmp[100];
+        int hiAddress, loAddress;
+        int sLen = <a href="#" OnFocus="link('_member','m_ramHiAddr183903365',this)">m_ramHiAddr</a>.GetWindowText(s,100);
+        if(sLen&lt;=0)
+        {
+            AfxMessageBox("You must specify an upper address for the RAM upload operation!",MB_ICONSTOP);
+            return false;
+        }
+        if(sscanf(s,"%x%s",&amp;hiAddress,&amp;tmp)!=1)
+        {
+            AfxMessageBox("You must specify a single upper address for RAM upload operations!", MB_ICONSTOP);
+            return false;
+        }
+
+        sLen = <a href="#" OnFocus="link('_member','m_ramLoAddr183903365',this)">m_ramLoAddr</a>.GetWindowText(s,100);
+        if(sLen&lt;=0)
+        {
+            AfxMessageBox("You must specify a lower address for the RAM upload operation!",MB_ICONSTOP);
+            return false;
+        }
+        if(sscanf(s,"%x%s",&amp;loAddress,&amp;tmp)!=1)
+        {
+            AfxMessageBox("You must specify a single lower address for RAM upload operations!", MB_ICONSTOP);
+            return false;
+        }
+
+        bool ramIntfcDownload = (<a href="#" OnFocus="link('_member','m_ramIntfcDownload183903365',this)">m_ramIntfcDownload</a>.GetCheck()==BST_CHECKED);
+        CString formatName;
+        <a href="#" OnFocus="link('_member','m_ramFormat183903365',this)">m_ramFormat</a>.GetLBText(<a href="#" OnFocus="link('_member','m_ramFormat183903365',this)">m_ramFormat</a>.GetCurSel(),formatName);
+        string ramUploadFilename = <a href="#" OnFocus="link('_member','../xstoolslib/FindXSTOOLSBinDir53616',this)">FindXSTOOLSBinDir</a>();
+        ramUploadFilename += "/ramupld.";
+        ramUploadFilename += LPCTSTR(formatName.Left(3));
+        bool status = <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/UploadRAM1330229625',this)">UploadRAM</a>(ramUploadFilename,LPCTSTR(formatName),loAddress,hiAddress,ENDIAN_DEFAULTS,ramIntfcDownload,true);
+        delete <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>;
+        return status;
+    }
+    else if(source==<a href="#" OnFocus="link('_member','FLASHSOURCE0',this)">FLASHSOURCE</a>)
+    {
+        char s[100], tmp[100];
+        int hiAddress, loAddress;
+        int sLen = <a href="#" OnFocus="link('_member','m_flashHiAddr183903365',this)">m_flashHiAddr</a>.GetWindowText(s,100);
+        if(sLen&lt;=0)
+        {
+            AfxMessageBox("You must specify an upper address for the Flash upload operation!",MB_ICONSTOP);
+            return false;
+        }
+        if(sscanf(s,"%x%s",&amp;hiAddress,&amp;tmp)!=1)
+        {
+            AfxMessageBox("You must specify a single upper address for Flash upload operations!", MB_ICONSTOP);
+            return false;
+        }
+        sLen = <a href="#" OnFocus="link('_member','m_flashLoAddr183903365',this)">m_flashLoAddr</a>.GetWindowText(s,100);
+        if(sLen&lt;=0)
+        {
+            AfxMessageBox("You must specify a lower address for the Flash upload operation!",MB_ICONSTOP);
+            return false;
+        }
+        if(sscanf(s,"%x%s",&amp;loAddress,&amp;tmp)!=1)
+        {
+            AfxMessageBox("You must specify a single lower address for Flash upload operations!", MB_ICONSTOP);
+            return false;
+        }
+
+        bool flashIntfcDownload = (<a href="#" OnFocus="link('_member','m_ramIntfcDownload183903365',this)">m_ramIntfcDownload</a>.GetCheck()==BST_CHECKED);
+        CString formatName;
+        <a href="#" OnFocus="link('_member','m_flashFormat183903365',this)">m_flashFormat</a>.GetLBText(<a href="#" OnFocus="link('_member','m_flashFormat183903365',this)">m_flashFormat</a>.GetCurSel(),formatName);
+        string flashUploadFilename = <a href="#" OnFocus="link('_member','../xstoolslib/FindXSTOOLSBinDir53616',this)">FindXSTOOLSBinDir</a>();
+        flashUploadFilename += "/flshupld.";
+        flashUploadFilename += LPCTSTR(formatName.Left(3));
+        bool status = <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/UploadFlash1330229625',this)">UploadFlash</a>(flashUploadFilename,LPCTSTR(formatName),loAddress,hiAddress,ENDIAN_DEFAULTS,flashIntfcDownload,true);
+        delete <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>;
+        return status;
+    }
+    else
+    {
+        assert(1==0);   // should never get here
+        return false;
+        delete <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>;
+    }
+
+    return false;
+}
+
+// class for handling drag-and-drop for RAM/Flash upload operations
+class <a href="#" OnFocus="link('_class','UploadDataSource0',this)">UploadDataSource</a> : public COleDataSource
+{
+public:
+    BOOL <a href="#" OnFocus="link('_member','OnRenderGlobalData319803964',this)">OnRenderGlobalData</a>( LPFORMATETC lpFormatEtc, HGLOBAL* phGlobal );
+    int <a href="#" OnFocus="link('_member','source957789771',this)">source</a>;   // RAMSOURCE or FLASHSOURCE
+    <a href="#" OnFocus="link('_class','CGxsloadDlg0',this)">CGxsloadDlg</a>* <a href="#" OnFocus="link('_member','top957789771',this)">top</a>; // pointer to dialog window class containing the upload methods 
+};
+
+const int <a href="#" OnFocus="link('_member','mouseButtonUp0',this)">mouseButtonUp</a> = 1;
+const int <a href="#" OnFocus="link('_member','mouseButtonDown0',this)">mouseButtonDown</a> = -1;
+int <a href="#" OnFocus="link('_member','prevKeyState0',this)">prevKeyState</a> = <a href="#" OnFocus="link('_member','mouseButtonUp0',this)">mouseButtonUp</a>;    // global flag for the previous state of the left mouse button
+
+BOOL <a href="#" OnFocus="link('_member','OnRenderGlobalData319803964',this)">UploadDataSource::OnRenderGlobalData</a>( LPFORMATETC lpFormatEtc, HGLOBAL* phGlobal )
+{
+    // create the structure that contains the name of the file containing the uploaded data
+    string filename;
+    CString formatName;
+    if(<a href="#" OnFocus="link('_member','source957789771',this)">source</a>==<a href="#" OnFocus="link('_member','RAMSOURCE0',this)">RAMSOURCE</a>)
+    {
+        filename = <a href="#" OnFocus="link('_member','../xstoolslib/FindXSTOOLSBinDir53616',this)">FindXSTOOLSBinDir</a>();
+        filename += "/ramupld.";
+        <a href="#" OnFocus="link('_member','top957789771',this)">top</a>-&gt;<a href="#" OnFocus="link('_member','m_ramFormat183903365',this)">m_ramFormat</a>.GetLBText(<a href="#" OnFocus="link('_member','top957789771',this)">top</a>-&gt;<a href="#" OnFocus="link('_member','m_ramFormat183903365',this)">m_ramFormat</a>.GetCurSel(),formatName);
+        filename += LPCTSTR(formatName.Left(3));    // add upload filename extension corresponding to hex format
+    }
+    else if(<a href="#" OnFocus="link('_member','source957789771',this)">source</a>==<a href="#" OnFocus="link('_member','FLASHSOURCE0',this)">FLASHSOURCE</a>)
+    {
+        filename = <a href="#" OnFocus="link('_member','../xstoolslib/FindXSTOOLSBinDir53616',this)">FindXSTOOLSBinDir</a>();
+        filename += "/flshupld.";
+        <a href="#" OnFocus="link('_member','top957789771',this)">top</a>-&gt;<a href="#" OnFocus="link('_member','m_ramFormat183903365',this)">m_ramFormat</a>.GetLBText(<a href="#" OnFocus="link('_member','top957789771',this)">top</a>-&gt;<a href="#" OnFocus="link('_member','m_flashFormat183903365',this)">m_flashFormat</a>.GetCurSel(),formatName);
+        filename += LPCTSTR(formatName.Left(3));    // add upload filename extension corresponding to hex format
+    }
+    else
+    {   // we should never get here
+        assert(1==0);
+        return FALSE;
+    }
+    DROPFILES dropFile;
+    dropFile.pFiles = sizeof(DROPFILES);    // filename starts after the DROPFILES structure
+    dropFile.fNC = false;
+    dropFile.fWide = false;
+    if(*phGlobal==NULL)
+    {   // create the storage for the structure if it doesn't already exist
+        HGLOBAL file = GlobalAlloc(0,sizeof(DROPFILES)+strlen(filename.c_str())+2);
+        assert(file != NULL);
+        *phGlobal = file;
+    }
+    // copy the dropFile and filename to the global data structure
+    memcpy((void*)GlobalLock(*phGlobal),&amp;dropFile,sizeof(DROPFILES));
+    memcpy((void*)((char*)GlobalLock(*phGlobal)+sizeof(DROPFILES)),(void*)(filename.c_str()),strlen(filename.c_str()));
+    memcpy((void*)((char*)GlobalLock(*phGlobal)+sizeof(DROPFILES)+strlen(filename.c_str())),"\000\000",2);  // doubly-terminate list of files
+
+    // find out if the left mouse button is pressed
+    int currentKeyState = ::GetAsyncKeyState(::GetSystemMetrics(SM_SWAPBUTTON) ? VK_RBUTTON:VK_LBUTTON);    
+
+    if(<a href="#" OnFocus="link('_member','prevKeyState0',this)">prevKeyState</a> == <a href="#" OnFocus="link('_member','mouseButtonUp0',this)">mouseButtonUp</a>)
+    {   // exit if the mouse button was not pressed on the previous call
+        <a href="#" OnFocus="link('_member','prevKeyState0',this)">prevKeyState</a> = currentKeyState&lt;0 ? <a href="#" OnFocus="link('_member','mouseButtonDown0',this)">mouseButtonDown</a> : <a href="#" OnFocus="link('_member','mouseButtonUp0',this)">mouseButtonUp</a>;
+        return TRUE;    // return with filename that will eventually be uploaded with data
+    }
+
+    if(currentKeyState&lt;0)
+    {   // exit if the mouse button is still pressed
+        <a href="#" OnFocus="link('_member','prevKeyState0',this)">prevKeyState</a> = <a href="#" OnFocus="link('_member','mouseButtonDown0',this)">mouseButtonDown</a>;
+        return TRUE;    // return with filename that will eventually be uploaded with data
+    }
+
+    <a href="#" OnFocus="link('_member','prevKeyState0',this)">prevKeyState</a> = <a href="#" OnFocus="link('_member','mouseButtonUp0',this)">mouseButtonUp</a>;    // the mouse button has been released if we get here
+
+    //string fname;
+    if(<a href="#" OnFocus="link('_member','source957789771',this)">source</a>==<a href="#" OnFocus="link('_member','RAMSOURCE0',this)">RAMSOURCE</a>)
+    {
+        if(<a href="#" OnFocus="link('_member','top957789771',this)">top</a>-&gt;<a href="#" OnFocus="link('_member','UploadFile1258210492',this)">UploadFile</a>(source) == false)
+            return FALSE;   // upload failed
+    }
+    else if(<a href="#" OnFocus="link('_member','source957789771',this)">source</a>==<a href="#" OnFocus="link('_member','FLASHSOURCE0',this)">FLASHSOURCE</a>)
+    {
+        if(<a href="#" OnFocus="link('_member','top957789771',this)">top</a>-&gt;<a href="#" OnFocus="link('_member','UploadFile1258210492',this)">UploadFile</a>(source) == false)
+            return FALSE;   // upload failed
+    }
+    else
+    {   // we should never get here
+        assert(1==0);
+        return FALSE;
+    }
+
+    return TRUE;    // now return true with the file loaded with the data from RAM or Flash
+}
+
+// handle drag-and-drop for RAM and Flash uploads from the XS Board to the PC
+void <a href="#" OnFocus="link('_member','OnLButtonDown1200844378',this)">CGxsloadDlg::OnLButtonDown</a>(UINT nFlags, CPoint point) 
+{
+    WINDOWPLACEMENT ramIcon, flashIcon;
+    <a href="#" OnFocus="link('_member','m_ramFile183903365',this)">m_ramFile</a>.GetWindowPlacement(&amp;ramIcon);
+    <a href="#" OnFocus="link('_member','m_flashFile183903365',this)">m_flashFile</a>.GetWindowPlacement(&amp;flashIcon);
+    if(ramIcon.rcNormalPosition.left&lt;=point.x &amp;&amp; point.x&lt;=ramIcon.rcNormalPosition.right &amp;&amp;
+        ramIcon.rcNormalPosition.top&lt;=point.y &amp;&amp; point.y&lt;=ramIcon.rcNormalPosition.bottom)
+    {   // dragging from the RAM file icon, so get ready to upload data from RAM
+        <a href="#" OnFocus="link('_class','UploadDataSource0',this)">UploadDataSource</a>* p = new <a href="#" OnFocus="link('_class','UploadDataSource0',this)">UploadDataSource</a>;
+        <a href="#" OnFocus="link('_member','prevKeyState0',this)">prevKeyState</a> = <a href="#" OnFocus="link('_member','mouseButtonDown0',this)">mouseButtonDown</a>;
+        p-&gt;<a href="#" OnFocus="link('_member','source957789771',this)">source</a> = <a href="#" OnFocus="link('_member','RAMSOURCE0',this)">RAMSOURCE</a>;
+        p-&gt;<a href="#" OnFocus="link('_member','top957789771',this)">top</a> = this;
+        p-&gt;DelayRenderData(CF_HDROP);
+        p-&gt;DoDragDrop(DROPEFFECT_COPY);
+    }
+    else if(flashIcon.rcNormalPosition.left&lt;=point.x &amp;&amp; point.x&lt;=flashIcon.rcNormalPosition.right &amp;&amp;
+        flashIcon.rcNormalPosition.top&lt;=point.y &amp;&amp; point.y&lt;=flashIcon.rcNormalPosition.bottom)
+    {   // dragging from the Flash file icon, so get ready to upload data from Flash
+        <a href="#" OnFocus="link('_class','UploadDataSource0',this)">UploadDataSource</a>* p = new <a href="#" OnFocus="link('_class','UploadDataSource0',this)">UploadDataSource</a>;
+        <a href="#" OnFocus="link('_member','prevKeyState0',this)">prevKeyState</a> = <a href="#" OnFocus="link('_member','mouseButtonDown0',this)">mouseButtonDown</a>;
+        p-&gt;<a href="#" OnFocus="link('_member','source957789771',this)">source</a> = <a href="#" OnFocus="link('_member','FLASHSOURCE0',this)">FLASHSOURCE</a>;
+        p-&gt;<a href="#" OnFocus="link('_member','top957789771',this)">top</a> = this;
+        p-&gt;DelayRenderData(CF_HDROP);
+        p-&gt;DoDragDrop(DROPEFFECT_COPY);
+    }
+    else
+        CDialog::OnLButtonDown(nFlags, point);
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_file','_source');
+</script>

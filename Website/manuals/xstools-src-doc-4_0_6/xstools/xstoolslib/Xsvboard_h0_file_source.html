@@ -1,0 +1,155 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - xsvboard.h</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">xsvboard.h</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">xsvboard.h</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','xsvboard_h0','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','xsvboard_h0','_overview',this)" class="tabLinkInActive">Overview</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','xsvboard_h0','_includedfiles',this)" class="tabLinkInActive">Included files</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','xsvboard_h0','_includedby',this)" class="tabLinkInActive">Included by</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_file','xsvboard_h0','_source',this)" class="tabLinkActive">Source</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<pre class="codeExamples">
+/*----------------------------------------------------------------------------------
+  SOFTWARE LICENSE AGREEMENT
+    1.  Permission to use, copy, modify, and distribute this software
+        and its documentation, with or without modification, for any
+        purpose and without fee or royalty is hereby granted, provided
+        that you include the following on ALL copies of the software
+        and documentation or portions thereof, including
+        modifications, that you make:
+
+            a.  The full text of this license in a location viewable to users
+            of the redistributed or derivative work.
+
+            b.  Notice of any changes or modifications to the files,
+            including the date changes were made.
+
+    2.  The name, servicemarks and trademarks of X Engineering
+        Software Systems Corp. may NOT be used in advertising or
+        publicity pertaining to the software without specific, written
+        prior permission.
+
+    3.  Title to copyright in this software and any associated
+        documentation will at all times remain with X Engineering
+        Software Systems Corp.
+
+    4.  THIS SOFTWARE AND DOCUMENTATION IS PROVIDED "AS IS," AND X
+        Engineering Software Systems Corp MAKES NO REPRESENTATIONS OR
+        WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO,
+        WARRANTIES OF MERCHANTABILITY OR FITNESS FOR ANY PARTICULAR
+        PURPOSE OR THAT THE USE OF THE SOFTWARE OR DOCUMENTATION WILL
+        NOT INFRINGE ANY THIRD PARTY PATENTS, COPYRIGHTS, TRADEMARKS
+        OR OTHER RIGHTS.
+
+    5.  X Engineering Software Systems Corp WILL NOT BE LIABLE FOR ANY
+        DAMAGES, INCLUDING BUT NOT LIMITED TO, DIRECT, INDIRECT,
+        SPECIAL OR CONSEQUENTIAL, ARISING OUT OF ANY USE OF THE
+        SOFTWARE OR DOCUMENTATION.
+
+  ©2006 - X Engineering Software Systems Corp.  All rights reserved.
+----------------------------------------------------------------------------------*/
+
+
+#ifndef XSVBOARD_H
+#define XSVBOARD_H
+
+#include "<a href="#" OnFocus="link('_file','xsboard_h0',this)">xsboard.h</a>"
+#include "<a href="#" OnFocus="link('_file','xcvprt_h0',this)">xcvprt.h</a>"
+#include "<a href="#" OnFocus="link('_file','xc95kprt_h0',this)">xc95kprt.h</a>"
+#include "<a href="#" OnFocus="link('_file','oscport_h0',this)">oscport.h</a>"
+#include "<a href="#" OnFocus="link('_file','ramport_h0',this)">ramport.h</a>"
+#include "<a href="#" OnFocus="link('_file','f28port_h0',this)">f28port.h</a>"
+#include "<a href="#" OnFocus="link('_file','saa711x_h0',this)">saa711x.h</a>"
+
+
+/// Object for manipulating an XSV Board.
+class <a href="#" OnFocus="link('_class','XSVBoard0',this)">XSVBoard</a> : public <a href="#" OnFocus="link('_class','XSBoard0',this)">XSBoard</a>
+{
+    public:
+
+    <a href="#" OnFocus="link('_member','XSVBoard175268175',this)">XSVBoard</a>(void);
+
+    <a href="#" OnFocus="link('_member','tilde_XSVBoard175268175',this)">~XSVBoard</a>(void);
+
+    void <a href="#" OnFocus="link('_member','SetFlags952471996',this)">SetFlags</a>(unsigned long f);
+
+    unsigned long <a href="#" OnFocus="link('_member','GetFlags175268175',this)">GetFlags</a>(void);
+
+    bool <a href="#" OnFocus="link('_member','CheckChipID175268175',this)">CheckChipID</a>(void);
+
+    bool <a href="#" OnFocus="link('_member','Setup1422035791',this)">Setup</a>(<a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>* err, const char* brdModel, unsigned int lptNum);
+
+    bool <a href="#" OnFocus="link('_member','Configure2073856850',this)">Configure</a>(string&amp; fileName);
+
+    bool <a href="#" OnFocus="link('_member','ConfigureInterface2073856850',this)">ConfigureInterface</a>(string&amp; fileName);
+
+    bool <a href="#" OnFocus="link('_member','DownloadRAM1223904062',this)">DownloadRAM</a>(string&amp; fileName, bool bigEndianBytes, bool bigEndianBits,
+        bool doStart, bool doEnd);
+
+    bool <a href="#" OnFocus="link('_member','UploadRAM3129624999',this)">UploadRAM</a>(string&amp; fileName, const char* format, unsigned int loAddr,
+        unsigned int hiAddr, bool bigEndianBytes, bool bigEndianBits,
+        bool doStart, bool doEnd);
+
+    bool <a href="#" OnFocus="link('_member','ReadRAM1691774080',this)">ReadRAM</a>(unsigned int addr, unsigned int* data, bool bigEndianBytes,
+        bool bigEndianBits);
+
+    bool <a href="#" OnFocus="link('_member','WriteRAM157036722',this)">WriteRAM</a>(unsigned int addr, unsigned int data,
+        bool bigEndianBytes, bool bigEndianBits);
+
+    bool <a href="#" OnFocus="link('_member','DownloadFlash1223904062',this)">DownloadFlash</a>(string&amp; fileName, bool bigEndianBytes, bool bigEndianBits,
+        bool doStart, bool doEnd);
+
+    bool <a href="#" OnFocus="link('_member','UploadFlash3129624999',this)">UploadFlash</a>(string&amp; fileName, const char* format, unsigned int loAddr,
+        unsigned int hiAddr, bool bigEndianBytes, bool bigEndianBits,
+        bool doStart,bool doEnd);
+
+    bool <a href="#" OnFocus="link('_member','SetFreq716611010',this)">SetFreq</a>(int div, bool extOscPresent);
+
+    bool <a href="#" OnFocus="link('_member','SetupAudio2590129969',this)">SetupAudio</a>(int *reg);
+
+    bool <a href="#" OnFocus="link('_member','SetupVideoIn2073856850',this)">SetupVideoIn</a>(string&amp; fileName);
+
+    bool <a href="#" OnFocus="link('_member','Test175268175',this)">Test</a>(void);
+
+    
+    private:
+
+    char* <a href="#" OnFocus="link('_member','brdModel210218449',this)">brdModel</a>;         ///&lt; board model
+    unsigned long <a href="#" OnFocus="link('_member','flags210218449',this)">flags</a>; ///&lt; general-purpose flags
+    
+    // Objects that represent devices on the board.
+    <a href="#" OnFocus="link('_class','XCVPort0',this)">XCVPort</a> <a href="#" OnFocus="link('_member','fpga210218449',this)">fpga</a>;          ///&lt; main programmable logic device on the board
+    <a href="#" OnFocus="link('_class','XC95KPort0',this)">XC95KPort</a> <a href="#" OnFocus="link('_member','cpld210218449',this)">cpld</a>;          ///&lt; CPLD that manages the parallel port interface
+    <a href="#" OnFocus="link('_class','OscPort0',this)">OscPort</a> <a href="#" OnFocus="link('_member','osc210218449',this)">osc</a>;          ///&lt; DS1075 programmable oscillator
+    <a href="#" OnFocus="link('_class','RAMPort0',this)">RAMPort</a> <a href="#" OnFocus="link('_member','ram210218449',this)">ram</a>;          ///&lt; dual-banks of SRAM
+    <a href="#" OnFocus="link('_class','F28Port0',this)">F28Port</a> <a href="#" OnFocus="link('_member','flash210218449',this)">flash</a>;          ///&lt; Intel Flash
+    <a href="#" OnFocus="link('_class','SAA711X0',this)">SAA711X</a> <a href="#" OnFocus="link('_member','videoin210218449',this)">videoin</a>;      ///&lt; Philips video decoder
+};
+
+#endif
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_file','_source');
+</script>

@@ -1,0 +1,4 @@
+Mapping Module test_vga . . .
+MAP command line:
+map -intstyle ise -p xc3s1000-ft256-4 -cm area -pr b -k 4 -c 100 -tx off -o test_vga_map.ncd test_vga.ngd test_vga.pcf
+Mapping Module test_vga: DONE

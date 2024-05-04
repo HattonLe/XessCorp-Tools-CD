@@ -1,0 +1,424 @@
+<html>
+
+
+<!-- Mirrored from 192.168.0.47/appnotes/xst3_IDE.html by HTTrack Website Copier/3.x [XR&CO'2004], Mon, 04 Dec 2006 16:07:35 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=ISO-8859-1"><!-- /Added by HTTrack -->
+<head>
+<link rel="SHORTCUT ICON" HREF="../images/xess.ico">
+<title>USING THE IDE HARD DISK INTERFACE ON THE XST-3.0 BOARD</title>
+<meta name="KEYWORDS" content="IDE hard disk, XST-3.0, XStend 3.0, XSA, XILINX, FPGA, CPLD">
+<meta name="DESCRIPTION" content="A simple design example that writes data to sectors on an IDE hard disk and then reads it back to verify it.">
+<meta http-equiv="Content-Type" content="text/html">
+<link rel="stylesheet" type="text/css" href="../xess-1.css">
+<meta name="Microsoft Border" content="none, default">
+</head>
+
+<body>
+
+<table>
+	<!-- MSTableType="nolayout" -->
+	<tr>
+		<td class="StdPageLogo">
+		<a href="../index-2.html"><img border="0" src="../images/xess-138x32.bmp"></a>
+
+		<?php 
+			require("logo.html");
+		?>
+		</td>
+		<td class="StdPageNav">
+		<script type="text/javascript" src="xess.js"></script>
+<!-- <script type="text/javascript" src="niftycube_xess.js"></script> -->
+<!-- <script type="text/javascript" src="prototype.js"></script> -->
+<!-- <script type="text/javascript" src="rico.js"></script> -->
+<script type="text/javascript">
+	window.onload=function(){
+		startList("nav");
+		stripe_xess();
+		collapseall();
+		// Nifty("td.StdPageNav","transparent");
+		// Nifty("td.StdPageSidebar","transparent");
+		// Nifty("td.StdPageNavLinks","transparent");
+	};
+	onload=function(){
+		startList("nav");
+		stripe_xess();
+		collapseall();
+		// Nifty("td.StdPageNav","transparent");
+		// Nifty("td.StdPageSidebar","transparent");
+		// Nifty("td.StdPageNavLinks","transparent");
+	};
+</script>
+
+
+
+<table border="0" width="640" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="center" valign="center" width="70%">
+
+<!--
+  -- naviagation bar for browsers with scripting capability
+  -- (make sure there is no whitespace after the '\' on each line and run
+  -- the Javascript console on Firefox to check the syntax.)
+  -->
+<script type="text/javascript">
+nav_text = '\
+  <ul id="nav"> \
+    <li id="first"><a href="../ho04000.html">Products</a> \
+      <ul> \
+        <li><a href="../ho04000.html"><div>Catalog</div></a></li> \
+        <li><a href="../manuals.html"><div>Manuals</div></a></li> \
+        <li><a href="../ho07000.html"><div>Software Downloads</div></a></li> \
+      </ul> \
+    </li> \
+    <li><a href="../help.html">Support</a> \
+      <ul> \
+        <li><a href="../manuals.html" ><div>Product Manuals</div></a></li> \
+        <li><a href="../ho03000.html" ><div>Tutorials</div></a></li> \
+        <li><a href="../ho03000.html" ><div>Application Notes</div></a></li> \
+        <li><a href="../ho03000.html" ><div>Design Examples</div></a></li> \
+        <li><a href="../ho01000.html" ><div>FAQ</div></a></li> \
+        <li><a href="../list_reg.html"><div>User Forum</div></a></li> \
+        <li><a href="../help.html"    ><div>Request Help</div></a></li> \
+      </ul> \
+    </li> \
+    <li><a href="../ho01001.html">Purchasing</a> \
+      <ul> \
+        <li><a href="https://xess.com/xess_int_order.php3"><div>Web Orders</div></a></li> \
+        <li><a href="../ho01001.html"                       ><div>Purchase Orders</div></a></li> \
+        <li><a href="../ho01001.html"                       ><div>Payment Methods</div></a></li> \
+        <li><a href="../xess_int_quote.html"                ><div>Get a Quote</div></a></li> \
+        <li><a href="../xess_int_quote.html"                ><div>Get a Proforma Invoice</div></a></li> \
+        <li><a href="../ho01001.html"                       ><div>How To Buy From Us</div></a></li> \
+      </ul> \
+    </li> \
+    <li id="last"><a href="../index-2.html">XESS</a> \
+      <ul> \
+        <li><a href="../index-2.html"   ><div>Home</div></a></li> \
+        <li><a href="../about_us.html"><div>About Us</div></a></li> \
+        <li><a href="../ho00003.html" ><div>Contact Us</div></a></li> \
+<!-- \
+        <li><a href=""              ><div>Announcements</div></a></li> \
+        <li><a href="../ho00005.html" ><div>Press Releases</div></a></li> \
+--> \
+      </ul> \
+    </li> \
+    <li id="last"><a href="../links.html">Misc.</a> \
+      <ul> \
+        <li><a href="../links.html"><div>Links</div></a></li> \
+      </ul> \
+    </li> \
+  </ul> \
+';
+document.writeln(nav_text);
+</script>
+
+<!--
+  -- naviagation bar for browsers with NO scripting capability
+  -->
+<noscript>
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="14%" align="left">
+    <a href="../ho04000.html"><img border="0" src="../images/menu_arrow.png">Products</a>
+    </td>
+    <td width="16%" align="left">
+    <a href="../ho01001.html"><img border="0" src="../images/menu_arrow.png">How to Buy</a>
+    </td>
+    <td width="11%" align="left">
+    <a href="../help.html"><img border="0" src="../images/menu_arrow.png">Help!</a>
+    </td>
+    <td width="14%" align="left">
+    <a href="../ho03000.html"><img border="0" src="../images/menu_arrow.png">Tutorials</a>
+    </td>
+    <td width="14%" align="left">
+    <a href="../index-2.html"><img border="0" src="../images/menu_arrow.png">Home</a>
+<!--
+    <a href="/ho00005.html"><img border="0" src="/images/menu_arrow.png">Press&nbsp;Rel.</a>
+-->
+    </td>
+  </tr>
+  <tr>
+    <td>
+    <a href="../manuals.html"><img border="0" src="../images/menu_arrow.png">Manuals</a>
+    </td>
+    <td>
+    <a href="../xess_int_quote.html"><img border="0" src="../images/menu_arrow.png">Online Quote</a>
+    </td>
+    <td>
+    <a href="../ho01000.html"><img border="0" src="../images/menu_arrow.png">FAQ</a>
+    </td>
+    <td>
+    <a href="../ho03000.html"><img border="0" src="../images/menu_arrow.png">Examples</a>
+    </td>
+    <td>
+    <a href="../about_us.html">
+    <img border="0" src="../images/menu_arrow.png">About&nbsp;Us</a>
+    </td>
+  </tr>
+  <tr>
+    <td>
+    <a href="../ho07000.html"><img border="0" src="../images/menu_arrow.png">Downloads</a>
+    </td>
+    <td>
+    <a href="https://xess.com/xess_int_order.php3"><img border="0" src="../images/menu_arrow.png">Order Online</a>
+    </td>
+    <td>
+    <a href="../list_reg.html"><img border="0" src="../images/menu_arrow.png">Forum</a>
+    </td>
+    <td>
+    <a href="../links.html"><img border="0" src="../images/menu_arrow.png">Links</a>
+    </td>
+    <td>
+    <a href="../ho00003.html"><img border="0" src="../images/menu_arrow.png">Contact&nbsp;Us</a>
+    </td>
+  </tr>
+</table>
+</noscript>
+
+    </td>
+    <td align="center" valign="center" width="30%" id="srch">
+      <FORM ACTION="http://192.168.0.47/cgi-bin/ksearch/ksearch.cgi" METHOD="GET" NAME="search">
+        <INPUT TYPE="text" value="search" NAME="terms">
+		<input type=image src="../images/search_arrow.png" value="Search">
+      </FORM>
+    </td>
+  </tr>
+</table>
+
+
+		<?php 
+			require("nav.html");
+		?>
+		</td>
+	</tr>
+	<tr>
+
+	
+		<td class="StdPageSidebar">
+		This is a simple design example that writes data to sectors 
+		on an IDE hard disk and then reads it back to verify it.</p>
+		</td>
+
+
+		<td class="StdPageBody">
+
+<p><a name="__index__"></a></p>
+<!-- INDEX BEGIN -->
+
+<ul>
+
+	<li><a href="#using_the_ide_hard_disk_interface_on_the_xst3_0_board">USING THE IDE HARD DISK INTERFACE ON THE XST-3.0 BOARD</a></li>
+	<li><a href="#design_files">DESIGN FILES</a></li>
+	<li><a href="#using_the_design_example">USING THE DESIGN EXAMPLE</a></li>
+	<li><a href="#environment">ENVIRONMENT</a></li>
+	<li><a href="#source_files">SOURCE FILES</a></li>
+	<li><a href="#author">AUTHOR</a></li>
+	<li><a href="#copyright_and_license">COPYRIGHT AND LICENSE</a></li>
+	<li><a href="#history">HISTORY</a></li>
+</ul>
+<!-- INDEX END -->
+
+<hr />
+<p>
+</p>
+<hr />
+<h1><a name="using_the_ide_hard_disk_interface_on_the_xst3_0_board">USING THE IDE HARD DISK INTERFACE ON THE XST-3.0 BOARD</a></h1>
+<p>This is a simple design example that writes data to sectors 
+on an IDE hard disk and then reads it back to verify it.</p>
+<p>
+</p>
+<hr />
+<h1><a name="design_files">DESIGN FILES</a></h1>
+<ul>
+<li><strong><a name="item_common_2evhd"><em>common.vhd</em></a></strong>
+
+<p>This file contains some definitions and functions used in the rest of the VHDL code.</p>
+</li>
+<li><strong><a name="item_atacntl_2evhd"><em>atacntl.vhd</em></a></strong>
+
+<p>This is the VHDL file that describes an ATAPI interface to an IDE hard disk.
+You can get a more detailed description of the interface at <a href="http://xess.com/appnotes/an-041404-atacntl.pdf">http://xess.com/appnotes/an-041404-atacntl.pdf</a> .</p>
+</li>
+<li><strong><a name="item_memtest_2evhd_2c_randgen_2evhd"><em>memtest.vhd</em>, <em>randgen.vhd</em></a></strong>
+
+<p>These VHDL files describe a memory tester module that writes a stream of data from a random-number generator (RNG) to a storage
+device and then reads the data back and compares it to the RNG output to verify it was stored correctly.</p>
+</li>
+<li><strong><a name="item_debounce_2evhd"><em>debounce.vhd</em></a></strong>
+
+<p>This VHDL file describes a simple switch debouncer.</p>
+</li>
+<li><strong><a name="item_ide_2evhd"><em>ide.vhd</em></a></strong>
+
+<p>This is the VHDL file that combines the IDE interface and memory tester module to create a design that tests
+writes and reads of hard disk sectors.</p>
+</li>
+<li><strong><a name="item_ide_2eucf"><em>ide.ucf</em></a></strong>
+
+<p>These are the constraints which assign the I/O signals of IDE interface to the
+appropriate pins of the FPGA on the XSA-3S1000 + XST-3.0 combination.</p>
+</li>
+<li><strong><a name="item_ide_2ebit"><em>ide.bit</em></a></strong>
+
+<p>This is a compiled bitstream for the design that can be downloaded into the XSA-3S1000 + XST-3.0 combination.</p>
+</li>
+<li><strong><a name="item_ide_2d200_2eucf"><em>ide-200.ucf</em></a></strong>
+
+<p>This is an alternate set of pin assignments to be used if the design is recompiled for
+an XSA-200 + XST-3.0 combination.</p>
+</li>
+<li><strong><a name="item_ide_2enpl"><em>ide.npl</em></a></strong>
+
+<p>Open this project file with WebPACK if you need to recompile the design.</p>
+</li>
+</ul>
+<p>
+</p>
+<hr />
+<h1><a name="using_the_design_example">USING THE DESIGN EXAMPLE</a></h1>
+<ul>
+<li><strong><a name="item_step_1_3a">Step 1:</a></strong>
+
+<p>Attach an ATX power supply to the XST-3.0 Board and an IDE hard disk.</p>
+</li>
+<li><strong><a name="item_step_2_3a">Step 2:</a></strong>
+
+<p>Attach an IDE cable from header IDE1 on the XST-3.0 Board to the IDE hard disk.</p>
+</li>
+<li><strong><a name="item_step_3_3a">Step 3:</a></strong>
+
+<p>Set jumper J9 on the XSA-3S1000 Board to XS.</p>
+</li>
+<li><strong><a name="item_step_4_3a">Step 4:</a></strong>
+
+<p>Download the default parallel port interface into the XSA-3S1000 (<em>\XSTOOLS\XSA\3S1000\dwnldpar.svf</em>)
+if it is not already present.  (Running GXSTEST will do this automatically.)</p>
+</li>
+<li><strong><a name="item_step_5_3a">Step 5:</a></strong>
+
+<p>Download the <em>ide.bit</em> file to the XSA Board.</p>
+</li>
+<li><strong><a name="item_step_6_3a">Step 6:</a></strong>
+
+<p>After a 20-second delay, the application will write and read sectors on the hard disk and report
+the success or failure of the operation by displaying an ``O'' or an ``E'' on LED2, respectively.
+Press switch SW2 on the XSA Board to re-run the test.</p>
+</li>
+</ul>
+<p>
+</p>
+<hr />
+<h1><a name="environment">ENVIRONMENT</a></h1>
+<p>This example design was developed using the following version of software:</p>
+<pre>
+   Xilinx WebPACK       : 6.3.03i</pre>
+<p>
+</p>
+<hr />
+<h1><a name="source_files">SOURCE FILES</a></h1>
+<p>You can download the source files for this example design from the XESS website at
+<a href="http://www.xess.com/projects/xst3_IDE.zip">http://www.xess.com/projects/xst3_IDE.zip</a> .</p>
+<p>
+</p>
+<hr />
+<h1><a name="author">AUTHOR</a></h1>
+<p>Dave Vanden Bout, X Engineering Software Systems Corp.</p>
+<p>Send bug reports to <a href="mailto:bugs@xess.com.">bugs@xess.com.</a></p>
+<p>
+</p>
+<hr />
+<h1><a name="copyright_and_license">COPYRIGHT AND LICENSE</a></h1>
+<p>Copyright 2006 by X Engineering Software Systems Corporation.</p>
+<p>This application can be freely distributed and modified
+as long as you do not remove the attributions to the author or his employer.</p>
+<p>
+</p>
+<hr />
+<h1><a name="history">HISTORY</a></h1>
+<p>05/30/2006 - Release 1.0.1:</p>
+<ul>
+<li>
+<p>Added multisector R/W.</p>
+</li>
+<li>
+<p>Added PIO Mode 2 timing parameters.</p>
+</li>
+<li>
+<p>Added enhanced ATA status outputs.</p>
+</li>
+<li>
+<p>Added outputs to inactivate the XSA Flash and IDE disk DMA acknowledge.</p>
+</li>
+<li>
+<p>Added a switch input that re-runs the sector R/W test.</p>
+</li>
+</ul>
+<p>01/30/2006 - Initial release.</p>
+
+		</td>
+
+
+	</tr>
+	<tr>
+		<td class="StdPageCredits">
+		<a href="mailto:webmaster@xess.com"> webmaster@xess.com</a><br>
+© 1998-2006, XESS Corp.<br> 
+All rights reserved.
+<script src="../../www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-765812-1";
+urchinTracker();
+</script>
+		<?php 
+			require("credits.html");
+		?>
+		</td>
+		<td class="StdPageNavLinks">
+		    <a href="../ho04000.html">
+    <img border="0" src="../images/menu_arrow.png">Products</a>
+    <a href="../manuals.html">
+    <img border="0" src="../images/menu_arrow.png">Manuals</a>
+    <a href="../ho07000.html">
+    <img border="0" src="../images/menu_arrow.png">Downloads</a>
+    <a href="../ho01001.html">
+    <img border="0" src="../images/menu_arrow.png">How to Buy</a>
+    <a href="../xess_int_quote.html">
+    <img border="0" src="../images/menu_arrow.png">Online Quote</a>
+    <a href="https://xess.com/xess_int_order.php3">
+    <img border="0" src="../images/menu_arrow.png">Order Online</a>
+    <br>
+    <a href="../help.html">
+    <img border="0" src="../images/menu_arrow.png">Help!</a>
+    <a href="../ho01000.html">
+    <img border="0" src="../images/menu_arrow.png">FAQ</a>
+    <a href="../list_reg.html">
+    <img border="0" src="../images/menu_arrow.png">Forum</a>
+    <a href="../ho03000.html">
+    <img border="0" src="../images/menu_arrow.png">Tutorials</a>
+    <a href="../ho03000.html">
+    <img border="0" src="../images/menu_arrow.png">Examples</a>
+    <a href="../links.html">
+    <img border="0" src="../images/menu_arrow.png">Links</a>
+    <a href="../ho00005.html">
+    <a href="../index-2.html">
+    <img border="0" src="../images/menu_arrow.png">Home</a>
+    <a href="../about_us.html">
+    <img border="0" src="../images/menu_arrow.png">About&nbsp;Us</a>
+    <a href="../ho00003.html">
+    <img border="0" src="../images/menu_arrow.png">Contact&nbsp;Us</a>
+
+		<?php 
+			require("navlinks.html");
+		?>
+		</td>
+	</tr>
+</table>
+
+</body>
+
+
+<!-- Mirrored from 192.168.0.47/appnotes/xst3_IDE.html by HTTrack Website Copier/3.x [XR&CO'2004], Mon, 04 Dec 2006 16:07:35 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=ISO-8859-1"><!-- /Added by HTTrack -->
+</html>
+

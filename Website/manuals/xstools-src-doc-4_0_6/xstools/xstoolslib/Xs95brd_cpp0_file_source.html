@@ -1,0 +1,559 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - xs95brd.cpp</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">xs95brd.cpp</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">xs95brd.cpp</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','xs95brd_cpp0','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','xs95brd_cpp0','_overview',this)" class="tabLinkInActive">Overview</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','xs95brd_cpp0','_includedfiles',this)" class="tabLinkInActive">Included files</a></span>
+<span class="tabInActiveGrayout"><span class="tabLinkGrayout">Included by</span></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_file','xs95brd_cpp0','_source',this)" class="tabLinkActive">Source</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<pre class="codeExamples">
+/*----------------------------------------------------------------------------------
+  SOFTWARE LICENSE AGREEMENT
+    1.  Permission to use, copy, modify, and distribute this software
+        and its documentation, with or without modification, for any
+        purpose and without fee or royalty is hereby granted, provided
+        that you include the following on ALL copies of the software
+        and documentation or portions thereof, including
+        modifications, that you make:
+
+            a.  The full text of this license in a location viewable to users
+            of the redistributed or derivative work.
+
+            b.  Notice of any changes or modifications to the files,
+            including the date changes were made.
+
+    2.  The name, servicemarks and trademarks of X Engineering
+        Software Systems Corp. may NOT be used in advertising or
+        publicity pertaining to the software without specific, written
+        prior permission.
+
+    3.  Title to copyright in this software and any associated
+        documentation will at all times remain with X Engineering
+        Software Systems Corp.
+
+    4.  THIS SOFTWARE AND DOCUMENTATION IS PROVIDED "AS IS," AND X
+        Engineering Software Systems Corp MAKES NO REPRESENTATIONS OR
+        WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO,
+        WARRANTIES OF MERCHANTABILITY OR FITNESS FOR ANY PARTICULAR
+        PURPOSE OR THAT THE USE OF THE SOFTWARE OR DOCUMENTATION WILL
+        NOT INFRINGE ANY THIRD PARTY PATENTS, COPYRIGHTS, TRADEMARKS
+        OR OTHER RIGHTS.
+
+    5.  X Engineering Software Systems Corp WILL NOT BE LIABLE FOR ANY
+        DAMAGES, INCLUDING BUT NOT LIMITED TO, DIRECT, INDIRECT,
+        SPECIAL OR CONSEQUENTIAL, ARISING OUT OF ANY USE OF THE
+        SOFTWARE OR DOCUMENTATION.
+
+  ©2006 - X Engineering Software Systems Corp.  All rights reserved.
+----------------------------------------------------------------------------------*/
+
+
+#include &lt;ctime&gt;
+#include &lt;string&gt;
+using namespace std;
+
+#include "<a href="#" OnFocus="link('_file','utils_h0',this)">utils.h</a>"
+#include "<a href="#" OnFocus="link('_file','xserror_h0',this)">xserror.h</a>"
+#include "<a href="#" OnFocus="link('_file','xs95brd_h0',this)">xs95brd.h</a>"
+
+
+// inversion mask for parallel port connection to XS95 Board
+// 00000011: bits  7- 0 are attached to data pins D7-D0
+// 00000xxx: bits 15-11 are attached to status pins /S7,S6,S5,S4,S3
+// xxxx1001: bits 19-16 are attached to control pins /C3,C2,/C1,/C0
+// const unsigned int invMask = 0x090003;
+
+// bit position of XC9572XL JTAG pins within parallel port registers
+static const unsigned int posTCK  = 17;
+static const unsigned int posTMS  = 18;
+static const unsigned int posTDI  = 19;
+static const unsigned int posTDO  = 15;
+
+// bit position of prog. osc. pins within parallel port registers
+static const unsigned int posOSC  = 0;
+
+// bit positions for board test status
+static const unsigned int posTESTSTATUS = 14;
+static const unsigned int posTESTRESET      = 5;
+
+static <a href="#" OnFocus="link('_class','brdModel_struct0',this)">XSBoardInfo</a>* brdInfo;
+static int numBoards;
+
+
+/// Create an XS95 Board object.
+<a href="#" OnFocus="link('_member','XS95Board2569708575',this)">XS95Board::XS95Board</a>(void)
+{
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>* <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> = new <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>(cerr);    // create error-reporting channel
+    <a href="#" OnFocus="link('_member','brdModel239498408',this)">brdModel</a> = NULL;
+    numBoards = <a href="#" OnFocus="link('_member','GetXSBoardInfo2867269968',this)">GetXSBoardInfo</a>(&amp;brdInfo); // get information about all the models of XS boards
+    <a href="#" OnFocus="link('_member','Setup2766866531',this)">Setup</a>(err,"XS95-108",1); // use a default board model and parallel port number at this point
+}
+
+
+/// Destroy an XS95 Board object.
+<a href="#" OnFocus="link('_member','tilde_XS95Board2569708575',this)">XS95Board::~XS95Board</a>(void)
+{
+    ;
+}
+
+
+// Look at xsboard.h for a description of the interface.
+void <a href="#" OnFocus="link('_member','SetFlags2887299885',this)">XS95Board::SetFlags</a>(unsigned long f)
+{
+    <a href="#" OnFocus="link('_member','flags239498408',this)">flags</a> = f;
+}
+
+
+// Look at xsboard.h for a description of the interface.
+unsigned long <a href="#" OnFocus="link('_member','GetFlags2569708575',this)">XS95Board::GetFlags</a>(void)
+{
+    return <a href="#" OnFocus="link('_member','flags239498408',this)">flags</a>;
+}
+
+
+// Look at xsboard.h for a description of the interface.
+bool <a href="#" OnFocus="link('_member','Setup2766866531',this)">XS95Board::Setup</a>(<a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>* err, const char* model, unsigned int lptNum)
+{
+    // store name of board model
+    if(<a href="#" OnFocus="link('_member','brdModel239498408',this)">brdModel</a>!=NULL)
+        free(brdModel);
+    <a href="#" OnFocus="link('_member','brdModel239498408',this)">brdModel</a> = (char*)malloc(strlen(model)+1);
+    if(<a href="#" OnFocus="link('_member','brdModel239498408',this)">brdModel</a>==NULL)
+    {
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>-&gt;<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorFatal,"ERRLOC: out of memory!!\n");
+    }
+    strcpy(brdModel,model);
+
+    // find parallel port inversion mask for this board model
+    int brdIndex;
+    for(brdIndex=0; brdIndex&lt;numBoards; brdIndex++)
+    {
+        if(strcmp(brdModel,brdInfo[brdIndex].brdModel) == 0)
+            break;
+    }
+    if(brdIndex&gt;=numBoards)
+    {
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>-&gt;<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorFatal,"Unknown type of XS95 Board!\n");
+    }
+    int invMask = brdInfo[brdIndex].<a href="#" OnFocus="link('_member','invMask1254770407',this)">invMask</a>;
+
+    // initialize the objects for the components on the board
+    bool status;
+    status = <a href="#" OnFocus="link('_member','cpld239498408',this)">cpld</a>.<a href="#" OnFocus="link('_member','Setup503400686',this)">Setup</a>(err,lptNum,invMask,posTCK,posTMS,posTDI,posTDO);
+    status = status &amp;&amp; <a href="#" OnFocus="link('_member','osc239498408',this)">osc</a>.<a href="#" OnFocus="link('_member','Setup4236493299',this)">Setup</a>(err,lptNum,invMask,posOSC);
+    status = status &amp;&amp; <a href="#" OnFocus="link('_member','ram239498408',this)">ram</a>.<a href="#" OnFocus="link('_member','Setup3118790128',this)">Setup</a>(XC95108Type,err,lptNum,invMask,posTCK,posTMS,posTDI,posTDO);
+    return status;  // return true if no error occurred for any object setup
+}
+
+
+// Look at xsboard.h for a description of the interface.
+bool <a href="#" OnFocus="link('_member','CheckChipID2569708575',this)">XS95Board::CheckChipID</a>(void)
+{
+    // get the chip ID from the interface CPLD and compare it to the chip ID for
+    // an XC95108 CPLD (ignoring the first 4 bits which increment for each chip revision)
+    char* XC95108ID = "1001010100000110000010010011";
+    string chipID = <a href="#" OnFocus="link('_member','cpld239498408',this)">cpld</a>.<a href="#" OnFocus="link('_member','GetChipID215401329',this)">GetChipID</a>();
+    if(strncmp(XC95108ID,chipID.c_str()+4,strlen(XC95108ID)))
+    { // ID did not match
+        string instructions;
+        instructions = "The CPLD of your XS95 Board is not responding!!\n\n";
+        instructions += "\nChip ID = ";
+        instructions += chipID;     // display the ID that was received
+        instructions += "\n\n";
+        instructions += "1) Is power getting to your XS95 Board?\n";
+        instructions += "2) Is the downloading cable attached?\n";
+        instructions += "\nContinue anyway?\n";
+        if(<a href="#" OnFocus="link('_member','PromptUser2517124797',this)">PromptUser</a>(instructions,PROMPT_OKCANCEL) == <a href="#" OnFocus="link('_member','RESPONSE_CANCEL0',this)">RESPONSE_CANCEL</a>)
+            return false;
+    }
+    return true;    // ID matched
+}
+
+
+// Look at xsboard.h for a description of the interface.
+bool <a href="#" OnFocus="link('_member','Configure3913016962',this)">XS95Board::Configure</a>(string&amp; fileName)
+{
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a> = <a href="#" OnFocus="link('_member','cpld239498408',this)">cpld</a>.<a href="#" OnFocus="link('_member','GetErr2569683910',this)">GetErr</a>(); // setup error channel
+
+    // check the type of the file that is going to be downloaded
+    string suffix = <a href="#" OnFocus="link('_member','GetSuffix67554305',this)">GetSuffix</a>(fileName);
+    if(suffix!="SVF")
+    {
+        <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,"Only .SVF files can be downloaded into the CPLD on the XS95 Board!!\n");
+        return false;
+    }
+
+    // abort if the CPLD chip ID doesn't match the ID for the CPLD on this type of board
+    if(<a href="#" OnFocus="link('_member','CheckChipID2569708575',this)">CheckChipID</a>() == false)
+        return false;
+
+    // initialize and then configure the CPLD with the contents of the bitstream file
+    <a href="#" OnFocus="link('_member','cpld239498408',this)">cpld</a>.<a href="#" OnFocus="link('_member','InitConfigureCPLD2569683910',this)">InitConfigureCPLD</a>();
+    return <a href="#" OnFocus="link('_member','cpld239498408',this)">cpld</a>.<a href="#" OnFocus="link('_member','ConfigureCPLD3019441395',this)">ConfigureCPLD</a>(fileName);
+}
+
+
+// Look at xsboard.h for a description of the interface.
+bool <a href="#" OnFocus="link('_member','ConfigureInterface3913016962',this)">XS95Board::ConfigureInterface</a>(string&amp; fileName)
+{
+    return false;   // there is no interface CPLD on the XS40 Board, so this is an error
+}
+
+
+// Look at xsboard.h for a description of the interface.
+bool <a href="#" OnFocus="link('_member','DownloadRAM2355593322',this)">XS95Board::DownloadRAM</a>(string&amp; fileName, bool bigEndianBytes,
+            bool bigEndianBits, bool doStart, bool doEnd)
+{
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a> = <a href="#" OnFocus="link('_member','cpld239498408',this)">cpld</a>.<a href="#" OnFocus="link('_member','GetErr2569683910',this)">GetErr</a>(); // setup error channel
+
+    // check the type of the file that is going to be downloaded
+    string suffix = <a href="#" OnFocus="link('_member','GetSuffix67554305',this)">GetSuffix</a>(fileName);
+    if(suffix!="HEX" &amp;&amp; suffix!="EXO" &amp;&amp; suffix!="XES" &amp;&amp; suffix!="MCS")
+    {
+        <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,"Only .HEX, .MCS, .EXO or .XES files can be downloaded into the RAM on the XS95 Board!!\n");
+        return false;
+    }
+
+    // abort if the CPLD chip ID doesn't match the ID for the CPLD on this type of board
+    if(<a href="#" OnFocus="link('_member','CheckChipID2569708575',this)">CheckChipID</a>() == false)
+        return false;
+
+    // download data to the RAM
+    if(<a href="#" OnFocus="link('_member','ram239498408',this)">ram</a>.<a href="#" OnFocus="link('_member','DownloadRAM1745454770',this)">DownloadRAM</a>(fileName,bigEndianBytes,bigEndianBits) == false)
+    {
+        <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,"Error downloading into RAM!!\n");
+        return false;
+    }
+
+    return true;
+}
+
+
+// Look at xsboard.h for a description of the interface.
+bool <a href="#" OnFocus="link('_member','UploadRAM1864775899',this)">XS95Board::UploadRAM</a>(string&amp; fileName, const char* format, 
+                unsigned int loAddr, unsigned int hiAddr,
+                bool bigEndianBytes, bool bigEndianBits,    
+                bool doStart, bool doEnd)
+{
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a> = <a href="#" OnFocus="link('_member','cpld239498408',this)">cpld</a>.<a href="#" OnFocus="link('_member','GetErr2569683910',this)">GetErr</a>(); // setup error channel
+
+    // abort if the CPLD chip ID doesn't match the ID for the CPLD on this type of board
+    if(<a href="#" OnFocus="link('_member','CheckChipID2569708575',this)">CheckChipID</a>() == false)
+        return false;
+
+    // upload data from the RAM
+    if(<a href="#" OnFocus="link('_member','ram239498408',this)">ram</a>.<a href="#" OnFocus="link('_member','UploadRAM2771819634',this)">UploadRAM</a>(fileName,format,loAddr,hiAddr,bigEndianBytes,bigEndianBits) == false)
+    {
+        <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,"Error uploading from RAM!!\n");
+        return false;
+    }
+    
+    return true;
+}
+
+
+// Look at xsboard.h for a description of the interface.
+bool <a href="#" OnFocus="link('_member','ReadRAM2991798699',this)">XS95Board::ReadRAM</a>(unsigned int addr, unsigned int* data,    
+        bool bigEndianBytes, bool bigEndianBits)
+{
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a> = <a href="#" OnFocus="link('_member','cpld239498408',this)">cpld</a>.<a href="#" OnFocus="link('_member','GetErr2569683910',this)">GetErr</a>(); // setup error channel
+
+    // try reading the RAM
+    return <a href="#" OnFocus="link('_member','ram239498408',this)">ram</a>.<a href="#" OnFocus="link('_member','ReadRAM615582957',this)">ReadRAM</a>(addr,data,bigEndianBytes,bigEndianBits);
+}
+
+
+// Look at xsboard.h for a description of the interface.
+bool <a href="#" OnFocus="link('_member','WriteRAM3255650226',this)">XS95Board::WriteRAM</a>(unsigned int addr, unsigned int data, 
+        bool bigEndianBytes, bool bigEndianBits)
+{
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a> = <a href="#" OnFocus="link('_member','cpld239498408',this)">cpld</a>.<a href="#" OnFocus="link('_member','GetErr2569683910',this)">GetErr</a>(); // setup error channel
+
+    // try writing to the RAM
+    return <a href="#" OnFocus="link('_member','ram239498408',this)">ram</a>.<a href="#" OnFocus="link('_member','WriteRAM3927601562',this)">WriteRAM</a>(addr,data,bigEndianBytes,bigEndianBits);
+}
+
+
+// Look at xsboard.h for a description of the interface.
+bool <a href="#" OnFocus="link('_member','DownloadFlash2355593322',this)">XS95Board::DownloadFlash</a>(string&amp; fileName, bool bigEndianBytes,
+            bool bigEndianBits, bool doStart, bool doEnd)
+{
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a> = <a href="#" OnFocus="link('_member','cpld239498408',this)">cpld</a>.<a href="#" OnFocus="link('_member','GetErr2569683910',this)">GetErr</a>(); // setup error channel
+    <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,"The XS95 Board does not have a Flash memory device!!\n");
+    return false;
+}
+
+
+// Look at xsboard.h for a description of the interface.
+bool <a href="#" OnFocus="link('_member','UploadFlash1864775899',this)">XS95Board::UploadFlash</a>(string&amp; fileName, const char* format, 
+                unsigned int loAddr, unsigned int hiAddr,
+                bool bigEndianBytes, bool bigEndianBits,    
+                bool doStart, bool doEnd)
+{
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a> = <a href="#" OnFocus="link('_member','cpld239498408',this)">cpld</a>.<a href="#" OnFocus="link('_member','GetErr2569683910',this)">GetErr</a>(); // setup error channel
+    <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,"The XS95 Board does not have a Flash memory device!!\n");
+    return false;
+}
+
+
+// Look at xsboard.h for a description of the interface.
+bool <a href="#" OnFocus="link('_member','SetFreq1510073007',this)">XS95Board::SetFreq</a>(int div, bool extOscPresent)
+{
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a> = <a href="#" OnFocus="link('_member','cpld239498408',this)">cpld</a>.<a href="#" OnFocus="link('_member','GetErr2569683910',this)">GetErr</a>(); // setup error channel
+
+    // get the directory where the tools and RAM download files are kept
+    const char* xstoolsBinDir = <a href="#" OnFocus="link('_member','FindXSTOOLSBinDir53616',this)">FindXSTOOLSBinDir</a>();
+    
+    // use the board model name to find the corresponding index into the list of boards
+    int brdIndex;
+    for(brdIndex=0; brdIndex&lt;numBoards; brdIndex++)
+        if(strcmp(brdModel,brdInfo[brdIndex].brdModel) == 0)
+            break;
+    if(brdIndex&gt;=numBoards)
+    {
+        <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,"Unknown type of XS95 Board!\n");
+        return false;
+    }
+
+    // get the name of the file that contains a bitstream that will configure the CPLD to provide an interface
+    // between the parallel port and the programmable oscillator
+    if(strlen(brdInfo[brdIndex].oscBitstreamFile)==0)
+    {
+        string msg;
+        msg = <a href="#" OnFocus="link('_member','brdModel239498408',this)">brdModel</a> + (string)" does not support oscillator programming!!\n";
+        <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,msg);
+        return false;
+    }
+    // concat the file name with the directory to form a complete path to the oscillator interface bitstream file
+    string bitFileName;
+    bitFileName = xstoolsBinDir;
+    bitFileName += "/";
+    bitFileName += brdInfo[brdIndex].<a href="#" OnFocus="link('_member','oscBitstreamFile1254770407',this)">oscBitstreamFile</a>;
+
+    // give the user some instructions on how to initialize the oscillator for programming
+    string instructions;
+    instructions = "Before setting the XS95 Board frequency you must:\n";
+    instructions += "1) Remove the power and downloading cable from your XS95 Board\n";
+    instructions += "2) Place a shunt on the \"set\" position of jumper J6\n";
+    instructions += "3) Reconnect the power cable\n";
+    instructions += "4) Reconnect the downloading cable\n";
+    instructions += "5) Click on the OK button\n";
+    if(<a href="#" OnFocus="link('_member','PromptUser2517124797',this)">PromptUser</a>(instructions,PROMPT_OKCANCEL) == <a href="#" OnFocus="link('_member','RESPONSE_CANCEL0',this)">RESPONSE_CANCEL</a>)
+        return false;
+
+    // configure the CPLD with the oscillator interface
+    <a href="#" OnFocus="link('_member','cpld239498408',this)">cpld</a>.<a href="#" OnFocus="link('_member','ConfigureCPLD3019441395',this)">ConfigureCPLD</a>(bitFileName);
+    if(<a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','IsError863564933',this)">IsError</a>())
+    {
+        <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,"Error downloading clock-set circuit!!\n");
+        return false;
+    }
+
+    // program the oscillator
+    <a href="#" OnFocus="link('_member','osc239498408',this)">osc</a>.<a href="#" OnFocus="link('_member','SetOscFrequency4061435083',this)">SetOscFrequency</a>(div,extOscPresent);
+
+    // erase the oscillator interface from the CPLD
+    bitFileName = xstoolsBinDir;
+    bitFileName += "/";
+    bitFileName += brdInfo[brdIndex].<a href="#" OnFocus="link('_member','eraseBitstreamFile1254770407',this)">eraseBitstreamFile</a>;
+    <a href="#" OnFocus="link('_member','cpld239498408',this)">cpld</a>.<a href="#" OnFocus="link('_member','ConfigureCPLD3019441395',this)">ConfigureCPLD</a>(bitFileName);
+    if(<a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','IsError863564933',this)">IsError</a>())
+    {
+        <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,"Error erasing CPLD!!\n");
+        return false;
+    }
+
+    // give the user some instructions on how to reset the oscillator so the programming will take effect
+    instructions = "The frequency of your XS95 Board has been set!!\n";
+    instructions += "Now do these steps to activate the oscillator:\n";
+    instructions += "1) Remove the power and downloading cable from your XS95 Board\n";
+    instructions += "2) Move the shunt to the \"osc\" position of jumper J6\n";
+    instructions += "3) Reconnect the power cable\n";
+    instructions += "4) Reconnect the downloading cable\n";
+    instructions += "5) Click on the OK button\n";
+    <a href="#" OnFocus="link('_member','PromptUser2517124797',this)">PromptUser</a>(instructions,PROMPT_OK);
+
+    return true;
+}
+
+
+// Look at xsboard.h for a description of the interface.
+bool <a href="#" OnFocus="link('_member','SetupAudio2832663552',this)">XS95Board::SetupAudio</a>(int *reg)
+{
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a> = <a href="#" OnFocus="link('_member','cpld239498408',this)">cpld</a>.<a href="#" OnFocus="link('_member','GetErr2569683910',this)">GetErr</a>(); // setup error channel
+
+    string msg = <a href="#" OnFocus="link('_member','brdModel239498408',this)">brdModel</a> + (string)" does not support audio codec programming!!\n";
+    <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,msg);
+    return false;
+}
+
+
+// Look at xsboard.h for a description of the interface.
+bool <a href="#" OnFocus="link('_member','SetupVideoIn3913016962',this)">XS95Board::SetupVideoIn</a>(string&amp; fileName)
+{
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a> = <a href="#" OnFocus="link('_member','cpld239498408',this)">cpld</a>.<a href="#" OnFocus="link('_member','GetErr2569683910',this)">GetErr</a>(); // setup error channel
+
+    string msg = <a href="#" OnFocus="link('_member','brdModel239498408',this)">brdModel</a> + (string)" does not support video input programming!!\n";
+    <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,msg);
+    return false;
+}
+
+
+// Look at xsboard.h for a description of the interface.
+bool <a href="#" OnFocus="link('_member','Test2569708575',this)">XS95Board::Test</a>(void)
+{
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a> = <a href="#" OnFocus="link('_member','cpld239498408',this)">cpld</a>.<a href="#" OnFocus="link('_member','GetErr2569683910',this)">GetErr</a>(); // setup error channel
+
+    // use the board model name to find the corresponding index into the list of boards
+    int brdIndex;
+    for(brdIndex=0; brdIndex&lt;numBoards; brdIndex++)
+    {
+        if(strcmp(brdModel,brdInfo[brdIndex].brdModel) == 0)
+            break;
+    }
+    if(brdIndex&gt;=numBoards)
+    {
+        <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,"Unknown type of XS95 Board!\n");
+        return false;
+    }
+
+    // if there is no diagnostic bitstream file, then this board model does not support diagnostics
+    string msg;
+    if(strlen(brdInfo[brdIndex].testBitstreamFile)==0)
+    {
+        msg = <a href="#" OnFocus="link('_member','brdModel239498408',this)">brdModel</a> + (string)" does not support self-test!!\n";
+        <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,msg);
+        return false;
+    }
+
+    // get the directory where the test interface files are kept
+    const char* xstoolsBinDir = <a href="#" OnFocus="link('_member','FindXSTOOLSBinDir53616',this)">FindXSTOOLSBinDir</a>();
+
+    <a href="#" OnFocus="link('_member','cpld239498408',this)">cpld</a>.<a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posTESTRESET,posTESTRESET); // make sure micro is reset as soon as CPLD is configured
+
+    // concat the file name with the directory to form a complete path to the diagnostic program for the on-board micro
+    string testprogFileName = xstoolsBinDir;
+    testprogFileName += "/";
+    testprogFileName += brdInfo[brdIndex].<a href="#" OnFocus="link('_member','testObjFile1254770407',this)">testObjFile</a>;
+    // download the diagnostic program for the micro to the on-board RAM
+    if(<a href="#" OnFocus="link('_member','DownloadRAM2355593322',this)">DownloadRAM</a>(testprogFileName,BIG_ENDIAN_BYTES,LITTLE_ENDIAN_BITS,true,false) == false)
+    {
+        <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,"Error downloading XS95 Board self-test program!\n");
+        return false;
+    }
+
+    <a href="#" OnFocus="link('_member','cpld239498408',this)">cpld</a>.<a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posTESTRESET,posTESTRESET); // make sure micro is reset as soon as CPLD is configured
+
+    // concat the file name with the directory to form a complete path to the diagnostic interface for the CPLD
+    string bitFileName = xstoolsBinDir;
+    bitFileName += "/";
+    bitFileName += brdInfo[brdIndex].<a href="#" OnFocus="link('_member','testBitstreamFile1254770407',this)">testBitstreamFile</a>;
+    // download the CPLD bitstream that supports the diagnostic program run by the micro
+    if(<a href="#" OnFocus="link('_member','Configure3913016962',this)">Configure</a>(bitFileName) == false)
+    {
+        <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,"Error downloading XS95 Board self-test circuit!\n");
+        return false;
+    }
+
+    // reset the micro and release the reset to start the diagnostic running
+    <a href="#" OnFocus="link('_member','cpld239498408',this)">cpld</a>.<a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posTESTRESET,posTESTRESET); // make sure the microcontroller is reset
+    <a href="#" OnFocus="link('_member','InsertDelay359930342',this)">InsertDelay</a>(10,MILLISECONDS);
+    <a href="#" OnFocus="link('_member','cpld239498408',this)">cpld</a>.<a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posTESTRESET,posTESTRESET); // release the microcontroller reset and do the test
+
+    // display a progress indicator while the diagnostic is running
+    string desc((string)"Testing " + brdModel), subdesc("Testing...");
+    <a href="#" OnFocus="link('_class','Progress0',this)">Progress</a>* progressGauge = new <a href="#" OnFocus="link('_class','Progress0',this)">Progress</a>(&amp;errMsg,desc,subdesc,0,100);
+    int testProgress = 0;
+
+    // Monitor the test status pin to see if the test is still running or not.
+    // While the diagnostic runs, the test status pin pulses at some rate.
+    // The number of pulses within the integration period is counted and one of the following actions is taken:
+    //    1. If the count is ever 0, then the test is done and the board has failed.
+    //    2. If the count increases by a factor of two or more, then the test is done and the board passed.
+    //    3. Otherwise, the test is still running.
+    int prevStatus = <a href="#" OnFocus="link('_member','cpld239498408',this)">cpld</a>.<a href="#" OnFocus="link('_member','In1210046855',this)">In</a>(posTESTSTATUS,posTESTSTATUS);
+    int currStatus;
+    int prevDiff = 0;
+    int currDiff;
+    const float integrationPeriod = 0.5;    // in seconds
+    while(true)
+    {
+        // count the number of pulses on the status pin during the integration period
+        clock_t startTime = clock();
+        clock_t endTime = startTime + integrationPeriod * CLOCKS_PER_SEC;
+        currDiff = 0; // pulse counter starts at 0
+        while(clock()&lt;endTime)
+        {
+            currStatus = <a href="#" OnFocus="link('_member','cpld239498408',this)">cpld</a>.<a href="#" OnFocus="link('_member','In1210046855',this)">In</a>(posTESTSTATUS,posTESTSTATUS);
+            if(currStatus != prevStatus)
+                currDiff++;
+            prevStatus = currStatus;
+        }
+
+        // update the progress indicator
+        testProgress = testProgress&gt;=100 ? 0 : testProgress+10;
+        progressGauge-&gt;<a href="#" OnFocus="link('_member','Report2561259521',this)">Report</a>(testProgress);
+        
+        if(currDiff == 0)
+        {   // Test is done and the board failed.  Give the user some help.
+            msg = (string)"\nYour " + <a href="#" OnFocus="link('_member','brdModel239498408',this)">brdModel</a> + (string)" failed the test!\n\n";
+            msg += "Check the following:\n";
+            msg += "1) Is your board connected to the PC parallel port?\n";
+            msg += "2) Is your PC parallel port in unidirectional mode?\n";
+            msg += "3) Is your board the only device connected to the parallel port?\n";
+            msg += "4) Is your board getting power?\n";
+            msg += "5) Is your board sitting on a non-conductive surface?\n";
+            msg += "6) Is the programmable oscillator frequency greater than 1 MHz?\n";
+            msg += "7) Is the shunt on jumper J6 in the osc position?\n";
+            msg += "8) Is the shunt on jumper J7 in the ext position?\n";
+            <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,msg);
+            delete progressGauge;
+            return false;
+        }
+        else
+        {
+            if((currDiff &gt; 2*prevDiff) &amp;&amp; (prevDiff&gt;0))
+            {   // test is done and the board passed
+                msg = (string)"\nYour " + <a href="#" OnFocus="link('_member','brdModel239498408',this)">brdModel</a> + (string)" passed the test!\n";
+                <a href="#" OnFocus="link('_member','PromptUser2517124797',this)">PromptUser</a>(msg,PROMPT_OK);
+                delete progressGauge;
+                return true;
+            }
+        }
+
+        // the test is still running
+        prevDiff = currDiff;
+    }
+
+    delete progressGauge; // get rid of the progress indicator
+
+    return false;
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_file','_source');
+</script>

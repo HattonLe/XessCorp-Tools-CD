@@ -1,0 +1,859 @@
+<html>
+
+
+<!-- Mirrored from 192.168.0.47/appnotes/makefile.html by HTTrack Website Copier/3.x [XR&CO'2004], Mon, 04 Dec 2006 16:07:38 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=ISO-8859-1"><!-- /Added by HTTrack -->
+<head>
+<link rel="SHORTCUT ICON" HREF="../images/xess.ico">
+<title>MAKEFILES FOR XILINX FPGA/CPLD PROJECTS</title>
+<meta name="KEYWORDS" content="makefile, batch processing, XILINX, FPGA, CPLD">
+<meta name="DESCRIPTION" content="How to use makefiles to automate the creation of Xilinx bitstreams.">
+<meta http-equiv="Content-Type" content="text/html">
+<link rel="stylesheet" type="text/css" href="../xess-1.css">
+<meta name="Microsoft Border" content="none, default">
+</head>
+
+<body>
+
+<table>
+	<!-- MSTableType="nolayout" -->
+	<tr>
+		<td class="StdPageLogo">
+		<a href="../index-2.html"><img border="0" src="../images/xess-138x32.bmp"></a>
+
+		<?php 
+			require("logo.html");
+		?>
+		</td>
+		<td class="StdPageNav">
+		<script type="text/javascript" src="xess.js"></script>
+<!-- <script type="text/javascript" src="niftycube_xess.js"></script> -->
+<!-- <script type="text/javascript" src="prototype.js"></script> -->
+<!-- <script type="text/javascript" src="rico.js"></script> -->
+<script type="text/javascript">
+	window.onload=function(){
+		startList("nav");
+		stripe_xess();
+		collapseall();
+		// Nifty("td.StdPageNav","transparent");
+		// Nifty("td.StdPageSidebar","transparent");
+		// Nifty("td.StdPageNavLinks","transparent");
+	};
+	onload=function(){
+		startList("nav");
+		stripe_xess();
+		collapseall();
+		// Nifty("td.StdPageNav","transparent");
+		// Nifty("td.StdPageSidebar","transparent");
+		// Nifty("td.StdPageNavLinks","transparent");
+	};
+</script>
+
+
+
+<table border="0" width="640" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="center" valign="center" width="70%">
+
+<!--
+  -- naviagation bar for browsers with scripting capability
+  -- (make sure there is no whitespace after the '\' on each line and run
+  -- the Javascript console on Firefox to check the syntax.)
+  -->
+<script type="text/javascript">
+nav_text = '\
+  <ul id="nav"> \
+    <li id="first"><a href="../ho04000.html">Products</a> \
+      <ul> \
+        <li><a href="../ho04000.html"><div>Catalog</div></a></li> \
+        <li><a href="../manuals.html"><div>Manuals</div></a></li> \
+        <li><a href="../ho07000.html"><div>Software Downloads</div></a></li> \
+      </ul> \
+    </li> \
+    <li><a href="../help.html">Support</a> \
+      <ul> \
+        <li><a href="../manuals.html" ><div>Product Manuals</div></a></li> \
+        <li><a href="../ho03000.html" ><div>Tutorials</div></a></li> \
+        <li><a href="../ho03000.html" ><div>Application Notes</div></a></li> \
+        <li><a href="../ho03000.html" ><div>Design Examples</div></a></li> \
+        <li><a href="../ho01000.html" ><div>FAQ</div></a></li> \
+        <li><a href="../list_reg.html"><div>User Forum</div></a></li> \
+        <li><a href="../help.html"    ><div>Request Help</div></a></li> \
+      </ul> \
+    </li> \
+    <li><a href="../ho01001.html">Purchasing</a> \
+      <ul> \
+        <li><a href="https://xess.com/xess_int_order.php3"><div>Web Orders</div></a></li> \
+        <li><a href="../ho01001.html"                       ><div>Purchase Orders</div></a></li> \
+        <li><a href="../ho01001.html"                       ><div>Payment Methods</div></a></li> \
+        <li><a href="../xess_int_quote.html"                ><div>Get a Quote</div></a></li> \
+        <li><a href="../xess_int_quote.html"                ><div>Get a Proforma Invoice</div></a></li> \
+        <li><a href="../ho01001.html"                       ><div>How To Buy From Us</div></a></li> \
+      </ul> \
+    </li> \
+    <li id="last"><a href="../index-2.html">XESS</a> \
+      <ul> \
+        <li><a href="../index-2.html"   ><div>Home</div></a></li> \
+        <li><a href="../about_us.html"><div>About Us</div></a></li> \
+        <li><a href="../ho00003.html" ><div>Contact Us</div></a></li> \
+<!-- \
+        <li><a href=""              ><div>Announcements</div></a></li> \
+        <li><a href="../ho00005.html" ><div>Press Releases</div></a></li> \
+--> \
+      </ul> \
+    </li> \
+    <li id="last"><a href="../links.html">Misc.</a> \
+      <ul> \
+        <li><a href="../links.html"><div>Links</div></a></li> \
+      </ul> \
+    </li> \
+  </ul> \
+';
+document.writeln(nav_text);
+</script>
+
+<!--
+  -- naviagation bar for browsers with NO scripting capability
+  -->
+<noscript>
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="14%" align="left">
+    <a href="../ho04000.html"><img border="0" src="../images/menu_arrow.png">Products</a>
+    </td>
+    <td width="16%" align="left">
+    <a href="../ho01001.html"><img border="0" src="../images/menu_arrow.png">How to Buy</a>
+    </td>
+    <td width="11%" align="left">
+    <a href="../help.html"><img border="0" src="../images/menu_arrow.png">Help!</a>
+    </td>
+    <td width="14%" align="left">
+    <a href="../ho03000.html"><img border="0" src="../images/menu_arrow.png">Tutorials</a>
+    </td>
+    <td width="14%" align="left">
+    <a href="../index-2.html"><img border="0" src="../images/menu_arrow.png">Home</a>
+<!--
+    <a href="/ho00005.html"><img border="0" src="/images/menu_arrow.png">Press&nbsp;Rel.</a>
+-->
+    </td>
+  </tr>
+  <tr>
+    <td>
+    <a href="../manuals.html"><img border="0" src="../images/menu_arrow.png">Manuals</a>
+    </td>
+    <td>
+    <a href="../xess_int_quote.html"><img border="0" src="../images/menu_arrow.png">Online Quote</a>
+    </td>
+    <td>
+    <a href="../ho01000.html"><img border="0" src="../images/menu_arrow.png">FAQ</a>
+    </td>
+    <td>
+    <a href="../ho03000.html"><img border="0" src="../images/menu_arrow.png">Examples</a>
+    </td>
+    <td>
+    <a href="../about_us.html">
+    <img border="0" src="../images/menu_arrow.png">About&nbsp;Us</a>
+    </td>
+  </tr>
+  <tr>
+    <td>
+    <a href="../ho07000.html"><img border="0" src="../images/menu_arrow.png">Downloads</a>
+    </td>
+    <td>
+    <a href="https://xess.com/xess_int_order.php3"><img border="0" src="../images/menu_arrow.png">Order Online</a>
+    </td>
+    <td>
+    <a href="../list_reg.html"><img border="0" src="../images/menu_arrow.png">Forum</a>
+    </td>
+    <td>
+    <a href="../links.html"><img border="0" src="../images/menu_arrow.png">Links</a>
+    </td>
+    <td>
+    <a href="../ho00003.html"><img border="0" src="../images/menu_arrow.png">Contact&nbsp;Us</a>
+    </td>
+  </tr>
+</table>
+</noscript>
+
+    </td>
+    <td align="center" valign="center" width="30%" id="srch">
+      <FORM ACTION="http://192.168.0.47/cgi-bin/ksearch/ksearch.cgi" METHOD="GET" NAME="search">
+        <INPUT TYPE="text" value="search" NAME="terms">
+		<input type=image src="../images/search_arrow.png" value="Search">
+      </FORM>
+    </td>
+  </tr>
+</table>
+
+
+		<?php 
+			require("nav.html");
+		?>
+		</td>
+	</tr>
+	<tr>
+
+	
+		<td class="StdPageSidebar">
+		This is a description of the makefiles we use to automate the batch processing
+		of Xilinx FPGA and CPLD projects.
+		</td>
+
+
+		<td class="StdPageBody">
+
+<!-- INDEX BEGIN -->
+
+<ul>
+
+	<li><a href="#makefiles_for_xilinx_fpga_cpld_projects">MAKEFILES FOR XILINX FPGA/CPLD PROJECTS</a></li>
+	<ul>
+
+		<li><a href="#xilinx_rules_makefile">Xilinx Rules Makefile</a></li>
+		<ul>
+
+			<li><a href="#xilinx_rules_mk">xilinx_rules.mk</a></li>
+			<li><a href="#get_option_values_pl_perl_script">get_option_values.pl Perl Script</a></li>
+			<li><a href="#set_option_values_pl_perl_script">set_option_values.pl Perl Script</a></li>
+			<li><a href="#get_project_files_pl_perl_script">get_project_files.pl Perl Script</a></li>
+		</ul>
+
+		<li><a href="#project_makefile">Project Makefile</a></li>
+		<li><a href="#directory_makefile">Directory Makefile</a></li>
+		<li><a href="#environment">Environment</a></li>
+		<li><a href="#source_files">Source Files</a></li>
+		<li><a href="#author">Author</a></li>
+		<li><a href="#copyright_and_license">Copyright and License</a></li>
+		<li><a href="#history">History</a></li>
+	</ul>
+
+</ul>
+<!-- INDEX END -->
+
+<hr />
+<p>
+</p>
+<hr />
+<h1><a name="makefiles_for_xilinx_fpga_cpld_projects">MAKEFILES FOR XILINX FPGA/CPLD PROJECTS</a></h1>
+<p>These makefiles were created so that you can develop a Xilinx project using
+the WebPACK/ISE GUI, but then use a makefile to automate the build process 
+once the development work is done.</p>
+<p>Several makefiles will be described:</p>
+<dl>
+<dt><strong><a name="item_xilinx_rules_makefile"><a href="#xilinx_rules_makefile">Xilinx Rules Makefile</a></a></strong>
+
+<dd>
+<p>This makefile contains the rules that move the HDL files through the
+synthesizer, place &amp; route and bitstream generation processes to produce the
+final bitstream file.</p>
+</dd>
+</li>
+<dt><strong><a name="item_project_makefile"><a href="#project_makefile">Project Makefile</a></a></strong>
+
+<dd>
+<p>This makefile resides in the WebPACK/ISE project directory and uses the
+Xilinx rules makefile to create the bitstream for the project.</p>
+</dd>
+</li>
+<dt><strong><a name="item_directory_makefile"><a href="#directory_makefile">Directory Makefile</a></a></strong>
+
+<dd>
+<p>This makefile creates bitstreams for a number WebPACK/ISE projects by calling
+the project makefile in each of the project subdirectories.</p>
+</dd>
+</li>
+</dl>
+<p>
+</p>
+<h2><a name="xilinx_rules_makefile">Xilinx Rules Makefile</a></h2>
+<p>The <em>xilinx_rules.mk</em> file contains the variable definitions and rules that perform 
+the bulk of the operations for creating an FPGA or CPLD configuration bitstream.
+The rules encode the process flow for an FPGA:</p>
+<pre>
+  (.vhd,.ver)--&gt;[XST]--&gt;(.ngc,.ucf)--&gt;[NGDBUILD]--&gt;(.ngd,.pcf)--&gt;[MAP]--&gt;(.ncd,.pcf)--&gt; ...
+            ... --&gt;[PAR]--&gt;(.ncd)--&gt;[BITGEN]--&gt;(.bit)</pre>
+<p>and the process flow for a CPLD:</p>
+<pre>
+  (.vhd,.ver)--&gt;[XST]--&gt;(.ngc,.ucf)--&gt;[NGDBUILD]--&gt;(.ngd)--&gt;[CPLDFIT]--&gt;(.vm6)--&gt; ...
+            ... --&gt;[HPREP6]--&gt;(.jed)--&gt;[IMPACT]--&gt;(.svf)</pre>
+<p><em>xilinx_rules.mk</em> is not used directly.  It is included in the main <em>makefile</em> of a
+WebPACK/ISE project.  <em>xilinx_rules.mk</em> is usually placed in the
+<em>/usr/local/include</em> directory so that <code>make</code> can find it when needed.</p>
+<p>The <em><a href="#xilinx_rules_mk">xilinx_rules.mk</a></em> file is shown below.
+<em>xilinx_rules.mk</em> uses several Perl script files 
+(<em><a href="#get_option_values_pl_perl_script">get_option_values.pl</a></em>,
+<em><a href="#set_option_values_pl_perl_script">set_option_values.pl</a></em>, and
+<em><a href="#get_project_files_pl_perl_script">get_project_files.pl</a></em>)
+and these are also shown.</p>
+<p>
+</p>
+<h3><a name="xilinx_rules_mk">xilinx_rules.mk</a></h3>
+<pre>
+        <span class="comment">#-------------------------------------------------------------------</span>
+        <span class="comment"># Company       : XESS Corp.</span>
+        <span class="comment"># Engineer      : Dave Vanden Bout</span>
+        <span class="comment"># Creation Date : 05/16/2006</span>
+        <span class="comment"># Copyright     : 2005-2006, XESS Corp</span>
+        <span class="comment"># Tool Versions : make 3.79.1, perl 5.8.8, WebPACK 8.1.03i</span>
+        <span class="comment">#</span>
+        <span class="comment"># Description:</span>
+        <span class="comment">#    This makefile contains the rules that move the HDL files through</span>
+        <span class="comment">#    the Xilinx WebPACK/ISE synthesizer, place &amp; route and bitstream </span>
+        <span class="comment">#    generation processes to produce the final bitstream file.</span>
+        <span class="comment">#</span>
+        <span class="comment"># Revision:</span>
+        <span class="comment">#    1.0.2</span>
+        <span class="comment">#</span>
+        <span class="comment"># Additional Comments:</span>
+        <span class="comment">#    This file is normally included in another makefile using the</span>
+        <span class="comment">#    `include' directive.  Usually this file is placed in the </span>
+        <span class="comment">#    /usr/local/include directory so make can find it automatically.</span>
+        <span class="comment">#</span>
+        <span class="comment">#    The makefile targets are:</span>
+        <span class="comment">#        config: Creates bit/svf file for FPGA/CPLD.</span>
+        <span class="comment">#        svf:    Directly creates bit file for FPGA.</span>
+        <span class="comment">#        bit:    Directly creates svf file for CPLD.</span>
+        <span class="comment">#        mcs:    Creates Intel MCS file from bit file.</span>
+        <span class="comment">#        exo:    Creates Motorola EXO file from bit file.</span>
+        <span class="comment">#        timing: Creates timing report for FPGA (not CPLD).</span>
+        <span class="comment">#        clean:  Cleans temporary files created during build process.</span>
+        <span class="comment">#        distclean: Clean and also remove timing report.</span>
+        <span class="comment">#        maintainer-clean: Distclean and also remove bit/svf files.</span>
+        <span class="comment">#        nice:   beautify the HDL source code</span>
+        <span class="comment">#</span>
+        <span class="comment">#    1.0.2:</span>
+        <span class="comment">#        Added more file types for removal during cleaning.</span>
+        <span class="comment">#    1.0.1:</span>
+        <span class="comment">#        Added 'nice' target.</span>
+        <span class="comment">#    1.0.0</span>
+        <span class="comment">#        Initial revision.</span>
+        <span class="comment">#-------------------------------------------------------------------</span>
+        
+        
+        
+        <span class="comment">#</span>
+        <span class="comment"># Paths to utilities.</span>
+        <span class="comment">#</span>
+        
+        <span class="comment"># Standard OS utilities.  These are for DOS.  Set them for your particular OS.</span>
+        <span class="variable">RM</span>                 <span class="operator">:=</span> <span class="variable">erase</span> <span class="operator">/</span><span class="regex">s /q
+        RMDIR              := rmdir /s /q</span>
+        <span class="variable">MKDIR</span>              <span class="operator">:=</span> <span class="keyword">mkdir</span>
+        <span class="variable">ECHO</span>               <span class="operator">:=</span> <span class="variable">echo</span>
+        <span class="variable">EMACS</span>              <span class="operator">:=</span> <span class="regex">/utils/emacs</span><span class="operator">-</span><span class="number">21.3</span><span class="operator">/</span><span class="variable">bin</span><span class="operator">/</span><span class="variable">emacs</span>
+        
+        <span class="comment"># These are Perl script files that perform some simple operations.</span>
+        <span class="variable">UTILITY_DIR</span>        <span class="operator">:=</span> <span class="variable">C</span><span class="operator">:</span><span class="regex">/UTILS/</span>
+        <span class="variable">SET_OPTION_VALUES</span>  <span class="operator">:=</span> <span class="variable">perl</span> <span class="variable">$(</span><span class="variable">UTILITY_DIR</span><span class="operator">)</span><span class="variable">set_option_values</span><span class="operator">.</span><span class="variable">pl</span>
+        <span class="variable">GET_OPTION_VALUES</span>  <span class="operator">:=</span> <span class="variable">perl</span> <span class="variable">$(</span><span class="variable">UTILITY_DIR</span><span class="operator">)</span><span class="variable">get_option_values</span><span class="operator">.</span><span class="variable">pl</span>
+        <span class="variable">GET_PROJECT_FILES</span>  <span class="operator">:=</span> <span class="variable">perl</span> <span class="variable">$(</span><span class="variable">UTILITY_DIR</span><span class="operator">)</span><span class="variable">get_project_files</span><span class="operator">.</span><span class="variable">pl</span>
+        
+        
+        
+        <span class="comment">#</span>
+        <span class="comment"># Flags and option values that control the behavior of the Xilinx tools.</span>
+        <span class="comment"># You can override these values in the makefile that includes this one.</span>
+        <span class="comment"># Otherwise, the default values will be set as shown below.</span>
+        <span class="comment">#</span>
+        
+        <span class="comment"># Unless otherwise specified, the name of the design and the top-level</span>
+        <span class="comment"># entity are derived from the name of the directory that contains the design.</span>
+        <span class="variable">DIR_SPACES</span>  <span class="operator">:=</span> <span class="variable">$(</span><span class="variable">subst</span> <span class="operator">/,</span> <span class="operator">,</span><span class="variable">$(</span><span class="variable">CURDIR</span><span class="operator">))</span>
+        <span class="variable">DIR_NAME</span>    <span class="operator">:=</span> <span class="variable">$(</span><span class="variable">word</span> <span class="variable">$(</span><span class="variable">words</span> <span class="variable">$(</span><span class="variable">DIR_SPACES</span><span class="operator">)),</span> <span class="variable">$(</span><span class="variable">DIR_SPACES</span><span class="operator">))</span>
+        <span class="variable">DESIGN_NAME</span> <span class="operator">?=</span> <span class="variable">$(</span><span class="variable">DIR_NAME</span><span class="operator">)</span>
+        <span class="variable">TOP_NAME</span>    <span class="operator">?=</span> <span class="variable">$(</span><span class="variable">DESIGN_NAME</span><span class="operator">)</span>
+        
+        <span class="comment"># Extract the part identifier from the project .npl file.</span>
+        <span class="variable">PART_TYPE</span>        <span class="operator">?=</span>            <span class="variable">$(</span><span class="variable">shell</span> <span class="variable">$(</span><span class="variable">GET_OPTION_VALUES</span><span class="operator">)</span> <span class="variable">$(</span><span class="variable">DESIGN_NAME</span><span class="operator">).</span><span class="variable">npl</span> <span class="variable">DEVICE</span><span class="operator">)</span>
+        <span class="variable">PART_SPEED_GRADE</span> <span class="operator">?=</span> <span class="variable">$(</span><span class="variable">subst</span> <span class="operator">-,,</span><span class="variable">$(</span><span class="variable">shell</span> <span class="variable">$(</span><span class="variable">GET_OPTION_VALUES</span><span class="operator">)</span> <span class="variable">$(</span><span class="variable">DESIGN_NAME</span><span class="operator">).</span><span class="variable">npl</span> <span class="variable">DEVSPEED</span><span class="operator">))</span>
+        <span class="variable">PART_PACKAGE</span>     <span class="operator">?=</span>            <span class="variable">$(</span><span class="variable">shell</span> <span class="variable">$(</span><span class="variable">GET_OPTION_VALUES</span><span class="operator">)</span> <span class="variable">$(</span><span class="variable">DESIGN_NAME</span><span class="operator">).</span><span class="variable">npl</span> <span class="variable">DEVPKG</span><span class="operator">)</span>
+        <span class="variable">PART</span>             <span class="operator">?=</span> <span class="variable">$(</span><span class="variable">PART_TYPE</span><span class="operator">)-</span><span class="variable">$(</span><span class="variable">PART_SPEED_GRADE</span><span class="operator">)-</span><span class="variable">$(</span><span class="variable">PART_PACKAGE</span><span class="operator">)</span>
+        
+        <span class="comment"># This variable will be non-empty if the design is targeted to an XC9500 CPLD.</span>
+        <span class="variable">IS_CPLD</span> <span class="operator">=</span> <span class="variable">$(</span><span class="variable">findstring</span> <span class="variable">xc95</span><span class="operator">,</span><span class="variable">$(</span><span class="variable">PART</span><span class="operator">))</span>
+        
+        <span class="comment"># Flags common to both FPGA and CPLD design flow.</span>
+        <span class="variable">INTSTYLE</span>         <span class="operator">?=</span> <span class="operator">-</span><span class="variable">intstyle</span> <span class="variable">silent</span>      <span class="comment"># call Xilinx tools in silent mode</span>
+        <span class="variable">XST_FLAGS</span>        <span class="operator">?=</span> <span class="variable">$(</span><span class="variable">INTSTYLE</span><span class="operator">)</span>           <span class="comment"># most synthesis flags are specified in the .xst file</span>
+        <span class="variable">UCF_FILE</span>         <span class="operator">?=</span> <span class="variable">$(</span><span class="variable">DESIGN_NAME</span><span class="operator">).</span><span class="variable">ucf</span>    <span class="comment"># constraint/pin-assignment file</span>
+        <span class="variable">NGDBUILD_FLAGS</span>   <span class="operator">?=</span> <span class="variable">$(</span><span class="variable">INTSTYLE</span><span class="operator">)</span> <span class="operator">-</span><span class="variable">dd</span> <span class="variable">_ngo</span>  <span class="comment"># ngdbuild flags</span>
+        <span class="variable">NGDBUILD_FLAGS</span> <span class="operator">+=</span> <span class="variable">$(</span><span class="keyword">if</span> <span class="variable">$(</span><span class="variable">UCF_FILE</span><span class="operator">),-</span><span class="keyword">uc</span><span class="operator">,)</span> <span class="variable">$(</span><span class="variable">UCF_FILE</span><span class="operator">)</span>         <span class="comment"># append the UCF file option if it is specified </span>
+        
+        <span class="comment"># Flags for FPGA-specific tools.  These were extracted by looking in the</span>
+        <span class="comment"># .cmd_log file after compiling the design with the WebPACK/ISE GUI.</span>
+        <span class="variable">MAP_FLAGS</span>        <span class="operator">?=</span> <span class="variable">$(</span><span class="variable">INTSTYLE</span><span class="operator">)</span> <span class="operator">-</span><span class="variable">cm</span> <span class="variable">area</span> <span class="operator">-</span><span class="variable">pr</span> <span class="variable">b</span> <span class="keyword">-k</span> <span class="number">4</span> <span class="keyword">-c</span> <span class="number">100</span> <span class="operator">-</span><span class="variable">tx</span> <span class="variable">off</span>
+        <span class="variable">PAR_FLAGS</span>        <span class="operator">?=</span> <span class="variable">$(</span><span class="variable">INTSTYLE</span><span class="operator">)</span> <span class="keyword">-w</span> <span class="operator">-</span><span class="variable">ol</span> <span class="variable">std</span> <span class="keyword">-t</span> <span class="number">1</span>
+        <span class="variable">TRCE_FLAGS</span>       <span class="operator">?=</span> <span class="variable">$(</span><span class="variable">INTSTYLE</span><span class="operator">)</span> <span class="keyword">-e</span> <span class="number">3</span> <span class="keyword">-l</span> <span class="number">3</span>
+        <span class="variable">BITGEN_FLAGS</span>     <span class="operator">?=</span> <span class="variable">$(</span><span class="variable">INTSTYLE</span><span class="operator">)</span>           <span class="comment"># most bitgen flags are specified in the .ut file</span>
+        <span class="variable">PROMGEN_FLAGS</span>    <span class="operator">?=</span> <span class="keyword">-u</span> <span class="number">0</span>                  <span class="comment"># flags that control the MCS/EXO file generation</span>
+        
+        <span class="comment"># Flags for CPLD-specific tools.  These were extracted by looking in the</span>
+        <span class="comment"># .cmd_log file after compiling the design with the WebPACK/ISE GUI.</span>
+        <span class="variable">CPLDFIT_FLAGS</span>    <span class="operator">?=</span> <span class="operator">-</span><span class="variable">ofmt</span> <span class="variable">vhdl</span> <span class="operator">-</span><span class="variable">optimize</span> <span class="variable">speed</span> <span class="operator">-</span><span class="variable">htmlrpt</span> <span class="operator">-</span><span class="variable">loc</span> <span class="variable">on</span> <span class="operator">-</span><span class="variable">slew</span> <span class="variable">fast</span> <span class="operator">-</span><span class="variable">init</span> <span class="variable">low</span> <span class="operator">-</span><span class="variable">inputs</span> <span class="number">54</span> <span class="operator">-</span><span class="variable">pterms</span> <span class="number">25</span> <span class="operator">-</span><span class="variable">unused</span> <span class="variable">float</span> <span class="operator">-</span><span class="variable">power</span> <span class="variable">std</span> <span class="operator">-</span><span class="variable">terminate</span> <span class="variable">keeper</span>
+        <span class="variable">SIGNATURE</span>        <span class="operator">?=</span> <span class="variable">$(</span><span class="variable">DESIGN_NAME</span><span class="operator">)</span>        <span class="comment"># JTAG-accessible signature stored in the CPLD</span>
+        <span class="variable">HPREP6_FLAGS</span>     <span class="operator">?=</span> <span class="keyword">-s</span> <span class="variable">IEEE1149</span>           <span class="comment"># hprep flags</span>
+        <span class="variable">HPREP6_FLAGS</span>     <span class="operator">+=</span> <span class="variable">$(</span><span class="keyword">if</span> <span class="variable">$(</span><span class="variable">SIGNATURE</span><span class="operator">),-</span><span class="variable">n</span><span class="operator">,)</span> <span class="variable">$(</span><span class="variable">SIGNATURE</span><span class="operator">)</span>  <span class="comment"># append signature if it is specified </span>
+        
+        <span class="comment"># Select the correct tool options files that control the synthesizer</span>
+        <span class="comment"># and bitstream generator for FPGAs or CPLDs.</span>
+        <span class="variable">PROJNAV_DIR</span>      <span class="operator">?=</span> <span class="variable">__projnav</span>
+        <span class="variable">ifneq</span> <span class="operator">(,</span><span class="variable">$(</span><span class="variable">IS_CPLD</span><span class="operator">))</span>
+          <span class="variable">XST_CPLD_OPTIONS_FILE</span> <span class="operator">?=</span> <span class="variable">$(</span><span class="variable">PROJNAV_DIR</span><span class="operator">)/</span><span class="variable">$(</span><span class="variable">DESIGN_NAME</span><span class="operator">).</span><span class="variable">xst</span>
+          <span class="variable">IMPACT_OPTIONS_FILE</span>   <span class="operator">?=</span> <span class="variable">_impact</span><span class="operator">.</span><span class="variable">cmd</span>
+          <span class="variable">XST_OPTIONS_FILE</span>       <span class="operator">=</span> <span class="variable">$(</span><span class="variable">XST_CPLD_OPTIONS_FILE</span><span class="operator">)</span>
+        <span class="keyword">else</span>
+          <span class="variable">XST_FPGA_OPTIONS_FILE</span> <span class="operator">?=</span> <span class="variable">$(</span><span class="variable">PROJNAV_DIR</span><span class="operator">)/</span><span class="variable">$(</span><span class="variable">DESIGN_NAME</span><span class="operator">).</span><span class="variable">xst</span>
+          <span class="variable">BITGEN_OPTIONS_FILE</span>   <span class="operator">?=</span> <span class="variable">$(</span><span class="variable">DESIGN_NAME</span><span class="operator">).</span><span class="variable">ut</span>
+          <span class="variable">XST_OPTIONS_FILE</span>       <span class="operator">=</span> <span class="variable">$(</span><span class="variable">XST_FPGA_OPTIONS_FILE</span><span class="operator">)</span>
+        <span class="variable">endif</span>
+        
+        
+        
+        <span class="comment">#</span>
+        <span class="comment"># The following rules describe how to compile the design to an FPGA/CPLD.</span>
+        <span class="comment">#</span>
+        
+        <span class="comment"># Get the list of VHDL and Verilog files that this design depends on by</span>
+        <span class="comment"># extracting their names from the project .prj file.  This variable is used</span>
+        <span class="comment"># by make for checking dependencies, but the synthesizer tool ignores this</span>
+        <span class="comment"># variable and uses the file list found in the .prj file.</span>
+        <span class="variable">ifeq</span> <span class="operator">(</span><span class="variable">$(</span><span class="variable">origin</span> <span class="variable">HDL_FILES</span><span class="operator">),</span><span class="variable">undefined</span><span class="operator">)</span>
+          <span class="variable">HDL_FILES</span>       <span class="operator">?=</span> <span class="variable">$(</span><span class="variable">shell</span> <span class="variable">$(</span><span class="variable">GET_PROJECT_FILES</span><span class="operator">)</span> <span class="variable">$(</span><span class="variable">DESIGN_NAME</span><span class="operator">).</span><span class="variable">prj</span><span class="operator">)</span>
+        <span class="variable">endif</span>
+        
+        <span class="comment"># cleanup the source code to make it look nice</span>
+        <span class="variable">%.</span><span class="variable">nice</span><span class="operator">:</span> <span class="variable">%.</span><span class="variable">vhd</span>
+                <span class="variable">$(</span><span class="variable">EMACS</span><span class="operator">)</span> <span class="operator">-</span><span class="variable">batch</span> <span class="variable">$&lt;</span> <span class="keyword">-f</span> <span class="variable">vhdl</span><span class="operator">-</span><span class="variable">beautify</span><span class="operator">-</span><span class="variable">buffer</span> <span class="keyword">-f</span> <span class="variable">save</span><span class="operator">-</span><span class="variable">buffer</span>
+                <span class="variable">$(</span><span class="variable">RM</span><span class="operator">)</span> <span class="variable">$&lt;</span><span class="operator">~</span>
+        
+        <span class="comment"># Synthesize the HDL files into an NGC file.  This rule is triggered if</span>
+        <span class="comment"># any of the HDL files are changed or the synthesis options are changed.</span>
+        <span class="variable">%.</span><span class="variable">ngc</span><span class="operator">:</span> <span class="variable">$(</span><span class="variable">HDL_FILES</span><span class="operator">)</span> <span class="variable">$(</span><span class="variable">XST_OPTIONS_FILE</span><span class="operator">)</span>
+                <span class="operator">-</span><span class="variable">$(</span><span class="variable">MKDIR</span><span class="operator">)</span> <span class="variable">$(</span><span class="variable">PROJNAV_DIR</span><span class="operator">)</span>
+                                        <span class="comment"># The .xst file containing the synthesis options is modified to </span>
+                                        <span class="comment"># reflect the design name, device, and top-level entity and stored</span>
+                                        <span class="comment"># in a temporary .xst file.</span>
+                <span class="variable">$(</span><span class="variable">SET_OPTION_VALUES</span><span class="operator">)</span> <span class="variable">$(</span><span class="variable">XST_OPTIONS_FILE</span><span class="operator">)</span> <span class="operator">\</span>
+                        <span class="string">"set -tmpdir $(PROJNAV_DIR)"</span> <span class="operator">\</span>
+                        <span class="string">"-lso $(DESIGN_NAME).lso"</span> <span class="operator">\</span>
+                        <span class="string">"-ifn $(DESIGN_NAME).prj"</span> <span class="operator">\</span>
+                        <span class="string">"-ofn $(DESIGN_NAME)"</span> <span class="operator">\</span>
+                        <span class="string">"-p $(PART)"</span> <span class="operator">\</span>
+                        <span class="string">"-top $(TOP_NAME)"</span> <span class="operator">\</span>
+                                <span class="operator">&gt;</span> <span class="variable">$(</span><span class="variable">PROJNAV_DIR</span><span class="operator">)/</span><span class="variable">tmp</span><span class="operator">.</span><span class="variable">xst</span>
+                <span class="variable">xst</span> <span class="variable">$(</span><span class="variable">XST_FLAGS</span><span class="operator">)</span> <span class="operator">-</span><span class="variable">ifn</span> <span class="variable">$(</span><span class="variable">PROJNAV_DIR</span><span class="operator">)/</span><span class="variable">tmp</span><span class="operator">.</span><span class="variable">xst</span> <span class="operator">-</span><span class="variable">ofn</span> <span class="variable">$*</span><span class="operator">.</span><span class="variable">syr</span>
+        
+        <span class="comment"># Take the output of the synthesizer and create the NGD file.  This rule</span>
+        <span class="comment"># will also be triggered if constraints file is changed.</span>
+        <span class="variable">%.</span><span class="variable">ngd</span><span class="operator">:</span> <span class="variable">%.</span><span class="variable">ngc</span> <span class="variable">%.</span><span class="variable">ucf</span>
+                <span class="variable">ngdbuild</span> <span class="variable">$(</span><span class="variable">NGDBUILD_FLAGS</span><span class="operator">)</span> <span class="keyword">-p</span> <span class="variable">$(</span><span class="variable">PART</span><span class="operator">)</span> <span class="variable">$*</span><span class="operator">.</span><span class="variable">ngc</span> <span class="variable">$*</span><span class="operator">.</span><span class="variable">ngd</span>
+        
+        <span class="comment"># Map the NGD file and physical-constraints to the FPGA to create the mapped NCD file.</span>
+        <span class="variable">%_map</span><span class="operator">.</span><span class="variable">ncd</span> <span class="variable">%.</span><span class="variable">pcf</span><span class="operator">:</span> <span class="variable">%.</span><span class="variable">ngd</span>
+                <span class="keyword">map</span> <span class="variable">$(</span><span class="variable">MAP_FLAGS</span><span class="operator">)</span> <span class="keyword">-p</span> <span class="variable">$(</span><span class="variable">PART</span><span class="operator">)</span> <span class="keyword">-o</span> <span class="variable">$*</span><span class="variable">_map</span><span class="operator">.</span><span class="variable">ncd</span> <span class="variable">$*</span><span class="operator">.</span><span class="variable">ngd</span> <span class="variable">$*</span><span class="operator">.</span><span class="variable">pcf</span>
+        
+        <span class="comment"># Place &amp; route the mapped NCD file to create the final NCD file.</span>
+        <span class="variable">%.</span><span class="variable">ncd</span><span class="operator">:</span> <span class="variable">%_map</span><span class="operator">.</span><span class="variable">ncd</span> <span class="variable">%.</span><span class="variable">pcf</span>
+                <span class="variable">par</span> <span class="variable">$(</span><span class="variable">PAR_FLAGS</span><span class="operator">)</span> <span class="variable">$*</span><span class="variable">_map</span><span class="operator">.</span><span class="variable">ncd</span> <span class="variable">$*</span><span class="operator">.</span><span class="variable">ncd</span> <span class="variable">$*</span><span class="operator">.</span><span class="variable">pcf</span>
+        
+        <span class="comment"># Take the final NCD file and create an FPGA bitstream file.  This rule will also be</span>
+        <span class="comment"># triggered if the bit generation options file is changed.</span>
+        <span class="variable">%.</span><span class="variable">bit</span><span class="operator">:</span> <span class="variable">%.</span><span class="variable">ncd</span> <span class="variable">$(</span><span class="variable">BITGEN_OPTIONS_FILE</span><span class="operator">)</span>
+                <span class="variable">bitgen</span> <span class="variable">$(</span><span class="variable">BITGEN_FLAGS</span><span class="operator">)</span> <span class="keyword">-f</span> <span class="variable">$(</span><span class="variable">BITGEN_OPTIONS_FILE</span><span class="operator">)</span> <span class="variable">$*</span><span class="operator">.</span><span class="variable">ncd</span>
+        
+        <span class="comment"># Convert a bitstream file into an MCS hex file that can be stored into Flash memory.</span>
+        <span class="variable">%.</span><span class="variable">mcs</span><span class="operator">:</span> <span class="variable">%.</span><span class="variable">bit</span>
+                <span class="variable">promgen</span> <span class="variable">$(</span><span class="variable">PROMGEN_FLAGS</span><span class="operator">)</span> <span class="variable">$*</span><span class="operator">.</span><span class="variable">bit</span> <span class="keyword">-p</span> <span class="variable">mcs</span>
+        
+        <span class="comment"># Convert a bitstream file into an EXO hex file that can be stored into Flash memory.</span>
+        <span class="variable">%.</span><span class="variable">exo</span><span class="operator">:</span> <span class="variable">%.</span><span class="variable">bit</span>
+                <span class="variable">promgen</span> <span class="variable">$(</span><span class="variable">PROMGEN_FLAGS</span><span class="operator">)</span> <span class="variable">$*</span><span class="operator">.</span><span class="variable">bit</span> <span class="keyword">-p</span> <span class="variable">exo</span>
+        
+        <span class="comment"># Fit the NGD file synthesized for the CPLD to create the VM6 file.</span>
+        <span class="variable">%.</span><span class="variable">vm6</span><span class="operator">:</span> <span class="variable">%.</span><span class="variable">ngd</span>
+                <span class="variable">cpldfit</span> <span class="variable">$(</span><span class="variable">CPLDFIT_FLAGS</span><span class="operator">)</span> <span class="keyword">-p</span> <span class="variable">$(</span><span class="variable">PART</span><span class="operator">)</span> <span class="variable">$*</span><span class="operator">.</span><span class="variable">ngd</span>
+        
+        <span class="comment"># Convert the VM6 file into a JED file for the CPLD.</span>
+        <span class="variable">%.</span><span class="variable">jed</span><span class="operator">:</span> <span class="variable">%.</span><span class="variable">vm6</span>
+                <span class="variable">hprep6</span> <span class="variable">$(</span><span class="variable">HPREP6_FLAGS</span><span class="operator">)</span> <span class="operator">-</span><span class="variable">i</span> <span class="variable">$*</span><span class="operator">.</span><span class="variable">vm6</span>
+        
+        <span class="comment"># Convert JED file into an SVF file for the CPLD.</span>
+        <span class="variable">%.</span><span class="variable">svf</span><span class="operator">:</span> <span class="variable">%.</span><span class="variable">jed</span> <span class="variable">$(</span><span class="variable">IMPACT_OPTIONS_FILE</span><span class="operator">)</span>
+                <span class="variable">$(</span><span class="variable">SET_OPTION_VALUES</span><span class="operator">)</span> <span class="variable">$(</span><span class="variable">IMPACT_OPTIONS_FILE</span><span class="operator">)</span> <span class="operator">\</span>
+                        <span class="string">"setCable -port svf -file \"$*.svf\""</span> <span class="operator">\</span>
+                        <span class="string">"addDevice -position 1 -file \"$*.jed\""</span> <span class="operator">\</span>
+                                <span class="operator">&gt;</span> <span class="variable">impactcmd</span><span class="operator">.</span><span class="variable">txt</span>
+                <span class="variable">$(</span><span class="variable">ECHO</span><span class="operator">)</span> <span class="string">"quit"</span> <span class="operator">&gt;&gt;</span> <span class="variable">impactcmd</span><span class="operator">.</span><span class="variable">txt</span>
+                <span class="variable">impact</span> <span class="operator">-</span><span class="variable">batch</span> <span class="variable">impactcmd</span><span class="operator">.</span><span class="variable">txt</span>
+        
+        <span class="comment"># Use .config suffix to trigger creation of a bit/svf file</span>
+        <span class="comment"># depending upon whether an FPGA/CPLD is the target device.</span>
+        <span class="variable">%.</span><span class="variable">config</span><span class="operator">:</span> <span class="variable">$(</span><span class="keyword">if</span> <span class="variable">$(</span><span class="variable">IS_CPLD</span><span class="operator">),</span><span class="variable">%.</span><span class="variable">svf</span><span class="operator">,</span><span class="variable">%.</span><span class="variable">bit</span><span class="operator">)</span> <span class="operator">;</span>
+        
+        <span class="comment"># Create the FPGA timing report after place &amp; route.</span>
+        <span class="variable">%.</span><span class="variable">twr</span><span class="operator">:</span> <span class="variable">%.</span><span class="variable">ncd</span> <span class="variable">%.</span><span class="variable">pcf</span>
+                <span class="variable">trce</span> <span class="variable">$(</span><span class="variable">TRCE_FLAGS</span><span class="operator">)</span> <span class="variable">$*</span><span class="operator">.</span><span class="variable">ncd</span> <span class="keyword">-o</span> <span class="variable">$*</span><span class="operator">.</span><span class="variable">twr</span> <span class="variable">$*</span><span class="operator">.</span><span class="variable">pcf</span>
+        
+        <span class="comment"># Use .timing suffix to trigger timing report creation.</span>
+        <span class="variable">%.</span><span class="variable">timing</span><span class="operator">:</span> <span class="variable">%.</span><span class="variable">twr</span> <span class="operator">;</span>
+        
+        <span class="comment"># Preserve intermediate files.</span>
+        <span class="operator">.</span><span class="variable">PRECIOUS</span><span class="operator">:</span> <span class="variable">%.</span><span class="variable">ngc</span> <span class="variable">%.</span><span class="variable">ngd</span> <span class="variable">%_map</span><span class="operator">.</span><span class="variable">ncd</span> <span class="variable">%.</span><span class="variable">ncd</span> <span class="variable">%.</span><span class="variable">twr</span> <span class="variable">%.</span><span class="variable">vm6</span> <span class="variable">%.</span><span class="variable">jed</span>
+        
+        <span class="comment"># Clean up after creating the configuration file.</span>
+        <span class="variable">%.</span><span class="variable">clean</span><span class="operator">:</span>
+                <span class="operator">-</span><span class="variable">$(</span><span class="variable">RM</span><span class="operator">)</span> <span class="variable">$*</span><span class="operator">.</span><span class="variable">stx</span> <span class="variable">$*</span><span class="operator">.</span><span class="variable">ucf</span><span class="operator">.</span><span class="variable">untf</span> <span class="variable">$*</span><span class="operator">.</span><span class="variable">mrp</span> <span class="variable">$*</span><span class="operator">.</span><span class="variable">nc1</span> <span class="variable">$*</span><span class="operator">.</span><span class="variable">ngm</span> <span class="variable">$*</span><span class="operator">.</span><span class="variable">prm</span> <span class="variable">$*</span><span class="operator">.</span><span class="variable">lfp</span>
+                <span class="operator">-</span><span class="variable">$(</span><span class="variable">RM</span><span class="operator">)</span> <span class="variable">$*</span><span class="operator">.</span><span class="variable">placed_ncd_tracker</span> <span class="variable">$*</span><span class="operator">.</span><span class="variable">routed_ncd_tracker</span>
+                <span class="operator">-</span><span class="variable">$(</span><span class="variable">RM</span><span class="operator">)</span> <span class="variable">$*</span><span class="operator">.</span><span class="variable">pad_txt</span> <span class="variable">$*</span><span class="operator">.</span><span class="variable">twx</span> <span class="operator">*.</span><span class="keyword">log</span> <span class="operator">*.</span><span class="variable">vhd</span><span class="operator">~</span> <span class="variable">$*</span><span class="operator">.</span><span class="variable">dhp</span> <span class="variable">$*</span><span class="operator">.</span><span class="variable">jhd</span> <span class="variable">$*</span><span class="operator">.</span><span class="variable">cel</span>
+                <span class="operator">-</span><span class="variable">$(</span><span class="variable">RM</span><span class="operator">)</span> <span class="variable">$*</span><span class="operator">.</span><span class="variable">ngr</span> <span class="variable">$*</span><span class="operator">.</span><span class="variable">ngc</span> <span class="variable">$*</span><span class="operator">.</span><span class="variable">ngd</span> <span class="variable">$*</span><span class="operator">.</span><span class="variable">syr</span> <span class="variable">$*</span><span class="operator">.</span><span class="variable">bld</span> <span class="variable">$*</span><span class="operator">.</span><span class="variable">pcf</span>
+                <span class="operator">-</span><span class="variable">$(</span><span class="variable">RM</span><span class="operator">)</span> <span class="variable">$*</span><span class="variable">_map</span><span class="operator">.</span><span class="variable">mrp</span> <span class="variable">$*</span><span class="variable">_map</span><span class="operator">.</span><span class="variable">ncd</span> <span class="variable">$*</span><span class="variable">_map</span><span class="operator">.</span><span class="variable">ngm</span> <span class="variable">$*</span><span class="operator">.</span><span class="variable">ncd</span> <span class="variable">$*</span><span class="operator">.</span><span class="variable">pad</span>
+                <span class="operator">-</span><span class="variable">$(</span><span class="variable">RM</span><span class="operator">)</span> <span class="variable">$*</span><span class="operator">.</span><span class="variable">par</span> <span class="variable">$*</span><span class="operator">.</span><span class="variable">xpi</span> <span class="variable">$*</span><span class="variable">_pad</span><span class="operator">.</span><span class="variable">csv</span> <span class="variable">$*</span><span class="variable">_pad</span><span class="operator">.</span><span class="variable">txt</span> <span class="variable">$*</span><span class="operator">.</span><span class="variable">drc</span> <span class="variable">$*</span><span class="operator">.</span><span class="variable">bgn</span>
+                <span class="operator">-</span><span class="variable">$(</span><span class="variable">RM</span><span class="operator">)</span> <span class="variable">$*</span><span class="operator">.</span><span class="variable">xml</span> <span class="variable">$*</span><span class="variable">_build</span><span class="operator">.</span><span class="variable">xml</span> <span class="variable">$*</span><span class="operator">.</span><span class="variable">rpt</span> <span class="variable">$*</span><span class="operator">.</span><span class="variable">gyd</span> <span class="variable">$*</span><span class="operator">.</span><span class="variable">mfd</span> <span class="variable">$*</span><span class="operator">.</span><span class="variable">pnx</span>
+                <span class="operator">-</span><span class="variable">$(</span><span class="variable">RM</span><span class="operator">)</span> <span class="variable">$*</span><span class="operator">.</span><span class="variable">vm6</span> <span class="variable">$*</span><span class="operator">.</span><span class="variable">jed</span> <span class="variable">$*</span><span class="operator">.</span><span class="variable">err</span> <span class="variable">$*</span><span class="operator">.</span><span class="variable">ER</span> <span class="variable">result</span><span class="operator">.</span><span class="variable">txt</span> <span class="variable">tmperr</span><span class="operator">.</span><span class="variable">err</span> <span class="operator">*.</span><span class="variable">bak</span> <span class="operator">*.</span><span class="variable">vhd</span><span class="operator">~</span>
+                <span class="operator">-</span><span class="variable">$(</span><span class="variable">RM</span><span class="operator">)</span> <span class="variable">impactcmd</span><span class="operator">.</span><span class="variable">txt</span>
+                <span class="operator">-</span><span class="variable">$(</span><span class="variable">RMDIR</span><span class="operator">)</span> <span class="variable">xst</span> <span class="variable">_ngo</span> <span class="variable">$*</span><span class="variable">_html</span> <span class="variable">__projnav</span>
+        
+        <span class="comment"># Clean for distribution.</span>
+        <span class="variable">%.</span><span class="variable">distclean</span><span class="operator">:</span> <span class="variable">%.</span><span class="variable">clean</span>
+                <span class="operator">-</span><span class="variable">$(</span><span class="variable">RM</span><span class="operator">)</span> <span class="variable">$*</span><span class="operator">.</span><span class="variable">twr</span>
+        
+        <span class="comment"># Clean everything.</span>
+        <span class="variable">%.</span><span class="variable">maintainer</span><span class="operator">-</span><span class="variable">clean</span><span class="operator">:</span> <span class="variable">%.</span><span class="variable">distclean</span>
+                <span class="operator">-</span><span class="variable">$(</span><span class="variable">RM</span><span class="operator">)</span> <span class="variable">$*</span><span class="operator">.</span><span class="variable">bit</span> <span class="variable">$*</span><span class="operator">.</span><span class="variable">svf</span> <span class="variable">$*</span><span class="operator">.</span><span class="variable">exo</span> <span class="variable">$*</span><span class="operator">.</span><span class="variable">mcs</span>
+        
+        
+        
+        <span class="comment">#</span>
+        <span class="comment"># Default targets for FPGA/CPLD compilations.</span>
+        <span class="comment">#</span>
+        
+        <span class="variable">config</span>          <span class="operator">:</span> <span class="variable">$(</span><span class="variable">DESIGN_NAME</span><span class="operator">).</span><span class="variable">config</span>
+        <span class="variable">bit</span>             <span class="operator">:</span> <span class="variable">$(</span><span class="variable">DESIGN_NAME</span><span class="operator">).</span><span class="variable">bit</span>
+        <span class="variable">svf</span>             <span class="operator">:</span> <span class="variable">$(</span><span class="variable">DESIGN_NAME</span><span class="operator">).</span><span class="variable">svf</span>
+        <span class="variable">mcs</span>             <span class="operator">:</span> <span class="variable">$(</span><span class="variable">DESIGN_NAME</span><span class="operator">).</span><span class="variable">mcs</span>
+        <span class="variable">exo</span>             <span class="operator">:</span> <span class="variable">$(</span><span class="variable">DESIGN_NAME</span><span class="operator">).</span><span class="variable">exo</span>
+        <span class="variable">timing</span>          <span class="operator">:</span> <span class="variable">$(</span><span class="variable">DESIGN_NAME</span><span class="operator">).</span><span class="variable">timing</span>
+        <span class="variable">clean</span>           <span class="operator">:</span> <span class="variable">$(</span><span class="variable">DESIGN_NAME</span><span class="operator">).</span><span class="variable">clean</span>
+        <span class="variable">distclean</span>       <span class="operator">:</span> <span class="variable">$(</span><span class="variable">DESIGN_NAME</span><span class="operator">).</span><span class="variable">distclean</span>
+        <span class="variable">maintainer</span><span class="operator">-</span><span class="variable">clean</span><span class="operator">:</span> <span class="variable">$(</span><span class="variable">DESIGN_NAME</span><span class="operator">).</span><span class="variable">maintainer</span><span class="operator">-</span><span class="variable">clean</span>
+        <span class="variable">nice</span>            <span class="operator">:</span> <span class="variable">$(</span><span class="variable">subst</span> <span class="operator">.</span><span class="variable">vhd</span><span class="operator">,.</span><span class="variable">nice</span><span class="operator">,</span><span class="variable">$(</span><span class="variable">HDL_FILES</span><span class="operator">))</span>
+</pre>
+<p>
+</p>
+<h3><a name="get_option_values_pl_perl_script">get_option_values.pl Perl Script</a></h3>
+<pre>
+        <span class="comment">#</span>
+        <span class="comment"># Get selected option value from an options file of a Xilinx WebPACK/ISE project</span>
+        <span class="comment">#</span>
+        <span class="variable">$option_file</span> <span class="operator">=</span> <span class="keyword">shift</span> <span class="variable">@ARGV</span><span class="operator">;</span>         <span class="comment"># first argument is the option file name</span>
+        <span class="keyword">open</span><span class="operator">(</span><span class="variable">FILE</span><span class="operator">,</span><span class="variable">$option_file</span><span class="operator">)</span> <span class="operator">||</span> <span class="keyword">die</span> <span class="variable">$!</span><span class="operator">;</span>
+        <span class="variable">$option_name</span> <span class="operator">=</span> <span class="variable">$ARGV</span><span class="operator">[</span><span class="number">0</span><span class="operator">]</span><span class="operator">;</span>            <span class="comment"># second argument is the option name to search for</span>
+</pre>
+<pre>
+        <span class="comment"># read lines from option file looking for the given option name</span>
+        <span class="keyword">while</span><span class="operator">(&lt;</span><span class="variable">FILE</span><span class="operator">&gt;)</span> <span class="operator">{</span>
+          <span class="keyword">chop</span><span class="operator">;</span>
+          <span class="regex">/^$option_name\s+/</span> <span class="operator">&amp;&amp;</span> <span class="keyword">print</span> <span class="variable">$'</span><span class="operator">;</span>   <span class="comment"># print out the value for the given option</span>
+        <span class="operator">}</span>
+</pre>
+<p>
+</p>
+<h3><a name="set_option_values_pl_perl_script">set_option_values.pl Perl Script</a></h3>
+<pre>
+        <span class="comment">#</span>
+        <span class="comment"># Set option values in an options file of a Xilinx WebPACK/ISE project</span>
+        <span class="comment">#</span>
+        <span class="variable">$option_file</span> <span class="operator">=</span> <span class="keyword">shift</span> <span class="variable">@ARGV</span><span class="operator">;</span>    <span class="comment"># first argument is the option file name</span>
+        <span class="keyword">open</span><span class="operator">(</span><span class="variable">FILE</span><span class="operator">,</span><span class="variable">$option_file</span><span class="operator">)</span> <span class="operator">||</span> <span class="keyword">die</span> <span class="variable">$!</span><span class="operator">;</span>
+        <span class="variable">@options</span> <span class="operator">=</span> <span class="operator">&lt;</span><span class="variable">FILE</span><span class="operator">&gt;;</span>             <span class="comment"># read in all the options</span>
+        <span class="variable">$options</span> <span class="operator">=</span> <span class="keyword">join</span><span class="operator">(</span><span class="string">""</span><span class="operator">,</span><span class="variable">@options</span><span class="operator">);</span>  <span class="comment"># join all options into one big string</span>
+</pre>
+<pre>
+        <span class="comment"># remaining arguments are new option strings that will replace existing options</span>
+        <span class="keyword">foreach</span> <span class="operator">(</span><span class="variable">@ARGV</span><span class="operator">)</span> <span class="operator">{</span>
+          <span class="variable">@option_fields</span> <span class="operator">=</span> <span class="keyword">split</span><span class="operator">(</span><span class="regex">/\s+/</span><span class="operator">,</span><span class="variable">$_</span><span class="operator">);</span>  <span class="comment"># split new option string into fields</span>
+          <span class="variable">$option_value</span> <span class="operator">=</span> <span class="keyword">pop</span> <span class="variable">@option_fields</span><span class="operator">;</span> <span class="comment"># new option value is last field in the string</span>
+          <span class="variable">$option_name</span> <span class="operator">=</span> <span class="keyword">join</span><span class="operator">(</span><span class="string">" "</span><span class="operator">,</span><span class="variable">@option_fields</span><span class="operator">);</span>  <span class="comment"># option name is all the preceding fields</span>
+          <span class="variable">$options</span> <span class="operator">=~</span> <span class="regex">s/$option_name\s+.*/$option_name $option_value/gi</span><span class="operator">;</span>  <span class="comment"># curr val &lt;= new val</span>
+        <span class="operator">}</span>
+</pre>
+<pre>
+        <span class="keyword">print</span> <span class="variable">$options</span><span class="operator">;</span>  <span class="comment"># print the updated option file</span>
+</pre>
+<p>
+</p>
+<h3><a name="get_project_files_pl_perl_script">get_project_files.pl Perl Script</a></h3>
+<pre>
+        <span class="comment">#</span>
+        <span class="comment"># Output a list of the files found in the .prj file of a Xilinx WebPACK/ISE project</span>
+        <span class="comment">#</span>
+        <span class="keyword">open</span><span class="operator">(</span><span class="variable">PRJFILE</span><span class="operator">,</span><span class="variable">$ARGV</span><span class="operator">[</span><span class="number">0</span><span class="operator">]</span><span class="operator">)</span> <span class="operator">||</span> <span class="keyword">die</span> <span class="variable">$!</span><span class="operator">;</span>
+        <span class="keyword">while</span><span class="operator">(&lt;</span><span class="variable">PRJFILE</span><span class="operator">&gt;)</span> <span class="operator">{</span>
+          <span class="variable">@fields</span> <span class="operator">=</span> <span class="keyword">split</span><span class="operator">(</span><span class="regex">/\s+/</span><span class="operator">,</span><span class="variable">$_</span><span class="operator">);</span>
+          <span class="variable">$f</span> <span class="operator">=</span> <span class="keyword">pop</span><span class="operator">(</span><span class="variable">@fields</span><span class="operator">);</span>  <span class="comment"># file name is last field of each line</span>
+          <span class="variable">$f</span> <span class="operator">=~</span> <span class="regex">s/\"//g</span><span class="operator">;</span>  <span class="comment"># remove any quotations around file names</span>
+          <span class="keyword">print</span> <span class="string">" "</span> <span class="operator">.</span> <span class="variable">$f</span><span class="operator">;</span>
+        <span class="operator">}</span>
+</pre>
+<p>
+</p>
+<h2><a name="project_makefile">Project Makefile</a></h2>
+<p>The contents of the <em>makefile</em> file in the WebPACK/ISE project directory can be as
+simple as:</p>
+<pre>
+        # include the rules to build the Xilinx configuration bitstream, etc.
+        include xilinx_rules.mk</pre>
+<p>You can also override variables in the <em>xilinx_rules.mk</em> file to change the
+behavior of the build process.  For example, to target a different FPGA, you
+might use:</p>
+<pre>
+        PART = xc2s100-5-tq144</pre>
+<pre>
+        # include the rules to build the Xilinx configuration bitstream, etc.
+        include xilinx_rules.mk</pre>
+<p>Or if you don't want to use a constraint file, just give it an empty value like so:</p>
+<pre>
+        PART = xc2s100-5-tq144
+        UCF_FILE =</pre>
+<pre>
+        # include the rules to build the Xilinx configuration bitstream, etc.
+        include xilinx_rules.mk</pre>
+<p>To build the FPGA or CPLD configuration bitstream, just type the command:</p>
+<pre>
+        make</pre>
+<p>or:</p>
+<pre>
+        make config</pre>
+<p>To generate the timing report for an FPGA design, use the command:</p>
+<pre>
+        make timing</pre>
+<p>To clean any temporary files created during the build process, use the command:</p>
+<pre>
+        make clean</pre>
+<p>You can also remove more of the intermediate files with the command:</p>
+<pre>
+        make distclean</pre>
+<p>And you can remove all of the above plus the configuration bitstream file with:</p>
+<pre>
+        make maintainer-clean</pre>
+<p>
+</p>
+<h2><a name="directory_makefile">Directory Makefile</a></h2>
+<p>If you have a directory that contains several subdirectories, 
+each of which contains a WebPACK/ISE project, then the following makefile
+will build the bitstream for each project.  This makefile resides in the top-level
+directory and it activates the makefiles in each project subdirectory.</p>
+<pre>
+        projects := project1 project2 project3</pre>
+<pre>
+        # These are the standard targets for creating the configuration bitstream and
+        # timing report and also for cleaning each project.
+        config          : $(projects:=.config)
+        timing          : $(projects:=.timing)
+        clean           : $(projects:=.clean)
+        distclean       : $(projects:=.distclean)
+        maintainer-clean: $(projects:=.maintainer-clean)</pre>
+<pre>
+        # This rule causes make to enter each project directory and activate
+        # the makefile found there in order to create the configuration bitstream.
+        $(projects:=.config):
+                $(MAKE) -C $(subst .config,,$@) $@</pre>
+<pre>
+        # This rule causes make to enter each FPGA project directory and generate
+        # a timing report.
+        $(projects:=.timing):
+                $(MAKE) -C $(subst .timing,,$@) $@</pre>
+<pre>
+        <span class="comment"># The next three rules cause make to enter each project directory</span>
+        <span class="comment"># and clean the project to the selected level of cleanliness.</span>
+</pre>
+<pre>
+        $(projects:=.clean):
+                $(MAKE) -C $(subst .clean,,$@) $@</pre>
+<pre>
+        $(projects:=.distclean):
+                $(MAKE) -C $(subst .distclean,,$@) $@</pre>
+<pre>
+        $(projects:=.maintainer-clean):
+                $(MAKE) -C $(subst .maintainer-clean,,$@) $@</pre>
+<p>The following makefile is similar to the previous one but it also allows you
+to retarget the projects at a different type of FPGA or CPLD and use
+new options for the tools.</p>
+<pre>
+        # Override the part id for the following projects
+        FPGA_PART     := xc3s1000-4-ft256
+        fpga_projects := project1 project2</pre>
+<pre>
+        # Override the part id for the following projects
+        CPLD_PART     := xc9572xl-10-vq64
+        cpld_projects := project3 project4</pre>
+<pre>
+        # Override the variables that contain the location of the option files for the
+        # synthesizer and bitstream generators so all the projects will be controlled
+        # by these master option files in the top-level directory.
+        export XST_CPLD_OPTIONS_FILE ?= $(CURDIR)/xst_cpld_options.xst
+        export XST_FPGA_OPTIONS_FILE ?= $(CURDIR)/xst_fpga_options.xst
+        export BITGEN_OPTIONS_FILE   ?= $(CURDIR)/bitgen_options.ut
+        export IMPACT_OPTIONS_FILE   ?= $(CURDIR)/impact_options.txt</pre>
+<pre>
+        # These are the standard targets for creating the configuration bitstream and
+        # timing report and also for cleaning each project.
+        config          : $(fpga_projects:=.config)           $(cpld_projects:=.config)
+        timing          : $(fpga_projects:=.timing)
+        clean           : $(fpga_projects:=.clean)            $(cpld_projects:=.clean)
+        distclean       : $(fpga_projects:=.distclean)        $(cpld_projects:=.distclean)
+        maintainer-clean: $(fpga_projects:=.maintainer-clean) $(cpld_projects:=.maintainer-clean)</pre>
+<pre>
+        # This rule causes make to enter each FPGA project directory and activate
+        # the makefile found there in order to create the configuration bitstream.
+        # Note that the value in the FPGA_PART variable will override the value of the
+        # PART variable found in each project directory. 
+        $(fpga_projects:=.config):
+                $(MAKE) -C $(subst .config,,$@) PART=$(FPGA_PART) $@</pre>
+<pre>
+        # This rule causes make to enter each CPLD project directory and activate
+        # the makefile found there in order to create the configuration bitstream.
+        # Note that the value in the CPLD_PART variable will override the value of the
+        # PART variable found in each project directory. 
+        $(cpld_projects:=.config):
+                $(MAKE) -C $(subst .config,,$@) PART=$(CPLD_PART) $@</pre>
+<pre>
+        # This rule causes make to enter each FPGA project directory and generate
+        # a timing report.  CPLD projects do not have a separate phase for creating
+        # timing reports.
+        $(fpga_projects:=.timing):
+                $(MAKE) -C $(subst .timing,,$@) PART=$(FPGA_PART) $@</pre>
+<pre>
+        <span class="comment"># The next three rules cause make to enter each FPGA and CPLD project directory</span>
+        <span class="comment"># and clean the project to the selected level of cleanliness.</span>
+</pre>
+<pre>
+        $(fpga_projects:=.clean) $(cpld_projects:=.clean):
+                $(MAKE) -C $(subst .clean,,$@) $@</pre>
+<pre>
+        $(fpga_projects:=.distclean) $(cpld_projects:=.distclean):
+                $(MAKE) -C $(subst .distclean,,$@) $@</pre>
+<pre>
+        $(fpga_projects:=.maintainer-clean) $(cpld_projects:=.maintainer-clean):
+                $(MAKE) -C $(subst .maintainer-clean,,$@) $@</pre>
+<p>To build the FPGA and CPLD configuration bitstreams for all the projects,
+just type the command:</p>
+<pre>
+        make</pre>
+<p>or:</p>
+<pre>
+        make config</pre>
+<p>To generate the timing reports for all the FPGA designs, use the command:</p>
+<pre>
+        make timing</pre>
+<p>To clean all the project subdirectories, use one of the commands:</p>
+<pre>
+        make clean
+        make distclean
+        make maintainer-clean</pre>
+<p>
+</p>
+<h2><a name="environment">Environment</a></h2>
+<p>These makefiles were developed and tested using the following versions of software:</p>
+<pre>
+        GNU make          : 3.79.1 (version 3.77.1 does not work)
+        Active State perl : 5.8.4, 5.8.8
+        Xilinx WebPACK    : 6.3.03i, 8.1.03i</pre>
+<p>
+</p>
+<h2><a name="source_files">Source Files</a></h2>
+<p>You can download an example of a Xilinx project directory that uses these makefiles and perl scripts
+from <a href="http://www.xess.com/projects/XILINX_MAKEFILES.tar.gz">http://www.xess.com/projects/XILINX_MAKEFILES.tar.gz</a> .</p>
+<p>
+</p>
+<h2><a name="author">Author</a></h2>
+<p>Dave Vanden Bout, X Engineering Software Systems Corp.</p>
+<p>Send bug reports to <a href="mailto:bugs@xess.com.">bugs@xess.com.</a></p>
+<p>
+</p>
+<h2><a name="copyright_and_license">Copyright and License</a></h2>
+<p>© 2005-2006 by X Engineering Software Systems Corporation.</p>
+<p>These applications can be freely distributed and modified
+as long as you do not remove the attributions to the author or his employer.</p>
+<p>
+</p>
+<h2><a name="history">History</a></h2>
+<dl>
+<dt>
+<dd>
+<p>05/16/2006 - Fixed get_project_files.pl to handle quotes in Xilinx ISE 8.1i .prj file.</p>
+</dd>
+</li>
+<dt>
+<dd>
+<p>05/05/2005 - Initial release.
+</p>
+</dd>
+</dl>
+
+
+
+	</tr>
+	<tr>
+		<td class="StdPageCredits">
+		<a href="mailto:webmaster@xess.com"> webmaster@xess.com</a><br>
+© 1998-2006, XESS Corp.<br> 
+All rights reserved.
+<script src="../../www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-765812-1";
+urchinTracker();
+</script>
+		<?php 
+			require("credits.html");
+		?>
+		</td>
+		<td class="StdPageNavLinks">
+		    <a href="../ho04000.html">
+    <img border="0" src="../images/menu_arrow.png">Products</a>
+    <a href="../manuals.html">
+    <img border="0" src="../images/menu_arrow.png">Manuals</a>
+    <a href="../ho07000.html">
+    <img border="0" src="../images/menu_arrow.png">Downloads</a>
+    <a href="../ho01001.html">
+    <img border="0" src="../images/menu_arrow.png">How to Buy</a>
+    <a href="../xess_int_quote.html">
+    <img border="0" src="../images/menu_arrow.png">Online Quote</a>
+    <a href="https://xess.com/xess_int_order.php3">
+    <img border="0" src="../images/menu_arrow.png">Order Online</a>
+    <br>
+    <a href="../help.html">
+    <img border="0" src="../images/menu_arrow.png">Help!</a>
+    <a href="../ho01000.html">
+    <img border="0" src="../images/menu_arrow.png">FAQ</a>
+    <a href="../list_reg.html">
+    <img border="0" src="../images/menu_arrow.png">Forum</a>
+    <a href="../ho03000.html">
+    <img border="0" src="../images/menu_arrow.png">Tutorials</a>
+    <a href="../ho03000.html">
+    <img border="0" src="../images/menu_arrow.png">Examples</a>
+    <a href="../links.html">
+    <img border="0" src="../images/menu_arrow.png">Links</a>
+    <a href="../ho00005.html">
+    <a href="../index-2.html">
+    <img border="0" src="../images/menu_arrow.png">Home</a>
+    <a href="../about_us.html">
+    <img border="0" src="../images/menu_arrow.png">About&nbsp;Us</a>
+    <a href="../ho00003.html">
+    <img border="0" src="../images/menu_arrow.png">Contact&nbsp;Us</a>
+
+		<?php 
+			require("navlinks.html");
+		?>
+		</td>
+	</tr>
+</table>
+
+</body>
+
+
+<!-- Mirrored from 192.168.0.47/appnotes/makefile.html by HTTrack Website Copier/3.x [XR&CO'2004], Mon, 04 Dec 2006 16:07:38 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=ISO-8859-1"><!-- /Added by HTTrack -->
+</html>
+

@@ -1,0 +1,403 @@
+<html>
+
+
+<!-- Mirrored from 192.168.0.47/appnotes/an-071205-xsasdramcntl.html by HTTrack Website Copier/3.x [XR&CO'2004], Mon, 04 Dec 2006 16:07:38 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=ISO-8859-1"><!-- /Added by HTTrack -->
+<head>
+<link rel="SHORTCUT ICON" HREF="../images/xess.ico">
+<title>XSA Board SDRAM Controller</title>
+<meta name="KEYWORDS" content="SDRAM controller, dualport, XSA, XILINX, FPGA, CPLD">
+<meta name="DESCRIPTION" content="This describes a controller that makes a synchronous DRAM (SDRAM) appear to operate like a simple static RAM.">
+<meta http-equiv="Content-Type" content="text/html">
+<link rel="stylesheet" type="text/css" href="../xess-1.css">
+<meta name="Microsoft Border" content="none, default">
+</head>
+
+<body>
+
+<table>
+	<!-- MSTableType="nolayout" -->
+	<tr>
+		<td class="StdPageLogo">
+		<a href="../index-2.html"><img border="0" src="../images/xess-138x32.bmp"></a>
+
+		<?php 
+			require("logo.html");
+		?>
+		</td>
+		<td class="StdPageNav">
+		<script type="text/javascript" src="xess.js"></script>
+<!-- <script type="text/javascript" src="niftycube_xess.js"></script> -->
+<!-- <script type="text/javascript" src="prototype.js"></script> -->
+<!-- <script type="text/javascript" src="rico.js"></script> -->
+<script type="text/javascript">
+	window.onload=function(){
+		startList("nav");
+		stripe_xess();
+		collapseall();
+		// Nifty("td.StdPageNav","transparent");
+		// Nifty("td.StdPageSidebar","transparent");
+		// Nifty("td.StdPageNavLinks","transparent");
+	};
+	onload=function(){
+		startList("nav");
+		stripe_xess();
+		collapseall();
+		// Nifty("td.StdPageNav","transparent");
+		// Nifty("td.StdPageSidebar","transparent");
+		// Nifty("td.StdPageNavLinks","transparent");
+	};
+</script>
+
+
+
+<table border="0" width="640" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="center" valign="center" width="70%">
+
+<!--
+  -- naviagation bar for browsers with scripting capability
+  -- (make sure there is no whitespace after the '\' on each line and run
+  -- the Javascript console on Firefox to check the syntax.)
+  -->
+<script type="text/javascript">
+nav_text = '\
+  <ul id="nav"> \
+    <li id="first"><a href="../ho04000.html">Products</a> \
+      <ul> \
+        <li><a href="../ho04000.html"><div>Catalog</div></a></li> \
+        <li><a href="../manuals.html"><div>Manuals</div></a></li> \
+        <li><a href="../ho07000.html"><div>Software Downloads</div></a></li> \
+      </ul> \
+    </li> \
+    <li><a href="../help.html">Support</a> \
+      <ul> \
+        <li><a href="../manuals.html" ><div>Product Manuals</div></a></li> \
+        <li><a href="../ho03000.html" ><div>Tutorials</div></a></li> \
+        <li><a href="../ho03000.html" ><div>Application Notes</div></a></li> \
+        <li><a href="../ho03000.html" ><div>Design Examples</div></a></li> \
+        <li><a href="../ho01000.html" ><div>FAQ</div></a></li> \
+        <li><a href="../list_reg.html"><div>User Forum</div></a></li> \
+        <li><a href="../help.html"    ><div>Request Help</div></a></li> \
+      </ul> \
+    </li> \
+    <li><a href="../ho01001.html">Purchasing</a> \
+      <ul> \
+        <li><a href="https://xess.com/xess_int_order.php3"><div>Web Orders</div></a></li> \
+        <li><a href="../ho01001.html"                       ><div>Purchase Orders</div></a></li> \
+        <li><a href="../ho01001.html"                       ><div>Payment Methods</div></a></li> \
+        <li><a href="../xess_int_quote.html"                ><div>Get a Quote</div></a></li> \
+        <li><a href="../xess_int_quote.html"                ><div>Get a Proforma Invoice</div></a></li> \
+        <li><a href="../ho01001.html"                       ><div>How To Buy From Us</div></a></li> \
+      </ul> \
+    </li> \
+    <li id="last"><a href="../index-2.html">XESS</a> \
+      <ul> \
+        <li><a href="../index-2.html"   ><div>Home</div></a></li> \
+        <li><a href="../about_us.html"><div>About Us</div></a></li> \
+        <li><a href="../ho00003.html" ><div>Contact Us</div></a></li> \
+<!-- \
+        <li><a href=""              ><div>Announcements</div></a></li> \
+        <li><a href="../ho00005.html" ><div>Press Releases</div></a></li> \
+--> \
+      </ul> \
+    </li> \
+    <li id="last"><a href="../links.html">Misc.</a> \
+      <ul> \
+        <li><a href="../links.html"><div>Links</div></a></li> \
+      </ul> \
+    </li> \
+  </ul> \
+';
+document.writeln(nav_text);
+</script>
+
+<!--
+  -- naviagation bar for browsers with NO scripting capability
+  -->
+<noscript>
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="14%" align="left">
+    <a href="../ho04000.html"><img border="0" src="../images/menu_arrow.png">Products</a>
+    </td>
+    <td width="16%" align="left">
+    <a href="../ho01001.html"><img border="0" src="../images/menu_arrow.png">How to Buy</a>
+    </td>
+    <td width="11%" align="left">
+    <a href="../help.html"><img border="0" src="../images/menu_arrow.png">Help!</a>
+    </td>
+    <td width="14%" align="left">
+    <a href="../ho03000.html"><img border="0" src="../images/menu_arrow.png">Tutorials</a>
+    </td>
+    <td width="14%" align="left">
+    <a href="../index-2.html"><img border="0" src="../images/menu_arrow.png">Home</a>
+<!--
+    <a href="/ho00005.html"><img border="0" src="/images/menu_arrow.png">Press&nbsp;Rel.</a>
+-->
+    </td>
+  </tr>
+  <tr>
+    <td>
+    <a href="../manuals.html"><img border="0" src="../images/menu_arrow.png">Manuals</a>
+    </td>
+    <td>
+    <a href="../xess_int_quote.html"><img border="0" src="../images/menu_arrow.png">Online Quote</a>
+    </td>
+    <td>
+    <a href="../ho01000.html"><img border="0" src="../images/menu_arrow.png">FAQ</a>
+    </td>
+    <td>
+    <a href="../ho03000.html"><img border="0" src="../images/menu_arrow.png">Examples</a>
+    </td>
+    <td>
+    <a href="../about_us.html">
+    <img border="0" src="../images/menu_arrow.png">About&nbsp;Us</a>
+    </td>
+  </tr>
+  <tr>
+    <td>
+    <a href="../ho07000.html"><img border="0" src="../images/menu_arrow.png">Downloads</a>
+    </td>
+    <td>
+    <a href="https://xess.com/xess_int_order.php3"><img border="0" src="../images/menu_arrow.png">Order Online</a>
+    </td>
+    <td>
+    <a href="../list_reg.html"><img border="0" src="../images/menu_arrow.png">Forum</a>
+    </td>
+    <td>
+    <a href="../links.html"><img border="0" src="../images/menu_arrow.png">Links</a>
+    </td>
+    <td>
+    <a href="../ho00003.html"><img border="0" src="../images/menu_arrow.png">Contact&nbsp;Us</a>
+    </td>
+  </tr>
+</table>
+</noscript>
+
+    </td>
+    <td align="center" valign="center" width="30%" id="srch">
+      <FORM ACTION="http://192.168.0.47/cgi-bin/ksearch/ksearch.cgi" METHOD="GET" NAME="search">
+        <INPUT TYPE="text" value="search" NAME="terms">
+		<input type=image src="../images/search_arrow.png" value="Search">
+      </FORM>
+    </td>
+  </tr>
+</table>
+
+
+		<?php 
+			require("nav.html");
+		?>
+		</td>
+	</tr>
+	<tr>
+
+	
+		<td class="StdPageSidebar">
+		This describes a controller that makes a synchronous DRAM (SDRAM) appear to operate like a simple static RAM.</p>
+		</td>
+
+
+		<td class="StdPageBody">
+
+<p><a name="__index__"></a></p>
+<!-- INDEX BEGIN -->
+
+<ul>
+
+	<li><a href="#xsa_board_sdram_controller">XSA Board SDRAM Controller</a></li>
+	<li><a href="#design_files">DESIGN FILES</a></li>
+	<li><a href="#using_the_design_example">USING THE DESIGN EXAMPLE</a></li>
+	<li><a href="#environment">ENVIRONMENT</a></li>
+	<li><a href="#source_files">SOURCE FILES</a></li>
+	<li><a href="#author">AUTHOR</a></li>
+	<li><a href="#copyright_and_license">COPYRIGHT AND LICENSE</a></li>
+	<li><a href="#history">HISTORY</a></li>
+</ul>
+<!-- INDEX END -->
+
+<hr />
+<p>
+</p>
+<hr />
+<h1><a name="xsa_board_sdram_controller">XSA Board SDRAM Controller</a></h1>
+<p>The XSA Board synchronous DRAM (SDRAM) controller core accepts simple read and write requests
+on the host-side and generates the timed waveforms required to perform these operations on the SDRAM.  
+With pipelining enabled, read and write operations within a row of the SDRAM can be dispatched 
+almost every clock cycle.  
+The controller also manages the refresh operations needed to keep the SDRAM data valid, 
+and will place the SDRAM in a self-refresh mode so data is retained even if the controller ceases operation.</p>
+<p>A simple example that writes the SDRAM with random data and then verifies it is provided to
+show how the SDRAM controller is used.</p>
+<p>
+</p>
+<hr />
+<h1><a name="design_files">DESIGN FILES</a></h1>
+<ul>
+<li><strong><a name="item_common_2evhd"><em>common.vhd</em></a></strong><br />
+</li>
+This file contains some definitions and functions used in the rest of the VHDL code.
+<p></p>
+<li><strong><a name="item_memtest_2evhd_2c_randgen_2evhd"><em>memtest.vhd</em>, <em>randgen.vhd</em></a></strong><br />
+</li>
+These VHDL files describe a memory tester module that writes a stream of data from a random-number generator (RNG) to a storage
+device and then reads the data back and compares it to the RNG output to verify it was stored correctly.
+<p></p>
+<li><strong><a name="item_sdramcntl_2evhd"><em>sdramcntl.vhd</em></a></strong><br />
+</li>
+This VHDL file describes a controller that simplifies writing/reading data to/from an SDRAM.
+You can read a more detailed explanation of the SDRAM controller at 
+<a href="http://www.xess.com/appnotes/an-071205-xsasdramcntl.pdf">http://www.xess.com/appnotes/an-071205-xsasdramcntl.pdf</a> .
+<p></p>
+<li><strong><a name="item_xsasdramcntl_2evhd"><em>xsasdramcntl.vhd</em></a></strong><br />
+</li>
+This VHDL file surrounds the generic SDRAM controller with a wrapper that customizes it for the XSA Boards.
+<p></p>
+<li><strong><a name="item_test_board_core_2evhd"><em>test_board_core.vhd</em></a></strong><br />
+</li>
+This file combines the generic memory tester and the SDRAM controller core to make the complete SDRAM tester.
+<p></p>
+<li><strong><a name="item_test_board_2evhd"><em>test_board.vhd</em></a></strong><br />
+</li>
+This file instantiates the test_board_core module to create an SDRAM tester for a particular model of XSA Board.
+<p></p>
+<li><strong><a name="item_test_board_2eucf"><em>test_board.ucf</em></a></strong><br />
+</li>
+This file contains the pin assignments for mapping the SDRAM tester to a particular board.
+<p></p>
+<li><strong><a name="item_test_board_2enpl"><em>test_board.npl</em></a></strong><br />
+</li>
+Open this project file with WebPACK if you need to recompile the design.
+<p></p></ul>
+<p>
+</p>
+<hr />
+<h1><a name="using_the_design_example">USING THE DESIGN EXAMPLE</a></h1>
+<ul>
+<li><strong><a name="item_step_1_3a">Step 1:</a></strong><br />
+</li>
+Attach a DC power supply to the XSA Board.
+<p></p>
+<li><strong><a name="item_step_2_3a">Step 2:</a></strong><br />
+</li>
+Attach the downloading cable from the PC parallel port to the XSA Board.
+<p></p>
+<li><strong><a name="item_step_3_3a">Step 3:</a></strong><br />
+</li>
+Set jumper J9 on the XSA Board to XS.
+<p></p>
+<li><strong><a name="item_step_4_3a">Step 4:</a></strong><br />
+</li>
+Download the default parallel port interface into the XSA-3S1000 (<em>\XSTOOLS\XSA\3S1000\dwnldpar.svf</em>)
+if it is not already present.  (Running GXSTEST will do this automatically.)
+<p></p>
+<li><strong><a name="item_step_5_3a">Step 5:</a></strong><br />
+</li>
+Download the <em>test_board.bit</em> file to the XSA Board.
+<p></p>
+<li><strong><a name="item_step_6_3a">Step 6:</a></strong><br />
+</li>
+Once the test_board.bit file is downloaded into the XSA Board, the LED should display 2 =&gt; 3 =&gt; O
+to indicate the SDRAM test completed successfully.
+(An E will appear if an error occurred.)
+<p></p></ul>
+<p>
+</p>
+<hr />
+<h1><a name="environment">ENVIRONMENT</a></h1>
+<p>This example design was developed using the following version of software:</p>
+<pre>
+   Xilinx WebPACK       : 6.3.03i</pre>
+<p>
+</p>
+<hr />
+<h1><a name="source_files">SOURCE FILES</a></h1>
+<p>You can download the source files for this example design from the XESS website at
+<a href="http://www.xess.com/projects/sdramtst-1_4.zip">http://www.xess.com/projects/sdramtst-1_4.zip</a> .</p>
+<p>
+</p>
+<hr />
+<h1><a name="author">AUTHOR</a></h1>
+<p>Dave Vanden Bout, X Engineering Software Systems Corp.</p>
+<p>Send bug reports to <a href="mailto:bugs@xess.com.">bugs@xess.com.</a></p>
+<p>
+</p>
+<hr />
+<h1><a name="copyright_and_license">COPYRIGHT AND LICENSE</a></h1>
+<p>Copyright 2006 by X Engineering Software Systems Corporation.</p>
+<p>This application can be freely distributed and modified
+as long as you do not remove the attributions to the author or his employer.</p>
+<p>
+</p>
+<hr />
+<h1><a name="history">HISTORY</a></h1>
+<p>04/06/2006 - Initial release.</p>
+
+		</td>
+
+
+	</tr>
+	<tr>
+		<td class="StdPageCredits">
+		<a href="mailto:webmaster@xess.com"> webmaster@xess.com</a><br>
+© 1998-2006, XESS Corp.<br> 
+All rights reserved.
+<script src="../../www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-765812-1";
+urchinTracker();
+</script>
+		<?php 
+			require("credits.html");
+		?>
+		</td>
+		<td class="StdPageNavLinks">
+		    <a href="../ho04000.html">
+    <img border="0" src="../images/menu_arrow.png">Products</a>
+    <a href="../manuals.html">
+    <img border="0" src="../images/menu_arrow.png">Manuals</a>
+    <a href="../ho07000.html">
+    <img border="0" src="../images/menu_arrow.png">Downloads</a>
+    <a href="../ho01001.html">
+    <img border="0" src="../images/menu_arrow.png">How to Buy</a>
+    <a href="../xess_int_quote.html">
+    <img border="0" src="../images/menu_arrow.png">Online Quote</a>
+    <a href="https://xess.com/xess_int_order.php3">
+    <img border="0" src="../images/menu_arrow.png">Order Online</a>
+    <br>
+    <a href="../help.html">
+    <img border="0" src="../images/menu_arrow.png">Help!</a>
+    <a href="../ho01000.html">
+    <img border="0" src="../images/menu_arrow.png">FAQ</a>
+    <a href="../list_reg.html">
+    <img border="0" src="../images/menu_arrow.png">Forum</a>
+    <a href="../ho03000.html">
+    <img border="0" src="../images/menu_arrow.png">Tutorials</a>
+    <a href="../ho03000.html">
+    <img border="0" src="../images/menu_arrow.png">Examples</a>
+    <a href="../links.html">
+    <img border="0" src="../images/menu_arrow.png">Links</a>
+    <a href="../ho00005.html">
+    <a href="../index-2.html">
+    <img border="0" src="../images/menu_arrow.png">Home</a>
+    <a href="../about_us.html">
+    <img border="0" src="../images/menu_arrow.png">About&nbsp;Us</a>
+    <a href="../ho00003.html">
+    <img border="0" src="../images/menu_arrow.png">Contact&nbsp;Us</a>
+
+		<?php 
+			require("navlinks.html");
+		?>
+		</td>
+	</tr>
+</table>
+
+</body>
+
+
+<!-- Mirrored from 192.168.0.47/appnotes/an-071205-xsasdramcntl.html by HTTrack Website Copier/3.x [XR&CO'2004], Mon, 04 Dec 2006 16:07:38 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=ISO-8859-1"><!-- /Added by HTTrack -->
+</html>
+

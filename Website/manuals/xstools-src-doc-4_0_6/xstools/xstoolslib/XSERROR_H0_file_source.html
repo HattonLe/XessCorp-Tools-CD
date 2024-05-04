@@ -1,0 +1,195 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - xserror.h</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">xserror.h</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">xserror.h</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','xserror_h0','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','xserror_h0','_overview',this)" class="tabLinkInActive">Overview</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','xserror_h0','_includedfiles',this)" class="tabLinkInActive">Included files</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','xserror_h0','_includedby',this)" class="tabLinkInActive">Included by</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_file','xserror_h0','_source',this)" class="tabLinkActive">Source</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<pre class="codeExamples">
+/*----------------------------------------------------------------------------------
+  SOFTWARE LICENSE AGREEMENT
+    1.  Permission to use, copy, modify, and distribute this software
+        and its documentation, with or without modification, for any
+        purpose and without fee or royalty is hereby granted, provided
+        that you include the following on ALL copies of the software
+        and documentation or portions thereof, including
+        modifications, that you make:
+
+            a.  The full text of this license in a location viewable to users
+            of the redistributed or derivative work.
+
+            b.  Notice of any changes or modifications to the files,
+            including the date changes were made.
+
+    2.  The name, servicemarks and trademarks of X Engineering
+        Software Systems Corp. may NOT be used in advertising or
+        publicity pertaining to the software without specific, written
+        prior permission.
+
+    3.  Title to copyright in this software and any associated
+        documentation will at all times remain with X Engineering
+        Software Systems Corp.
+
+    4.  THIS SOFTWARE AND DOCUMENTATION IS PROVIDED "AS IS," AND X
+        Engineering Software Systems Corp MAKES NO REPRESENTATIONS OR
+        WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO,
+        WARRANTIES OF MERCHANTABILITY OR FITNESS FOR ANY PARTICULAR
+        PURPOSE OR THAT THE USE OF THE SOFTWARE OR DOCUMENTATION WILL
+        NOT INFRINGE ANY THIRD PARTY PATENTS, COPYRIGHTS, TRADEMARKS
+        OR OTHER RIGHTS.
+
+    5.  X Engineering Software Systems Corp WILL NOT BE LIABLE FOR ANY
+        DAMAGES, INCLUDING BUT NOT LIMITED TO, DIRECT, INDIRECT,
+        SPECIAL OR CONSEQUENTIAL, ARISING OUT OF ANY USE OF THE
+        SOFTWARE OR DOCUMENTATION.
+
+  ©2006 - X Engineering Software Systems Corp.  All rights reserved.
+----------------------------------------------------------------------------------*/
+
+
+#ifndef XSERROR_H
+#define XSERROR_H
+
+#include &lt;iostream&gt;
+#include &lt;string&gt;
+using namespace std;
+
+#define ERRLOC  __FILE__(__LINE__)
+
+
+/// Severity of errors.
+typedef enum
+{
+    <a href="#" OnFocus="link('_member','XSErrorMin0',this)">XSErrorMin</a>,       ///&lt; minimum error index
+    <a href="#" OnFocus="link('_member','XSErrorNone0',this)">XSErrorNone</a>,    ///&lt; no error (not initialized)
+    <a href="#" OnFocus="link('_member','XSErrorMinor0',this)">XSErrorMinor</a>,   ///&lt; minor error (no abort)
+    <a href="#" OnFocus="link('_member','XSErrorMajor0',this)">XSErrorMajor</a>,   ///&lt; major error (no abort)
+    <a href="#" OnFocus="link('_member','XSErrorFatal0',this)">XSErrorFatal</a>,   ///&lt; fatal error (causes abort)
+    <a href="#" OnFocus="link('_member','XSErrorMax0',this)">XSErrorMax</a>        ///&lt; maximum error index
+} <a href="#" OnFocus="link('_member','XSErrorSeverity0',this)">XSErrorSeverity</a>;
+
+
+/// States of the error object.
+typedef enum
+{
+    <a href="#" OnFocus="link('_member','XSErrorInitial0',this)">XSErrorInitial</a>,   ///&lt; Just starting error message
+    <a href="#" OnFocus="link('_member','XSErrorInMessage0',this)">XSErrorInMessage</a>, ///&lt; Currently printing error message
+} <a href="#" OnFocus="link('_member','XSErrorState0',this)">XSErrorState</a>;
+
+
+/**
+ Provides a channel for reporting errors with a consistent format.
+
+This object extends stream objects like cerr so that they report errors 
+with a consistent format. Each error message starts with a header that 
+typically reports the name of the program or method where the error 
+occurred. The severity of the error is also indicated. If the severity 
+is high enough, the object will terminate the entire program. Otherwise, 
+the object will record the number of each type of error that occurred. 
+Later, the calling program can query whether an error occurred and 
+decide what action to take. 
+
+This object also stores error messages and displays them in a Windows 
+message window or as text in a command-line environment. 
+
+\example
+    XSError err(cerr);
+    err.setHeader("XESS ");
+    err.setSeverity(XSErrorMinor);
+    err &lt;&lt; "this is a minor error" &lt;&lt; endl;
+    err.endMsg();
+    err.simpleMsg(XSErrorMinor,"this is another minor error");
+\endexample
+*/
+class <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>
+{
+    public:
+
+    <a href="#" OnFocus="link('_member','XSError3525118964',this)">XSError</a>(ostream&amp; s = cerr);
+
+    void <a href="#" OnFocus="link('_member','Setup3525118964',this)">Setup</a>(ostream&amp; s);
+
+    <a href="#" OnFocus="link('_member','tilde_XSError60232619',this)">~XSError</a>(void);
+
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','operatoreq_554470356',this)">operator=</a>(<a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; src);
+
+    unsigned int <a href="#" OnFocus="link('_member','GetNumErrors1262199531',this)">GetNumErrors</a>(XSErrorSeverity s) const;
+
+    void <a href="#" OnFocus="link('_member','SetNumErrors3238870529',this)">SetNumErrors</a>(XSErrorSeverity s, unsigned int n);
+
+    bool <a href="#" OnFocus="link('_member','IsError863564933',this)">IsError</a>(void) const;
+
+    void <a href="#" OnFocus="link('_member','SetSeverity3409672334',this)">SetSeverity</a>(XSErrorSeverity s);
+
+    void <a href="#" OnFocus="link('_member','SetHeader36636122',this)">SetHeader</a>(string&amp; h);
+
+    void <a href="#" OnFocus="link('_member','EnableBatch66524079',this)">EnableBatch</a>(bool b);
+
+    void <a href="#" OnFocus="link('_member','EndMsg60232619',this)">EndMsg</a>(void);
+
+    void <a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorSeverity s, string&amp; msg);
+
+    void <a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorSeverity s, char *msg);
+
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','operatorless_less_65475511',this)">operator<<</a>(long n);
+
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','operatorless_less_65475511',this)">operator<<</a>(float f);
+
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','operatorless_less_65475511',this)">operator<<</a>(char*  msg);
+
+//  XSError&amp; operator&lt;&lt;(string&amp; msg);
+
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','operatorless_less_65475511',this)">operator<<</a>(string msg);
+
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','operatorless_less_65475511',this)">operator<<</a>(ostream&amp; s);
+
+
+    private:
+
+    <a href="#" OnFocus="link('_member','XSErrorSeverity0',this)">XSErrorSeverity</a> <a href="#" OnFocus="link('_member','GetSeverity863564933',this)">GetSeverity</a>(void) const;
+
+    void <a href="#" OnFocus="link('_member','SetState3952274671',this)">SetState</a>(XSErrorState s );
+
+    <a href="#" OnFocus="link('_member','XSErrorState0',this)">XSErrorState</a> <a href="#" OnFocus="link('_member','GetState863564933',this)">GetState</a>(void) const;
+
+    string&amp; <a href="#" OnFocus="link('_member','GetHeader60232619',this)">GetHeader</a>(void);
+
+    ostream *<a href="#" OnFocus="link('_member','os511292',this)">os</a>;                          ///&lt; output stream for error messages
+    unsigned int <a href="#" OnFocus="link('_member','numErrors511292',this)">numErrors</a>[<a href="#" OnFocus="link('_member','XSErrorMax0',this)">XSErrorMax</a>];        ///&lt; counters for various grades of errors
+    <a href="#" OnFocus="link('_member','XSErrorState0',this)">XSErrorState</a> <a href="#" OnFocus="link('_member','state511292',this)">state</a>;                      ///&lt; records state of the error reporting process
+    <a href="#" OnFocus="link('_member','XSErrorSeverity0',this)">XSErrorSeverity</a> <a href="#" OnFocus="link('_member','severity511292',this)">severity</a>;              ///&lt; severity of current error report
+    string <a href="#" OnFocus="link('_member','header511292',this)">header</a>;                            ///&lt; header for each error message
+    string <a href="#" OnFocus="link('_member','storedMsg511292',this)">storedMsg</a>;                        ///&lt; stored error message for display in window
+    bool <a href="#" OnFocus="link('_member','batch511292',this)">batch</a>;                              ///&lt; disables messages to user when true
+};
+
+#endif
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_file','_source');
+</script>

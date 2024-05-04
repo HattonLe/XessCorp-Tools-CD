@@ -1,0 +1,804 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - xs40brd.cpp</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">xs40brd.cpp</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">xs40brd.cpp</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','xs40brd_cpp0','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','xs40brd_cpp0','_overview',this)" class="tabLinkInActive">Overview</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','xs40brd_cpp0','_includedfiles',this)" class="tabLinkInActive">Included files</a></span>
+<span class="tabInActiveGrayout"><span class="tabLinkGrayout">Included by</span></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_file','xs40brd_cpp0','_source',this)" class="tabLinkActive">Source</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<pre class="codeExamples">
+/*----------------------------------------------------------------------------------
+  SOFTWARE LICENSE AGREEMENT
+    1.  Permission to use, copy, modify, and distribute this software
+        and its documentation, with or without modification, for any
+        purpose and without fee or royalty is hereby granted, provided
+        that you include the following on ALL copies of the software
+        and documentation or portions thereof, including
+        modifications, that you make:
+
+            a.  The full text of this license in a location viewable to users
+            of the redistributed or derivative work.
+
+            b.  Notice of any changes or modifications to the files,
+            including the date changes were made.
+
+    2.  The name, servicemarks and trademarks of X Engineering
+        Software Systems Corp. may NOT be used in advertising or
+        publicity pertaining to the software without specific, written
+        prior permission.
+
+    3.  Title to copyright in this software and any associated
+        documentation will at all times remain with X Engineering
+        Software Systems Corp.
+
+    4.  THIS SOFTWARE AND DOCUMENTATION IS PROVIDED "AS IS," AND X
+        Engineering Software Systems Corp MAKES NO REPRESENTATIONS OR
+        WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO,
+        WARRANTIES OF MERCHANTABILITY OR FITNESS FOR ANY PARTICULAR
+        PURPOSE OR THAT THE USE OF THE SOFTWARE OR DOCUMENTATION WILL
+        NOT INFRINGE ANY THIRD PARTY PATENTS, COPYRIGHTS, TRADEMARKS
+        OR OTHER RIGHTS.
+
+    5.  X Engineering Software Systems Corp WILL NOT BE LIABLE FOR ANY
+        DAMAGES, INCLUDING BUT NOT LIMITED TO, DIRECT, INDIRECT,
+        SPECIAL OR CONSEQUENTIAL, ARISING OUT OF ANY USE OF THE
+        SOFTWARE OR DOCUMENTATION.
+
+  ©2006 - X Engineering Software Systems Corp.  All rights reserved.
+----------------------------------------------------------------------------------*/
+
+
+#include &lt;ctime&gt;
+#include &lt;string&gt;
+using namespace std;
+
+#include "<a href="#" OnFocus="link('_file','xserror_h0',this)">xserror.h</a>"
+#include "<a href="#" OnFocus="link('_file','utils_h0',this)">utils.h</a>"
+#include "<a href="#" OnFocus="link('_file','xs40brd_h0',this)">xs40brd.h</a>"
+
+
+// inversion mask for parallel port connection to XS40 Board
+// 00000011: bits  7- 0 are attached to data pins D7-D0
+// 00000xxx: bits 15-11 are attached to status pins /S7,S6,S5,S4,S3
+// xxxx1001: bits 19-16 are attached to control pins /C3,C2,/C1,/C0
+// const unsigned int invMask   = 0x090003;
+
+// bit position of XC4000 configuration pins within parallel port registers
+static const unsigned int posCCLK       = 17;
+static const unsigned int posPROG       = 16;
+static const unsigned int posDIN        = 19;
+static const unsigned int posDONE       = 23;   // not used
+
+// bit position of prog. osc. pins within parallel port registers
+static const unsigned int posOSC        = 0;
+
+// bit positions of RAM access pins within parallel port
+static const unsigned int posRESET      = 0;
+static const unsigned int posCLK        = 1;
+static const unsigned int posDOLSB      = 2;
+static const unsigned int posDOMSB      = 5;
+static const unsigned int posDILSB      = 11;
+static const unsigned int posDIMSB      = 14;
+static const unsigned int posSTLSB      = 11;
+static const unsigned int posSTMSB      = 14;
+
+// bit positions of serial EEPROM access pins within parallel port
+static const unsigned int posSEECLK     = 17;
+static const unsigned int posSEEOE      = 6;
+static const unsigned int posSEECE      = 7;
+static const unsigned int posSEEDIN     = 19;
+
+// bit positions for board test status
+static const unsigned int posTESTSTATUS = 14;
+static const unsigned int posTESTRESET  = 5;
+
+static <a href="#" OnFocus="link('_class','brdModel_struct0',this)">XSBoardInfo</a>* brdInfo;
+static int numBoards;
+
+
+/// Create an XS40 Board object.
+<a href="#" OnFocus="link('_member','XS40Board2569711311',this)">XS40Board::XS40Board</a>(void)
+{
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>* <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> = new <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>(cerr);    // create error-reporting channel
+    <a href="#" OnFocus="link('_member','brdModel239500920',this)">brdModel</a> = NULL;    // no particular XS40 board model, yet
+    numBoards = <a href="#" OnFocus="link('_member','GetXSBoardInfo2867269968',this)">GetXSBoardInfo</a>(&amp;brdInfo); // get information about all the models of XS boards
+    <a href="#" OnFocus="link('_member','Setup2766865075',this)">Setup</a>(err,"XS40-005XL",1);   // use a default board model and parallel port number at this point
+}
+
+
+/// Destroy an XS40 Board object.
+<a href="#" OnFocus="link('_member','tilde_XS40Board2569711311',this)">XS40Board::~XS40Board</a>(void)
+{
+    ;
+}
+
+
+// Look at xsboard.h for a description of the interface.
+void <a href="#" OnFocus="link('_member','SetFlags2887301629',this)">XS40Board::SetFlags</a>(unsigned long f)
+{
+    <a href="#" OnFocus="link('_member','flags239500920',this)">flags</a> = f;
+}
+
+
+// Look at xsboard.h for a description of the interface.
+unsigned long <a href="#" OnFocus="link('_member','GetFlags2569711311',this)">XS40Board::GetFlags</a>(void)
+{
+    return <a href="#" OnFocus="link('_member','flags239500920',this)">flags</a>;
+}
+
+
+// Look at xsboard.h for a description of the interface.
+bool <a href="#" OnFocus="link('_member','Setup2766865075',this)">XS40Board::Setup</a>(<a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>* err, const char* model, unsigned int lptNum)
+{
+    // store name of board model
+    if(<a href="#" OnFocus="link('_member','brdModel239500920',this)">brdModel</a>!=NULL)
+        free(brdModel);
+    <a href="#" OnFocus="link('_member','brdModel239500920',this)">brdModel</a> = (char*)malloc(strlen(model)+1);
+    if(<a href="#" OnFocus="link('_member','brdModel239500920',this)">brdModel</a>==NULL)
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>-&gt;<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorFatal,"ERRLOC: out of memory!!\n");
+    strcpy(brdModel,model);
+
+    // find parallel port inversion mask for this board model
+    int brdIndex;
+    for(brdIndex=0; brdIndex&lt;numBoards; brdIndex++)
+    {
+        if(strcmp(brdModel,brdInfo[brdIndex].brdModel) == 0)
+            break;
+    }
+    if(brdIndex&gt;=numBoards)
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>-&gt;<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorFatal,"Unknown type of XS40 Board!\n");
+    int invMask = brdInfo[brdIndex].<a href="#" OnFocus="link('_member','invMask1254770407',this)">invMask</a>;
+
+    // initialize the objects for the components on the board
+    bool status;
+    status = <a href="#" OnFocus="link('_member','fpga239500920',this)">fpga</a>.<a href="#" OnFocus="link('_member','Setup2737913540',this)">Setup</a>(err,lptNum,invMask,posCCLK,posPROG,posDIN,posDONE);
+    status = status &amp;&amp; <a href="#" OnFocus="link('_member','osc239500920',this)">osc</a>.<a href="#" OnFocus="link('_member','Setup4236493299',this)">Setup</a>(err,lptNum,invMask,posOSC);
+    status = status &amp;&amp; <a href="#" OnFocus="link('_member','ram239500920',this)">ram</a>.<a href="#" OnFocus="link('_member','Setup2928848075',this)">Setup</a>(err,lptNum,invMask,posRESET,posCLK,posDOLSB,posDOMSB,posDILSB,posDIMSB,posSTLSB,posSTMSB,8,20);
+    status = status &amp;&amp; <a href="#" OnFocus="link('_member','seeprom239500920',this)">seeprom</a>.<a href="#" OnFocus="link('_member','Setup2737948323',this)">Setup</a>(err,lptNum,invMask,posSEECLK,posSEECE,posSEEOE,posSEEDIN);
+    return status;  // return true if no error occurred for any object setup
+}
+
+
+// Look at xsboard.h for a description of the interface.
+bool <a href="#" OnFocus="link('_member','Configure3913018450',this)">XS40Board::Configure</a>(string&amp; fileName)
+{
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a> = <a href="#" OnFocus="link('_member','fpga239500920',this)">fpga</a>.<a href="#" OnFocus="link('_member','GetErr259477277',this)">GetErr</a>(); // setup error channel
+
+    // use the board model name to find the corresponding index into the list of boards
+    int brdIndex;
+    for(brdIndex=0; brdIndex&lt;numBoards; brdIndex++)
+    {
+        if(strcmp(brdModel,brdInfo[brdIndex].brdModel) == 0)
+            break;
+    }
+    if(brdIndex&gt;=numBoards)
+    {
+        <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,"Unknown type of XS40 Board!\n");
+        return false;
+    }
+    
+    // check the type of the file that is going to be downloaded
+    string suffix = <a href="#" OnFocus="link('_member','GetSuffix67554305',this)">GetSuffix</a>(fileName);
+    if(suffix!="BIT")
+    {
+        <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,"Only .BIT files can be downloaded into the FPGA on the XS40 Board!!\n");
+        return false;
+    }
+
+    // look in the bitstream file to find the type of FPGA it is intended for and make sure that matches the type of FPGA on the board
+    string type = <a href="#" OnFocus="link('_member','fpga239500920',this)">fpga</a>.<a href="#" OnFocus="link('_member','GetChipType435841068',this)">GetChipType</a>(fileName);
+    <a href="#" OnFocus="link('_member','ConvertToUpperCase67554305',this)">ConvertToUpperCase</a>(type);
+    if(type == "")
+    {
+        <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,"The .BIT file does not identify the target FPGA!!\n");
+        return false;
+    }
+    if(type != brdInfo[brdIndex].<a href="#" OnFocus="link('_member','chipType1254770407',this)">chipType</a>)
+    {
+        string msg;
+        msg = ".BIT file is for the " + type + " but this is not the FPGA on the " + <a href="#" OnFocus="link('_member','brdModel239500920',this)">brdModel</a> + "!!\n";
+        <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,msg);
+        return false;
+    }
+    
+    // initialize and then configure the FPGA with the contents of the bitstream file
+    <a href="#" OnFocus="link('_member','fpga239500920',this)">fpga</a>.<a href="#" OnFocus="link('_member','InitConfigureFPGA141718704',this)">InitConfigureFPGA</a>();
+    return <a href="#" OnFocus="link('_member','fpga239500920',this)">fpga</a>.<a href="#" OnFocus="link('_member','ConfigureFPGA912622780',this)">ConfigureFPGA</a>(fileName);
+}
+
+
+// Look at xsboard.h for a description of the interface.
+bool <a href="#" OnFocus="link('_member','ConfigureInterface3913018450',this)">XS40Board::ConfigureInterface</a>(string&amp; fileName)
+{
+    return false;   // there is no interface CPLD on the XS40 Board, so this is an error
+}
+
+
+// Look at xsboard.h for a description of the interface.
+bool <a href="#" OnFocus="link('_member','DownloadRAM2355595962',this)">XS40Board::DownloadRAM</a>(string&amp; fileName, bool bigEndianBytes,
+            bool bigEndianBits, bool doStart, bool doEnd)
+{
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a> = <a href="#" OnFocus="link('_member','fpga239500920',this)">fpga</a>.<a href="#" OnFocus="link('_member','GetErr259477277',this)">GetErr</a>(); // setup error channel
+
+    // check the type of the file that is going to be downloaded
+    string suffix = <a href="#" OnFocus="link('_member','GetSuffix67554305',this)">GetSuffix</a>(fileName);
+    if(suffix!="HEX" &amp;&amp; suffix!="EXO" &amp;&amp; suffix!="XES" &amp;&amp; suffix!="MCS")
+    {
+        <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,"Only .HEX, .MCS, .EXO or .XES files can be downloaded into the RAM on the XS40 Board!!\n");
+        return false;
+    }
+
+    // get the directory where the RAM interface files are kept
+    const char* xstoolsBinDir = <a href="#" OnFocus="link('_member','FindXSTOOLSBinDir53616',this)">FindXSTOOLSBinDir</a>();
+    
+    // use the board model name to find the corresponding index into the list of boards
+    int brdIndex;
+    for(brdIndex=0; brdIndex&lt;numBoards; brdIndex++)
+    {
+        if(strcmp(brdModel,brdInfo[brdIndex].brdModel) == 0)
+            break;
+    }
+    if(brdIndex&gt;=numBoards)
+    {
+        <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,"Unknown type of XS40 Board!\n");
+        return false;
+    }
+
+    // get the name of the file that contains a bitstream that will configure the FPGA to provide an interface
+    // between the parallel port and the RAM
+    if(strlen(brdInfo[brdIndex].ramBitstreamFile)==0)
+    {
+        string msg;
+        msg = <a href="#" OnFocus="link('_member','brdModel239500920',this)">brdModel</a> + (string)" does not support RAM downloads!!\n";
+        <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,msg);
+        return false;
+    }
+    // concat the file name with the directory to form a complete path to the RAM interface bitstream file
+    string bitFileName;
+    bitFileName = xstoolsBinDir;
+    bitFileName += "/";
+    bitFileName += brdInfo[brdIndex].<a href="#" OnFocus="link('_member','ramBitstreamFile1254770407',this)">ramBitstreamFile</a>;
+
+    // only download the RAM interface if this is the first download of data to the RAM.
+    // otherwise the interface should already be in place.
+    if(doStart)
+    {
+        if(<a href="#" OnFocus="link('_member','Configure3913018450',this)">Configure</a>(bitFileName) == false)
+        {
+            <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,"Error downloading RAM interface circuit!!\n");
+            return false;
+        }
+    }
+
+    // download data to the RAM
+    if(<a href="#" OnFocus="link('_member','ram239500920',this)">ram</a>.<a href="#" OnFocus="link('_member','DownloadRAM3521986278',this)">DownloadRAM</a>(fileName,bigEndianBytes,bigEndianBits) == false)
+    {
+        <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,"Error downloading into RAM!!\n");
+        return false;
+    }
+
+    return true;
+}
+
+
+// Look at xsboard.h for a description of the interface.
+bool <a href="#" OnFocus="link('_member','UploadRAM1864774155',this)">XS40Board::UploadRAM</a>(string&amp; fileName, const char* format, 
+                unsigned int loAddr, unsigned int hiAddr,
+                bool bigEndianBytes, bool bigEndianBits,    
+                bool doStart, bool doEnd)
+{
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a> = <a href="#" OnFocus="link('_member','fpga239500920',this)">fpga</a>.<a href="#" OnFocus="link('_member','GetErr259477277',this)">GetErr</a>(); // setup error channel
+
+    // get the directory where the RAM interface files are kept
+    const char* xstoolsBinDir = <a href="#" OnFocus="link('_member','FindXSTOOLSBinDir53616',this)">FindXSTOOLSBinDir</a>();
+    
+    // use the board model name to find the corresponding index into the list of boards
+    int brdIndex;
+    for(brdIndex=0; brdIndex&lt;numBoards; brdIndex++)
+    {
+        if(strcmp(brdModel,brdInfo[brdIndex].brdModel) == 0)
+            break;
+    }
+    if(brdIndex&gt;=numBoards)
+    {
+        <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,"Unknown type of XS40 Board!\n");
+        return false;
+    }
+
+    // get the name of the file that contains a bitstream that will configure the FPGA to provide an interface
+    // between the parallel port and the RAM
+    if(strlen(brdInfo[brdIndex].ramBitstreamFile)==0)
+    {
+        string msg;
+        msg = <a href="#" OnFocus="link('_member','brdModel239500920',this)">brdModel</a> + (string)" does not support RAM uploads!!\n";
+        <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,msg);
+        return false;
+    }
+    // concat the file name with the directory to form a complete path to the RAM interface bitstream file
+    string bitFileName;
+    bitFileName = xstoolsBinDir;
+    bitFileName += "/";
+    bitFileName += brdInfo[brdIndex].<a href="#" OnFocus="link('_member','ramBitstreamFile1254770407',this)">ramBitstreamFile</a>;
+
+    // only upload the RAM interface if this is the first upload of data from the RAM.
+    // otherwise the interface should already be in place.
+    if(doStart)
+    {
+        if(<a href="#" OnFocus="link('_member','Configure3913018450',this)">Configure</a>(bitFileName) == false)
+        {
+            <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,"Error downloading RAM interface circuit!!\n");
+            return false;
+        }
+    }
+
+    // upload data from the RAM
+    if(<a href="#" OnFocus="link('_member','ram239500920',this)">ram</a>.<a href="#" OnFocus="link('_member','UploadRAM934319802',this)">UploadRAM</a>(fileName,format,loAddr,hiAddr,bigEndianBytes,bigEndianBits) == false)
+    {
+        <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,"Error uploading from RAM!!\n");
+        return false;
+    }
+    
+    return true;
+}
+
+
+// Look at xsboard.h for a description of the interface.
+bool <a href="#" OnFocus="link('_member','ReadRAM2991797115',this)">XS40Board::ReadRAM</a>(unsigned int addr, unsigned int* data,    
+        bool bigEndianBytes, bool bigEndianBits)
+{
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a> = <a href="#" OnFocus="link('_member','fpga239500920',this)">fpga</a>.<a href="#" OnFocus="link('_member','GetErr259477277',this)">GetErr</a>(); // setup error channel
+
+    if(<a href="#" OnFocus="link('_member','ram239500920',this)">ram</a>.<a href="#" OnFocus="link('_member','ReadRAM3707112581',this)">ReadRAM</a>(addr,data,bigEndianBytes,bigEndianBits) == false)
+    { // couldn't read RAM so maybe RAM interface is not loaded???
+        
+        // use the board model name to find the corresponding index into the list of boards
+        int brdIndex;
+        for(brdIndex=0; brdIndex&lt;numBoards; brdIndex++)
+        {
+            if(strcmp(brdModel,brdInfo[brdIndex].brdModel) == 0)
+                break;
+        }
+        if(brdIndex&gt;=numBoards)
+        {
+            <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,"Unknown type of XS40 Board!\n");
+            return false;
+        }
+        
+        // get the name of the file that contains a bitstream that will configure the FPGA to provide an interface
+        // between the parallel port and the RAM
+        if(strlen(brdInfo[brdIndex].ramBitstreamFile)==0)
+        {
+            string msg;
+            msg = <a href="#" OnFocus="link('_member','brdModel239500920',this)">brdModel</a> + (string)" does not support RAM uploads!!\n";
+            <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,msg);
+            return false;
+        }
+        // get the directory where the RAM interface files are kept
+        const char* xstoolsBinDir = <a href="#" OnFocus="link('_member','FindXSTOOLSBinDir53616',this)">FindXSTOOLSBinDir</a>();
+        // concat the file name with the directory to form a complete path to the RAM interface bitstream file
+        string bitFileName;
+        bitFileName = xstoolsBinDir;
+        bitFileName += "/";
+        bitFileName += brdInfo[brdIndex].<a href="#" OnFocus="link('_member','ramBitstreamFile1254770407',this)">ramBitstreamFile</a>;
+        
+        // configure the FPGA with the RAM interface
+        if(<a href="#" OnFocus="link('_member','Configure3913018450',this)">Configure</a>(bitFileName) == false)
+        {
+            <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,"Error downloading RAM interface circuit!!\n");
+            return false;
+        }
+
+        // now try reading the RAM again
+        return <a href="#" OnFocus="link('_member','ram239500920',this)">ram</a>.<a href="#" OnFocus="link('_member','ReadRAM3707112581',this)">ReadRAM</a>(addr,data,bigEndianBytes,bigEndianBits);
+    }
+    
+    return true;    // RAM read succeeded
+}
+
+
+// Look at xsboard.h for a description of the interface.
+bool <a href="#" OnFocus="link('_member','WriteRAM3255651682',this)">XS40Board::WriteRAM</a>(unsigned int addr, unsigned int data, 
+        bool bigEndianBytes, bool bigEndianBits)
+{
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a> = <a href="#" OnFocus="link('_member','fpga239500920',this)">fpga</a>.<a href="#" OnFocus="link('_member','GetErr259477277',this)">GetErr</a>(); // setup error channel
+
+    if(<a href="#" OnFocus="link('_member','ram239500920',this)">ram</a>.<a href="#" OnFocus="link('_member','WriteRAM3747247576',this)">WriteRAM</a>(addr,data,bigEndianBytes,bigEndianBits) == false)
+    { // couldn't write to RAM so maybe RAM interface is not loaded???
+        
+        // use the board model name to find the corresponding index into the list of boards
+        int brdIndex;
+        for(brdIndex=0; brdIndex&lt;numBoards; brdIndex++)
+        {
+            if(strcmp(brdModel,brdInfo[brdIndex].brdModel) == 0)
+                break;
+        }
+        if(brdIndex&gt;=numBoards)
+        {
+            <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,"Unknown type of XS40 Board!\n");
+            return false;
+        }
+        
+        // get the name of the file that contains a bitstream that will configure the FPGA to provide an interface
+        // between the parallel port and the RAM
+        if(strlen(brdInfo[brdIndex].ramBitstreamFile)==0)
+        {
+            string msg;
+            msg = <a href="#" OnFocus="link('_member','brdModel239500920',this)">brdModel</a> + (string)" does not support RAM uploads!!\n";
+            <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,msg);
+            return false;
+        }
+        // get the directory where the RAM interface files are kept
+        const char* xstoolsBinDir = <a href="#" OnFocus="link('_member','FindXSTOOLSBinDir53616',this)">FindXSTOOLSBinDir</a>();
+        // concat the file name with the directory to form a complete path to the RAM interface bitstream file
+        string bitFileName;
+        bitFileName = xstoolsBinDir;
+        bitFileName += "/";
+        bitFileName += brdInfo[brdIndex].<a href="#" OnFocus="link('_member','ramBitstreamFile1254770407',this)">ramBitstreamFile</a>;
+        
+        // configure the FPGA with the RAM interface
+        if(<a href="#" OnFocus="link('_member','Configure3913018450',this)">Configure</a>(bitFileName) == false)
+        {
+            <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,"Error downloading RAM interface circuit!!\n");
+            return false;
+        }
+
+        // now try writinging the RAM again
+        return <a href="#" OnFocus="link('_member','ram239500920',this)">ram</a>.<a href="#" OnFocus="link('_member','WriteRAM3747247576',this)">WriteRAM</a>(addr,data,bigEndianBytes,bigEndianBits);   // now try writing to the RAM again
+    }
+    
+    return true;    // RAM write succeeded
+}
+
+
+// Look at xsboard.h for a description of the interface.
+bool <a href="#" OnFocus="link('_member','DownloadFlash2355595962',this)">XS40Board::DownloadFlash</a>(string&amp; fileName, bool bigEndianBytes,
+            bool bigEndianBits, bool doStart, bool doEnd)
+{
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a> = <a href="#" OnFocus="link('_member','fpga239500920',this)">fpga</a>.<a href="#" OnFocus="link('_member','GetErr259477277',this)">GetErr</a>(); // setup error channel
+
+    // check the type of the file that is going to be downloaded
+    string suffix = <a href="#" OnFocus="link('_member','GetSuffix67554305',this)">GetSuffix</a>(fileName);
+    if(suffix!="BIT")
+    {
+        <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,"Only .BIT files can be downloaded into the serial EEPROM on the XS40 Board!!\n");
+        return false;
+    }
+
+    // get the directory where the serial EEPROM interface files are kept
+    const char* xstoolsBinDir = <a href="#" OnFocus="link('_member','FindXSTOOLSBinDir53616',this)">FindXSTOOLSBinDir</a>();
+    
+    // use the board model name to find the corresponding index into the list of boards
+    int brdIndex;
+    for(brdIndex=0; brdIndex&lt;numBoards; brdIndex++)
+    {
+        if(strcmp(brdModel,brdInfo[brdIndex].brdModel) == 0)
+            break;
+    }
+    if(brdIndex&gt;=numBoards)
+    {
+        <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,"Unknown type of XS40 Board!\n");
+        return false;
+    }
+
+    // use the board model name to find the corresponding index into the list of boards
+    if(strlen(brdInfo[brdIndex].flashBitstreamFile)==0)
+    {
+        string msg;
+        msg = <a href="#" OnFocus="link('_member','brdModel239500920',this)">brdModel</a> + (string)" does not support serial EEPROM programming!!\n";
+        <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,msg);
+        return false;
+    }
+
+    // If this is the first data file being downloaded to the serial EEPROM, then give the user some instructions
+    // that will initialize the hardware.
+    string instructions;
+    if(doStart)
+    {
+        instructions = "Before programming the XS40 Board serial EEPROM you must:\n";
+        instructions += "1) Place shunts on jumpers J4, J6 and J11\n";
+        instructions += "2) Remove any shunt on jumper J10\n";
+        instructions += "3) Apply power to the board\n";
+        if(<a href="#" OnFocus="link('_member','PromptUser2517124797',this)">PromptUser</a>(instructions,PROMPT_OKCANCEL) == <a href="#" OnFocus="link('_member','RESPONSE_CANCEL0',this)">RESPONSE_CANCEL</a>)
+            return false;
+        
+        // concat the file name with the directory to form a complete path to the EEPROM interface bitstream file
+        string bitFileName;
+        bitFileName = xstoolsBinDir;
+        bitFileName += "/";
+        bitFileName += brdInfo[brdIndex].<a href="#" OnFocus="link('_member','flashBitstreamFile1254770407',this)">flashBitstreamFile</a>;
+        
+        // configure the FPGA with the EEPROM interface
+        if(<a href="#" OnFocus="link('_member','Configure3913018450',this)">Configure</a>(bitFileName) == false)
+        {
+            <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,"Error downloading serial EEPROM interface circuit!!\n");
+            return false;
+        }
+    }
+
+    // download data into the serial EEPROM
+    if(<a href="#" OnFocus="link('_member','seeprom239500920',this)">seeprom</a>.<a href="#" OnFocus="link('_member','ProgramEEPROM2040293066',this)">ProgramEEPROM</a>(fileName) == false)
+    {
+        <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,"Error downloading into serial EEPROM!!\n");
+        return false;
+    }
+
+    // If this was the last data file to download to the serial EEPROM, then give the user some instructions
+    // that will reset the hardware.
+    if(doEnd)
+    {
+        instructions = "The XS40 Board serial EEPROM has been programmed!!\n";
+        instructions += "Now do these steps to enable configuration of your XS40 Board from the serial EEPROM:\n";
+        instructions += "1) Remove the shunts from jumpers J4, J6 and J11\n";
+        instructions += "2) Place a shunt on jumper J10\n";
+        instructions += "3) Disconnect the parallel port cable\n";
+        instructions += "4) Apply power to the board\n";
+        <a href="#" OnFocus="link('_member','PromptUser2517124797',this)">PromptUser</a>(instructions,PROMPT_OK);
+    }
+
+    return true;
+}
+
+
+// Look at xsboard.h for a description of the interface.
+bool <a href="#" OnFocus="link('_member','UploadFlash1864774155',this)">XS40Board::UploadFlash</a>(string&amp; fileName, const char* format, 
+                unsigned int loAddr, unsigned int hiAddr,
+                bool bigEndianBytes, bool bigEndianBits,    
+                bool doStart, bool doEnd)
+{
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a> = <a href="#" OnFocus="link('_member','fpga239500920',this)">fpga</a>.<a href="#" OnFocus="link('_member','GetErr259477277',this)">GetErr</a>(); // setup error channel
+    <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,"The serial EEPROM on the XS40 Board cannot be read back!!\n");
+    return false;
+}
+
+
+// Look at xsboard.h for a description of the interface.
+bool <a href="#" OnFocus="link('_member','SetFreq1510074495',this)">XS40Board::SetFreq</a>(int div, bool extOscPresent)
+{
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a> = <a href="#" OnFocus="link('_member','fpga239500920',this)">fpga</a>.<a href="#" OnFocus="link('_member','GetErr259477277',this)">GetErr</a>(); // setup error channel
+
+    // get the directory where the oscillator interface files are kept
+    const char* xstoolsBinDir = <a href="#" OnFocus="link('_member','FindXSTOOLSBinDir53616',this)">FindXSTOOLSBinDir</a>();
+    
+    // use the board model name to find the corresponding index into the list of boards
+    int brdIndex;
+    for(brdIndex=0; brdIndex&lt;numBoards; brdIndex++)
+    {
+        if(strcmp(brdModel,brdInfo[brdIndex].brdModel) == 0)
+            break;
+    }
+    if(brdIndex&gt;=numBoards)
+    {
+        <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,"Unknown type of XS40 Board!\n");
+        return false;
+    }
+
+    // get the name of the file that contains a bitstream that will configure the FPGA to provide an interface
+    // between the parallel port and the programmable oscillator
+    if(strlen(brdInfo[brdIndex].oscBitstreamFile)==0)
+    {
+        string msg = <a href="#" OnFocus="link('_member','brdModel239500920',this)">brdModel</a> + (string)" does not support oscillator programming!!\n";
+        <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,msg);
+        return false;
+    }
+
+    // give the user some instructions on how to initialize the oscillator for programming
+    string instructions;
+    instructions = "Before setting the XS40 Board frequency you must:\n";
+    instructions += "1) Remove the power and downloading cable from your XS40 Board\n";
+    instructions += "2) Place a shunt on the \"set\" position of jumper J12\n";
+    instructions += "3) Reconnect the power cable\n";
+    instructions += "4) Reconnect the downloading cable\n";
+    instructions += "5) Click on the OK button\n";
+    if(<a href="#" OnFocus="link('_member','PromptUser2517124797',this)">PromptUser</a>(instructions,PROMPT_OKCANCEL) == <a href="#" OnFocus="link('_member','RESPONSE_CANCEL0',this)">RESPONSE_CANCEL</a>)
+        return false;
+
+    // concat the file name with the directory to form a complete path to the oscillator interface bitstream file
+    string bitFileName;
+    bitFileName = xstoolsBinDir;
+    bitFileName += "/";
+    bitFileName += brdInfo[brdIndex].<a href="#" OnFocus="link('_member','oscBitstreamFile1254770407',this)">oscBitstreamFile</a>;
+
+    // configure the FPGA with the oscillator interface
+    if(<a href="#" OnFocus="link('_member','Configure3913018450',this)">Configure</a>(bitFileName) == false)
+    {
+        <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,"Error downloading clock-set circuit!!\n");
+        return false;
+    }
+
+    // program the oscillator
+    <a href="#" OnFocus="link('_member','osc239500920',this)">osc</a>.<a href="#" OnFocus="link('_member','SetOscFrequency4061435083',this)">SetOscFrequency</a>(div,extOscPresent);
+
+    // give the user some instructions on how to reset the oscillator so the programming will take effect
+    instructions = "The frequency of your XS40 Board has been set!!\n";
+    instructions += "Now do these steps to activate the oscillator:\n";
+    instructions += "1) Remove the power and downloading cable from your XS40 Board\n";
+    instructions += "2) Move the shunt to the \"osc\" position of jumper J12\n";
+    instructions += "3) Reconnect the power cable\n";
+    instructions += "4) Reconnect the downloading cable\n";
+    instructions += "5) Click on the OK button\n";
+    <a href="#" OnFocus="link('_member','PromptUser2517124797',this)">PromptUser</a>(instructions,PROMPT_OK);
+
+    return true;
+}
+
+
+// Look at xsboard.h for a description of the interface.
+bool <a href="#" OnFocus="link('_member','SetupAudio2832666320',this)">XS40Board::SetupAudio</a>(int *reg)
+{
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a> = <a href="#" OnFocus="link('_member','fpga239500920',this)">fpga</a>.<a href="#" OnFocus="link('_member','GetErr259477277',this)">GetErr</a>(); // setup error channel
+
+    string msg = <a href="#" OnFocus="link('_member','brdModel239500920',this)">brdModel</a> + (string)" does not support audio codec programming!!\n";
+    <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,msg);
+    return false;
+}
+
+
+// Look at xsboard.h for a description of the interface.
+bool <a href="#" OnFocus="link('_member','SetupVideoIn3913018450',this)">XS40Board::SetupVideoIn</a>(string&amp; fileName)
+{
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a> = <a href="#" OnFocus="link('_member','fpga239500920',this)">fpga</a>.<a href="#" OnFocus="link('_member','GetErr259477277',this)">GetErr</a>(); // setup error channel
+
+    string msg = <a href="#" OnFocus="link('_member','brdModel239500920',this)">brdModel</a> + (string)" does not support video input programming!!\n";
+    <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,msg);
+    return false;
+}
+
+
+// Look at xsboard.h for a description of the interface.
+bool <a href="#" OnFocus="link('_member','Test2569711311',this)">XS40Board::Test</a>(void)
+{
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a> = <a href="#" OnFocus="link('_member','fpga239500920',this)">fpga</a>.<a href="#" OnFocus="link('_member','GetErr259477277',this)">GetErr</a>(); // setup error channel
+
+    // use the board model name to find the corresponding index into the list of boards
+    int brdIndex;
+    for(brdIndex=0; brdIndex&lt;numBoards; brdIndex++)
+    {
+        if(strcmp(brdModel,brdInfo[brdIndex].brdModel) == 0)
+            break;
+    }
+    if(brdIndex&gt;=numBoards)
+    {
+        <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,"Unknown type of XS40 Board!\n");
+        return false;
+    }
+
+    // if there is no diagnostic bitstream file, then this board model does not support diagnostics
+    string msg;
+    if(strlen(brdInfo[brdIndex].testBitstreamFile)==0)
+    {
+        msg = <a href="#" OnFocus="link('_member','brdModel239500920',this)">brdModel</a> + (string)" does not support self-test!!\n";
+        <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,msg);
+        return false;
+    }
+
+    // get the directory where the test interface files are kept
+    const char* xstoolsBinDir = <a href="#" OnFocus="link('_member','FindXSTOOLSBinDir53616',this)">FindXSTOOLSBinDir</a>();
+
+    // concat the file name with the directory to form a complete path to the diagnostic program for the on-board micro
+    string testprogFileName = xstoolsBinDir;
+    testprogFileName += "/";
+    testprogFileName += brdInfo[brdIndex].<a href="#" OnFocus="link('_member','testObjFile1254770407',this)">testObjFile</a>;
+    // download the diagnostic program for the micro to the on-board RAM
+    if(<a href="#" OnFocus="link('_member','DownloadRAM2355595962',this)">DownloadRAM</a>(testprogFileName,BIG_ENDIAN_BYTES,LITTLE_ENDIAN_BITS,true,false) == false)
+    {
+        <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,"Error downloading XS40 Board self-test program!\n");
+        return false;
+    }
+
+    <a href="#" OnFocus="link('_member','fpga239500920',this)">fpga</a>.<a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posTESTRESET,posTESTRESET); // make sure micro is reset as soon as FPGA is configured
+
+    // concat the file name with the directory to form a complete path to the diagnostic interface for the FPGA
+    string bitFileName = xstoolsBinDir;
+    bitFileName += "/";
+    bitFileName += brdInfo[brdIndex].<a href="#" OnFocus="link('_member','testBitstreamFile1254770407',this)">testBitstreamFile</a>;
+    // download the FPGA bitstream that supports the diagnostic program run by the micro
+    if(<a href="#" OnFocus="link('_member','Configure3913018450',this)">Configure</a>(bitFileName) == false)
+    {
+        <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,"Error downloading XS40 Board self-test circuit!\n");
+        return false;
+    }
+
+    // reset the micro and release the reset to start the diagnostic running
+    <a href="#" OnFocus="link('_member','fpga239500920',this)">fpga</a>.<a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posTESTRESET,posTESTRESET); // reset the microcontroller
+    <a href="#" OnFocus="link('_member','InsertDelay359930342',this)">InsertDelay</a>(10,MILLISECONDS);
+    <a href="#" OnFocus="link('_member','fpga239500920',this)">fpga</a>.<a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posTESTRESET,posTESTRESET); // release the microcontroller and do the test
+
+    // display a progress indicator while the diagnostic is running
+    string desc((string)"Testing " + brdModel), subdesc("Testing...");
+    <a href="#" OnFocus="link('_class','Progress0',this)">Progress</a>* progressGauge = new <a href="#" OnFocus="link('_class','Progress0',this)">Progress</a>(&amp;errMsg,desc,subdesc,0,100);
+    int testProgress = 0;
+
+    // Monitor the test status pin to see if the test is still running or not.
+    // While the diagnostic runs, the test status pin pulses at some rate.
+    // The number of pulses within the integration period is counted and one of the following actions is taken:
+    //    1. If the count is ever 0, then the test is done and the board has failed.
+    //    2. If the count increases by a factor of two or more, then the test is done and the board passed.
+    //    3. Otherwise, the test is still running.
+    int prevStatus = <a href="#" OnFocus="link('_member','fpga239500920',this)">fpga</a>.<a href="#" OnFocus="link('_member','In1210046855',this)">In</a>(posTESTSTATUS,posTESTSTATUS);
+    int currStatus;
+    int prevDiff = 0;
+    int currDiff;
+    const float integrationPeriod = 0.5;    // in seconds
+    while(true)
+    {
+        // count the number of pulses on the status pin during the integration period
+        clock_t startTime = clock();
+        clock_t endTime = startTime + integrationPeriod * CLOCKS_PER_SEC;
+        currDiff = 0; // pulse counter starts at 0
+        while(clock()&lt;endTime)
+        {
+            currStatus = <a href="#" OnFocus="link('_member','fpga239500920',this)">fpga</a>.<a href="#" OnFocus="link('_member','In1210046855',this)">In</a>(posTESTSTATUS,posTESTSTATUS);
+            if(currStatus != prevStatus)
+                currDiff++;
+            prevStatus = currStatus;
+        }
+        
+        // update the progress indicator
+        testProgress = testProgress&gt;=100 ? 0 : testProgress+10;
+        progressGauge-&gt;<a href="#" OnFocus="link('_member','Report2561259521',this)">Report</a>(testProgress);
+        
+        if(currDiff == 0)
+        {   // Test is done and the board failed.  Give the user some help.
+            msg = (string)"\nYour " + <a href="#" OnFocus="link('_member','brdModel239500920',this)">brdModel</a> + (string)" failed the test!\n\n";
+            msg += "Check the following:\n";
+            msg += " 1) Is your board connected to the PC parallel port?\n";
+            msg += " 2) Is your PC parallel port in unidirectional mode?\n";
+            msg += " 3) Is your board the only device connected to the parallel port?\n";
+            msg += " 4) Is your board getting power?\n";
+            msg += " 5) Is your board sitting on a non-conductive surface?\n";
+            msg += " 6) Is the programmable oscillator frequency greater than 1 MHz?\n";
+            msg += " 7) Is the shunt on jumper J12 in the osc position?\n";
+            msg += " 8) Is the shunt on jumper J7 in the ext position?\n";
+            msg += " 9) Are the shunts on jumpers J4 and J11?\n";
+            msg += "10) Are the shunts removed from jumpers J6 and J10?\n";
+            <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,msg);
+            delete progressGauge;
+            return false;
+        }
+        else
+        {
+            if((currDiff &gt; 2*prevDiff) &amp;&amp; (prevDiff&gt;0))
+            {   // test is done and the board passed
+                msg = (string)"\nYour " + <a href="#" OnFocus="link('_member','brdModel239500920',this)">brdModel</a> + (string)" passed the test!\n";
+                <a href="#" OnFocus="link('_member','PromptUser2517124797',this)">PromptUser</a>(msg,PROMPT_OK);
+                delete progressGauge;
+                return true;
+            }
+        }
+
+        // the test is still running
+        prevDiff = currDiff;    // save the current number of pulses to compare during the next integration period 
+    }
+    
+    delete progressGauge; // get rid of the progress indicator
+    
+    return false;
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_file','_source');
+</script>

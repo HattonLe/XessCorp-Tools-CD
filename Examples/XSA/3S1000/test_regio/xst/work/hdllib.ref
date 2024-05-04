@@ -1,0 +1,8 @@
+EN test_regio NULL C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/test_regio/test_regio.vhd sub00/vhpl06
+PH regio_jtag_pckg NULL C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/test_regio/../../../XS_LIB/regio_jtag.vhd sub00/vhpl03
+AR test_regio behavioral C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/test_regio/test_regio.vhd sub00/vhpl07
+PB common common C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/test_regio/../../../XS_LIB/common.vhd sub00/vhpl02
+PH userinstr_jtag_pckg NULL C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/test_regio/../../../XS_LIB/userinstr_jtag.vhd sub00/vhpl00
+AR regio_jtag arch C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/test_regio/../../../XS_LIB/regio_jtag.vhd sub00/vhpl05
+PH common NULL C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/test_regio/../../../XS_LIB/common.vhd sub00/vhpl01
+EN regio_jtag NULL C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/test_regio/../../../XS_LIB/regio_jtag.vhd sub00/vhpl04

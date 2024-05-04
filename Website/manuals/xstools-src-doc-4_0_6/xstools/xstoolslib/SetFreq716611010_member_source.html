@@ -1,0 +1,145 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - SetFreq</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">SetFreq</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_class','XSVBoard0',this)" class="pathLink">XSVBoard</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">SetFreq</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','SetFreq716611010','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_member','SetFreq716611010','_source',this)" class="tabLinkActive">Source</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','SetFreq716611010','_callgraph',this)" class="tabLinkInActive">Call Graph</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<div class="paragraph2NoTopPadding">Start Line: 754</div>
+<pre class="codeExamples">
+bool <a href="#" OnFocus="link('_member','SetFreq716611010',this)">XSVBoard::SetFreq</a>(int div, bool extOscPresent)
+{
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a> = <a href="#" OnFocus="link('_member','fpga210218449',this)">fpga</a>.<a href="#" OnFocus="link('_member','GetErr259477277',this)">GetErr</a>(); // setup error channel
+
+    // use the board model name to find the corresponding index into the list of boards
+    int brdIndex;
+    for(brdIndex=0; brdIndex&lt;<a href="#" OnFocus="link('_member','numBoards_1245',this)">numBoards</a>; brdIndex++)
+    {
+        if(strcmp(brdModel,brdInfo[brdIndex].brdModel) == 0)
+            break;
+    }
+    if(brdIndex&gt;=<a href="#" OnFocus="link('_member','numBoards_1245',this)">numBoards</a>)
+    {
+        <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,"Unknown type of XSV Board!\n");
+        return false;
+    }
+
+    // get the name of the file that contains a bitstream that will configure the FPGA to provide an interface
+    // between the parallel port and the programmable oscillator
+    if(strlen(brdInfo[brdIndex].oscBitstreamFile)==0)
+    {
+        string msg = <a href="#" OnFocus="link('_member','brdModel210218449',this)">brdModel</a> + (string)" does not support oscillator programming!!\n";
+        <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,msg);
+        return false;
+    }
+
+    // check the ID of the interface CPLD to see if it matches the type on this particular board.
+    if(<a href="#" OnFocus="link('_member','CheckChipID175268175',this)">CheckChipID</a>() == false)
+        return false;
+    
+    // get the USERCODE from the interface CPLD to see if it supports programming the oscillator
+    bool loadOscIntfc;
+    string usercode = <a href="#" OnFocus="link('_member','cpld210218449',this)">cpld</a>.<a href="#" OnFocus="link('_member','GetUSERCODE215401329',this)">GetUSERCODE</a>();
+    if((usercode==<a href="#" OnFocus="link('_member','flashIntfcCode_1240',this)">flashIntfcCode</a>) || (usercode==<a href="#" OnFocus="link('_member','dwnldIntfcCode_1243',this)">dwnldIntfcCode</a>) || 
+        (usercode==<a href="#" OnFocus="link('_member','flashConfigIntfcCode_1241',this)">flashConfigIntfcCode</a>) || (usercode==<a href="#" OnFocus="link('_member','testIntfcCode_1242',this)">testIntfcCode</a>))
+    { // the interface CPLD is not configured with the oscillator interface ...
+        loadOscIntfc = true; // so force it to be loaded
+    }
+    else if(usercode==<a href="#" OnFocus="link('_member','oscIntfcCode_1239',this)">oscIntfcCode</a>)
+    { // the CPLD already contains the oscillator interface bitstream
+        loadOscIntfc = false;
+    }
+    else
+    { // can't tell what the CPLD contains, so load the oscillator interface
+        loadOscIntfc = true;
+    }
+
+    // get the directory where the oscillator interface files are kept
+    const char* xstoolsBinDir = <a href="#" OnFocus="link('_member','FindXSTOOLSBinDir53616',this)">FindXSTOOLSBinDir</a>();
+    // concat the file name with the directory to form a complete path to the oscillator interface bitstream file
+    string bitFileName;
+    bitFileName = xstoolsBinDir;
+    bitFileName += "/";
+    bitFileName += <a href="#" OnFocus="link('_member','brdInfo_1244',this)">brdInfo</a>[brdIndex].<a href="#" OnFocus="link('_member','oscBitstreamFile1254770407',this)">oscBitstreamFile</a>;
+
+    // give the user some instructions on how to initialize the oscillator for programming
+    string instructions;
+    instructions = "Before setting the XSV Board frequency you must:\n";
+    instructions += "1) Turn off the power to your XSV Board\n";
+    instructions += "2) Remove the downloading cable from your XSV Board\n";
+    instructions += "3) Place a shunt across pins 2 and 3 of jumpers J29, J30, and J31\n";
+    instructions += "4) Place a shunt across the pins of jumper J23\n";
+    instructions += "5) Place a shunt across pins 1 and 2 of jumpers J22 and J36\n";
+    instructions += "6) Turn on the power to your XSV Board\n";
+    instructions += "7) Reconnect the downloading cable\n";
+    instructions += "8) Click on the OK button\n";
+    if(<a href="#" OnFocus="link('_member','PromptUser2517124797',this)">PromptUser</a>(instructions,PROMPT_OKCANCEL) == <a href="#" OnFocus="link('_member','RESPONSE_CANCEL0',this)">RESPONSE_CANCEL</a>)
+        return false;
+
+    // load the CPLD with the interface that allows the programming of the oscillator thru the parallel port
+    if(loadOscIntfc)
+    {
+        <a href="#" OnFocus="link('_member','cpld210218449',this)">cpld</a>.<a href="#" OnFocus="link('_member','ConfigureCPLD3019441395',this)">ConfigureCPLD</a>(bitFileName);
+        if(<a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','IsError863564933',this)">IsError</a>())
+        {
+            <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,"Error downloading clock-set circuit!!\n");
+            return false;
+        }
+    }
+
+    // program the oscillator
+    <a href="#" OnFocus="link('_member','osc210218449',this)">osc</a>.<a href="#" OnFocus="link('_member','SetOscFrequency4061435083',this)">SetOscFrequency</a>(div,extOscPresent);
+
+    // erase the oscillator interface from the CPLD
+    bitFileName = xstoolsBinDir;
+    bitFileName += "/";
+    bitFileName += <a href="#" OnFocus="link('_member','brdInfo_1244',this)">brdInfo</a>[brdIndex].<a href="#" OnFocus="link('_member','eraseBitstreamFile1254770407',this)">eraseBitstreamFile</a>;
+    <a href="#" OnFocus="link('_member','cpld210218449',this)">cpld</a>.<a href="#" OnFocus="link('_member','ConfigureCPLD3019441395',this)">ConfigureCPLD</a>(bitFileName);
+    if(<a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','IsError863564933',this)">IsError</a>())
+    {
+        <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,"Error erasing CPLD!!\n");
+        return false;
+    }
+
+    // give the user some instructions on how to reset the oscillator so the programming will take effect
+    instructions = "The frequency of your XSV Board has been set!!\n";
+    instructions += "Now do these steps to activate the oscillator:\n";
+    instructions += "1) Turn off the power to your XSV Board\n";
+    instructions += "2) Remove the downloading cable from your XSV Board\n";
+    instructions += "3) Move the shunt to pins 2 and 3 of jumper J22\n";
+    instructions += "4) Leave the shunt across pins 1 and 2 of jumper J36\n";
+    instructions += "5) Turn on the power to your XSV Board\n";
+    instructions += "6) Reconnect the downloading cable\n";
+    instructions += "7) Click on the OK button\n\n";
+    instructions += "YOU MUST REPROGRAM THE CPLD INTERFACE ON YOUR XSV BOARD!!\n";
+    <a href="#" OnFocus="link('_member','PromptUser2517124797',this)">PromptUser</a>(instructions,PROMPT_OK);
+
+    return true;
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_member','_source');
+</script>

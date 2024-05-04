@@ -1,0 +1,61 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - NewXSBoard</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">NewXSBoard</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">NewXSBoard</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','NewXSBoard189216495','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_member','NewXSBoard189216495','_source',this)" class="tabLinkActive">Source</a></span>
+<span class="tabInActiveGrayout"><span class="tabLinkGrayout">Call Graph</span></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<div class="paragraph2NoTopPadding">Start Line: 710</div>
+<pre class="codeExamples">
+<a href="#" OnFocus="link('_class','XSBoard0',this)">XSBoard</a> * <a href="#" OnFocus="link('_member','NewXSBoard189216495',this)">NewXSBoard</a>(const char *boardModelName)
+{
+    <a href="#" OnFocus="link('_class','XSBoard0',this)">XSBoard</a>* <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>;
+
+    if(strncmp(boardModelName,"XS95",strlen("XS95"))==0)
+        <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a> = new <a href="#" OnFocus="link('_class','XS95Board0',this)">XS95Board</a>();
+    else if(strncmp(boardModelName,"XS40",strlen("XS40"))==0)
+        <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a> = new <a href="#" OnFocus="link('_class','XS40Board0',this)">XS40Board</a>();
+    else if(strncmp(boardModelName,"XSP",strlen("XSP"))==0)
+        <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a> = new <a href="#" OnFocus="link('_class','XS40Board0',this)">XS40Board</a>();
+    else if(strncmp(boardModelName,"XSA-3S",strlen("XSA-3S"))==0)
+        <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a> = new <a href="#" OnFocus="link('_class','XSA3SBoard0',this)">XSA3SBoard</a>();
+    else if(strncmp(boardModelName,"XSA-200",strlen("XSA-200"))==0)
+        <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a> = new <a href="#" OnFocus="link('_class','XSA200Board0',this)">XSA200Board</a>();
+    else if(strncmp(boardModelName,"XSA",strlen("XSA"))==0)
+        <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a> = new <a href="#" OnFocus="link('_class','XSABoard0',this)">XSABoard</a>();
+    else if(strncmp(boardModelName,"XSB",strlen("XSB"))==0)
+        <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a> = new <a href="#" OnFocus="link('_class','XSBBoard0',this)">XSBBoard</a>();
+    else if(strncmp(boardModelName,"XSV",strlen("XSV"))==0)
+        <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a> = new <a href="#" OnFocus="link('_class','XSVBoard0',this)">XSVBoard</a>();
+    else
+        <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a> = NULL;
+
+    return <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>;
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_member','_source');
+</script>

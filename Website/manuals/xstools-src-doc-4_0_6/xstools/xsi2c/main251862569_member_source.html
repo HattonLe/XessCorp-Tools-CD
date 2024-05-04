@@ -1,0 +1,181 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - main</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">main</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xsi2c0',this)" class="pathLink">xsi2c</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">main</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','main251862569','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_member','main251862569','_source',this)" class="tabLinkActive">Source</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','main251862569','_callgraph',this)" class="tabLinkInActive">Call Graph</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<div class="paragraph2NoTopPadding">Start Line: 242</div>
+<pre class="codeExamples">
+int <a href="#" OnFocus="link('_member','../xsusb/main251862569',this)">main</a>(int argc, char **argv)
+{
+    string s;
+
+    // set the error message header to the name of this program
+    string cmd = argv[0];
+    cmd = <a href="#" OnFocus="link('_member','../xstoolslib/StripSuffix67554305',this)">StripSuffix</a>(<a href="#" OnFocus="link('_member','../xstoolslib/StripPrefix67554305',this)">StripPrefix</a>(cmd));
+    <a href="#" OnFocus="link('_member','err0',this)">err</a>.<a href="#" OnFocus="link('_member','../xstoolslib/SetHeader36636122',this)">SetHeader</a>(cmd);
+
+    if((<a href="#" OnFocus="link('_member','../xsatapi/lpt0',this)">lpt</a>=<a href="#" OnFocus="link('_member','../xstoolslib/GetXSTOOLSParameter67554305',this)">GetXSTOOLSParameter</a>("LPT")) != "")
+    {
+        int n = sscanf(<a href="#" OnFocus="link('_member','../xsatapi/lpt0',this)">lpt</a>.c_str()+3,"%d",&amp;<a href="#" OnFocus="link('_member','../xsatapi/portNum0',this)">portNum</a>);
+        assert(n != 0);
+    }
+
+    if((s=<a href="#" OnFocus="link('_member','../xstoolslib/GetXSTOOLSParameter67554305',this)">GetXSTOOLSParameter</a>("I2C_ADDRESS")) != "")
+    {
+        sscanf(s.c_str(),"%x",&amp;<a href="#" OnFocus="link('_member','i2c_address0',this)">i2c_address</a>);
+        //istrstream argstr((char*)s.c_str());
+        //argstr &gt;&gt; hex &gt;&gt; i2c_address;
+    }
+
+    if((s=<a href="#" OnFocus="link('_member','../xstoolslib/GetXSTOOLSParameter67554305',this)">GetXSTOOLSParameter</a>("I2C_SCL_OUT_PIN")) != "")
+    {
+        sscanf(s.c_str(),"%d",&amp;<a href="#" OnFocus="link('_member','scl_out_pin0',this)">scl_out_pin</a>);
+        //istrstream argstr((char*)s.c_str());
+        //argstr &gt;&gt; scl_out_pin;
+    }
+
+    if((s=<a href="#" OnFocus="link('_member','../xstoolslib/GetXSTOOLSParameter67554305',this)">GetXSTOOLSParameter</a>("I2C_SDA_OUT_PIN")) != "")
+    {
+        sscanf(s.c_str(),"%d",&amp;<a href="#" OnFocus="link('_member','sda_out_pin0',this)">sda_out_pin</a>);
+        //istrstream argstr((char*)s.c_str());
+        //argstr &gt;&gt; sda_out_pin;
+    }
+
+    if((s=<a href="#" OnFocus="link('_member','../xstoolslib/GetXSTOOLSParameter67554305',this)">GetXSTOOLSParameter</a>("I2C_SCL_IN_PIN")) != "")
+    {
+        sscanf(s.c_str(),"%d",&amp;<a href="#" OnFocus="link('_member','scl_in_pin0',this)">scl_in_pin</a>);
+        //istrstream argstr((char*)s.c_str());
+        //argstr &gt;&gt; scl_in_pin;
+    }
+
+    if((s=<a href="#" OnFocus="link('_member','../xstoolslib/GetXSTOOLSParameter67554305',this)">GetXSTOOLSParameter</a>("I2C_SDA_IN_PIN")) != "")
+    {
+        sscanf(s.c_str(),"%d",&amp;<a href="#" OnFocus="link('_member','sda_in_pin0',this)">sda_in_pin</a>);
+        //istrstream argstr((char*)s.c_str());
+        //argstr &gt;&gt; sda_in_pin;
+    }
+    
+    if(<a href="#" OnFocus="link('_member','../xsusb/ProcessOpts2719128541',this)">ProcessOpts</a>( &amp;argc, argv ) == false)
+    {
+        <a href="#" OnFocus="link('_member','../xsusb/Usage86416935',this)">Usage</a>(string(argv[0]));
+        exit(1);    // exit if error in program options
+    }
+
+    // use LPT1 if no other parallel port was specified
+    if(<a href="#" OnFocus="link('_member','../xsatapi/portNum0',this)">portNum</a> == -1)
+    {
+        <a href="#" OnFocus="link('_member','../xsatapi/portNum0',this)">portNum</a> = 1;
+        <a href="#" OnFocus="link('_member','../xsatapi/lpt0',this)">lpt</a> = "LPT1";
+    }
+
+    // store the parallel port that will be used
+    if(<a href="#" OnFocus="link('_member','../xsatapi/portNum0',this)">portNum</a> &lt; 4)
+        <a href="#" OnFocus="link('_member','../xstoolslib/SetXSTOOLSParameter3292873876',this)">SetXSTOOLSParameter</a>("LPT",<a href="#" OnFocus="link('_member','../xsatapi/lpt0',this)">lpt</a>.c_str());
+
+    // error if no I2C address is specified
+    if(<a href="#" OnFocus="link('_member','i2c_address0',this)">i2c_address</a> == -1)
+    {
+        <a href="#" OnFocus="link('_member','err0',this)">err</a>.<a href="#" OnFocus="link('_member','../xstoolslib/SetSeverity3409672334',this)">SetSeverity</a>(<a href="#" OnFocus="link('_member','../xstoolslib/XSErrorFatal0',this)">XSErrorFatal</a>);
+        <a href="#" OnFocus="link('_member','err0',this)">err</a> &lt;&lt; "No I2C address was specified!!\n";
+        <a href="#" OnFocus="link('_member','err0',this)">err</a>.<a href="#" OnFocus="link('_member','../xstoolslib/EndMsg60232619',this)">EndMsg</a>();
+    }
+
+    if(<a href="#" OnFocus="link('_member','scl_out_pin0',this)">scl_out_pin</a> == -1)
+    {
+        <a href="#" OnFocus="link('_member','err0',this)">err</a>.<a href="#" OnFocus="link('_member','../xstoolslib/SetSeverity3409672334',this)">SetSeverity</a>(XSErrorFatal);
+        <a href="#" OnFocus="link('_member','err0',this)">err</a> &lt;&lt; "No I2C SCL output pin was specified!!\n";
+        <a href="#" OnFocus="link('_member','err0',this)">err</a>.<a href="#" OnFocus="link('_member','../xstoolslib/EndMsg60232619',this)">EndMsg</a>();
+    }
+    int scl_out_bit = <a href="#" OnFocus="link('_member','map_pin_to_bit171142247',this)">map_pin_to_bit</a>(scl_out_pin);
+
+    if(<a href="#" OnFocus="link('_member','sda_out_pin0',this)">sda_out_pin</a> == -1)
+    {
+        <a href="#" OnFocus="link('_member','err0',this)">err</a>.<a href="#" OnFocus="link('_member','../xstoolslib/SetSeverity3409672334',this)">SetSeverity</a>(XSErrorFatal);
+        <a href="#" OnFocus="link('_member','err0',this)">err</a> &lt;&lt; "No I2C SDA output pin was specified!!\n";
+        <a href="#" OnFocus="link('_member','err0',this)">err</a>.<a href="#" OnFocus="link('_member','../xstoolslib/EndMsg60232619',this)">EndMsg</a>();
+    }
+    int sda_out_bit = <a href="#" OnFocus="link('_member','map_pin_to_bit171142247',this)">map_pin_to_bit</a>(sda_out_pin);
+
+    if(<a href="#" OnFocus="link('_member','scl_in_pin0',this)">scl_in_pin</a> == -1)
+    {
+        <a href="#" OnFocus="link('_member','err0',this)">err</a>.<a href="#" OnFocus="link('_member','../xstoolslib/SetSeverity3409672334',this)">SetSeverity</a>(<a href="#" OnFocus="link('_member','../xstoolslib/XSErrorFatal0',this)">XSErrorFatal</a>);
+        <a href="#" OnFocus="link('_member','err0',this)">err</a> &lt;&lt; "No I2C SCL input pin was specified!!\n";
+        <a href="#" OnFocus="link('_member','err0',this)">err</a>.<a href="#" OnFocus="link('_member','../xstoolslib/EndMsg60232619',this)">EndMsg</a>();
+    }
+    int scl_in_bit = <a href="#" OnFocus="link('_member','map_pin_to_bit171142247',this)">map_pin_to_bit</a>(scl_in_pin);
+
+    if(<a href="#" OnFocus="link('_member','sda_in_pin0',this)">sda_in_pin</a> == -1)
+    {
+        <a href="#" OnFocus="link('_member','err0',this)">err</a>.<a href="#" OnFocus="link('_member','../xstoolslib/SetSeverity3409672334',this)">SetSeverity</a>(XSErrorFatal);
+        <a href="#" OnFocus="link('_member','err0',this)">err</a> &lt;&lt; "No I2C SDA input pin was specified!!\n";
+        <a href="#" OnFocus="link('_member','err0',this)">err</a>.<a href="#" OnFocus="link('_member','../xstoolslib/EndMsg60232619',this)">EndMsg</a>();
+    }
+    int sda_in_bit = <a href="#" OnFocus="link('_member','map_pin_to_bit171142247',this)">map_pin_to_bit</a>(sda_in_pin);
+
+    // create I2C port with inversion mask suitable for either XSA or XSB boards.
+    <a href="#" OnFocus="link('_class','../xstoolslib/I2CPort0',this)">I2CPort</a> <a href="#" OnFocus="link('_member','../xsether/port0',this)">port</a>(&amp;err,portNum,0x090003,scl_out_bit,sda_out_bit,scl_in_bit,sda_in_bit,10);
+    // set the clock and data pins to logic 1 which is a high-impedance state with resistor pull-ups
+    <a href="#" OnFocus="link('_member','../xsether/port0',this)">port</a>.SetSDA(1);
+    <a href="#" OnFocus="link('_member','../xsether/port0',this)">port</a>.SetSCL(1);
+    // wait for things to settle
+    <a href="#" OnFocus="link('_member','../xstoolslib/InsertDelay359930342',this)">InsertDelay</a>(10000,MICROSECONDS);
+    
+    // write to an I2C device register
+    if(<a href="#" OnFocus="link('_member','do_write0',this)">do_write</a>)
+    {
+        <a href="#" OnFocus="link('_member','../xsether/port0',this)">port</a>.WriteReg(i2c_address, regaddr, data);
+        if(<a href="#" OnFocus="link('_member','err0',this)">err</a>.<a href="#" OnFocus="link('_member','../xstoolslib/IsError863564933',this)">IsError</a>())
+            return 1;
+        // read the register that was written if the value needs to be validated
+        if(<a href="#" OnFocus="link('_member','do_validate0',this)">do_validate</a>)
+        {
+            unsigned char d;
+            <a href="#" OnFocus="link('_member','../xsether/port0',this)">port</a>.ReadReg(i2c_address, regaddr, &amp;d);
+            if(<a href="#" OnFocus="link('_member','err0',this)">err</a>.<a href="#" OnFocus="link('_member','../xstoolslib/IsError863564933',this)">IsError</a>())
+                return 1;
+            if(d != <a href="#" OnFocus="link('_member','../xsatapi/data0',this)">data</a>)
+                cerr &lt;&lt; "(" &lt;&lt; hex &lt;&lt; <a href="#" OnFocus="link('_member','../xsatapi/regaddr0',this)">regaddr</a> &lt;&lt; ") = " &lt;&lt; hex &lt;&lt; (unsigned int)d &lt;&lt; " != " &lt;&lt; hex &lt;&lt; <a href="#" OnFocus="link('_member','../xsatapi/data0',this)">data</a> &lt;&lt; endl;
+        }
+    }
+    
+    // read from an I2C device register
+    if(<a href="#" OnFocus="link('_member','do_read0',this)">do_read</a>)
+    {
+        unsigned char d;
+        <a href="#" OnFocus="link('_member','../xsether/port0',this)">port</a>.ReadReg(i2c_address, regaddr, &amp;d);
+        if(<a href="#" OnFocus="link('_member','err0',this)">err</a>.<a href="#" OnFocus="link('_member','../xstoolslib/IsError863564933',this)">IsError</a>())
+            return 1;
+        cout &lt;&lt; "(" &lt;&lt; hex &lt;&lt; <a href="#" OnFocus="link('_member','../xsatapi/regaddr0',this)">regaddr</a> &lt;&lt; ") = " &lt;&lt; hex &lt;&lt; (unsigned int)d &lt;&lt; endl;
+    }
+
+    return 0; // exit with 0 if no errors occurred
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_member','_source');
+</script>

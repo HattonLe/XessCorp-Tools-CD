@@ -1,0 +1,1 @@
+set allSynthModules {common.MOD randgen.MOD rand.MOD memtest.MOD dualport.MOD sdramcntl.MOD mem.MOD sdram.MOD test_dualport_core.MOD test_dualport_core_pckg.MOD test_dualport.MOD}

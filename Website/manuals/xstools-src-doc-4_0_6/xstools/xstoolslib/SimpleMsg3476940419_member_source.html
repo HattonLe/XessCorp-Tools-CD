@@ -1,0 +1,43 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - SimpleMsg</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">SimpleMsg</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_class','XSError0',this)" class="pathLink">XSError</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">SimpleMsg</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','SimpleMsg3476940419','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_member','SimpleMsg3476940419','_source',this)" class="tabLinkActive">Source</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','SimpleMsg3476940419','_callgraph',this)" class="tabLinkInActive">Call Graph</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<div class="paragraph2NoTopPadding">Start Line: 258</div>
+<pre class="codeExamples">
+void <a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">XSError::SimpleMsg</a>(XSErrorSeverity s, string &amp;msg)
+{
+    <a href="#" OnFocus="link('_member','SetSeverity3409672334',this)">SetSeverity</a>(s);
+    <a href="#" OnFocus="link('_member','storedMsg511292',this)">storedMsg</a> = <a href="#" OnFocus="link('_member','storedMsg511292',this)">storedMsg</a> + msg;
+    *<a href="#" OnFocus="link('_member','os511292',this)">os</a> &lt;&lt; msg.c_str();
+    <a href="#" OnFocus="link('_member','EndMsg60232619',this)">EndMsg</a>();
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_member','_source');
+</script>

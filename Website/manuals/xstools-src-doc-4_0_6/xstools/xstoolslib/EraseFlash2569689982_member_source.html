@@ -1,0 +1,71 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - EraseFlash</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">EraseFlash</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_class','AM29FPort0',this)" class="pathLink">AM29FPort</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">EraseFlash</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','EraseFlash2569689982','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_member','EraseFlash2569689982','_source',this)" class="tabLinkActive">Source</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','EraseFlash2569689982','_callgraph',this)" class="tabLinkInActive">Call Graph</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<div class="paragraph2NoTopPadding">Start Line: 156</div>
+<pre class="codeExamples">
+bool <a href="#" OnFocus="link('_member','EraseFlash2569689982',this)">AM29FPort::EraseFlash</a>(void)
+{
+    int i;
+    
+    if(<a href="#" OnFocus="link('_member','WriteFlashByte3255642504',this)">WriteFlashByte</a>(0xAAA,0xAA,ENDIAN_DEFAULTS) == false)   return false;
+    if(<a href="#" OnFocus="link('_member','WriteFlashByte3255642504',this)">WriteFlashByte</a>(0x555,0x55,ENDIAN_DEFAULTS) == false)   return false;
+    if(<a href="#" OnFocus="link('_member','WriteFlashByte3255642504',this)">WriteFlashByte</a>(0xAAA,0x80,ENDIAN_DEFAULTS) == false)   return false;
+    if(<a href="#" OnFocus="link('_member','WriteFlashByte3255642504',this)">WriteFlashByte</a>(0xAAA,0xAA,ENDIAN_DEFAULTS) == false)   return false;
+    if(<a href="#" OnFocus="link('_member','WriteFlashByte3255642504',this)">WriteFlashByte</a>(0x555,0x55,ENDIAN_DEFAULTS) == false)   return false;
+    if(<a href="#" OnFocus="link('_member','WriteFlashByte3255642504',this)">WriteFlashByte</a>(0xAAA,0x10,ENDIAN_DEFAULTS) == false)   return false;
+
+    string desc("Flash Erase");
+    string subdesc("Erasing flash device");
+    <a href="#" OnFocus="link('_class','Progress0',this)">Progress</a>* <a href="#" OnFocus="link('_member','progressGauge239475346',this)">progressGauge</a> = new <a href="#" OnFocus="link('_class','Progress0',this)">Progress</a>(NULL,desc,subdesc,0,30);
+    const unsigned int estimated_erase_time = 60;  // units = seconds
+    for(i=0; ; i++)
+    {
+        <a href="#" OnFocus="link('_member','InsertDelay359930342',this)">InsertDelay</a>((estimated_erase_time * 1000)/30,MILLISECONDS);
+        progressGauge-&gt;<a href="#" OnFocus="link('_member','Report2561259521',this)">Report</a>(i%30);
+        unsigned int d;
+        if(<a href="#" OnFocus="link('_member','ReadFlashByte2991806353',this)">ReadFlashByte</a>(0,&amp;d,ENDIAN_DEFAULTS) == false)
+        {
+            delete progressGauge;
+            return false;
+        }
+        if(d &amp; 0x80)
+            break;  // erase is done when MSB is set
+    }
+    delete progressGauge;
+
+    // initialize the block erasure flags
+    for(i=sizeof(<a href="#" OnFocus="link('_member','flashBlocks0',this)">flashBlocks</a>)/sizeof(struct <a href="#" OnFocus="link('_class','flashBlock0',this)">flashBlock</a>)-1; i&gt;=0; i--)
+        <a href="#" OnFocus="link('_member','flashBlocks0',this)">flashBlocks</a>[i].<a href="#" OnFocus="link('_member','erased233242341',this)">erased</a> = true;
+    return true;
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_member','_source');
+</script>

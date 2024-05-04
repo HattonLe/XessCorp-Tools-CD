@@ -1,0 +1,109 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - gxstest.cpp</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">gxstest.cpp</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','gxstest0',this)" class="pathLink">gxstest</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">gxstest.cpp</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','gxstest_cpp0','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','gxstest_cpp0','_overview',this)" class="tabLinkInActive">Overview</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','gxstest_cpp0','_includedfiles',this)" class="tabLinkInActive">Included files</a></span>
+<span class="tabInActiveGrayout"><span class="tabLinkGrayout">Included by</span></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_file','gxstest_cpp0','_source',this)" class="tabLinkActive">Source</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<pre class="codeExamples">
+// gxstest.cpp : Defines the class behaviors for the application.
+//
+
+#include "stdafx.h"
+#include "<a href="#" OnFocus="link('_file','gxstest_h0',this)">gxstest.h</a>"
+#include "<a href="#" OnFocus="link('_file','gxstestDlg_h0',this)">gxstestDlg.h</a>"
+
+#ifdef _DEBUG
+#define new DEBUG_NEW
+#undef THIS_FILE
+static char THIS_FILE[] = __FILE__;
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+// CGxstestApp
+
+BEGIN_MESSAGE_MAP(<a href="#" OnFocus="link('_class','CGxstestApp0',this)">CGxstestApp</a>, CWinApp)
+    //{{AFX_MSG_MAP(CGxstestApp)
+        // NOTE - the ClassWizard will add and remove mapping macros here.
+        //    DO NOT EDIT what you see in these blocks of generated code!
+    //}}AFX_MSG
+    ON_COMMAND(ID_HELP, CWinApp::OnHelp)
+END_MESSAGE_MAP()
+
+/////////////////////////////////////////////////////////////////////////////
+// CGxstestApp construction
+
+<a href="#" OnFocus="link('_member','CGxstestApp159858081',this)">CGxstestApp::CGxstestApp</a>()
+{
+    // TODO: add construction code here,
+    // Place all significant initialization in InitInstance
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// The one and only CGxstestApp object
+
+<a href="#" OnFocus="link('_class','CGxstestApp0',this)">CGxstestApp</a> <a href="#" OnFocus="link('_member','../gxsload/theApp0',this)">theApp</a>;
+
+/////////////////////////////////////////////////////////////////////////////
+// CGxstestApp initialization
+
+BOOL <a href="#" OnFocus="link('_member','InitInstance159858081',this)">CGxstestApp::InitInstance</a>()
+{
+    // Standard initialization
+    // If you are not using these features and wish to reduce the size
+    //  of your final executable, you should remove from the following
+    //  the specific initialization routines you do not need.
+
+#ifdef _AFXDLL
+    Enable3dControls();         // Call this when using MFC in a shared DLL
+#else
+    Enable3dControlsStatic();   // Call this when linking to MFC statically
+#endif
+
+    <a href="#" OnFocus="link('_class','CGxstestDlg0',this)">CGxstestDlg</a> dlg;
+    m_pMainWnd = &amp;dlg;
+    int nResponse = dlg.DoModal();
+    if (nResponse == IDOK)
+    {
+        // TODO: Place code here to handle when the dialog is
+        //  dismissed with OK
+    }
+    else if (nResponse == IDCANCEL)
+    {
+        // TODO: Place code here to handle when the dialog is
+        //  dismissed with Cancel
+    }
+
+    // Since the dialog has been closed, return FALSE so that we exit the
+    //  application, rather than start the application's message pump.
+    return FALSE;
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_file','_source');
+</script>

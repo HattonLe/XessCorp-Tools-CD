@@ -1,0 +1,230 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - at49fprt.cpp</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">at49fprt.cpp</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">at49fprt.cpp</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','at49fprt_cpp0','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','at49fprt_cpp0','_overview',this)" class="tabLinkInActive">Overview</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','at49fprt_cpp0','_includedfiles',this)" class="tabLinkInActive">Included files</a></span>
+<span class="tabInActiveGrayout"><span class="tabLinkGrayout">Included by</span></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_file','at49fprt_cpp0','_source',this)" class="tabLinkActive">Source</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<pre class="codeExamples">
+/*----------------------------------------------------------------------------------
+  SOFTWARE LICENSE AGREEMENT
+    1.  Permission to use, copy, modify, and distribute this software
+        and its documentation, with or without modification, for any
+        purpose and without fee or royalty is hereby granted, provided
+        that you include the following on ALL copies of the software
+        and documentation or portions thereof, including
+        modifications, that you make:
+
+            a.  The full text of this license in a location viewable to users
+            of the redistributed or derivative work.
+
+            b.  Notice of any changes or modifications to the files,
+            including the date changes were made.
+
+    2.  The name, servicemarks and trademarks of X Engineering
+        Software Systems Corp. may NOT be used in advertising or
+        publicity pertaining to the software without specific, written
+        prior permission.
+
+    3.  Title to copyright in this software and any associated
+        documentation will at all times remain with X Engineering
+        Software Systems Corp.
+
+    4.  THIS SOFTWARE AND DOCUMENTATION IS PROVIDED "AS IS," AND X
+        Engineering Software Systems Corp MAKES NO REPRESENTATIONS OR
+        WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO,
+        WARRANTIES OF MERCHANTABILITY OR FITNESS FOR ANY PARTICULAR
+        PURPOSE OR THAT THE USE OF THE SOFTWARE OR DOCUMENTATION WILL
+        NOT INFRINGE ANY THIRD PARTY PATENTS, COPYRIGHTS, TRADEMARKS
+        OR OTHER RIGHTS.
+
+    5.  X Engineering Software Systems Corp WILL NOT BE LIABLE FOR ANY
+        DAMAGES, INCLUDING BUT NOT LIMITED TO, DIRECT, INDIRECT,
+        SPECIAL OR CONSEQUENTIAL, ARISING OUT OF ANY USE OF THE
+        SOFTWARE OR DOCUMENTATION.
+
+  ©2006 - X Engineering Software Systems Corp.  All rights reserved.
+----------------------------------------------------------------------------------*/
+
+
+#include &lt;fstream&gt;
+#include &lt;cassert&gt;
+
+#include "<a href="#" OnFocus="link('_file','utils_h0',this)">utils.h</a>"
+#include "<a href="#" OnFocus="link('_file','at49fprt_h0',this)">at49fprt.h</a>"
+
+
+/// Create a Flash upload/download port.
+<a href="#" OnFocus="link('_member','AT49FPort2569689900',this)">AT49FPort::AT49FPort</a>(void)
+{
+    ;
+}
+
+
+/// Create a Flash upload/download port.
+<a href="#" OnFocus="link('_member','AT49FPort2569689900',this)">AT49FPort::AT49FPort</a>(<a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>* e,   ///&gt; pointer to error reporting object
+                   unsigned int portNum,    ///&gt; parallel port number
+                   unsigned int invMask,    ///&gt; inversion mask for the parallel port
+                   unsigned int pos_reset,  ///&gt; bit position in parallel port of Flash RESET pin
+                   unsigned int pos_clk,    ///&gt; bit position in parallel port of Flash CLK pin
+                   unsigned int pos_dolsb,  ///&gt; bit position in parallel port of LSB of Flash data-out pin
+                   unsigned int pos_domsb,  ///&gt; bit position in parallel port of MSB of Flash data-out pin
+                   unsigned int pos_dilsb,  ///&gt; bit position in parallel port of LSB of Flash data-in pin
+                   unsigned int pos_dimsb,  ///&gt; bit position in parallel port of MSB of Flash data-in pin
+                   unsigned int pos_stlsb,  ///&gt; bit position in parallel port of LSB of Flash status pin
+                   unsigned int pos_stmsb)  ///&gt; bit position in parallel port of MSB of Flash status pin
+    : <a href="#" OnFocus="link('_class','FlashPort0',this)">FlashPort</a>(e,<a href="#" OnFocus="link('_member','../xsatapi/portNum0',this)">portNum</a>,invMask,pos_reset,pos_clk,pos_dolsb,pos_domsb,pos_dilsb,pos_dimsb,pos_stlsb,pos_stmsb)
+{
+    ;
+}
+
+
+struct <a href="#" OnFocus="link('_class','flashBlock0',this)">flashBlock</a>
+{
+    unsigned int <a href="#" OnFocus="link('_member','address233242341',this)">address</a>; // address of block
+    unsigned int <a href="#" OnFocus="link('_member','length233242341',this)">length</a>; // length of block
+    bool <a href="#" OnFocus="link('_member','erased233242341',this)">erased</a>; // true if block is erase
+} static <a href="#" OnFocus="link('_member','flashBlocks0',this)">flashBlocks</a>[] = 
+{
+    {0x00000000, 0x00004000, false},
+    {0x00004000, 0x00002000, false},
+    {0x00006000, 0x00002000, false},
+    {0x00008000, 0x00018000, false},
+    {0x00020000, 0x00020000, false},
+};
+
+
+/// Program a byte in the Flash.
+///\return true if successful, false if not.
+bool <a href="#" OnFocus="link('_member','ProgramFlash3255679105',this)">AT49FPort::ProgramFlash</a>( unsigned int address,    ///&lt; address at which to store data
+                    unsigned int data,      ///&lt; data byte to be stored
+                    bool bigEndianBytes,    ///&lt; data is stored in RAM with most-significant byte at lower address
+                    bool bigEndianBits)     ///&lt; data is stored in RAM with most-significant bit in position 0
+{
+//  fprintf(stdout,"%02x =&gt; (%06x)\n",data,address);
+    if(<a href="#" OnFocus="link('_member','WriteFlashByte3255642504',this)">WriteFlashByte</a>(0x5555,0xAA,ENDIAN_DEFAULTS) == false)  return false;
+    if(<a href="#" OnFocus="link('_member','WriteFlashByte3255642504',this)">WriteFlashByte</a>(0x2AAA,0x55,ENDIAN_DEFAULTS) == false)  return false;
+    if(<a href="#" OnFocus="link('_member','WriteFlashByte3255642504',this)">WriteFlashByte</a>(0x5555,0xA0,ENDIAN_DEFAULTS) == false)  return false;
+    if(<a href="#" OnFocus="link('_member','WriteFlashByte3255642504',this)">WriteFlashByte</a>(address,data,bigEndianBytes,bigEndianBits) == false)    return false;
+
+    unsigned int d;
+    if(<a href="#" OnFocus="link('_member','ReadFlashByte2991806353',this)">ReadFlashByte</a>(address,&amp;d,bigEndianBytes,bigEndianBits) == false)
+        return false;
+    while((<a href="#" OnFocus="link('_member','../xsatapi/data0',this)">data</a> &amp; 0x80) != (d &amp; 0x80))
+    {
+        if(<a href="#" OnFocus="link('_member','ReadFlashByte2991806353',this)">ReadFlashByte</a>(address,&amp;d,bigEndianBytes,bigEndianBits) == false)
+            return false;
+    }
+
+    if(<a href="#" OnFocus="link('_member','../xsatapi/data0',this)">data</a> != d)
+    {
+        <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> = <a href="#" OnFocus="link('_member','GetErr259477277',this)">GetErr</a>();
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','SetSeverity3409672334',this)">SetSeverity</a>(XSErrorNone);
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> &lt;&lt; "data mismatch at " &lt;&lt; (long)address &lt;&lt; ": " &lt;&lt; (long)<a href="#" OnFocus="link('_member','../xsatapi/data0',this)">data</a> &lt;&lt; " != " &lt;&lt; (long)d &lt;&lt; "\n";
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','EndMsg60232619',this)">EndMsg</a>();
+        return false;
+    }
+    return true;
+}
+
+
+/// Erase the entire contents of the Flash RAM.
+///\return true if successful, false if not.
+bool <a href="#" OnFocus="link('_member','EraseFlash2569689900',this)">AT49FPort::EraseFlash</a>(void)
+{
+    int i;
+    
+    if(<a href="#" OnFocus="link('_member','WriteFlashByte3255642504',this)">WriteFlashByte</a>(0x5555,0xAA,ENDIAN_DEFAULTS) == false)  return false;
+    if(<a href="#" OnFocus="link('_member','WriteFlashByte3255642504',this)">WriteFlashByte</a>(0x2AAA,0x55,ENDIAN_DEFAULTS) == false)  return false;
+    if(<a href="#" OnFocus="link('_member','WriteFlashByte3255642504',this)">WriteFlashByte</a>(0x5555,0x80,ENDIAN_DEFAULTS) == false)  return false;
+    if(<a href="#" OnFocus="link('_member','WriteFlashByte3255642504',this)">WriteFlashByte</a>(0x5555,0xAA,ENDIAN_DEFAULTS) == false)  return false;
+    if(<a href="#" OnFocus="link('_member','WriteFlashByte3255642504',this)">WriteFlashByte</a>(0x2AAA,0x55,ENDIAN_DEFAULTS) == false)  return false;
+    if(<a href="#" OnFocus="link('_member','WriteFlashByte3255642504',this)">WriteFlashByte</a>(0x5555,0x10,ENDIAN_DEFAULTS) == false)  return false;
+
+    string desc("Flash Erase"), subdesc("Erasing flash device");
+    <a href="#" OnFocus="link('_class','Progress0',this)">Progress</a>* <a href="#" OnFocus="link('_member','progressGauge239475346',this)">progressGauge</a> = new <a href="#" OnFocus="link('_class','Progress0',this)">Progress</a>(NULL,desc,subdesc,0,30);
+    const unsigned int estimated_erase_time = 10;  // units = seconds
+    for(i=0; ; i++)
+    {
+        <a href="#" OnFocus="link('_member','InsertDelay359930342',this)">InsertDelay</a>((estimated_erase_time * 1000)/30,MILLISECONDS);
+        progressGauge-&gt;<a href="#" OnFocus="link('_member','Report2561259521',this)">Report</a>(i%30);
+        unsigned int d;
+        if(<a href="#" OnFocus="link('_member','ReadFlashByte2991806353',this)">ReadFlashByte</a>(0,&amp;d,ENDIAN_DEFAULTS) == false)
+        {
+            delete progressGauge;
+            return false;
+        }
+        if(d &amp; 0x80)
+            break;  // erase is done when MSB is set
+    }
+    delete progressGauge;
+
+    // initialize the block erasure flags
+    for(i=sizeof(<a href="#" OnFocus="link('_member','flashBlocks0',this)">flashBlocks</a>)/sizeof(struct <a href="#" OnFocus="link('_class','flashBlock0',this)">flashBlock</a>)-1; i&gt;=0; i--)
+        <a href="#" OnFocus="link('_member','flashBlocks0',this)">flashBlocks</a>[i].<a href="#" OnFocus="link('_member','erased233242341',this)">erased</a> = true;
+    return true;
+}
+
+
+/// Erase the contents of a Flash block.
+///\return true if successful, false if not.
+bool <a href="#" OnFocus="link('_member','EraseFlashBlock2774313279',this)">AT49FPort::EraseFlashBlock</a>(unsigned int blockIndex)
+{
+    assert(blockIndex &lt; sizeof(flashBlocks)/sizeof(struct <a href="#" OnFocus="link('_class','flashBlock0',this)">flashBlock</a>));
+    unsigned int address = <a href="#" OnFocus="link('_member','flashBlocks0',this)">flashBlocks</a>[blockIndex].<a href="#" OnFocus="link('_member','address233242341',this)">address</a>;
+    if(<a href="#" OnFocus="link('_member','WriteFlashByte3255642504',this)">WriteFlashByte</a>(0x5555,0xAA,ENDIAN_DEFAULTS) == false)  return false;
+    if(<a href="#" OnFocus="link('_member','WriteFlashByte3255642504',this)">WriteFlashByte</a>(0x2AAA,0x55,ENDIAN_DEFAULTS) == false)  return false;
+    if(<a href="#" OnFocus="link('_member','WriteFlashByte3255642504',this)">WriteFlashByte</a>(0x5555,0x80,ENDIAN_DEFAULTS) == false)  return false;
+    if(<a href="#" OnFocus="link('_member','WriteFlashByte3255642504',this)">WriteFlashByte</a>(0x5555,0xAA,ENDIAN_DEFAULTS) == false)  return false;
+    if(<a href="#" OnFocus="link('_member','WriteFlashByte3255642504',this)">WriteFlashByte</a>(0x2AAA,0x55,ENDIAN_DEFAULTS) == false)  return false;
+    if(<a href="#" OnFocus="link('_member','WriteFlashByte3255642504',this)">WriteFlashByte</a>(address,0x30,ENDIAN_DEFAULTS) == false) return false;
+
+    unsigned int d;
+    if(<a href="#" OnFocus="link('_member','ReadFlashByte2991806353',this)">ReadFlashByte</a>(address,&amp;d,ENDIAN_DEFAULTS) == false)
+        return false;
+    while((d &amp; 0x80) == 0)
+    {
+        if(<a href="#" OnFocus="link('_member','ReadFlashByte2991806353',this)">ReadFlashByte</a>(address,&amp;d,ENDIAN_DEFAULTS) == false)
+            return false;
+    }
+
+    <a href="#" OnFocus="link('_member','flashBlocks0',this)">flashBlocks</a>[blockIndex].<a href="#" OnFocus="link('_member','erased233242341',this)">erased</a> = true;
+    return true;
+}
+
+
+/// Reset the Flash so data can be read from it.
+///\return true if successful, false if not.
+bool <a href="#" OnFocus="link('_member','ResetFlash2569689900',this)">AT49FPort::ResetFlash</a>(void)
+{
+    return true;
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_file','_source');
+</script>

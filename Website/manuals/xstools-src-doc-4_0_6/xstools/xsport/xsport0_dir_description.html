@@ -1,0 +1,56 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - xsport</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">xsport</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">xsport</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("divID2139","aID2139","headerLeftMenuActive","leftMenuLinkHeadActive");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_dir','xsport0','_description',this)" class="tabLinkActive">Description</a></span>
+<span class="tabInActiveGrayout"><span class="tabLinkGrayout">Overview</span></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_dir','xsport0','_globals',this)" class="tabLinkInActive">Globals</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<span class="paragraph1">xsport</span>
+<span class="padding">( Directory )</span>
+<div class="padding">&nbsp;</div>
+<table cellspacing=0 cellpadding=0 border=0 class="widthAndBorderTop" height=1>
+<TR><TD height=1 width=100% class="oneLine"></TD></TR></TABLE>
+<div class="padding">Command-line utility for forcing bit values onto pins of the board.<br>
+<br>
+</div>
+<div class="padding">XSPORT begins by fetching the parallel <a href="#" OnFocus="link('_member','../xsether/port0',this)">port</a> identifier used by the most recent invocation of any XSTOOLS utility. This allows the user to specify a particular parallel <a href="#" OnFocus="link('_member','../xsether/port0',this)">port</a> as an argument to an XSTOOLS utility and then it will be inferred from then on unless specifically overridden by a new set of arguments.<br>
+<br>
+</div>
+<div class="padding">Next, a new <a href="#" OnFocus="link('_class','../xstoolslib/PPort0',this)">PPort</a> object is created that connects to the specified parallel <a href="#" OnFocus="link('_member','../xsether/port0',this)">port</a>. The current levels on the parallel <a href="#" OnFocus="link('_member','../xsether/port0',this)">port</a> <a href="#" OnFocus="link('_member','../xsusb/data0',this)">data</a> pins are read and stored. Then the binary string passed as an argument to XSPORT is parsed and the ones and zeroes in the string replace the bits in the stored parallel <a href="#" OnFocus="link('_member','../xsether/port0',this)">port</a> <a href="#" OnFocus="link('_member','../xsusb/data0',this)">data</a> value. Finally, the updated <a href="#" OnFocus="link('_member','../xsusb/data0',this)">data</a> is output on the parallel <a href="#" OnFocus="link('_member','../xsether/port0',this)">port</a> <a href="#" OnFocus="link('_member','../xsusb/data0',this)">data</a> pins and the program terminates.<br>
+<br>
+</div>
+<div class="padding"><br>
+</div>
+<div class="padding">&nbsp;</div>
+<table cellspacing=0 cellpadding=0 border=0 class="widthAndBorderTop" height=1>
+<TR><TD height=1 width=100% class="oneLine"></TD></TR></TABLE>
+<div class="paragraph2">Source</div>
+<div class="paddingMembers">The documentation for this Directory was generated from the following files:</div>
+<div class="paddingMembers"><LI><a href="#" OnFocus="link('_file','xsport_dir0',this)">xsport.dir</a><br></div>
+<div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_dir','_description');
+</script>

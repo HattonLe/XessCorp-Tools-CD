@@ -1,0 +1,161 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - gxsportDlg.h</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">gxsportDlg.h</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','gxsport0',this)" class="pathLink">gxsport</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">gxsportDlg.h</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','gxsportDlg_h0','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','gxsportDlg_h0','_overview',this)" class="tabLinkInActive">Overview</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','gxsportDlg_h0','_includedfiles',this)" class="tabLinkInActive">Included files</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','gxsportDlg_h0','_includedby',this)" class="tabLinkInActive">Included by</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_file','gxsportDlg_h0','_source',this)" class="tabLinkActive">Source</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<pre class="codeExamples">
+/*----------------------------------------------------------------------------------
+  SOFTWARE LICENSE AGREEMENT
+    1.  Permission to use, copy, modify, and distribute this software
+        and its documentation, with or without modification, for any
+        purpose and without fee or royalty is hereby granted, provided
+        that you include the following on ALL copies of the software
+        and documentation or portions thereof, including
+        modifications, that you make:
+
+            a.  The full text of this license in a location viewable to users
+            of the redistributed or derivative work.
+
+            b.  Notice of any changes or modifications to the files,
+            including the date changes were made.
+
+    2.  The name, servicemarks and trademarks of X Engineering
+        Software Systems Corp. may NOT be used in advertising or
+        publicity pertaining to the software without specific, written
+        prior permission.
+
+    3.  Title to copyright in this software and any associated
+        documentation will at all times remain with X Engineering
+        Software Systems Corp.
+
+    4.  THIS SOFTWARE AND DOCUMENTATION IS PROVIDED "AS IS," AND X
+        Engineering Software Systems Corp MAKES NO REPRESENTATIONS OR
+        WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO,
+        WARRANTIES OF MERCHANTABILITY OR FITNESS FOR ANY PARTICULAR
+        PURPOSE OR THAT THE USE OF THE SOFTWARE OR DOCUMENTATION WILL
+        NOT INFRINGE ANY THIRD PARTY PATENTS, COPYRIGHTS, TRADEMARKS
+        OR OTHER RIGHTS.
+
+    5.  X Engineering Software Systems Corp WILL NOT BE LIABLE FOR ANY
+        DAMAGES, INCLUDING BUT NOT LIMITED TO, DIRECT, INDIRECT,
+        SPECIAL OR CONSEQUENTIAL, ARISING OUT OF ANY USE OF THE
+        SOFTWARE OR DOCUMENTATION.
+
+  ©2006 - X Engineering Software Systems Corp.  All rights reserved.
+----------------------------------------------------------------------------------*/
+
+// gxsportDlg.h : header file
+//
+
+#if !defined(AFX_GXSPORTDLG_H__1B663A09_02EF_11D3_8544_00A0CC3E3927__INCLUDED_)
+#define AFX_GXSPORTDLG_H__1B663A09_02EF_11D3_8544_00A0CC3E3927__INCLUDED_
+
+#if _MSC_VER &gt;= 1000
+#pragma once
+#endif // _MSC_VER &gt;= 1000
+
+#include "Pport.h"
+
+/////////////////////////////////////////////////////////////////////////////
+// CGxsportDlg dialog
+
+class <a href="#" OnFocus="link('_class','CGxsportDlg0',this)">CGxsportDlg</a> : public CDialog
+{
+// Construction
+public:
+    <a href="#" OnFocus="link('_member','CGxsportDlg3903157818',this)">CGxsportDlg</a>(CWnd* pParent = NULL); // standard constructor
+
+    <a href="#" OnFocus="link('_class','../xstoolslib/PPort0',this)">PPort</a>* <a href="#" OnFocus="link('_member','parPort150410393',this)">parPort</a>;
+    unsigned int <a href="#" OnFocus="link('_member','newPortDataVal150410393',this)">newPortDataVal</a>;
+
+    CButton* <a href="#" OnFocus="link('_member','dataBtn150410393',this)">dataBtn</a>[8];
+// Dialog Data
+    //{{AFX_DATA(CGxsportDlg)
+    enum { <a href="#" OnFocus="link('_member','IDD150410393',this)">IDD</a> = IDD_GXSPORT_DIALOG };
+    CComboBox   <a href="#" OnFocus="link('_member','m_cmbLpt150410393',this)">m_cmbLpt</a>;
+    CButton <a href="#" OnFocus="link('_member','m_chkCount150410393',this)">m_chkCount</a>;
+    CButton <a href="#" OnFocus="link('_member','m_btnStrobe150410393',this)">m_btnStrobe</a>;
+    CButton <a href="#" OnFocus="link('_member','m_btnData7150410393',this)">m_btnData7</a>;
+    CButton <a href="#" OnFocus="link('_member','m_btnData6150410393',this)">m_btnData6</a>;
+    CButton <a href="#" OnFocus="link('_member','m_btnData5150410393',this)">m_btnData5</a>;
+    CButton <a href="#" OnFocus="link('_member','m_btnData4150410393',this)">m_btnData4</a>;
+    CButton <a href="#" OnFocus="link('_member','m_btnData3150410393',this)">m_btnData3</a>;
+    CButton <a href="#" OnFocus="link('_member','m_btnData2150410393',this)">m_btnData2</a>;
+    CButton <a href="#" OnFocus="link('_member','m_btnData1150410393',this)">m_btnData1</a>;
+    CButton <a href="#" OnFocus="link('_member','m_btnData0150410393',this)">m_btnData0</a>;
+    //}}AFX_DATA
+
+    // ClassWizard generated virtual function overrides
+    //{{AFX_VIRTUAL(CGxsportDlg)
+    protected:
+    virtual void <a href="#" OnFocus="link('_member','DoDataExchange3529355110',this)">DoDataExchange</a>(CDataExchange* pDX);  // DDX/DDV support
+    //}}AFX_VIRTUAL
+
+// Implementation
+protected:
+    HICON <a href="#" OnFocus="link('_member','m_hIcon150410393',this)">m_hIcon</a>;
+
+    void <a href="#" OnFocus="link('_member','HandleStrobe150410464',this)">HandleStrobe</a>();
+    void <a href="#" OnFocus="link('_member','DisplayBtnData4245494786',this)">DisplayBtnData</a>(unsigned int data);
+    void <a href="#" OnFocus="link('_member','OnBtnData1224733856',this)">OnBtnData</a>(int bitPos);
+
+    // Generated message map functions
+    //{{AFX_MSG(CGxsportDlg)
+    virtual BOOL <a href="#" OnFocus="link('_member','OnInitDialog150410464',this)">OnInitDialog</a>();
+    afx_msg void <a href="#" OnFocus="link('_member','OnSysCommand1123068344',this)">OnSysCommand</a>(UINT nID, LPARAM lParam);
+    afx_msg void <a href="#" OnFocus="link('_member','OnPaint150410464',this)">OnPaint</a>();
+    afx_msg void <a href="#" OnFocus="link('_member','OnActivate1513500589',this)">OnActivate</a>(UINT,CWnd*,BOOL);
+    afx_msg HCURSOR <a href="#" OnFocus="link('_member','OnQueryDragIcon150410464',this)">OnQueryDragIcon</a>();
+    afx_msg void <a href="#" OnFocus="link('_member','OnBtnData0150410464',this)">OnBtnData0</a>();
+    afx_msg void <a href="#" OnFocus="link('_member','OnBtnData1150410464',this)">OnBtnData1</a>();
+    afx_msg void <a href="#" OnFocus="link('_member','OnBtnData2150410464',this)">OnBtnData2</a>();
+    afx_msg void <a href="#" OnFocus="link('_member','OnBtnData3150410464',this)">OnBtnData3</a>();
+    afx_msg void <a href="#" OnFocus="link('_member','OnBtnData4150410464',this)">OnBtnData4</a>();
+    afx_msg void <a href="#" OnFocus="link('_member','OnBtnData5150410464',this)">OnBtnData5</a>();
+    afx_msg void <a href="#" OnFocus="link('_member','OnBtnData6150410464',this)">OnBtnData6</a>();
+    afx_msg void <a href="#" OnFocus="link('_member','OnBtnData7150410464',this)">OnBtnData7</a>();
+    afx_msg void <a href="#" OnFocus="link('_member','OnBtnStrobe150410464',this)">OnBtnStrobe</a>();
+    afx_msg void <a href="#" OnFocus="link('_member','OnDblclkListLpt150410464',this)">OnDblclkListLpt</a>();
+    afx_msg void <a href="#" OnFocus="link('_member','OnSelchangeListLpt150410464',this)">OnSelchangeListLpt</a>();
+    afx_msg void <a href="#" OnFocus="link('_member','OnChkCount150410464',this)">OnChkCount</a>();
+    afx_msg void <a href="#" OnFocus="link('_member','OnDblclkComboLpt150410464',this)">OnDblclkComboLpt</a>();
+    afx_msg void <a href="#" OnFocus="link('_member','OnSelchangeComboLpt150410464',this)">OnSelchangeComboLpt</a>();
+    //}}AFX_MSG
+    DECLARE_MESSAGE_MAP()
+};
+
+//{{AFX_INSERT_LOCATION}}
+// Microsoft Developer Studio will insert additional declarations immediately before the previous line.
+
+#endif // !defined(AFX_GXSPORTDLG_H__1B663A09_02EF_11D3_8544_00A0CC3E3927__INCLUDED_)
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_file','_source');
+</script>

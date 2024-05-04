@@ -1,0 +1,857 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - utils.cpp</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">utils.cpp</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">utils.cpp</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','utils_cpp0','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','utils_cpp0','_overview',this)" class="tabLinkInActive">Overview</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','utils_cpp0','_includedfiles',this)" class="tabLinkInActive">Included files</a></span>
+<span class="tabInActiveGrayout"><span class="tabLinkGrayout">Included by</span></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_file','utils_cpp0','_source',this)" class="tabLinkActive">Source</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<pre class="codeExamples">
+/*----------------------------------------------------------------------------------
+  SOFTWARE LICENSE AGREEMENT
+    1.  Permission to use, copy, modify, and distribute this software
+        and its documentation, with or without modification, for any
+        purpose and without fee or royalty is hereby granted, provided
+        that you include the following on ALL copies of the software
+        and documentation or portions thereof, including
+        modifications, that you make:
+
+            a.  The full text of this license in a location viewable to users
+            of the redistributed or derivative work.
+
+            b.  Notice of any changes or modifications to the files,
+            including the date changes were made.
+
+    2.  The name, servicemarks and trademarks of X Engineering
+        Software Systems Corp. may NOT be used in advertising or
+        publicity pertaining to the software without specific, written
+        prior permission.
+
+    3.  Title to copyright in this software and any associated
+        documentation will at all times remain with X Engineering
+        Software Systems Corp.
+
+    4.  THIS SOFTWARE AND DOCUMENTATION IS PROVIDED "AS IS," AND X
+        Engineering Software Systems Corp MAKES NO REPRESENTATIONS OR
+        WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO,
+        WARRANTIES OF MERCHANTABILITY OR FITNESS FOR ANY PARTICULAR
+        PURPOSE OR THAT THE USE OF THE SOFTWARE OR DOCUMENTATION WILL
+        NOT INFRINGE ANY THIRD PARTY PATENTS, COPYRIGHTS, TRADEMARKS
+        OR OTHER RIGHTS.
+
+    5.  X Engineering Software Systems Corp WILL NOT BE LIABLE FOR ANY
+        DAMAGES, INCLUDING BUT NOT LIMITED TO, DIRECT, INDIRECT,
+        SPECIAL OR CONSEQUENTIAL, ARISING OUT OF ANY USE OF THE
+        SOFTWARE OR DOCUMENTATION.
+
+  ©2006 - X Engineering Software Systems Corp.  All rights reserved.
+----------------------------------------------------------------------------------*/
+
+///\unit
+
+///\file
+/// Miscellaneous subroutines.
+
+
+#include &lt;cstdlib&gt;
+#include &lt;cassert&gt;
+#include &lt;ctime&gt;
+#include &lt;io.h&gt;
+#include &lt;fcntl.h&gt;
+#include &lt;string&gt;
+#include &lt;iostream&gt;
+#include &lt;fstream&gt;
+using namespace std;
+
+#ifdef WIN32
+#include &lt;afxole.h&gt;
+#include &lt;shlobj.h&gt;
+#include &lt;winreg.h&gt;
+#include &lt;afxwin.h&gt;
+#include &lt;afxcmn.h&gt;
+#endif
+
+#include "<a href="#" OnFocus="link('_file','utils_h0',this)">utils.h</a>"
+#include "<a href="#" OnFocus="link('_file','xserror_h0',this)">xserror.h</a>"
+#include "<a href="#" OnFocus="link('_file','xsallbrds_h0',this)">xsallbrds.h</a>"
+
+//#ifdef WIN32
+//#define   DIR_DELIM   '\\'
+//#else
+//#define   DIR_DELIM   '/'
+//#endif
+
+
+/// Convert ASCII '0'-'F' to number between 0 and 15, inclusive.
+unsigned int <a href="#" OnFocus="link('_member','CharToHex49468',this)">CharToHex</a>(char c)
+{
+    if(c&gt;='0' &amp;&amp; c&lt;='9')
+        return c-'0';
+    c = toupper(c);
+    return c-'A'+10;
+}
+
+
+/// Convert a string to upper case.
+///\return Upper-case string
+string&amp; <a href="#" OnFocus="link('_member','ConvertToUpperCase67554305',this)">ConvertToUpperCase</a>(string&amp; s)
+{
+    int i;
+    for(i=0; i&lt;s.length(); i++)
+        s[i] = toupper(s[i]);
+    return s;
+}
+
+
+/// Strip suffix from a file name.
+///\return String with suffix removed
+string&amp; <a href="#" OnFocus="link('_member','StripSuffix67554305',this)">StripSuffix</a>(string&amp; fileName)
+{
+    int i;
+    
+    assert(<a href="#" OnFocus="link('_member','../xssetsaa711X/fileName0',this)">fileName</a>.empty()==false);
+    for(i=<a href="#" OnFocus="link('_member','../xssetsaa711X/fileName0',this)">fileName</a>.length()-1; i&gt;=0; i-- )
+    {
+        if(<a href="#" OnFocus="link('_member','../xssetsaa711X/fileName0',this)">fileName</a>[i]=='.') // found the last period that delimits the suffix
+        {
+            <a href="#" OnFocus="link('_member','../xssetsaa711X/fileName0',this)">fileName</a>.erase(i,<a href="#" OnFocus="link('_member','../xssetsaa711X/fileName0',this)">fileName</a>.length()-i); // cut off the suffix
+            break;
+        }
+//      else if(fileName[i]==DIR_DELIM) // found the file/directory delimiter
+        else if(<a href="#" OnFocus="link('_member','../xssetsaa711X/fileName0',this)">fileName</a>[i]=='/' || <a href="#" OnFocus="link('_member','../xssetsaa711X/fileName0',this)">fileName</a>[i]=='\\') // found the file/directory delimiter
+            break;        //  so there is no suffix
+    }
+    return <a href="#" OnFocus="link('_member','../xssetsaa711X/fileName0',this)">fileName</a>;  // return the suffix-stripped file name
+}
+
+
+/// Get suffix from a file name.
+///\return File suffix
+string <a href="#" OnFocus="link('_member','GetSuffix67554305',this)">GetSuffix</a>(string&amp; fileName)
+{
+    assert(<a href="#" OnFocus="link('_member','../xssetsaa711X/fileName0',this)">fileName</a>.empty()==false);
+    for(int i=<a href="#" OnFocus="link('_member','../xssetsaa711X/fileName0',this)">fileName</a>.length()-1; i&gt;=0; i--)
+    {
+        if(<a href="#" OnFocus="link('_member','../xssetsaa711X/fileName0',this)">fileName</a>[i]=='.') // found the last period that delimits the suffix
+        {
+            string suffix(<a href="#" OnFocus="link('_member','../xssetsaa711X/fileName0',this)">fileName</a>.substr(i+1,<a href="#" OnFocus="link('_member','../xssetsaa711X/fileName0',this)">fileName</a>.length()-(i+1)));
+            return <a href="#" OnFocus="link('_member','ConvertToUpperCase67554305',this)">ConvertToUpperCase</a>(suffix);
+        }
+//      else if(fileName[i]==DIR_DELIM) // found the file/directory delimiter
+        else if(<a href="#" OnFocus="link('_member','../xssetsaa711X/fileName0',this)">fileName</a>[i]=='/' || <a href="#" OnFocus="link('_member','../xssetsaa711X/fileName0',this)">fileName</a>[i]=='\\') // found the file/directory delimiter
+            break;
+    }
+    return string(""); // no suffix. return empty string
+}
+
+
+/// Strip prefixed directory path from a file name.
+///\return String with leading path removed
+string&amp; <a href="#" OnFocus="link('_member','StripPrefix67554305',this)">StripPrefix</a>(string&amp; fileName)
+{
+    assert(<a href="#" OnFocus="link('_member','../xssetsaa711X/fileName0',this)">fileName</a>.empty()==false);
+    for(int i=<a href="#" OnFocus="link('_member','../xssetsaa711X/fileName0',this)">fileName</a>.length()-1; i&gt;=0; i--)
+//      if(fileName[i]==DIR_DELIM) // found the last file/directory delimiter
+        if(<a href="#" OnFocus="link('_member','../xssetsaa711X/fileName0',this)">fileName</a>[i]=='/' || <a href="#" OnFocus="link('_member','../xssetsaa711X/fileName0',this)">fileName</a>[i]=='\\') // found the last file/directory delimiter
+        {
+            // return only the last part of the file name
+            <a href="#" OnFocus="link('_member','../xssetsaa711X/fileName0',this)">fileName</a> = <a href="#" OnFocus="link('_member','../xssetsaa711X/fileName0',this)">fileName</a>.substr(i+1,<a href="#" OnFocus="link('_member','../xssetsaa711X/fileName0',this)">fileName</a>.length()-(i+1));
+            return <a href="#" OnFocus="link('_member','../xssetsaa711X/fileName0',this)">fileName</a>;
+        }
+    return <a href="#" OnFocus="link('_member','../xssetsaa711X/fileName0',this)">fileName</a>;  // no prefix, so return the original file name
+}
+
+
+/// Get prefixed directory path from a file name.
+///\return Leading directory path to file
+string <a href="#" OnFocus="link('_member','GetPrefix67554305',this)">GetPrefix</a>(string&amp; fileName)
+{
+    int i;
+    
+    assert(<a href="#" OnFocus="link('_member','../xssetsaa711X/fileName0',this)">fileName</a>.empty()==false);
+    for(i=<a href="#" OnFocus="link('_member','../xssetsaa711X/fileName0',this)">fileName</a>.length()-1; i&gt;=0; i--)
+//      if(fileName[i]==DIR_DELIM) // found the last file/directory delimiter
+        if(<a href="#" OnFocus="link('_member','../xssetsaa711X/fileName0',this)">fileName</a>[i]=='/' || <a href="#" OnFocus="link('_member','../xssetsaa711X/fileName0',this)">fileName</a>[i]=='\\') // found the last file/directory delimiter
+            break;
+    return <a href="#" OnFocus="link('_member','../xssetsaa711X/fileName0',this)">fileName</a>.substr(0,i);    // return the directory path without the file name
+}
+
+
+/// Compute an integer from a vector of hex numbers in an FPGA bitstream.
+///\return the integer retrieved from the bitstream
+long unsigned int <a href="#" OnFocus="link('_member','GetInteger1332633361',this)">GetInteger</a>(istream&amp; is, int len)
+{
+    assert(len&lt;=4); // can't handle lengths greater than 32 bits
+    long unsigned int lui = 0;
+    for(int i=0; i&lt;len; i++)
+    { // process hex digits starting from MSDigit
+        unsigned char digit;
+        is.read((char*)&amp;digit,1);
+        assert(is.eof()==0);
+        lui = (lui&lt;&lt;8) | (long unsigned int)digit;
+    }
+    return lui;
+}
+
+
+/// Get the field type indicator from an FPGA bitstream.
+static int <a href="#" OnFocus="link('_member','GetType255246136',this)">GetType</a>(istream&amp; is)
+{
+    unsigned char type;
+    is.read((char*)&amp;type,1);
+    assert(is.eof()==0);
+    return type;
+}
+
+
+/// Pass over fields in an FPGA bitstream until a certain field is found.
+///\return true if the field type identifier was found, false otherwise
+bool <a href="#" OnFocus="link('_member','ScanForField2849822024',this)">ScanForField</a>(istream&amp; is,  ///&lt; stream whose contents will be searched
+            unsigned char searchType)   ///&lt; field type identifier to be searched for in stream
+{
+    while(true)
+    {
+        unsigned char type = <a href="#" OnFocus="link('_member','GetType255246136',this)">GetType</a>(is);
+        if(type==searchType)
+            return true;
+        unsigned int length = <a href="#" OnFocus="link('_member','GetInteger1332633361',this)">GetInteger</a>(is);
+        is.ignore(length);
+        if(is.eof()!=0)
+            break;
+    }
+    return false;
+}
+
+
+#pragma optimize( "", off ) // turn off optimization so timing loops don't get removed
+
+/// Delay for a given number of microseconds or milliseconds.
+void <a href="#" OnFocus="link('_member','InsertDelay359930342',this)">InsertDelay</a>(unsigned long d, ///&lt; number of microseconds or milliseconds to delay
+                unsigned int time_units) ///&lt; time units, either MICROSECONDS or MILLISECONDS
+{
+    static long loopsPerMillisecond = -1;
+    
+    if(loopsPerMillisecond &lt; 0)
+    { // determine the timing of the computer if we haven't already done so
+        long unsigned iterations = 10000000;
+        clock_t start, finish;
+        do
+        {
+        start = clock();    // get starting time
+        assert(start&gt;=0);
+        for(long i = iterations; i&gt;0L; i--)
+            ;   // do a whole bunch of empty loops
+        finish = clock();   // get ending time
+        assert(finish&gt;0);
+        iterations *= 2;    // double iterations for next try if needed
+        } while ((finish-start)&lt;10);    // keep going until we have enough precision
+        // compute the number of empty loops per millisecond
+        loopsPerMillisecond = ((iterations/(2*1000))*CLOCKS_PER_SEC)/(finish-start);
+        assert(loopsPerMillisecond&gt;1000);   // we need enough precision
+#if DEBUG
+        cerr &lt;&lt; "finish = " &lt;&lt; finish &lt;&lt; "   start = " &lt;&lt; start &lt;&lt; "\n";
+        cerr &lt;&lt; "loops per ms = " &lt;&lt; loopsPerMillisecond &lt;&lt; "\n";
+        cerr.flush();
+#endif
+    }
+    
+    if(time_units==<a href="#" OnFocus="link('_member','MICROSECONDS0',this)">MICROSECONDS</a> &amp;&amp; d&gt;10000)
+    {
+        time_units = <a href="#" OnFocus="link('_member','MILLISECONDS0',this)">MILLISECONDS</a>;
+        d /= 1000;
+    }
+    if(time_units == <a href="#" OnFocus="link('_member','MILLISECONDS0',this)">MILLISECONDS</a>)
+    {   // doing millisecond timing here
+        long s = clock();
+        assert(s&gt;0);    // clock() returns -1 if there is an error
+        long t = s + (d * CLOCKS_PER_SEC)/ 1000;
+        if(t==s) t++;   // must wait at least 1 clock tick
+        while(clock()&lt;t)
+            ;
+    }
+    else if(time_units == <a href="#" OnFocus="link('_member','MICROSECONDS0',this)">MICROSECONDS</a>)
+    {   // doing microsecond timing here
+        for(long loops = (loopsPerMillisecond*d)/1000; loops&gt;0; loops--)
+            ;
+    }
+    else
+        ;
+}
+
+#pragma optimize( "", on )
+
+
+static bool batch = false;  // stops prompts to user when true
+
+/// Subroutine for enabling/disabling prompts to user.
+void <a href="#" OnFocus="link('_member','EnableBatch56656',this)">EnableBatch</a>(bool b) ///&lt; true if user prompts should be disabled for batch processing; false if user prompts are enabled
+{
+    batch = b;
+}
+
+
+/// Subroutine for prompting the user for a response.
+///\return RESPONSE_CONTINUE if user selects OK; RESPONSE_CANCEL if user selects CANCEL
+int <a href="#" OnFocus="link('_member','PromptUser2517124797',this)">PromptUser</a>(string&amp; msg, ///&lt; prompt string displayed to user 
+                int action) ///&lt; allowable user actions
+{
+    if(batch)
+        return <a href="#" OnFocus="link('_member','RESPONSE_CONTINUE0',this)">RESPONSE_CONTINUE</a>;
+
+#ifdef _WINDOWS
+    int response;
+    switch(action)
+    {
+    case <a href="#" OnFocus="link('_member','PROMPT_OKCANCEL0',this)">PROMPT_OKCANCEL</a>:
+        response = AfxMessageBox(msg.c_str(),MB_ICONINFORMATION | MB_OKCANCEL);
+        return response==IDCANCEL ? <a href="#" OnFocus="link('_member','RESPONSE_CANCEL0',this)">RESPONSE_CANCEL</a> : <a href="#" OnFocus="link('_member','RESPONSE_CONTINUE0',this)">RESPONSE_CONTINUE</a>;
+    case <a href="#" OnFocus="link('_member','PROMPT_OK0',this)">PROMPT_OK</a>:
+    default:
+        AfxMessageBox(msg.c_str(),MB_ICONINFORMATION);
+        return <a href="#" OnFocus="link('_member','RESPONSE_CONTINUE0',this)">RESPONSE_CONTINUE</a>;
+    }
+#else
+    cerr &lt;&lt; msg.c_str();
+    char c;
+    switch(action)
+    {
+    case <a href="#" OnFocus="link('_member','PROMPT_OKCANCEL0',this)">PROMPT_OKCANCEL</a>:
+        cerr &lt;&lt; "\nContinue (Y/N)?...";
+        c = toupper(getchar());
+        fflush(stdin);
+        cerr &lt;&lt; "\n";
+        if(c == 'Y')
+            return <a href="#" OnFocus="link('_member','RESPONSE_CONTINUE0',this)">RESPONSE_CONTINUE</a>;
+        else
+            return <a href="#" OnFocus="link('_member','RESPONSE_CANCEL0',this)">RESPONSE_CANCEL</a>;
+    case <a href="#" OnFocus="link('_member','PROMPT_OK0',this)">PROMPT_OK</a>:
+    default:
+        cerr &lt;&lt; "\nPress any key to continue...";
+        getchar();
+        fflush(stdin);
+        cerr &lt;&lt; "\n";
+        return <a href="#" OnFocus="link('_member','RESPONSE_CONTINUE0',this)">RESPONSE_CONTINUE</a>;
+    }
+#endif
+}
+
+
+/// Get the directory where the XSTOOLs utilities are stored.
+///\return path to XSTOOLs utilities if found; NULL otherwise
+const char* <a href="#" OnFocus="link('_member','FindXSTOOLSBinDir53616',this)">FindXSTOOLSBinDir</a>(void)
+{
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a> <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>(cerr);
+
+#ifdef _WINDOWS
+    // check the registry
+    HKEY key;
+    if(RegOpenKeyEx(HKEY_LOCAL_MACHINE,"SOFTWARE\\XESS\\XSTOOLS",0,KEY_READ,&amp;key) == ERROR_SUCCESS)
+    {
+        // get the installation path
+        static char path[200];
+        DWORD length, valType;
+        length = 200;
+        if(RegQueryValueEx(key,"InstallDir",0,&amp;valType,(unsigned char*)path,&amp;length) == ERROR_SUCCESS)
+        {
+            assert(valType==REG_SZ);
+            return path;
+        }
+    }
+#endif
+    // check the environment variable if the registry didn't have it
+    char* p = getenv("XSTOOLS");
+    if(p != NULL)
+        return p;
+    p = getenv("XSTOOLS_BIN_DIR");
+    if(p != NULL)
+        return p;
+    string msg("Neither XSTOOLS or XSTOOLS_BIN_DIR environment variable is set!!\n");
+    <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorFatal,msg);
+    return NULL;
+}
+
+
+/// Set XSTOOLs parameter value.
+///\return true if successful; false otherwise
+bool <a href="#" OnFocus="link('_member','SetXSTOOLSParameter1183990257',this)">SetXSTOOLSParameter</a>(char *name, ///&lt; name of parameter 
+                    const char *value)  ///&lt; value to be stored under parameter name
+{
+    string n(name), v(value);
+    return <a href="#" OnFocus="link('_member','SetXSTOOLSParameter1183990257',this)">SetXSTOOLSParameter</a>(n,v);
+}
+
+
+/// Set XSTOOLs parameter value.
+///\return true if successful; false otherwise
+bool <a href="#" OnFocus="link('_member','SetXSTOOLSParameter1183990257',this)">SetXSTOOLSParameter</a>(string&amp; name, ///&lt; name of parameter 
+                    string&amp; value)  ///&lt; value to be stored under parameter name
+{
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a> <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>(cerr);
+    string msg;
+    
+#ifdef _WINDOWS
+    // check the registry for the parameter value and set it if found
+    HKEY appKey;
+    DWORD keyDisp;
+    
+    if(RegCreateKeyEx(HKEY_CURRENT_USER,"SOFTWARE\\XESS",0,NULL,REG_OPTION_NON_VOLATILE,KEY_ALL_ACCESS,NULL,&amp;appKey,&amp;keyDisp) == ERROR_SUCCESS)
+    {
+        RegSetValueEx(appKey,name.c_str(),0,REG_SZ,(const unsigned char*)(value.c_str()),value.length());
+        RegCloseKey(appKey);
+    }
+#endif
+    // remove the parameter value from the XSPARAM file and replace it at the end of the file with a new value
+    char* lines[1000];
+    string XSTOOLSParameterFilename = (string)<a href="#" OnFocus="link('_member','FindXSTOOLSBinDir53616',this)">FindXSTOOLSBinDir</a>() + (string)"/XSPARAM.TXT";
+    FILE* fp = fopen(XSTOOLSParameterFilename.c_str(),"r");
+    int numLines=0;
+    if(fp != NULL)
+    {
+        char line[512], val[512];
+        for(int i=0; fgets(line,511,fp) != NULL; i++)
+        {
+            char nm[512];
+            int n = sscanf(line,"%s %s",nm,val);
+            if(n==0 || n==EOF)
+                continue;   // skip blank lines
+            if(n != 2)
+            {
+                msg = (string)"Corrupted record encountered while reading XSTOOLS parameter file (" + XSTOOLSParameterFilename + (string)"):\n";
+                msg += (string)line;
+                <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,msg);
+                fclose(fp);
+                return false;
+            }
+            if((string)nm != name)  // store lines that don't match line to be replaced
+                lines[numLines++] = strdup(line);
+        }
+        fclose(fp);
+    }
+    fp = fopen(XSTOOLSParameterFilename.c_str(),"w");
+    if(fp == NULL)
+    {
+        msg = "XSTOOLS parameter file (" + XSTOOLSParameterFilename + (string)") could not be opened!!\n";
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,msg);
+        return false;
+    }
+    for(int j=0; j&lt;numLines; j++)
+    {
+        fprintf(fp,"%s",lines[j]);
+        free(lines[j]);
+    }
+    fprintf(fp,"%s %s\n",name.c_str(),value.c_str());
+    fclose(fp);
+    return true;
+}
+
+
+/// Get XSTOOLs parameter value from registry or file in XSTOOLs directory.
+///\return value of the parameter
+string <a href="#" OnFocus="link('_member','GetXSTOOLSParameter86138908',this)">GetXSTOOLSParameter</a>(char *name) ///&lt; name of parameter whose value is returned
+{
+    string n(name);
+    return <a href="#" OnFocus="link('_member','GetXSTOOLSParameter86138908',this)">GetXSTOOLSParameter</a>(n);
+}
+
+
+/// Get XSTOOLs parameter value from registry or file in XSTOOLs directory.
+///\return value of the parameter
+string <a href="#" OnFocus="link('_member','GetXSTOOLSParameter86138908',this)">GetXSTOOLSParameter</a>(string&amp; name) ///&lt; name of parameter whose value is returned
+{
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a> <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>(cerr);
+    string msg;
+    char fileValString[512];
+    char regValString[512];
+    DWORD regValLength = 0;
+    
+#ifdef _WINDOWS
+    // check the registry for the parameter
+    HKEY appKey;
+    DWORD keyDisp;
+    DWORD valType;
+    if(RegCreateKeyEx(HKEY_CURRENT_USER,"SOFTWARE\\XESS",0,NULL,REG_OPTION_NON_VOLATILE,KEY_ALL_ACCESS,NULL,&amp;appKey,&amp;keyDisp) == ERROR_SUCCESS)
+    {
+        regValLength = 512;
+        if(RegQueryValueEx(appKey,name.c_str(),0,&amp;valType,(unsigned char*)regValString,&amp;regValLength) == ERROR_SUCCESS)
+        {
+            assert(valType==REG_SZ);
+            regValString[regValLength] = 0; // terminate string read from registry
+        }
+        else
+            regValLength = 0;
+        RegCloseKey(appKey);
+    }
+#endif
+    // check the XS parameter file
+    fileValString[0] = 0;   // start off by clearing the value string from the XS parameter file
+    string XSTOOLSParameterFilename = (string)<a href="#" OnFocus="link('_member','FindXSTOOLSBinDir53616',this)">FindXSTOOLSBinDir</a>() + (string)"/XSPARAM.TXT";
+    FILE* fp = fopen(XSTOOLSParameterFilename.c_str(),"r");
+    if(fp == NULL)
+    {
+        msg = "XSTOOLS parameter file (" + XSTOOLSParameterFilename + (string)") could not be opened!!\n";
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,msg);
+    }
+    else
+    {
+        char line[512];
+        while(fgets(line,511,fp) != NULL)
+        {
+            // got a line of text.  now see if it starts with the name we are searching for...
+            char nm[512];
+            int n = sscanf(line,"%s %s",nm,fileValString);
+            if(n==0 || n==EOF)
+                continue;   // skip blank lines
+            if(n != 2)
+            {
+                msg = (string)"Corrupted record encountered while reading XSTOOLS parameter file (" + XSTOOLSParameterFilename + (string)"):\n";
+                msg += (string)line;
+                <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,msg);
+                break;
+            }
+            if((string)nm == name)
+                break;  // found the parameter name.  now return the parameter value...
+            // otherwise keep searching through the parameter text file...
+            fileValString[0] = 0; // clear any crap from the fileValString
+        }
+        fclose(fp);
+    }
+    if(regValLength==0) return fileValString;   // return value from file if registry value is null
+    else return regValString;                   // else return value from registry
+}
+
+
+/// Get the information about the XS Boards from a file.
+///\return the number of boards in the array
+int <a href="#" OnFocus="link('_member','GetXSBoardInfo2867269968',this)">GetXSBoardInfo</a>(<a href="#" OnFocus="link('_class','brdModel_struct0',this)">XSBoardInfo</a>** bInfo) ///&lt; returns with a pointer to the array of XESS board information by this subroutine 
+{
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a> <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>(cerr);
+    static int numBoards=0;
+    static <a href="#" OnFocus="link('_class','brdModel_struct0',this)">XSBoardInfo</a>* brdInfo=NULL;
+
+    // return board info already read from file on a previous call to this subroutine
+    if(numBoards &gt; 0)
+    {
+        *bInfo = brdInfo;
+        return numBoards;
+    }
+
+    // otherwise, read board info from file and store it in data structure
+    const char* whitespace = " \t\n\f\r";
+    string msg;
+    string XSBoardInfoFilename = (string)<a href="#" OnFocus="link('_member','FindXSTOOLSBinDir53616',this)">FindXSTOOLSBinDir</a>() + (string)"/XSBRDINF.TXT";
+    FILE* fp = fopen(XSBoardInfoFilename.c_str(),"r");
+    if(fp == NULL)
+    {
+        msg = "XS Board information file (" + XSBoardInfoFilename + (string)") could not be opened!!\n";
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,msg);
+        brdInfo = NULL;
+        numBoards = 0;
+        *bInfo = brdInfo;
+        return numBoards;
+    }
+
+    char *line, *field;
+    while(!feof(fp))
+    {
+        if((line = (char*)malloc(512)) == NULL)
+        {
+            msg = (string)"Ran out of memory while reading entries from the XS Board information file (" + XSBoardInfoFilename + (string)")\n";
+            <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,msg);
+            numBoards = 0;
+            if(brdInfo!=NULL)
+                free(brdInfo);
+            brdInfo = NULL;
+            fclose(fp);
+            *bInfo = brdInfo;
+            return numBoards;
+        }
+        if(fgets(line,512,fp) == NULL)
+        {
+            if(feof(fp))
+            {
+                free(line);
+                fclose(fp);
+                *bInfo = brdInfo;
+                return numBoards;
+            }
+            msg = (string)"File error encountered while reading XS Board information file (" + XSBoardInfoFilename + (string)")\n";
+            <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,msg);
+            numBoards = 0;
+            if(brdInfo!=NULL)
+                free(brdInfo);
+            brdInfo = NULL;
+            free(line);
+            fclose(fp);
+            *bInfo = brdInfo;
+            return numBoards;
+        }
+
+        if((field = strtok(line,whitespace)) == NULL)
+        {
+            free(line);
+            continue;   // skip blank lines
+        }
+        if(*field == '#')
+        {
+            free(line);
+            continue;   // skip comments
+        }
+
+        if((brdInfo = (<a href="#" OnFocus="link('_class','brdModel_struct0',this)">XSBoardInfo</a>*)realloc(brdInfo, (numBoards+1) * sizeof(<a href="#" OnFocus="link('_class','brdModel_struct0',this)">XSBoardInfo</a>))) == NULL)
+        {
+            msg = (string)"Ran out of memory while reading records from XS Board information file (" + XSBoardInfoFilename + (string)")\n";
+            <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,msg);
+            numBoards = 0;
+            if(brdInfo!=NULL)
+                free(brdInfo);
+            brdInfo = NULL;
+            free(line);
+            fclose(fp);
+            *bInfo = brdInfo;
+            return numBoards;
+        }
+        brdInfo[numBoards].<a href="#" OnFocus="link('_member','brdModel1254770407',this)">brdModel</a> = field;
+
+        if((field = strtok(NULL,whitespace)) != NULL)
+        {
+            if(!strcmp(field,"NULL"))
+                field[0] = 0;   // null any unused fields
+            brdInfo[numBoards].chipType = field;
+        }
+        if((field = strtok(NULL,whitespace)) != NULL)
+        {
+            if(!strcmp(field,"NULL"))
+            {
+                msg = (string)"Missing inversion mask for " + brdInfo[numBoards].brdModel + (string)" in XS Board information file (" + XSBoardInfoFilename + (string)")\n";
+                <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,msg);
+                numBoards = 0;
+                if(brdInfo!=NULL)
+                    free(brdInfo);
+                brdInfo = NULL;
+                free(line);
+                fclose(fp);
+                *bInfo = brdInfo;
+                return numBoards;
+            }
+            sscanf(field,"%x",&amp;(brdInfo[numBoards].invMask));
+        }
+        if((field = strtok(NULL,whitespace)) != NULL)
+        {
+            if(!strcmp(field,"NULL"))
+                field[0] = 0;   // null any unused fields
+            brdInfo[numBoards].dwnldIntfcBitstreamFile = field;
+        }
+        if((field = strtok(NULL,whitespace)) != NULL)
+        {
+            if(!strcmp(field,"NULL"))
+                field[0] = 0;   // null any unused fields
+            brdInfo[numBoards].ramBitstreamFile = field;
+        }
+        if((field = strtok(NULL,whitespace)) != NULL)
+        {
+            if(!strcmp(field,"NULL"))
+                field[0] = 0;   // null any unused fields
+            brdInfo[numBoards].oscBitstreamFile = field;
+        }
+        if((field = strtok(NULL,whitespace)) != NULL)
+        {
+            if(!strcmp(field,"NULL"))
+                field[0] = 0;   // null any unused fields
+            brdInfo[numBoards].eraseBitstreamFile = field;
+        }
+        if((field = strtok(NULL,whitespace)) != NULL)
+        {
+            if(!strcmp(field,"NULL"))
+                field[0] = 0;   // null any unused fields
+            brdInfo[numBoards].flashBitstreamFile = field;
+        }
+        if((field = strtok(NULL,whitespace)) != NULL)
+        {
+            if(!strcmp(field,"NULL"))
+                field[0] = 0;   // null any unused fields
+            brdInfo[numBoards].flashConfigBitstreamFile = field;
+        }
+        if((field = strtok(NULL,whitespace)) != NULL)
+        {
+            if(!strcmp(field,"NULL"))
+                field[0] = 0;   // null any unused fields
+            brdInfo[numBoards].testIntfcBitstreamFile = field;
+        }
+        if((field = strtok(NULL,whitespace)) != NULL)
+        {
+            if(!strcmp(field,"NULL"))
+                field[0] = 0;   // null any unused fields
+            brdInfo[numBoards].testBitstreamFile = field;
+        }
+        if((field = strtok(NULL,whitespace)) != NULL)
+        {
+            if(!strcmp(field,"NULL"))
+                field[0] = 0;   // null any unused fields
+            brdInfo[numBoards].testObjFile = field;
+        }
+        else
+        {   // if the last field was not read correctly, then an error occurred in that field
+            // or one of the earlier fields
+            msg = (string)"File error encountered while reading fields of XS Board information file (" + XSBoardInfoFilename + (string)")\n";
+            <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,msg);
+            numBoards = 0;
+            if(brdInfo!=NULL)
+                free(brdInfo);
+            brdInfo = NULL;
+            free(line);
+            fclose(fp);
+            *bInfo = brdInfo;
+            return numBoards;
+        }
+
+        numBoards++;
+    }
+
+    fclose(fp);
+    *bInfo = brdInfo;
+    return numBoards;
+}
+
+
+/// Return a pointer to a new object created for a given XS Board model.  
+/// \return NULL if not successful; pointer to board object otherwise.
+<a href="#" OnFocus="link('_class','XSBoard0',this)">XSBoard</a>* <a href="#" OnFocus="link('_member','NewXSBoard189216495',this)">NewXSBoard</a>(const char* boardModelName) ///&lt; model name of XESS board
+{
+    <a href="#" OnFocus="link('_class','XSBoard0',this)">XSBoard</a>* <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>;
+
+    if(strncmp(boardModelName,"XS95",strlen("XS95"))==0)
+        <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a> = new <a href="#" OnFocus="link('_class','XS95Board0',this)">XS95Board</a>();
+    else if(strncmp(boardModelName,"XS40",strlen("XS40"))==0)
+        <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a> = new <a href="#" OnFocus="link('_class','XS40Board0',this)">XS40Board</a>();
+    else if(strncmp(boardModelName,"XSP",strlen("XSP"))==0)
+        <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a> = new <a href="#" OnFocus="link('_class','XS40Board0',this)">XS40Board</a>();
+    else if(strncmp(boardModelName,"XSA-3S",strlen("XSA-3S"))==0)
+        <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a> = new <a href="#" OnFocus="link('_class','XSA3SBoard0',this)">XSA3SBoard</a>();
+    else if(strncmp(boardModelName,"XSA-200",strlen("XSA-200"))==0)
+        <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a> = new <a href="#" OnFocus="link('_class','XSA200Board0',this)">XSA200Board</a>();
+    else if(strncmp(boardModelName,"XSA",strlen("XSA"))==0)
+        <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a> = new <a href="#" OnFocus="link('_class','XSABoard0',this)">XSABoard</a>();
+    else if(strncmp(boardModelName,"XSB",strlen("XSB"))==0)
+        <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a> = new <a href="#" OnFocus="link('_class','XSBBoard0',this)">XSBBoard</a>();
+    else if(strncmp(boardModelName,"XSV",strlen("XSV"))==0)
+        <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a> = new <a href="#" OnFocus="link('_class','XSVBoard0',this)">XSVBoard</a>();
+    else
+        <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a> = NULL;
+
+    return <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>;
+}
+
+
+/// Table used to reverse bits within a byte.  reverseBits[d] = d with bits in reverse order.
+const unsigned char <a href="#" OnFocus="link('_member','reverseByteBits0',this)">reverseByteBits</a>[] = {
+    0x00, 0x80, 0x40, 0xc0, 0x20, 0xa0, 0x60, 0xe0, 0x10, 0x90, 0x50, 0xd0, 0x30, 0xb0, 0x70, 0xf0, 
+    0x08, 0x88, 0x48, 0xc8, 0x28, 0xa8, 0x68, 0xe8, 0x18, 0x98, 0x58, 0xd8, 0x38, 0xb8, 0x78, 0xf8, 
+    0x04, 0x84, 0x44, 0xc4, 0x24, 0xa4, 0x64, 0xe4, 0x14, 0x94, 0x54, 0xd4, 0x34, 0xb4, 0x74, 0xf4, 
+    0x0c, 0x8c, 0x4c, 0xcc, 0x2c, 0xac, 0x6c, 0xec, 0x1c, 0x9c, 0x5c, 0xdc, 0x3c, 0xbc, 0x7c, 0xfc, 
+    0x02, 0x82, 0x42, 0xc2, 0x22, 0xa2, 0x62, 0xe2, 0x12, 0x92, 0x52, 0xd2, 0x32, 0xb2, 0x72, 0xf2, 
+    0x0a, 0x8a, 0x4a, 0xca, 0x2a, 0xaa, 0x6a, 0xea, 0x1a, 0x9a, 0x5a, 0xda, 0x3a, 0xba, 0x7a, 0xfa, 
+    0x06, 0x86, 0x46, 0xc6, 0x26, 0xa6, 0x66, 0xe6, 0x16, 0x96, 0x56, 0xd6, 0x36, 0xb6, 0x76, 0xf6, 
+    0x0e, 0x8e, 0x4e, 0xce, 0x2e, 0xae, 0x6e, 0xee, 0x1e, 0x9e, 0x5e, 0xde, 0x3e, 0xbe, 0x7e, 0xfe, 
+    0x01, 0x81, 0x41, 0xc1, 0x21, 0xa1, 0x61, 0xe1, 0x11, 0x91, 0x51, 0xd1, 0x31, 0xb1, 0x71, 0xf1, 
+    0x09, 0x89, 0x49, 0xc9, 0x29, 0xa9, 0x69, 0xe9, 0x19, 0x99, 0x59, 0xd9, 0x39, 0xb9, 0x79, 0xf9, 
+    0x05, 0x85, 0x45, 0xc5, 0x25, 0xa5, 0x65, 0xe5, 0x15, 0x95, 0x55, 0xd5, 0x35, 0xb5, 0x75, 0xf5, 
+    0x0d, 0x8d, 0x4d, 0xcd, 0x2d, 0xad, 0x6d, 0xed, 0x1d, 0x9d, 0x5d, 0xdd, 0x3d, 0xbd, 0x7d, 0xfd, 
+    0x03, 0x83, 0x43, 0xc3, 0x23, 0xa3, 0x63, 0xe3, 0x13, 0x93, 0x53, 0xd3, 0x33, 0xb3, 0x73, 0xf3, 
+    0x0b, 0x8b, 0x4b, 0xcb, 0x2b, 0xab, 0x6b, 0xeb, 0x1b, 0x9b, 0x5b, 0xdb, 0x3b, 0xbb, 0x7b, 0xfb, 
+    0x07, 0x87, 0x47, 0xc7, 0x27, 0xa7, 0x67, 0xe7, 0x17, 0x97, 0x57, 0xd7, 0x37, 0xb7, 0x77, 0xf7, 
+    0x0f, 0x8f, 0x4f, 0xcf, 0x2f, 0xaf, 0x6f, 0xef, 0x1f, 0x9f, 0x5f, 0xdf, 0x3f, 0xbf, 0x7f, 0xff, 
+};
+
+/// Combine hex data bytes to form a word of data depending upon big/little-byte/bit ordering.
+///\return the hex data as an unsigned int
+unsigned int <a href="#" OnFocus="link('_member','Hex2Data1322513901',this)">Hex2Data</a>(<a href="#" OnFocus="link('_class','HexRecord0',this)">HexRecord</a>&amp; hx, ///&lt; hex record containing hex data bytes 
+                int start, ///&lt; index of starting position within the hex record
+                int numBytes, ///&lt; number of bytes in hex representation for data
+                bool bigEndianBytes, ///&lt; true if data should be stored with most-significant byte at lower address
+                bool bigEndianBits) ///&lt; true if data should be stored with most-significant bit in bit position 0 (right-most)
+{
+    // If translating big-endian hex into data, start at lower address and work toward higher address.
+    // Do the opposite if hex is stored in little-endian byte order.
+    int j     = bigEndianBytes ? 0        : numBytes-1; // starting byte position within hex record
+    int j_end = bigEndianBytes ? numBytes : -1; // ending position within hex record
+    int j_inc = bigEndianBytes ? 1        : -1; // direction from start to end
+    unsigned int <a href="#" OnFocus="link('_member','../xsatapi/data0',this)">data</a> = 0;
+    for( ; j!=j_end; j+=j_inc)
+    {
+        // process hex from most-significant byte to least-significant byte
+        unsigned int hx_data = hx[start+j] &amp; 0xFF;
+        // reverse the bits within each hex byte if it is in big-endian bit order
+        if(bigEndianBits)
+            hx_data = <a href="#" OnFocus="link('_member','reverseByteBits0',this)">reverseByteBits</a>[hx_data];
+        <a href="#" OnFocus="link('_member','../xsatapi/data0',this)">data</a> = (<a href="#" OnFocus="link('_member','../xsatapi/data0',this)">data</a>&lt;&lt;8) | hx_data;
+    }
+    return <a href="#" OnFocus="link('_member','../xsatapi/data0',this)">data</a>;
+}
+
+
+/// Split-apart a word of data into hex data bytes depending upon big/little-byte/bit ordering.
+void <a href="#" OnFocus="link('_member','Data2Hex2742888260',this)">Data2Hex</a>(unsigned int data,  ///&lt; data to be rearranged (assumes bytes are stored big-endian and bits are stored little-endian)
+                <a href="#" OnFocus="link('_class','HexRecord0',this)">HexRecord</a>&amp; hx, ///&lt; hex record to store hex representation of data
+                int start, ///&lt; index of starting position within the hex record
+                int numBytes, ///&lt; number of bytes in hex representation for data
+                bool bigEndianBytes,  ///&lt; true if data should be stored with most-significant byte at lower address
+                bool bigEndianBits) ///&lt; true if data should be stored with most-significant bit in bit position 0 (right-most)
+{
+    // If translating data into hex with big-endian byte order, start at higher address and work toward lower address.
+    // Do the opposite if hex is stored in little-endian byte order.
+    int j     = bigEndianBytes ? numBytes-1 : 0; // starting byte position within hex record
+    int j_end = bigEndianBytes ? -1         : numBytes; // ending position within hex record
+    int j_inc = bigEndianBytes ? -1         : 1; // direction from start to end
+    for( ; j!=j_end; j+=j_inc)
+    {
+        // process data from least-significant byte to most-significant byte and store into hex record
+        unsigned int hx_data = <a href="#" OnFocus="link('_member','../xsatapi/data0',this)">data</a> &amp; 0xFF;
+        <a href="#" OnFocus="link('_member','../xsatapi/data0',this)">data</a> &gt;&gt;= 8;
+        // reverse the bits within each byte if the data is to be stored in big-endian bit order
+        if(bigEndianBits)
+            hx_data = <a href="#" OnFocus="link('_member','reverseByteBits0',this)">reverseByteBits</a>[hx_data];
+        hx[start+j] = hx_data;
+    }
+}
+
+/// Rearrange data word depending upon big/little-byte/bit ordering.
+///\return the rearranged data
+unsigned int <a href="#" OnFocus="link('_member','RearrangeData127079845',this)">RearrangeData</a>(unsigned int data, ///&lt; data to be rearranged (assumes bytes are stored big-endian and bits are stored little-endian)
+                unsigned int numBits, ///&lt; width of data
+                bool bigEndianBytes, ///&lt; true if data should be stored with most-significant byte at lower address
+                bool bigEndianBits) ///&lt; true if data should be stored with most-significant bit in bit position 0 (right-most)
+{
+    unsigned int numBytes = (numBits+7) / 8;    // 0 bits=&gt;0 bytes; 1..8 bits=&gt;1 byte; 9..17 bits=&gt;2 bytes...
+    <a href="#" OnFocus="link('_class','HexRecord0',this)">HexRecord</a> hx;
+    hx.<a href="#" OnFocus="link('_member','SetLength2774302151',this)">SetLength</a>(numBytes);
+    <a href="#" OnFocus="link('_member','Data2Hex2742888260',this)">Data2Hex</a>(data,hx,0,numBytes,BIG_ENDIAN_BYTES,LITTLE_ENDIAN_BITS); // convert data to hex
+    return <a href="#" OnFocus="link('_member','Hex2Data1322513901',this)">Hex2Data</a>(hx,0,numBytes,bigEndianBytes,bigEndianBits); // convert back into data with the desired bit and byte order
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_file','_source');
+</script>

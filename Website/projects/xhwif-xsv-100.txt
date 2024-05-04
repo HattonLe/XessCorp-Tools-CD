@@ -1,0 +1,101 @@
+Xilinx Hardware Interface for Xess Corp. XSV100 board.
+
+AUTHOR:	Gordon Hollingworth
+
+DESCRIPTION:
+
+This zip contains the source and targets for the XHWIF interface for
+the XSV100 board (Virtex XCV100 PQ24 chip)
+
+What is XHWIF?  XHWIF is the Xilinx HardWare InterFace, and is a native
+interface for programming Xilinx FPGAs from Java.  It is currently
+shipped as standard with the JBits package. email jbits@xilinx.com
+for more information about JBits...
+
+Currently only the XSV100 chip is supported, if you'd like to support
+one of the other chips the source is supplied so that you can.
+
+Finally a bit of a disclaimer, if you use the JBits software and change
+and write configurations to your chip, it is possible to damage your
+devices!  So be careful.  This software is provided as is and I do not
+accept any liability for the use/misuse thereof...
+
+INSTALLATION
+
+What you need...
+	This software....
+	JBits version 2.3 or later
+	DLPortIO software available from Scientific Software Tools Inc
+		(www.sstnet.com)
+	Java 2 (i.e. JDK1.2.2 is good!)
+	
+
+Guidelines:
+
+1)	In the base directory are the target files that you'll need to
+	put into the right directories, you'll need to substitute the
+	correct paths for your system.
+
+copy xsv100.class d:\JBits\com\Xilinx\XHWIF\Boards
+
+Right, now you'll need to set a couple of environment variables
+
+The first is so that java can find the libraries (.dll's)
+
+set path=d:\xsv100
+
+Second we need to set the classpath for JBits
+
+set classpath=d:\JBits
+
+OK, thats about it...
+
+To test your installation run the following
+
+java Download -xsv100 xsvts100.bit
+
+The bitstream provided is actually just the simple test program written by
+XESS, so it should do some flashy things with the 7seg displays.
+
+Source Code:
+
+First thing to know is that native interfaces for java are not easy to
+use because everyone has done it differently, so we have to compile
+three different libraries rather than one!
+
+Files
+
+xsv100RNI.dll:
+
+pport.cpp
+xs4005.cpp
+xs4005RNI.c
+DLPORTIO.LIB
+
+xs4005JNI.dll:
+
+pport.cpp
+xs4005.cpp
+xs4005JNI.c
+DLPORTIO.LIB
+
+xs4005Stubs.dll:
+
+pport.cpp
+xs4005.cpp
+xs4005Stubs.c
+xs400510.c
+DLPORTIO.LIB
+
+Just compile/link these altogether and it should all work, one final
+point is the include path for the compilations..
+
+d:\jdk1.2.1\include;d:\jdk1.2.1\include\win32;d:\jdk1.2.1\include-old;d:\jdk1.2.1\include-old\win32
+
+Compile the java files using whatever java compiler you use, and don't
+forget to set the java classpath correctly to point at the JBits base
+directory.
+
+Thanks
+
+Gordon

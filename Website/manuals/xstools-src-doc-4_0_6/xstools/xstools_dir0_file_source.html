@@ -1,0 +1,75 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - xstools.dir</TITLE>
+<script type="text/javascript" src="../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../common/";
+ var relPathToHelpDir = "../common/help/";
+ var toSearchPage     = "_search','../search";
+ Body1();
+</script>
+<div class="headerPage">xstools.dir</div>
+<div class="path"><a href="#" OnFocus="link('','../index',this)" class="pathLink">XSTOOLs</A><img src="../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstools0',this)" class="pathLink">xstools</A><img src="../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">xstools.dir</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','xstools_dir0','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabInActiveGrayout"><span class="tabLinkGrayout">Overview</span></span>
+<span class="tabInActiveGrayout"><span class="tabLinkGrayout">Included files</span></span>
+<span class="tabInActiveGrayout"><span class="tabLinkGrayout">Included by</span></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_file','xstools_dir0','_source',this)" class="tabLinkActive">Source</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<pre class="codeExamples">
+/**
+\mainpage XSTOOLs
+
+Source code for the XSTOOLs utilities that are used with the XESS FPGA/CPLD Boards.
+
+You can read an earlier, more linear version of the XSTOOLs source code documentation at
+http://www.xess.com/manuals/xstools-src-doc-4_0.pdf .
+However, this HTML document is the most-current documentation for the XSTOOLs source code
+and supersedes the earlier document.
+
+This code was compiled using Microsoft Visual C++ 6.0.  The master workspace for all 
+the utilities is in the xstools directory.  Makefiles for each utility are also provided.
+
+!!Active Utilities
+|| #Directory# || #Function#
+| xstools | Directory that contains the master workspace file for all the other utilities.
+| xstoolslib | Library of classes and utilities used by all the command-line utilities.  
+| xstest | Command-line utility for running board diagnostics.
+| xssetclk | Command-line utility for setting the board clock frequency.
+| xsload | Command-line utility for uploading/downloading bitstreams/data to/from a board.
+| xsport | Command-line utility for forcing bit values onto pins of the board.
+| gxstoolslib | Same as xstoolslib, except these are recompiled for the GUI utilities.  
+| gxstest | GUI utility for running board diagnostics.
+| gxssetclk | GUI utility for setting the board clock frequency.
+| gxsload | GUI utility for uploading/downloading bitstreams/data to/from a board.
+| gxsport | GUI utility for forcing bit values onto pins of the board.
+
+!!Miscellaneous Utilities
+|| #Directory# || #Function#
+| xsatapi | Command-line utility for reading/writing an IDE hard drive.
+| xsether | Command-line utility for reading/writing the XSB-300E Ethernet interface.
+| xsi2c | Command-line utility for reading/writing devices on an I2C bus.
+| xsramtest | Command-line utilities for reading/writing RAM.
+| xsrw | Command-line utility for reading/writing a single RAM location.
+| xssetsaa711X | Command-line utility for setting control registers in the Philips video decoders.
+| xsusb | Command-line utility for reading/writing the USB interface.
+| gxssetcodec | GUI utility for setting control registers in the XSB-300E audio codec.
+*/
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_file','_source');
+</script>

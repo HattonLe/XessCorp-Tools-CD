@@ -1,0 +1,54 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - ReadBuffer</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">ReadBuffer</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_class','I2CPort0',this)" class="pathLink">I2CPort</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">ReadBuffer</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','ReadBuffer461448834','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_member','ReadBuffer461448834','_source',this)" class="tabLinkActive">Source</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','ReadBuffer461448834','_callgraph',this)" class="tabLinkInActive">Call Graph</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<div class="paragraph2NoTopPadding">Start Line: 290</div>
+<pre class="codeExamples">
+void <a href="#" OnFocus="link('_member','ReadBuffer461448834',this)">I2CPort::ReadBuffer</a>(unsigned int numWriteBytes, unsigned char *wrBuffer, unsigned int numReadBytes, unsigned char *rdBuffer)
+{
+    <a href="#" OnFocus="link('_member','StartTransfer84404763',this)">StartTransfer</a>();
+    unsigned i;
+    /// send data to device
+    for(i=0; i&lt;numWriteBytes; i++)
+    {
+        if(i==(numWriteBytes-1) &amp;&amp; i&gt;0)
+            <a href="#" OnFocus="link('_member','StartTransfer84404763',this)">StartTransfer</a>();
+        <a href="#" OnFocus="link('_member','WriteByte3135533083',this)">WriteByte</a>(wrBuffer[i]);
+        if(<a href="#" OnFocus="link('_member','GetErr259477277',this)">GetErr</a>().<a href="#" OnFocus="link('_member','IsError863564933',this)">IsError</a>()==true)
+            return;
+    }
+    /// receive data from device in response to previous transmission
+    for(i=0; i&lt;numReadBytes; i++)
+        rdBuffer[i] = <a href="#" OnFocus="link('_member','ReadByte66532513',this)">ReadByte</a>(i!=(numReadBytes-1));    // master-receiver doesn't ACK the last byte received
+    <a href="#" OnFocus="link('_member','StopTransfer84404763',this)">StopTransfer</a>();
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_member','_source');
+</script>

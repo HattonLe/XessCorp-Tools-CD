@@ -1,0 +1,345 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - gxstestDlg.cpp</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">gxstestDlg.cpp</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','gxstest0',this)" class="pathLink">gxstest</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">gxstestDlg.cpp</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','gxstestDlg_cpp0','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','gxstestDlg_cpp0','_overview',this)" class="tabLinkInActive">Overview</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','gxstestDlg_cpp0','_includedfiles',this)" class="tabLinkInActive">Included files</a></span>
+<span class="tabInActiveGrayout"><span class="tabLinkGrayout">Included by</span></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_file','gxstestDlg_cpp0','_source',this)" class="tabLinkActive">Source</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<pre class="codeExamples">
+/*----------------------------------------------------------------------------------
+  SOFTWARE LICENSE AGREEMENT
+    1.  Permission to use, copy, modify, and distribute this software
+        and its documentation, with or without modification, for any
+        purpose and without fee or royalty is hereby granted, provided
+        that you include the following on ALL copies of the software
+        and documentation or portions thereof, including
+        modifications, that you make:
+
+            a.  The full text of this license in a location viewable to users
+            of the redistributed or derivative work.
+
+            b.  Notice of any changes or modifications to the files,
+            including the date changes were made.
+
+    2.  The name, servicemarks and trademarks of X Engineering
+        Software Systems Corp. may NOT be used in advertising or
+        publicity pertaining to the software without specific, written
+        prior permission.
+
+    3.  Title to copyright in this software and any associated
+        documentation will at all times remain with X Engineering
+        Software Systems Corp.
+
+    4.  THIS SOFTWARE AND DOCUMENTATION IS PROVIDED "AS IS," AND X
+        Engineering Software Systems Corp MAKES NO REPRESENTATIONS OR
+        WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO,
+        WARRANTIES OF MERCHANTABILITY OR FITNESS FOR ANY PARTICULAR
+        PURPOSE OR THAT THE USE OF THE SOFTWARE OR DOCUMENTATION WILL
+        NOT INFRINGE ANY THIRD PARTY PATENTS, COPYRIGHTS, TRADEMARKS
+        OR OTHER RIGHTS.
+
+    5.  X Engineering Software Systems Corp WILL NOT BE LIABLE FOR ANY
+        DAMAGES, INCLUDING BUT NOT LIMITED TO, DIRECT, INDIRECT,
+        SPECIAL OR CONSEQUENTIAL, ARISING OUT OF ANY USE OF THE
+        SOFTWARE OR DOCUMENTATION.
+
+  ©2006 - X Engineering Software Systems Corp.  All rights reserved.
+----------------------------------------------------------------------------------*/
+
+// gxstestDlg.cpp : implementation file
+//
+
+#include "stdafx.h"
+
+#include &lt;time.h&gt;
+#include &lt;assert.h&gt;
+#include &lt;afxole.h&gt;
+#include &lt;shlobj.h&gt;
+#include "<a href="#" OnFocus="link('_file','gxstest_h0',this)">gxstest.h</a>"
+#include "<a href="#" OnFocus="link('_file','gxstestDlg_h0',this)">gxstestDlg.h</a>"
+
+#include "<a href="#" OnFocus="link('_file','../xstoolslib/xsallbrds_h0',this)">xsallbrds.h</a>"
+#include "<a href="#" OnFocus="link('_file','../xstoolslib/utils_h0',this)">utils.h</a>"
+
+#ifdef _DEBUG
+#define new DEBUG_NEW
+#undef THIS_FILE
+static char THIS_FILE[] = __FILE__;
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+// CAboutDlg dialog used for App About
+
+class <a href="#" OnFocus="link('_class','../gxsload/CAboutDlg0',this)">CAboutDlg</a> : public CDialog
+{
+public:
+    <a href="#" OnFocus="link('_member','../gxsload/CAboutDlg253019763',this)">CAboutDlg</a>();
+
+// Dialog Data
+    //{{AFX_DATA(CAboutDlg)
+    enum { <a href="#" OnFocus="link('_member','../gxsload/IDD226793075',this)">IDD</a> = IDD_ABOUTBOX };
+    //}}AFX_DATA
+
+    // ClassWizard generated virtual function overrides
+    //{{AFX_VIRTUAL(CAboutDlg)
+    protected:
+    virtual void <a href="#" OnFocus="link('_member','../gxsload/DoDataExchange2240984102',this)">DoDataExchange</a>(CDataExchange* pDX);    // DDX/DDV support
+    //}}AFX_VIRTUAL
+
+// Implementation
+protected:
+    //{{AFX_MSG(CAboutDlg)
+    //}}AFX_MSG
+    DECLARE_MESSAGE_MAP()
+};
+
+<a href="#" OnFocus="link('_member','../gxsload/CAboutDlg253019763',this)">CAboutDlg::CAboutDlg</a>() : CDialog(<a href="#" OnFocus="link('_class','../gxsload/CAboutDlg0',this)">CAboutDlg</a>::IDD)
+{
+    //{{AFX_DATA_INIT(CAboutDlg)
+    //}}AFX_DATA_INIT
+}
+
+void <a href="#" OnFocus="link('_member','../gxsload/DoDataExchange2240984102',this)">CAboutDlg::DoDataExchange</a>(CDataExchange* pDX)
+{
+    CDialog::DoDataExchange(pDX);
+    //{{AFX_DATA_MAP(CAboutDlg)
+    //}}AFX_DATA_MAP
+}
+
+BEGIN_MESSAGE_MAP(<a href="#" OnFocus="link('_class','../gxsload/CAboutDlg0',this)">CAboutDlg</a>, CDialog)
+    //{{AFX_MSG_MAP(CAboutDlg)
+        // No message handlers
+    //}}AFX_MSG_MAP
+END_MESSAGE_MAP()
+
+/////////////////////////////////////////////////////////////////////////////
+// CGxstestDlg dialog
+
+<a href="#" OnFocus="link('_member','CGxstestDlg3903154046',this)">CGxstestDlg::CGxstestDlg</a>(CWnd* pParent /*=NULL*/)
+    : CDialog(<a href="#" OnFocus="link('_class','CGxstestDlg0',this)">CGxstestDlg</a>::IDD, pParent)
+{
+    //{{AFX_DATA_INIT(CGxstestDlg)
+    //}}AFX_DATA_INIT
+    // Note that LoadIcon does not require a subsequent DestroyIcon in Win32
+    m_hIcon = AfxGetApp()-&gt;LoadIcon(IDR_MAINFRAME);
+}
+
+void <a href="#" OnFocus="link('_member','DoDataExchange3529358882',this)">CGxstestDlg::DoDataExchange</a>(CDataExchange* pDX)
+{
+    CDialog::DoDataExchange(pDX);
+    //{{AFX_DATA_MAP(CGxstestDlg)
+    DDX_Control(pDX, IDC_CMB_LPT, m_cmbLpt);
+    DDX_Control(pDX, IDC_CMB_BOARD, m_cmbBoard);
+    //}}AFX_DATA_MAP
+}
+
+BEGIN_MESSAGE_MAP(<a href="#" OnFocus="link('_class','CGxstestDlg0',this)">CGxstestDlg</a>, CDialog)
+    //{{AFX_MSG_MAP(CGxstestDlg)
+    ON_WM_SYSCOMMAND()
+    ON_WM_PAINT()
+    ON_WM_QUERYDRAGICON()
+    ON_BN_CLICKED(IDTEST, OnTest)
+    ON_CBN_SELCHANGE(IDC_CMB_BOARD, OnSelchangeCmbBoard)
+    ON_CBN_SELCHANGE(IDC_CMB_LPT, OnSelchangeCmbLpt)
+    //}}AFX_MSG_MAP
+END_MESSAGE_MAP()
+
+/////////////////////////////////////////////////////////////////////////////
+// CGxstestDlg message handlers
+
+BOOL <a href="#" OnFocus="link('_member','OnInitDialog150406564',this)">CGxstestDlg::OnInitDialog</a>()
+{
+    CDialog::OnInitDialog();
+
+    // Add "About..." menu item to system menu.
+
+    // IDM_ABOUTBOX must be in the system command range.
+    ASSERT((IDM_ABOUTBOX &amp; 0xFFF0) == IDM_ABOUTBOX);
+    ASSERT(IDM_ABOUTBOX &lt; 0xF000);
+
+    CMenu* pSysMenu = GetSystemMenu(FALSE);
+    if (pSysMenu != NULL)
+    {
+        CString strAboutMenu;
+        strAboutMenu.LoadString(IDS_ABOUTBOX);
+        if (!strAboutMenu.IsEmpty())
+        {
+            pSysMenu-&gt;AppendMenu(MF_SEPARATOR);
+            pSysMenu-&gt;AppendMenu(MF_STRING, IDM_ABOUTBOX, strAboutMenu);
+        }
+    }
+
+    // Set the icon for this dialog.  The framework does this automatically
+    //  when the application's main window is not a dialog
+    SetIcon(m_hIcon, TRUE);         // Set big icon
+    SetIcon(m_hIcon, FALSE);        // Set small icon
+    
+    // TODO: Add extra initialization here
+
+    // setup the list of XS Boards in the pulldown list
+    <a href="#" OnFocus="link('_class','../xstoolslib/brdModel_struct0',this)">XSBoardInfo</a>* brdInfo;
+    int numBoards;
+    numBoards = <a href="#" OnFocus="link('_member','../xstoolslib/GetXSBoardInfo2867269968',this)">GetXSBoardInfo</a>(&amp;brdInfo);
+    for(int i=0; i&lt;numBoards; i++)
+        <a href="#" OnFocus="link('_member','m_cmbBoard150406621',this)">m_cmbBoard</a>.AddString(brdInfo[i].brdModel);
+
+    // setup the list of parallel ports in the pulldown list
+    <a href="#" OnFocus="link('_member','m_cmbLpt150406621',this)">m_cmbLpt</a>.AddString("LPT1");
+    <a href="#" OnFocus="link('_member','m_cmbLpt150406621',this)">m_cmbLpt</a>.AddString("LPT2");
+    <a href="#" OnFocus="link('_member','m_cmbLpt150406621',this)">m_cmbLpt</a>.AddString("LPT3");
+
+    // get the last setting for the board type
+    string brdType;
+    if((brdType=<a href="#" OnFocus="link('_member','../xstoolslib/GetXSTOOLSParameter86138908',this)">GetXSTOOLSParameter</a>((string)"BoardType")) == "")
+    { // set the default value if no previous value exists
+        if(<a href="#" OnFocus="link('_member','../xstoolslib/SetXSTOOLSParameter1183990257',this)">SetXSTOOLSParameter</a>((string)"BoardType",(string)brdInfo[0].brdModel) == false)
+        {
+            AfxMessageBox("BoardType value was not set",MB_ICONSTOP);
+            exit(0);
+        }
+        brdType = <a href="#" OnFocus="link('_member','../xstoolslib/GetXSTOOLSParameter86138908',this)">GetXSTOOLSParameter</a>((string)"BoardType");
+        assert(brdType != "");
+    }
+    <a href="#" OnFocus="link('_member','m_cmbBoard150406621',this)">m_cmbBoard</a>.SelectString(-1,(const char*)(brdType.c_str()));
+
+    // get the last setting for the parallel port
+    string lptNum;
+    if((lptNum=<a href="#" OnFocus="link('_member','../xstoolslib/GetXSTOOLSParameter86138908',this)">GetXSTOOLSParameter</a>((string)"LPT")) == "")
+    { // set the default value if no previous value exists
+        if(<a href="#" OnFocus="link('_member','../xstoolslib/SetXSTOOLSParameter1183990257',this)">SetXSTOOLSParameter</a>((string)"LPT",(string)"LPT1") == false)
+        {
+            AfxMessageBox("LPT value was not set",MB_ICONSTOP);
+            exit(0);
+        }
+        lptNum = <a href="#" OnFocus="link('_member','../xstoolslib/GetXSTOOLSParameter86138908',this)">GetXSTOOLSParameter</a>((string)"LPT");
+        assert(lptNum != "");
+    }
+    <a href="#" OnFocus="link('_member','m_cmbLpt150406621',this)">m_cmbLpt</a>.SelectString(-1,(const char*)(lptNum.c_str()));
+    
+    return TRUE;  // return TRUE  unless you set the focus to a control
+}
+
+void <a href="#" OnFocus="link('_member','OnSysCommand1123072252',this)">CGxstestDlg::OnSysCommand</a>(UINT nID, LPARAM lParam)
+{
+    if ((nID &amp; 0xFFF0) == IDM_ABOUTBOX)
+    {
+        <a href="#" OnFocus="link('_class','../gxsload/CAboutDlg0',this)">CAboutDlg</a> dlgAbout;
+        dlgAbout.DoModal();
+    }
+    else
+    {
+        CDialog::OnSysCommand(nID, lParam);
+    }
+}
+
+// If you add a minimize button to your dialog, you will need the code below
+//  to draw the icon.  For MFC applications using the document/view model,
+//  this is automatically done for you by the framework.
+
+void <a href="#" OnFocus="link('_member','OnPaint150406564',this)">CGxstestDlg::OnPaint</a>() 
+{
+    if (IsIconic())
+    {
+        CPaintDC dc(this); // device context for painting
+
+        SendMessage(WM_ICONERASEBKGND, (WPARAM) dc.GetSafeHdc(), 0);
+
+        // Center icon in client rectangle
+        int cxIcon = GetSystemMetrics(SM_CXICON);
+        int cyIcon = GetSystemMetrics(SM_CYICON);
+        CRect rect;
+        GetClientRect(&amp;rect);
+        int x = (rect.Width() - cxIcon + 1) / 2;
+        int y = (rect.Height() - cyIcon + 1) / 2;
+
+        // Draw the icon
+        dc.DrawIcon(x, y, m_hIcon);
+    }
+    else
+    {
+        CDialog::OnPaint();
+    }
+}
+
+// The system calls this to obtain the cursor to display while the user drags
+//  the minimized window.
+HCURSOR <a href="#" OnFocus="link('_member','OnQueryDragIcon150406564',this)">CGxstestDlg::OnQueryDragIcon</a>()
+{
+    return (HCURSOR) <a href="#" OnFocus="link('_member','m_hIcon150406621',this)">m_hIcon</a>;
+}
+
+
+void <a href="#" OnFocus="link('_member','OnTest150406564',this)">CGxstestDlg::OnTest</a>() 
+{
+    // TODO: Add your control notification handler code here
+    
+    <a href="#" OnFocus="link('_class','../xstoolslib/XSError0',this)">XSError</a> <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>(cerr); // setup error channel
+
+    int <a href="#" OnFocus="link('_member','../xsatapi/portNum0',this)">portNum</a> = <a href="#" OnFocus="link('_member','m_cmbLpt150406621',this)">m_cmbLpt</a>.GetCurSel()+1;  // get parallel port number
+
+    // determine the type of XS Board and set the pointer to the board object
+    <a href="#" OnFocus="link('_class','../xstoolslib/XSBoard0',this)">XSBoard</a>* <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>;
+    CString brdName;
+    <a href="#" OnFocus="link('_member','m_cmbBoard150406621',this)">m_cmbBoard</a>.GetLBText(<a href="#" OnFocus="link('_member','m_cmbBoard150406621',this)">m_cmbBoard</a>.GetCurSel(),brdName);
+    char <a href="#" OnFocus="link('_member','../xsatapi/brdModel0',this)">brdModel</a>[20];
+    strcpy(brdModel,(LPCTSTR)brdName);
+    <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a> = <a href="#" OnFocus="link('_member','../xstoolslib/NewXSBoard189216495',this)">NewXSBoard</a>(brdModel);
+    if(<a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>==NULL)
+    {
+        AfxMessageBox("Unknown type of XS Board!", MB_ICONSTOP);
+        return;
+    }
+    if(<a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/Setup3588776655',this)">Setup</a>(&amp;errMsg,brdModel,portNum) == false)
+    {
+        AfxMessageBox("Invalid parallel port selected!",MB_ICONSTOP);
+        delete <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>;
+        return;
+    }
+
+    <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/Test60181096',this)">Test</a>();
+
+    delete <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>;
+}
+
+void <a href="#" OnFocus="link('_member','OnSelchangeCmbBoard150406564',this)">CGxstestDlg::OnSelchangeCmbBoard</a>() 
+{
+    CString <a href="#" OnFocus="link('_member','../xsatapi/brdModel0',this)">brdModel</a>;
+    <a href="#" OnFocus="link('_member','m_cmbBoard150406621',this)">m_cmbBoard</a>.GetLBText(<a href="#" OnFocus="link('_member','m_cmbBoard150406621',this)">m_cmbBoard</a>.GetCurSel(),<a href="#" OnFocus="link('_member','../xsatapi/brdModel0',this)">brdModel</a>);
+    <a href="#" OnFocus="link('_member','../xstoolslib/SetXSTOOLSParameter1183990257',this)">SetXSTOOLSParameter</a>((string)"BoardType",(string)LPCTSTR(brdModel));
+}
+
+void <a href="#" OnFocus="link('_member','OnSelchangeCmbLpt150406564',this)">CGxstestDlg::OnSelchangeCmbLpt</a>() 
+{
+    CString <a href="#" OnFocus="link('_member','../xsatapi/lpt0',this)">lpt</a>;
+    <a href="#" OnFocus="link('_member','m_cmbLpt150406621',this)">m_cmbLpt</a>.GetLBText(<a href="#" OnFocus="link('_member','m_cmbLpt150406621',this)">m_cmbLpt</a>.GetCurSel(),<a href="#" OnFocus="link('_member','../xsatapi/lpt0',this)">lpt</a>);
+    <a href="#" OnFocus="link('_member','../xstoolslib/SetXSTOOLSParameter1183990257',this)">SetXSTOOLSParameter</a>((string)"LPT",(string)LPCTSTR(lpt));
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_file','_source');
+</script>

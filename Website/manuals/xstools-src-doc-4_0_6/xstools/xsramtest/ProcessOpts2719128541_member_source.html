@@ -1,0 +1,218 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - ProcessOpts</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">ProcessOpts</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xsramtest0',this)" class="pathLink">xsramtest</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">ProcessOpts</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','ProcessOpts2719128541','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_member','ProcessOpts2719128541','_source',this)" class="tabLinkActive">Source</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','ProcessOpts2719128541','_callgraph',this)" class="tabLinkInActive">Call Graph</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<div class="paragraph2NoTopPadding">Start Line: 100</div>
+<pre class="codeExamples">
+bool <a href="#" OnFocus="link('_member','../xsusb/ProcessOpts2719128541',this)">ProcessOpts</a>(int *argc, char **argv)
+{
+    int *numFiles = NULL;   // pointer to number of FPGA/RAM/Flash files
+    int *posFiles = NULL;   // pointer to position of FPGA/RAM/Flash files
+
+    bool ok = true; // no errors yet
+
+    for(int i=1; i&lt; *argc; i++)
+    {
+        int cnt, j;
+        string arg = argv[i];
+        
+        if(arg[0] == '-')  // found an option
+        {
+            <a href="#" OnFocus="link('_member','../xstoolslib/ConvertToUpperCase67554305',this)">ConvertToUpperCase</a>(arg);  // convert option to upper case
+            
+            // ask for help but we don't give much
+            if(arg=="-H" || arg=="-HELP")
+            {
+                <a href="#" OnFocus="link('_member','../xsusb/Usage86416935',this)">Usage</a>(arg);
+                cnt = 1;
+            }
+            
+            // specify the parallel port being used
+            else if(arg=="-PORT" || arg=="-P")
+            {
+                sscanf(argv[i+1],"%d",&amp;portNum);
+                if(<a href="#" OnFocus="link('_member','../xsatapi/portNum0',this)">portNum</a>&lt;4)
+                    <a href="#" OnFocus="link('_member','../xsatapi/lpt0',this)">lpt</a> = (string)"LPT" + (string)(argv[i+1]);
+                else
+                    <a href="#" OnFocus="link('_member','../xsatapi/lpt0',this)">lpt</a> = "LPT1";
+                cnt = 2;
+            }
+            
+            // enable full RAM test
+            else if(arg=="-FULL")
+            {
+                <a href="#" OnFocus="link('_member','doFullRAMTest0',this)">doFullRAMTest</a> = true;
+                cnt = 1;
+            }
+            
+            // enable batch operation
+            else if(arg=="-BATCH")
+            {
+                <a href="#" OnFocus="link('_member','../xsatapi/doBatch0',this)">doBatch</a> = true;
+                cnt = 1;
+            }
+            
+            // specify the board model number
+            else if(arg=="-BOARD" || arg=="-B")
+            {
+                <a href="#" OnFocus="link('_member','../xsatapi/brdModel0',this)">brdModel</a> = argv[i+1];
+                <a href="#" OnFocus="link('_member','../xstoolslib/ConvertToUpperCase67554305',this)">ConvertToUpperCase</a>(brdModel);
+                cnt = 2;
+            }
+
+#if 0           
+            // specify that the programmable logic device is to be programmed
+            else if(arg=="-FPGA" || arg=="-CPLD")
+            {
+                if(<a href="#" OnFocus="link('_member','../xsatapi/nBitstreams0',this)">nBitstreams</a> &gt; 0)
+                {
+                    ok = false;
+                    <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','../xstoolslib/SetSeverity3409672334',this)">SetSeverity</a>(XSErrorMinor);
+                    <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a> &lt;&lt; "cannot have more than one list of Flash/SEEPROM files" &lt;&lt; "\n";
+                    <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','../xstoolslib/EndMsg60232619',this)">EndMsg</a>();
+                    cnt = 1;
+                }
+                else
+                {
+                    numFiles = &amp;<a href="#" OnFocus="link('_member','../xsatapi/nBitstreams0',this)">nBitstreams</a>;
+                    posFiles = &amp;<a href="#" OnFocus="link('_member','../xsatapi/posBitstreams0',this)">posBitstreams</a>;
+                    cnt = 1;
+                }
+            }
+            
+            // specify that the RAM is to be programmed
+            else if(arg=="-RAM")
+            {
+                if(<a href="#" OnFocus="link('_member','../xsatapi/nRAMfiles0',this)">nRAMfiles</a> &gt; 0)
+                {
+                    ok = false;
+                    <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','../xstoolslib/SetSeverity3409672334',this)">SetSeverity</a>(XSErrorMinor);
+                    <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a> &lt;&lt; "cannot have more than one list of RAM files" &lt;&lt; "\n";
+                    <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','../xstoolslib/EndMsg60232619',this)">EndMsg</a>();
+                    cnt = 1;
+                }
+                else
+                {
+                    numFiles = &amp;<a href="#" OnFocus="link('_member','../xsatapi/nRAMfiles0',this)">nRAMfiles</a>;
+                    posFiles = &amp;<a href="#" OnFocus="link('_member','../xsatapi/posRAMfiles0',this)">posRAMfiles</a>;
+                    cnt = 1;
+                }
+            }
+            
+            // specify that the Flash or serial EEPROM is to be programmed
+            else if(arg=="-FLASH" || arg=="-SEEPROM")
+            {
+                if(<a href="#" OnFocus="link('_member','../xsatapi/nFlashfiles0',this)">nFlashfiles</a> &gt; 0)
+                {
+                    ok = false;
+                    <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','../xstoolslib/SetSeverity3409672334',this)">SetSeverity</a>(<a href="#" OnFocus="link('_member','../xstoolslib/XSErrorMinor0',this)">XSErrorMinor</a>);
+                    <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a> &lt;&lt; "cannot have more than one list of Flash/SEEPROM files" &lt;&lt; "\n";
+                    <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','../xstoolslib/EndMsg60232619',this)">EndMsg</a>();
+                    cnt = 1;
+                }
+                else
+                {
+                    numFiles = &amp;<a href="#" OnFocus="link('_member','../xsatapi/nFlashfiles0',this)">nFlashfiles</a>;
+                    posFiles = &amp;<a href="#" OnFocus="link('_member','../xsatapi/posFlashfiles0',this)">posFlashfiles</a>;
+                    cnt = 1;
+                }
+            }
+
+            // specify what range of XS Board RAM addresses should be uploaded into a file
+            else if(arg=="-UPLOAD" || arg=="-U")
+            {
+                <a href="#" OnFocus="link('_member','../xsload/upload0',this)">upload</a> = true;
+                sscanf(argv[i+1],"%x",&amp;loAddr);
+                // istrstream argstr1(argv[i+1]);
+                // argstr1 &gt;&gt; hex &gt;&gt; loAddr;
+                sscanf(argv[i+2],"%x",&amp;hiAddr);
+                // istrstream argstr2(argv[i+2]);
+                // argstr2 &gt;&gt; hex &gt;&gt; hiAddr;
+                cnt = 3;
+            }
+            
+            // specify the upload file format
+            else if(arg=="-FORMAT" || arg=="-F")
+            {
+                <a href="#" OnFocus="link('_member','../xsload/ramFileFormat0',this)">ramFileFormat</a> = <a href="#" OnFocus="link('_member','../xstoolslib/ConvertToUpperCase67554305',this)">ConvertToUpperCase</a>((string)(argv[i+1]));
+                <a href="#" OnFocus="link('_member','../xsload/flashFileFormat0',this)">flashFileFormat</a> = <a href="#" OnFocus="link('_member','../xstoolslib/ConvertToUpperCase67554305',this)">ConvertToUpperCase</a>((string)(argv[i+1]));
+                cnt = 2;
+            }
+#endif
+            
+            // can't figure out what the user wants
+            else
+            {
+                ok = false;
+                <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','../xstoolslib/SetSeverity3409672334',this)">SetSeverity</a>(XSErrorMinor);
+                <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a> &lt;&lt; "unknown option: " &lt;&lt; arg.c_str() &lt;&lt; "\n";
+                <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','../xstoolslib/EndMsg60232619',this)">EndMsg</a>();
+                cnt = 1;
+            }
+        }
+        else    // found something which is not an option, so it is must be a file name
+        {
+            ok = false;
+            <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','../xstoolslib/SetSeverity3409672334',this)">SetSeverity</a>(XSErrorMinor);
+            <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a> &lt;&lt; "unknown option: " &lt;&lt; arg.c_str() &lt;&lt; "\n";
+            <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','../xstoolslib/EndMsg60232619',this)">EndMsg</a>();
+            cnt = 1;
+#if 0
+            if(posFiles==NULL || numFiles==NULL)
+            {
+                ok = false;
+                <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','../xstoolslib/SetSeverity3409672334',this)">SetSeverity</a>(XSErrorMinor);
+                <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a> &lt;&lt; "this file is misplaced: " &lt;&lt; arg.c_str() &lt;&lt; "\n";
+                <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','../xstoolslib/EndMsg60232619',this)">EndMsg</a>();
+                cnt = 1;
+            }
+            else
+            {
+                if(*posFiles&lt;0)
+                    *posFiles = i;  // record start position of list of files
+                (*numFiles)++;  // increment the number of files in the list
+                cnt = 0;
+                i++;            // keep the file name on the argument list
+            }
+#endif
+        }
+            
+        // remove the processed options from the argument list
+        for(j=i+cnt; j&lt; *argc; j++)
+            argv[j-cnt] = argv[j];
+        *argc -= cnt;
+        i--;
+    }
+
+    return ok;
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_member','_source');
+</script>

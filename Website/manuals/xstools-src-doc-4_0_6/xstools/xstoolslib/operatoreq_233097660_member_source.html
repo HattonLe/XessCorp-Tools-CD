@@ -1,0 +1,50 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - operator=</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">operator=</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_class','Bitstream0',this)" class="pathLink">Bitstream</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">operator=</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','operatoreq_233097660','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_member','operatoreq_233097660','_source',this)" class="tabLinkActive">Source</a></span>
+<span class="tabInActiveGrayout"><span class="tabLinkGrayout">Call Graph</span></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<div class="paragraph2NoTopPadding">Start Line: 137</div>
+<pre class="codeExamples">
+<a href="#" OnFocus="link('_class','Bitstream0',this)">Bitstream</a> &amp; <a href="#" OnFocus="link('_member','operatoreq_233097660',this)">Bitstream::operator=</a>(<a href="#" OnFocus="link('_class','Bitstream0',this)">Bitstream</a> &amp;b2)
+{
+    unsigned int numWords2 = NUM_OF_WORDS(b2.<a href="#" OnFocus="link('_member','numBits203865993',this)">numBits</a>); // # words in b2
+    if(NUM_OF_WORDS(numBits) != numWords2)  // compare # words in b1 to b2
+    { // change size of b1 bitstream to match b2            
+        delete <a href="#" OnFocus="link('_member','bits203865993',this)">bits</a>;
+        <a href="#" OnFocus="link('_member','bits203865993',this)">bits</a> = new unsigned long[numWords2];
+        assert(bits!=NULL);
+    }
+    <a href="#" OnFocus="link('_member','numBits203865993',this)">numBits</a> = b2.<a href="#" OnFocus="link('_member','numBits203865993',this)">numBits</a>;
+    for(unsigned int i=0; i&lt;numWords2; i++)
+        <a href="#" OnFocus="link('_member','bits203865993',this)">bits</a>[i] = b2.<a href="#" OnFocus="link('_member','bits203865993',this)">bits</a>[i]; // copy b2 to b1 word-by-word
+    return *this;
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_member','_source');
+</script>

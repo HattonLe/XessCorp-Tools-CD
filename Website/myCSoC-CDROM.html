@@ -1,0 +1,461 @@
+<html>
+
+
+<!-- Mirrored from 192.168.0.47/myCSoC-CDROM.html by HTTrack Website Copier/3.x [XR&CO'2004], Mon, 04 Dec 2006 16:07:50 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=ISO-8859-1"><!-- /Added by HTTrack -->
+<head>
+<link rel="SHORTCUT ICON" HREF="images/xess.ico">
+<title>myCSoC Tutorial CDROM</title>
+<meta name="KEYWORDS" content="XESS Triscend TE5 CSoC lab book design examples">
+<meta name="DESCRIPTION" content="This book shows how to use the Triscend 
+      configurable system on a chip (CSoC) that combines programmable 
+      logic with an 8032 microcontroller core in a single device.">
+<meta http-equiv="Content-Type" content="text/html">
+<link rel="stylesheet" type="text/css" href="xess-1.css">
+<meta name="Microsoft Border" content="none, default">
+</head>
+
+<?php 
+	require('prod_db.html');
+	$product = "myCSoC-CDROM";
+?>
+<table>
+	<!-- MSTableType="nolayout" -->
+	<tr>
+		<td class="StdPageLogo">
+		<a href="index-2.html"><img border="0" src="images/xess-138x32.bmp"></a>
+
+		<?php 
+			require("logo.html");
+		?>
+		</td>
+		<td class="StdPageNav">
+		<script type="text/javascript" src="xess.js"></script>
+<!-- <script type="text/javascript" src="niftycube_xess.js"></script> -->
+<!-- <script type="text/javascript" src="prototype.js"></script> -->
+<!-- <script type="text/javascript" src="rico.js"></script> -->
+<script type="text/javascript">
+	window.onload=function(){
+		startList("nav");
+		stripe_xess();
+		collapseall();
+		// Nifty("td.StdPageNav","transparent");
+		// Nifty("td.StdPageSidebar","transparent");
+		// Nifty("td.StdPageNavLinks","transparent");
+	};
+	onload=function(){
+		startList("nav");
+		stripe_xess();
+		collapseall();
+		// Nifty("td.StdPageNav","transparent");
+		// Nifty("td.StdPageSidebar","transparent");
+		// Nifty("td.StdPageNavLinks","transparent");
+	};
+</script>
+
+
+
+<table border="0" width="640" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="center" valign="center" width="70%">
+
+<!--
+  -- naviagation bar for browsers with scripting capability
+  -- (make sure there is no whitespace after the '\' on each line and run
+  -- the Javascript console on Firefox to check the syntax.)
+  -->
+<script type="text/javascript">
+nav_text = '\
+  <ul id="nav"> \
+    <li id="first"><a href="ho04000.html">Products</a> \
+      <ul> \
+        <li><a href="ho04000.html"><div>Catalog</div></a></li> \
+        <li><a href="manuals.html"><div>Manuals</div></a></li> \
+        <li><a href="ho07000.html"><div>Software Downloads</div></a></li> \
+      </ul> \
+    </li> \
+    <li><a href="help.html">Support</a> \
+      <ul> \
+        <li><a href="manuals.html" ><div>Product Manuals</div></a></li> \
+        <li><a href="ho03000.html" ><div>Tutorials</div></a></li> \
+        <li><a href="ho03000.html" ><div>Application Notes</div></a></li> \
+        <li><a href="ho03000.html" ><div>Design Examples</div></a></li> \
+        <li><a href="ho01000.html" ><div>FAQ</div></a></li> \
+        <li><a href="list_reg.html"><div>User Forum</div></a></li> \
+        <li><a href="help.html"    ><div>Request Help</div></a></li> \
+      </ul> \
+    </li> \
+    <li><a href="ho01001.html">Purchasing</a> \
+      <ul> \
+        <li><a href="https://xess.com/xess_int_order.php3"><div>Web Orders</div></a></li> \
+        <li><a href="ho01001.html"                       ><div>Purchase Orders</div></a></li> \
+        <li><a href="ho01001.html"                       ><div>Payment Methods</div></a></li> \
+        <li><a href="xess_int_quote.html"                ><div>Get a Quote</div></a></li> \
+        <li><a href="xess_int_quote.html"                ><div>Get a Proforma Invoice</div></a></li> \
+        <li><a href="ho01001.html"                       ><div>How To Buy From Us</div></a></li> \
+      </ul> \
+    </li> \
+    <li id="last"><a href="index-2.html">XESS</a> \
+      <ul> \
+        <li><a href="index-2.html"   ><div>Home</div></a></li> \
+        <li><a href="about_us.html"><div>About Us</div></a></li> \
+        <li><a href="ho00003.html" ><div>Contact Us</div></a></li> \
+<!-- \
+        <li><a href=""              ><div>Announcements</div></a></li> \
+        <li><a href="ho00005.html" ><div>Press Releases</div></a></li> \
+--> \
+      </ul> \
+    </li> \
+    <li id="last"><a href="links.html">Misc.</a> \
+      <ul> \
+        <li><a href="links.html"><div>Links</div></a></li> \
+      </ul> \
+    </li> \
+  </ul> \
+';
+document.writeln(nav_text);
+</script>
+
+<!--
+  -- naviagation bar for browsers with NO scripting capability
+  -->
+<noscript>
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="14%" align="left">
+    <a href="ho04000.html"><img border="0" src="images/menu_arrow.png">Products</a>
+    </td>
+    <td width="16%" align="left">
+    <a href="ho01001.html"><img border="0" src="images/menu_arrow.png">How to Buy</a>
+    </td>
+    <td width="11%" align="left">
+    <a href="help.html"><img border="0" src="images/menu_arrow.png">Help!</a>
+    </td>
+    <td width="14%" align="left">
+    <a href="ho03000.html"><img border="0" src="images/menu_arrow.png">Tutorials</a>
+    </td>
+    <td width="14%" align="left">
+    <a href="index-2.html"><img border="0" src="images/menu_arrow.png">Home</a>
+<!--
+    <a href="/ho00005.html"><img border="0" src="/images/menu_arrow.png">Press&nbsp;Rel.</a>
+-->
+    </td>
+  </tr>
+  <tr>
+    <td>
+    <a href="manuals.html"><img border="0" src="images/menu_arrow.png">Manuals</a>
+    </td>
+    <td>
+    <a href="xess_int_quote.html"><img border="0" src="images/menu_arrow.png">Online Quote</a>
+    </td>
+    <td>
+    <a href="ho01000.html"><img border="0" src="images/menu_arrow.png">FAQ</a>
+    </td>
+    <td>
+    <a href="ho03000.html"><img border="0" src="images/menu_arrow.png">Examples</a>
+    </td>
+    <td>
+    <a href="about_us.html">
+    <img border="0" src="images/menu_arrow.png">About&nbsp;Us</a>
+    </td>
+  </tr>
+  <tr>
+    <td>
+    <a href="ho07000.html"><img border="0" src="images/menu_arrow.png">Downloads</a>
+    </td>
+    <td>
+    <a href="https://xess.com/xess_int_order.php3"><img border="0" src="images/menu_arrow.png">Order Online</a>
+    </td>
+    <td>
+    <a href="list_reg.html"><img border="0" src="images/menu_arrow.png">Forum</a>
+    </td>
+    <td>
+    <a href="links.html"><img border="0" src="images/menu_arrow.png">Links</a>
+    </td>
+    <td>
+    <a href="ho00003.html"><img border="0" src="images/menu_arrow.png">Contact&nbsp;Us</a>
+    </td>
+  </tr>
+</table>
+</noscript>
+
+    </td>
+    <td align="center" valign="center" width="30%" id="srch">
+      <FORM ACTION="http://192.168.0.47/cgi-bin/ksearch/ksearch.cgi" METHOD="GET" NAME="search">
+        <INPUT TYPE="text" value="search" NAME="terms">
+		<input type=image src="images/search_arrow.png" value="Search">
+      </FORM>
+    </td>
+  </tr>
+</table>
+
+
+		<?php 
+			require("nav.html");
+		?>
+		</td>
+	</tr>
+	<tr>
+		<td class="StdPageSidebar">
+		<h3 align="left">myCSoC Tutorial CDROM<br>
+		<font size="2"><i>by David Vanden Bout</i></font></h3>
+		<ul>
+			
+      <p align="center">Download the highlighted sections of the tutorial for FREE!!</p> 
+      <p align="center"> 
+      <a href="manuals/myCSoC-1_1.pdf"> 
+      Design Example 1.1</a><br> 
+      <a href="manuals/myCSoC-1_2.pdf"> 
+      Design Example 1.2</a><br> 
+      <a href="manuals/myCSoC-1_3.pdf"> 
+      Design Example 1.3</a><br> 
+      <a href="manuals/myCSoC-1_4.pdf"> 
+      Design Example 1.4</a><br> 
+      <a href="manuals/myCSoC-2_1.pdf"> 
+      Design Example 2.1</a><br> 
+      <a href="manuals/myCSoC-2_2.pdf"> 
+      Design Example 2.2</a><br> 
+      <a href="manuals/myCSoC-2_3.pdf"> 
+      Design Example 2.3</a><br> 
+      <a href="manuals/myCSoC-2_4.pdf"> 
+      Design Example 2.4</a><br> 
+      <a href="manuals/myCSoC-3_1.pdf"> 
+      Design Example 3.1</a><br> 
+      <a href="manuals/myCSoC-3_2.pdf"> 
+      Design Example 3.2</a><br> 
+      <a href="manuals/myCSoC-4_1.pdf"> 
+      Design Example 4.1</a><br> 
+      <p align="center"></p> 
+    <p align="center"><a href="http://www.adobe.com/products/acrobat/readstep2.html">Download 
+    Adobe Acrobat Reader 4.0 to read these files!</p> 
+    <p align="center"><img border="0" src="images/acroread.gif" width="87" height="30"></a> 
+      <p>The myCSoC CDROM&nbsp;<br> 
+      is included in the <a href="prod022.html">myCSoC 
+      Kit</a> which has 
+      everything you need to design with Triscend's configurable system-on-chip 
+      devices.</p>
+		</ul>
+		<p align="center"><a href="#"></a>
+		</p>
+		</td>
+		<td class="StdPageBody">
+      Triscend Corp. has developed 
+      a configurable system on a chip (CSoC) that combines programmable 
+      logic with an 8032 microcontroller core in a single device. Application software runs in the 8032 with assistance from 
+      peripherals built with soft modules in the programmable 
+      logic. Combined with their FastChip 1999 development software, you can now design systems where both the software and hardware can 
+      be changed at a moment's notice. 
+      <p>But you have a number of skills to master before you can use CSoCs 
+      successfully. The skill set is best illustrated 
+      by the following questions:</p> 
+      <ol> 
+        <li>How do I build a system in a CSoC using a pre-existing library of 
+          soft modules?</li> 
+        <li>How do I develop application code for an 8032 microcontroller?</li> 
+        <li>How do I extend the capabilities of the microcontroller by adding 
+          soft modules?</li> 
+        <li>How do I develop new soft modules for functions that are not already 
+          in the library?</li> 
+      </ol> 
+      <p>The answers to questions 1–4 are provided in Chapters 1–4 of this 
+      CDROM-based tutorial:</p> 
+    <table> 
+      <tr> 
+        <td class="title">myCSoC: Design Explorations With Your Configurable System on a Chip<br>Table of Contents</td> 
+      </tr> 
+      <tr> 
+        <td class="sectionheader">1. 
+          Logic Design With Soft Modules</td> 
+      </tr> 
+      <tr> 
+        <td class="oddrow"><blockquote> 
+          <p>Introduces the Triscend FastChip 1999 CSoC 
+          development software. In this chapter, you use FastChip 1999 to build 
+          combinational and sequential logic systems from an existing library of 
+          soft modules. In effect, the CSoC is used as if it were a programmable 
+          logic chip without any microcontroller capabilities.</p> 
+          <p>Example 1.1: Using the 
+                LED decoder soft module.</p> 
+          <p>Example 1.2: Building a 
+                three-bit adder with a display.</p> 
+          <p>Example 1.3: Constructing 
+                a simple timer with a display.</p> 
+          <p>Example 1.4: Receiving 
+                keypresses from a keyboard.</p> 
+        </blockquote> 
+        </td> 
+      </tr> 
+      <tr> 
+        <td class="sectionheader">2. 
+          Programming the 8032 MCU Core</td> 
+      </tr> 
+      <tr> 
+        <td class="oddrow" ><blockquote> 
+          <p>In this chapter, the CSoC serves as a 
+          microcontroller with no programmable logic capabilities.&nbsp; It 
+          discusses the Keil software development tools for the 8032 
+          microcontroller.&nbsp; The Keil tools include a C compiler and linker 
+          along with a debugger.&nbsp; The 8032 object code you develop with the 
+          Keil tools is downloaded by FastChip 1999 into the CSoC where it executes.</p> 
+          <p>Example 2.1: Using the 
+                8032 I/O ports.</p> 
+          <p>Example 2.2: Implementing 
+                polled loopback between the UART transmitter and receiver.</p> 
+          <p>Example 2.3: Implementing 
+                interrupt-driven UART loopback.</p> 
+          <p>Example 2.4: Testing 
+                the CSoC memory spaces.</p> 
+        </blockquote> 
+        </td> 
+      </tr> 
+      <tr> 
+        <td class="sectionheader">3. 8032 
+          MCU + Soft Modules</td> 
+      </tr> 
+      <tr> 
+        <td class="oddrow" ><blockquote> 
+          <p>Illustrates how you can augment 8032 
+          application programs with logic functions built from soft 
+          modules.</p> 
+          <p>Example 3.1: Interfacing 
+                the 8032 to a PS/2 keyboard.</p> 
+          <p>Example 3.2: Interfacing 
+                the 8032 to a PS/2 keyboard using the CSoC DMA controllers.&nbsp;</p> 
+        </blockquote> 
+        </td> 
+      </tr> 
+      <tr> 
+        <td class="sectionheader">4. 
+          Designing Your Own Soft Modules</td> 
+      </tr> 
+      <tr> 
+        <td class="oddrow"><blockquote> 
+          <p>Shows you how to design logic circuits 
+          with OrCAD schematic capture tools and import these circuits into the 
+          FastChip 1999 library of soft modules.&nbsp; Then you can use these custom 
+          modules in your designs.</p> 
+          <p>Example 4.1: Designing, 
+                importing, and using a PS/2 keyboard interface module.</p> 
+        </blockquote> 
+        </td> 
+      </tr> 
+      <tr> 
+        <td class="sectionheader">A1: 
+          Installing the Software</td> 
+      </tr> 
+      <tr> 
+        <td class="oddrow"><blockquote> 
+          <p>Steps you 
+          through the installation of the FastChip 1999 software and its update 
+          patch, the Keil software development environment, and the OrCAD 
+          schematic capture tools.&nbsp;</p> 
+        </blockquote> 
+        </td> 
+      </tr> 
+      <tr> 
+        <td class="sectionheader">A2: 
+          XSTE5 CSoC Board Installation</td> 
+      </tr> 
+      <tr> 
+        <td class="oddrow"><blockquote> 
+          <p>Shows you how to configure and set-up 
+          your <a href="prod021.html"> CSoC Board</a> so it can be used to run the example designs presented 
+          in Chapters 1-4.</p> 
+        </blockquote> 
+        </td> 
+      </tr> 
+    </table> 
+      <p>All the project files for each design example are 
+      provided on the CDROM.&nbsp; You should be able to re-create each design 
+      just from following the text, but you can use the project files in case 
+      you have problems or are in a hurry.&nbsp; Of equal importance, these 
+      working examples serve as a starting point for your own designs and 
+      explorations.&nbsp; If you have difficulties using a particular feature of 
+      the Triscend CSoC, you should be able to find an example where that 
+      feature is used.&nbsp; Then you can modify the example and see what works 
+      and what doesn't.</p> 
+      <p>After you complete this text will you be an expert in using Triscend 
+      CSoCs?&nbsp; Working with programmable logic?&nbsp; Developing 8032 
+      application code with the Keil tools?&nbsp; Designing logic circuits with 
+      OrCAD?&nbsp; The answer is a definite NO.&nbsp; This text is just a 
+      starting point. After you complete this text you will be able to:</p> 
+      <ul> 
+        <li>Understand the basic operations of the Triscend CSoC and be able to 
+          further your understanding by reading the <a href="http://www.triscend.com/products/dse5csoc.pdf">Triscend TE505 Datasheet</a>.</li> 
+        <li>Understand the basic functions of the soft modules and use the 
+          FastChip 1999 software to build larger systems from the library of soft 
+          modules.</li> 
+        <li>Create simple software applications with the Keil software 
+          development and debugging tools and expand your knowledge using the 
+          Keil documentation.</li> 
+        <li>Develop new soft modules from elementary logic circuits with the 
+          OrCAD schematic capture tools and extend your abilities by reading the 
+          online OrCAD documentation.</li> 
+        <li>Comprehend how the FastChip 1999, Keil, and OrCAD tools interact and 
+          share information with each other to create a CSoC design.</li> 
+        <li>Use the FastChip 1999, Keil, and OrCAD tools to actually create a CSoC 
+          design which runs on your <a href="prod021.html"> CSoC Board</a>.</li> 
+      </ul> </td>
+	</tr>
+	<tr>
+		<td class="StdPageCredits">
+		<a href="mailto:webmaster@xess.com"> webmaster@xess.com</a><br>
+© 1998-2006, XESS Corp.<br> 
+All rights reserved.
+<script src="../www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-765812-1";
+urchinTracker();
+</script>
+		<?php 
+			require("credits.html");
+		?>
+		</td>
+		<td class="StdPageNavLinks">
+		    <a href="ho04000.html">
+    <img border="0" src="images/menu_arrow.png">Products</a>
+    <a href="manuals.html">
+    <img border="0" src="images/menu_arrow.png">Manuals</a>
+    <a href="ho07000.html">
+    <img border="0" src="images/menu_arrow.png">Downloads</a>
+    <a href="ho01001.html">
+    <img border="0" src="images/menu_arrow.png">How to Buy</a>
+    <a href="xess_int_quote.html">
+    <img border="0" src="images/menu_arrow.png">Online Quote</a>
+    <a href="https://xess.com/xess_int_order.php3">
+    <img border="0" src="images/menu_arrow.png">Order Online</a>
+    <br>
+    <a href="help.html">
+    <img border="0" src="images/menu_arrow.png">Help!</a>
+    <a href="ho01000.html">
+    <img border="0" src="images/menu_arrow.png">FAQ</a>
+    <a href="list_reg.html">
+    <img border="0" src="images/menu_arrow.png">Forum</a>
+    <a href="ho03000.html">
+    <img border="0" src="images/menu_arrow.png">Tutorials</a>
+    <a href="ho03000.html">
+    <img border="0" src="images/menu_arrow.png">Examples</a>
+    <a href="links.html">
+    <img border="0" src="images/menu_arrow.png">Links</a>
+    <a href="ho00005.html">
+    <a href="index-2.html">
+    <img border="0" src="images/menu_arrow.png">Home</a>
+    <a href="about_us.html">
+    <img border="0" src="images/menu_arrow.png">About&nbsp;Us</a>
+    <a href="ho00003.html">
+    <img border="0" src="images/menu_arrow.png">Contact&nbsp;Us</a>
+
+		<?php 
+			require("navlinks.html");
+		?>
+		</td>
+	</tr>
+</table>
+
+</body>
+
+
+<!-- Mirrored from 192.168.0.47/myCSoC-CDROM.html by HTTrack Website Copier/3.x [XR&CO'2004], Mon, 04 Dec 2006 16:07:50 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=ISO-8859-1"><!-- /Added by HTTrack -->
+</html>

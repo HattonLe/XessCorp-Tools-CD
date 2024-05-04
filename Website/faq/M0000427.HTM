@@ -1,0 +1,410 @@
+<html>
+
+
+<!-- Mirrored from 192.168.0.47/faq/M0000427.HTM by HTTrack Website Copier/3.x [XR&CO'2004], Mon, 04 Dec 2006 16:08:02 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=ISO-8859-1"><!-- /Added by HTTrack -->
+<head>
+<link rel="SHORTCUT ICON" href="../images/xess.ico">
+<title>Serial port access to the Virtex FPGA on the XSV Board</title>
+<meta name="KEYWORDS" content="XESS USER FAQ">
+<meta name="DESCRIPTION" content="XESS User FAQ question &amp; answer.">
+<meta http-equiv="Content-Type" content="text/html">
+<link rel="stylesheet" type="text/css" href="../xess-1.css">
+<meta name="Microsoft Border" content="none, default">
+</head>
+
+<table>
+  <tr>
+    <td class="StdPageLogo">
+    <a href="../index-2.html"><img border="0" src="../images/xess-138x32.bmp"></a>
+<?php 
+			require("../logo.html");
+		?></td>
+    <td class="StdPageNav">
+    <script type="text/javascript" src="xess.js"></script>
+<!-- <script type="text/javascript" src="niftycube_xess.js"></script> -->
+<!-- <script type="text/javascript" src="prototype.js"></script> -->
+<!-- <script type="text/javascript" src="rico.js"></script> -->
+<script type="text/javascript">
+	window.onload=function(){
+		startList("nav");
+		stripe_xess();
+		collapseall();
+		// Nifty("td.StdPageNav","transparent");
+		// Nifty("td.StdPageSidebar","transparent");
+		// Nifty("td.StdPageNavLinks","transparent");
+	};
+	onload=function(){
+		startList("nav");
+		stripe_xess();
+		collapseall();
+		// Nifty("td.StdPageNav","transparent");
+		// Nifty("td.StdPageSidebar","transparent");
+		// Nifty("td.StdPageNavLinks","transparent");
+	};
+</script>
+
+
+
+<table border="0" width="640" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="center" valign="center" width="70%">
+
+<!--
+  -- naviagation bar for browsers with scripting capability
+  -- (make sure there is no whitespace after the '\' on each line and run
+  -- the Javascript console on Firefox to check the syntax.)
+  -->
+<script type="text/javascript">
+nav_text = '\
+  <ul id="nav"> \
+    <li id="first"><a href="../ho04000.html">Products</a> \
+      <ul> \
+        <li><a href="../ho04000.html"><div>Catalog</div></a></li> \
+        <li><a href="../manuals.html"><div>Manuals</div></a></li> \
+        <li><a href="../ho07000.html"><div>Software Downloads</div></a></li> \
+      </ul> \
+    </li> \
+    <li><a href="../help.html">Support</a> \
+      <ul> \
+        <li><a href="../manuals.html" ><div>Product Manuals</div></a></li> \
+        <li><a href="../ho03000.html" ><div>Tutorials</div></a></li> \
+        <li><a href="../ho03000.html" ><div>Application Notes</div></a></li> \
+        <li><a href="../ho03000.html" ><div>Design Examples</div></a></li> \
+        <li><a href="../ho01000.html" ><div>FAQ</div></a></li> \
+        <li><a href="../list_reg.html"><div>User Forum</div></a></li> \
+        <li><a href="../help.html"    ><div>Request Help</div></a></li> \
+      </ul> \
+    </li> \
+    <li><a href="../ho01001.html">Purchasing</a> \
+      <ul> \
+        <li><a href="https://xess.com/xess_int_order.php3"><div>Web Orders</div></a></li> \
+        <li><a href="../ho01001.html"                       ><div>Purchase Orders</div></a></li> \
+        <li><a href="../ho01001.html"                       ><div>Payment Methods</div></a></li> \
+        <li><a href="../xess_int_quote.html"                ><div>Get a Quote</div></a></li> \
+        <li><a href="../xess_int_quote.html"                ><div>Get a Proforma Invoice</div></a></li> \
+        <li><a href="../ho01001.html"                       ><div>How To Buy From Us</div></a></li> \
+      </ul> \
+    </li> \
+    <li id="last"><a href="../index-2.html">XESS</a> \
+      <ul> \
+        <li><a href="../index-2.html"   ><div>Home</div></a></li> \
+        <li><a href="../about_us.html"><div>About Us</div></a></li> \
+        <li><a href="../ho00003.html" ><div>Contact Us</div></a></li> \
+<!-- \
+        <li><a href=""              ><div>Announcements</div></a></li> \
+        <li><a href="../ho00005.html" ><div>Press Releases</div></a></li> \
+--> \
+      </ul> \
+    </li> \
+    <li id="last"><a href="../links.html">Misc.</a> \
+      <ul> \
+        <li><a href="../links.html"><div>Links</div></a></li> \
+      </ul> \
+    </li> \
+  </ul> \
+';
+document.writeln(nav_text);
+</script>
+
+<!--
+  -- naviagation bar for browsers with NO scripting capability
+  -->
+<noscript>
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="14%" align="left">
+    <a href="../ho04000.html"><img border="0" src="../images/menu_arrow.png">Products</a>
+    </td>
+    <td width="16%" align="left">
+    <a href="../ho01001.html"><img border="0" src="../images/menu_arrow.png">How to Buy</a>
+    </td>
+    <td width="11%" align="left">
+    <a href="../help.html"><img border="0" src="../images/menu_arrow.png">Help!</a>
+    </td>
+    <td width="14%" align="left">
+    <a href="../ho03000.html"><img border="0" src="../images/menu_arrow.png">Tutorials</a>
+    </td>
+    <td width="14%" align="left">
+    <a href="../index-2.html"><img border="0" src="../images/menu_arrow.png">Home</a>
+<!--
+    <a href="/ho00005.html"><img border="0" src="/images/menu_arrow.png">Press&nbsp;Rel.</a>
+-->
+    </td>
+  </tr>
+  <tr>
+    <td>
+    <a href="../manuals.html"><img border="0" src="../images/menu_arrow.png">Manuals</a>
+    </td>
+    <td>
+    <a href="../xess_int_quote.html"><img border="0" src="../images/menu_arrow.png">Online Quote</a>
+    </td>
+    <td>
+    <a href="../ho01000.html"><img border="0" src="../images/menu_arrow.png">FAQ</a>
+    </td>
+    <td>
+    <a href="../ho03000.html"><img border="0" src="../images/menu_arrow.png">Examples</a>
+    </td>
+    <td>
+    <a href="../about_us.html">
+    <img border="0" src="../images/menu_arrow.png">About&nbsp;Us</a>
+    </td>
+  </tr>
+  <tr>
+    <td>
+    <a href="../ho07000.html"><img border="0" src="../images/menu_arrow.png">Downloads</a>
+    </td>
+    <td>
+    <a href="https://xess.com/xess_int_order.php3"><img border="0" src="../images/menu_arrow.png">Order Online</a>
+    </td>
+    <td>
+    <a href="../list_reg.html"><img border="0" src="../images/menu_arrow.png">Forum</a>
+    </td>
+    <td>
+    <a href="../links.html"><img border="0" src="../images/menu_arrow.png">Links</a>
+    </td>
+    <td>
+    <a href="../ho00003.html"><img border="0" src="../images/menu_arrow.png">Contact&nbsp;Us</a>
+    </td>
+  </tr>
+</table>
+</noscript>
+
+    </td>
+    <td align="center" valign="center" width="30%" id="srch">
+      <FORM ACTION="http://192.168.0.47/cgi-bin/ksearch/ksearch.cgi" METHOD="GET" NAME="search">
+        <INPUT TYPE="text" value="search" NAME="terms">
+		<input type=image src="../images/search_arrow.png" value="Search">
+      </FORM>
+    </td>
+  </tr>
+</table>
+
+<?php 
+			require("../nav.html");
+		?></td>
+  </tr>
+  <tr>
+
+    <td class="StdPageSidebar">
+    <h1>Question &amp; Answer</h1>
+    <p class="FAQClassification">Classification: </p>
+    <p class="FAQDate">Date: Jul 02, 2001</p>
+    </td>
+
+    <td class="StdPageBody">
+        <h1 class=FAQTitle>Serial port access to the Virtex FPGA on the XSV Board </h1>
+    <div class="FAQ">
+      <h2 class="FAQQuestion">Q:</h2>
+      <div class="FAQQuestion">
+        <p>
+I am mapping the Leon processor onto the Xess XSV800 board.
+I want to access the processor UART through the serial port on the
+board so that it can talk to the Hyperterminal on the PC.</p>
+<p> </p>
+      </div>
+      <h2 class="FAQAnswer">A:</h2>
+      <div class="FAQAnswer">
+        <p>
+I have appended some pin assignments and code from one of our customers who
+made the modifications for accessing the RS232 driver through the CPLD.  This
+code should be compiled and loaded into the CPLD, not the FPGA.</p><pre>
+  net V_tck loc=p4;
+  net V_initb loc=p9;
+  net V_done loc=p10;
+  net V_progb loc=p11;
+  net V_cclk loc=p12;
+  net V_m(0) loc=p13;
+  net V_m(1) loc=p14;
+  net V_m(2) loc=p15;
+  net V_d(0) loc=p32;
+  net V_d(1) loc=p33;
+  net V_d(2) loc=p34;
+  net V_d(3) loc=p35;
+  net V_d(4) loc=p36;
+  net V_d(5) loc=p37;
+  net V_d(6) loc=p39;
+  net V_d(7) loc=p40;
+  net V_a(0) loc=p16;
+  net V_a(1) loc=p17;
+  net V_a(2) loc=p18;
+  net V_a(3) loc=p19;
+  
+  net TXD1 loc=p24;
+  net RTS1 loc=p25;
+  
+  
+  net RXD1 loc=p28;
+  net CTS1 loc=p29;
+  
+  
+  net ceb loc=P46;
+  
+  
+  
+  
+  net resetb loc=p3;
+  
+  
+  
+  net ppd(0) loc=p77;
+  net ppd(1) loc=p74;
+  net ppd(2) loc=p72;
+  net ppd(3) loc=p70;
+  net ppd(4) loc=p68;
+  net ppd(5) loc=p67;
+  net ppd(6) loc=p66;
+  net ppd(7) loc=p65;
+  net ppc(0) loc=p79;
+  net ppc(1) loc=p78;
+  net ppc(3) loc=p71;
+  net pps(3) loc=p76;
+  net pps(4) loc=p60;
+  net pps(5) loc=p61;
+  net pps(6) loc=p64;
+  
+  net rxd loc=p80;
+  net txd loc=p81;
+  net rts loc=p82;
+  net cts loc=p85;
+  
+  -- VHDL code for the XSV CPLD
+  library ieee;
+  use ieee.std_logic_1164.all;
+  
+  entity dwnldpar is
+   port(
+  -- parallel port data, control, and status pins
+          ppd: in std_logic_vector(7 downto 0);
+          ppc: in std_logic_vector(3 downto 0);
+          pps: out std_logic_vector(6 downto 3);
+          
+          -- Virtex FPGA pins
+          V_a: in std_logic_vector(3 downto 0); -- inputs from Virtex
+          V_tck: out std_logic; -- driver to Virtex JTAG clock
+          V_cclk: out std_logic; -- driver to Virtex config clock
+          V_progb: out std_logic; -- driver to Virtex program pin
+          V_initb: in std_logic; -- input from Virtex init pin
+          V_done: in std_logic; -- input from Virtex done pin
+          V_d: out std_logic_vector(7 downto 0); -- drivers to Virtex data pins
+          V_m: out std_logic_vector(2 downto 0); -- Virtex config mode pins
+          
+          ceb: out std_logic; -- Flash chip-enable
+          resetb: out std_logic; -- reset for video input and Ethernet chips
+          bar: out std_logic_vector(9 downto 0); -- LED bargraph
+          
+          -- serial port connections
+          rxd: in std_logic;
+          txd: out std_logic;
+          rts: out std_logic;
+          cts: in std_logic;
+          
+          --Virtex FPGA pins
+          RXD1: out std_logic;
+          TXD1: in std_logic;
+          RTS1: in std_logic;
+          CTS1: out std_logic
+      );
+  end dwnldpar;
+  
+  architecture dwnldpar_arch of dwnldpar is
+          constant LO: std_logic := '0';
+          constant HI: std_logic := '1';
+          constant SLAVE_SERIAL_MODE: std_logic_vector(2 downto 0) := &quot;111&quot;;
+          
+          begin
+          -- disable other chips on the XSV Board so they don't interfere
+          -- during the configuration of the Virtex FPGA
+          ceb &lt;= HI; -- disable Flash
+          V_tck &lt;= LO; -- deactivate Virtex JTAG circuit
+          
+          -- disable the video input and Ethernet chips until config is done
+          resetb &lt;= LO when V_done=LO else HI;
+          
+          -- connect Virtex configuration pins
+          V_m &lt;= SLAVE_SERIAL_MODE; -- set Virtex config mode pins
+          V_progb&lt;= ppc(0); -- Virtex programming pulse comes from parallel port
+          V_cclk &lt;= ppc(1); -- Virtex config clock comes from parallel port
+          -- config bitstream comes from parallel port control pin until
+          -- config is done and then gets driven by parallel port data pin
+          V_d(0) &lt;= ppc(3) when V_done=LO else ppd(0);
+          
+          -- connect the rest of the parallel port to the Virtex FPGA
+          V_d(7 downto 1) &lt;= ppd(7 downto 1); -- data from PC
+          pps(6 downto 3) &lt;= V_a(3 downto 0); -- status back to PC
+          -- display status of Virtex done and init pins on the bargraph LED
+          bar(0) &lt;= V_done;
+          bar(1) &lt;= V_initb;
+          
+          --connect serial port to virtex FPGA
+          RXD1 &lt;= rxd;
+          txd &lt;= TXD1;
+          rts &lt;= RTS1;
+          CTS1 &lt;= cts;
+  end dwnldpar_arch;</pre>
+
+
+
+
+<p> </p>
+      </div>
+    </div>
+    </td>
+  </tr>
+  <tr>
+
+    <td class="StdPageCredits">
+    <a href="mailto:webmaster@xess.com"> webmaster@xess.com</a><br>
+© 1998-2006, XESS Corp.<br> 
+All rights reserved.
+<script src="../../www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-765812-1";
+urchinTracker();
+</script><?php 
+			require("../credits.html");
+		?></td>
+    <td class="StdPageNavLinks">
+        <a href="../ho04000.html">
+    <img border="0" src="../images/menu_arrow.png">Products</a>
+    <a href="../manuals.html">
+    <img border="0" src="../images/menu_arrow.png">Manuals</a>
+    <a href="../ho07000.html">
+    <img border="0" src="../images/menu_arrow.png">Downloads</a>
+    <a href="../ho01001.html">
+    <img border="0" src="../images/menu_arrow.png">How to Buy</a>
+    <a href="../xess_int_quote.html">
+    <img border="0" src="../images/menu_arrow.png">Online Quote</a>
+    <a href="https://xess.com/xess_int_order.php3">
+    <img border="0" src="../images/menu_arrow.png">Order Online</a>
+    <br>
+    <a href="../help.html">
+    <img border="0" src="../images/menu_arrow.png">Help!</a>
+    <a href="../ho01000.html">
+    <img border="0" src="../images/menu_arrow.png">FAQ</a>
+    <a href="../list_reg.html">
+    <img border="0" src="../images/menu_arrow.png">Forum</a>
+    <a href="../ho03000.html">
+    <img border="0" src="../images/menu_arrow.png">Tutorials</a>
+    <a href="../ho03000.html">
+    <img border="0" src="../images/menu_arrow.png">Examples</a>
+    <a href="../links.html">
+    <img border="0" src="../images/menu_arrow.png">Links</a>
+    <a href="../ho00005.html">
+    <a href="../index-2.html">
+    <img border="0" src="../images/menu_arrow.png">Home</a>
+    <a href="../about_us.html">
+    <img border="0" src="../images/menu_arrow.png">About&nbsp;Us</a>
+    <a href="../ho00003.html">
+    <img border="0" src="../images/menu_arrow.png">Contact&nbsp;Us</a>
+<?php 
+			require("../navlinks.html");
+		?></td>
+  </tr>
+</table>
+
+
+<!-- Mirrored from 192.168.0.47/faq/M0000427.HTM by HTTrack Website Copier/3.x [XR&CO'2004], Mon, 04 Dec 2006 16:08:02 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=ISO-8859-1"><!-- /Added by HTTrack -->
+</html>

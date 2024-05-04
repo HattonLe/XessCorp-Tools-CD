@@ -1,0 +1,281 @@
+Release 6.3.03i Map G.38
+Xilinx Mapping Report File for Design 'test_vga'
+
+Design Information
+------------------
+Command Line   : C:/ISE6/bin/nt/map.exe -intstyle ise -p xc3s1000-ft256-4 -cm
+area -pr b -k 4 -c 100 -tx off -o test_vga_map.ncd test_vga.ngd test_vga.pcf 
+Target Device  : x3s1000
+Target Package : ft256
+Target Speed   : -4
+Mapper Version : spartan3 -- $Revision: 1.16.8.2 $
+Mapped Date    : Sun Feb 04 09:18:05 2007
+
+Design Summary
+--------------
+Number of errors:      0
+Number of warnings:    1
+Logic Utilization:
+  Number of Slice Flip Flops:         210 out of  15,360    1%
+  Number of 4 input LUTs:             355 out of  15,360    2%
+Logic Distribution:
+  Number of occupied Slices:                          260 out of   7,680    3%
+    Number of Slices containing only related logic:     260 out of     260  100%
+    Number of Slices containing unrelated logic:          0 out of     260    0%
+      *See NOTES below for an explanation of the effects of unrelated logic
+Total Number 4 input LUTs:            464 out of  15,360    3%
+  Number used as logic:                355
+  Number used as a route-thru:         109
+  Number of bonded IOBs:               53 out of     173   30%
+    IOB Flip Flops:                    44
+  Number of Block RAMs:                1 out of      24    4%
+  Number of GCLKs:                     1 out of       8   12%
+  Number of DCMs:                      2 out of       4   50%
+
+Total equivalent gate count for design:  84,637
+Additional JTAG gate count for IOBs:  2,544
+Peak Memory Usage:  87 MB
+
+NOTES:
+
+   Related logic is defined as being logic that shares connectivity -
+   e.g. two LUTs are "related" if they share common inputs.
+   When assembling slices, Map gives priority to combine logic that
+   is related.  Doing so results in the best timing performance.
+
+   Unrelated logic shares no connectivity.  Map will only begin
+   packing unrelated logic into a slice once 99% of the slices are
+   occupied through related logic packing.
+
+   Note that once logic distribution reaches the 99% level through
+   related logic packing, this does not mean the device is completely
+   utilized.  Unrelated logic packing will then begin, continuing until
+   all usable LUTs and FFs are occupied.  Depending on your timing
+   budget, increased levels of unrelated logic packing may adversely
+   affect the overall timing performance of your design.
+
+
+Table of Contents
+-----------------
+Section 1 - Errors
+Section 2 - Warnings
+Section 3 - Informational
+Section 4 - Removed Logic Summary
+Section 5 - Removed Logic
+Section 6 - IOB Properties
+Section 7 - RPMs
+Section 8 - Guide Report
+Section 9 - Area Group Summary
+Section 10 - Modular Design Summary
+Section 11 - Timing Report
+Section 12 - Configuration String Information
+Section 13 - Additional Device Resource Counts
+
+Section 1 - Errors
+------------------
+
+Section 2 - Warnings
+--------------------
+WARNING:MapLib:537 - The following Virtex Blockram(s) is/are being retargetted
+   to Virtex2 Blockram(s). This will waste 75% of Virtex2 Blockram capacity. To
+   obtain better utilization, Please re-run memory generator to retarget to
+   Virtex2 Blockram modules:
+   RAMB4_S16_S16 symbol "u1_fifo_bram1" (output signal=u1_pixel_data_out<0>)
+
+Section 3 - Informational
+-------------------------
+INFO:LIT:95 - All of the external outputs in this design are using slew rate
+   limited output drivers. The delay on speed critical outputs can be
+   dramatically reduced by designating them as fast outputs in the schematic.
+INFO:MapLib:562 - No environment variables are currently set.
+INFO:MapLib:535 - The following Virtex BUFG(s) is/are being retargetted to
+   Virtex2 BUFGMUX(s) with input tied to I0 and Select pin tied to constant 0:
+   BUFG symbol "u0_int_clk1x_buf" (output signal=clk1x)
+
+Section 4 - Removed Logic Summary
+---------------------------------
+  17 block(s) removed
+   2 block(s) optimized away
+   1 signal(s) removed
+
+Section 5 - Removed Logic
+-------------------------
+
+The trimmed logic report below shows the logic removed from your design due to
+sourceless or loadless signals, and VCC or ground connections.  If the removal
+of a signal or symbol results in the subsequent removal of an additional signal
+or symbol, the message explaining that second removal will be indented.  This
+indentation will be repeated as a chain of related logic is removed.
+
+To quickly locate the original cause for the removal of a chain of logic, look
+above the place where that logic is listed in the trimming report, then locate
+the lines that are least indented (begin at the leftmost edge).
+
+Loadless block "u0_int_clk2x_buf" (CKBUF) removed.
+ The signal "u0_int_clk2x" is loadless and has been removed.
+Unused block "sData_0_IOBUF/OBUFT" (TRI) removed.
+Unused block "sData_10_IOBUF/OBUFT" (TRI) removed.
+Unused block "sData_11_IOBUF/OBUFT" (TRI) removed.
+Unused block "sData_12_IOBUF/OBUFT" (TRI) removed.
+Unused block "sData_13_IOBUF/OBUFT" (TRI) removed.
+Unused block "sData_14_IOBUF/OBUFT" (TRI) removed.
+Unused block "sData_15_IOBUF/OBUFT" (TRI) removed.
+Unused block "sData_1_IOBUF/OBUFT" (TRI) removed.
+Unused block "sData_2_IOBUF/OBUFT" (TRI) removed.
+Unused block "sData_3_IOBUF/OBUFT" (TRI) removed.
+Unused block "sData_4_IOBUF/OBUFT" (TRI) removed.
+Unused block "sData_5_IOBUF/OBUFT" (TRI) removed.
+Unused block "sData_6_IOBUF/OBUFT" (TRI) removed.
+Unused block "sData_7_IOBUF/OBUFT" (TRI) removed.
+Unused block "sData_8_IOBUF/OBUFT" (TRI) removed.
+Unused block "sData_9_IOBUF/OBUFT" (TRI) removed.
+
+Optimized Block(s):
+TYPE 		BLOCK
+GND 		XST_GND
+VCC 		XST_VCC
+
+To enable printing of redundant blocks removed and signals merged, set the
+detailed map report option and rerun map.
+
+Section 6 - IOB Properties
+--------------------------
+
++------------------------------------------------------------------------------------------------------------------------+
+| IOB Name                           | Type    | Direction | IO Standard | Drive    | Slew | Reg (s)  | Resistor | IOB   |
+|                                    |         |           |             | Strength | Rate |          |          | Delay |
++------------------------------------------------------------------------------------------------------------------------+
+| ba<0>                              | IOB     | OUTPUT    | LVCMOS25    | 12       | SLOW | OFF1     |          |       |
+| ba<1>                              | IOB     | OUTPUT    | LVCMOS25    | 12       | SLOW | OFF1     |          |       |
+| blue<0>                            | IOB     | OUTPUT    | LVCMOS25    | 12       | SLOW | OFF1     |          |       |
+| blue<1>                            | IOB     | OUTPUT    | LVCMOS25    | 12       | SLOW | OFF1     |          |       |
+| blue<2>                            | IOB     | OUTPUT    | LVCMOS25    | 12       | SLOW | OFF1     |          |       |
+| cas_n                              | IOB     | OUTPUT    | LVCMOS25    | 12       | SLOW | OFF1     |          |       |
+| cke                                | IOB     | OUTPUT    | LVCMOS25    | 12       | SLOW | OFF1     |          |       |
+| clk                                | IOB     | INPUT     | LVCMOS25    |          |      |          |          |       |
+| cs_n                               | IOB     | OUTPUT    | LVCMOS25    | 12       | SLOW |          |          |       |
+| dqmh                               | IOB     | OUTPUT    | LVCMOS25    | 12       | SLOW |          |          |       |
+| dqml                               | IOB     | OUTPUT    | LVCMOS25    | 12       | SLOW |          |          |       |
+| green<0>                           | IOB     | OUTPUT    | LVCMOS25    | 12       | SLOW |          |          |       |
+| green<1>                           | IOB     | OUTPUT    | LVCMOS25    | 12       | SLOW | OFF1     |          |       |
+| green<2>                           | IOB     | OUTPUT    | LVCMOS25    | 12       | SLOW | OFF1     |          |       |
+| hsync_n                            | IOB     | OUTPUT    | LVCMOS25    | 12       | SLOW | OFF1     |          |       |
+| ras_n                              | IOB     | OUTPUT    | LVCMOS25    | 12       | SLOW | OFF1     |          |       |
+| red<0>                             | IOB     | OUTPUT    | LVCMOS25    | 12       | SLOW | OFF1     |          |       |
+| red<1>                             | IOB     | OUTPUT    | LVCMOS25    | 12       | SLOW | OFF1     |          |       |
+| red<2>                             | IOB     | OUTPUT    | LVCMOS25    | 12       | SLOW | OFF1     |          |       |
+| rst_n                              | IOB     | INPUT     | LVCMOS25    |          |      |          |          |       |
+| sAddr<0>                           | IOB     | OUTPUT    | LVCMOS25    | 12       | SLOW | OFF1     |          |       |
+| sAddr<1>                           | IOB     | OUTPUT    | LVCMOS25    | 12       | SLOW | OFF1     |          |       |
+| sAddr<2>                           | IOB     | OUTPUT    | LVCMOS25    | 12       | SLOW | OFF1     |          |       |
+| sAddr<3>                           | IOB     | OUTPUT    | LVCMOS25    | 12       | SLOW | OFF1     |          |       |
+| sAddr<4>                           | IOB     | OUTPUT    | LVCMOS25    | 12       | SLOW | OFF1     |          |       |
+| sAddr<5>                           | IOB     | OUTPUT    | LVCMOS25    | 12       | SLOW | OFF1     |          |       |
+| sAddr<6>                           | IOB     | OUTPUT    | LVCMOS25    | 12       | SLOW | OFF1     |          |       |
+| sAddr<7>                           | IOB     | OUTPUT    | LVCMOS25    | 12       | SLOW | OFF1     |          |       |
+| sAddr<8>                           | IOB     | OUTPUT    | LVCMOS25    | 12       | SLOW | OFF1     |          |       |
+| sAddr<9>                           | IOB     | OUTPUT    | LVCMOS25    | 12       | SLOW | OFF1     |          |       |
+| sAddr<10>                          | IOB     | OUTPUT    | LVCMOS25    | 12       | SLOW | OFF1     |          |       |
+| sAddr<11>                          | IOB     | OUTPUT    | LVCMOS25    | 12       | SLOW | OFF1     |          |       |
+| sAddr<12>                          | IOB     | OUTPUT    | LVCMOS25    | 12       | SLOW | OFF1     |          |       |
+| sData<0>                           | IOB     | BIDIR     | LVCMOS25    |          |      | INFF1    |          |       |
+| sData<1>                           | IOB     | BIDIR     | LVCMOS25    |          |      | INFF1    |          |       |
+| sData<2>                           | IOB     | BIDIR     | LVCMOS25    |          |      | INFF1    |          |       |
+| sData<3>                           | IOB     | BIDIR     | LVCMOS25    |          |      | INFF1    |          |       |
+| sData<4>                           | IOB     | BIDIR     | LVCMOS25    |          |      | INFF1    |          |       |
+| sData<5>                           | IOB     | BIDIR     | LVCMOS25    |          |      | INFF1    |          |       |
+| sData<6>                           | IOB     | BIDIR     | LVCMOS25    |          |      | INFF1    |          |       |
+| sData<7>                           | IOB     | BIDIR     | LVCMOS25    |          |      | INFF1    |          |       |
+| sData<8>                           | IOB     | BIDIR     | LVCMOS25    |          |      | INFF1    |          |       |
+| sData<9>                           | IOB     | BIDIR     | LVCMOS25    |          |      | INFF1    |          |       |
+| sData<10>                          | IOB     | BIDIR     | LVCMOS25    |          |      | INFF1    |          |       |
+| sData<11>                          | IOB     | BIDIR     | LVCMOS25    |          |      | INFF1    |          |       |
+| sData<12>                          | IOB     | BIDIR     | LVCMOS25    |          |      | INFF1    |          |       |
+| sData<13>                          | IOB     | BIDIR     | LVCMOS25    |          |      | INFF1    |          |       |
+| sData<14>                          | IOB     | BIDIR     | LVCMOS25    |          |      | INFF1    |          |       |
+| sData<15>                          | IOB     | BIDIR     | LVCMOS25    |          |      | INFF1    |          |       |
+| sclk                               | IOB     | OUTPUT    | LVCMOS25    | 12       | SLOW |          |          |       |
+| sclkfb                             | IOB     | INPUT     | LVCMOS25    |          |      |          |          |       |
+| vsync_n                            | IOB     | OUTPUT    | LVCMOS25    | 12       | SLOW |          |          |       |
+| we_n                               | IOB     | OUTPUT    | LVCMOS25    | 12       | SLOW | OFF1     |          |       |
++------------------------------------------------------------------------------------------------------------------------+
+
+Section 7 - RPMs
+----------------
+
+Section 8 - Guide Report
+------------------------
+Guide not run on this design.
+
+Section 9 - Area Group Summary
+------------------------------
+No area groups were found in this design.
+
+Section 10 - Modular Design Summary
+-----------------------------------
+Modular Design not used for this design.
+
+Section 11 - Timing Report
+--------------------------
+This design was not run using timing mode.
+
+Section 12 - Configuration String Details
+-----------------------------------------
+Use the "-detail" map option to print out Configuration Strings
+
+Section 13 - Additional Device Resource Counts
+----------------------------------------------
+Number of JTAG Gates for IOBs = 53
+Number of Equivalent Gates for Design = 84,637
+Number of RPM Macros = 0
+Number of Hard Macros = 0
+DCIRESETs = 0
+CAPTUREs = 0
+BSCANs = 0
+STARTUPs = 0
+DCMs = 2
+GCLKs = 1
+ICAPs = 0
+18X18 Multipliers = 0
+Block RAMs = 1
+Total Registers (Flops & Latches in Slices & IOBs) not driven by LUTs = 96
+IOB Dual-Rate Flops not driven by LUTs = 0
+IOB Dual-Rate Flops = 0
+IOB Slave Pads = 0
+IOB Master Pads = 0
+IOB Latches not driven by LUTs = 0
+IOB Latches = 0
+IOB Flip Flops not driven by LUTs = 20
+IOB Flip Flops = 44
+Unbonded IOBs = 0
+Bonded IOBs = 53
+Shift Registers = 0
+Static Shift Registers = 0
+Dynamic Shift Registers = 0
+16x1 ROMs = 0
+16x1 RAMs = 0
+32x1 RAMs = 0
+Dual Port RAMs = 0
+MUXFXs = 1
+MULTANDs = 0
+4 input LUTs used as Route-Thrus = 109
+4 input LUTs = 355
+Slice Latches not driven by LUTs = 0
+Slice Latches = 0
+Slice Flip Flops not driven by LUTs = 76
+Slice Flip Flops = 210
+SliceMs = 0
+SliceLs = 260
+Slices = 260
+Number of LUT signals with 4 loads = 4
+Number of LUT signals with 3 loads = 13
+Number of LUT signals with 2 loads = 55
+Number of LUT signals with 1 load = 249
+NGM Average fanout of LUT = 2.45
+NGM Maximum fanout of LUT = 28
+NGM Average fanin for LUT = 3.0620
+Number of LUT symbols = 355
+Number of IPAD symbols = 3
+Number of IBUF symbols = 19
+Number of DCM symbols = 2
+Number of BIPAD symbols = 16

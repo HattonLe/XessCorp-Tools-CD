@@ -1,0 +1,446 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - usbport.cpp</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">usbport.cpp</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">usbport.cpp</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','usbport_cpp0','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','usbport_cpp0','_overview',this)" class="tabLinkInActive">Overview</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','usbport_cpp0','_includedfiles',this)" class="tabLinkInActive">Included files</a></span>
+<span class="tabInActiveGrayout"><span class="tabLinkGrayout">Included by</span></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_file','usbport_cpp0','_source',this)" class="tabLinkActive">Source</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<pre class="codeExamples">
+/*----------------------------------------------------------------------------------
+  SOFTWARE LICENSE AGREEMENT
+    1.  Permission to use, copy, modify, and distribute this software
+        and its documentation, with or without modification, for any
+        purpose and without fee or royalty is hereby granted, provided
+        that you include the following on ALL copies of the software
+        and documentation or portions thereof, including
+        modifications, that you make:
+
+            a.  The full text of this license in a location viewable to users
+            of the redistributed or derivative work.
+
+            b.  Notice of any changes or modifications to the files,
+            including the date changes were made.
+
+    2.  The name, servicemarks and trademarks of X Engineering
+        Software Systems Corp. may NOT be used in advertising or
+        publicity pertaining to the software without specific, written
+        prior permission.
+
+    3.  Title to copyright in this software and any associated
+        documentation will at all times remain with X Engineering
+        Software Systems Corp.
+
+    4.  THIS SOFTWARE AND DOCUMENTATION IS PROVIDED "AS IS," AND X
+        Engineering Software Systems Corp MAKES NO REPRESENTATIONS OR
+        WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO,
+        WARRANTIES OF MERCHANTABILITY OR FITNESS FOR ANY PARTICULAR
+        PURPOSE OR THAT THE USE OF THE SOFTWARE OR DOCUMENTATION WILL
+        NOT INFRINGE ANY THIRD PARTY PATENTS, COPYRIGHTS, TRADEMARKS
+        OR OTHER RIGHTS.
+
+    5.  X Engineering Software Systems Corp WILL NOT BE LIABLE FOR ANY
+        DAMAGES, INCLUDING BUT NOT LIMITED TO, DIRECT, INDIRECT,
+        SPECIAL OR CONSEQUENTIAL, ARISING OUT OF ANY USE OF THE
+        SOFTWARE OR DOCUMENTATION.
+
+  ©2006 - X Engineering Software Systems Corp.  All rights reserved.
+----------------------------------------------------------------------------------*/
+
+
+#include &lt;string&gt;
+#include &lt;fstream&gt;
+#include &lt;cassert&gt;
+#include &lt;ctime&gt;
+#include &lt;cstdarg&gt;
+#include &lt;wtypes.h&gt;
+using namespace std;
+
+#include "mpusbapi.h"
+#include "<a href="#" OnFocus="link('_file','usbport_h0',this)">usbport.h</a>"
+#include "<a href="#" OnFocus="link('_file','usbcmd_h0',this)">usbcmd.h</a>"
+
+
+#define USB_INVALID_INSTANCE    -1
+#define USB_INVALID_ENDPOINT    -1
+#define USB_MAX_PACKET_SIZE     64
+#define USB_TIMEOUT             INFINITE
+
+// positions and size of fields in information packet returned by USB device
+#define OPCODE_START            0
+#define OPCODE_SIZE             1
+#define MANUFACTURER_START      (OPCODE_START + OPCODE_SIZE)
+#define MANUFACTURER_SIZE       1
+#define FIRMWARE_VERSION_START  (MANUFACTURER_START + MANUFACTURER_SIZE)
+#define SERIAL_NUMBER_START     (FIRMWARE_VERSION_START + FIRMWARE_VERSION_SIZE)
+#define CLOCK_SPEED_START       (SERIAL_NUMBER_START + SERIAL_NUMBER_SIZE)
+#define CLOCK_SPEED_SIZE        2
+#define TCK_SPEED_START         (CLOCK_SPEED_START + CLOCK_SPEED_SIZE)
+#define TCK_SPEED_SIZE          2
+#define INFO_SIZE               MAX_PACKET_SIZE
+
+// positions and sizes of single TMS-TDI packet sent to USB device
+#define TMS_TDI_BITS_START      (OPCODE_START + OPCODE_SIZE)
+#define TMS_TDI_BITS_SIZE       1
+
+// positions and sizes of fields in JTAG TDI packet sent to USB device
+#define NUM_TDI_BITS_START      (OPCODE_START + OPCODE_SIZE)
+#define NUM_TDI_BITS_SIZE       4
+#define TDI_BITS_START          (NUM_TDI_BITS_START + NUM_TDI_BITS_SIZE)
+#define TDI_BITS_SIZE           (MAX_PACKET_SIZE - TDI_BITS_START)
+
+//static char *mpusb_vid_pid = "vid_04d8&amp;pid_000c";    // VID,PID for USB device (Microchip)
+static char *mpusbVidPid = "vid_04d8&amp;pid_ff8c";    // VID,PID for USB device (Microchip VID and XESS PID)
+static const char *mpusbEndpointNamePrefix = "\\MCHP_EP";
+
+HINSTANCE <a href="#" OnFocus="link('_member','mpusbapi_handle518908',this)">USBPort::mpusbapi_handle</a> = NULL;  // init API handle to NULL until the associated DLL is loaded
+
+// List of micro manufacturers used in the XESS USB peripherals.
+static char* manufacturerTbl[] =
+{
+    "UNKNOWN",
+    "Microchip",
+};
+
+
+/// Create a USB port object.
+<a href="#" OnFocus="link('_member','USBPort60241003',this)">USBPort::USBPort</a>(void)
+{
+    <a href="#" OnFocus="link('_member','instance518908',this)">instance</a> = USB_INVALID_INSTANCE;
+    <a href="#" OnFocus="link('_member','endpoint518908',this)">endpoint</a> = USB_INVALID_ENDPOINT;
+    <a href="#" OnFocus="link('_member','epOut518908',this)">epOut</a> = <a href="#" OnFocus="link('_member','epIn518908',this)">epIn</a> = INVALID_HANDLE_VALUE;
+}
+
+
+/// Create a USB port object.
+<a href="#" OnFocus="link('_member','USBPort60241003',this)">USBPort::USBPort</a>(<a href="#" OnFocus="link('_class','XSError0',this)">XSError</a> *e,   ///&lt; error reporting channel
+            int portNum,        ///&lt; number of USB port
+            int endptNum)       ///&lt; endpoint number
+{
+    <a href="#" OnFocus="link('_member','Setup4253302659',this)">Setup</a>(e,portNum,endptNum);
+}
+
+
+/// Destroy a USB port object.
+<a href="#" OnFocus="link('_member','tilde_USBPort60241003',this)">USBPort::~USBPort</a>(void)
+{
+    <a href="#" OnFocus="link('_member','Close60241003',this)">Close</a>();
+}
+
+
+/// Initialize a USB port object.
+///\return USB_SUCCESS or USB_FAILURE
+int <a href="#" OnFocus="link('_member','Setup4253302659',this)">USBPort::Setup</a>(<a href="#" OnFocus="link('_class','XSError0',this)">XSError</a> *e,   ///&lt; error reporting channel
+            int portNum,        ///&lt; number of USB port
+            int endptNum)       ///&lt; endpoint number
+{
+    <a href="#" OnFocus="link('_member','SetErr554478616',this)">SetErr</a>(e);
+    <a href="#" OnFocus="link('_member','instance518908',this)">instance</a> = <a href="#" OnFocus="link('_member','../xsatapi/portNum0',this)">portNum</a>;
+    <a href="#" OnFocus="link('_member','endpoint518908',this)">endpoint</a> = endptNum;
+    sprintf(endpointName,"%s%d", mpusbEndpointNamePrefix, endptNum);
+    <a href="#" OnFocus="link('_member','epOut518908',this)">epOut</a> = <a href="#" OnFocus="link('_member','epIn518908',this)">epIn</a> = INVALID_HANDLE_VALUE;
+    return <a href="#" OnFocus="link('_member','LoadMPUSBAPIDLL60241003',this)">LoadMPUSBAPIDLL</a>();
+}
+
+
+/// Set the error reporting channel.
+void <a href="#" OnFocus="link('_member','SetErr554478616',this)">USBPort::SetErr</a>(<a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>* e)
+{
+    <a href="#" OnFocus="link('_member','err518908',this)">err</a> = e;
+}
+
+
+/// Provide access to the error reporting channel.
+<a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','GetErr60241003',this)">USBPort::GetErr</a>(void)
+{
+    return *<a href="#" OnFocus="link('_member','err518908',this)">err</a>;
+}
+
+
+/// Load the DLL containing API subroutines that interface to the Microchip USB driver.
+///\return USB_SUCCESS or USB_FAILURE
+int <a href="#" OnFocus="link('_member','LoadMPUSBAPIDLL60241003',this)">USBPort::LoadMPUSBAPIDLL</a>(void)
+{
+    if(<a href="#" OnFocus="link('_member','mpusbapi_handle518908',this)">mpusbapi_handle</a> != NULL)
+        return USB_SUCCESS;
+
+    if((<a href="#" OnFocus="link('_member','mpusbapi_handle518908',this)">mpusbapi_handle</a> = LoadLibrary("mpusbapi")) == NULL)
+    {
+        <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a> <a href="#" OnFocus="link('_member','err518908',this)">err</a>(cerr);
+        string msg("Unable to load mpusbapi.dll.");
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorFatal,msg);
+    }
+
+    MPUSBGetDLLVersion=(DWORD(*)(void))\
+                GetProcAddress(mpusbapi_handle,"_MPUSBGetDLLVersion");
+    MPUSBGetDeviceCount=(DWORD(*)(PCHAR))\
+                GetProcAddress(mpusbapi_handle,"_MPUSBGetDeviceCount");
+    MPUSBOpen=(HANDLE(*)(DWORD,PCHAR,PCHAR,DWORD,DWORD))\
+                GetProcAddress(mpusbapi_handle,"_MPUSBOpen");
+    MPUSBWrite=(DWORD(*)(HANDLE,PVOID,DWORD,PDWORD,DWORD))\
+                GetProcAddress(mpusbapi_handle,"_MPUSBWrite");
+    MPUSBRead=(DWORD(*)(HANDLE,PVOID,DWORD,PDWORD,DWORD))\
+                GetProcAddress(mpusbapi_handle,"_MPUSBRead");
+    MPUSBReadInt=(DWORD(*)(HANDLE,PVOID,DWORD,PDWORD,DWORD))\
+                GetProcAddress(mpusbapi_handle,"_MPUSBReadInt");
+    MPUSBClose=(BOOL(*)(HANDLE))
+                GetProcAddress(mpusbapi_handle,"_MPUSBClose");
+
+    if((MPUSBGetDeviceCount == NULL) || (MPUSBOpen == NULL) ||
+        (MPUSBWrite == NULL) || (MPUSBRead == NULL) ||
+        (MPUSBClose == NULL) || (MPUSBGetDLLVersion == NULL) ||
+        (MPUSBReadInt == NULL))
+    {
+        <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a> <a href="#" OnFocus="link('_member','err518908',this)">err</a>(cerr);
+        string msg("Failed to find all needed procedures in mpusbapi.dll.");
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorFatal,msg);
+    }
+
+    return USB_SUCCESS;
+}
+
+
+static char versionString[6];
+
+/// Get the version of the Microchip USB driver API DLL.
+///\return string with the version number
+char* <a href="#" OnFocus="link('_member','GetMPUSBAPIDLLVersion60241003',this)">USBPort::GetMPUSBAPIDLLVersion</a>(void)
+{
+    if(<a href="#" OnFocus="link('_member','LoadMPUSBAPIDLL60241003',this)">LoadMPUSBAPIDLL</a>() != USB_SUCCESS)
+    {
+        <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a> <a href="#" OnFocus="link('_member','err518908',this)">err</a>(cerr);
+        string msg("Unable to load mpusbapi.dll.");
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorFatal,msg);
+    }
+    
+    DWORD <a href="#" OnFocus="link('_member','../xsatapi/version0',this)">version</a> = MPUSBGetDLLVersion();
+    sprintf(versionString,"%d.%d",version&gt;&gt;16,version&amp;0xFFFF);
+    return versionString;
+}
+
+
+/// Open input and output endpoints of a USB port object.
+///\return USB_SUCCESS or USB_FAILURE
+int <a href="#" OnFocus="link('_member','Open60241003',this)">USBPort::Open</a>(void)
+{
+    // open channel used to send to the USB device if it is not already opened
+    if(<a href="#" OnFocus="link('_member','epOut518908',this)">epOut</a> == INVALID_HANDLE_VALUE)
+    {
+        <a href="#" OnFocus="link('_member','epOut518908',this)">epOut</a> = MPUSBOpen(instance, mpusbVidPid, endpointName, MP_WRITE, 0);
+        if(<a href="#" OnFocus="link('_member','epOut518908',this)">epOut</a> == INVALID_HANDLE_VALUE)
+            return USB_FAILURE;
+    }
+
+    // open channel used to receive from the USB device if it is not already opened
+    if(<a href="#" OnFocus="link('_member','epIn518908',this)">epIn</a> == INVALID_HANDLE_VALUE)
+    {
+        <a href="#" OnFocus="link('_member','epIn518908',this)">epIn</a>  = MPUSBOpen(instance, mpusbVidPid, endpointName, MP_READ, 0);
+        if(<a href="#" OnFocus="link('_member','epIn518908',this)">epIn</a> == INVALID_HANDLE_VALUE)
+        {
+            MPUSBClose(epOut); // close first endpoint that was successfully opened
+            return USB_FAILURE;
+        }
+    }
+
+    return USB_SUCCESS;
+}
+
+
+/// Close the input and output endpoints of a USB port object.
+///\return USB_SUCCESS or USB_FAILURE
+int <a href="#" OnFocus="link('_member','Close60241003',this)">USBPort::Close</a>(void)
+{
+    int outClosed = MPUSBClose(epOut);
+    <a href="#" OnFocus="link('_member','epOut518908',this)">epOut</a> = INVALID_HANDLE_VALUE;
+    int inClosed  = MPUSBClose(epIn );
+    <a href="#" OnFocus="link('_member','epIn518908',this)">epIn</a>  = INVALID_HANDLE_VALUE;
+    return (outClosed &amp;&amp; inClosed) ? USB_SUCCESS : USB_FAILURE;
+}
+
+
+/// Send and (possibly) receive packets of data to/from a USB peripheral.
+///\return USB_SUCCESS or USB_FAILURE
+int <a href="#" OnFocus="link('_member','SendRcvPacket2960143232',this)">USBPort::SendRcvPacket</a>(unsigned char* sendData,   ///&lt; packet of bytes to send to USB peripheral
+                unsigned long  sendLength,  ///&lt; number of bytes to send
+                unsigned char* rcvData,     ///&lt; gets loaded with bytes received from the USB peripheral
+                unsigned long* rcvLength,   ///&lt; number of bytes received
+                bool checkFirstByte)        /// if true, sendData[0] is compared to rcvData[0] to see if they match
+{
+    unsigned long sentDataLength;
+    unsigned long expectedRcvLength = *rcvLength;
+    
+    if(<a href="#" OnFocus="link('_member','epOut518908',this)">epOut</a> == INVALID_HANDLE_VALUE || <a href="#" OnFocus="link('_member','epIn518908',this)">epIn</a> == INVALID_HANDLE_VALUE)
+        if(<a href="#" OnFocus="link('_member','Open60241003',this)">Open</a>() == USB_FAILURE)
+        {
+            string msg("Cannot open USB port.");
+            <a href="#" OnFocus="link('_member','GetErr60241003',this)">GetErr</a>().<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMinor,msg);
+            return USB_FAILURE;
+        }
+
+    if(<a href="#" OnFocus="link('_member','epOut518908',this)">epOut</a> != INVALID_HANDLE_VALUE &amp;&amp; <a href="#" OnFocus="link('_member','epIn518908',this)">epIn</a> != INVALID_HANDLE_VALUE)
+    {
+        if(MPUSBWrite(epOut, sendData, sendLength, &amp;sentDataLength, USB_TIMEOUT))
+        {
+            if(rcvData == NULL || expectedRcvLength == 0)
+                return USB_SUCCESS;
+            else
+            {
+                if(MPUSBRead(epIn, rcvData, expectedRcvLength, rcvLength, USB_TIMEOUT))
+                {
+                    if(*rcvLength == expectedRcvLength)
+                    {
+                        if(!checkFirstByte || rcvData[0] == sendData[0])
+                        {
+                            return USB_SUCCESS;
+                        }
+                        else
+                        {
+                            string msg("Command byte in received USB packet does not match.");
+                            <a href="#" OnFocus="link('_member','GetErr60241003',this)">GetErr</a>().<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMinor,msg);
+                            return USB_FAILURE;
+                        }
+                    }
+                    else
+                    {
+                        string msg("Received USB packet is too short.");
+                        <a href="#" OnFocus="link('_member','GetErr60241003',this)">GetErr</a>().<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMinor,msg);
+                        return USB_FAILURE;
+                    }
+                }
+                else
+                {
+                    TCHAR szBuf[80]; 
+                    LPVOID lpMsgBuf;
+                    DWORD dw = GetLastError(); 
+                    
+                    FormatMessage(
+                        FORMAT_MESSAGE_ALLOCATE_BUFFER | 
+                        FORMAT_MESSAGE_FROM_SYSTEM,
+                        NULL,
+                        dw,
+                        MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+                        (LPTSTR) &amp;lpMsgBuf,
+                        0, NULL );
+                    
+                    wsprintf(szBuf, 
+                        "failed with error %d: %s", 
+                        dw, lpMsgBuf); 
+                    
+                    TCHAR <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>[256];
+                    sprintf(errMsg,"MPUSBRead() failed: %s", lpMsgBuf);
+                    string msg(errMsg);
+                    <a href="#" OnFocus="link('_member','GetErr60241003',this)">GetErr</a>().<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMinor,msg);
+                    return USB_FAILURE;
+                }
+            }
+        }
+        else
+        {
+            TCHAR szBuf[80]; 
+            LPVOID lpMsgBuf;
+            DWORD dw = GetLastError(); 
+            
+            FormatMessage(
+                FORMAT_MESSAGE_ALLOCATE_BUFFER | 
+                FORMAT_MESSAGE_FROM_SYSTEM,
+                NULL,
+                dw,
+                MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+                (LPTSTR) &amp;lpMsgBuf,
+                0, NULL );
+            
+            wsprintf(szBuf, 
+                "failed with error %d: %s", 
+                dw, lpMsgBuf); 
+            
+            TCHAR <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>[256];
+            sprintf(errMsg,"MPUSBWrite() failed: %s", lpMsgBuf);
+            string msg(errMsg);
+            <a href="#" OnFocus="link('_member','GetErr60241003',this)">GetErr</a>().<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMinor,msg);
+            return USB_FAILURE;
+        }
+    }
+    else
+    {
+        string msg("Endpoint not open.");
+        <a href="#" OnFocus="link('_member','GetErr60241003',this)">GetErr</a>().<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMinor,msg);
+        return USB_FAILURE;
+    }
+
+    return USB_FAILURE;
+}
+
+
+/// Get information from the USB peripheral and store it in the USB port object.
+///\return USB_SUCCESS or USB_FAILURE
+int <a href="#" OnFocus="link('_member','GetInfo60241003',this)">USBPort::GetInfo</a>(void)
+{
+        // send the command the makes the USB device return its info
+        unsigned char infoCmd[] = {<a href="#" OnFocus="link('_member','INFO_CMD0',this)">INFO_CMD</a>,'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
+        unsigned char infoRcvd[USB_MAX_PACKET_SIZE];
+        unsigned long numBytesReceived = USB_MAX_PACKET_SIZE;
+        if(<a href="#" OnFocus="link('_member','SendRcvPacket2960143232',this)">SendRcvPacket</a>(infoCmd, sizeof(infoCmd), infoRcvd, &amp;numBytesReceived, true) == USB_FAILURE)
+        {
+            <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a> <a href="#" OnFocus="link('_member','err518908',this)">err</a>(cerr);
+            string msg("failed to get USB device info");
+            <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMinor,msg);
+            return USB_FAILURE;
+        }
+
+        // extract the information from the packet and store it
+
+        <a href="#" OnFocus="link('_member','manufacturer518908',this)">manufacturer</a> = infoRcvd[MANUFACTURER_START];
+
+        strncpy(firmwareVersion, (char*)infoRcvd+FIRMWARE_VERSION_START, FIRMWARE_VERSION_SIZE);
+        <a href="#" OnFocus="link('_member','firmwareVersion518908',this)">firmwareVersion</a>[FIRMWARE_VERSION_SIZE] = 0;
+
+        strncpy(serialNumber, (char*)infoRcvd+SERIAL_NUMBER_START, SERIAL_NUMBER_SIZE);
+        <a href="#" OnFocus="link('_member','serialNumber518908',this)">serialNumber</a>[SERIAL_NUMBER_SIZE] = 0;
+
+        <a href="#" OnFocus="link('_member','clockSpeed518908',this)">clockSpeed</a> = infoRcvd[CLOCK_SPEED_START] + infoRcvd[CLOCK_SPEED_START+1] * 256U;
+        <a href="#" OnFocus="link('_member','tckSpeed518908',this)">tckSpeed</a>   = infoRcvd[TCK_SPEED_START  ] + infoRcvd[TCK_SPEED_START  +1] * 256U;
+
+        return USB_SUCCESS;
+}
+
+
+/// Print the USB peripheral information.
+///\return reference to the output stream
+ostream&amp; <a href="#" OnFocus="link('_member','ReportInfo3525127220',this)">USBPort::ReportInfo</a>(ostream&amp; os) ///&lt; output stream that receives the information report
+{
+    os &lt;&lt; "Instance of USBJTAG device : " &lt;&lt; <a href="#" OnFocus="link('_member','instance518908',this)">instance</a>                        &lt;&lt; endl;
+    os &lt;&lt; "Manufacturer               : " &lt;&lt; manufacturerTbl[<a href="#" OnFocus="link('_member','manufacturer518908',this)">manufacturer</a>]   &lt;&lt; endl;
+    os &lt;&lt; "Firmware Version           : " &lt;&lt; <a href="#" OnFocus="link('_member','firmwareVersion518908',this)">firmwareVersion</a>                 &lt;&lt; endl;
+    os &lt;&lt; "Serial Number              : " &lt;&lt; <a href="#" OnFocus="link('_member','serialNumber518908',this)">serialNumber</a>                    &lt;&lt; endl;
+    os &lt;&lt; "Clock Speed                : " &lt;&lt; <a href="#" OnFocus="link('_member','clockSpeed518908',this)">clockSpeed</a> / 10 &lt;&lt; " MHz"       &lt;&lt; endl;
+    os &lt;&lt; "TCK Speed                  : " &lt;&lt; <a href="#" OnFocus="link('_member','tckSpeed518908',this)">tckSpeed</a> / 10 &lt;&lt; " MHz"         &lt;&lt; endl;
+    return os;
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_file','_source');
+</script>

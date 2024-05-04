@@ -1,0 +1,116 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - ReadFlashByte</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">ReadFlashByte</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_class','FlashPort0',this)" class="pathLink">FlashPort</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">ReadFlashByte</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','ReadFlashByte2991806353','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_member','ReadFlashByte2991806353','_source',this)" class="tabLinkActive">Source</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','ReadFlashByte2991806353','_callgraph',this)" class="tabLinkInActive">Call Graph</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<div class="paragraph2NoTopPadding">Start Line: 431</div>
+<pre class="codeExamples">
+bool <a href="#" OnFocus="link('_member','ReadFlashByte2991806353',this)">FlashPort::ReadFlashByte</a>(unsigned int address, unsigned int *b, bool bigEndianBytes, bool bigEndianBits)
+{
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posRESET,posRESET);  // reset the downloading state machine
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posCLK,posCLK);      // force clock high
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posRESET,posRESET);  // release the reset
+
+    int status = <a href="#" OnFocus="link('_member','In1210046855',this)">In</a>(posDILSB,posDIMSB);
+//  assert(status==0);
+    if(status != 0)
+        return false;
+
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>((address&gt;&gt;20)&amp;0xf,posDOLSB,posDOMSB);
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posCLK,posCLK);  // latch address bits A23-A20 into downloading circuit
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posCLK,posCLK);
+    
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>((address&gt;&gt;16)&amp;0xf,posDOLSB,posDOMSB);
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posCLK,posCLK);  // latch address bits A19-A16 into downloading circuit
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posCLK,posCLK);
+    
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>((address&gt;&gt;12)&amp;0xf,posDOLSB,posDOMSB);
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posCLK,posCLK);  // latch address bits A15-A12 into downloading circuit
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posCLK,posCLK);
+    
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>((address&gt;&gt; 8)&amp;0xf,posDOLSB,posDOMSB);
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posCLK,posCLK);  // latch address bits A11-A8 into downloading circuit
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posCLK,posCLK);
+
+    status = <a href="#" OnFocus="link('_member','In1210046855',this)">In</a>(posDILSB,posDIMSB);
+//  assert(status==1);
+    if(status != 1)
+        return false;
+    
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>((address&gt;&gt; 4)&amp;0xf,posDOLSB,posDOMSB);
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posCLK,posCLK);  // latch address bits A7-A4 into downloading circuit
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posCLK,posCLK);
+
+    status = <a href="#" OnFocus="link('_member','In1210046855',this)">In</a>(posDILSB,posDIMSB);
+//  assert(status==2);
+    if(status != 2)
+        return false;
+    
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>( address     &amp;0xf,posDOLSB,posDOMSB);
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posCLK,posCLK);      // latch address bits A3-A0 into downloading circuit
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posCLK,posCLK);
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posCLK,posCLK);
+
+    status = <a href="#" OnFocus="link('_member','In1210046855',this)">In</a>(posDILSB,posDIMSB);
+//  assert(status==3);
+    if(status != 3)
+        return false;
+
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posRESET,posRESET);  // reset the downloading state machine
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posRESET,posRESET);  // release the reset
+
+    status = <a href="#" OnFocus="link('_member','In1210046855',this)">In</a>(posDILSB,posDIMSB);
+//  assert(status==0);
+    if(status != 0)
+        return false;
+
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>((address&gt;&gt;20)&amp;0xf,posDOLSB,posDOMSB);
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posCLK,posCLK);  // latch address bits A23-A20 into downloading circuit
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posCLK,posCLK);
+    // read upper 3 bits of RAM data from previously loaded address
+    unsigned int <a href="#" OnFocus="link('_member','../xsatapi/data0',this)">data</a> = <a href="#" OnFocus="link('_member','In1210046855',this)">In</a>(posDILSB,posDIMSB);    
+
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>((address&gt;&gt;16)&amp;0xf,posDOLSB,posDOMSB);
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posCLK,posCLK);  // latch address bits A19-A16 into downloading circuit
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posCLK,posCLK);
+    // read middle 3 bits of RAM data from previously loaded address
+    <a href="#" OnFocus="link('_member','../xsatapi/data0',this)">data</a> = (<a href="#" OnFocus="link('_member','../xsatapi/data0',this)">data</a>&lt;&lt;3) | (<a href="#" OnFocus="link('_member','In1210046855',this)">In</a>(posDILSB,posDIMSB) &amp; 0x7);
+
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>((address&gt;&gt;12)&amp;0xf,posDOLSB,posDOMSB);
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posCLK,posCLK);  // latch address bits A15-A12 into downloading circuit
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posCLK,posCLK);
+    // read lowest 2 bits of RAM data from previously loaded address
+    <a href="#" OnFocus="link('_member','../xsatapi/data0',this)">data</a> = (<a href="#" OnFocus="link('_member','../xsatapi/data0',this)">data</a>&lt;&lt;2) | (<a href="#" OnFocus="link('_member','In1210046855',this)">In</a>(posDILSB,posDIMSB) &amp; 0x3);
+
+    *b = <a href="#" OnFocus="link('_member','RearrangeData127079845',this)">RearrangeData</a>(data,8,bigEndianBytes,bigEndianBits);
+    return true;
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_member','_source');
+</script>

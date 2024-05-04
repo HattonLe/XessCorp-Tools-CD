@@ -1,0 +1,56 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - SingleIO</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">SingleIO</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_class','USBJTAG0',this)" class="pathLink">USBJTAG</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">SingleIO</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','SingleIO992449150','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_member','SingleIO992449150','_source',this)" class="tabLinkActive">Source</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','SingleIO992449150','_callgraph',this)" class="tabLinkInActive">Call Graph</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<div class="paragraph2NoTopPadding">Start Line: 267</div>
+<pre class="codeExamples">
+int <a href="#" OnFocus="link('_member','SingleIO992449150',this)">USBJTAG::SingleIO</a>(int tms, int tdi, int readTDO)
+{
+    unsigned char tmsTdi[2];
+    tmsTdi[1]= ((tdi &amp; 1) &lt;&lt; 1) | (tms &amp; 1);
+    if(!readTDO)
+    {
+        unsigned long rcvLength = 0;
+        tmsTdi[0] = <a href="#" OnFocus="link('_member','TMS_TDI_CMD0',this)">TMS_TDI_CMD</a>;
+        <a href="#" OnFocus="link('_member','SendRcvPacket2960143232',this)">SendRcvPacket</a>(tmsTdi, 2, NULL, &amp;rcvLength, true);
+        return 0;
+    }
+    else
+    {
+        unsigned char tdo[2];
+        unsigned long rcvLength = 2;
+        tmsTdi[0] = <a href="#" OnFocus="link('_member','TMS_TDI_TDO_CMD0',this)">TMS_TDI_TDO_CMD</a>;
+        <a href="#" OnFocus="link('_member','SendRcvPacket2960143232',this)">SendRcvPacket</a>(tmsTdi, 2, tdo, &amp;rcvLength, true);
+        return (tdo[1]&gt;&gt;2) &amp; 1;
+    }
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_member','_source');
+</script>

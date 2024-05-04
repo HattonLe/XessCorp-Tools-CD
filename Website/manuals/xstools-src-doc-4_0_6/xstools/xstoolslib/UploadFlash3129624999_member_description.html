@@ -1,0 +1,153 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - UploadFlash</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">UploadFlash</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_class','XSVBoard0',this)" class="pathLink">XSVBoard</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">UploadFlash</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_member','UploadFlash3129624999','_description',this)" class="tabLinkActive">Description</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','UploadFlash3129624999','_source',this)" class="tabLinkInActive">Source</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','UploadFlash3129624999','_callgraph',this)" class="tabLinkInActive">Call Graph</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<span class="paragraph1">XSVBoard::UploadFlash</span>
+<span class="padding">( Public Method  )</span>
+<div class="paragraph2">Upload XESS board Flash from loAddr to hiAddr into a hex file.</div>
+<div class="padding">&nbsp;</div>
+<table cellspacing=0 cellpadding=0 border=0 class="widthAndBorderTop" height=1>
+<TR><TD height=1 width=100% class="oneLine"></TD></TR></TABLE>
+<div class="paragraph2"><span id="descFunSynExpSpan" style="display:none;visibility:hidden"><a href="javascript:showElement( 'descFunSynColSpan' );javascript:hideElement( 'descFunSynExpSpan' );javascript:showElement( 'descFunSyn' );javascript:setMyCookie( cookieName, 'descFunSyn', 'show' );"><img src="../../common/expand.gif" border=0></a></span><span id="descFunSynColSpan"><a href="javascript:showElement( 'descFunSynExpSpan' );javascript:hideElement( 'descFunSynColSpan' );javascript:hideElement( 'descFunSyn' );javascript:setMyCookie( cookieName, 'descFunSyn', 'hide' );"><img src="../../common/collapse.gif" border=0></a></span>
+Syntax / parameters</div>
+<div id="descFunSyn" class="paddingMembersTableDiv"><table cellspacing=0 cellpadding=0 border=0 class="widthAndBorderMembers">
+<TR VALIGN="top"><TD class="paddingHeadMultiColumn2"><span class="codeFont">bool UploadFlash(string &fileName, const char *format, unsigned int loAddr, unsigned int hiAddr, bool bigEndianBytes, bool bigEndianBits, bool doStart, bool doEnd)</span></TD></TR></TABLE>
+<br><table cellspacing=0 cellpadding=0 border=0 class="widthAndBorderMembers">
+<TR VALIGN="top">
+<TD width=20% class="paddingHeadMultiColumn1">Name</TD>
+<TD class="paddingHeadMultiColumn1" nowrap>Type</TD>
+<TD class="paddingHeadMultiColumn1" nowrap>Default</TD>
+<TD width=80% class="paddingHeadMultiColumn2">Description</TD>
+</TR>
+<TR VALIGN="top">
+<TD class="paddingNormal1"><span class="codeFont">fileName</span></TD>
+<TD class="paddingNormal1" nowrap><span class="codeFont">string &amp; <br>
+</span></TD>
+<TD class="paddingNormal1" nowrap><span class="codeFont">&nbsp;</span></TD>
+<TD class="paddingNormal2">store uploaded <a href="#" OnFocus="link('_member','../xsusb/data0',this)">data</a> in this EXO, MCS or XES hex file <br>
+</TD>
+</TR>
+<TR VALIGN="top">
+<TD class="paddingNormal1"><span class="codeFont">format</span></TD>
+<TD class="paddingNormal1" nowrap><span class="codeFont">const char * <br>
+</span></TD>
+<TD class="paddingNormal1" nowrap><span class="codeFont">&nbsp;</span></TD>
+<TD class="paddingNormal2">select hex file format - Intel mcs, Moto exo, or XESS xes <br>
+</TD>
+</TR>
+<TR VALIGN="top">
+<TD class="paddingNormal1"><span class="codeFont">loAddr</span></TD>
+<TD class="paddingNormal1" nowrap><span class="codeFont">unsigned int <br>
+</span></TD>
+<TD class="paddingNormal1" nowrap><span class="codeFont">&nbsp;</span></TD>
+<TD class="paddingNormal2">lower address of RAM <a href="#" OnFocus="link('_member','../xsusb/data0',this)">data</a> (inclusive) <br>
+</TD>
+</TR>
+<TR VALIGN="top">
+<TD class="paddingNormal1"><span class="codeFont">hiAddr</span></TD>
+<TD class="paddingNormal1" nowrap><span class="codeFont">unsigned int <br>
+</span></TD>
+<TD class="paddingNormal1" nowrap><span class="codeFont">&nbsp;</span></TD>
+<TD class="paddingNormal2">upper address of RAM <a href="#" OnFocus="link('_member','../xsusb/data0',this)">data</a> (inclusive) <br>
+</TD>
+</TR>
+<TR VALIGN="top">
+<TD class="paddingNormal1"><span class="codeFont">bigEndianBytes</span></TD>
+<TD class="paddingNormal1" nowrap><span class="codeFont">bool <br>
+</span></TD>
+<TD class="paddingNormal1" nowrap><span class="codeFont">&nbsp;</span></TD>
+<TD class="paddingNormal2">if true, <a href="#" OnFocus="link('_member','../xsusb/data0',this)">data</a> is stored in RAM with most-significant byte at lower address <br>
+</TD>
+</TR>
+<TR VALIGN="top">
+<TD class="paddingNormal1"><span class="codeFont">bigEndianBits</span></TD>
+<TD class="paddingNormal1" nowrap><span class="codeFont">bool <br>
+</span></TD>
+<TD class="paddingNormal1" nowrap><span class="codeFont">&nbsp;</span></TD>
+<TD class="paddingNormal2">if true, <a href="#" OnFocus="link('_member','../xsusb/data0',this)">data</a> is stored in RAM with most-significant bit in position 0 <br>
+</TD>
+</TR>
+<TR VALIGN="top">
+<TD class="paddingNormal1"><span class="codeFont">doStart</span></TD>
+<TD class="paddingNormal1" nowrap><span class="codeFont">bool <br>
+</span></TD>
+<TD class="paddingNormal1" nowrap><span class="codeFont">&nbsp;</span></TD>
+<TD class="paddingNormal2">perform startup operations for Flash uploads <br>
+</TD>
+</TR>
+<TR VALIGN="top">
+<TD class="paddingNormal1"><span class="codeFont">doEnd</span></TD>
+<TD class="paddingNormal1" nowrap><span class="codeFont">bool <br>
+</span></TD>
+<TD class="paddingNormal1" nowrap><span class="codeFont">&nbsp;</span></TD>
+<TD class="paddingNormal2">perform terminating operations for Flash uploads <br>
+</TD>
+</TR>
+<TR VALIGN="top">
+<TD class="paddingHeadBlank" colspan=4>&nbsp;</TD>
+</TR>
+<TR VALIGN="top">
+<TD width=20% class="paddingHeadMultiColumn1">Return value</TD>
+<TD class="paddingNormal1" nowrap><span class="codeFont">bool <br>
+</span></TD>
+<TD class="paddingNormal1" nowrap>&nbsp;</TD>
+<TD width=80% class="paddingNormal2">true if the <a href="#" OnFocus="link('_member','../xsusb/operation0',this)">operation</a> was successful, false otherwise <br>
+</TD>
+</TR>
+</TABLE>
+</div>
+<div class="paragraph2">Description</div>
+<div id="descDesc" class="paddingMembers">Upload XESS board Flash from <a href="#" OnFocus="link('_member','../xsramtest/loAddr0',this)">loAddr</a> to <a href="#" OnFocus="link('_member','../xsramtest/hiAddr0',this)">hiAddr</a> into a hex file. This method uploads <a href="#" OnFocus="link('_member','../xsusb/data0',this)">data</a> between the upper and lower addresses (inclusive) from the XESS Board Flash and stores it in a HEX file in Intel, Motorola or XESS format.<br>
+<br>
+<br>
+</div>
+<div class="paragraph2"><span id="descReImpExpSpan" style="display:none;visibility:hidden"><a href="javascript:showElement( 'descReImpColSpan' );javascript:hideElement( 'descReImpExpSpan' );javascript:showElement( 'descReImp' );javascript:setMyCookie( cookieName, 'descReImp', 'show' );"><img src="../../common/expand.gif" border=0></a></span><span id="descReImpColSpan"><a href="javascript:showElement( 'descReImpExpSpan' );javascript:hideElement( 'descReImpColSpan' );javascript:hideElement( 'descReImp' );javascript:setMyCookie( cookieName, 'descReImp', 'hide' );"><img src="../../common/collapse.gif" border=0></a></span>
+Reimplements</div>
+<div id="descReImp" class="paddingMembersTableDiv"><table cellspacing=0 cellpadding=0 border=0 class="widthAndBorderMembers">
+<TR VALIGN="top">
+<TD width=20% class="paddingHeadMultiColumn1">Name</TD>
+<TD width=80% class="paddingHeadMultiColumn2">Brief description</TD>
+</TR>
+<TR VALIGN="top">
+<TD class="paddingNormal1"><a href="#" OnFocus="link('_member','UploadFlash1330229625',this)">XSBoard::UploadFlash</a></TD>
+<TD class="paddingNormal2">Upload XESS board Flash from <a href="#" OnFocus="link('_member','../xsramtest/loAddr0',this)">loAddr</a> to <a href="#" OnFocus="link('_member','../xsramtest/hiAddr0',this)">hiAddr</a> into a hex file. <br>
+</TD>
+</TR>
+</table>
+</div>
+<div class="padding">&nbsp;</div>
+<table cellspacing=0 cellpadding=0 border=0 class="widthAndBorderTop" height=1>
+<TR><TD height=1 width=100% class="oneLine"></TD></TR></TABLE>
+<div class="paragraph2">Source</div>
+<div class="paddingMembers">The documentation for this Member was generated from the following file:</div>
+<div class="paddingMembers"><LI><a href="#" OnFocus="link('_file','xsboard_h0',this)">xsboard.h</a><br></div>
+<div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_member','_description');
+</script>

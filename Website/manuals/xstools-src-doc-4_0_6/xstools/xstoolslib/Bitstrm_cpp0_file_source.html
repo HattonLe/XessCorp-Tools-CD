@@ -1,0 +1,573 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - bitstrm.cpp</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">bitstrm.cpp</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">bitstrm.cpp</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','bitstrm_cpp0','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','bitstrm_cpp0','_overview',this)" class="tabLinkInActive">Overview</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','bitstrm_cpp0','_includedfiles',this)" class="tabLinkInActive">Included files</a></span>
+<span class="tabInActiveGrayout"><span class="tabLinkGrayout">Included by</span></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_file','bitstrm_cpp0','_source',this)" class="tabLinkActive">Source</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<pre class="codeExamples">
+/*----------------------------------------------------------------------------------
+  SOFTWARE LICENSE AGREEMENT
+    1.  Permission to use, copy, modify, and distribute this software
+        and its documentation, with or without modification, for any
+        purpose and without fee or royalty is hereby granted, provided
+        that you include the following on ALL copies of the software
+        and documentation or portions thereof, including
+        modifications, that you make:
+
+            a.  The full text of this license in a location viewable to users
+            of the redistributed or derivative work.
+
+            b.  Notice of any changes or modifications to the files,
+            including the date changes were made.
+
+    2.  The name, servicemarks and trademarks of X Engineering
+        Software Systems Corp. may NOT be used in advertising or
+        publicity pertaining to the software without specific, written
+        prior permission.
+
+    3.  Title to copyright in this software and any associated
+        documentation will at all times remain with X Engineering
+        Software Systems Corp.
+
+    4.  THIS SOFTWARE AND DOCUMENTATION IS PROVIDED "AS IS," AND X
+        Engineering Software Systems Corp MAKES NO REPRESENTATIONS OR
+        WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO,
+        WARRANTIES OF MERCHANTABILITY OR FITNESS FOR ANY PARTICULAR
+        PURPOSE OR THAT THE USE OF THE SOFTWARE OR DOCUMENTATION WILL
+        NOT INFRINGE ANY THIRD PARTY PATENTS, COPYRIGHTS, TRADEMARKS
+        OR OTHER RIGHTS.
+
+    5.  X Engineering Software Systems Corp WILL NOT BE LIABLE FOR ANY
+        DAMAGES, INCLUDING BUT NOT LIMITED TO, DIRECT, INDIRECT,
+        SPECIAL OR CONSEQUENTIAL, ARISING OUT OF ANY USE OF THE
+        SOFTWARE OR DOCUMENTATION.
+
+  ©2006 - X Engineering Software Systems Corp.  All rights reserved.
+----------------------------------------------------------------------------------*/
+
+
+#include &lt;cctype&gt;
+#include &lt;cstdarg&gt;
+#include &lt;cassert&gt;
+
+#include "<a href="#" OnFocus="link('_file','bitstrm_h0',this)">bitstrm.h</a>"
+#include "<a href="#" OnFocus="link('_file','utils_h0',this)">utils.h</a>"
+
+#define MIN(a,b) ((a)&lt;(b) ? (a):(b))
+#define NUM_OF_WORDS(numBits)   ((numBits-(numBits?1:0))/bitsPerLong+1)
+
+static const unsigned int charsPerLong      = sizeof(unsigned long)/sizeof(char);
+static const unsigned int nybblesPerLong    = 2 * charsPerLong;
+static const unsigned int bitsPerLong       = 8 * charsPerLong;
+
+
+/// Allocates a bitstream containing at least n bits.
+<a href="#" OnFocus="link('_member','Bitstream2805767469',this)">Bitstream::Bitstream</a>(unsigned int n) ///&lt; length of bitstream
+{
+    <a href="#" OnFocus="link('_member','numBits203865993',this)">numBits</a> = n;       // remember number of bits in the bitstream
+    unsigned int numWords = NUM_OF_WORDS(numBits); // number of words to store it
+    <a href="#" OnFocus="link('_member','bits203865993',this)">bits</a> = new unsigned long[numWords]; // allocate storage
+    assert(bits!=NULL);                 // make sure storage was allocated
+    for( unsigned int i=0; i&lt;numWords; i++ )
+        <a href="#" OnFocus="link('_member','bits203865993',this)">bits</a>[i] = 0;    // clear all bits in stream to 0
+}
+
+
+/// Frees the storage used by a bitstream.
+<a href="#" OnFocus="link('_member','tilde_Bitstream2605346622',this)">Bitstream::~Bitstream</a>(void)
+{
+    delete <a href="#" OnFocus="link('_member','bits203865993',this)">bits</a>;
+    <a href="#" OnFocus="link('_member','bits203865993',this)">bits</a> = NULL;
+}
+
+
+/// Returns the number of bits in the bitstream.
+unsigned int <a href="#" OnFocus="link('_member','GetLength2106616265',this)">Bitstream::GetLength</a>(void) const
+{
+    return <a href="#" OnFocus="link('_member','numBits203865993',this)">numBits</a>;
+}
+
+
+/// Resizes a bitstream while keeping the current bitstream contents.
+///\return true if successful, false if not.
+bool <a href="#" OnFocus="link('_member','Resize2805767469',this)">Bitstream::Resize</a>(unsigned int n) ///&lt; new size of bitstream
+{
+    unsigned int numWords = NUM_OF_WORDS(numBits);
+    unsigned int newNumWords = NUM_OF_WORDS(n);
+    unsigned long *newBits = new unsigned long[newNumWords];
+
+    unsigned i;
+    for(i=0; i&lt;MIN(numWords,newNumWords); i++)
+        newBits[i] = <a href="#" OnFocus="link('_member','bits203865993',this)">bits</a>[i];
+    for( ; i&lt;newNumWords; i++)
+        newBits[i] = 0;
+    delete <a href="#" OnFocus="link('_member','bits203865993',this)">bits</a>;
+    <a href="#" OnFocus="link('_member','bits203865993',this)">bits</a> = newBits;
+    <a href="#" OnFocus="link('_member','numBits203865993',this)">numBits</a> = n;
+    return true;
+}
+
+
+/// Compares two bitstreams.
+///\return true if bitstreams match, false if not.
+bool <a href="#" OnFocus="link('_member','operatoreq_eq_233187935',this)">Bitstream::operator==</a>(<a href="#" OnFocus="link('_class','Bitstream0',this)">Bitstream</a>&amp; b2) const
+{
+    if(b2.<a href="#" OnFocus="link('_member','numBits203865993',this)">numBits</a>!=<a href="#" OnFocus="link('_member','numBits203865993',this)">numBits</a>)   // can't be equal unless same length
+        return false;
+    for(unsigned int i=NUM_OF_WORDS(numBits); i&gt;0; i--)
+        if(<a href="#" OnFocus="link('_member','bits203865993',this)">bits</a>[i-1]!=b2.<a href="#" OnFocus="link('_member','bits203865993',this)">bits</a>[i-1])     // compare word-by-word
+            return false;   // failed - bits don't match
+        return true;    // ok, they must be equal
+}
+
+
+/// Compares the end of 1st bitstream against a subfield of 2nd bitstream
+///\return true if bitstreams match, false if not.
+bool <a href="#" OnFocus="link('_member','Subcompare2301990008',this)">Bitstream::Subcompare</a>(unsigned int pos, ///&lt; position in 1st bitstream
+                           <a href="#" OnFocus="link('_class','Bitstream0',this)">Bitstream</a>&amp; b2,        ///&lt; 2nd bitstream
+                           unsigned int b2Pos /**&lt; position in 2nd bitstream */) const
+{
+    assert(pos&lt;numBits);       // field 1 goes from pos -&gt; numBits
+    assert(b2Pos&lt;b2.numBits);   // field 2 goes from b2pos -&gt; b2.<a href="#" OnFocus="link('_member','numBits203865993',this)">numBits</a>
+    if(numBits-pos &gt; b2.<a href="#" OnFocus="link('_member','numBits203865993',this)">numBits</a>-b2Pos)
+        return false;     // no match - field 1 longer than field 2
+    unsigned int i,j;
+    for(i=pos, j=b2Pos; i&lt;numBits; i++,j++)
+        if((*this)[i]!=b2[j])
+            return false;   // no match - one or more bits don't match
+        return true;    // got through the whole thing, so streams match
+}
+
+
+/// Copies contents of one bitstream into another (also adjusts size).
+<a href="#" OnFocus="link('_class','Bitstream0',this)">Bitstream</a>&amp; <a href="#" OnFocus="link('_member','operatoreq_233097660',this)">Bitstream::operator=</a>(<a href="#" OnFocus="link('_class','Bitstream0',this)">Bitstream</a>&amp; b2)
+{
+    unsigned int numWords2 = NUM_OF_WORDS(b2.<a href="#" OnFocus="link('_member','numBits203865993',this)">numBits</a>); // # words in b2
+    if(NUM_OF_WORDS(numBits) != numWords2)  // compare # words in b1 to b2
+    { // change size of b1 bitstream to match b2            
+        delete <a href="#" OnFocus="link('_member','bits203865993',this)">bits</a>;
+        <a href="#" OnFocus="link('_member','bits203865993',this)">bits</a> = new unsigned long[numWords2];
+        assert(bits!=NULL);
+    }
+    <a href="#" OnFocus="link('_member','numBits203865993',this)">numBits</a> = b2.<a href="#" OnFocus="link('_member','numBits203865993',this)">numBits</a>;
+    for(unsigned int i=0; i&lt;numWords2; i++)
+        <a href="#" OnFocus="link('_member','bits203865993',this)">bits</a>[i] = b2.<a href="#" OnFocus="link('_member','bits203865993',this)">bits</a>[i]; // copy b2 to b1 word-by-word
+    return *this;
+}
+
+
+/// Makes a new copy of a bitstream.
+///\return Pointer to copy of bitstream.
+<a href="#" OnFocus="link('_class','Bitstream0',this)">Bitstream</a>* <a href="#" OnFocus="link('_member','Copy2605346622',this)">Bitstream::Copy</a>(void)
+{
+    <a href="#" OnFocus="link('_class','Bitstream0',this)">Bitstream</a>* bcopy = new <a href="#" OnFocus="link('_member','Bitstream2805767469',this)">Bitstream</a>(numBits);    // make a new bitstream of the same size
+    *bcopy = *this;     // copy contents of original to new bitstream
+    return bcopy;
+}
+
+
+/// Gets the value of a bit from a bitstream.
+unsigned int <a href="#" OnFocus="link('_member','operatorl_brack_r_brack_2805758212',this)">Bitstream::operator[]</a>(unsigned int bitIndex /**&lt; index into bitstream (0 is index of first bit) */) const 
+{
+    unsigned int wordIndex = bitIndex / bitsPerLong;    // word containing the bit
+    unsigned int shift     = bitIndex % bitsPerLong;    // bit position within word
+    
+    // now get the word and shift it so the requested bit is in the LSB.
+    // Then mask off the rest and return just a 1 or a 0.
+    return ((<a href="#" OnFocus="link('_member','bits203865993',this)">bits</a>[wordIndex]&gt;&gt;shift) &amp; 1L);
+}
+
+
+/// Clear a bitstream to all zeroes.
+void <a href="#" OnFocus="link('_member','Clear2605346622',this)">Bitstream::Clear</a>(void)
+{
+    // count from numWords down to 1
+    for(unsigned int i=NUM_OF_WORDS(numBits); i&gt;0; )
+        <a href="#" OnFocus="link('_member','bits203865993',this)">bits</a>[--i] = 0; // decrement before access since index is numWords-1 to 0
+}
+
+
+/// Sets the value of a bit in a bitstream.
+void <a href="#" OnFocus="link('_member','SetBit2908394482',this)">Bitstream::SetBit</a>( unsigned int bitIndex,   // position to set
+                       unsigned int val         // value to set bit
+                       )
+{
+    assert(bitIndex&lt;numBits);
+    unsigned int wordIndex = bitIndex / bitsPerLong;  // index of word containing bit
+    unsigned long bitMask  = 1L &lt;&lt; (bitIndex % bitsPerLong);
+    
+    <a href="#" OnFocus="link('_member','bits203865993',this)">bits</a>[wordIndex] &amp;= ~bitMask;  // force selected bit to zero
+    if(val)
+        <a href="#" OnFocus="link('_member','bits203865993',this)">bits</a>[wordIndex] |= bitMask; // then set it if the input value is 1
+}
+
+
+/// Sets the value of multiple bits in a bitstream.  End the string of bit values with a number that is neither 0 or 1.
+void <a href="#" OnFocus="link('_member','SetBits2734584593',this)">Bitstream::SetBits</a>( unsigned int bitIndex,   ///&lt; position to start changing bits
+                        int firstBit, ...)      ///&lt; list of bit values
+{
+    int bit;
+    // progress through the states until a -1 is seen (this ends the string)
+    va_list ap;
+    for(va_start(ap,firstBit),bit=firstBit;  bit==0 || bit==1; bit=va_arg(ap,int))
+        <a href="#" OnFocus="link('_member','SetBit2908394482',this)">SetBit</a>(bitIndex++,(unsigned int)bit);
+    va_end(ap);
+}
+
+
+/// XOR two bitstreams.
+///\return the resulting bitstream.
+<a href="#" OnFocus="link('_class','Bitstream0',this)">Bitstream</a>&amp; <a href="#" OnFocus="link('_member','operatorsirq_233187935',this)">Bitstream::operator^</a>(<a href="#" OnFocus="link('_class','Bitstream0',this)">Bitstream</a>&amp; b2) const
+{
+    assert(numBits==b2.<a href="#" OnFocus="link('_member','numBits203865993',this)">numBits</a>); // operands must have the same size
+    <a href="#" OnFocus="link('_class','Bitstream0',this)">Bitstream</a>&amp; result = *(new <a href="#" OnFocus="link('_member','Bitstream2805767469',this)">Bitstream</a>(numBits));  // result is same size as operands
+    unsigned int numWords = NUM_OF_WORDS(numBits);
+    
+    // store a 1 in the result anywhere the two bitstreams differ
+    for(unsigned int i=0; i&lt;numWords; i++)
+        result.bits[i] = <a href="#" OnFocus="link('_member','bits203865993',this)">bits</a>[i] ^ b2.<a href="#" OnFocus="link('_member','bits203865993',this)">bits</a>[i];  // XOR word-by-word
+    return result;
+}
+
+
+/// Concatenate two bitstreams.
+///\return the concatenated bitstream.
+<a href="#" OnFocus="link('_class','Bitstream0',this)">Bitstream</a>&amp; <a href="#" OnFocus="link('_member','operatorplus_233187935',this)">Bitstream::operator+</a>(<a href="#" OnFocus="link('_class','Bitstream0',this)">Bitstream</a>&amp; b2) const
+{
+    <a href="#" OnFocus="link('_class','Bitstream0',this)">Bitstream</a>&amp; sum = *(new <a href="#" OnFocus="link('_member','Bitstream2805767469',this)">Bitstream</a>(numBits + b2.<a href="#" OnFocus="link('_member','numBits203865993',this)">numBits</a>));
+    int i, j;
+    for(i=sum.numBits-1, j=<a href="#" OnFocus="link('_member','numBits203865993',this)">numBits</a>-1; j&gt;=0; i--,j-- )
+        sum.<a href="#" OnFocus="link('_member','SetBit2908394482',this)">SetBit</a>(i,(*this)[j]);
+    assert(j== -1);
+    for( j=b2.<a href="#" OnFocus="link('_member','numBits203865993',this)">numBits</a>-1; j&gt;=0; i--,j-- )
+        sum.SetBit(i,b2[j]);
+    assert(i== -1);
+    assert(j== -1);
+    return sum;
+}
+
+
+/// Remove padding bits on the right-end of a bitstream.
+void <a href="#" OnFocus="link('_member','ShiftRight2805767469',this)">Bitstream::ShiftRight</a>(unsigned int rightShift)
+{
+    // exit if nothing to do
+    if(rightShift == 0)
+        return;
+
+    // first, remove chunks of bits on the right
+    unsigned int numWords = NUM_OF_WORDS(numBits);
+    unsigned int numPaddingWords = rightShift / bitsPerLong;
+    if(numPaddingWords &gt; 0)
+    {
+        for(unsigned int i=0, j=numPaddingWords; j&lt;numWords; i++,j++)
+            <a href="#" OnFocus="link('_member','bits203865993',this)">bits</a>[i] = <a href="#" OnFocus="link('_member','bits203865993',this)">bits</a>[j];
+    }
+
+    // then right shift bits between chunks to get the final result
+    rightShift %= bitsPerLong;
+    unsigned long a;
+    unsigned int leftShift = bitsPerLong - rightShift;
+    int i;
+    for(i=0; i&lt;numWords-1; i++)
+    {
+        a = <a href="#" OnFocus="link('_member','bits203865993',this)">bits</a>[i+1];
+        <a href="#" OnFocus="link('_member','bits203865993',this)">bits</a>[i] = (<a href="#" OnFocus="link('_member','bits203865993',this)">bits</a>[i]&gt;&gt;rightShift) | (a&lt;&lt;leftShift);
+    }
+
+    // right shift the last chunk
+    <a href="#" OnFocus="link('_member','bits203865993',this)">bits</a>[i] &gt;&gt;= rightShift;
+}
+
+
+// Reverse bits in a long.
+static unsigned long <a href="#" OnFocus="link('_member','ReverseLongBits2590682239',this)">ReverseLongBits</a>(unsigned long l)
+{
+    // Reverse a long byte-by-byte while reversing the bits within each byte.
+    unsigned char *p1 = (unsigned char*)&amp;l;                     // ptr to first byte of long
+    unsigned char *p2 = (unsigned char*)&amp;l + charsPerLong - 1;  // ptr to last byte of long
+    unsigned char a;
+    for(int i=0, j=charsPerLong-1; i&lt;=j; i++,j--,p1++,p2--)
+    {
+        // swap bytes and reverse bits within each byte
+        a = *p1;
+        *p1 = <a href="#" OnFocus="link('_member','reverseByteBits0',this)">reverseByteBits</a>[*p2];
+        *p2 = <a href="#" OnFocus="link('_member','reverseByteBits0',this)">reverseByteBits</a>[a];
+    }
+    return l;
+}
+
+
+/// Reverse bit order in a bitstream.
+void <a href="#" OnFocus="link('_member','Reverse2605346622',this)">Bitstream::Reverse</a>(void)
+{
+    if(<a href="#" OnFocus="link('_member','numBits203865993',this)">numBits</a>==0)
+        return;
+
+    // Reverse the bitstream chunk-by-chunk while reversing the bits within each chunk.
+    unsigned int numWords = NUM_OF_WORDS(numBits);
+    unsigned long a;
+    for(int i=0, j=numWords-1; i&lt;=j; i++,j--)
+    {
+        a = <a href="#" OnFocus="link('_member','bits203865993',this)">bits</a>[i];
+        <a href="#" OnFocus="link('_member','bits203865993',this)">bits</a>[i] = <a href="#" OnFocus="link('_member','ReverseLongBits2590682239',this)">ReverseLongBits</a>(bits[j]);
+        <a href="#" OnFocus="link('_member','bits203865993',this)">bits</a>[j] = <a href="#" OnFocus="link('_member','ReverseLongBits2590682239',this)">ReverseLongBits</a>(a);
+    }
+    // Remove the extra bits at the end of the original bitstream which are now
+    // at the beginning due to the reversal of bit order.
+    unsigned int numPaddingBits = bitsPerLong - (<a href="#" OnFocus="link('_member','numBits203865993',this)">numBits</a> % bitsPerLong);
+    if(numPaddingBits != 0 &amp;&amp; numPaddingBits &lt; bitsPerLong)
+        <a href="#" OnFocus="link('_member','ShiftRight2805767469',this)">ShiftRight</a>(numPaddingBits);
+}
+
+
+static char hexChar[] = {'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
+
+/// Converts a bitstream to hexadecimal characters.
+///\return pointer to character array of hex characters
+unsigned char* <a href="#" OnFocus="link('_member','ToHexString2106616265',this)">Bitstream::ToHexString</a>(void) const
+{
+    if(<a href="#" OnFocus="link('_member','numBits203865993',this)">numBits</a> == 0)
+        return (unsigned char*)"";
+    unsigned int numWords = NUM_OF_WORDS(numBits);
+    unsigned int nChars = ((<a href="#" OnFocus="link('_member','numBits203865993',this)">numBits</a>-1) / 4 + 1) + 1;  // extra char to hold '0' string terminator
+    unsigned char *hexString = new unsigned char[nChars];
+    hexString[nChars-1] = 0; // string terminator
+    for(int i=0, k=nChars-2; i&lt;numWords; i++)
+    {
+        unsigned long b = <a href="#" OnFocus="link('_member','bits203865993',this)">bits</a>[i];
+        int j;
+        for(j=0; j&lt;2*charsPerLong &amp;&amp; k&gt;=0; j++,b&gt;&gt;=4,k--)
+            hexString[k] = hexChar[b &amp; 0xF];
+        assert( (i&lt;numWords-1 &amp;&amp; j==2*charsPerLong) || (i==numWords-1 &amp;&amp; j&gt;0) );
+        assert( (i&lt;numWords-1 &amp;&amp; k&gt;=0) || (i==numWords-1 &amp;&amp; k&gt;=-1));
+    }
+    return hexString;
+}
+
+
+/// Converts a string of hexadecimal characters into a bitstream.
+///\return the resulting bitstream
+bool <a href="#" OnFocus="link('_member','FromHexString2822437144',this)">Bitstream::FromHexString</a>(unsigned int nBits, ///&lt; convert hex string into a bitstream with this many bits
+                    const char *hexString) ///&lt; string of hex digits to be converted into a bitstream
+{
+    <a href="#" OnFocus="link('_member','Resize2805767469',this)">Resize</a>(nBits);  // sets numBits == nBits
+    if(<a href="#" OnFocus="link('_member','numBits203865993',this)">numBits</a> == 0)
+        return true;
+    unsigned int nChars = strlen(hexString);
+    unsigned int numWords = NUM_OF_WORDS(numBits);
+    for(int i=0, k=nChars-1; i&lt;numWords; i++)
+    {
+        <a href="#" OnFocus="link('_member','bits203865993',this)">bits</a>[i] = 0;
+        int j;
+        for(j=0; j&lt;2*charsPerLong &amp;&amp; k&gt;=0; k--)
+        {
+            char c = toupper(hexString[k]);
+            if(c&lt;'0' || c&gt;'F')
+                continue;   // skip non-hex characters
+            unsigned int b = (c&gt;='A') ? (c-'A'+10) : (c-'0');
+            <a href="#" OnFocus="link('_member','bits203865993',this)">bits</a>[i] |= b &lt;&lt; (j*4);
+            j++;
+        }
+        assert( (i&lt;numWords-1 &amp;&amp; j==2*charsPerLong) || (i==numWords-1 &amp;&amp; j&gt;0) );
+        assert( (i&lt;numWords-1 &amp;&amp; k&gt;=0) || (i==numWords-1 &amp;&amp; k&gt;=-1));
+    }
+    return true;
+}
+
+
+/// Converts hexadecimal characters from a stream into a bitstream.
+///\return true if successful, false if not.
+bool <a href="#" OnFocus="link('_member','FromHexStream1630694954',this)">Bitstream::FromHexStream</a>(unsigned int nBits, ///&lt; convert hex string into a bitstream with this many bits
+                    istream&amp; is, ///&lt; stream through which hex characters are received
+                    bool reverseBits) ///&lt; true if the entire bitstream should be returned with its bit-order reversed
+{
+    <a href="#" OnFocus="link('_member','Resize2805767469',this)">Resize</a>(nBits);  // sets numBits == nBits
+
+    // exit if nothing to do
+    if(<a href="#" OnFocus="link('_member','numBits203865993',this)">numBits</a> == 0)
+        return true;
+
+    // read hex characters and store them in reversed-bit format so that most-significant bit of bitstream ends-up in bit position 0
+    int nNybbles = (<a href="#" OnFocus="link('_member','numBits203865993',this)">numBits</a>+3)/4; // 0 bits=&gt;0 nybbles; 1..4 bits=&gt; 1 nybble; 5..8 bits=&gt;2 nybbles
+    int numWords = NUM_OF_WORDS(numBits);
+    int j = (nNybbles-1) % nybblesPerLong;
+    for(int i=numWords-1, k=nNybbles-1; i&gt;=0; i--)
+    {
+        <a href="#" OnFocus="link('_member','bits203865993',this)">bits</a>[i] = 0;
+        while(j&gt;=0 &amp;&amp; k&gt;=0)
+        {
+            char c;
+            is.read(&amp;c,1);
+            c = toupper(c);
+            if(c&lt;'0' || c&gt;'F')
+                continue;   // skip non-hex characters
+            unsigned int b = (c&gt;='A') ? (c-'A'+10) : (c-'0');
+            <a href="#" OnFocus="link('_member','bits203865993',this)">bits</a>[i] |= b&lt;&lt;(j*4);
+            j--;
+            k--;
+        }
+        j = nybblesPerLong - 1;
+//      assert( (i&lt;numWords-1 &amp;&amp; j==nybblesPerLong) || (i==numWords-1 &amp;&amp; j&gt;0) );
+//      assert( (i&lt;numWords-1 &amp;&amp; k&gt;=0) || (i==numWords-1 &amp;&amp; k&gt;=-1));
+    }
+
+    if(reverseBits)
+        <a href="#" OnFocus="link('_member','Reverse2605346622',this)">Reverse</a>();
+
+    return true;
+}
+
+
+/// Converts a bitstream to unsigned, bit-packed characters.
+///\return pointer to array of bit-packed characters
+unsigned char* <a href="#" OnFocus="link('_member','ToCharString2106616265',this)">Bitstream::ToCharString</a>(void) const
+{
+    if(<a href="#" OnFocus="link('_member','numBits203865993',this)">numBits</a> == 0)
+        return NULL;
+    unsigned int numWords = NUM_OF_WORDS(numBits);
+    unsigned int nChars = (<a href="#" OnFocus="link('_member','numBits203865993',this)">numBits</a>-1) / 8 + 1;
+    unsigned char *charString = new unsigned char[nChars];
+    for(int i=0; i&lt;numWords; i++)
+    {
+        unsigned long b = <a href="#" OnFocus="link('_member','bits203865993',this)">bits</a>[i];
+        int k = i*charsPerLong;
+        int j;
+        for(j=0; (j&lt;charsPerLong) &amp;&amp; ((k+j)&lt;nChars); j++,b&gt;&gt;=8)
+            charString[k+j] = b &amp; 0xFF;
+        assert( ((i&lt;(numWords-1)) &amp;&amp; (j==charsPerLong)) || ((i==(numWords-1)) &amp;&amp; (j&gt;0)) );
+    }
+    return charString;
+}
+
+
+/// Converts unsigned, bit-packed characters to a bitstream.
+///\return true if successful, false if not.
+bool <a href="#" OnFocus="link('_member','FromCharString3963816108',this)">Bitstream::FromCharString</a>(unsigned int nBits,  ///&lt; convert bit-packed character array into a bitstream with this many bits
+                    const unsigned char *charString) ///&lt; pointer to array of bit-packed characters
+{
+    <a href="#" OnFocus="link('_member','Resize2805767469',this)">Resize</a>(nBits);  // sets numBits == nBits
+    if(<a href="#" OnFocus="link('_member','numBits203865993',this)">numBits</a> == 0)
+        return true;
+    unsigned int nChars = (<a href="#" OnFocus="link('_member','numBits203865993',this)">numBits</a>-1) / 8 + 1;
+    unsigned int numWords = NUM_OF_WORDS(numBits);
+    for(int i=0; i&lt;numWords; i++)
+    {
+        <a href="#" OnFocus="link('_member','bits203865993',this)">bits</a>[i] = 0;
+        int k = i*charsPerLong;
+        for(int j=0; (j&lt;charsPerLong) &amp;&amp; ((k+j)&lt;nChars); j++)
+        {
+            <a href="#" OnFocus="link('_member','bits203865993',this)">bits</a>[i] |= charString[k+j] &lt;&lt; (j*8);
+        }
+    }
+    return true;
+}
+
+
+/// Converts unsigned, bit-packed characters from a stream into a bitstream.
+///\return true if successful, false if not.
+bool <a href="#" OnFocus="link('_member','FromCharStream1630694954',this)">Bitstream::FromCharStream</a>(unsigned int nBits, ///&lt; convert bit-packed character stream into a bitstream with this many bits
+                    istream&amp; is, ///&lt; stream over which bit-packed characters will arrive
+                    bool reverseBits) ///&lt; true if the entire bitstream should be returned with its bit-order reversed
+{
+    <a href="#" OnFocus="link('_member','Resize2805767469',this)">Resize</a>(nBits);  // sets numBits == nBits
+
+    // exit if nothing to do
+    if(<a href="#" OnFocus="link('_member','numBits203865993',this)">numBits</a> == 0)
+        return true;
+
+    // read bit-packed characters and store them in reversed-bit format with MSb in bit position 0
+    unsigned int nChars = (<a href="#" OnFocus="link('_member','numBits203865993',this)">numBits</a>-1) / 8 + 1;
+    unsigned int numWords = NUM_OF_WORDS(numBits);
+    unsigned char byte;
+    for(int i=0; i&lt;numWords; i++)
+    {
+        <a href="#" OnFocus="link('_member','bits203865993',this)">bits</a>[i] = 0;
+        int k = i*charsPerLong;
+        for(int j=0; (j&lt;charsPerLong) &amp;&amp; ((k+j)&lt;nChars); j++)
+        {
+            is.read((char*)&amp;byte,1);
+            <a href="#" OnFocus="link('_member','bits203865993',this)">bits</a>[i] |= <a href="#" OnFocus="link('_member','reverseByteBits0',this)">reverseByteBits</a>[byte] &lt;&lt; (j*8);
+        }
+    }
+
+    // since bits are already stored in reversed order, do another reversal if you want them in 
+    // the unreversed order
+    if(!reverseBits)
+        <a href="#" OnFocus="link('_member','Reverse2605346622',this)">Reverse</a>();
+
+    return true;
+}
+
+
+/// Converts a bitstream to a string of 1 and 0 characters.
+///\return a string consisting of 1 and 0 characters.
+string <a href="#" OnFocus="link('_member','ToString2106616265',this)">Bitstream::ToString</a>(void) const
+{
+    // start printing with the MSB which is stored at the
+    // end of the bitstream.  Then work our way to the beginning.
+    string s = "";
+    for(int i=<a href="#" OnFocus="link('_member','numBits203865993',this)">numBits</a>; i&gt;0; )
+        s += ((*this)[--i]==1 ? "1":"0");
+    return s;
+}
+
+
+/// Converts a string of 1s and 0s to a bitstream.
+void <a href="#" OnFocus="link('_member','FromString2484475908',this)">Bitstream::FromString</a>(const string s)
+{
+    <a href="#" OnFocus="link('_member','Resize2805767469',this)">Resize</a>(s.length());
+    // the last char in the string is the LSB of the bitstream
+    for(int i=<a href="#" OnFocus="link('_member','numBits203865993',this)">numBits</a>-1, j=0; i&gt;=0; i--)
+    {
+        if(isspace(s[i]))
+            continue;   // skip whitespace
+        this-&gt;<a href="#" OnFocus="link('_member','SetBit2908394482',this)">SetBit</a>(j++, s[i]=='0' ? 0:1);
+    }
+}
+
+
+/// Prints a bitstream to an output stream.
+///\return reference to the output stream
+ostream&amp; <a href="#" OnFocus="link('_member','PrintBits3975311493',this)">Bitstream::PrintBits</a>(ostream&amp; os) const
+{
+    os &lt;&lt; <a href="#" OnFocus="link('_member','ToString2106616265',this)">ToString</a>().c_str() &lt;&lt; endl;
+    return os;
+}
+
+
+/// Helper function which prints a bitstream to an output stream.
+///\return reference to the output stream
+ostream&amp; <a href="#" OnFocus="link('_member','operatorless_less_2307103839',this)">operator<<</a>(ostream&amp; os, <a href="#" OnFocus="link('_class','Bitstream0',this)">Bitstream</a>&amp; b)
+{
+    return b.<a href="#" OnFocus="link('_member','PrintBits3975311493',this)">PrintBits</a>(os);
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_file','_source');
+</script>

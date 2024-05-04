@@ -1,0 +1,199 @@
+# Version: 1.0
+# Author: Dave Vanden Bout
+# Affiliation: XESS Corp.
+# Date: 12/18/1998
+# This script is in the public-domain.
+
+
+# This perl script will translate the pin mappings in an
+# XS95 UCF file to the equivalent pin mappings for an
+# XS40 Board.  Or it will do the reverse operation.
+
+
+# Translating an XS95 UCF file to an XS40 UCF file:
+#		perl xs_xlate.pl -xs95_to_xs40 XS95.UCF > XS40.UCF
+#
+# Translating an XS40 UCF file to an XS95 UCF file:
+#		perl xs_xlate.pl -xs40_to_xs95 XS40.UCF > XS95.UCF
+#
+# If you are translating a design which uses the
+# left LED digit on the XStend Board, then you need 
+# to include the option that accounts for the scrambled
+# LED segments on the XS95 Board:
+#		perl xs_xlate.pl -left_led -xs40_to_xs95 XS40.UCF > XS95.UCF 
+
+
+# This associative table maps the pins of the XS95 Board to the
+# corresponding pins of the XS40 Board.  Some of the pins do not
+# map to the XS40 because they are VCC/GND (in which case they
+# should not even be in the XS95 UCF file!), they are JTAG pins,
+# or they are free pins on the XS95.
+
+$translate_xs95_to_xs40{"1"}  = "79";
+$translate_xs95_to_xs40{"2"}  = "84";
+$translate_xs95_to_xs40{"3"}  = "82";
+$translate_xs95_to_xs40{"4"}  = "--";  # no equivalent XS40 pin
+$translate_xs95_to_xs40{"5"}  = "6";
+$translate_xs95_to_xs40{"6"}  = "7";
+$translate_xs95_to_xs40{"7"}  = "8";
+$translate_xs95_to_xs40{"8"}  = "--";  # no equivalent XS40 pin
+$translate_xs95_to_xs40{"9"}  = "13";
+$translate_xs95_to_xs40{"10"} = "37";
+$translate_xs95_to_xs40{"11"} = "9";
+$translate_xs95_to_xs40{"12"} = "--";  # no equivalent XS40 pin
+$translate_xs95_to_xs40{"13"} = "14";
+$translate_xs95_to_xs40{"14"} = "18";
+$translate_xs95_to_xs40{"15"} = "19";
+$translate_xs95_to_xs40{"16"} = "--";  # no equivalent XS40 pin
+$translate_xs95_to_xs40{"17"} = "20";
+$translate_xs95_to_xs40{"18"} = "23";
+$translate_xs95_to_xs40{"19"} = "24";
+$translate_xs95_to_xs40{"20"} = "29";
+$translate_xs95_to_xs40{"21"} = "25";
+$translate_xs95_to_xs40{"22"} = "--";  # no equivalent XS40 pin
+$translate_xs95_to_xs40{"23"} = "26";
+$translate_xs95_to_xs40{"24"} = "67";
+$translate_xs95_to_xs40{"25"} = "--";  # no equivalent XS40 pin
+$translate_xs95_to_xs40{"26"} = "68";
+$translate_xs95_to_xs40{"27"} = "--";  # no equivalent XS40 pin
+$translate_xs95_to_xs40{"28"} = "--";  # no equivalent XS40 pin
+$translate_xs95_to_xs40{"29"} = "--";  # no equivalent XS40 pin
+$translate_xs95_to_xs40{"30"} = "--";  # no equivalent XS40 pin
+$translate_xs95_to_xs40{"31"} = "--";  # no equivalent XS40 pin
+$translate_xs95_to_xs40{"32"} = "27";
+$translate_xs95_to_xs40{"33"} = "--";  # no equivalent XS40 pin
+$translate_xs95_to_xs40{"34"} = "28";
+$translate_xs95_to_xs40{"35"} = "10";
+$translate_xs95_to_xs40{"36"} = "80";
+$translate_xs95_to_xs40{"37"} = "81";
+$translate_xs95_to_xs40{"38"} = "--";  # no equivalent XS40 pin
+$translate_xs95_to_xs40{"39"} = "35";
+$translate_xs95_to_xs40{"40"} = "38";
+$translate_xs95_to_xs40{"41"} = "39";
+$translate_xs95_to_xs40{"42"} = "--";  # no equivalent XS40 pin
+$translate_xs95_to_xs40{"43"} = "40";
+$translate_xs95_to_xs40{"44"} = "41";
+$translate_xs95_to_xs40{"45"} = "36";
+$translate_xs95_to_xs40{"46"} = "44";
+$translate_xs95_to_xs40{"47"} = "45";
+$translate_xs95_to_xs40{"48"} = "46";
+$translate_xs95_to_xs40{"49"} = "--";  # no equivalent XS40 pin
+$translate_xs95_to_xs40{"50"} = "47";
+$translate_xs95_to_xs40{"51"} = "48";
+$translate_xs95_to_xs40{"52"} = "49";
+$translate_xs95_to_xs40{"53"} = "50";
+$translate_xs95_to_xs40{"54"} = "51";
+$translate_xs95_to_xs40{"55"} = "56";
+$translate_xs95_to_xs40{"56"} = "57";
+$translate_xs95_to_xs40{"57"} = "58";
+$translate_xs95_to_xs40{"58"} = "59";
+$translate_xs95_to_xs40{"59"} = "--";  # no equivalent XS40 pin
+$translate_xs95_to_xs40{"60"} = "--";  # no equivalent XS40 pin
+$translate_xs95_to_xs40{"61"} = "60";
+$translate_xs95_to_xs40{"62"} = "61";
+$translate_xs95_to_xs40{"63"} = "62";
+$translate_xs95_to_xs40{"64"} = "--";  # no equivalent XS40 pin
+$translate_xs95_to_xs40{"65"} = "65";
+$translate_xs95_to_xs40{"66"} = "66";
+$translate_xs95_to_xs40{"67"} = "67";
+$translate_xs95_to_xs40{"68"} = "--";  # no equivalent XS40 pin
+$translate_xs95_to_xs40{"69"} = "--";  # no equivalent XS40 pin
+$translate_xs95_to_xs40{"70"} = "69";
+$translate_xs95_to_xs40{"71"} = "70";
+$translate_xs95_to_xs40{"72"} = "77";
+$translate_xs95_to_xs40{"73"} = "--";  # no equivalent XS40 pin
+$translate_xs95_to_xs40{"74"} = "--";  # no equivalent XS40 pin
+$translate_xs95_to_xs40{"75"} = "3";
+$translate_xs95_to_xs40{"76"} = "--";  # no equivalent XS40 pin
+$translate_xs95_to_xs40{"77"} = "--";  # no equivalent XS40 pin
+$translate_xs95_to_xs40{"78"} = "--";  # no equivalent XS40 pin
+$translate_xs95_to_xs40{"79"} = "4";
+$translate_xs95_to_xs40{"80"} = "34";
+$translate_xs95_to_xs40{"81"} = "32";
+$translate_xs95_to_xs40{"82"} = "5";
+$translate_xs95_to_xs40{"83"} = "83";
+$translate_xs95_to_xs40{"84"} = "78";
+
+
+# Give some instructions if called with no arguments
+if($#ARGV<0)
+{
+   printf STDERR "perl xs_xlate [-left_led] [-xs40_to_xs95] [-xs95_to_xs40] file.ucf > file2.ucf\n\n";
+   exit(0);
+}
+
+# Scan the options
+$errmsgs = "";
+while($_=$ARGV[0])
+{
+	shift @ARGV;
+   /^-left_led/i		&& ($left_led=1, next);	# handle LED pin scrambling
+	/^-xs40_to_xs95/i	&& ($to_xs95=1, next); # map from XS40 to XS95
+	/^-xs95_to_xs40/i	&& ($to_xs40=1, next); # map from XS95 to XS40
+	/^-/					&& ($errmsgs.="ERROR -- unknown option: $_\n", next);
+	(eof(UCF)==0) && ($errmsgs.="ERROR -- cannot open more than one .UCF file\n", next);
+	(eof(UCF)!=0) && (open(UCF,$_), next); # open the UCF file
+}
+
+# If we are at the end-of-file for the UCF file, then that means
+# we could not open the file, it is empty, or none was given.
+(eof(UCF)!=0) && $errmsgs.="ERROR -- no .UCF file to process!!\n";
+
+# Print error messages, if any, and exit the script.
+$errmsgs ne "" && print STDERR $errmsgs;
+$errmsgs ne "" && exit 1;
+
+# If the design uses the XStend Board left LED digit, then we
+# must correct the pin translation table to account for the
+# scrambling between the XS40 and XS95 pin assignments.
+if($left_led==1)
+{
+	$translate_xs95_to_xs40{"1"} = "3";	
+	$translate_xs95_to_xs40{"2"} = "4";	
+	$translate_xs95_to_xs40{"3"} = "5";	
+	$translate_xs95_to_xs40{"75"} = "78";	
+	$translate_xs95_to_xs40{"79"} = "79";	
+	$translate_xs95_to_xs40{"82"} = "82";	
+	$translate_xs95_to_xs40{"83"} = "83";	
+	$translate_xs95_to_xs40{"84"} = "84";	
+}
+
+# Generate the reverse pin translation table if the mapping is
+# from an XS40 to an XS95 Board.  Doing this means we don't have
+# to maintain and synchronize two separate tables.
+if($to_xs95=1)
+{
+	for $i (keys %translate_xs95_to_xs40)
+	{
+		$translate_xs40_to_xs95{$translate_xs95_to_xs40{$i}} = $i;
+	}
+}
+
+# Go through each line of the UCF file.  If the line contains a
+# construct like "LOC=P45;", then we assume it is a pin assignment.
+# So we extract the pin number and replace it with the pin number
+# from the translation table.  Then we print the line to the
+# standard output.
+while($line=<UCF>)
+{
+	if($line =~ /loc\s*=\s*p[0-9]+;/i) # look for a line containing pin location
+	{
+		$& =~ /[0-9]+/; # extract the pin number
+		$pin = $&;
+
+		if($to_xs40)
+		{ # translate from the XS95 pin assignment to the XS40 pin assignment
+			if($translate_xs95_to_xs40{$pin} eq "--")
+			{
+				print STDERR "ERROR -- cannot translate this line:\n\t$line\n";
+			}
+			$line =~ s/loc\s*=\s*p[0-9]+;/loc = p$translate_xs95_to_xs40{$pin}/i;
+		}
+		else
+		{ # else translate from the XS40 pin assignment to the XS95 pin assignment
+			$line =~ s/loc\s*=\s*p[0-9]+;/loc = p$translate_xs40_to_xs95{$pin}/i;
+		}
+	}
+	print $line; # print every line so no constraints or comments are lost.
+}
+

@@ -1,0 +1,105 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - SetOscFrequency</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">SetOscFrequency</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_class','OscPort0',this)" class="pathLink">OscPort</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">SetOscFrequency</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','SetOscFrequency4061435083','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_member','SetOscFrequency4061435083','_source',this)" class="tabLinkActive">Source</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','SetOscFrequency4061435083','_callgraph',this)" class="tabLinkInActive">Call Graph</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<div class="paragraph2NoTopPadding">Start Line: 147</div>
+<pre class="codeExamples">
+bool <a href="#" OnFocus="link('_member','SetOscFrequency4061435083',this)">OscPort::SetOscFrequency</a>(int div, bool extOscPresent)
+{
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> = <a href="#" OnFocus="link('_member','GetErr259477277',this)">GetErr</a>();
+    if(div&lt;1)
+    {
+        string msg("Clock divisor must be greater than zero!!\n");
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,msg);
+        return false;
+    }
+    if(div&gt;2052)
+    {
+        string msg("Clock divisor must be less than 2053!!\n");
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,msg);
+        return false;
+    }
+
+    int div1 = div==1 ? 1:0;    // set divide-by-1 bit if clock is not divided down
+    int prescaleOff = 1;        // turn off prescalar
+    int prescaleByTwo = 0;
+    if(!extOscPresent)      // setup prescalar circuitry if DS1075 internal oscillator is used
+    {
+        if(div&gt;1026)
+        {
+            prescaleOff = 0;    // turn on the prescalar
+            prescaleByTwo = 0;  // enable divide-by-four by turning off the divide-by-two prescalar
+            div /= 4;           // reduce divisor
+        }
+        else if(div&gt;513)
+        {
+            prescaleOff = 0;    // turn on the prescalar
+            prescaleByTwo = 1;  // turn on the divide-by-two prescalar
+            div /= 2;
+        }
+    }
+    div = div&gt;513 ? 513:div;    // divisor saturates at 513 if external oscillator is used
+    // The divisor must be adjusted to get the frequency right as follows:
+    //      original    adjusted    resulting
+    //      div         div         frequency
+    //      ----------------------------------
+    //      1            -1         100 MHz (no division)
+    //      2             0          50 MHz (divide by 2)
+    //      3             1          33 MHz (divide by 3)
+    //      4             2          25 MHz (divide by 4)
+    //      ...         ...         ...
+    //      511         509         
+    //      512         510         
+    //      513         511
+    div -= 2;
+
+    int powerUp = 1;        // keep the oscillator powered up
+    int disable0 = 1;       // disable the OUT0 output of the DS1075 (it's not connected on the XS Boards)
+    int mux = (disable0&lt;&lt;5) | (powerUp&lt;&lt;4) | (prescaleByTwo&lt;&lt;3) |(prescaleOff&lt;&lt;2) | (div1&lt;&lt;1) | (extOscPresent ? 1:0);
+
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posOsc,posOsc);  // make sure the osc. data pin starts out high
+
+    // program divisor register of the DS1075
+    <a href="#" OnFocus="link('_member','ResetOsc60241441',this)">ResetOsc</a>();
+    <a href="#" OnFocus="link('_member','IssueOscCmd3135533727',this)">IssueOscCmd</a>(OscCmdWriteDIV);
+    <a href="#" OnFocus="link('_member','SendOscData3135533727',this)">SendOscData</a>(div);
+    <a href="#" OnFocus="link('_member','InsertDelay359930342',this)">InsertDelay</a>(240,MICROSECONDS);
+
+    // program multiplexor register of the DS1075
+    <a href="#" OnFocus="link('_member','ResetOsc60241441',this)">ResetOsc</a>();
+    <a href="#" OnFocus="link('_member','IssueOscCmd3135533727',this)">IssueOscCmd</a>(OscCmdWriteMUX);
+    <a href="#" OnFocus="link('_member','SendOscData3135533727',this)">SendOscData</a>(mux);
+    <a href="#" OnFocus="link('_member','InsertDelay359930342',this)">InsertDelay</a>(240,MICROSECONDS);
+
+    return true;
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_member','_source');
+</script>

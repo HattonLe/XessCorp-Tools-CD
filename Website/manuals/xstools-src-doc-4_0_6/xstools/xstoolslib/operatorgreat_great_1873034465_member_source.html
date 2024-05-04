@@ -1,0 +1,308 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - operator>></TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">operator>></div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">operator>></span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','operatorgreat_great_1873034465','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_member','operatorgreat_great_1873034465','_source',this)" class="tabLinkActive">Source</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','operatorgreat_great_1873034465','_callgraph',this)" class="tabLinkInActive">Call Graph</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<div class="paragraph2NoTopPadding">Start Line: 519</div>
+<pre class="codeExamples">
+istream &amp; <a href="#" OnFocus="link('_member','operatorgreat_great_1873034465',this)">operator>></a>(istream &amp;is, <a href="#" OnFocus="link('_class','HexRecord0',this)">HexRecord</a> &amp;hx)
+{
+    unsigned char c;    // character from input stream
+    <a href="#" OnFocus="link('_class','Hex0',this)">Hex</a> length(2);     // two-digit length for hex data record
+    <a href="#" OnFocus="link('_class','Hex0',this)">Hex</a> address(0);        // offset address for hex data
+    <a href="#" OnFocus="link('_class','Hex0',this)">Hex</a> recordType(2); // two-digit data record tag
+    <a href="#" OnFocus="link('_class','Hex0',this)">Hex</a> <a href="#" OnFocus="link('_member','../xsusb/data0',this)">data</a>(2);       // two-digit data item
+    <a href="#" OnFocus="link('_class','Hex0',this)">Hex</a> checkSum(2);   // two-digit checksum
+    unsigned int i = 0; // counter variable
+
+    // get the initial character of a hex record to see what type it is
+    is &gt;&gt; c;
+    if(is.eof())
+    { // no hex record error
+        hx.<a href="#" OnFocus="link('_member','SetError3731019749',this)">SetError</a>(NoHexRecordError);
+        hx.<a href="#" OnFocus="link('_member','SetRecordType4230118567',this)">SetRecordType</a>(InvalidRecord);
+        return is;
+    }
+    if(is.fail())
+    { // error starting hex record
+        hx.<a href="#" OnFocus="link('_member','SetError3731019749',this)">SetError</a>(StartHexRecordError);
+        hx.<a href="#" OnFocus="link('_member','SetRecordType4230118567',this)">SetRecordType</a>(InvalidRecord);
+        return is;
+    }
+    switch(c)
+    {
+    case ':':
+        hx.<a href="#" OnFocus="link('_member','SetFileFormat1919421449',this)">SetFileFormat</a>(IntelFormat);
+        break;
+    case 'S':
+        hx.<a href="#" OnFocus="link('_member','SetFileFormat1919421449',this)">SetFileFormat</a>(MotorolaFormat);
+        break;
+    case '-':
+        hx.<a href="#" OnFocus="link('_member','SetFileFormat1919421449',this)">SetFileFormat</a>(XESSFormat);
+        hx.<a href="#" OnFocus="link('_member','SetRecordType4230118567',this)">SetRecordType</a>(XESSDataWith16BitAddressRecord);
+    case '=':
+        hx.<a href="#" OnFocus="link('_member','SetFileFormat1919421449',this)">SetFileFormat</a>(XESSFormat);
+        hx.<a href="#" OnFocus="link('_member','SetRecordType4230118567',this)">SetRecordType</a>(XESSDataWith24BitAddressRecord);
+    case '+':
+        hx.<a href="#" OnFocus="link('_member','SetFileFormat1919421449',this)">SetFileFormat</a>(XESSFormat);
+        hx.<a href="#" OnFocus="link('_member','SetRecordType4230118567',this)">SetRecordType</a>(XESSDataWith32BitAddressRecord);
+    default:
+        hx.<a href="#" OnFocus="link('_member','SetError3731019749',this)">SetError</a>(StartHexRecordError);
+    }
+
+    switch(hx.<a href="#" OnFocus="link('_member','GetFileFormat2146470179',this)">GetFileFormat</a>())
+    {
+    case <a href="#" OnFocus="link('_member','MotorolaFormat0',this)">MotorolaFormat</a>:
+        is &gt;&gt; c;
+        if(is.eof())
+        { // no hex record error
+            hx.<a href="#" OnFocus="link('_member','SetError3731019749',this)">SetError</a>(StartHexRecordError);
+            hx.<a href="#" OnFocus="link('_member','SetRecordType4230118567',this)">SetRecordType</a>(InvalidRecord);
+            return is;
+        }
+        if(is.fail())
+        { // error starting S-record
+            hx.<a href="#" OnFocus="link('_member','SetError3731019749',this)">SetError</a>(StartHexRecordError);
+            hx.<a href="#" OnFocus="link('_member','SetRecordType4230118567',this)">SetRecordType</a>(InvalidRecord);
+            return is;
+        }
+        switch(c)
+        {
+        case '3':   // data record with 4-byte address
+            hx.<a href="#" OnFocus="link('_member','SetRecordType4230118567',this)">SetRecordType</a>(<a href="#" OnFocus="link('_member','MotoDataWith32BitAddressRecord0',this)">MotoDataWith32BitAddressRecord</a>);
+            break;
+        case '2':   // data record with 3-byte address
+            hx.<a href="#" OnFocus="link('_member','SetRecordType4230118567',this)">SetRecordType</a>(MotoDataWith24BitAddressRecord);
+            break;
+        case '1':   // data record with 2-byte address
+            hx.<a href="#" OnFocus="link('_member','SetRecordType4230118567',this)">SetRecordType</a>(MotoDataWith16BitAddressRecord);
+            break;
+        case '7':   // starting execution address in 4-byte address
+            hx.<a href="#" OnFocus="link('_member','SetRecordType4230118567',this)">SetRecordType</a>(MotoEndWith32BitAddressRecord);
+            break;
+        case '8':   // starting execution address in 3-byte address
+            hx.<a href="#" OnFocus="link('_member','SetRecordType4230118567',this)">SetRecordType</a>(MotoEndWith24BitAddressRecord);
+            break;
+        case '9':   // starting execution address in 2-byte address
+            hx.<a href="#" OnFocus="link('_member','SetRecordType4230118567',this)">SetRecordType</a>(MotoEndWith16BitAddressRecord);
+            break;
+        case '0':   // name, version, revision info record with 2-byte address
+            hx.<a href="#" OnFocus="link('_member','SetRecordType4230118567',this)">SetRecordType</a>(MotoStartRecord);
+            break;
+        default:
+            hx.<a href="#" OnFocus="link('_member','SetError3731019749',this)">SetError</a>(StartHexRecordError);
+            hx.<a href="#" OnFocus="link('_member','SetRecordType4230118567',this)">SetRecordType</a>(InvalidRecord);
+            return is;
+        }
+        
+        // now get the number of bytes in the S-record
+        is &gt;&gt; length;
+        if(is.fail())
+        { // no length given for the S-record
+            hx.<a href="#" OnFocus="link('_member','SetError3731019749',this)">SetError</a>(LengthHexRecordError);
+            hx.<a href="#" OnFocus="link('_member','SetRecordType4230118567',this)">SetRecordType</a>(InvalidRecord);
+            return is;
+        }
+        // reduce the length by the number of address bytes and the checksum byte
+        hx.<a href="#" OnFocus="link('_member','SetLength2774302151',this)">SetLength</a>(length.<a href="#" OnFocus="link('_member','GetHex210160317',this)">GetHex</a>()-hx.<a href="#" OnFocus="link('_member','GetAddressLength2569703380',this)">GetAddressLength</a>()-1);
+        
+        // now get the destination address for the data bytes
+        address.SetLength(2 * hx.<a href="#" OnFocus="link('_member','GetAddressLength2569703380',this)">GetAddressLength</a>());   // set # of hex digits in address
+        is &gt;&gt; address;
+        if(is.fail())
+        { // no starting address for the S-record data
+            hx.<a href="#" OnFocus="link('_member','SetError3731019749',this)">SetError</a>(AddressHexRecordError);
+            hx.<a href="#" OnFocus="link('_member','SetRecordType4230118567',this)">SetRecordType</a>(InvalidRecord);
+            return is;
+        }
+        hx.<a href="#" OnFocus="link('_member','SetAddress2774302151',this)">SetAddress</a>(address.GetHex());
+        
+        // read in the number of data bytes given in the length
+        for(i=0; i&lt;hx.<a href="#" OnFocus="link('_member','GetLength2146470179',this)">GetLength</a>(); i++)
+        {
+            is &gt;&gt; <a href="#" OnFocus="link('_member','../xsatapi/data0',this)">data</a>;
+            hx[i] = <a href="#" OnFocus="link('_member','../xsatapi/data0',this)">data</a>.GetHex();
+            if(is.fail())
+            { // error if data ended too soon
+                hx.<a href="#" OnFocus="link('_member','SetError3731019749',this)">SetError</a>(DataHexRecordError);
+                hx.<a href="#" OnFocus="link('_member','SetRecordType4230118567',this)">SetRecordType</a>(InvalidRecord);
+                return is;
+            }
+        }
+        
+        // calculate the checksum for the data that has been read
+        is &gt;&gt; checkSum; // get the checksum for the S-record
+        if(is.fail())
+        { // error if no checksum when there should be one
+            hx.<a href="#" OnFocus="link('_member','SetError3731019749',this)">SetError</a>(CheckSumHexRecordError);
+            hx.<a href="#" OnFocus="link('_member','SetRecordType4230118567',this)">SetRecordType</a>(InvalidRecord);
+            return is;
+        }
+        hx.<a href="#" OnFocus="link('_member','CalcCheckSum2569703380',this)">CalcCheckSum</a>();  // now calculate the checksum for the data
+        if(checkSum.GetHex()!=hx.<a href="#" OnFocus="link('_member','GetCheckSum2146470179',this)">GetCheckSum</a>())
+        { // error if checksums do not match
+            hx.<a href="#" OnFocus="link('_member','SetError3731019749',this)">SetError</a>(CheckSumHexRecordError);
+            hx.<a href="#" OnFocus="link('_member','SetRecordType4230118567',this)">SetRecordType</a>(InvalidRecord);
+            return is;
+        }
+        
+        // got all the way to the end, so there are no errors in the Motorola S-record
+        hx.<a href="#" OnFocus="link('_member','SetError3731019749',this)">SetError</a>(NoHexRecordError);
+        break;
+
+    case <a href="#" OnFocus="link('_member','IntelFormat0',this)">IntelFormat</a>:
+        // get the number of bytes in the hex record
+        is &gt;&gt; length;
+        if(is.fail())
+        { // no length given for the hex record
+            hx.<a href="#" OnFocus="link('_member','SetError3731019749',this)">SetError</a>(<a href="#" OnFocus="link('_member','LengthHexRecordError0',this)">LengthHexRecordError</a>);
+            hx.<a href="#" OnFocus="link('_member','SetRecordType4230118567',this)">SetRecordType</a>(<a href="#" OnFocus="link('_member','InvalidRecord0',this)">InvalidRecord</a>);
+            return is;
+        }
+        hx.<a href="#" OnFocus="link('_member','SetLength2774302151',this)">SetLength</a>(length.<a href="#" OnFocus="link('_member','GetHex210160317',this)">GetHex</a>());
+        
+        // now get the destination offset address for the data bytes
+        address.SetLength(4);   // set # of hex digits in offset address
+        is &gt;&gt; address;
+        if(is.fail())
+        { // no offset address for the hex record data
+            hx.<a href="#" OnFocus="link('_member','SetError3731019749',this)">SetError</a>(AddressHexRecordError);
+            hx.<a href="#" OnFocus="link('_member','SetRecordType4230118567',this)">SetRecordType</a>(InvalidRecord);
+            return is;
+        }
+
+        // get the Intel record type
+        is &gt;&gt; recordType;
+        if(is.fail())
+        { // no record type error
+            hx.<a href="#" OnFocus="link('_member','SetError3731019749',this)">SetError</a>(TypeHexRecordError);
+            hx.<a href="#" OnFocus="link('_member','SetRecordType4230118567',this)">SetRecordType</a>(InvalidRecord);
+            return is;
+        }
+        hx.<a href="#" OnFocus="link('_member','SetRecordType4230118567',this)">SetRecordType</a>( (HexRecordType) (recordType.GetHex() | (unsigned int)(hx.<a href="#" OnFocus="link('_member','GetFileFormat2146470179',this)">GetFileFormat</a>())) ); // record the type of record
+        
+        // read in the number of data bytes given in the length
+        for(i=0; i&lt;hx.<a href="#" OnFocus="link('_member','GetLength2146470179',this)">GetLength</a>(); i++)
+        {
+            is &gt;&gt; <a href="#" OnFocus="link('_member','../xsatapi/data0',this)">data</a>;
+            hx[i] = <a href="#" OnFocus="link('_member','../xsatapi/data0',this)">data</a>.GetHex();
+            if(is.fail())
+            { // error if data ended too soon
+                hx.<a href="#" OnFocus="link('_member','SetError3731019749',this)">SetError</a>(DataHexRecordError);
+                hx.<a href="#" OnFocus="link('_member','SetRecordType4230118567',this)">SetRecordType</a>(InvalidRecord);
+                return is;
+            }
+        }
+
+        // don't set the record address until the record type is determined
+        // update the base address if this is an extended address record
+        switch(hx.<a href="#" OnFocus="link('_member','GetRecordType2146470179',this)">GetRecordType</a>())
+        {
+        case <a href="#" OnFocus="link('_member','IntelExtSegAddressRecord0',this)">IntelExtSegAddressRecord</a>:
+            hx.<a href="#" OnFocus="link('_member','SetBaseAddress2774302151',this)">SetBaseAddress</a>(((hx[0]&lt;&lt;8) + hx[1]) &lt;&lt; 4);
+            hx.<a href="#" OnFocus="link('_member','SetAddress2774302151',this)">SetAddress</a>(0);
+            break;
+        case <a href="#" OnFocus="link('_member','IntelExtLinAddressRecord0',this)">IntelExtLinAddressRecord</a>:
+            hx.<a href="#" OnFocus="link('_member','SetBaseAddress2774302151',this)">SetBaseAddress</a>(((hx[0]&lt;&lt;8) + hx[1]) &lt;&lt; 16);
+            hx.<a href="#" OnFocus="link('_member','SetAddress2774302151',this)">SetAddress</a>(0);
+            break;
+        default:
+            hx.<a href="#" OnFocus="link('_member','SetAddress2774302151',this)">SetAddress</a>(address.GetHex());
+        }
+        
+        // calculate the checksum for the data that has been read
+        // and compare it with the calculated value
+        is &gt;&gt; checkSum; // get the checksum for the hex record
+        if(is.fail())
+        { // error if no checksum when there should be one
+            hx.<a href="#" OnFocus="link('_member','SetError3731019749',this)">SetError</a>(<a href="#" OnFocus="link('_member','CheckSumHexRecordError0',this)">CheckSumHexRecordError</a>);
+            hx.<a href="#" OnFocus="link('_member','SetRecordType4230118567',this)">SetRecordType</a>(<a href="#" OnFocus="link('_member','InvalidRecord0',this)">InvalidRecord</a>);
+            return is;
+        }
+        hx.<a href="#" OnFocus="link('_member','CalcCheckSum2569703380',this)">CalcCheckSum</a>();  // now calculate the checksum for the data
+        if(checkSum.GetHex()!=hx.<a href="#" OnFocus="link('_member','GetCheckSum2146470179',this)">GetCheckSum</a>())
+        { // error if checksums do not match
+            hx.<a href="#" OnFocus="link('_member','SetError3731019749',this)">SetError</a>(CheckSumHexRecordError);
+            hx.<a href="#" OnFocus="link('_member','SetRecordType4230118567',this)">SetRecordType</a>(InvalidRecord);
+            return is;
+        }
+        
+        // got all the way to the end, so there are no errors in the hex record
+        hx.<a href="#" OnFocus="link('_member','SetError3731019749',this)">SetError</a>(NoHexRecordError);
+        break;
+
+    case <a href="#" OnFocus="link('_member','XESSFormat0',this)">XESSFormat</a>:
+        // get the number of bytes in the hex record
+        is &gt;&gt; length;
+        if(is.fail())
+        { // no length given for the hex record
+            hx.<a href="#" OnFocus="link('_member','SetError3731019749',this)">SetError</a>(LengthHexRecordError);
+            hx.<a href="#" OnFocus="link('_member','SetRecordType4230118567',this)">SetRecordType</a>(InvalidRecord);
+            return is;
+        }
+        hx.<a href="#" OnFocus="link('_member','SetLength2774302151',this)">SetLength</a>(length.<a href="#" OnFocus="link('_member','GetHex210160317',this)">GetHex</a>());
+        
+        // now get the destination offset address for the data bytes
+        address.SetLength(2 * hx.<a href="#" OnFocus="link('_member','GetAddressLength2569703380',this)">GetAddressLength</a>());   // set # of hex digits in address
+        is &gt;&gt; address;
+        if(is.fail())
+        { // no offset address for the hex record data
+            hx.<a href="#" OnFocus="link('_member','SetError3731019749',this)">SetError</a>(<a href="#" OnFocus="link('_member','AddressHexRecordError0',this)">AddressHexRecordError</a>);
+            hx.<a href="#" OnFocus="link('_member','SetRecordType4230118567',this)">SetRecordType</a>(<a href="#" OnFocus="link('_member','InvalidRecord0',this)">InvalidRecord</a>);
+            return is;
+        }
+        hx.<a href="#" OnFocus="link('_member','SetAddress2774302151',this)">SetAddress</a>(address.GetHex());
+        
+        // read in the number of data bytes given in the length
+        for(i=0; i&lt;hx.<a href="#" OnFocus="link('_member','GetLength2146470179',this)">GetLength</a>(); i++)
+        {
+            is &gt;&gt; <a href="#" OnFocus="link('_member','../xsatapi/data0',this)">data</a>;
+            hx[i] = <a href="#" OnFocus="link('_member','../xsatapi/data0',this)">data</a>.GetHex();
+            if(is.fail())
+            { // error if data ended too soon
+                hx.<a href="#" OnFocus="link('_member','SetError3731019749',this)">SetError</a>(<a href="#" OnFocus="link('_member','DataHexRecordError0',this)">DataHexRecordError</a>);
+                hx.<a href="#" OnFocus="link('_member','SetRecordType4230118567',this)">SetRecordType</a>(<a href="#" OnFocus="link('_member','InvalidRecord0',this)">InvalidRecord</a>);
+                return is;
+            }
+        }
+        
+        // got all the way to the end, so there are no errors in the hex record
+        hx.<a href="#" OnFocus="link('_member','SetError3731019749',this)">SetError</a>(NoHexRecordError);
+        break;
+
+    default:
+        assert(1==0);
+        break;
+    }
+    
+    return is;
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_member','_source');
+</script>

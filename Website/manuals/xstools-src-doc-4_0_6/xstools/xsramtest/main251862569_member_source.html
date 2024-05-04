@@ -1,0 +1,273 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - main</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">main</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xsramtest0',this)" class="pathLink">xsramtest</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">main</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','main251862569','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_member','main251862569','_source',this)" class="tabLinkActive">Source</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','main251862569','_callgraph',this)" class="tabLinkInActive">Call Graph</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<div class="paragraph2NoTopPadding">Start Line: 410</div>
+<pre class="codeExamples">
+int <a href="#" OnFocus="link('_member','../xsusb/main251862569',this)">main</a>(int argc, char **argv)
+{
+    // get the board type used in the most recent invocation of an XSTOOLS utility
+    <a href="#" OnFocus="link('_member','../xsatapi/brdModel0',this)">brdModel</a> = <a href="#" OnFocus="link('_member','../xstoolslib/GetXSTOOLSParameter67554305',this)">GetXSTOOLSParameter</a>("BoardType");
+
+#if 0
+    // get the RAM hex file type used in the most recent invocation of an XSTOOLS utility
+    <a href="#" OnFocus="link('_member','../xsload/ramFileFormat0',this)">ramFileFormat</a> = <a href="#" OnFocus="link('_member','../xstoolslib/GetXSTOOLSParameter67554305',this)">GetXSTOOLSParameter</a>("RAMFormat");
+
+    // get the Flash hex file type used in the most recent invocation of an XSTOOLS utility
+    <a href="#" OnFocus="link('_member','../xsload/flashFileFormat0',this)">flashFileFormat</a> = <a href="#" OnFocus="link('_member','../xstoolslib/GetXSTOOLSParameter67554305',this)">GetXSTOOLSParameter</a>("FlashFormat");
+#endif
+
+    // get the parallel port used in the most recent invocation of an XSTOOLS utility
+    <a href="#" OnFocus="link('_member','../xsatapi/lpt0',this)">lpt</a> = <a href="#" OnFocus="link('_member','../xstoolslib/GetXSTOOLSParameter67554305',this)">GetXSTOOLSParameter</a>("LPT");
+    if(<a href="#" OnFocus="link('_member','../xsatapi/lpt0',this)">lpt</a> != "")
+    {
+        int n = sscanf(<a href="#" OnFocus="link('_member','../xsatapi/lpt0',this)">lpt</a>.c_str()+3,"%d",&amp;<a href="#" OnFocus="link('_member','../xsatapi/portNum0',this)">portNum</a>);
+        assert(n != 0);
+    }
+
+    // process command-line options
+    if(<a href="#" OnFocus="link('_member','../xsusb/ProcessOpts2719128541',this)">ProcessOpts</a>(&amp;argc,argv) == false)
+    {
+        <a href="#" OnFocus="link('_member','../xsusb/Usage86416935',this)">Usage</a>(string(argv[0]));
+        return 1;   // exit if error in program options
+    }
+
+    if(<a href="#" OnFocus="link('_member','../xsatapi/doBatch0',this)">doBatch</a>)
+    {
+        <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','../xstoolslib/EnableBatch66524079',this)">EnableBatch</a>(true);    // turn off error messages
+        <a href="#" OnFocus="link('_member','../xstoolslib/EnableBatch56656',this)">EnableBatch</a>(true);     // turn off user prompts
+    }
+
+    // it's an error if the board model being tested is not specified
+    if(<a href="#" OnFocus="link('_member','../xsatapi/brdModel0',this)">brdModel</a> == "")
+    {
+        <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','../xstoolslib/SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,"No XS Board model was specified!\n");
+        <a href="#" OnFocus="link('_member','../xsusb/Usage86416935',this)">Usage</a>(string(argv[0]));
+        return 1;
+    }
+
+    // store the model type of the board that was specified
+    <a href="#" OnFocus="link('_member','../xstoolslib/SetXSTOOLSParameter3292873876',this)">SetXSTOOLSParameter</a>("BoardType",<a href="#" OnFocus="link('_member','../xsatapi/brdModel0',this)">brdModel</a>.c_str());
+
+    // use LPT1 if no other parallel port was specified
+    if(<a href="#" OnFocus="link('_member','../xsatapi/portNum0',this)">portNum</a> == -1)
+    {
+        <a href="#" OnFocus="link('_member','../xsatapi/portNum0',this)">portNum</a> = 1;
+        <a href="#" OnFocus="link('_member','../xsatapi/lpt0',this)">lpt</a> = "LPT1";
+    }
+
+    // store the parallel port that was specified
+    if(<a href="#" OnFocus="link('_member','../xsatapi/portNum0',this)">portNum</a> &lt; 4)
+        <a href="#" OnFocus="link('_member','../xstoolslib/SetXSTOOLSParameter3292873876',this)">SetXSTOOLSParameter</a>("LPT",<a href="#" OnFocus="link('_member','../xsatapi/lpt0',this)">lpt</a>.c_str());
+
+    // determine the type of XS Board and set the pointer to the board object
+    <a href="#" OnFocus="link('_class','../xstoolslib/XSBoard0',this)">XSBoard</a>* <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>;
+    <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a> = <a href="#" OnFocus="link('_member','../xstoolslib/NewXSBoard189216495',this)">NewXSBoard</a>(<a href="#" OnFocus="link('_member','../xsatapi/brdModel0',this)">brdModel</a>.c_str());
+    if(<a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>==NULL)
+    {
+        <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','../xstoolslib/SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,"Unknown type of XS Board was specified!\n");
+        return 1;
+    }
+
+    // initialize the board object
+    if(<a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/Setup3588776655',this)">Setup</a>(&amp;errMsg,<a href="#" OnFocus="link('_member','../xsatapi/brdModel0',this)">brdModel</a>.c_str(),<a href="#" OnFocus="link('_member','../xsatapi/portNum0',this)">portNum</a>) == false)
+    {
+        <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','../xstoolslib/SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,"Invalid parallel port was selected!\n");
+        delete <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>;
+        return 1;
+    }
+
+    unsigned addrBitErrs, dataBitErrs, failAddress;
+    bool fullPass;
+    if(strncmp(<a href="#" OnFocus="link('_member','../xsatapi/brdModel0',this)">brdModel</a>.c_str(),"XSA",strlen("XSA"))==0)
+    {
+        if(<a href="#" OnFocus="link('_member','testRAM2809384717',this)">testRAM</a>(<a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>,0,23,16,&amp;addrBitErrs,&amp;dataBitErrs,&amp;fullPass,&amp;failAddress) == false)
+        {
+            <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','../xstoolslib/SimpleMsg3476940419',this)">SimpleMsg</a>(<a href="#" OnFocus="link('_member','../xstoolslib/XSErrorMajor0',this)">XSErrorMajor</a>,"Error reading/writing RAM during test!\n");
+            delete <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>;
+            return 1;
+        }
+
+        unsigned mask;
+        int i;
+        printf( "Data bit errors =" );
+        for(mask=1&lt;&lt;31, i=0; mask&gt;0; mask&gt;&gt;=1, i++)
+        {
+            if(i%4==0) printf( " " );
+            printf( "%c", (dataBitErrs &amp; mask) ? 'X':'-' );
+        }
+        printf( "\nAddress bit errors =" );
+        for(mask=1&lt;&lt;31, i=0; mask&gt;0; mask&gt;&gt;=1, i++)
+        {
+            if(i%4==0) printf( " " );
+            printf( "%c", (addrBitErrs &amp; mask) ? 'X':'-' );
+        }
+        printf("\n");
+        if(!fullPass)
+        {
+            printf( "Failure at RAM address: %x\n", failAddress);
+        }
+        
+        delete <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>;
+        
+        return (addrBitErrs==0 &amp;&amp; dataBitErrs==0) ? 0 : 1;  // 0 indicates a successful download/upload
+    }
+    else if(strncmp(<a href="#" OnFocus="link('_member','../xsatapi/brdModel0',this)">brdModel</a>.c_str(),"XSB",strlen("XSB"))==0)
+    {
+        if(<a href="#" OnFocus="link('_member','testRAM2809384717',this)">testRAM</a>(brdPtr,0,18,16,&amp;addrBitErrs,&amp;dataBitErrs,&amp;fullPass,&amp;failAddress) == false)
+        {
+            <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','../xstoolslib/SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,"Error reading/writing RAM during test!\n");
+            delete <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>;
+            return 1;
+        }
+
+        unsigned mask;
+        int i;
+        printf( "Data bit errors =" );
+        for(mask=1&lt;&lt;31, i=0; mask&gt;0; mask&gt;&gt;=1, i++)
+        {
+            if(i%4==0) printf( " " );
+            printf( "%c", (dataBitErrs &amp; mask) ? 'X':'-' );
+        }
+        printf( "\nAddress bit errors =" );
+        for(mask=1&lt;&lt;31, i=0; mask&gt;0; mask&gt;&gt;=1, i++)
+        {
+            if(i%4==0) printf( " " );
+            printf( "%c", (addrBitErrs &amp; mask) ? 'X':'-' );
+        }
+        printf("\n");
+        if(!fullPass)
+        {
+            printf( "Failure at RAM address: %x\n", failAddress);
+        }
+        
+        delete <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>;
+        
+        return (addrBitErrs==0 &amp;&amp; dataBitErrs==0) ? 0 : 1;  // 0 indicates a successful download/upload
+    }
+    else if(strncmp(<a href="#" OnFocus="link('_member','../xsatapi/brdModel0',this)">brdModel</a>.c_str(),"XSV",strlen("XSV"))==0)
+    {
+        bool opStatus, leftFullPass, rightFullPass;
+        unsigned leftAddrBitErrs, leftDataBitErrs, rightAddrBitErrs, rightDataBitErrs, leftFailAddress, rightFailAddress;
+        opStatus = <a href="#" OnFocus="link('_member','testRAM2809384717',this)">testRAM</a>(brdPtr,0,19,16,&amp;rightAddrBitErrs,&amp;rightDataBitErrs,&amp;rightFullPass,&amp;rightFailAddress);
+        opStatus &amp;= <a href="#" OnFocus="link('_member','testRAM2809384717',this)">testRAM</a>(brdPtr,1&lt;&lt;19,19,16,&amp;leftAddrBitErrs,&amp;leftDataBitErrs,&amp;leftFullPass,&amp;leftFailAddress);
+        if(opStatus == false)
+        {
+            <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','../xstoolslib/SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,"Error reading/writing RAM during test!\n");
+            delete <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>;
+            return 1;
+        }
+
+        unsigned mask;
+        int i;
+        printf( "Left-bank data bit errors =" );
+        for(mask=1&lt;&lt;31, i=0; mask&gt;0; mask&gt;&gt;=1, i++)
+        {
+            if(i%4==0) printf( " " );
+            printf( "%c", (leftDataBitErrs &amp; mask) ? 'X':'-' );
+        }
+        printf( "\nLeft-bank address bit errors =" );
+        for(mask=1&lt;&lt;31, i=0; mask&gt;0; mask&gt;&gt;=1, i++)
+        {
+            if(i%4==0) printf( " " );
+            printf( "%c", (leftAddrBitErrs &amp; mask) ? 'X':'-' );
+        }
+        printf("\n");
+        if(!leftFullPass)
+        {
+            printf( "Failure at left-bank RAM address: %x\n", leftFailAddress);
+        }
+        printf( "Right-bank data bit errors =" );
+        for(mask=1&lt;&lt;31, i=0; mask&gt;0; mask&gt;&gt;=1, i++)
+        {
+            if(i%4==0) printf( " " );
+            printf( "%c", (rightDataBitErrs &amp; mask) ? 'X':'-' );
+        }
+        printf( "\nRight-bank address bit errors =" );
+        for(mask=1&lt;&lt;31, i=0; mask&gt;0; mask&gt;&gt;=1, i++)
+        {
+            if(i%4==0) printf( " " );
+            printf( "%c", (rightAddrBitErrs &amp; mask) ? 'X':'-' );
+        }
+        printf("\n");
+        if(!rightFullPass)
+        {
+            printf( "Failure at right-bank RAM address: %x\n", rightFailAddress);
+        }
+        
+        delete <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>;
+        
+        return (rightAddrBitErrs==0 &amp;&amp; rightDataBitErrs==0 &amp;&amp; leftAddrBitErrs==0 &amp;&amp; leftDataBitErrs==0) ? 0 : 1;    // 0 indicates a successful download/upload
+    }
+    else if(
+        strncmp(<a href="#" OnFocus="link('_member','../xsatapi/brdModel0',this)">brdModel</a>.c_str(),"XS95",strlen("XS95"))==0 ||
+        strncmp(<a href="#" OnFocus="link('_member','../xsatapi/brdModel0',this)">brdModel</a>.c_str(),"XS40",strlen("XS40"))==0 ||
+        strncmp(<a href="#" OnFocus="link('_member','../xsatapi/brdModel0',this)">brdModel</a>.c_str(),"XSP",strlen("XSP"))==0
+        )
+    {
+        if(<a href="#" OnFocus="link('_member','testRAM2809384717',this)">testRAM</a>(brdPtr,0,17,8,&amp;addrBitErrs,&amp;dataBitErrs,&amp;fullPass,&amp;failAddress) == false)
+        {
+            <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','../xstoolslib/SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,"Error reading/writing RAM during test!\n");
+            delete <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>;
+            return 1;
+        }
+
+        unsigned mask;
+        int i;
+        printf( "Data bit errors =" );
+        for(mask=1&lt;&lt;31, i=0; mask&gt;0; mask&gt;&gt;=1, i++)
+        {
+            if(i%4==0) printf( " " );
+            printf( "%c", (dataBitErrs &amp; mask) ? 'X':'-' );
+        }
+        printf( "\nAddress bit errors =" );
+        for(mask=1&lt;&lt;31, i=0; mask&gt;0; mask&gt;&gt;=1, i++)
+        {
+            if(i%4==0) printf( " " );
+            printf( "%c", (addrBitErrs &amp; mask) ? 'X':'-' );
+        }
+        printf("\n");
+        if(!fullPass)
+        {
+            printf( "Failure at RAM address: %x\n", failAddress);
+        }
+        
+        delete <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>;
+        
+        return (addrBitErrs==0 &amp;&amp; dataBitErrs==0) ? 0 : 1;  // 0 indicates a successful download/upload
+    }
+
+    delete <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>;
+
+    return 0;   // 0 indicates a successful download/upload
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_member','_source');
+</script>

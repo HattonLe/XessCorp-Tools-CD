@@ -1,0 +1,54 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - OnBtnData</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">OnBtnData</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','gxsport0',this)" class="pathLink">gxsport</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_class','CGxsportDlg0',this)" class="pathLink">CGxsportDlg</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">OnBtnData</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','OnBtnData1224733856','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_member','OnBtnData1224733856','_source',this)" class="tabLinkActive">Source</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','OnBtnData1224733856','_callgraph',this)" class="tabLinkInActive">Call Graph</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<div class="paragraph2NoTopPadding">Start Line: 307</div>
+<pre class="codeExamples">
+void <a href="#" OnFocus="link('_member','OnBtnData1224733856',this)">CGxsportDlg::OnBtnData</a>(int bitPos)
+{
+    ASSERT(bitPos&gt;=0 &amp;&amp; bitPos&lt;=7);
+
+    // toggle the data bit and show the new value on the button
+    if(<a href="#" OnFocus="link('_member','newPortDataVal150410393',this)">newPortDataVal</a> &amp; (1&lt;&lt;bitPos))
+    { // data bit is 1 so reset it to 0
+        <a href="#" OnFocus="link('_member','newPortDataVal150410393',this)">newPortDataVal</a> &amp;= (~(1&lt;&lt;bitPos));
+        <a href="#" OnFocus="link('_member','dataBtn150410393',this)">dataBtn</a>[bitPos]-&gt;SetWindowText("0");
+    }
+    else
+    { // data bit is 0 so set it to 1
+        <a href="#" OnFocus="link('_member','newPortDataVal150410393',this)">newPortDataVal</a> |= (1&lt;&lt;bitPos);
+        <a href="#" OnFocus="link('_member','dataBtn150410393',this)">dataBtn</a>[bitPos]-&gt;SetWindowText("1");
+    }
+
+    <a href="#" OnFocus="link('_member','HandleStrobe150410464',this)">HandleStrobe</a>();
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_member','_source');
+</script>

@@ -1,0 +1,62 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - xsload</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">xsload</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">xsload</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("divID2138","aID2138","headerLeftMenuActive","leftMenuLinkHeadActive");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_dir','xsload0','_description',this)" class="tabLinkActive">Description</a></span>
+<span class="tabInActiveGrayout"><span class="tabLinkGrayout">Overview</span></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_dir','xsload0','_globals',this)" class="tabLinkInActive">Globals</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<span class="paragraph1">xsload</span>
+<span class="padding">( Directory )</span>
+<div class="padding">&nbsp;</div>
+<table cellspacing=0 cellpadding=0 border=0 class="widthAndBorderTop" height=1>
+<TR><TD height=1 width=100% class="oneLine"></TD></TR></TABLE>
+<div class="padding">Command-line utility for uploading/downloading bitstreams/data to/from a board.<br>
+<br>
+</div>
+<div class="padding">XSLOAD begins by fetching the XS Board model, parallel <a href="#" OnFocus="link('_member','../xsether/port0',this)">port</a> identifier and RAM and Flash file formats used by the most recent invocation of any XSTOOLS utility. This allows the user to specify these settings once and then these arguments will be inferred from then on unless specifically overridden by a new set of arguments.<br>
+<br>
+</div>
+<div class="padding">Next, the model identifier is used to select which XS Board object will be instantiated. Then the object is setup to use the specified parallel <a href="#" OnFocus="link('_member','../xsether/port0',this)">port</a> for communication.<br>
+<br>
+</div>
+<div class="padding">If the arguments to XSLOAD specify a RAM or Flash <a href="#" OnFocus="link('_member','../xsramtest/upload0',this)">upload</a> <a href="#" OnFocus="link('_member','../xsusb/operation0',this)">operation</a>, then the appropriate <a href="#" OnFocus="link('_member','../xsramtest/upload0',this)">upload</a> method of the XS Board object is called and the <a href="#" OnFocus="link('_member','../xsusb/data0',this)">data</a> is stored in the specified file.<br>
+<br>
+</div>
+<div class="padding">If the arguments to XSLOAD specify a RAM/Flash download, then the contents of any HEX <a href="#" OnFocus="link('_member','../xsusb/data0',this)">data</a> files are transferred to the RAM or Flash using the appropriate download method of the XS Board object. After the RAM/Flash download completes, if any arguments to XSLOAD specify a CPLD or FPGA configuration <a href="#" OnFocus="link('_member','../xsusb/operation0',this)">operation</a>, then the given bitstream file is downloaded to the appropriate programmable device.<br>
+<br>
+</div>
+<div class="padding"><br>
+</div>
+<div class="padding">&nbsp;</div>
+<table cellspacing=0 cellpadding=0 border=0 class="widthAndBorderTop" height=1>
+<TR><TD height=1 width=100% class="oneLine"></TD></TR></TABLE>
+<div class="paragraph2">Source</div>
+<div class="paddingMembers">The documentation for this Directory was generated from the following files:</div>
+<div class="paddingMembers"><LI><a href="#" OnFocus="link('_file','xsload_dir0',this)">xsload.dir</a><br></div>
+<div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_dir','_description');
+</script>

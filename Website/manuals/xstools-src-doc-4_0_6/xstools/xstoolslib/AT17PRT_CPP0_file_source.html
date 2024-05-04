@@ -1,0 +1,279 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - at17prt.cpp</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">at17prt.cpp</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">at17prt.cpp</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','at17prt_cpp0','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabInActiveGrayout"><span class="tabLinkGrayout">Overview</span></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','at17prt_cpp0','_includedfiles',this)" class="tabLinkInActive">Included files</a></span>
+<span class="tabInActiveGrayout"><span class="tabLinkGrayout">Included by</span></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_file','at17prt_cpp0','_source',this)" class="tabLinkActive">Source</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<pre class="codeExamples">
+/*----------------------------------------------------------------------------------
+  SOFTWARE LICENSE AGREEMENT
+    1.  Permission to use, copy, modify, and distribute this software
+        and its documentation, with or without modification, for any
+        purpose and without fee or royalty is hereby granted, provided
+        that you include the following on ALL copies of the software
+        and documentation or portions thereof, including
+        modifications, that you make:
+
+            a.  The full text of this license in a location viewable to users
+            of the redistributed or derivative work.
+
+            b.  Notice of any changes or modifications to the files,
+            including the date changes were made.
+
+    2.  The name, servicemarks and trademarks of X Engineering
+        Software Systems Corp. may NOT be used in advertising or
+        publicity pertaining to the software without specific, written
+        prior permission.
+
+    3.  Title to copyright in this software and any associated
+        documentation will at all times remain with X Engineering
+        Software Systems Corp.
+
+    4.  THIS SOFTWARE AND DOCUMENTATION IS PROVIDED "AS IS," AND X
+        Engineering Software Systems Corp MAKES NO REPRESENTATIONS OR
+        WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO,
+        WARRANTIES OF MERCHANTABILITY OR FITNESS FOR ANY PARTICULAR
+        PURPOSE OR THAT THE USE OF THE SOFTWARE OR DOCUMENTATION WILL
+        NOT INFRINGE ANY THIRD PARTY PATENTS, COPYRIGHTS, TRADEMARKS
+        OR OTHER RIGHTS.
+
+    5.  X Engineering Software Systems Corp WILL NOT BE LIABLE FOR ANY
+        DAMAGES, INCLUDING BUT NOT LIMITED TO, DIRECT, INDIRECT,
+        SPECIAL OR CONSEQUENTIAL, ARISING OUT OF ANY USE OF THE
+        SOFTWARE OR DOCUMENTATION.
+
+  ©2006 - X Engineering Software Systems Corp.  All rights reserved.
+----------------------------------------------------------------------------------*/
+
+
+#include &lt;fstream&gt;
+#include &lt;iostream&gt;
+#include &lt;cassert&gt;
+
+#include "<a href="#" OnFocus="link('_file','utils_h0',this)">utils.h</a>"
+#include "<a href="#" OnFocus="link('_file','hexrecrd_h0',this)">hexrecrd.h</a>"
+#include "<a href="#" OnFocus="link('_file','at17prt_h0',this)">at17prt.h</a>"
+
+
+/// Create a Flash upload/download port.
+<a href="#" OnFocus="link('_member','AT17Port141724887',this)">AT17Port::AT17Port</a>(void)
+{
+    <a href="#" OnFocus="link('_member','progressGauge243744841',this)">progressGauge</a> = NULL;
+}
+
+/// Create a serial EEPROM download port.
+<a href="#" OnFocus="link('_member','AT17Port141724887',this)">AT17Port::AT17Port</a>( <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>* e,  ///&lt; pointer to error reporting object
+                   unsigned int portNum,    ///&lt; parallel port number
+                   unsigned int invMask,    ///&lt; inversion mask for the parallel port
+                   unsigned int pos_clk,    ///&lt; bit position in parallel port of EEPROM clock pin
+                   unsigned int pos_eece,   ///&lt; bit position in parallel port of EEPROM chip-enable
+                   unsigned int pos_eeoe,   ///&lt; bit position in parallel port of EEPROM output-enable
+                   unsigned int pos_din     ///&lt; bit position in parallel port of EEPROM serial data input
+                   )
+{
+    <a href="#" OnFocus="link('_member','progressGauge243744841',this)">progressGauge</a> = NULL;
+    <a href="#" OnFocus="link('_member','Setup2737948323',this)">Setup</a>(e,portNum,invMask,pos_clk,pos_eece,pos_eeoe,pos_din);
+}
+
+/// Setup a serial EEPROM download port.
+int <a href="#" OnFocus="link('_member','Setup2737948323',this)">AT17Port::Setup</a>( <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>* e,  ///&lt; pointer to error reporting object
+                   unsigned int portNum,    ///&lt; parallel port number
+                   unsigned int invMask,    ///&lt; inversion mask for the parallel port
+                   unsigned int pos_clk,    ///&lt; bit position in parallel port of EEPROM clock pin
+                   unsigned int pos_eece,   ///&lt; bit position in parallel port of EEPROM chip-enable
+                   unsigned int pos_eeoe,   ///&lt; bit position in parallel port of EEPROM output-enable
+                   unsigned int pos_din     ///&lt; bit position in parallel port of EEPROM serial data input
+                   )
+{
+    <a href="#" OnFocus="link('_member','posCLK243744841',this)">posCLK</a>   = pos_clk;
+    <a href="#" OnFocus="link('_member','posEECE243744841',this)">posEECE</a> = pos_eece;
+    <a href="#" OnFocus="link('_member','posEEOE243744841',this)">posEEOE</a> = pos_eeoe;
+    <a href="#" OnFocus="link('_member','posDIN243744841',this)">posDIN</a> = pos_din;
+    return <a href="#" OnFocus="link('_member','Setup1571714867',this)">PPort::Setup</a>(e,portNum,invMask);
+}
+
+/// Program a serial EEPROM with an FPGA bitstream stored in a .bit file.
+///\return true if operation is successful, false if not.
+bool <a href="#" OnFocus="link('_member','ProgramEEPROM2040293066',this)">AT17Port::ProgramEEPROM</a>(string&amp; bitfileName) ///&lt; name of file containing bitstream
+{
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> = <a href="#" OnFocus="link('_member','GetErr259477277',this)">GetErr</a>();
+    
+    if(bitfileName.length()==0)
+        return false;  // stop if no bit file was given
+    
+    ifstream is(bitfileName.c_str(),ios::binary);  // otherwise open bit file
+    if(!is || is.fail() || is.eof()!=0)
+    { // error - couldn't open bitstream file
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','SetSeverity3409672334',this)">SetSeverity</a>(XSErrorMajor);
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> &lt;&lt; "could not open " &lt;&lt; bitfileName.c_str() &lt;&lt; "\n";
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','EndMsg60232619',this)">EndMsg</a>();
+        return false;
+    }
+    
+    // determine the size of the file
+    is.seekg(0,ios::end);   // move pointer to end of file
+    streampos streamEndPos = is.tellg();    // pointer position = position of end of file
+    is.seekg(0,ios::beg);   // return pointer to beginning of file
+
+    string desc("Serial EEPROM Download"), subdesc("Downloading "+<a href="#" OnFocus="link('_member','StripPrefix67554305',this)">StripPrefix</a>(bitfileName));
+    <a href="#" OnFocus="link('_member','progressGauge243744841',this)">progressGauge</a> = new <a href="#" OnFocus="link('_class','Progress0',this)">Progress</a>(&amp;err,desc,subdesc,0,streamEndPos);
+
+    bool status = <a href="#" OnFocus="link('_member','ProgramEEPROM2040293066',this)">ProgramEEPROM</a>(is);
+    
+    delete <a href="#" OnFocus="link('_member','progressGauge243744841',this)">progressGauge</a>;
+    
+    is.close();  // close-up the bitstream file
+    
+    return status;
+}
+
+
+/// Program a serial EEPROM with a bitstream received through a stream.
+///\return true if the operation is successful, false if not
+bool <a href="#" OnFocus="link('_member','ProgramEEPROM2040293066',this)">AT17Port::ProgramEEPROM</a>(istream&amp; is) ///&lt; bitstream arrives through this stream
+{
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> = <a href="#" OnFocus="link('_member','GetErr259477277',this)">GetErr</a>();
+
+    if(is.eof()!=0)
+        return false; // exit if no BIT stream exists
+
+    // Setup the pins of the Atmel EEPROM for programming.
+    // The SER_EN_ should already be held low by a shunt on Jumper J6.
+    // This holds the EEPROM CE_ low.
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posEECE,posEECE);
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posEEOE,posEEOE);
+    
+    // jump over the first field of the BIT file
+    long unsigned int fieldLength = <a href="#" OnFocus="link('_member','GetInteger1332633361',this)">GetInteger</a>(is,2);
+    assert(fieldLength!=0);
+    is.ignore(fieldLength);
+    
+    // process the second field
+    fieldLength = <a href="#" OnFocus="link('_member','GetInteger1332633361',this)">GetInteger</a>(is,2);
+    assert(fieldLength==1);
+    
+    // now look for the field with the bitstream data
+    const int BitstreamFieldType = 0x65;    // field type for the bitstream data
+    bool status = <a href="#" OnFocus="link('_member','ScanForField2849822024',this)">ScanForField</a>(is,BitstreamFieldType);
+    assert(status==true);
+    
+    // now we are at the start of the configuration bits
+    fieldLength = <a href="#" OnFocus="link('_member','GetInteger1332633361',this)">GetInteger</a>(is,4); // get the length of the bit stream
+    assert(fieldLength&gt;0);
+    
+    // now load the EEPROM memory
+    long unsigned int i;
+    unsigned char page[64];
+    for(i=0; i&lt;fieldLength; i++)
+    { 
+        is.read((char*)&amp;page[i&amp;0x3f],1);    // read the bytes and into a 64-byte page
+        if(is.eof())
+        {
+            break;
+        }
+        assert(is.eof()==0);    // shouldn't reach end-of-file
+        if((i%1000)==0)     // after every 1000 bytes,
+            <a href="#" OnFocus="link('_member','progressGauge243744841',this)">progressGauge</a>-&gt;<a href="#" OnFocus="link('_member','Report2561259521',this)">Report</a>(is.tellg()); // give some feedback during the programming process
+        if((i&amp;0x3f)==0x3f)
+        { // got a full 64-byte page, so program the EEPROM
+            <a href="#" OnFocus="link('_member','ProgramEEPROMPage649310900',this)">ProgramEEPROMPage</a>(page,i&amp;~0x3F,64);
+        }
+    }
+    if((i&amp;0x3F)!=0)
+    { // BIT file ended before a full 64-byte page was assembled
+        <a href="#" OnFocus="link('_member','ProgramEEPROMPage649310900',this)">ProgramEEPROMPage</a>(page,i&amp;~0x3F,(i&amp;0x3F)+1);
+    }
+    <a href="#" OnFocus="link('_member','progressGauge243744841',this)">progressGauge</a>-&gt;<a href="#" OnFocus="link('_member','Report2561259521',this)">Report</a>(is.tellg()); // should set gauge to 100%
+
+    // now set the output-enable polarity for the EEPROM to active-high
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posEECE,posEECE);    // raise chip-enable high
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posEEOE,posEEOE);    // raise output-enable high
+    // write 0xFF to address 0x3FFF to set the output-enable polarity
+    unsigned char allOne = 0xFF;
+    <a href="#" OnFocus="link('_member','ProgramEEPROMPage649310900',this)">ProgramEEPROMPage</a>(&amp;allOne,0x3FFF,1);
+        
+    // programming done, so disable the EEPROM
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posEECE,posEECE);
+
+    return true;
+}
+
+
+/// Send a byte into an Atmel EEPROM.
+void <a href="#" OnFocus="link('_member','SendEEPROMByte912620763',this)">AT17Port::SendEEPROMByte</a>(unsigned char byte) ///&lt; data byte
+{
+    for(int i=0; i&lt;8; i++)
+    {
+        // configuration data pin of parallel port connects to data pin of Atmel EEPROM
+        <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(byte&amp;0x80 ? 1:0,posDIN,posDIN);  // byte is sent MSB first
+        byte &lt;&lt;= 1;
+        <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posCLK,posCLK);
+        <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posCLK,posCLK);
+    }
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posDIN,posDIN);  // this is for the acknowledge bit from the EEPROM
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posCLK,posCLK);
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posCLK,posCLK);
+}
+
+
+/// Program a page of an Atmel EEPROM.
+void <a href="#" OnFocus="link('_member','ProgramEEPROMPage649310900',this)">AT17Port::ProgramEEPROMPage</a>(unsigned char* buf,   ///&lt; buffer with data bytes
+                             unsigned int pageAddr, ///&lt; address where data will be stored
+                             unsigned int len       ///&lt; number of bytes in buffer
+                             )
+{
+    assert(len&lt;=64);    // an Atmel page is 64 bytes or less
+    assert(pageAddr&lt;0x20000L);  // Atmel byte addresses are less than 128K
+    
+    // initialize clock and data pins
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posCLK,posCLK);
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posDIN,posDIN);
+    // give start signal (data falls while clock is high)
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posCLK,posCLK);
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posDIN,posDIN);
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posCLK,posCLK);
+    // send device-address byte with A2=0 and R/W=0 (write enabled)
+    <a href="#" OnFocus="link('_member','SendEEPROMByte912620763',this)">SendEEPROMByte</a>(0xA6);
+    // send two-byte address of EEPROM page
+    <a href="#" OnFocus="link('_member','SendEEPROMByte912620763',this)">SendEEPROMByte</a>(pageAddr&gt;&gt;8);  // send upper byte
+    <a href="#" OnFocus="link('_member','SendEEPROMByte912620763',this)">SendEEPROMByte</a>(pageAddr&amp;0xFF);    // send lower bytes
+    // send data bytes in page
+    for(unsigned int i=0; i&lt;len; i++)
+        <a href="#" OnFocus="link('_member','SendEEPROMByte912620763',this)">SendEEPROMByte</a>(buf[i]);
+    // give stop signal (data rises while clock is high)
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posDIN,posDIN);
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posCLK,posCLK);
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posDIN,posDIN);
+    // wait 10 ms
+    <a href="#" OnFocus="link('_member','InsertDelay359930342',this)">InsertDelay</a>(10,MILLISECONDS);
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_file','_source');
+</script>

@@ -1,0 +1,1762 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - jtagport.cpp</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">jtagport.cpp</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">jtagport.cpp</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','jtagport_cpp0','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','jtagport_cpp0','_overview',this)" class="tabLinkInActive">Overview</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','jtagport_cpp0','_includedfiles',this)" class="tabLinkInActive">Included files</a></span>
+<span class="tabInActiveGrayout"><span class="tabLinkGrayout">Included by</span></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_file','jtagport_cpp0','_source',this)" class="tabLinkActive">Source</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<pre class="codeExamples">
+/*----------------------------------------------------------------------------------
+  SOFTWARE LICENSE AGREEMENT
+    1.  Permission to use, copy, modify, and distribute this software
+        and its documentation, with or without modification, for any
+        purpose and without fee or royalty is hereby granted, provided
+        that you include the following on ALL copies of the software
+        and documentation or portions thereof, including
+        modifications, that you make:
+
+            a.  The full text of this license in a location viewable to users
+            of the redistributed or derivative work.
+
+            b.  Notice of any changes or modifications to the files,
+            including the date changes were made.
+
+    2.  The name, servicemarks and trademarks of X Engineering
+        Software Systems Corp. may NOT be used in advertising or
+        publicity pertaining to the software without specific, written
+        prior permission.
+
+    3.  Title to copyright in this software and any associated
+        documentation will at all times remain with X Engineering
+        Software Systems Corp.
+
+    4.  THIS SOFTWARE AND DOCUMENTATION IS PROVIDED "AS IS," AND X
+        Engineering Software Systems Corp MAKES NO REPRESENTATIONS OR
+        WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO,
+        WARRANTIES OF MERCHANTABILITY OR FITNESS FOR ANY PARTICULAR
+        PURPOSE OR THAT THE USE OF THE SOFTWARE OR DOCUMENTATION WILL
+        NOT INFRINGE ANY THIRD PARTY PATENTS, COPYRIGHTS, TRADEMARKS
+        OR OTHER RIGHTS.
+
+    5.  X Engineering Software Systems Corp WILL NOT BE LIABLE FOR ANY
+        DAMAGES, INCLUDING BUT NOT LIMITED TO, DIRECT, INDIRECT,
+        SPECIAL OR CONSEQUENTIAL, ARISING OUT OF ANY USE OF THE
+        SOFTWARE OR DOCUMENTATION.
+
+  ©2006 - X Engineering Software Systems Corp.  All rights reserved.
+----------------------------------------------------------------------------------*/
+
+
+#include &lt;string&gt;
+#include &lt;fstream&gt;
+#include &lt;cassert&gt;
+#include &lt;ctime&gt;
+#include &lt;cstdarg&gt;
+using namespace std;
+
+#include "<a href="#" OnFocus="link('_file','utils_h0',this)">utils.h</a>"
+#include "<a href="#" OnFocus="link('_file','jtagport_h0',this)">jtagport.h</a>"
+
+
+// The following array stores the transition table for the TAP
+// controller.  It tells us what the next state will be by placing the
+// current state code in the first index and the value of
+// the TMS input in the second index.
+static <a href="#" OnFocus="link('_member','TAPState0',this)">TAPState</a> nextTAPState[16][2] =
+{
+    // TMS=0                 TMS=1            CURRENT TAP STATE
+    { <a href="#" OnFocus="link('_member','RunTestIdle0',this)">RunTestIdle</a>,        <a href="#" OnFocus="link('_member','TestLogicReset0',this)">TestLogicReset</a> },     // TestLogicReset
+    { <a href="#" OnFocus="link('_member','RunTestIdle0',this)">RunTestIdle</a>,        <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>   },     // RunTestIdle
+    { <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>,          <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>   },     // SelectDRScan
+    { <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>,          <a href="#" OnFocus="link('_member','TestLogicReset0',this)">TestLogicReset</a> },     // SelectIRScan
+    { <a href="#" OnFocus="link('_member','ShiftDR0',this)">ShiftDR</a>,            <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>        },     // CaptureDR
+    { <a href="#" OnFocus="link('_member','ShiftIR0',this)">ShiftIR</a>,            <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>        },     // CaptureIR
+    { <a href="#" OnFocus="link('_member','ShiftDR0',this)">ShiftDR</a>,            <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>        },     // ShiftDR
+    { <a href="#" OnFocus="link('_member','ShiftIR0',this)">ShiftIR</a>,            <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>        },     // ShiftIR
+    { <a href="#" OnFocus="link('_member','PauseDR0',this)">PauseDR</a>,            <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>       },     // Exit1DR
+    { <a href="#" OnFocus="link('_member','PauseIR0',this)">PauseIR</a>,            <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>       },     // Exit1IR
+    { <a href="#" OnFocus="link('_member','PauseDR0',this)">PauseDR</a>,            <a href="#" OnFocus="link('_member','Exit2DR0',this)">Exit2DR</a>        },     // PauseDR
+    { <a href="#" OnFocus="link('_member','PauseIR0',this)">PauseIR</a>,            <a href="#" OnFocus="link('_member','Exit2IR0',this)">Exit2IR</a>        },     // PauseIR
+    { <a href="#" OnFocus="link('_member','ShiftDR0',this)">ShiftDR</a>,            <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>       },     // Exit2DR
+    { <a href="#" OnFocus="link('_member','ShiftIR0',this)">ShiftIR</a>,            <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>       },     // Exit2IR
+    { <a href="#" OnFocus="link('_member','RunTestIdle0',this)">RunTestIdle</a>,        <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>   },     // UpdateDR
+    { <a href="#" OnFocus="link('_member','RunTestIdle0',this)">RunTestIdle</a>,        <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>   },     // UpdateIR
+};
+
+
+// The following array stores the TAP state path to get from the
+// first state to the final state.  The first state is entered as the first index
+// to this array, the final state is entered as the second index to the array,
+// and the third index is used to step through the intermediate states until
+// a -1 is found indicating the end of the sequence.
+static int TAPPath[16][16][17] =
+{
+    // From TestLogicReset ...
+    {
+        // ... to TestLogicReset
+        { -1 },
+        // ... to RunTestIdle
+        { <a href="#" OnFocus="link('_member','RunTestIdle0',this)">RunTestIdle</a>, -1 },
+        // ... to SelectDRScan
+        { <a href="#" OnFocus="link('_member','RunTestIdle0',this)">RunTestIdle</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, -1 },
+        // ... to SelectIRScan
+        { <a href="#" OnFocus="link('_member','RunTestIdle0',this)">RunTestIdle</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, -1 },
+        // ... to CaptureDR
+        { <a href="#" OnFocus="link('_member','RunTestIdle0',this)">RunTestIdle</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>, -1 },
+        // ... to CaptureIR
+        { <a href="#" OnFocus="link('_member','RunTestIdle0',this)">RunTestIdle</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>, -1 },
+        // ... to ShiftDR
+        { <a href="#" OnFocus="link('_member','RunTestIdle0',this)">RunTestIdle</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>, <a href="#" OnFocus="link('_member','ShiftDR0',this)">ShiftDR</a>, -1 },
+        // ... to ShiftIR
+        { <a href="#" OnFocus="link('_member','RunTestIdle0',this)">RunTestIdle</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>, <a href="#" OnFocus="link('_member','ShiftIR0',this)">ShiftIR</a>, -1 },
+        // ... to Exit1DR
+        { <a href="#" OnFocus="link('_member','RunTestIdle0',this)">RunTestIdle</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>, <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, -1 },
+        // ... to Exit1IR
+        { <a href="#" OnFocus="link('_member','RunTestIdle0',this)">RunTestIdle</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>, <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, -1 },
+        // ... to PauseDR
+        { <a href="#" OnFocus="link('_member','RunTestIdle0',this)">RunTestIdle</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>, <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, <a href="#" OnFocus="link('_member','PauseDR0',this)">PauseDR</a>, -1 },
+        // ... to PauseIR
+        { <a href="#" OnFocus="link('_member','RunTestIdle0',this)">RunTestIdle</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>, <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, <a href="#" OnFocus="link('_member','PauseIR0',this)">PauseIR</a>, -1 },
+        // ... to Exit2DR
+        { <a href="#" OnFocus="link('_member','RunTestIdle0',this)">RunTestIdle</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>, <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, <a href="#" OnFocus="link('_member','PauseDR0',this)">PauseDR</a>, <a href="#" OnFocus="link('_member','Exit2DR0',this)">Exit2DR</a>, -1 },
+        // ... to Exit2IR
+        { <a href="#" OnFocus="link('_member','RunTestIdle0',this)">RunTestIdle</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>, <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, <a href="#" OnFocus="link('_member','PauseIR0',this)">PauseIR</a>, <a href="#" OnFocus="link('_member','Exit2IR0',this)">Exit2IR</a>, -1 },
+        // ... to UpdateDR
+        { <a href="#" OnFocus="link('_member','RunTestIdle0',this)">RunTestIdle</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>, <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>, -1 },
+        // ... to UpdateIR
+        { <a href="#" OnFocus="link('_member','RunTestIdle0',this)">RunTestIdle</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>, <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>, -1 },
+    },
+    // From RunTestIdle ...
+    {
+        // ... to TestLogicReset
+        { <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','TestLogicReset0',this)">TestLogicReset</a>, -1 },
+        // ... to RunTestIdle
+        { -1 },
+        // ... to SelectDRScan
+        { <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, -1 },
+        // ... to SelectIRScan
+        { <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, -1 },
+        // ... to CaptureDR
+        { <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>, -1 },
+        // ... to CaptureIR
+        { <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>, -1 },
+        // ... to ShiftDR
+        { <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>, <a href="#" OnFocus="link('_member','ShiftDR0',this)">ShiftDR</a>, -1 },
+        // ... to ShiftIR
+        { <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>, <a href="#" OnFocus="link('_member','ShiftIR0',this)">ShiftIR</a>, -1 },
+        // ... to Exit1DR
+        { <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>, <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, -1 },
+        // ... to Exit1IR
+        { <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>, <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, -1 },
+        // ... to PauseDR
+        { <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>, <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, <a href="#" OnFocus="link('_member','PauseDR0',this)">PauseDR</a>, -1 },
+        // ... to PauseIR
+        { <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>, <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, <a href="#" OnFocus="link('_member','PauseIR0',this)">PauseIR</a>, -1 },
+        // ... to Exit2DR
+        { <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>, <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, <a href="#" OnFocus="link('_member','PauseDR0',this)">PauseDR</a>, <a href="#" OnFocus="link('_member','Exit2DR0',this)">Exit2DR</a>, -1 },
+        // ... to Exit2IR
+        { <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>, <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, <a href="#" OnFocus="link('_member','PauseIR0',this)">PauseIR</a>, <a href="#" OnFocus="link('_member','Exit2IR0',this)">Exit2IR</a>, -1 },
+        // ... to UpdateDR
+        { <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>, <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>, -1 },
+        // ... to UpdateIR
+        { <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>, <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>, -1 },
+    },
+    // From SelectDRScan ...
+    {
+        // ... to TestLogicReset
+        { <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','TestLogicReset0',this)">TestLogicReset</a>, -1 },
+        // ... to RunTestIdle
+        { <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','TestLogicReset0',this)">TestLogicReset</a>, <a href="#" OnFocus="link('_member','RunTestIdle0',this)">RunTestIdle</a>, -1 },
+        // ... to SelectDRScan
+        { -1 },
+        // ... to SelectIRScan
+        { <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, -1 },
+        // ... to CaptureDR
+        { <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>, -1 },
+        // ... to CaptureIR
+        { <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>, -1 },
+        // ... to ShiftDR
+        { <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>, <a href="#" OnFocus="link('_member','ShiftDR0',this)">ShiftDR</a>, -1 },
+        // ... to ShiftIR
+        { <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>, <a href="#" OnFocus="link('_member','ShiftIR0',this)">ShiftIR</a>, -1 },
+        // ... to Exit1DR
+        { <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>, <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, -1 },
+        // ... to Exit1IR
+        { <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>, <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, -1 },
+        // ... to PauseDR
+        { <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>, <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, <a href="#" OnFocus="link('_member','PauseDR0',this)">PauseDR</a>, -1 },
+        // ... to PauseIR
+        { <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>, <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, <a href="#" OnFocus="link('_member','PauseIR0',this)">PauseIR</a>, -1 },
+        // ... to Exit2DR
+        { <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>, <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, <a href="#" OnFocus="link('_member','PauseDR0',this)">PauseDR</a>, <a href="#" OnFocus="link('_member','Exit2DR0',this)">Exit2DR</a>, -1 },
+        // ... to Exit2IR
+        { <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>, <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, <a href="#" OnFocus="link('_member','PauseIR0',this)">PauseIR</a>, <a href="#" OnFocus="link('_member','Exit2IR0',this)">Exit2IR</a>, -1 },
+        // ... to UpdateDR
+        { <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>, <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>, -1 },
+        // ... to UpdateIR
+        { <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>, <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>, -1 },
+    },
+    // From SelectIRScan ...
+    {
+        // ... to TestLogicReset
+        { <a href="#" OnFocus="link('_member','TestLogicReset0',this)">TestLogicReset</a>, -1 },
+        // ... to RunTestIdle
+        { <a href="#" OnFocus="link('_member','TestLogicReset0',this)">TestLogicReset</a>, <a href="#" OnFocus="link('_member','RunTestIdle0',this)">RunTestIdle</a>, -1 },
+        // ... to SelectDRScan
+        { <a href="#" OnFocus="link('_member','TestLogicReset0',this)">TestLogicReset</a>, <a href="#" OnFocus="link('_member','RunTestIdle0',this)">RunTestIdle</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, -1 },
+        // ... to SelectIRScan
+        { -1 },
+        // ... to CaptureDR
+        { <a href="#" OnFocus="link('_member','TestLogicReset0',this)">TestLogicReset</a>, <a href="#" OnFocus="link('_member','RunTestIdle0',this)">RunTestIdle</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>, -1 },
+        // ... to CaptureIR
+        { <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>, -1 },
+        // ... to ShiftDR
+        { <a href="#" OnFocus="link('_member','TestLogicReset0',this)">TestLogicReset</a>, <a href="#" OnFocus="link('_member','RunTestIdle0',this)">RunTestIdle</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>, <a href="#" OnFocus="link('_member','ShiftDR0',this)">ShiftDR</a>, -1 },
+        // ... to ShiftIR
+        { <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>, <a href="#" OnFocus="link('_member','ShiftIR0',this)">ShiftIR</a>, -1 },
+        // ... to Exit1DR
+        { <a href="#" OnFocus="link('_member','TestLogicReset0',this)">TestLogicReset</a>, <a href="#" OnFocus="link('_member','RunTestIdle0',this)">RunTestIdle</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>, <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, -1 },
+        // ... to Exit1IR
+        { <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>, <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, -1 },
+        // ... to PauseDR
+        { <a href="#" OnFocus="link('_member','TestLogicReset0',this)">TestLogicReset</a>, <a href="#" OnFocus="link('_member','RunTestIdle0',this)">RunTestIdle</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>, <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, <a href="#" OnFocus="link('_member','PauseDR0',this)">PauseDR</a>, -1 },
+        // ... to PauseIR
+        { <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>, <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, <a href="#" OnFocus="link('_member','PauseIR0',this)">PauseIR</a>, -1 },
+        // ... to Exit2DR
+        { <a href="#" OnFocus="link('_member','TestLogicReset0',this)">TestLogicReset</a>, <a href="#" OnFocus="link('_member','RunTestIdle0',this)">RunTestIdle</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>, <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, <a href="#" OnFocus="link('_member','PauseDR0',this)">PauseDR</a>, <a href="#" OnFocus="link('_member','Exit2DR0',this)">Exit2DR</a>, -1 },
+        // ... to Exit2IR
+        { <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>, <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, <a href="#" OnFocus="link('_member','PauseIR0',this)">PauseIR</a>, <a href="#" OnFocus="link('_member','Exit2IR0',this)">Exit2IR</a>, -1 },
+        // ... to UpdateDR
+        { <a href="#" OnFocus="link('_member','TestLogicReset0',this)">TestLogicReset</a>, <a href="#" OnFocus="link('_member','RunTestIdle0',this)">RunTestIdle</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>, <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>, -1 },
+        // ... to UpdateIR
+        { <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>, <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>, -1 },
+    },
+    // From CaptureDR ...
+    {
+        // ... to TestLogicReset
+        { <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','TestLogicReset0',this)">TestLogicReset</a>, -1 },
+        // ... to RunTestIdle
+        { <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>, <a href="#" OnFocus="link('_member','RunTestIdle0',this)">RunTestIdle</a>, -1 },
+        // ... to SelectDRScan
+        { <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, -1 },
+        // ... to SelectIRScan
+        { <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, -1 },
+        // ... to CaptureDR
+        { -1 },
+        // ... to CaptureIR
+        { <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>, -1 },
+        // ... to ShiftDR
+        { <a href="#" OnFocus="link('_member','ShiftDR0',this)">ShiftDR</a>, -1 },
+        // ... to ShiftIR
+        { <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>, <a href="#" OnFocus="link('_member','ShiftIR0',this)">ShiftIR</a>, -1 },
+        // ... to Exit1DR
+        { <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, -1 },
+        // ... to Exit1IR
+        { <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>, <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, -1 },
+        // ... to PauseDR
+        { <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, <a href="#" OnFocus="link('_member','PauseDR0',this)">PauseDR</a>, -1 },
+        // ... to PauseIR
+        { <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>, <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, <a href="#" OnFocus="link('_member','PauseIR0',this)">PauseIR</a>, -1 },
+        // ... to Exit2DR
+        { <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, <a href="#" OnFocus="link('_member','PauseDR0',this)">PauseDR</a>, <a href="#" OnFocus="link('_member','Exit2DR0',this)">Exit2DR</a>, -1 },
+        // ... to Exit2IR
+        { <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>, <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, <a href="#" OnFocus="link('_member','PauseIR0',this)">PauseIR</a>, <a href="#" OnFocus="link('_member','Exit2IR0',this)">Exit2IR</a>, -1 },
+        // ... to UpdateDR
+        { <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>, -1 },
+        // ... to UpdateIR
+        { <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>, <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>, -1 },
+    },
+    // From CaptureIR ...
+    {
+        // ... to TestLogicReset
+        { <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','TestLogicReset0',this)">TestLogicReset</a>, -1 },
+        // ... to RunTestIdle
+        { <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>, <a href="#" OnFocus="link('_member','RunTestIdle0',this)">RunTestIdle</a>, -1 },
+        // ... to SelectDRScan
+        { <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, -1 },
+        // ... to SelectIRScan
+        { <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, -1 },
+        // ... to CaptureDR
+        { <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>, -1 },
+        // ... to CaptureIR
+        { -1 },
+        // ... to ShiftDR
+        { <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>, <a href="#" OnFocus="link('_member','ShiftDR0',this)">ShiftDR</a>, -1 },
+        // ... to ShiftIR
+        { <a href="#" OnFocus="link('_member','ShiftIR0',this)">ShiftIR</a>, -1 },
+        // ... to Exit1DR
+        { <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>, <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, -1 },
+        // ... to Exit1IR
+        { <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, -1 },
+        // ... to PauseDR
+        { <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>, <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, <a href="#" OnFocus="link('_member','PauseDR0',this)">PauseDR</a>, -1 },
+        // ... to PauseIR
+        { <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, <a href="#" OnFocus="link('_member','PauseIR0',this)">PauseIR</a>, -1 },
+        // ... to Exit2DR
+        { <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>, <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, <a href="#" OnFocus="link('_member','PauseDR0',this)">PauseDR</a>, <a href="#" OnFocus="link('_member','Exit2DR0',this)">Exit2DR</a>, -1 },
+        // ... to Exit2IR
+        { <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, <a href="#" OnFocus="link('_member','PauseIR0',this)">PauseIR</a>, <a href="#" OnFocus="link('_member','Exit2IR0',this)">Exit2IR</a>, -1 },
+        // ... to UpdateDR
+        { <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>, <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>, -1 },
+        // ... to UpdateIR
+        { <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>, -1 },
+    },
+    // From ShiftDR ...
+    {
+        // ... to TestLogicReset
+        { <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','TestLogicReset0',this)">TestLogicReset</a>, -1 },
+        // ... to RunTestIdle
+        { <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>, <a href="#" OnFocus="link('_member','RunTestIdle0',this)">RunTestIdle</a>, -1 },
+        // ... to SelectDRScan
+        { <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, -1 },
+        // ... to SelectIRScan
+        { <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, -1 },
+        // ... to CaptureDR
+        { <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>, -1 },
+        // ... to CaptureIR
+        { <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>, -1 },
+        // ... to ShiftDR
+        { -1 },
+        // ... to ShiftIR
+        { <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>, <a href="#" OnFocus="link('_member','ShiftIR0',this)">ShiftIR</a>, -1 },
+        // ... to Exit1DR
+        { <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, -1 },
+        // ... to Exit1IR
+        { <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>, <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, -1 },
+        // ... to PauseDR
+        { <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, <a href="#" OnFocus="link('_member','PauseDR0',this)">PauseDR</a>, -1 },
+        // ... to PauseIR
+        { <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>, <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, <a href="#" OnFocus="link('_member','PauseIR0',this)">PauseIR</a>, -1 },
+        // ... to Exit2DR
+        { <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, <a href="#" OnFocus="link('_member','PauseDR0',this)">PauseDR</a>, <a href="#" OnFocus="link('_member','Exit2DR0',this)">Exit2DR</a>, -1 },
+        // ... to Exit2IR
+        { <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>, <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, <a href="#" OnFocus="link('_member','PauseIR0',this)">PauseIR</a>, <a href="#" OnFocus="link('_member','Exit2IR0',this)">Exit2IR</a>, -1 },
+        // ... to UpdateDR
+        { <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>, -1 },
+        // ... to UpdateIR
+        { <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>, <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>, -1 },
+    },
+    // From ShiftIR ...
+    {
+        // ... to TestLogicReset
+        { <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','TestLogicReset0',this)">TestLogicReset</a>, -1 },
+        // ... to RunTestIdle
+        { <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>, <a href="#" OnFocus="link('_member','RunTestIdle0',this)">RunTestIdle</a>, -1 },
+        // ... to SelectDRScan
+        { <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, -1 },
+        // ... to SelectIRScan
+        { <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, -1 },
+        // ... to CaptureDR
+        { <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>, -1 },
+        // ... to CaptureIR
+        { <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>, -1 },
+        // ... to ShiftDR
+        { <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>, <a href="#" OnFocus="link('_member','ShiftDR0',this)">ShiftDR</a>, -1 },
+        // ... to ShiftIR
+        { -1 },
+        // ... to Exit1DR
+        { <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>, <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, -1 },
+        // ... to Exit1IR
+        { <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, -1 },
+        // ... to PauseDR
+        { <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>, <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, <a href="#" OnFocus="link('_member','PauseDR0',this)">PauseDR</a>, -1 },
+        // ... to PauseIR
+        { <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, <a href="#" OnFocus="link('_member','PauseIR0',this)">PauseIR</a>, -1 },
+        // ... to Exit2DR
+        { <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>, <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, <a href="#" OnFocus="link('_member','PauseDR0',this)">PauseDR</a>, <a href="#" OnFocus="link('_member','Exit2DR0',this)">Exit2DR</a>, -1 },
+        // ... to Exit2IR
+        { <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, <a href="#" OnFocus="link('_member','PauseIR0',this)">PauseIR</a>, <a href="#" OnFocus="link('_member','Exit2IR0',this)">Exit2IR</a>, -1 },
+        // ... to UpdateDR
+        { <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>, <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>, -1 },
+        // ... to UpdateIR
+        { <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>, -1 },
+    },
+    // From Exit1DR ...
+    {
+        // ... to TestLogicReset
+        { <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','TestLogicReset0',this)">TestLogicReset</a>, -1 },
+        // ... to RunTestIdle
+        { <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>, <a href="#" OnFocus="link('_member','RunTestIdle0',this)">RunTestIdle</a>, -1 },
+        // ... to SelectDRScan
+        { <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, -1 },
+        // ... to SelectIRScan
+        { <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, -1 },
+        // ... to CaptureDR
+        { <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>, -1 },
+        // ... to CaptureIR
+        { <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>, -1 },
+        // ... to ShiftDR
+        { <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>, <a href="#" OnFocus="link('_member','ShiftDR0',this)">ShiftDR</a>, -1 },
+        // ... to ShiftIR
+        { <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>, <a href="#" OnFocus="link('_member','ShiftIR0',this)">ShiftIR</a>, -1 },
+        // ... to Exit1DR
+        { -1 },
+        // ... to Exit1IR
+        { <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>, <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, -1 },
+        // ... to PauseDR
+        { <a href="#" OnFocus="link('_member','PauseDR0',this)">PauseDR</a>, -1 },
+        // ... to PauseIR
+        { <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>, <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, <a href="#" OnFocus="link('_member','PauseIR0',this)">PauseIR</a>, -1 },
+        // ... to Exit2DR
+        { <a href="#" OnFocus="link('_member','PauseDR0',this)">PauseDR</a>, <a href="#" OnFocus="link('_member','Exit2DR0',this)">Exit2DR</a>, -1 },
+        // ... to Exit2IR
+        { <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>, <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, <a href="#" OnFocus="link('_member','PauseIR0',this)">PauseIR</a>, <a href="#" OnFocus="link('_member','Exit2IR0',this)">Exit2IR</a>, -1 },
+        // ... to UpdateDR
+        { <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>, -1 },
+        // ... to UpdateIR
+        { <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>, <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>, -1 },
+    },
+    // From Exit1IR ...
+    {
+        // ... to TestLogicReset
+        { <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','TestLogicReset0',this)">TestLogicReset</a>, -1 },
+        // ... to RunTestIdle
+        { <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>, <a href="#" OnFocus="link('_member','RunTestIdle0',this)">RunTestIdle</a>, -1 },
+        // ... to SelectDRScan
+        { <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, -1 },
+        // ... to SelectIRScan
+        { <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, -1 },
+        // ... to CaptureDR
+        { <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>, -1 },
+        // ... to CaptureIR
+        { <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>, -1 },
+        // ... to ShiftDR
+        { <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>, <a href="#" OnFocus="link('_member','ShiftDR0',this)">ShiftDR</a>, -1 },
+        // ... to ShiftIR
+        { <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>, <a href="#" OnFocus="link('_member','ShiftIR0',this)">ShiftIR</a>, -1 },
+        // ... to Exit1DR
+        { <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>, <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, -1 },
+        // ... to Exit1IR
+        { -1 },
+        // ... to PauseDR
+        { <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>, <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, <a href="#" OnFocus="link('_member','PauseDR0',this)">PauseDR</a>, -1 },
+        // ... to PauseIR
+        { <a href="#" OnFocus="link('_member','PauseIR0',this)">PauseIR</a>, -1 },
+        // ... to Exit2DR
+        { <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>, <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, <a href="#" OnFocus="link('_member','PauseDR0',this)">PauseDR</a>, <a href="#" OnFocus="link('_member','Exit2DR0',this)">Exit2DR</a>, -1 },
+        // ... to Exit2IR
+        { <a href="#" OnFocus="link('_member','PauseIR0',this)">PauseIR</a>, <a href="#" OnFocus="link('_member','Exit2IR0',this)">Exit2IR</a>, -1 },
+        // ... to UpdateDR
+        { <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>, <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>, -1 },
+        // ... to UpdateIR
+        { <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>, -1 },
+    },
+    // From PauseDR ...
+    {
+        // ... to TestLogicReset
+        { <a href="#" OnFocus="link('_member','Exit2DR0',this)">Exit2DR</a>, <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','TestLogicReset0',this)">TestLogicReset</a>, -1 },
+        // ... to RunTestIdle
+        { <a href="#" OnFocus="link('_member','Exit2DR0',this)">Exit2DR</a>, <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>, <a href="#" OnFocus="link('_member','RunTestIdle0',this)">RunTestIdle</a>, -1 },
+        // ... to SelectDRScan
+        { <a href="#" OnFocus="link('_member','Exit2DR0',this)">Exit2DR</a>, <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, -1 },
+        // ... to SelectIRScan
+        { <a href="#" OnFocus="link('_member','Exit2DR0',this)">Exit2DR</a>, <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, -1 },
+        // ... to CaptureDR
+        { <a href="#" OnFocus="link('_member','Exit2DR0',this)">Exit2DR</a>, <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>, -1 },
+        // ... to CaptureIR
+        { <a href="#" OnFocus="link('_member','Exit2DR0',this)">Exit2DR</a>, <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>, -1 },
+        // ... to ShiftDR
+        { <a href="#" OnFocus="link('_member','Exit2DR0',this)">Exit2DR</a>, <a href="#" OnFocus="link('_member','ShiftDR0',this)">ShiftDR</a>, -1 },
+        // ... to ShiftIR
+        { <a href="#" OnFocus="link('_member','Exit2DR0',this)">Exit2DR</a>, <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>, <a href="#" OnFocus="link('_member','ShiftIR0',this)">ShiftIR</a>, -1 },
+        // ... to Exit1DR
+        { <a href="#" OnFocus="link('_member','Exit2DR0',this)">Exit2DR</a>, <a href="#" OnFocus="link('_member','ShiftDR0',this)">ShiftDR</a>, <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, -1 },
+        // ... to Exit1IR
+        { <a href="#" OnFocus="link('_member','Exit2DR0',this)">Exit2DR</a>, <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>, <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, -1 },
+        // ... to PauseDR
+        { <a href="#" OnFocus="link('_member','Exit2DR0',this)">Exit2DR</a>, <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>, <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, <a href="#" OnFocus="link('_member','PauseDR0',this)">PauseDR</a>, -1 },
+        // ... to PauseIR
+        { <a href="#" OnFocus="link('_member','Exit2DR0',this)">Exit2DR</a>, <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>, <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, <a href="#" OnFocus="link('_member','PauseIR0',this)">PauseIR</a>, -1 },
+        // ... to Exit2DR
+        { <a href="#" OnFocus="link('_member','Exit2DR0',this)">Exit2DR</a>, -1 },
+        // ... to Exit2IR
+        { <a href="#" OnFocus="link('_member','Exit2DR0',this)">Exit2DR</a>, <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>, <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, <a href="#" OnFocus="link('_member','PauseIR0',this)">PauseIR</a>, <a href="#" OnFocus="link('_member','Exit2IR0',this)">Exit2IR</a>, -1 },
+        // ... to UpdateDR
+        { <a href="#" OnFocus="link('_member','Exit2DR0',this)">Exit2DR</a>, <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>, -1 },
+        // ... to UpdateIR
+        { <a href="#" OnFocus="link('_member','Exit2DR0',this)">Exit2DR</a>, <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>, <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>, -1 },
+    },
+    // From PauseIR ...
+    {
+        // ... to TestLogicReset
+        { <a href="#" OnFocus="link('_member','Exit2IR0',this)">Exit2IR</a>, <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','TestLogicReset0',this)">TestLogicReset</a>, -1},
+        // ... to RunTestIdle
+        { <a href="#" OnFocus="link('_member','Exit2IR0',this)">Exit2IR</a>, <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>, <a href="#" OnFocus="link('_member','RunTestIdle0',this)">RunTestIdle</a>, -1},
+        // ... to SelectDRScan
+        { <a href="#" OnFocus="link('_member','Exit2IR0',this)">Exit2IR</a>, <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, -1 },
+        // ... to SelectIRScan
+        { <a href="#" OnFocus="link('_member','Exit2IR0',this)">Exit2IR</a>, <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, -1 },
+        // ... to CaptureDR
+        { <a href="#" OnFocus="link('_member','Exit2IR0',this)">Exit2IR</a>, <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>, -1 },
+        // ... to CaptureIR
+        { <a href="#" OnFocus="link('_member','Exit2IR0',this)">Exit2IR</a>, <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>, -1 },
+        // ... to ShiftDR
+        { <a href="#" OnFocus="link('_member','Exit2IR0',this)">Exit2IR</a>, <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>, <a href="#" OnFocus="link('_member','ShiftDR0',this)">ShiftDR</a>, -1 },
+        // ... to ShiftIR
+        { <a href="#" OnFocus="link('_member','Exit2IR0',this)">Exit2IR</a>, <a href="#" OnFocus="link('_member','ShiftIR0',this)">ShiftIR</a>, -1},
+        // ... to Exit1DR
+        { <a href="#" OnFocus="link('_member','Exit2IR0',this)">Exit2IR</a>, <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>, <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, -1 },
+        // ... to Exit1IR
+        { <a href="#" OnFocus="link('_member','Exit2IR0',this)">Exit2IR</a>, <a href="#" OnFocus="link('_member','ShiftIR0',this)">ShiftIR</a>, <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, -1 },
+        // ... to PauseDR
+        { <a href="#" OnFocus="link('_member','Exit2IR0',this)">Exit2IR</a>, <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>, <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, <a href="#" OnFocus="link('_member','PauseDR0',this)">PauseDR</a>, -1 },
+        // ... to PauseIR
+        { <a href="#" OnFocus="link('_member','Exit2IR0',this)">Exit2IR</a>, <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>, <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, <a href="#" OnFocus="link('_member','PauseIR0',this)">PauseIR</a>, -1 },
+        // ... to Exit2DR
+        { <a href="#" OnFocus="link('_member','Exit2IR0',this)">Exit2IR</a>, <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>, <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, <a href="#" OnFocus="link('_member','PauseDR0',this)">PauseDR</a>, <a href="#" OnFocus="link('_member','Exit2DR0',this)">Exit2DR</a>, -1 },
+        // ... to Exit2IR
+        { <a href="#" OnFocus="link('_member','Exit2IR0',this)">Exit2IR</a>, -1},
+        // ... to UpdateDR
+        { <a href="#" OnFocus="link('_member','Exit2IR0',this)">Exit2IR</a>, <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>, <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>, -1 },
+        // ... to UpdateIR
+        { <a href="#" OnFocus="link('_member','Exit2IR0',this)">Exit2IR</a>, <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>, -1 },
+    },
+    // From Exit2DR ...
+    {
+        // ... to TestLogicReset
+        { <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','TestLogicReset0',this)">TestLogicReset</a>, -1 },
+        // ... to RunTestIdle
+        { <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>, <a href="#" OnFocus="link('_member','RunTestIdle0',this)">RunTestIdle</a>, -1 },
+        // ... to SelectDRScan
+        { <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, -1 },
+        // ... to SelectIRScan
+        { <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, -1 },
+        // ... to CaptureDR
+        { <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>, -1 },
+        // ... to CaptureIR
+        { <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>, -1 },
+        // ... to ShiftDR
+        { <a href="#" OnFocus="link('_member','ShiftDR0',this)">ShiftDR</a>, -1 },
+        // ... to ShiftIR
+        { <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>, <a href="#" OnFocus="link('_member','ShiftIR0',this)">ShiftIR</a>, -1 },
+        // ... to Exit1DR
+        { <a href="#" OnFocus="link('_member','ShiftDR0',this)">ShiftDR</a>, <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, -1 },
+        // ... to Exit1IR
+        { <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>, <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, -1 },
+        // ... to PauseDR
+        { <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>, <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, <a href="#" OnFocus="link('_member','PauseDR0',this)">PauseDR</a>, -1 },
+        // ... to PauseIR
+        { <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>, <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, <a href="#" OnFocus="link('_member','PauseIR0',this)">PauseIR</a>, -1 },
+        // ... to Exit2DR
+        { -1 },
+        // ... to Exit2IR
+        { <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>, <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, <a href="#" OnFocus="link('_member','PauseIR0',this)">PauseIR</a>, <a href="#" OnFocus="link('_member','Exit2IR0',this)">Exit2IR</a>, -1 },
+        // ... to UpdateDR
+        { <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>, -1 },
+        // ... to UpdateIR
+        { <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>, <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>, -1 },
+    },
+    // From Exit2IR ...
+    {
+        // ... to TestLogicReset
+        { <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','TestLogicReset0',this)">TestLogicReset</a>, -1},
+        // ... to RunTestIdle
+        { <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>, <a href="#" OnFocus="link('_member','RunTestIdle0',this)">RunTestIdle</a>, -1},
+        // ... to SelectDRScan
+        { <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, -1 },
+        // ... to SelectIRScan
+        { <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, -1 },
+        // ... to CaptureDR
+        { <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>, -1 },
+        // ... to CaptureIR
+        { <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>, -1 },
+        // ... to ShiftDR
+        { <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>, <a href="#" OnFocus="link('_member','ShiftDR0',this)">ShiftDR</a>, -1 },
+        // ... to ShiftIR
+        { <a href="#" OnFocus="link('_member','ShiftIR0',this)">ShiftIR</a>, -1},
+        // ... to Exit1DR
+        { <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>, <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, -1 },
+        // ... to Exit1IR
+        { <a href="#" OnFocus="link('_member','ShiftIR0',this)">ShiftIR</a>, <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, -1 },
+        // ... to PauseDR
+        { <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>, <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, <a href="#" OnFocus="link('_member','PauseDR0',this)">PauseDR</a>, -1 },
+        // ... to PauseIR
+        { <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>, <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, <a href="#" OnFocus="link('_member','PauseIR0',this)">PauseIR</a>, -1 },
+        // ... to Exit2DR
+        { <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>, <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, <a href="#" OnFocus="link('_member','PauseDR0',this)">PauseDR</a>, <a href="#" OnFocus="link('_member','Exit2DR0',this)">Exit2DR</a>, -1 },
+        // ... to Exit2IR
+        { -1},
+        // ... to UpdateDR
+        { <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>, <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>, <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>, -1 },
+        // ... to UpdateIR
+        { <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>, -1 },
+    },
+    // From UpdateDR ...
+    {
+        // ... to TestLogicReset
+        { <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','TestLogicReset0',this)">TestLogicReset</a>, -1 },
+        // ... to RunTestIdle
+        { <a href="#" OnFocus="link('_member','RunTestIdle0',this)">RunTestIdle</a>, -1 },
+        // ... to SelectDRScan
+        { <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, -1 },
+        // ... to SelectIRScan
+        { <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, -1 },
+        // ... to CaptureDR
+        { <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>, -1 },
+        // ... to CaptureIR
+        { <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>, -1 },
+        // ... to ShiftDR
+        { <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>, <a href="#" OnFocus="link('_member','ShiftDR0',this)">ShiftDR</a>, -1 },
+        // ... to ShiftIR
+        { <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>, <a href="#" OnFocus="link('_member','ShiftIR0',this)">ShiftIR</a>, -1 },
+        // ... to Exit1DR
+        { <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>, <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, -1 },
+        // ... to Exit1IR
+        { <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>, <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, -1 },
+        // ... to PauseDR
+        { <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>, <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, <a href="#" OnFocus="link('_member','PauseDR0',this)">PauseDR</a>, -1 },
+        // ... to PauseIR
+        { <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>, <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, <a href="#" OnFocus="link('_member','PauseIR0',this)">PauseIR</a>, -1 },
+        // ... to Exit2DR
+        { <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>, <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, <a href="#" OnFocus="link('_member','PauseDR0',this)">PauseDR</a>, <a href="#" OnFocus="link('_member','Exit2DR0',this)">Exit2DR</a>, -1 },
+        // ... to Exit2IR
+        { <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>, <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, <a href="#" OnFocus="link('_member','PauseIR0',this)">PauseIR</a>, <a href="#" OnFocus="link('_member','Exit2IR0',this)">Exit2IR</a>, -1 },
+        // ... to UpdateDR
+        { -1 },
+        // ... to UpdateIR
+        { <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>, <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>, -1 },
+    },
+    // From UpdateIR ...
+    {
+        // ... to TestLogicReset
+        { <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','TestLogicReset0',this)">TestLogicReset</a>, -1},
+        // ... to RunTestIdle
+        { <a href="#" OnFocus="link('_member','RunTestIdle0',this)">RunTestIdle</a>, -1},
+        // ... to SelectDRScan
+        { <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, -1 },
+        // ... to SelectIRScan
+        { <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, -1 },
+        // ... to CaptureDR
+        { <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>, -1 },
+        // ... to CaptureIR
+        { <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>, -1 },
+        // ... to ShiftDR
+        { <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>, <a href="#" OnFocus="link('_member','ShiftDR0',this)">ShiftDR</a>, -1 },
+        // ... to ShiftIR
+        { <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>, <a href="#" OnFocus="link('_member','ShiftIR0',this)">ShiftIR</a>, -1},
+        // ... to Exit1DR
+        { <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>, <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, -1 },
+        // ... to Exit1IR
+        { <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>, <a href="#" OnFocus="link('_member','ShiftIR0',this)">ShiftIR</a>, <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, -1 },
+        // ... to PauseDR
+        { <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>, <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, <a href="#" OnFocus="link('_member','PauseDR0',this)">PauseDR</a>, -1 },
+        // ... to PauseIR
+        { <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>, <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, <a href="#" OnFocus="link('_member','PauseIR0',this)">PauseIR</a>, -1 },
+        // ... to Exit2DR
+        { <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>, <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, <a href="#" OnFocus="link('_member','PauseDR0',this)">PauseDR</a>, <a href="#" OnFocus="link('_member','Exit2DR0',this)">Exit2DR</a>, -1 },
+        // ... to Exit2IR
+        { <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>, <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>, <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>, <a href="#" OnFocus="link('_member','PauseIR0',this)">PauseIR</a>, <a href="#" OnFocus="link('_member','Exit2IR0',this)">Exit2IR</a>, -1},
+        // ... to UpdateDR
+        { <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>, <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>, <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>, <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>, -1 },
+        // ... to UpdateIR
+        { -1 },
+    },
+};
+
+
+/// Create a JTAG controller port.
+<a href="#" OnFocus="link('_member','JTAGPort141716444',this)">JTAGPort::JTAGPort</a>(void)
+{
+    <a href="#" OnFocus="link('_member','progressGauge243771202',this)">progressGauge</a> = NULL;
+    <a href="#" OnFocus="link('_member','Setup3091404295',this)">Setup</a>((<a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>*)NULL,false,cerr);
+}
+
+
+/// Create a JTAG controller port.
+<a href="#" OnFocus="link('_member','JTAGPort141716444',this)">JTAGPort::JTAGPort</a>(<a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>* e)
+{
+    <a href="#" OnFocus="link('_member','progressGauge243771202',this)">progressGauge</a> = NULL;
+    <a href="#" OnFocus="link('_member','Setup3091404295',this)">Setup</a>(e,false,cerr);
+}
+
+
+/// Initialize the object.
+bool <a href="#" OnFocus="link('_member','Setup3091404295',this)">JTAGPort::Setup</a>(<a href="#" OnFocus="link('_class','XSError0',this)">XSError</a> *e,  ///&lt; error reporting channel 
+            bool traceOnFlag,       ///&lt; if true, output trace information on JTAG operations
+            ostream&amp; traceOstream)  ///&lt; send trace messages to this output stream
+{
+    <a href="#" OnFocus="link('_member','currentTAPState243771202',this)">currentTAPState</a> = <a href="#" OnFocus="link('_member','InvalidTAPState0',this)">InvalidTAPState</a>;
+    <a href="#" OnFocus="link('_member','SetErr4225963298',this)">SetErr</a>(e);
+    <a href="#" OnFocus="link('_member','SetTraceOnOff3476357123',this)">SetTraceOnOff</a>(traceOnFlag,traceOstream);
+    if(<a href="#" OnFocus="link('_member','progressGauge243771202',this)">progressGauge</a> != NULL)
+        delete <a href="#" OnFocus="link('_member','progressGauge243771202',this)">progressGauge</a>;
+    <a href="#" OnFocus="link('_member','progressGauge243771202',this)">progressGauge</a> = NULL;
+    return true;
+}
+
+
+/// Sets the error reporting channel.
+void <a href="#" OnFocus="link('_member','SetErr4225963298',this)">JTAGPort::SetErr</a>(<a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>* e)  ///&lt; error reporting channel
+{
+    <a href="#" OnFocus="link('_member','err243771202',this)">err</a> = e;
+}
+
+
+/// Provides access to the error reporting channel.
+<a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','GetErr141716444',this)">JTAGPort::GetErr</a>(void)
+{
+    return *<a href="#" OnFocus="link('_member','err243771202',this)">err</a>;
+}
+
+
+/// Returns the text label associated with the given TAP state.
+string <a href="#" OnFocus="link('_member','GetTAPStateLabel449122300',this)">JTAGPort::GetTAPStateLabel</a>(TAPState s)
+{
+    switch(s)
+    {
+    case <a href="#" OnFocus="link('_member','TestLogicReset0',this)">TestLogicReset</a>:  return string("Test-Logic-Reset");
+    case <a href="#" OnFocus="link('_member','RunTestIdle0',this)">RunTestIdle</a>:     return string("Run-Test/Idle");
+    case <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>:    return string("Select_DR-Scan");
+    case <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>:    return string("Select_IR-Scan");
+    case <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>:       return string("Capture-DR");
+    case <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>:       return string("Capture-IR");
+    case <a href="#" OnFocus="link('_member','ShiftDR0',this)">ShiftDR</a>:         return string("Shift-DR");
+    case <a href="#" OnFocus="link('_member','ShiftIR0',this)">ShiftIR</a>:         return string("Shift-IR");
+    case <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>:         return string("Exit1-DR");
+    case <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>:         return string("Exit1-IR");
+    case <a href="#" OnFocus="link('_member','PauseDR0',this)">PauseDR</a>:         return string("Pause-DR");
+    case <a href="#" OnFocus="link('_member','PauseIR0',this)">PauseIR</a>:         return string("Pause-IR");
+    case <a href="#" OnFocus="link('_member','Exit2DR0',this)">Exit2DR</a>:         return string("Exit2-DR");
+    case <a href="#" OnFocus="link('_member','Exit2IR0',this)">Exit2IR</a>:         return string("Exit2-IR");
+    case <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>:        return string("Update-DR");
+    case <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>:        return string("Update-IR");
+    case <a href="#" OnFocus="link('_member','InvalidTAPState0',this)">InvalidTAPState</a>:
+    default:
+        assert(true==false);  // should never get here!!
+    }
+    return string("Unknown TAP state");
+}
+
+
+/// Returns the TAP state for the given text label.
+<a href="#" OnFocus="link('_member','TAPState0',this)">TAPState</a> <a href="#" OnFocus="link('_member','LabelToTAPState2043650535',this)">JTAGPort::LabelToTAPState</a>(string label)
+{
+    if(label == "Test-Logic-Reset" || label == "RESET")
+        return <a href="#" OnFocus="link('_member','TestLogicReset0',this)">TestLogicReset</a>;
+    if(label == "Run-Test/Idle"    || label == "IDLE")
+        return <a href="#" OnFocus="link('_member','RunTestIdle0',this)">RunTestIdle</a>;
+    if(label == "Select_DR-Scan"   || label == "DRSELECT")
+        return <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>;
+    if(label == "Select_IR-Scan"   || label == "IRSELECT")
+        return <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>;
+    if(label == "Capture-DR"       || label == "DRCAPTURE")
+        return <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>;
+    if(label == "Capture-IR"       || label == "IRCAPTURE")
+        return <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>;
+    if(label == "Shift-DR"         || label == "DRSHIFT")
+        return <a href="#" OnFocus="link('_member','ShiftDR0',this)">ShiftDR</a>;
+    if(label == "Shift-IR"         || label == "IRSHIFT")
+        return <a href="#" OnFocus="link('_member','ShiftIR0',this)">ShiftIR</a>;
+    if(label == "Exit1-DR"         || label == "DREXIT1")
+        return <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>;
+    if(label == "Exit1-IR"         || label == "IREXIT1")
+        return <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>;
+    if(label == "Pause-DR"         || label == "DRPAUSE")
+        return <a href="#" OnFocus="link('_member','PauseDR0',this)">PauseDR</a>;
+    if(label == "Pause-IR"         || label == "IRPAUSE")
+        return <a href="#" OnFocus="link('_member','PauseIR0',this)">PauseIR</a>;
+    if(label == "Exit2-DR"         || label == "DREXIT2")
+        return <a href="#" OnFocus="link('_member','Exit2DR0',this)">Exit2DR</a>;
+    if(label == "Exit2-IR"         || label == "IREXIT2")
+        return <a href="#" OnFocus="link('_member','Exit2IR0',this)">Exit2IR</a>;
+    if(label == "Update-DR"        || label == "DRUPDATE")
+        return <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>;
+    if(label == "Update-IR"        || label == "IRUPDATE")
+        return <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>;
+    assert(1==0);
+    return (<a href="#" OnFocus="link('_member','TAPState0',this)">TAPState</a>) -1;
+}
+
+
+/// Initialize the TAP state controller and the attached JTAG device.
+void <a href="#" OnFocus="link('_member','InitTAP141716444',this)">JTAGPort::InitTAP</a>(void)
+{
+    <a href="#" OnFocus="link('_member','currentTAPState243771202',this)">currentTAPState</a> = <a href="#" OnFocus="link('_member','TestLogicReset0',this)">TestLogicReset</a>; // this is the state the TAP should start in
+    <a href="#" OnFocus="link('_member','SetTCK822545253',this)">SetTCK</a>(0);        // set clock low; TAP changes state on rising edge
+    <a href="#" OnFocus="link('_member','SetTMS822545253',this)">SetTMS</a>(1);        // set TMS high to reset TAP state machine
+    <a href="#" OnFocus="link('_member','SetTDI822545253',this)">SetTDI</a>(0);
+    <a href="#" OnFocus="link('_member','PulseTCK822545253',this)">PulseTCK</a>(5);    // pulse TCK 5 times to reset TAP state machine
+    <a href="#" OnFocus="link('_member','currentTAPState243771202',this)">currentTAPState</a> = <a href="#" OnFocus="link('_member','TestLogicReset0',this)">TestLogicReset</a>; // this is state TAP should be in now
+}
+
+
+/// Enables/disables trace of JTAG signals.
+void <a href="#" OnFocus="link('_member','SetTraceOnOff3476357123',this)">JTAGPort::SetTraceOnOff</a>(bool f,       ///&lt; if true, output trace of JTAG operations
+                             ostream&amp; os)   ///&lt; send trace messages to this output stream
+{
+    <a href="#" OnFocus="link('_member','traceFlag243771202',this)">traceFlag</a> = f;
+    <a href="#" OnFocus="link('_member','osTrace243771202',this)">osTrace</a> = &amp;os;  // trace messages go to this output stream
+}
+
+
+/// Update the TAP state to what it will be after the given number of clock pulses.
+/// No clock pulses are actually created!
+void <a href="#" OnFocus="link('_member','UpdateTAPState822545253',this)">JTAGPort::UpdateTAPState</a>(unsigned int numTCKPulses) ///&lt; number of clock pulses
+{
+    assert(currentTAPState&gt;=TestLogicReset &amp;&amp; currentTAPState&lt;=UpdateIR);
+    unsigned int tms = <a href="#" OnFocus="link('_member','GetTMS141716444',this)">GetTMS</a>();
+    for(unsigned int i=numTCKPulses; i&gt;0; i--)
+        <a href="#" OnFocus="link('_member','currentTAPState243771202',this)">currentTAPState</a> = nextTAPState[<a href="#" OnFocus="link('_member','currentTAPState243771202',this)">currentTAPState</a>][tms];
+}
+
+
+/// Set the TMS level and pulse TCK to move from the current state to the given adjacent state. 
+/// If the new state of the TAP controller doesn't match the requested state, the subroutine will cause the program to abort.
+void <a href="#" OnFocus="link('_member','GotoNextTAPState449122300',this)">JTAGPort::GotoNextTAPState</a>(TAPState nextState) ///&lt; TAP state that is adjacent to the current state
+{
+    // determine the correct TMS value to move to the desired state
+    assert(currentTAPState&gt;=TestLogicReset &amp;&amp; currentTAPState&lt;=UpdateIR);
+    assert( nextTAPState[currentTAPState][0]==nextState || nextTAPState[currentTAPState][1]==nextState);
+    <a href="#" OnFocus="link('_member','SetTMS822545253',this)">SetTMS</a>( nextTAPState[currentTAPState][1]==nextState ? 1:0 );
+    <a href="#" OnFocus="link('_member','PulseTCK822545253',this)">PulseTCK</a>();  // pulse TCK to move to the next state
+    assert( currentTAPState==nextState );  // ensure new state matches desired state
+}
+
+
+/// Moves through a sequence of TAP controller states.
+void <a href="#" OnFocus="link('_member','GoThruTAPSequence1124965842',this)">JTAGPort::GoThruTAPSequence</a>(TAPState nextState,   ///&lt; TAP state that is adjacent to the current state
+                                ...)    ///&lt; sequence of adjacent state to move thru until a -1 terminates the sequence
+{
+    // progress through the states until a -1 is seen
+    va_list ap;
+    for(va_start(ap,nextState); nextState != -1; nextState=(<a href="#" OnFocus="link('_member','TAPState0',this)">TAPState</a>)va_arg(ap,int))
+        <a href="#" OnFocus="link('_member','GotoNextTAPState449122300',this)">GotoNextTAPState</a>(nextState);
+    va_end(ap);
+}
+
+
+/// Move from the current TAP state to a specific, non-adjacent TAP state.
+void <a href="#" OnFocus="link('_member','GotoTAPState449122300',this)">JTAGPort::GotoTAPState</a>(TAPState finalState)  ///&lt; move to this state (which does not have to be adjacent to the current state)
+{
+    int* path = TAPPath[<a href="#" OnFocus="link('_member','currentTAPState243771202',this)">currentTAPState</a>][finalState];
+    for(int i=0; i&lt;17 &amp;&amp; path[i]&gt;=0; i++)
+        <a href="#" OnFocus="link('_member','GotoNextTAPState449122300',this)">GotoNextTAPState</a>((TAPState)path[i]);
+}
+
+
+/// Check table of TAP state paths to make sure there are no invalid transitions.
+///\return true if the table of state paths is valid, false if invalid.
+bool <a href="#" OnFocus="link('_member','TAPPathsOK141716444',this)">JTAGPort::TAPPathsOK</a>(void)
+{
+    for(int start=0; start&lt;16; start++)
+    {
+        for(int final=0; final&lt;16; final++)
+        {
+            int* path = TAPPath[start][final];
+            int s = start;
+            for(int p=0; p&lt;17 &amp;&amp; path[p]&gt;=0; p++)
+            {
+                if(nextTAPState[s][0]!=path[p] &amp;&amp; nextTAPState[s][1]!=path[p])
+                {
+                    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a> <a href="#" OnFocus="link('_member','err243771202',this)">err</a> = <a href="#" OnFocus="link('_member','GetErr141716444',this)">GetErr</a>();
+                    <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','SetSeverity3409672334',this)">SetSeverity</a>(XSErrorMinor);
+                    <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> &lt;&lt; "TAP path error: " &lt;&lt; <a href="#" OnFocus="link('_member','GetTAPStateLabel449122300',this)">GetTAPStateLabel</a>((TAPState)start);
+                    <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> &lt;&lt; " --- ("           &lt;&lt; <a href="#" OnFocus="link('_member','GetTAPStateLabel449122300',this)">GetTAPStateLabel</a>((TAPState)path[p]);
+                    <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> &lt;&lt; ") --- "           &lt;&lt; <a href="#" OnFocus="link('_member','GetTAPStateLabel449122300',this)">GetTAPStateLabel</a>((TAPState)final);
+                    <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> &lt;&lt; "\n";
+                    <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','EndMsg60232619',this)">EndMsg</a>();
+                    break;
+                }
+                s = path[p];
+            }
+        }
+    }
+    return <a href="#" OnFocus="link('_member','GetErr141716444',this)">GetErr</a>().<a href="#" OnFocus="link('_member','IsError863564933',this)">IsError</a>() ? false : true;
+}
+
+
+/// Fetch the bit from TDO, send a bit to TDI, and pulse TCLK.
+/// This subroutine assumes that the TCK is 0 and the TAP controller state
+/// is Shift-DR or Shift-IR upon entry.  That's why we pick up the value
+/// coming in through TDO right away.
+///\return the TDO bit
+unsigned int <a href="#" OnFocus="link('_member','SendRcvBit822545253',this)">JTAGPort::SendRcvBit</a>(unsigned int sendBit) ///&lt; send this bit through TDI
+{
+    // Make sure we are in the Shift-IR or Shift-DR state.  Gathering
+    // and shifting out data isn't legal otherwise.
+    assert( currentTAPState==ShiftIR || currentTAPState==ShiftDR );
+
+    // now output the specified value to the TDI input of the external device
+    <a href="#" OnFocus="link('_member','SetTDI822545253',this)">SetTDI</a>(sendBit &amp; 1);
+    
+    // pulse TCK to move the bit into the BSIR or BSDR
+    <a href="#" OnFocus="link('_member','PulseTCK822545253',this)">PulseTCK</a>(1); //clock goes high then low
+
+    return <a href="#" OnFocus="link('_member','tdoVal243771202',this)">tdoVal</a>; // return the value on TDO pin before the clock pulse
+}
+
+
+/// Load the BSIR with an instruction, execute the instruction, and then capture and reload the BSDR.
+/// This subroutine assumes the TAP controller is in the Test-Logic-Reset
+/// or Run-Test/Idle state upon entry.  The TAP controller is returned to the
+/// Run-Test/Idle state upon exit.
+void <a href="#" OnFocus="link('_member','LoadBSIRthenBSDR3423522178',this)">JTAGPort::LoadBSIRthenBSDR</a>(<a href="#" OnFocus="link('_class','Bitstream0',this)">Bitstream</a>&amp; instruction,    ///&lt; instruction to be loaded into BSIR
+                                <a href="#" OnFocus="link('_class','Bitstream0',this)">Bitstream</a>&amp; send,     ///&lt; data to send into the BSDR
+                                <a href="#" OnFocus="link('_class','Bitstream0',this)">Bitstream</a>&amp; recv )    ///&lt; store data received from the BSDR in here
+{
+    // Make sure we are in the appropriate state.
+    assert( currentTAPState==RunTestIdle || currentTAPState==TestLogicReset ||
+        currentTAPState==PauseDR || currentTAPState==PauseIR);
+    
+    // move the TAP controller to the Shift-IR state
+    <a href="#" OnFocus="link('_member','GotoTAPState449122300',this)">GotoTAPState</a>(ShiftIR);
+    
+    // load the instruction opcode into the BSIR
+    <a href="#" OnFocus="link('_class','Bitstream0',this)">Bitstream</a> nullBitstream(0);  //   
+    <a href="#" OnFocus="link('_member','SendRcvBitstream1691161481',this)">SendRcvBitstream</a>(instruction, nullBitstream);
+    
+    // now activate the instruction by entering the Update-IR state.
+    <a href="#" OnFocus="link('_member','GotoTAPState449122300',this)">GotoTAPState</a>(UpdateIR);
+    
+    // if the BSDR length is non-zero, then select the BSDR by moving
+    // into the Capture-DR state so that the new pin data is
+    // parallel-loaded into the BSDR.  Then move into the
+    // Shift-DR state so that the captured data can be shifted out
+    // while a new pattern is shifted in. Finally, output the
+    // newly loaded data onto the parallel output of the BSDR by moving
+    // into the Update-DR state.
+    if(send.GetLength() &gt; 0 || recv.GetLength() &gt; 0)
+    {
+        // move into the Capture-DR state so that the new pin data is
+        // parallel loaded into the BSDR.  Then move into the Shift-DR state.
+        <a href="#" OnFocus="link('_member','GotoTAPState449122300',this)">GotoTAPState</a>(ShiftDR);
+        
+        // shift out the captured data while new data is shifted in
+        <a href="#" OnFocus="link('_member','SendRcvBitstream1691161481',this)">SendRcvBitstream</a>(send, recv);
+        
+        // output the freshly loaded data onto the pins of the external device
+        <a href="#" OnFocus="link('_member','GotoTAPState449122300',this)">GotoTAPState</a>(UpdateDR);
+    }
+
+    // return to the idle state
+    <a href="#" OnFocus="link('_member','GotoTAPState449122300',this)">GotoTAPState</a>(RunTestIdle);
+}
+
+
+// Read and entire SVF file into memory.
+static char* <a href="#" OnFocus="link('_member','LoadFile255246136',this)">LoadFile</a>(istream&amp; is)
+{
+#ifdef DEBUG_SVF
+    long loadfile_start = clock();
+#endif
+
+    // determine the size of the file
+    is.seekg(0,ios::end);       // move pointer to end of file
+    int length = is.tellg();    // pointer position = position of end of file
+    is.seekg(0,ios::beg);       // return pointer to beginning of file
+
+    char *buffer = new char[length+1];
+    if(buffer==NULL)
+    {
+        <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a> <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>(cerr);
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorFatal,"Unable to allocate enough memory to hold file.");
+    }
+    for(int i=0; i&lt;=length; i++)
+        buffer[i] = 0;
+    is.read(buffer, length);
+
+#ifdef DEBUG_SVF
+    long loadfile_finish = clock();
+    cout &lt;&lt; "Time to load file = " &lt;&lt; (loadfile_finish-loadfile_start)/(CLOCKS_PER_SEC) &lt;&lt; "\n";
+#endif
+
+    return buffer;
+}
+
+
+// Fetch the next line from the SVF file stored in memory
+static char* <a href="#" OnFocus="link('_member','GetLineFromBuffer88236085',this)">GetLineFromBuffer</a>(char** buffer) // buffer holding SVF file
+{
+    char* beginBuffer = *buffer;
+    char* newBuffer = *buffer;
+    if(*newBuffer==0)
+        return NULL;
+    for(char b=*newBuffer; *newBuffer!=0x0a &amp;&amp; *newBuffer!=0x0c &amp;&amp; *newBuffer!=0; newBuffer++)
+        ;
+    for( ; *newBuffer==0x0c || *newBuffer==0x0a; newBuffer++)
+        *newBuffer = 0;
+    *buffer = newBuffer;
+    return beginBuffer;
+}
+
+
+// Fetch the next SVF command from the SVF file stored in memory
+static char* <a href="#" OnFocus="link('_member','GetSVFCmdFromBuffer88236085',this)">GetSVFCmdFromBuffer</a>(char** buffer)
+{
+    char* beginBuffer = *buffer;
+    char* newBuffer = *buffer;
+    if(*newBuffer==0)
+        return NULL;
+    while(*newBuffer!=0)
+    {
+        switch(*newBuffer)
+        {
+        case 0x0a:
+        case 0x0c:
+            *newBuffer++ = ' ';
+            break;
+        case '/':
+            if(*(newBuffer+1) != '/')
+            {
+                newBuffer++;
+                break;
+            }
+            *newBuffer++ = ' ';
+        case '!':
+            for( ; (*newBuffer!=0x0a) &amp;&amp; (*newBuffer!=0x0c) &amp;&amp; (*newBuffer!=0); newBuffer++)
+                *newBuffer = ' ';
+            break;
+        case ';':
+            *newBuffer = 0;
+            *buffer = newBuffer+1;
+            return beginBuffer;
+        default:
+            newBuffer++;
+            break;
+        }
+    }
+    *buffer = newBuffer;
+    return beginBuffer;
+}
+
+
+// Fetch the next word from an SVF command string
+static string <a href="#" OnFocus="link('_member','NextWord67554305',this)">NextWord</a>(string&amp; s)
+{
+    int pos = s.find_first_not_of(" \t\n\r");   // find beginning of word
+    if(pos==string::npos)
+    {   // no non-whitespace chars found, so string has no words
+        s = "";
+        return "";
+    }
+    s = s.substr(pos,s.length()-pos);   // remove leading whitespace
+    if(*(s.c_str()) == '(')
+    {
+        pos = s.find_first_of(")");         // find end of parenthesized hex
+        pos++;
+    }
+    else
+        pos = s.find_first_of(" \t\n\r");   // find end of first keyword
+    string word;
+    if(pos==string::npos)
+    {   // no more whitespace, so entire string is the last word
+        word = s;
+        s = "";
+    }
+    else
+    {   // extract the word from the string
+        word = s.substr(0,pos); // get first keyword from command
+        s = s.substr(pos,s.length()-pos);   // remove keyword from command
+    }
+    return word;
+}
+
+
+// Fetch the next word from an SVF command received through an input stream
+static string <a href="#" OnFocus="link('_member','NextWord67554305',this)">NextWord</a>(istream&amp; is)
+{
+    char c, waste[257];
+    string word = "";
+    while(!is.fail())
+    {
+        is.read(&amp;c,1);
+        if(is.fail())
+            break;
+        switch(c)
+        {
+        case '/':
+            if(is.peek()=='/')
+            {
+                is.getline(waste,256);
+                if(word.length() != 0)
+                    return word;
+            }
+            else
+                word = word + c;
+            break;
+
+        case '!':
+            is.getline(waste,256);
+            if(word.length() != 0)
+                return word;
+            break;
+
+        case '\n':
+            break;
+
+        case ' ':
+        case '\t':
+            if(word.length() != 0)
+                return word;
+            break;
+
+        case ';':
+            is.putback(c);
+            return word;
+
+        default:
+            word = word + c;
+            break;
+        }
+    }
+    return word;
+}
+
+
+// Fetch the next SVF command from an input stream
+static void <a href="#" OnFocus="link('_member','NextCmd255246136',this)">NextCmd</a>(istream&amp; is)
+{
+    char c, waste[257];
+    while(!is.fail())
+    {
+        is.read(&amp;c,1);
+        if(is.fail())
+            break;
+        switch(c)
+        {
+        case '/':
+            if(is.peek()=='/')
+                is.getline(waste,256);
+            break;
+
+        case '!':
+            is.getline(waste,256);
+            break;
+
+        case ';':
+            return;
+
+        default:
+            break;
+        }
+    }
+}
+
+
+/// Process SVF file and send results to device attached to JTAG port.
+///\return true if no errors were encountered, false otherwise.
+bool <a href="#" OnFocus="link('_member','DownloadSVF1467815114',this)">JTAGPort::DownloadSVF</a>(istream&amp; is,      ///&lt; receive SVF through this input stream
+                        string&amp; fileName)   ///&lt; name of the file that was opened to create the input stream (used only for progress indicator)
+{
+    <a href="#" OnFocus="link('_member','TAPState0',this)">TAPState</a> endir=<a href="#" OnFocus="link('_member','RunTestIdle0',this)">RunTestIdle</a>, enddr=<a href="#" OnFocus="link('_member','RunTestIdle0',this)">RunTestIdle</a>;
+
+#ifdef DEBUG_SVF
+    long start = clock();
+#endif
+
+    // determine the size of the SVF file
+    is.seekg(0,ios::end);   // move pointer to end of file
+    long svfLength = is.tellg();    // pointer position = position of end of file
+    is.seekg(0,ios::beg);   // return pointer to beginning of file
+
+    char* svfStart = <a href="#" OnFocus="link('_member','LoadFile255246136',this)">LoadFile</a>(is); // is.tellg() stops working correctly after file is loaded into internal memory
+    if(*svfStart == 0)
+    {
+        // file is empty, so there is nothing to do
+        delete svfStart;
+        return false;
+    }
+    char* svf = svfStart;
+
+    // create a downloading progress gauge
+    if(<a href="#" OnFocus="link('_member','progressGauge243771202',this)">progressGauge</a> == NULL)
+    {
+        string desc("Download SVF"), subdesc("Downloading "+<a href="#" OnFocus="link('_member','StripPrefix67554305',this)">StripPrefix</a>(fileName));
+        <a href="#" OnFocus="link('_member','progressGauge243771202',this)">progressGauge</a> = new <a href="#" OnFocus="link('_class','Progress0',this)">Progress</a>(&amp;<a href="#" OnFocus="link('_member','GetErr141716444',this)">GetErr</a>(),desc,subdesc,0,svfLength);
+    }
+
+    <a href="#" OnFocus="link('_member','InitTAP141716444',this)">InitTAP</a>(); // initialize the JTAG state machine
+    <a href="#" OnFocus="link('_member','GoThruTAPSequence1124965842',this)">GoThruTAPSequence</a>(RunTestIdle,-1); // home state for configuration
+    
+    int lineCnt = 0;
+    unsigned long elapsedTime = 0;
+    <a href="#" OnFocus="link('_member','progressGauge243771202',this)">progressGauge</a>-&gt;<a href="#" OnFocus="link('_member','Report2561259521',this)">Report</a>(svf-svfStart); // start progress at 0 which is the beginning of the SVF string
+//  progressGauge-&gt;Report(is.tellg()); // start progress at 0 which is the beginning of the SVF string
+
+    unsigned int currentSecond = clock()/CLOCKS_PER_SEC;
+
+    while(true)
+    {
+        // update progress to the user no more than once per second
+        if((unsigned int)(clock()/CLOCKS_PER_SEC)!=currentSecond)
+        {
+            currentSecond = clock()/CLOCKS_PER_SEC;
+            <a href="#" OnFocus="link('_member','progressGauge243771202',this)">progressGauge</a>-&gt;<a href="#" OnFocus="link('_member','Report2561259521',this)">Report</a>(svf-svfStart);  // SVF string pointer position indicates the current progress
+//          progressGauge-&gt;Report(is.tellg());  // position in stream indicates the current progress
+        }
+
+        // collect one or more lines into a single SVF command
+        char *s = <a href="#" OnFocus="link('_member','GetSVFCmdFromBuffer88236085',this)">GetSVFCmdFromBuffer</a>(&amp;svf);
+        if(s == NULL)
+            break;
+        string svfCmd = s;
+
+#ifdef DEBUG_SVF
+        if(svfCmd.length()&lt;1000)
+        {
+            cout &lt;&lt; "SVFCmd: --" &lt;&lt; svfCmd &lt;&lt; "--\n";
+            cout.flush();
+        }
+#endif
+
+        // remove the first keyword from the command
+        string keywd(<a href="#" OnFocus="link('_member','NextWord67554305',this)">NextWord</a>(svfCmd));
+//      string keywd = NextWord(svfCmd);
+//      string keywd = NextWord(is);
+//      if(is.fail())
+//          break;  // exit if EOF
+        if(keywd == "")
+            continue;   // must be a blank line
+#ifdef DEBUG_SVF
+        cout &lt;&lt; "Keywd: --" &lt;&lt; keywd &lt;&lt; "--\n"; cout.flush();
+#endif
+
+        int status;
+        unsigned long len;
+        static <a href="#" OnFocus="link('_class','Bitstream0',this)">Bitstream</a> hdr(0), hir(0), tdr(0), tir(0), sdr(0), sir(0);
+        
+        if(keywd == "TRST"
+            || keywd == "PIO"
+            || keywd == "PIOMAP"
+            || keywd == "FREQUENCY"
+            )
+        { // these commands have nothing to do with configuration so ignore them
+//          NextCmd(is);
+            continue;
+        }
+
+        else if(keywd == "ENDIR")
+        {
+            string nw = <a href="#" OnFocus="link('_member','NextWord67554305',this)">NextWord</a>(svfCmd);
+//          string nw = NextWord(is);
+            assert(nw != "");
+            endir = <a href="#" OnFocus="link('_member','LabelToTAPState2043650535',this)">LabelToTAPState</a>(nw);
+#ifdef DEBUG_SVF
+            cout &lt;&lt; <a href="#" OnFocus="link('_member','GetTAPStateLabel449122300',this)">GetTAPStateLabel</a>(endir);
+            cout.flush();
+#endif
+//          NextCmd(is);
+            continue;
+        }
+
+        else if(keywd == "ENDDR")
+        {
+            string nw = <a href="#" OnFocus="link('_member','NextWord67554305',this)">NextWord</a>(svfCmd);
+//          string nw = NextWord(is);
+            assert(nw != "");
+            enddr = <a href="#" OnFocus="link('_member','LabelToTAPState2043650535',this)">LabelToTAPState</a>(nw);
+#ifdef DEBUG_SVF
+            cout &lt;&lt; <a href="#" OnFocus="link('_member','GetTAPStateLabel449122300',this)">GetTAPStateLabel</a>(enddr);
+            cout.flush();
+#endif
+//          NextCmd(is);
+            continue;
+        }
+
+        else if(keywd == "STATE")
+        {
+            string s;
+            for(s=<a href="#" OnFocus="link('_member','NextWord67554305',this)">NextWord</a>(svfCmd); s!=""; s=<a href="#" OnFocus="link('_member','NextWord67554305',this)">NextWord</a>(svfCmd))
+//          for(s=NextWord(is); s!=""; s=NextWord(is))
+            {
+#ifdef DEBUG_SVF
+                cout&lt;&lt; " --&gt; " &lt;&lt; s;
+                cout.flush();
+#endif
+                <a href="#" OnFocus="link('_member','GotoTAPState449122300',this)">GotoTAPState</a>(<a href="#" OnFocus="link('_member','LabelToTAPState2043650535',this)">LabelToTAPState</a>(s));
+            }
+#ifdef DEBUG_SVF
+            cout&lt;&lt; "\n";
+            cout.flush();
+#endif
+//          NextCmd(is);
+            continue;
+        }
+        
+        else if(keywd == "HIR")
+        { // initialize the header bits for loading into the IR
+            // get the number of bits in the header
+            status = sscanf(<a href="#" OnFocus="link('_member','NextWord67554305',this)">NextWord</a>(svfCmd).c_str(),"%ld",&amp;len);
+//          status = sscanf(NextWord(is).c_str(),"%ld",&amp;len);
+            assert(status!=0);
+            hir.Resize(len);
+            if(len != 0)
+            {
+                // otherwise look for the TDI bitfield
+                string word;
+                for(word=<a href="#" OnFocus="link('_member','NextWord67554305',this)">NextWord</a>(svfCmd); word!="TDI" &amp;&amp; word!=""; word=<a href="#" OnFocus="link('_member','NextWord67554305',this)">NextWord</a>(svfCmd))
+//              for(word=NextWord(is); word!="TDI" &amp;&amp; word!=""; word=NextWord(is))
+                    ;
+                if(word=="TDI")
+                {
+                    // replace the TDI bits only if the SVF command has a TDI bitfield
+                    word = <a href="#" OnFocus="link('_member','NextWord67554305',this)">NextWord</a>(svfCmd); // get the TDI bits
+                    assert(word[0]=='(');
+                    assert(word[word.length()-1]==')');
+                    hir.FromHexString(len,word.c_str()+1);
+//                  hir.FromHexStream(len,is,false);
+                }
+            }
+#ifdef DEBUG_SVF
+            if(hir.GetLength()&lt;1000)
+                cout &lt;&lt; hir &lt;&lt; "\n";
+            else
+                cout &lt;&lt; "[... " &lt;&lt; hir.GetLength() &lt;&lt; " ...]\n";
+            cout.flush();
+#endif
+//          NextCmd(is);
+            continue;
+        }
+        
+        else if(keywd == "HDR")
+        { // initialize the header bits for loading into the DR
+            // get the number of bits in the header
+            status = sscanf(<a href="#" OnFocus="link('_member','NextWord67554305',this)">NextWord</a>(svfCmd).c_str(),"%ld",&amp;len);
+//          status = sscanf(NextWord(is).c_str(),"%ld",&amp;len);
+            assert(status!=0);
+            hdr.<a href="#" OnFocus="link('_member','Resize2805767469',this)">Resize</a>(len);
+            if(len != 0)
+            {
+                // otherwise look for the TDI bitfield
+                string word;
+                for(word=<a href="#" OnFocus="link('_member','NextWord67554305',this)">NextWord</a>(svfCmd); word!="TDI" &amp;&amp; word!=""; word=<a href="#" OnFocus="link('_member','NextWord67554305',this)">NextWord</a>(svfCmd))
+//              for(word=NextWord(is); word!="TDI" &amp;&amp; word!=""; word=NextWord(is))
+                    ;
+                if(word=="TDI")
+                {
+                    // replace the TDI bits only if the SVF command has a TDI bitfield
+                    word = <a href="#" OnFocus="link('_member','NextWord67554305',this)">NextWord</a>(svfCmd); // get the TDI bits
+                    assert(word[0]=='(');
+                    assert(word[word.length()-1]==')');
+                    hdr.<a href="#" OnFocus="link('_member','FromHexString2822437144',this)">FromHexString</a>(len,word.c_str()+1);
+//                  hdr.FromHexStream(len,is,false);
+                }
+            }
+#ifdef DEBUG_SVF
+            if(hdr.<a href="#" OnFocus="link('_member','GetLength2106616265',this)">GetLength</a>()&lt;1000)
+                cout &lt;&lt; hdr &lt;&lt; "\n";
+            else
+                cout &lt;&lt; "[... " &lt;&lt; hdr.<a href="#" OnFocus="link('_member','GetLength2106616265',this)">GetLength</a>() &lt;&lt; " ...]\n";
+            cout.flush();
+#endif
+//          NextCmd(is);
+            continue;
+        }
+        
+        else if(keywd == "TIR")
+        { // initialize the trailer bits for loading into the IR
+            // get the number of bits in the trailer
+            status = sscanf(<a href="#" OnFocus="link('_member','NextWord67554305',this)">NextWord</a>(svfCmd).c_str(),"%ld",&amp;len);
+//          status = sscanf(NextWord(is).c_str(),"%ld",&amp;len);
+            assert(status!=0);
+            tir.Resize(len);
+            if(len != 0)
+            {
+                // otherwise look for the TDI bitfield
+                string word;
+                for(word=<a href="#" OnFocus="link('_member','NextWord67554305',this)">NextWord</a>(svfCmd); word!="TDI" &amp;&amp; word!=""; word=<a href="#" OnFocus="link('_member','NextWord67554305',this)">NextWord</a>(svfCmd))
+//              for(word=NextWord(is); word!="TDI" &amp;&amp; word!=""; word=NextWord(is))
+                    ;
+                if(word=="TDI")
+                {
+                    // replace the TDI bits only if the SVF command has a TDI bitfield
+                    word = <a href="#" OnFocus="link('_member','NextWord67554305',this)">NextWord</a>(svfCmd); // get the TDI bits
+                    assert(word[0]=='(');
+                    assert(word[word.length()-1]==')');
+                    tir.FromHexString(len,word.c_str()+1);
+//                  tir.FromHexStream(len,is,false);
+                }
+            }
+#ifdef DEBUG_SVF
+            if(tir.GetLength()&lt;1000)
+                cout &lt;&lt; tir &lt;&lt; "\n";
+            else
+                cout &lt;&lt; "[... " &lt;&lt; tir.GetLength() &lt;&lt; " ...]\n";
+            cout.flush();
+#endif
+//          NextCmd(is);
+            continue;
+        }
+        
+        else if(keywd == "TDR")
+        { // initialize the trailer bits for loading into the DR
+            // get the number of bits in the trailer
+            status = sscanf(<a href="#" OnFocus="link('_member','NextWord67554305',this)">NextWord</a>(svfCmd).c_str(),"%ld",&amp;len);
+//          status = sscanf(NextWord(is).c_str(),"%ld",&amp;len);
+            assert(status!=0);
+            tdr.Resize(len);
+            if(len != 0)
+            {
+                // otherwise look for the TDI bitfield
+                string word;
+                for(word=<a href="#" OnFocus="link('_member','NextWord67554305',this)">NextWord</a>(svfCmd); word!="TDI" &amp;&amp; word!=""; word=<a href="#" OnFocus="link('_member','NextWord67554305',this)">NextWord</a>(svfCmd))
+//              for(word=NextWord(is); word!="TDI" &amp;&amp; word!=""; word=NextWord(is))
+                    ;
+                if(word=="TDI")
+                {
+                    // replace the TDI bits only if the SVF command has a TDI bitfield
+                    word = <a href="#" OnFocus="link('_member','NextWord67554305',this)">NextWord</a>(svfCmd); // get the TDI bits
+                    assert(word[0]=='(');
+                    assert(word[word.length()-1]==')');
+                    tdr.FromHexString(len,word.c_str()+1);
+//                  tdr.FromHexStream(len,is,false);
+                }
+            }
+#ifdef DEBUG_SVF
+            if(tdr.GetLength()&lt;1000)
+                cout &lt;&lt; tdr &lt;&lt; "\n";
+            else
+                cout &lt;&lt; "[... " &lt;&lt; tdr.GetLength() &lt;&lt; " ...]\n";
+            cout.flush();
+#endif
+//          NextCmd(is);
+            continue;
+        }
+        
+        else if(keywd == "SIR")
+        { // send a bitstream into the instruction register
+            // get the number of bits in the instruction register
+            status = sscanf(<a href="#" OnFocus="link('_member','NextWord67554305',this)">NextWord</a>(svfCmd).c_str(),"%ld",&amp;len);
+//          status = sscanf(NextWord(is).c_str(),"%ld",&amp;len);
+            assert(status!=0);
+            assert(len&gt;0);
+            <a href="#" OnFocus="link('_class','Bitstream0',this)">Bitstream</a> bs(len); // load TDI bits into this bit stream
+            string word;
+            for(word=<a href="#" OnFocus="link('_member','NextWord67554305',this)">NextWord</a>(svfCmd); word!="TDI" &amp;&amp; word!=""; word=<a href="#" OnFocus="link('_member','NextWord67554305',this)">NextWord</a>(svfCmd))
+//          for(word=NextWord(is); word!="TDI" &amp;&amp; word!=""; word=NextWord(is))
+                ;
+            if(word=="TDI")
+            {
+                word = <a href="#" OnFocus="link('_member','NextWord67554305',this)">NextWord</a>(svfCmd); // get the TDI bits
+                assert(word[0]=='(');
+                assert(word[word.length()-1]==')');
+                sir.FromHexString(len,word.c_str()+1);
+//              sir.FromHexStream(len,is,false);
+            }
+
+            // concatenate header, instruction, and trailer bitstreams
+            bs = hir + sir + tir;
+
+#ifdef DEBUG_SVF
+            if(bs.<a href="#" OnFocus="link('_member','GetLength2106616265',this)">GetLength</a>()&lt;1000)
+                cout &lt;&lt; "SIR " &lt;&lt; len &lt;&lt; " (" &lt;&lt; bs.<a href="#" OnFocus="link('_member','ToHexString2106616265',this)">ToHexString</a>() &lt;&lt; ")" &lt;&lt; endl;
+            else
+                cout &lt;&lt; "SIR " &lt;&lt; len &lt;&lt; " (... " &lt;&lt; bs.<a href="#" OnFocus="link('_member','GetLength2106616265',this)">GetLength</a>() &lt;&lt; " ...)" &lt;&lt; endl;
+            cout.flush();
+#endif
+            // send bitstream into IR and return to idle state
+            <a href="#" OnFocus="link('_member','GotoTAPState449122300',this)">GotoTAPState</a>(ShiftIR);
+            <a href="#" OnFocus="link('_class','Bitstream0',this)">Bitstream</a> null(0);   // zero-length bitstream
+            <a href="#" OnFocus="link('_member','SendRcvBitstream1691161481',this)">SendRcvBitstream</a>(bs,null);
+            <a href="#" OnFocus="link('_member','GotoTAPState449122300',this)">GotoTAPState</a>(endir);
+//          NextCmd(is);
+            continue;
+        }
+        
+        else if(keywd == "SDR")
+        { // send a bitstream into the data register
+            // get the number of bits in the data register
+            status = sscanf(<a href="#" OnFocus="link('_member','NextWord67554305',this)">NextWord</a>(svfCmd).c_str(),"%ld",&amp;len);
+//          status = sscanf(NextWord(is).c_str(),"%ld",&amp;len);
+            assert(status!=0);
+            assert(len&gt;0);
+            <a href="#" OnFocus="link('_class','Bitstream0',this)">Bitstream</a> bs(0); // load TDI bits into this bit stream
+            string word;
+            for(word=<a href="#" OnFocus="link('_member','NextWord67554305',this)">NextWord</a>(svfCmd); word!="TDI" &amp;&amp; word!=""; word=<a href="#" OnFocus="link('_member','NextWord67554305',this)">NextWord</a>(svfCmd))
+//          for(word=NextWord(is); word!="TDI" &amp;&amp; word!=""; word=NextWord(is))
+                ;
+            if(word=="TDI")
+            {
+                word = <a href="#" OnFocus="link('_member','NextWord67554305',this)">NextWord</a>(svfCmd); // get the TDI bits
+                assert(word[0]=='(');
+                assert(word[word.length()-1]==')');
+                sdr.FromHexString(len,word.c_str()+1);
+//              sdr.FromHexStream(len,is,false);
+            }
+
+            // concatenate header, data, and trailer bitstreams
+            bs = hdr + sdr + tdr;
+
+#ifdef DEBUG_SVF
+            if(bs.<a href="#" OnFocus="link('_member','GetLength2106616265',this)">GetLength</a>()&lt;1000)
+                cout &lt;&lt; "SDR " &lt;&lt; len &lt;&lt; " (" &lt;&lt; bs.<a href="#" OnFocus="link('_member','ToHexString2106616265',this)">ToHexString</a>() &lt;&lt; ")" &lt;&lt; endl;
+            else
+                cout &lt;&lt; "SDR " &lt;&lt; len &lt;&lt; " (... " &lt;&lt; bs.<a href="#" OnFocus="link('_member','GetLength2106616265',this)">GetLength</a>() &lt;&lt; " ...)" &lt;&lt; endl;
+            cout.flush();
+#endif
+            // send bitstream into DR and return to Run-Test-Idle state
+#ifdef DEBUG_SVF
+    long sdr_start = clock();
+#endif
+            <a href="#" OnFocus="link('_member','GotoTAPState449122300',this)">GotoTAPState</a>(ShiftDR);
+            <a href="#" OnFocus="link('_class','Bitstream0',this)">Bitstream</a> null(0);   // zero-length bitstream
+            <a href="#" OnFocus="link('_member','SendRcvBitstream1691161481',this)">SendRcvBitstream</a>(bs,null);
+            <a href="#" OnFocus="link('_member','GotoTAPState449122300',this)">GotoTAPState</a>(enddr);
+#ifdef DEBUG_SVF
+    long sdr_finish = clock();
+    cerr &lt;&lt; "elapsed time = " &lt;&lt; (sdr_finish-sdr_start)/(CLOCKS_PER_SEC) &lt;&lt; "\n";
+#endif
+//          NextCmd(is);
+            continue;
+        }
+        
+        else if(keywd == "RUNTEST")
+        { // insert delay while programming takes place
+            // get the number of microseconds to pause while programming the CPLD 
+            status = sscanf(<a href="#" OnFocus="link('_member','NextWord67554305',this)">NextWord</a>(svfCmd).c_str(),"%ld",&amp;len);
+//          status = sscanf(NextWord(is).c_str(),"%ld",&amp;len);
+            assert(status!=0);
+            elapsedTime += len;
+            assert(<a href="#" OnFocus="link('_member','NextWord67554305',this)">NextWord</a>(svfCmd) == "TCK");
+//          assert(NextWord(is) == "TCK");
+            if(<a href="#" OnFocus="link('_member','currentTAPState243771202',this)">currentTAPState</a> == <a href="#" OnFocus="link('_member','TestLogicReset0',this)">TestLogicReset</a>)
+                <a href="#" OnFocus="link('_member','SetTMS822545253',this)">SetTMS</a>(1); // TMS value to stay in RESET state
+            else
+                <a href="#" OnFocus="link('_member','SetTMS822545253',this)">SetTMS</a>(0); // TMS value to stay in IDLE, DRPAUSE or IRPAUSE state
+            <a href="#" OnFocus="link('_member','PulseTCK822545253',this)">PulseTCK</a>(len);
+#ifdef DEBUG_SVF
+            cout &lt;&lt; "delay = " &lt;&lt; len &lt;&lt; " us\n"; cout.flush();
+#endif
+//          NextCmd(is);
+            continue;
+        }
+        
+        // if we get here, then it's some strange junk we don't understand
+        <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a> <a href="#" OnFocus="link('_member','err243771202',this)">err</a> = <a href="#" OnFocus="link('_member','GetErr141716444',this)">GetErr</a>();
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','SetSeverity3409672334',this)">SetSeverity</a>(XSErrorMajor);
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> &lt;&lt; (string)"unknown SVF command: " &lt;&lt; keywd &lt;&lt; (string)"\n";
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','EndMsg60232619',this)">EndMsg</a>();
+        <a href="#" OnFocus="link('_member','InitTAP141716444',this)">InitTAP</a>(); // reset TAP and idle the JTAG logic
+        delete <a href="#" OnFocus="link('_member','progressGauge243771202',this)">progressGauge</a>;
+        <a href="#" OnFocus="link('_member','progressGauge243771202',this)">progressGauge</a> = NULL;
+        delete svfStart;
+        return false;
+    }
+    
+    <a href="#" OnFocus="link('_member','progressGauge243771202',this)">progressGauge</a>-&gt;<a href="#" OnFocus="link('_member','Report2561259521',this)">Report</a>(svf-svfStart); // start progress at 0 which is the beginning of the SVF string
+//  progressGauge-&gt;Report(is.tellg());  // should set gauge to 100%
+    
+#ifdef DEBUG_SVF
+    long finish = clock();
+    cerr &lt;&lt; "elapsed time = " &lt;&lt; (finish-start)/(CLOCKS_PER_SEC) &lt;&lt; "\n";
+    cerr &lt;&lt; "elapsed time = " &lt;&lt; elapsedTime &lt;&lt; " us\n";
+#endif
+    
+    <a href="#" OnFocus="link('_member','InitTAP141716444',this)">InitTAP</a>(); // done so reset TAP and idle the JTAG logic
+    <a href="#" OnFocus="link('_member','InsertDelay359930342',this)">InsertDelay</a>(100,MILLISECONDS); // let the XC9500 chip initialize
+    delete <a href="#" OnFocus="link('_member','progressGauge243771202',this)">progressGauge</a>;
+    <a href="#" OnFocus="link('_member','progressGauge243771202',this)">progressGauge</a> = NULL;
+    delete svfStart;
+    return true;
+}
+    
+    
+/// Download the contents of an SVF file to a device attached to the JTAG port.
+///\return true if no errors were encountered, false otherwise.
+bool <a href="#" OnFocus="link('_member','DownloadSVF1467815114',this)">JTAGPort::DownloadSVF</a>(string&amp; fileName) ///&lt; file containing SVF commands
+{
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','err243771202',this)">err</a> = <a href="#" OnFocus="link('_member','GetErr141716444',this)">GetErr</a>();
+
+    if(<a href="#" OnFocus="link('_member','../xssetsaa711X/fileName0',this)">fileName</a>.length()==0)
+        return false;  // stop if no SVF file was given
+    
+    ifstream is(<a href="#" OnFocus="link('_member','../xssetsaa711X/fileName0',this)">fileName</a>.c_str());  // otherwise open SVF file
+    if(!is || is.fail() || is.eof())
+    { // error - couldn't open file
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','SetSeverity3409672334',this)">SetSeverity</a>(XSErrorMajor);
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> &lt;&lt; "could not open " &lt;&lt; <a href="#" OnFocus="link('_member','../xssetsaa711X/fileName0',this)">fileName</a>.c_str() &lt;&lt; "\n";
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','EndMsg60232619',this)">EndMsg</a>();
+        return false;
+    }
+
+    bool status = <a href="#" OnFocus="link('_member','DownloadSVF1467815114',this)">DownloadSVF</a>(is, fileName);
+    
+    is.close();  // close-up the SVF file
+    
+    return status;
+}
+
+
+static const int BitstreamFieldType = 0x65; // field type for the bitstream data
+
+/// Process a configuration bitstream and send it to a device attached to the JTAG port.
+///\return true if the operation succeeded, false otherwise.
+bool <a href="#" OnFocus="link('_member','DownloadBitstream435844928',this)">JTAGPort::DownloadBitstream</a>(istream&amp; is)  ///&lt; input stream that delivers the config. bitstream
+{
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','err243771202',this)">err</a> = <a href="#" OnFocus="link('_member','GetErr141716444',this)">GetErr</a>();
+    
+    if(is.eof()!=0)
+        return false; // exit if no BIT stream exists
+
+    if(<a href="#" OnFocus="link('_member','progressGauge243771202',this)">progressGauge</a> == NULL)
+    {
+        is.seekg(0,ios::end);   // move pointer to end of file
+        streampos streamEndPos = is.tellg();    // pointer position = position of end of file
+        is.seekg(0,ios::beg);   // return pointer to beginning of file
+        string desc("Download Bitstream"), subdesc("Downloading Bitstream");
+        <a href="#" OnFocus="link('_member','progressGauge243771202',this)">progressGauge</a> = new <a href="#" OnFocus="link('_class','Progress0',this)">Progress</a>(&amp;<a href="#" OnFocus="link('_member','GetErr141716444',this)">GetErr</a>(),desc,subdesc,0,streamEndPos);
+    }
+
+    // show the progress indicator
+    <a href="#" OnFocus="link('_member','progressGauge243771202',this)">progressGauge</a>-&gt;<a href="#" OnFocus="link('_member','Report2561259521',this)">Report</a>(0);
+    
+    // jump over the first field of the BIT file
+    long unsigned int fieldLength = <a href="#" OnFocus="link('_member','GetInteger1332633361',this)">GetInteger</a>(is);
+    assert(fieldLength!=0);
+    is.ignore(fieldLength);
+    
+    // process the second field
+    fieldLength = <a href="#" OnFocus="link('_member','GetInteger1332633361',this)">GetInteger</a>(is);
+    assert(fieldLength==1);
+    
+    // now look for the field with the bitstream data
+    bool status = <a href="#" OnFocus="link('_member','ScanForField2849822024',this)">ScanForField</a>(is,BitstreamFieldType);
+    assert(status==true);
+
+    // now we are at the start of the configuration bits
+    fieldLength = <a href="#" OnFocus="link('_member','GetInteger1332633361',this)">GetInteger</a>(is,4) * 8; // get the length of the bit stream
+    assert(fieldLength&gt;0);
+#ifdef DEBUG
+    cerr &lt;&lt; "bit stream field length = " &lt;&lt; fieldLength &lt;&lt; "\n";
+#endif
+
+    <a href="#" OnFocus="link('_member','InitTAP141716444',this)">InitTAP</a>(); // initialize the JTAG state machine
+
+    <a href="#" OnFocus="link('_class','Bitstream0',this)">Bitstream</a> bsir(6);   // BSIR for sending configuration instructions
+    <a href="#" OnFocus="link('_class','Bitstream0',this)">Bitstream</a> bsdr(fieldLength); // BSDR for holding bitstream
+    <a href="#" OnFocus="link('_class','Bitstream0',this)">Bitstream</a> null(0);   // zero-length bitstream
+
+#if 0
+//Loading device with 'bypass' instruction.
+//SIR 6 TDI (3f) ;
+    bsir.<a href="#" OnFocus="link('_member','FromString2484475908',this)">FromString</a>("111111");
+    <a href="#" OnFocus="link('_member','LoadBSIRthenBSDR3423522178',this)">LoadBSIRthenBSDR</a>(bsir,null,null);
+#endif
+
+// Loading device with a `jprogram` instruction. 
+//SIR 6 TDI (0b) ;
+//RUNTEST 10000 TCK;
+    bsir.<a href="#" OnFocus="link('_member','FromString2484475908',this)">FromString</a>("001011");
+    <a href="#" OnFocus="link('_member','LoadBSIRthenBSDR3423522178',this)">LoadBSIRthenBSDR</a>(bsir,null,null);
+    <a href="#" OnFocus="link('_member','SetTMS822545253',this)">SetTMS</a>(0); // TMS value to stay in IDLE, DRPAUSE or IRPAUSE state
+    <a href="#" OnFocus="link('_member','PulseTCK822545253',this)">PulseTCK</a>(10000);
+
+#if 0
+// Loading device with a `cfg_in` instruction. 
+// erase first
+//SIR 6 TDI (05) ;
+//SDR 192 TDI (0000000000000000e00000008001000c66aa9955ffffffff) SMASK (ffffffffffffffffffffffffffffffffffffffffffffffff) ;
+    bsir.<a href="#" OnFocus="link('_member','FromString2484475908',this)">FromString</a>("000101");
+    bsdr.FromHexString(192, "0000000000000000e00000008001000c66aa9955ffffffff");
+    <a href="#" OnFocus="link('_member','LoadBSIRthenBSDR3423522178',this)">LoadBSIRthenBSDR</a>(bsir,null,null);
+#endif
+
+// Loading device with a `jshutdown` instruction. 
+//SIR 6 TDI (0d) ;
+//RUNTEST 12 TCK;
+    bsir.<a href="#" OnFocus="link('_member','FromString2484475908',this)">FromString</a>("001101");
+    <a href="#" OnFocus="link('_member','LoadBSIRthenBSDR3423522178',this)">LoadBSIRthenBSDR</a>(bsir,null,null);
+    <a href="#" OnFocus="link('_member','SetTMS822545253',this)">SetTMS</a>(0); // TMS value to stay in IDLE, DRPAUSE or IRPAUSE state
+    <a href="#" OnFocus="link('_member','PulseTCK822545253',this)">PulseTCK</a>(12);
+
+#if 0
+// Loading device with a `cfg_in` instruction. 
+//STATE RESET;
+//SIR 6 TDI (05) TDO (00) MASK (00) ;
+//SDR 96 TDI (000000000000000066aa9955) SMASK (ffffffffffffffffffffffff) ;
+    <a href="#" OnFocus="link('_member','GotoTAPState449122300',this)">GotoTAPState</a>(TestLogicReset);
+    bsir.<a href="#" OnFocus="link('_member','FromString2484475908',this)">FromString</a>("000101");
+    bsdr.FromHexString(96, "000000000000000066aa9955");
+    <a href="#" OnFocus="link('_member','LoadBSIRthenBSDR3423522178',this)">LoadBSIRthenBSDR</a>(bsir,null,null);
+#endif
+
+    bsir.<a href="#" OnFocus="link('_member','FromString2484475908',this)">FromString</a>("000101"); // CFG_IN instruction
+    bsdr.FromCharStream(fieldLength, is, true);
+    <a href="#" OnFocus="link('_member','LoadBSIRthenBSDR3423522178',this)">LoadBSIRthenBSDR</a>( bsir, bsdr, null );
+
+    bsir.<a href="#" OnFocus="link('_member','FromString2484475908',this)">FromString</a>("001100");    // JSTART instruction
+    <a href="#" OnFocus="link('_member','LoadBSIRthenBSDR3423522178',this)">LoadBSIRthenBSDR</a>( bsir, null, null );
+    <a href="#" OnFocus="link('_member','SetTMS822545253',this)">SetTMS</a>(0); // TMS value to stay in IDLE, DRPAUSE or IRPAUSE state
+    <a href="#" OnFocus="link('_member','PulseTCK822545253',this)">PulseTCK</a>(12);
+
+    bsir.<a href="#" OnFocus="link('_member','FromString2484475908',this)">FromString</a>("001100");    // JSTART instruction
+    <a href="#" OnFocus="link('_member','LoadBSIRthenBSDR3423522178',this)">LoadBSIRthenBSDR</a>( bsir, null, null );
+    <a href="#" OnFocus="link('_member','SetTMS822545253',this)">SetTMS</a>(0); // TMS value to stay in IDLE, DRPAUSE or IRPAUSE state
+    <a href="#" OnFocus="link('_member','PulseTCK822545253',this)">PulseTCK</a>(12);
+
+    assert( currentTAPState==RunTestIdle );
+
+    <a href="#" OnFocus="link('_member','progressGauge243771202',this)">progressGauge</a>-&gt;<a href="#" OnFocus="link('_member','Report2561259521',this)">Report</a>(is.tellg()); // this should set gauge to 100%
+
+    // insert a delay to let the chip initialize
+    <a href="#" OnFocus="link('_member','InsertDelay359930342',this)">InsertDelay</a>(100,MILLISECONDS);
+    
+#ifdef DEBUG
+    cerr &lt;&lt; "exiting DownloadBitstream()\n";
+#endif
+    
+    return true;
+}
+
+
+/// Process a configuration bitstream and send it to a device attached to the JTAG port.
+///\return true if the operation succeeded, false otherwise.
+bool <a href="#" OnFocus="link('_member','DownloadBitstream435844928',this)">JTAGPort::DownloadBitstream</a>(string&amp; fileName) ///&lt; file containing the config. bitstream
+{
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> = <a href="#" OnFocus="link('_member','GetErr141716444',this)">GetErr</a>();
+    
+    if(<a href="#" OnFocus="link('_member','../xssetsaa711X/fileName0',this)">fileName</a>.length()==0)
+        return false;  // stop if no SVF or BIT file was given
+    
+    ifstream is(<a href="#" OnFocus="link('_member','../xssetsaa711X/fileName0',this)">fileName</a>.c_str(),ios::binary);  // otherwise open BIT or SVF file
+    if(!is || is.fail() || is.eof())
+    { // error - couldn't open file
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','SetSeverity3409672334',this)">SetSeverity</a>(XSErrorMajor);
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> &lt;&lt; "could not open " &lt;&lt; <a href="#" OnFocus="link('_member','../xssetsaa711X/fileName0',this)">fileName</a>.c_str() &lt;&lt; "\n";
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','EndMsg60232619',this)">EndMsg</a>();
+        return false;
+    }
+    
+    // determine the size of the file
+    is.seekg(0,ios::end);   // move pointer to end of file
+    streampos streamEndPos = is.tellg();    // pointer position = position of end of file
+    is.seekg(0,ios::beg);   // return pointer to beginning of file
+
+    string desc("Configure FPGA"), subdesc("Downloading "+<a href="#" OnFocus="link('_member','StripPrefix67554305',this)">StripPrefix</a>(fileName));
+    <a href="#" OnFocus="link('_member','progressGauge243771202',this)">progressGauge</a> = new <a href="#" OnFocus="link('_class','Progress0',this)">Progress</a>(&amp;err,desc,subdesc,0,streamEndPos);
+    
+    bool status = <a href="#" OnFocus="link('_member','DownloadBitstream435844928',this)">DownloadBitstream</a>(is);
+    
+    is.close();  // close-up the hex file
+    
+    return status;
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_file','_source');
+</script>

@@ -1,0 +1,392 @@
+# XST (Creating Lso File) : 
+test_vga.lso
+# xst flow : RunXST
+test_vga.syr
+test_vga.prj
+test_vga.sprj
+test_vga.ana
+test_vga.stx
+test_vga.cmd_log
+# XST (Creating Lso File) : 
+test_vga.lso
+# xst flow : RunXST
+test_vga.syr
+test_vga.prj
+test_vga.sprj
+test_vga.ana
+test_vga.stx
+test_vga.cmd_log
+# XST (Creating Lso File) : 
+test_vga.lso
+# xst flow : RunXST
+test_vga.syr
+test_vga.prj
+test_vga.sprj
+test_vga.ana
+test_vga.stx
+test_vga.cmd_log
+# XST (Creating Lso File) : 
+test_vga.lso
+# xst flow : RunXST
+test_vga.syr
+test_vga.prj
+test_vga.sprj
+test_vga.ana
+test_vga.stx
+test_vga.cmd_log
+test_vga.ngc
+test_vga.ngr
+# XST (Creating Lso File) : 
+test_vga.lso
+# xst flow : RunXST
+test_vga.syr
+test_vga.prj
+test_vga.sprj
+test_vga.ana
+test_vga.stx
+test_vga.cmd_log
+test_vga.ngc
+test_vga.ngr
+# Implmentation : Translate
+__projnav/ngdbuild.err
+__projnav/ednTOngd_tcl.rsp
+c:\xesscorp\products\bitstreams\xsa\xst-dau_vga-vgagen\3s1000\test_vga/_ngo
+test_vga.ngd
+test_vga_ngdbuild.nav
+test_vga.bld
+test_vga.ucf.untf
+test_vga.cmd_log
+# Implementation : Map
+test_vga_map.ncd
+test_vga.ngm
+test_vga.pcf
+test_vga.nc1
+test_vga.mrp
+test_vga_map.mrp
+test_vga.mdf
+__projnav/map.log
+test_vga.cmd_log
+MAP_NO_GUIDE_FILE_CPF "test_vga"
+# Implmentation : Post-Place & Route Timing
+__projnav/ncdTOtwr_tcl.rsp
+__projnav/posttrc.log
+test_vga.twr
+test_vga.twx
+test_vga.tsi
+test_vga.cmd_log
+# Implmentation : Place & Route
+__projnav/nc1TOncd_tcl.rsp
+test_vga.ncd
+test_vga.par
+test_vga.pad
+test_vga_pad.txt
+test_vga_pad.csv
+test_vga.pad_txt
+test_vga.dly
+reportgen.log
+test_vga.xpi
+test_vga.grf
+test_vga.itr
+test_vga_last_par.ncd
+__projnav/par.log
+test_vga.placed_ncd_tracker
+test_vga.routed_ncd_tracker
+test_vga.cmd_log
+PAR_NO_GUIDE_FILE_CPF "test_vga"
+# Generate Programming File
+__projnav/test_vga_ncdTOut_tcl.rsp
+__projnav/bitgen.rsp
+bitgen.ut
+test_vga.ut
+# Generate Programming File
+test_vga.bgn
+test_vga.rbt
+test_vga.ll
+test_vga.msk
+test_vga.drc
+test_vga.nky
+test_vga.bit
+test_vga.bin
+test_vga.isc
+test_vga.cmd_log
+# Implmentation : Translate
+__projnav/ngdbuild.err
+__projnav/ednTOngd_tcl.rsp
+c:\xesscorp\products\bitstreams\xsa\xst-dau_vga-vgagen\3s1000\test_vga/_ngo
+test_vga.ngd
+test_vga_ngdbuild.nav
+test_vga.bld
+test_vga.ucf.untf
+test_vga.cmd_log
+# Implementation : Map
+test_vga_map.ncd
+test_vga.ngm
+test_vga.pcf
+test_vga.nc1
+test_vga.mrp
+test_vga_map.mrp
+test_vga.mdf
+__projnav/map.log
+test_vga.cmd_log
+MAP_NO_GUIDE_FILE_CPF "test_vga"
+# Implmentation : Post-Place & Route Timing
+__projnav/ncdTOtwr_tcl.rsp
+__projnav/posttrc.log
+test_vga.twr
+test_vga.twx
+test_vga.tsi
+test_vga.cmd_log
+# Implmentation : Place & Route
+__projnav/nc1TOncd_tcl.rsp
+test_vga.ncd
+test_vga.par
+test_vga.pad
+test_vga_pad.txt
+test_vga_pad.csv
+test_vga.pad_txt
+test_vga.dly
+reportgen.log
+test_vga.xpi
+test_vga.grf
+test_vga.itr
+test_vga_last_par.ncd
+__projnav/par.log
+test_vga.placed_ncd_tracker
+test_vga.routed_ncd_tracker
+test_vga.cmd_log
+PAR_NO_GUIDE_FILE_CPF "test_vga"
+# Generate Programming File
+__projnav/test_vga_ncdTOut_tcl.rsp
+__projnav/bitgen.rsp
+bitgen.ut
+test_vga.ut
+# Generate Programming File
+test_vga.bgn
+test_vga.rbt
+test_vga.ll
+test_vga.msk
+test_vga.drc
+test_vga.nky
+test_vga.bit
+test_vga.bin
+test_vga.isc
+test_vga.cmd_log
+# XST (Creating Lso File) : 
+test_vga.lso
+# xst flow : RunXST
+test_vga.syr
+test_vga.prj
+test_vga.sprj
+test_vga.ana
+test_vga.stx
+test_vga.cmd_log
+test_vga.ngc
+test_vga.ngr
+# Implmentation : Translate
+__projnav/ngdbuild.err
+__projnav/ednTOngd_tcl.rsp
+c:\xesscorp\products\bitstreams\xsa\xst-dau_vga-vgagen\3s1000\test_vga/_ngo
+test_vga.ngd
+test_vga_ngdbuild.nav
+test_vga.bld
+test_vga.ucf.untf
+test_vga.cmd_log
+# Implementation : Map
+test_vga_map.ncd
+test_vga.ngm
+test_vga.pcf
+test_vga.nc1
+test_vga.mrp
+test_vga_map.mrp
+test_vga.mdf
+__projnav/map.log
+test_vga.cmd_log
+MAP_NO_GUIDE_FILE_CPF "test_vga"
+# Implmentation : Post-Place & Route Timing
+__projnav/ncdTOtwr_tcl.rsp
+__projnav/posttrc.log
+test_vga.twr
+test_vga.twx
+test_vga.tsi
+test_vga.cmd_log
+# Implmentation : Place & Route
+__projnav/nc1TOncd_tcl.rsp
+test_vga.ncd
+test_vga.par
+test_vga.pad
+test_vga_pad.txt
+test_vga_pad.csv
+test_vga.pad_txt
+test_vga.dly
+reportgen.log
+test_vga.xpi
+test_vga.grf
+test_vga.itr
+test_vga_last_par.ncd
+__projnav/par.log
+test_vga.placed_ncd_tracker
+test_vga.routed_ncd_tracker
+test_vga.cmd_log
+PAR_NO_GUIDE_FILE_CPF "test_vga"
+# Generate Programming File
+__projnav/test_vga_ncdTOut_tcl.rsp
+__projnav/bitgen.rsp
+bitgen.ut
+test_vga.ut
+# Generate Programming File
+test_vga.bgn
+test_vga.rbt
+test_vga.ll
+test_vga.msk
+test_vga.drc
+test_vga.nky
+test_vga.bit
+test_vga.bin
+test_vga.isc
+test_vga.cmd_log
+# XST (Creating Lso File) : 
+test_vga.lso
+# xst flow : RunXST
+test_vga.syr
+test_vga.prj
+test_vga.sprj
+test_vga.ana
+test_vga.stx
+test_vga.cmd_log
+test_vga.ngc
+test_vga.ngr
+# Implmentation : Translate
+__projnav/ngdbuild.err
+__projnav/ednTOngd_tcl.rsp
+c:\xesscorp\products\bitstreams\xsa\xst-dau_vga-vgagen\3s1000\test_vga/_ngo
+test_vga.ngd
+test_vga_ngdbuild.nav
+test_vga.bld
+test_vga.ucf.untf
+test_vga.cmd_log
+# Implementation : Map
+test_vga_map.ncd
+test_vga.ngm
+test_vga.pcf
+test_vga.nc1
+test_vga.mrp
+test_vga_map.mrp
+test_vga.mdf
+__projnav/map.log
+test_vga.cmd_log
+MAP_NO_GUIDE_FILE_CPF "test_vga"
+# Implmentation : Post-Place & Route Timing
+__projnav/ncdTOtwr_tcl.rsp
+__projnav/posttrc.log
+test_vga.twr
+test_vga.twx
+test_vga.tsi
+test_vga.cmd_log
+# Implmentation : Place & Route
+__projnav/nc1TOncd_tcl.rsp
+test_vga.ncd
+test_vga.par
+test_vga.pad
+test_vga_pad.txt
+test_vga_pad.csv
+test_vga.pad_txt
+test_vga.dly
+reportgen.log
+test_vga.xpi
+test_vga.grf
+test_vga.itr
+test_vga_last_par.ncd
+__projnav/par.log
+test_vga.placed_ncd_tracker
+test_vga.routed_ncd_tracker
+test_vga.cmd_log
+PAR_NO_GUIDE_FILE_CPF "test_vga"
+# Generate Programming File
+__projnav/test_vga_ncdTOut_tcl.rsp
+__projnav/bitgen.rsp
+bitgen.ut
+test_vga.ut
+# Generate Programming File
+test_vga.bgn
+test_vga.rbt
+test_vga.ll
+test_vga.msk
+test_vga.drc
+test_vga.nky
+test_vga.bit
+test_vga.bin
+test_vga.isc
+test_vga.cmd_log
+# XST (Creating Lso File) : 
+test_vga.lso
+# xst flow : RunXST
+test_vga.syr
+test_vga.prj
+test_vga.sprj
+test_vga.ana
+test_vga.stx
+test_vga.cmd_log
+test_vga.ngc
+test_vga.ngr
+# Implmentation : Translate
+__projnav/ngdbuild.err
+__projnav/ednTOngd_tcl.rsp
+c:\xesscorp\products\bitstreams\xsa\xst-dau_vga-vgagen\3s1000\test_vga/_ngo
+test_vga.ngd
+test_vga_ngdbuild.nav
+test_vga.bld
+test_vga.ucf.untf
+test_vga.cmd_log
+# Implementation : Map
+test_vga_map.ncd
+test_vga.ngm
+test_vga.pcf
+test_vga.nc1
+test_vga.mrp
+test_vga_map.mrp
+test_vga.mdf
+__projnav/map.log
+test_vga.cmd_log
+MAP_NO_GUIDE_FILE_CPF "test_vga"
+# Implmentation : Post-Place & Route Timing
+__projnav/ncdTOtwr_tcl.rsp
+__projnav/posttrc.log
+test_vga.twr
+test_vga.twx
+test_vga.tsi
+test_vga.cmd_log
+# Implmentation : Place & Route
+__projnav/nc1TOncd_tcl.rsp
+test_vga.ncd
+test_vga.par
+test_vga.pad
+test_vga_pad.txt
+test_vga_pad.csv
+test_vga.pad_txt
+test_vga.dly
+reportgen.log
+test_vga.xpi
+test_vga.grf
+test_vga.itr
+test_vga_last_par.ncd
+__projnav/par.log
+test_vga.placed_ncd_tracker
+test_vga.routed_ncd_tracker
+test_vga.cmd_log
+PAR_NO_GUIDE_FILE_CPF "test_vga"
+# Generate Programming File
+__projnav/test_vga_ncdTOut_tcl.rsp
+__projnav/bitgen.rsp
+bitgen.ut
+test_vga.ut
+# Generate Programming File
+test_vga.bgn
+test_vga.rbt
+test_vga.ll
+test_vga.msk
+test_vga.drc
+test_vga.nky
+test_vga.bit
+test_vga.bin
+test_vga.isc
+test_vga.cmd_log

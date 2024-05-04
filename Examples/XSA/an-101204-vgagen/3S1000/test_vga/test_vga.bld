@@ -1,0 +1,34 @@
+Release 6.3.03i - ngdbuild G.38
+Copyright (c) 1995-2004 Xilinx, Inc.  All rights reserved.
+
+Command Line: ngdbuild -intstyle ise -dd
+c:\xesscorp\products\bitstreams\xsa\an-101204-vgagen\3s1000\test_vga/_ngo -uc
+test_vga.ucf -p xc3s1000-ft256-4 test_vga.ngc test_vga.ngd 
+
+Reading NGO file
+"C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/an-101204-vgagen/3S1000/test_vga/test_vga.n
+gc" ...
+Reading component libraries for design expansion...
+
+Annotating constraints to design from file "test_vga.ucf" ...
+
+Checking timing specifications ...
+INFO:XdmHelpers:851 - TNM "clk", used in period specification "TS_clk", was
+   traced into DCM instance "u0_dllext". The following new TNM groups and period
+   specifications were generated at the DCM output(s):
+   <none> (no matching synchronous elements driven by DCM outputs)
+INFO:XdmHelpers:851 - TNM "clk", used in period specification "TS_clk", was
+   traced into DCM instance "u0_dllint". The following new TNM groups and period
+   specifications were generated at the DCM output(s):
+   CLK0: TS_u0_int_clk1x=PERIOD u0_int_clk1x TS_clk*1.000000 HIGH 50.000000%
+Checking expanded design ...
+
+NGDBUILD Design Results Summary:
+  Number of errors:     0
+  Number of warnings:   0
+
+Total memory usage is 41560 kilobytes
+
+Writing NGD file "test_vga.ngd" ...
+
+Writing NGDBUILD log file "test_vga.bld"...

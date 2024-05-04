@@ -1,0 +1,65 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - ShiftRight</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">ShiftRight</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_class','Bitstream0',this)" class="pathLink">Bitstream</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">ShiftRight</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','ShiftRight2805767469','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_member','ShiftRight2805767469','_source',this)" class="tabLinkActive">Source</a></span>
+<span class="tabInActiveGrayout"><span class="tabLinkGrayout">Call Graph</span></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<div class="paragraph2NoTopPadding">Start Line: 245</div>
+<pre class="codeExamples">
+void <a href="#" OnFocus="link('_member','ShiftRight2805767469',this)">Bitstream::ShiftRight</a>(unsigned int rightShift)
+{
+    // exit if nothing to do
+    if(rightShift == 0)
+        return;
+
+    // first, remove chunks of bits on the right
+    unsigned int numWords = NUM_OF_WORDS(numBits);
+    unsigned int numPaddingWords = rightShift / <a href="#" OnFocus="link('_member','bitsPerLong0',this)">bitsPerLong</a>;
+    if(numPaddingWords &gt; 0)
+    {
+        for(unsigned int i=0, j=numPaddingWords; j&lt;numWords; i++,j++)
+            <a href="#" OnFocus="link('_member','bits203865993',this)">bits</a>[i] = <a href="#" OnFocus="link('_member','bits203865993',this)">bits</a>[j];
+    }
+
+    // then right shift bits between chunks to get the final result
+    rightShift %= <a href="#" OnFocus="link('_member','bitsPerLong0',this)">bitsPerLong</a>;
+    unsigned long a;
+    unsigned int leftShift = <a href="#" OnFocus="link('_member','bitsPerLong0',this)">bitsPerLong</a> - rightShift;
+    int i;
+    for(i=0; i&lt;numWords-1; i++)
+    {
+        a = <a href="#" OnFocus="link('_member','bits203865993',this)">bits</a>[i+1];
+        <a href="#" OnFocus="link('_member','bits203865993',this)">bits</a>[i] = (<a href="#" OnFocus="link('_member','bits203865993',this)">bits</a>[i]&gt;&gt;rightShift) | (a&lt;&lt;leftShift);
+    }
+
+    // right shift the last chunk
+    <a href="#" OnFocus="link('_member','bits203865993',this)">bits</a>[i] &gt;&gt;= rightShift;
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_member','_source');
+</script>

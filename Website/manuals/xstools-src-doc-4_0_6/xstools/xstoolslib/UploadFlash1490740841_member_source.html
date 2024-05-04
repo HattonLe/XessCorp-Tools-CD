@@ -1,0 +1,127 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - UploadFlash</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">UploadFlash</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_class','XSA3SBoard0',this)" class="pathLink">XSA3SBoard</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">UploadFlash</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','UploadFlash1490740841','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_member','UploadFlash1490740841','_source',this)" class="tabLinkActive">Source</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','UploadFlash1490740841','_callgraph',this)" class="tabLinkInActive">Call Graph</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<div class="paragraph2NoTopPadding">Start Line: 655</div>
+<pre class="codeExamples">
+bool <a href="#" OnFocus="link('_member','UploadFlash1490740841',this)">XSA3SBoard::UploadFlash</a>(string &amp;fileName, const char *format, unsigned int loAddr, unsigned int hiAddr, bool bigEndianBytes, bool bigEndianBits, bool doStart, bool doEnd)
+{
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a> = <a href="#" OnFocus="link('_member','fpga203838095',this)">fpga</a>.<a href="#" OnFocus="link('_member','GetErr259477277',this)">GetErr</a>(); // setup error channel
+
+    // use the board model name to find the corresponding index into the list of boards
+    int brdIndex;
+    for(brdIndex=0; brdIndex&lt;<a href="#" OnFocus="link('_member','numBoards_1097',this)">numBoards</a>; brdIndex++)
+    {
+        if(strcmp(brdModel,brdInfo[brdIndex].brdModel) == 0)
+            break;
+    }
+    if(brdIndex&gt;=<a href="#" OnFocus="link('_member','numBoards_1097',this)">numBoards</a>)
+    {
+        <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,"Unknown type of XSA-3S Board!\n");
+        return false;
+    }
+
+    // get the name of the file that contains a bitstream that will configure the FPGA to provide an interface
+    // between the parallel port and the Flash.
+    if(strlen(brdInfo[brdIndex].flashBitstreamFile)==0)
+    {
+        string msg = <a href="#" OnFocus="link('_member','brdModel203838095',this)">brdModel</a> + (string)" does not support Flash uploads!!\n";
+        <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,msg);
+        return false;
+    }
+
+    // check the ID of the interface CPLD to see if it matches the type on this particular board.
+    if(<a href="#" OnFocus="link('_member','CheckChipID1320047116',this)">CheckChipID</a>() == false)
+        return false;
+    
+    // get the directory where the board interface files are kept
+    const char* xstoolsBinDir = <a href="#" OnFocus="link('_member','FindXSTOOLSBinDir53616',this)">FindXSTOOLSBinDir</a>();
+    string bitFileName;
+    // concat the file name with the directory to form a complete path to the standard parallel port interface bitstream
+    bitFileName = xstoolsBinDir;
+    bitFileName += "/";
+    bitFileName += <a href="#" OnFocus="link('_member','brdInfo_1096',this)">brdInfo</a>[brdIndex].<a href="#" OnFocus="link('_member','dwnldIntfcBitstreamFile1254770407',this)">dwnldIntfcBitstreamFile</a>;
+    // get the USERCODE from the interface CPLD to see if it supports uploading from the Flash
+    if(<a href="#" OnFocus="link('_member','cpld203838095',this)">cpld</a>.<a href="#" OnFocus="link('_member','GetUSERCODE215401329',this)">GetUSERCODE</a>()!=<a href="#" OnFocus="link('_member','dwnldIntfcCode_1095',this)">dwnldIntfcCode</a>)
+    { // the interface CPLD is not configured with the standard parallel port interface, so download it to the CPLD
+        if(<a href="#" OnFocus="link('_member','ConfigureInterface3437613082',this)">ConfigureInterface</a>(bitFileName) == false)
+        {
+            <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,"Error configuring CPLD with downloading interface!\n");
+            return false;
+        }
+    }
+    
+    // concat the file name with the directory to form a complete path to the Flash interface bitstream file
+    bitFileName = xstoolsBinDir;
+    bitFileName += "/";
+    bitFileName += <a href="#" OnFocus="link('_member','brdInfo_1096',this)">brdInfo</a>[brdIndex].<a href="#" OnFocus="link('_member','flashBitstreamFile1254770407',this)">flashBitstreamFile</a>;
+    
+    // load the FPGA with the Flash interface file
+    // (Yes, the FPGA handles uploading from the Flash on this board.)
+    if(doStart)
+    {
+        if(<a href="#" OnFocus="link('_member','ConfigureInterface3437613082',this)">ConfigureInterface</a>(bitFileName) == false)
+        {
+            <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,"Error configuring FPGA with Flash programming circuit!\n");
+            return false;
+        }
+    }
+    
+    // Set all the parallel port data pins high before starting the Flash programming because
+    // the CPLD sends them on to the FPGA and Flash and D6 shares the Flash WE# pin.  If D6 is low,
+    // then this causes problems with unintentional writes to Flash.
+    <a href="#" OnFocus="link('_member','flash203838095',this)">flash</a>.<a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0xFF,0,7);
+
+    // upload data into the Flash
+    if(<a href="#" OnFocus="link('_member','flash203838095',this)">flash</a>.<a href="#" OnFocus="link('_member','UploadFlash1014271617',this)">UploadFlash</a>(fileName,format,loAddr,hiAddr,bigEndianBytes,bigEndianBits) == false)
+    {
+        <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,"Error uploading from Flash!!\n");
+        return false;
+    }
+
+#if 0
+    // you can only upload a single file from Flash, so reprogram the CPLD with a circuit
+    // that will make the CPLD load the FPGA with the contents of the Flash upon power-up.
+    // (We are assuming this was the circuit programmed into the CPLD before uploading from the Flash.)
+    bitFileName = xstoolsBinDir;
+    bitFileName += "/";
+    bitFileName += <a href="#" OnFocus="link('_member','brdInfo_1096',this)">brdInfo</a>[brdIndex].<a href="#" OnFocus="link('_member','flashConfigBitstreamFile1254770407',this)">flashConfigBitstreamFile</a>;
+    if(<a href="#" OnFocus="link('_member','ConfigureInterface3437613082',this)">ConfigureInterface</a>(bitFileName) == false)
+    {
+        <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,"Error configuring CPLD with Flash configuration circuit!\n");
+        return false;
+    }
+#endif
+
+    return true;
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_member','_source');
+</script>

@@ -1,0 +1,65 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - DownloadHexRecordToRAM</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">DownloadHexRecordToRAM</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_class','JTAGRAMPort0',this)" class="pathLink">JTAGRAMPort</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">DownloadHexRecordToRAM</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','DownloadHexRecordToRAM1728329283','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_member','DownloadHexRecordToRAM1728329283','_source',this)" class="tabLinkActive">Source</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','DownloadHexRecordToRAM1728329283','_callgraph',this)" class="tabLinkInActive">Call Graph</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<div class="paragraph2NoTopPadding">Start Line: 345</div>
+<pre class="codeExamples">
+bool <a href="#" OnFocus="link('_member','DownloadHexRecordToRAM1728329283',this)">JTAGRAMPort::DownloadHexRecordToRAM</a>(<a href="#" OnFocus="link('_class','HexRecord0',this)">HexRecord</a> &amp;hx, bool bigEndianBytes, bool bigEndianBits)
+{
+    if(!hx.<a href="#" OnFocus="link('_member','IsData2146470179',this)">IsData</a>()) // don't download unless this is RAM data
+        return true;
+    
+    // process the bytes from a data-type hex record
+    for(unsigned int i=0; i&lt;hx.<a href="#" OnFocus="link('_member','GetLength2146470179',this)">GetLength</a>(); i++)
+    {
+        <a href="#" OnFocus="link('_class','XCBSDR0',this)">XCBSDR</a>&amp; bsdr = *<a href="#" OnFocus="link('_member','bsdrPtr222607087',this)">bsdrPtr</a>;
+        <a href="#" OnFocus="link('_class','Bitstream0',this)">Bitstream</a> null(0);
+        
+        // load address and data onto the FPLD pins
+        bsdr.<a href="#" OnFocus="link('_member','Clear2605346622',this)">Clear</a>();    // set all the BSDR bits to zero
+        bsdr.<a href="#" OnFocus="link('_member','SetRAMAddress451307805',this)">SetRAMAddress</a>(hx.<a href="#" OnFocus="link('_member','GetAddress2146470179',this)">GetAddress</a>()+i);
+        bsdr.<a href="#" OnFocus="link('_member','SetRAMData451307805',this)">SetRAMData</a>(<a href="#" OnFocus="link('_member','RearrangeData127079845',this)">RearrangeData</a>(hx[i],8,bigEndianBytes,bigEndianBits));
+        bsdr.<a href="#" OnFocus="link('_member','SetRAMControls3431548137',this)">SetRAMControls</a>(0,1,1); // enable RAM, disable outputs, raise write line
+        <a href="#" OnFocus="link('_member','SendRcvBitstream109185014',this)">SendRcvBitstream</a>(bsdr,null);
+        <a href="#" OnFocus="link('_member','GoThruTAPSequence1124965842',this)">GoThruTAPSequence</a>(UpdateDR,SelectDRScan,CaptureDR,ShiftDR,-1);
+        
+        bsdr.<a href="#" OnFocus="link('_member','SetRAMControls3431548137',this)">SetRAMControls</a>(0,1,0); // bring write enable low
+        <a href="#" OnFocus="link('_member','SendRcvBitstream109185014',this)">SendRcvBitstream</a>(bsdr,null);
+        <a href="#" OnFocus="link('_member','GoThruTAPSequence1124965842',this)">GoThruTAPSequence</a>(UpdateDR,SelectDRScan,CaptureDR,ShiftDR,-1);
+        
+        bsdr.<a href="#" OnFocus="link('_member','SetRAMControls3431548137',this)">SetRAMControls</a>(0,1,1); // bring write enable high again
+        <a href="#" OnFocus="link('_member','SendRcvBitstream109185014',this)">SendRcvBitstream</a>(bsdr,null);
+        <a href="#" OnFocus="link('_member','GoThruTAPSequence1124965842',this)">GoThruTAPSequence</a>(UpdateDR,SelectDRScan,CaptureDR,ShiftDR,-1);
+    }
+    return true;
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_member','_source');
+</script>

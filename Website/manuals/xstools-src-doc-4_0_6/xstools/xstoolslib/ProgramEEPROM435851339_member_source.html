@@ -1,0 +1,103 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - ProgramEEPROM</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">ProgramEEPROM</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_class','AT17Port0',this)" class="pathLink">AT17Port</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">ProgramEEPROM</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','ProgramEEPROM435851339','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_member','ProgramEEPROM435851339','_source',this)" class="tabLinkActive">Source</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','ProgramEEPROM435851339','_callgraph',this)" class="tabLinkInActive">Call Graph</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<div class="paragraph2NoTopPadding">Start Line: 127</div>
+<pre class="codeExamples">
+bool <a href="#" OnFocus="link('_member','ProgramEEPROM2040293066',this)">AT17Port::ProgramEEPROM</a>(istream &amp;is)
+{
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> = <a href="#" OnFocus="link('_member','GetErr259477277',this)">GetErr</a>();
+
+    if(is.eof()!=0)
+        return false; // exit if no BIT stream exists
+
+    // Setup the pins of the Atmel EEPROM for programming.
+    // The SER_EN_ should already be held low by a shunt on Jumper J6.
+    // This holds the EEPROM CE_ low.
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posEECE,posEECE);
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(0,posEEOE,posEEOE);
+    
+    // jump over the first field of the BIT file
+    long unsigned int fieldLength = <a href="#" OnFocus="link('_member','GetInteger1332633361',this)">GetInteger</a>(is,2);
+    assert(fieldLength!=0);
+    is.ignore(fieldLength);
+    
+    // process the second field
+    fieldLength = <a href="#" OnFocus="link('_member','GetInteger1332633361',this)">GetInteger</a>(is,2);
+    assert(fieldLength==1);
+    
+    // now look for the field with the bitstream data
+    const int BitstreamFieldType = 0x65;    // field type for the bitstream data
+    bool status = <a href="#" OnFocus="link('_member','ScanForField2849822024',this)">ScanForField</a>(is,BitstreamFieldType);
+    assert(status==true);
+    
+    // now we are at the start of the configuration bits
+    fieldLength = <a href="#" OnFocus="link('_member','GetInteger1332633361',this)">GetInteger</a>(is,4); // get the length of the bit stream
+    assert(fieldLength&gt;0);
+    
+    // now load the EEPROM memory
+    long unsigned int i;
+    unsigned char page[64];
+    for(i=0; i&lt;fieldLength; i++)
+    { 
+        is.read((char*)&amp;page[i&amp;0x3f],1);    // read the bytes and into a 64-byte page
+        if(is.eof())
+        {
+            break;
+        }
+        assert(is.eof()==0);    // shouldn't reach end-of-file
+        if((i%1000)==0)     // after every 1000 bytes,
+            <a href="#" OnFocus="link('_member','progressGauge243744841',this)">progressGauge</a>-&gt;<a href="#" OnFocus="link('_member','Report2561259521',this)">Report</a>(is.tellg()); // give some feedback during the programming process
+        if((i&amp;0x3f)==0x3f)
+        { // got a full 64-byte page, so program the EEPROM
+            <a href="#" OnFocus="link('_member','ProgramEEPROMPage649310900',this)">ProgramEEPROMPage</a>(page,i&amp;~0x3F,64);
+        }
+    }
+    if((i&amp;0x3F)!=0)
+    { // BIT file ended before a full 64-byte page was assembled
+        <a href="#" OnFocus="link('_member','ProgramEEPROMPage649310900',this)">ProgramEEPROMPage</a>(page,i&amp;~0x3F,(i&amp;0x3F)+1);
+    }
+    <a href="#" OnFocus="link('_member','progressGauge243744841',this)">progressGauge</a>-&gt;<a href="#" OnFocus="link('_member','Report2561259521',this)">Report</a>(is.tellg()); // should set gauge to 100%
+
+    // now set the output-enable polarity for the EEPROM to active-high
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posEECE,posEECE);    // raise chip-enable high
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posEEOE,posEEOE);    // raise output-enable high
+    // write 0xFF to address 0x3FFF to set the output-enable polarity
+    unsigned char allOne = 0xFF;
+    <a href="#" OnFocus="link('_member','ProgramEEPROMPage649310900',this)">ProgramEEPROMPage</a>(&amp;allOne,0x3FFF,1);
+        
+    // programming done, so disable the EEPROM
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(1,posEECE,posEECE);
+
+    return true;
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_member','_source');
+</script>

@@ -1,0 +1,98 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - ConfigureFPGA</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">ConfigureFPGA</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_class','XC2SPort0',this)" class="pathLink">XC2SPort</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">ConfigureFPGA</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','ConfigureFPGA435837004','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_member','ConfigureFPGA435837004','_source',this)" class="tabLinkActive">Source</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','ConfigureFPGA435837004','_callgraph',this)" class="tabLinkInActive">Call Graph</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<div class="paragraph2NoTopPadding">Start Line: 209</div>
+<pre class="codeExamples">
+bool <a href="#" OnFocus="link('_member','ConfigureFPGA912635100',this)">XC2SPort::ConfigureFPGA</a>(istream &amp;is)
+{
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> = <a href="#" OnFocus="link('_member','GetErr259477277',this)">GetErr</a>();
+    
+    if(is.eof()!=0)
+        return false; // exit if no BIT stream exists
+
+    assert(progressGauge != NULL);  // make sure progress indicator is initialized
+
+    // show the progress indicator
+    <a href="#" OnFocus="link('_member','progressGauge243763278',this)">progressGauge</a>-&gt;<a href="#" OnFocus="link('_member','Report2561259521',this)">Report</a>(0);
+    
+    // jump over the first field of the BIT file
+    long unsigned int fieldLength = <a href="#" OnFocus="link('_member','GetInteger1332633361',this)">GetInteger</a>(is);
+    assert(fieldLength!=0);
+    is.ignore(fieldLength);
+    
+    // process the second field
+    fieldLength = <a href="#" OnFocus="link('_member','GetInteger1332633361',this)">GetInteger</a>(is);
+    assert(fieldLength==1);
+    
+    // now look for the field with the bitstream data
+    bool status = <a href="#" OnFocus="link('_member','ScanForField2849822024',this)">ScanForField</a>(is,BitstreamFieldType);
+    assert(status==true);
+    
+    // now we are at the start of the configuration bits
+    fieldLength = <a href="#" OnFocus="link('_member','GetInteger1332633361',this)">GetInteger</a>(is,4); // get the length of the bit stream
+    assert(fieldLength&gt;0);
+#if DEBUG
+    cerr &lt;&lt; "bit stream field length = " &lt;&lt; fieldLength &lt;&lt; "\n";
+#endif
+
+    // start the configuration process
+    <a href="#" OnFocus="link('_member','PulsePROG141699537',this)">PulsePROG</a>();                 // pulse the PROGRAM pin to start the configuration of the FPGA
+    <a href="#" OnFocus="link('_member','InsertDelay359930342',this)">InsertDelay</a>(30,MILLISECONDS);  // insert delay after PROGRAM pin goes high
+
+    for(long unsigned int i=0; i&lt;fieldLength; i++)
+    { // read the bytes and send the config. bits to the board
+        unsigned char byte;
+        is.read((char*)&amp;byte,1);
+        assert(is.eof()==0);    // should not hit end-of-file
+        <a href="#" OnFocus="link('_member','ConfigureFPGA912635100',this)">ConfigureFPGA</a>(byte);
+        // output some feedback as the configuration proceeds
+        if((i%1000)==0)
+            <a href="#" OnFocus="link('_member','progressGauge243763278',this)">progressGauge</a>-&gt;<a href="#" OnFocus="link('_member','Report2561259521',this)">Report</a>(is.tellg());
+    }
+    <a href="#" OnFocus="link('_member','progressGauge243763278',this)">progressGauge</a>-&gt;<a href="#" OnFocus="link('_member','Report2561259521',this)">Report</a>(is.tellg()); // this should set gauge to 100%
+    
+    // clock a few more times at the end of the configuration process
+    // to clean things up...
+    for(int ii=0; ii&lt;8; ii++)
+        <a href="#" OnFocus="link('_member','PulseCCLK141699537',this)">PulseCCLK</a>();
+
+    // insert a delay to let the chip initialize
+    <a href="#" OnFocus="link('_member','InsertDelay359930342',this)">InsertDelay</a>(10,MILLISECONDS);
+    
+#if DEBUG
+    cerr &lt;&lt; "exiting ConfigureFPGA()\n";
+#endif
+    
+    return true;
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_member','_source');
+</script>

@@ -1,0 +1,111 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - OnRenderGlobalData</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">OnRenderGlobalData</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','gxsload0',this)" class="pathLink">gxsload</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_class','UploadDataSource0',this)" class="pathLink">UploadDataSource</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">OnRenderGlobalData</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','OnRenderGlobalData319803964','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_member','OnRenderGlobalData319803964','_source',this)" class="tabLinkActive">Source</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','OnRenderGlobalData319803964','_callgraph',this)" class="tabLinkInActive">Call Graph</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<div class="paragraph2NoTopPadding">Start Line: 743</div>
+<pre class="codeExamples">
+BOOL <a href="#" OnFocus="link('_member','OnRenderGlobalData319803964',this)">UploadDataSource::OnRenderGlobalData</a>(LPFORMATETC lpFormatEtc, HGLOBAL *phGlobal)
+{
+    // create the structure that contains the name of the file containing the uploaded data
+    string filename;
+    CString formatName;
+    if(<a href="#" OnFocus="link('_member','source957789771',this)">source</a>==<a href="#" OnFocus="link('_member','RAMSOURCE0',this)">RAMSOURCE</a>)
+    {
+        filename = <a href="#" OnFocus="link('_member','../xstoolslib/FindXSTOOLSBinDir53616',this)">FindXSTOOLSBinDir</a>();
+        filename += "/ramupld.";
+        <a href="#" OnFocus="link('_member','top957789771',this)">top</a>-&gt;<a href="#" OnFocus="link('_member','m_ramFormat183903365',this)">m_ramFormat</a>.GetLBText(<a href="#" OnFocus="link('_member','top957789771',this)">top</a>-&gt;<a href="#" OnFocus="link('_member','m_ramFormat183903365',this)">m_ramFormat</a>.GetCurSel(),formatName);
+        filename += LPCTSTR(formatName.Left(3));    // add upload filename extension corresponding to hex format
+    }
+    else if(<a href="#" OnFocus="link('_member','source957789771',this)">source</a>==<a href="#" OnFocus="link('_member','FLASHSOURCE0',this)">FLASHSOURCE</a>)
+    {
+        filename = <a href="#" OnFocus="link('_member','../xstoolslib/FindXSTOOLSBinDir53616',this)">FindXSTOOLSBinDir</a>();
+        filename += "/flshupld.";
+        <a href="#" OnFocus="link('_member','top957789771',this)">top</a>-&gt;<a href="#" OnFocus="link('_member','m_ramFormat183903365',this)">m_ramFormat</a>.GetLBText(<a href="#" OnFocus="link('_member','top957789771',this)">top</a>-&gt;<a href="#" OnFocus="link('_member','m_flashFormat183903365',this)">m_flashFormat</a>.GetCurSel(),formatName);
+        filename += LPCTSTR(formatName.Left(3));    // add upload filename extension corresponding to hex format
+    }
+    else
+    {   // we should never get here
+        assert(1==0);
+        return FALSE;
+    }
+    DROPFILES dropFile;
+    dropFile.pFiles = sizeof(DROPFILES);    // filename starts after the DROPFILES structure
+    dropFile.fNC = false;
+    dropFile.fWide = false;
+    if(*phGlobal==NULL)
+    {   // create the storage for the structure if it doesn't already exist
+        HGLOBAL file = GlobalAlloc(0,sizeof(DROPFILES)+strlen(filename.c_str())+2);
+        assert(file != NULL);
+        *phGlobal = file;
+    }
+    // copy the dropFile and filename to the global data structure
+    memcpy((void*)GlobalLock(*phGlobal),&amp;dropFile,sizeof(DROPFILES));
+    memcpy((void*)((char*)GlobalLock(*phGlobal)+sizeof(DROPFILES)),(void*)(filename.c_str()),strlen(filename.c_str()));
+    memcpy((void*)((char*)GlobalLock(*phGlobal)+sizeof(DROPFILES)+strlen(filename.c_str())),"\000\000",2);  // doubly-terminate list of files
+
+    // find out if the left mouse button is pressed
+    int currentKeyState = ::GetAsyncKeyState(::GetSystemMetrics(SM_SWAPBUTTON) ? VK_RBUTTON:VK_LBUTTON);    
+
+    if(<a href="#" OnFocus="link('_member','prevKeyState0',this)">prevKeyState</a> == <a href="#" OnFocus="link('_member','mouseButtonUp0',this)">mouseButtonUp</a>)
+    {   // exit if the mouse button was not pressed on the previous call
+        <a href="#" OnFocus="link('_member','prevKeyState0',this)">prevKeyState</a> = currentKeyState&lt;0 ? <a href="#" OnFocus="link('_member','mouseButtonDown0',this)">mouseButtonDown</a> : <a href="#" OnFocus="link('_member','mouseButtonUp0',this)">mouseButtonUp</a>;
+        return TRUE;    // return with filename that will eventually be uploaded with data
+    }
+
+    if(currentKeyState&lt;0)
+    {   // exit if the mouse button is still pressed
+        <a href="#" OnFocus="link('_member','prevKeyState0',this)">prevKeyState</a> = <a href="#" OnFocus="link('_member','mouseButtonDown0',this)">mouseButtonDown</a>;
+        return TRUE;    // return with filename that will eventually be uploaded with data
+    }
+
+    <a href="#" OnFocus="link('_member','prevKeyState0',this)">prevKeyState</a> = <a href="#" OnFocus="link('_member','mouseButtonUp0',this)">mouseButtonUp</a>;    // the mouse button has been released if we get here
+
+    //string fname;
+    if(<a href="#" OnFocus="link('_member','source957789771',this)">source</a>==<a href="#" OnFocus="link('_member','RAMSOURCE0',this)">RAMSOURCE</a>)
+    {
+        if(<a href="#" OnFocus="link('_member','top957789771',this)">top</a>-&gt;<a href="#" OnFocus="link('_member','UploadFile1258210492',this)">UploadFile</a>(source) == false)
+            return FALSE;   // upload failed
+    }
+    else if(<a href="#" OnFocus="link('_member','source957789771',this)">source</a>==<a href="#" OnFocus="link('_member','FLASHSOURCE0',this)">FLASHSOURCE</a>)
+    {
+        if(<a href="#" OnFocus="link('_member','top957789771',this)">top</a>-&gt;<a href="#" OnFocus="link('_member','UploadFile1258210492',this)">UploadFile</a>(<a href="#" OnFocus="link('_member','source957789771',this)">source</a>) == false)
+            return FALSE;   // upload failed
+    }
+    else
+    {   // we should never get here
+        assert(1==0);
+        return FALSE;
+    }
+
+    return TRUE;    // now return true with the file loaded with the data from RAM or Flash
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_member','_source');
+</script>

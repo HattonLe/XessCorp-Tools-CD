@@ -1,0 +1,543 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - pport.cpp</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">pport.cpp</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">pport.cpp</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','pport_cpp0','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','pport_cpp0','_overview',this)" class="tabLinkInActive">Overview</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','pport_cpp0','_includedfiles',this)" class="tabLinkInActive">Included files</a></span>
+<span class="tabInActiveGrayout"><span class="tabLinkGrayout">Included by</span></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_file','pport_cpp0','_source',this)" class="tabLinkActive">Source</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<pre class="codeExamples">
+/*----------------------------------------------------------------------------------
+  SOFTWARE LICENSE AGREEMENT
+    1.  Permission to use, copy, modify, and distribute this software
+        and its documentation, with or without modification, for any
+        purpose and without fee or royalty is hereby granted, provided
+        that you include the following on ALL copies of the software
+        and documentation or portions thereof, including
+        modifications, that you make:
+
+            a.  The full text of this license in a location viewable to users
+            of the redistributed or derivative work.
+
+            b.  Notice of any changes or modifications to the files,
+            including the date changes were made.
+
+    2.  The name, servicemarks and trademarks of X Engineering
+        Software Systems Corp. may NOT be used in advertising or
+        publicity pertaining to the software without specific, written
+        prior permission.
+
+    3.  Title to copyright in this software and any associated
+        documentation will at all times remain with X Engineering
+        Software Systems Corp.
+
+    4.  THIS SOFTWARE AND DOCUMENTATION IS PROVIDED "AS IS," AND X
+        Engineering Software Systems Corp MAKES NO REPRESENTATIONS OR
+        WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO,
+        WARRANTIES OF MERCHANTABILITY OR FITNESS FOR ANY PARTICULAR
+        PURPOSE OR THAT THE USE OF THE SOFTWARE OR DOCUMENTATION WILL
+        NOT INFRINGE ANY THIRD PARTY PATENTS, COPYRIGHTS, TRADEMARKS
+        OR OTHER RIGHTS.
+
+    5.  X Engineering Software Systems Corp WILL NOT BE LIABLE FOR ANY
+        DAMAGES, INCLUDING BUT NOT LIMITED TO, DIRECT, INDIRECT,
+        SPECIAL OR CONSEQUENTIAL, ARISING OUT OF ANY USE OF THE
+        SOFTWARE OR DOCUMENTATION.
+
+  ©2006 - X Engineering Software Systems Corp.  All rights reserved.
+----------------------------------------------------------------------------------*/
+
+
+#include &lt;cstdlib&gt;
+#include &lt;conio.h&gt;
+#include &lt;cassert&gt;
+#include &lt;sstream&gt;
+#include &lt;fstream&gt;
+#include &lt;iostream&gt;
+using namespace std;
+
+#include "physmem.hpp"
+#include "osiface.hpp"
+#include "btrace.hpp"
+#include "DLPORTIO.H"
+
+#include "<a href="#" OnFocus="link('_file','pport_h0',this)">pport.h</a>"
+#include "<a href="#" OnFocus="link('_file','utils_h0',this)">utils.h</a>"
+
+#define TVICHW_VERSION_6_0
+
+
+enum {<a href="#" OnFocus="link('_member','UNIIO0',this)">UNIIO</a>, <a href="#" OnFocus="link('_member','DRIVERLINX0',this)">DRIVERLINX</a>, <a href="#" OnFocus="link('_member','TVICHW320',this)">TVICHW32</a>};        // indices for supported parallel port drivers
+
+static const unsigned short DATAREG = 0;        // offset of data register from LPT port base address
+static const unsigned short STATREG = 1;        // offset of status register from LPT port base address
+static const unsigned short CTRLREG = 2;        // offset of control register from LPT port base address
+
+// Global parameters for the parallel port
+static const unsigned int minPortNum = 1;       // minimum parallel port #
+static const unsigned int maxPortNum = 4;       // maximum parallel port #
+
+HANDLE <a href="#" OnFocus="link('_member','HW3257972',this)">PPort::HW32</a>;
+
+
+// Some macros for handling bit fields
+#define LOWFIELDMASK(lo,hi) ((1&lt;&lt;((hi)-(lo)+1))-1)
+#define FIELDMASK(lo,hi)    (LOWFIELDMASK(lo,hi)&lt;&lt;(lo))
+
+static const unsigned int minBitPos = 0;    // minimum index into parallel port register bits
+static const unsigned int maxBitPos = 23;   // maximum index into parallel port register bits
+
+// Get the value stored in a bit field.
+static unsigned int <a href="#" OnFocus="link('_member','GetField1358050609',this)">GetField</a>(unsigned int data,     // port data
+                             unsigned int loPos,    // low bit position of field
+                             unsigned int hiPos)        // high bit position of field
+{
+    assert(loPos&lt;=maxBitPos);
+    assert(hiPos&lt;=maxBitPos);
+    assert(hiPos&gt;=loPos);
+    return (FIELDMASK(loPos,hiPos) &amp; <a href="#" OnFocus="link('_member','../xsatapi/data0',this)">data</a>) &gt;&gt; loPos;
+}
+
+// Set the value in a bit field and return the entire data value after the field is updated.
+static unsigned int <a href="#" OnFocus="link('_member','SetField2984969458',this)">SetField</a>(unsigned int data,     // port data
+                             unsigned int loPos,    // low bit position of field
+                             unsigned int hiPos,    // high bit position of field
+                             unsigned int newData)  // new data for field
+{
+    assert(loPos&lt;=maxBitPos);
+    assert(hiPos&lt;=maxBitPos);
+    assert(hiPos&gt;=loPos);
+    return (<a href="#" OnFocus="link('_member','../xsatapi/data0',this)">data</a> &amp; ~FIELDMASK(loPos,hiPos)) |
+        ((newData &amp; FIELDMASK(0,hiPos-loPos))&lt;&lt;loPos);
+}
+
+
+/// Constructor for a parallel port object.
+<a href="#" OnFocus="link('_member','PPort259477277',this)">PPort::PPort</a>(void)
+{
+    <a href="#" OnFocus="link('_member','dataPort57972',this)">dataPort</a> = <a href="#" OnFocus="link('_member','statusPort57972',this)">statusPort</a> = <a href="#" OnFocus="link('_member','controlPort57972',this)">controlPort</a> = NULL;
+    <a href="#" OnFocus="link('_member','HW3257972',this)">PPort::HW32</a> = 0;
+}
+
+
+/// Constructor for a parallel port object.  
+/// Inversion masks are used to correct or the effects of the various inverters in the PC and XS Board.
+<a href="#" OnFocus="link('_member','PPort259477277',this)">PPort::PPort</a>(<a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>* e,               ///&lt; error reporting channel 
+             unsigned int n,            ///&lt; parallel port number
+             unsigned int invMask)      ///&lt; inversion mask for data, status, and control output bits
+{
+    <a href="#" OnFocus="link('_member','dataPort57972',this)">dataPort</a> = <a href="#" OnFocus="link('_member','statusPort57972',this)">statusPort</a> = <a href="#" OnFocus="link('_member','controlPort57972',this)">controlPort</a> = NULL;
+    <a href="#" OnFocus="link('_member','HW3257972',this)">PPort::HW32</a> = 0;
+    <a href="#" OnFocus="link('_member','Setup1571714867',this)">Setup</a>(e,n,invMask);
+}
+
+
+/// Destructor for parallel port object.
+<a href="#" OnFocus="link('_member','tilde_PPort259477277',this)">PPort::~PPort</a>(void)
+{
+    if(<a href="#" OnFocus="link('_member','dataPort57972',this)">dataPort</a> != NULL) delete <a href="#" OnFocus="link('_member','dataPort57972',this)">dataPort</a>;
+    if(<a href="#" OnFocus="link('_member','statusPort57972',this)">statusPort</a> != NULL) delete <a href="#" OnFocus="link('_member','statusPort57972',this)">statusPort</a>;
+    if(<a href="#" OnFocus="link('_member','controlPort57972',this)">controlPort</a> != NULL) delete <a href="#" OnFocus="link('_member','controlPort57972',this)">controlPort</a>;
+    if(<a href="#" OnFocus="link('_member','HW3257972',this)">PPort::HW32</a>!= 0)
+    {
+        <a href="#" OnFocus="link('_member','HW3257972',this)">PPort::HW32</a> = CloseTVicHW32(PPort::HW32);
+        assert(PPort::HW32==0);
+    }
+}
+
+
+/// Initialize the object.
+bool <a href="#" OnFocus="link('_member','Setup1571714867',this)">PPort::Setup</a>(<a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>* e,          ///&lt; error reporting channel 
+             unsigned int n,            ///&lt; parallel port number
+             unsigned int invMask)      ///&lt; inversion mask for data, status, and control output bits
+{
+    assert(sizeof(unsigned int)/sizeof(char) &gt;= 3); // value needs to be at least 24-bits wide
+
+    // find out which parallel port driver to use
+    string paramName("LPTDRIVER");
+    string driverName = <a href="#" OnFocus="link('_member','GetXSTOOLSParameter86138908',this)">GetXSTOOLSParameter</a>(paramName);
+    if(driverName =="DRIVERLINX")
+        <a href="#" OnFocus="link('_member','IODriverIndex57972',this)">IODriverIndex</a> = <a href="#" OnFocus="link('_member','DRIVERLINX0',this)">DRIVERLINX</a>;
+    else if(driverName == "TVICHW32")
+        <a href="#" OnFocus="link('_member','IODriverIndex57972',this)">IODriverIndex</a> = <a href="#" OnFocus="link('_member','TVICHW320',this)">TVICHW32</a>;
+    else
+        <a href="#" OnFocus="link('_member','IODriverIndex57972',this)">IODriverIndex</a> = <a href="#" OnFocus="link('_member','UNIIO0',this)">UNIIO</a>; // UNIIO is the default
+
+    // see if the parallel port should be checked for correct operation
+    char s[20];
+    sprintf(s,"LPT%1dCHECK",n); // get the parallel port check flag from the parameter file
+    paramName = (string)s;
+    if(<a href="#" OnFocus="link('_member','GetXSTOOLSParameter86138908',this)">GetXSTOOLSParameter</a>(paramName) == "NO")
+        <a href="#" OnFocus="link('_member','chkCounter57972',this)">chkCounter</a> = 0;               // don't bother to check the port for correct operation
+    else
+        <a href="#" OnFocus="link('_member','chkCounter57972',this)">chkCounter</a> = 100;         // number of times to initially check port for correct operation
+
+    <a href="#" OnFocus="link('_member','updateCounter57972',this)">updateCounter</a> = 0;
+
+    <a href="#" OnFocus="link('_member','SetErr2906956701',this)">SetErr</a>(e);                        // set error reporting channel
+    <a href="#" OnFocus="link('_member','SetInvMask190760768',this)">SetInvMask</a>(invMask);          // set read, write inversion masks
+    return <a href="#" OnFocus="link('_member','SetLPTNum190760768',this)">SetLPTNum</a>(n);         // return false if could not assign to the given parallel port address
+}
+
+
+/// Sets the error reporting channel.
+void <a href="#" OnFocus="link('_member','SetErr2906956701',this)">PPort::SetErr</a>(<a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>* e)      ///&lt; error reporting channel
+{
+    <a href="#" OnFocus="link('_member','err57972',this)">err</a> = e;
+}
+
+
+/// Provides access to the error reporting channel.
+<a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','GetErr259477277',this)">PPort::GetErr</a>(void)
+{
+    return *<a href="#" OnFocus="link('_member','err57972',this)">err</a>;
+}
+
+
+/// Assignment operator for parallel port objects.
+<a href="#" OnFocus="link('_class','PPort0',this)">PPort</a>&amp; <a href="#" OnFocus="link('_member','operatoreq_222307197',this)">PPort::operator=</a>(<a href="#" OnFocus="link('_class','PPort0',this)">PPort</a>&amp; src)
+{
+    <a href="#" OnFocus="link('_member','dataPort57972',this)">dataPort</a>        = src.<a href="#" OnFocus="link('_member','dataPort57972',this)">dataPort</a>;
+    <a href="#" OnFocus="link('_member','controlPort57972',this)">controlPort</a>        = src.<a href="#" OnFocus="link('_member','controlPort57972',this)">controlPort</a>;
+    <a href="#" OnFocus="link('_member','statusPort57972',this)">statusPort</a>        = src.<a href="#" OnFocus="link('_member','statusPort57972',this)">statusPort</a>;
+    <a href="#" OnFocus="link('_member','err57972',this)">err</a>                = src.<a href="#" OnFocus="link('_member','err57972',this)">err</a>;
+    <a href="#" OnFocus="link('_member','num57972',this)">num</a>                = src.<a href="#" OnFocus="link('_member','num57972',this)">num</a>;
+    <a href="#" OnFocus="link('_member','address57972',this)">address</a>            = src.<a href="#" OnFocus="link('_member','address57972',this)">address</a>;
+    <a href="#" OnFocus="link('_member','invMask57972',this)">invMask</a>            = src.<a href="#" OnFocus="link('_member','invMask57972',this)">invMask</a>;
+    <a href="#" OnFocus="link('_member','chkCounter57972',this)">chkCounter</a>        = src.<a href="#" OnFocus="link('_member','chkCounter57972',this)">chkCounter</a>;
+    <a href="#" OnFocus="link('_member','IODriverIndex57972',this)">IODriverIndex</a>    = src.<a href="#" OnFocus="link('_member','IODriverIndex57972',this)">IODriverIndex</a>;
+    <a href="#" OnFocus="link('_member','regvals57972',this)">regvals</a>            = src.<a href="#" OnFocus="link('_member','regvals57972',this)">regvals</a>;
+    <a href="#" OnFocus="link('_member','updateCounter57972',this)">updateCounter</a>    = src.<a href="#" OnFocus="link('_member','updateCounter57972',this)">updateCounter</a>;
+
+    return *this;
+}
+
+
+/// Sets up a port object for a given parallel port number.
+///\return true if parallel port was setup correctly, false if some error occurred.
+bool <a href="#" OnFocus="link('_member','SetLPTNum190760768',this)">PPort::SetLPTNum</a>(unsigned int n)   ///&lt; parallel port number or I/O address
+{
+    <a href="#" OnFocus="link('_member','num57972',this)">num</a> = (n &lt;= maxPortNum) ? n : 1;   // set parallel port number to 1 if n is a hardware address instead of port #
+    
+    // find the I/O address for the given parallel port
+    if(n &lt;= maxPortNum)
+    {
+        char s[20];
+        sprintf(s,"LPT%1dADDRESS",n);
+        string paramName(s);
+        <a href="#" OnFocus="link('_member','address57972',this)">address</a> = 0;
+        sscanf(<a href="#" OnFocus="link('_member','GetXSTOOLSParameter86138908',this)">GetXSTOOLSParameter</a>(paramName).c_str(),"%x",&amp;address);
+//      string lptAddress;
+//      if((lptAddress=GetXSTOOLSParameter((string)s)) != "")
+//      {
+//          istrstream argstr((char*)lptAddress.c_str());
+//          argstr &gt;&gt; address;
+//      }
+    }
+    else
+        <a href="#" OnFocus="link('_member','address57972',this)">address</a> = n;
+    
+    switch(<a href="#" OnFocus="link('_member','IODriverIndex57972',this)">IODriverIndex</a>)
+    {
+    case <a href="#" OnFocus="link('_member','TVICHW320',this)">TVICHW32</a>:
+        if(<a href="#" OnFocus="link('_member','HW3257972',this)">PPort::HW32</a>==0)
+        { // only activate the driver if it is currently inactive
+#ifdef TVICHW_VERSION_6_0
+            <a href="#" OnFocus="link('_member','HW3257972',this)">PPort::HW32</a> = OpenTVicHW();
+#else // TVICHW versions 5.x and earlier
+            <a href="#" OnFocus="link('_member','HW3257972',this)">PPort::HW32</a> = OpenTVicHW32(PPort::HW32, "TVICHW32","TVicDevice0");
+            if(<a href="#" OnFocus="link('_member','HW3257972',this)">PPort::HW32</a>==0 || !GetActiveHW(PPort::HW32))
+                <a href="#" OnFocus="link('_member','HW3257972',this)">PPort::HW32</a> = OpenTVicHW32(PPort::HW32, "TVICHW32","TVicDevice1");
+#endif
+            // handle the case where the driver can't be started
+            if(<a href="#" OnFocus="link('_member','HW3257972',this)">PPort::HW32</a>==0)
+                <a href="#" OnFocus="link('_member','err57972',this)">err</a>-&gt;<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMinor,"ERRLOC: All TVicHW32 handles are in use!!\n");
+            else if(!GetActiveHW(PPort::HW32))
+            {
+                <a href="#" OnFocus="link('_member','err57972',this)">err</a>-&gt;<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMinor,"ERRLOC: All TVicHW32 handles are in use!!\n");
+                <a href="#" OnFocus="link('_member','HW3257972',this)">PPort::HW32</a> = 0;
+            }
+        }
+        if(<a href="#" OnFocus="link('_member','HW3257972',this)">PPort::HW32</a>!=0)
+        {
+            if((n&lt;=GetLPTNumPorts(PPort::HW32)) &amp;&amp; (<a href="#" OnFocus="link('_member','address57972',this)">address</a>==0))
+            {
+                SetLPTNumber(PPort::HW32,n);
+                <a href="#" OnFocus="link('_member','address57972',this)">address</a> = GetLPTBasePort(PPort::HW32);
+                // Use soft access for higher speeds.  This is needed to generate
+                // timed waveforms like those used to program Atmel serial EEPROMs
+                // and Dallas programable oscillators.
+                SetHardAccess(PPort::HW32,FALSE);
+            }
+            else
+            {
+                if(n &lt;= maxPortNum)
+                    SetLPTNumber(PPort::HW32,n);
+                else
+                    SetLPTNumber(PPort::HW32,1);
+                SetHardAccess(PPort::HW32,FALSE);
+            }
+        }
+        break;
+    case <a href="#" OnFocus="link('_member','DRIVERLINX0',this)">DRIVERLINX</a>:
+        {
+            if(<a href="#" OnFocus="link('_member','address57972',this)">address</a> == 0)
+            {
+                char lptAddresses[8];
+                PhysicalMemory lptAddrBlock(0x00000408,8,false);
+                lptAddrBlock.readMemoryBlock((void*)lptAddresses,8, 0);
+                <a href="#" OnFocus="link('_member','address57972',this)">address</a> = (lptAddresses[(<a href="#" OnFocus="link('_member','num57972',this)">num</a>-1)*2+1]&lt;&lt;8) + lptAddresses[(<a href="#" OnFocus="link('_member','num57972',this)">num</a>-1)*2];
+            }
+            break;
+        }
+    case <a href="#" OnFocus="link('_member','UNIIO0',this)">UNIIO</a>:
+    default:
+        {
+            if(<a href="#" OnFocus="link('_member','address57972',this)">address</a> == 0)
+            {
+                char lptAddresses[8];
+                PhysicalMemory lptAddrBlock(0x00000408,8,false);
+                lptAddrBlock.readMemoryBlock((void*)lptAddresses,8, 0);
+                <a href="#" OnFocus="link('_member','address57972',this)">address</a> = (lptAddresses[(<a href="#" OnFocus="link('_member','num57972',this)">num</a>-1)*2+1]&lt;&lt;8) + lptAddresses[(<a href="#" OnFocus="link('_member','num57972',this)">num</a>-1)*2];
+            }
+            OSInterface&amp; o = OSInterface::osinterface(); // this just gets the driver running on WinNT, 2000, XP
+            <a href="#" OnFocus="link('_member','dataPort57972',this)">dataPort</a> = new IOPort(address,true);        // writeable data port
+            <a href="#" OnFocus="link('_member','statusPort57972',this)">statusPort</a> = new IOPort(address+1,false); // readable status port
+            <a href="#" OnFocus="link('_member','controlPort57972',this)">controlPort</a> = new IOPort(address+2,true);  // writeable control 
+            assert((dataPort!=NULL) &amp;&amp; (statusPort!=NULL) &amp;&amp; (controlPort!=NULL));
+            break;
+        }
+    }
+    
+    if(<a href="#" OnFocus="link('_member','address57972',this)">address</a>==0)
+        return false;   // return false if no parallel port is at this address
+
+    return true;        // return true if a parallel port was found
+}
+
+
+/// Gets the parallel port number for a parallel port object.
+///\return the parallel port number.
+unsigned int <a href="#" OnFocus="link('_member','GetLPTNum4017409866',this)">PPort::GetLPTNum</a>(void) const
+{
+    return <a href="#" OnFocus="link('_member','num57972',this)">num</a>;
+}
+
+
+/// Get data byte from a given register at the LPT base address.
+///\return data from the parallel port register.
+unsigned char <a href="#" OnFocus="link('_member','Inp103661393',this)">PPort::Inp</a>(unsigned short regOffset /**&lt; offset into paralllel port register set */) const
+{
+    assert(regOffset &lt; 3);
+    switch(<a href="#" OnFocus="link('_member','IODriverIndex57972',this)">IODriverIndex</a>)
+    {
+    case <a href="#" OnFocus="link('_member','DRIVERLINX0',this)">DRIVERLINX</a>:
+        return DlPortReadPortUchar(address + regOffset);
+        break;
+    case <a href="#" OnFocus="link('_member','TVICHW320',this)">TVICHW32</a>:
+        return GetPortByte(PPort::HW32, address + regOffset);
+        break;
+    case <a href="#" OnFocus="link('_member','UNIIO0',this)">UNIIO</a>:
+    default:
+        switch(regOffset)
+        {
+        case DATAREG:
+            return <a href="#" OnFocus="link('_member','dataPort57972',this)">dataPort</a>-&gt;readChar();
+            break;
+        case STATREG:
+            return <a href="#" OnFocus="link('_member','statusPort57972',this)">statusPort</a>-&gt;readChar();
+            break;
+        case CTRLREG:
+            return <a href="#" OnFocus="link('_member','controlPort57972',this)">controlPort</a>-&gt;readChar();
+            break;
+        default:
+            assert(1==0);
+            break;
+        }
+        break;
+    }
+    return 0;
+}
+
+
+/// Send data byte to a given register at the LPT base address.
+void <a href="#" OnFocus="link('_member','Outp3962489620',this)">PPort::Outp</a>(unsigned short regOffset, ///&lt; offset into parallel port register set
+                unsigned char byte)         ///&lt; data to write to the register
+{
+    assert(regOffset &lt; 3);
+    switch(<a href="#" OnFocus="link('_member','IODriverIndex57972',this)">IODriverIndex</a>)
+    {
+    case <a href="#" OnFocus="link('_member','DRIVERLINX0',this)">DRIVERLINX</a>:
+        DlPortWritePortUchar(address + regOffset, byte);
+        break;
+    case <a href="#" OnFocus="link('_member','TVICHW320',this)">TVICHW32</a>:
+        SetPortByte(PPort::HW32, address + regOffset, byte);
+        break;
+    case <a href="#" OnFocus="link('_member','UNIIO0',this)">UNIIO</a>:
+    default:
+        switch(regOffset)
+        {
+        case DATAREG:
+            <a href="#" OnFocus="link('_member','dataPort57972',this)">dataPort</a>-&gt;write(byte);
+            break;
+        case STATREG:
+            <a href="#" OnFocus="link('_member','statusPort57972',this)">statusPort</a>-&gt;write(byte);
+            break;
+        case CTRLREG:
+            <a href="#" OnFocus="link('_member','controlPort57972',this)">controlPort</a>-&gt;write(byte);
+            break;
+        default:
+            assert(1==0);
+            break;
+        }
+        break;
+    }
+}
+
+
+/// Output a value on the designated pins of the concatenated 24-bit parallel port field.
+/// Bits  0 -  7:   data pins
+/// Bits 15 -  8:   status pins
+/// Bits 23 - 16:   control pins
+void <a href="#" OnFocus="link('_member','Out2912582438',this)">PPort::Out</a>(unsigned int v,       ///&lt; value to output
+                unsigned int loPos, ///&lt; low bit position of field
+                unsigned int hiPos) ///&lt; high bit position of field
+{
+    unsigned int d, new_d;
+    assert(loPos&lt;=23);
+    assert(hiPos&lt;=23);
+    assert(loPos&lt;=hiPos);
+    if((<a href="#" OnFocus="link('_member','updateCounter57972',this)">updateCounter</a> &amp; 0xF)==0 || <a href="#" OnFocus="link('_member','chkCounter57972',this)">chkCounter</a>!=0)
+    {
+        if(hiPos&lt;8)
+            <a href="#" OnFocus="link('_member','regvals57972',this)">regvals</a> = (<a href="#" OnFocus="link('_member','regvals57972',this)">regvals</a> &amp; ~0x0000FF) | <a href="#" OnFocus="link('_member','Inp103661393',this)">Inp</a>(0);
+        else if(loPos&gt;15)
+            <a href="#" OnFocus="link('_member','regvals57972',this)">regvals</a> = (<a href="#" OnFocus="link('_member','regvals57972',this)">regvals</a> &amp; ~0xFF0000) | (<a href="#" OnFocus="link('_member','Inp103661393',this)">Inp</a>(2)&lt;&lt;16);
+        else if(loPos&gt;=8 &amp;&amp; hiPos&lt;=15)
+            <a href="#" OnFocus="link('_member','regvals57972',this)">regvals</a> = (<a href="#" OnFocus="link('_member','regvals57972',this)">regvals</a> &amp; ~0x00FF00) | (<a href="#" OnFocus="link('_member','Inp103661393',this)">Inp</a>(1)&lt;&lt;8);
+        else
+            <a href="#" OnFocus="link('_member','regvals57972',this)">regvals</a> = (<a href="#" OnFocus="link('_member','Inp103661393',this)">Inp</a>(2)&lt;&lt;16) | (<a href="#" OnFocus="link('_member','Inp103661393',this)">Inp</a>(1)&lt;&lt;8) | <a href="#" OnFocus="link('_member','Inp103661393',this)">Inp</a>(0);
+    }
+    <a href="#" OnFocus="link('_member','updateCounter57972',this)">updateCounter</a>++;
+    
+    d = <a href="#" OnFocus="link('_member','regvals57972',this)">regvals</a>;
+    new_d = (d &amp; ~FIELDMASK(loPos,hiPos)) | (((v&lt;&lt;loPos)^<a href="#" OnFocus="link('_member','invMask57972',this)">invMask</a>) &amp; FIELDMASK(loPos,hiPos));
+    <a href="#" OnFocus="link('_member','regvals57972',this)">regvals</a> = new_d;
+
+    if(hiPos&lt;8)
+        <a href="#" OnFocus="link('_member','Outp3962489620',this)">Outp</a>(0,new_d);
+    else if(loPos&gt;15)
+        <a href="#" OnFocus="link('_member','Outp3962489620',this)">Outp</a>(2,new_d&gt;&gt;16);
+    else if(loPos&gt;=8 &amp;&amp; hiPos&lt;=15)
+        <a href="#" OnFocus="link('_member','Outp3962489620',this)">Outp</a>(1,new_d&gt;&gt;8);
+    else
+    {
+        <a href="#" OnFocus="link('_member','Outp3962489620',this)">Outp</a>(0,new_d);
+        <a href="#" OnFocus="link('_member','Outp3962489620',this)">Outp</a>(1,new_d&gt;&gt;8);
+        <a href="#" OnFocus="link('_member','Outp3962489620',this)">Outp</a>(2,new_d&gt;&gt;16);
+    }
+
+    if(<a href="#" OnFocus="link('_member','chkCounter57972',this)">chkCounter</a> &gt; 0)
+    { // check the value output on the port to make sure it matches the value that was sent
+        // this check is only performed for the first few uses of the parallel port
+        <a href="#" OnFocus="link('_member','chkCounter57972',this)">chkCounter</a>--;
+        if(hiPos&lt;8)
+        {
+            d = <a href="#" OnFocus="link('_member','Inp103661393',this)">Inp</a>(0);
+            new_d &amp;= 0xff;  // zero the unused part of new output data
+        }
+        else if(loPos&gt;15)
+        {
+            d = <a href="#" OnFocus="link('_member','Inp103661393',this)">Inp</a>(2)&lt;&lt;16;
+            new_d &amp;= 0xff0000;  // zero the unused part of new output data
+        }
+        else if(loPos&gt;=8 &amp;&amp; hiPos&lt;=15)
+        {
+            d = <a href="#" OnFocus="link('_member','Inp103661393',this)">Inp</a>(1)&lt;&lt;8;
+            new_d &amp;= 0xff00;    // zero the unused part of new output data
+        }
+        else
+        {
+            d = <a href="#" OnFocus="link('_member','Inp103661393',this)">Inp</a>(0) | (<a href="#" OnFocus="link('_member','Inp103661393',this)">Inp</a>(1)&lt;&lt;8) | (<a href="#" OnFocus="link('_member','Inp103661393',this)">Inp</a>(2)&lt;&lt;16);
+            new_d &amp;= 0xffffff;  // zero the unused part of new output data
+        }
+        if(d != new_d)
+        {
+            <a href="#" OnFocus="link('_member','err57972',this)">err</a>-&gt;<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorFatal,"ERRLOC: Parallel port not responding!!\n\nCHECK YOUR PARALLEL PORT HARDWARE ADDRESS!!\n");
+        }
+    }
+}
+
+
+/// Return the current values on the designated pins of the concatenated 24-bit parallel port field.
+/// Bits  0 -  7:   data pins
+/// Bits 15 -  8:   status pins
+/// Bits 23 - 16:   control pins
+///\return the bit values in the selected bit field of the parallel port registers
+unsigned int <a href="#" OnFocus="link('_member','In1210046855',this)">PPort::In</a>(unsigned int loPos,   ///&lt; low bit position of field
+                        unsigned int hiPos) ///&lt; high bit position of field
+{
+    unsigned int d;
+    assert(loPos&lt;=23);
+    assert(hiPos&lt;=23);
+    assert(loPos&lt;=hiPos);
+    if(hiPos&lt;8)
+    {
+        d = <a href="#" OnFocus="link('_member','Inp103661393',this)">Inp</a>(0);
+        <a href="#" OnFocus="link('_member','regvals57972',this)">regvals</a> = (<a href="#" OnFocus="link('_member','regvals57972',this)">regvals</a> &amp; ~0x0000FF) | d;
+    }
+    else if(loPos&gt;15)
+    {
+        d = <a href="#" OnFocus="link('_member','Inp103661393',this)">Inp</a>(2)&lt;&lt;16;
+        <a href="#" OnFocus="link('_member','regvals57972',this)">regvals</a> = (<a href="#" OnFocus="link('_member','regvals57972',this)">regvals</a> &amp; ~0xFF0000) | d;
+    }
+    else if(loPos&gt;=8 &amp;&amp; hiPos&lt;=15)
+    {
+        d = <a href="#" OnFocus="link('_member','Inp103661393',this)">Inp</a>(1)&lt;&lt;8;
+        <a href="#" OnFocus="link('_member','regvals57972',this)">regvals</a> = (<a href="#" OnFocus="link('_member','regvals57972',this)">regvals</a> &amp; ~0x00FF00) | d;
+    }
+    else
+    {
+        d = <a href="#" OnFocus="link('_member','Inp103661393',this)">Inp</a>(0) | (<a href="#" OnFocus="link('_member','Inp103661393',this)">Inp</a>(1)&lt;&lt;8) | (<a href="#" OnFocus="link('_member','Inp103661393',this)">Inp</a>(2)&lt;&lt;16);
+        <a href="#" OnFocus="link('_member','regvals57972',this)">regvals</a> = d;
+    }
+    return ((d^<a href="#" OnFocus="link('_member','invMask57972',this)">invMask</a>) &amp; FIELDMASK(loPos,hiPos)) &gt;&gt; loPos;
+}
+
+
+/// Set the inversion mask for the concatenated 24-bit parallel port field.
+/// Bits  0 -  7:   inversion mask for data pins
+/// Bits 15 -  8:   inversion mask for status pins
+/// Bits 23 - 16:   inversion mask for control pins
+void <a href="#" OnFocus="link('_member','SetInvMask190760768',this)">PPort::SetInvMask</a>(unsigned int mask)
+{
+    <a href="#" OnFocus="link('_member','invMask57972',this)">invMask</a> = mask;
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_file','_source');
+</script>

@@ -1,0 +1,65 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - GetInfo</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">GetInfo</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_class','USBPort0',this)" class="pathLink">USBPort</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">GetInfo</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','GetInfo60241003','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_member','GetInfo60241003','_source',this)" class="tabLinkActive">Source</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','GetInfo60241003','_callgraph',this)" class="tabLinkInActive">Call Graph</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<div class="paragraph2NoTopPadding">Start Line: 368</div>
+<pre class="codeExamples">
+int <a href="#" OnFocus="link('_member','GetInfo60241003',this)">USBPort::GetInfo</a>(void)
+{
+        // send the command the makes the USB device return its info
+        unsigned char infoCmd[] = {<a href="#" OnFocus="link('_member','INFO_CMD0',this)">INFO_CMD</a>,'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
+        unsigned char infoRcvd[USB_MAX_PACKET_SIZE];
+        unsigned long numBytesReceived = USB_MAX_PACKET_SIZE;
+        if(<a href="#" OnFocus="link('_member','SendRcvPacket2960143232',this)">SendRcvPacket</a>(infoCmd, sizeof(infoCmd), infoRcvd, &amp;numBytesReceived, true) == USB_FAILURE)
+        {
+            <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a> <a href="#" OnFocus="link('_member','err518908',this)">err</a>(cerr);
+            string msg("failed to get USB device info");
+            <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMinor,msg);
+            return USB_FAILURE;
+        }
+
+        // extract the information from the packet and store it
+
+        <a href="#" OnFocus="link('_member','manufacturer518908',this)">manufacturer</a> = infoRcvd[MANUFACTURER_START];
+
+        strncpy(firmwareVersion, (char*)infoRcvd+FIRMWARE_VERSION_START, FIRMWARE_VERSION_SIZE);
+        <a href="#" OnFocus="link('_member','firmwareVersion518908',this)">firmwareVersion</a>[FIRMWARE_VERSION_SIZE] = 0;
+
+        strncpy(serialNumber, (char*)infoRcvd+SERIAL_NUMBER_START, SERIAL_NUMBER_SIZE);
+        <a href="#" OnFocus="link('_member','serialNumber518908',this)">serialNumber</a>[SERIAL_NUMBER_SIZE] = 0;
+
+        <a href="#" OnFocus="link('_member','clockSpeed518908',this)">clockSpeed</a> = infoRcvd[CLOCK_SPEED_START] + infoRcvd[CLOCK_SPEED_START+1] * 256U;
+        <a href="#" OnFocus="link('_member','tckSpeed518908',this)">tckSpeed</a>   = infoRcvd[TCK_SPEED_START  ] + infoRcvd[TCK_SPEED_START  +1] * 256U;
+
+        return USB_SUCCESS;
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_member','_source');
+</script>

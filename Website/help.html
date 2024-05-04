@@ -1,0 +1,404 @@
+<html>
+
+
+<!-- Mirrored from 192.168.0.47/help.php3 by HTTrack Website Copier/3.x [XR&CO'2004], Mon, 04 Dec 2006 16:07:19 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=ISO-8859-1"><!-- /Added by HTTrack -->
+<head>
+<link rel="SHORTCUT ICON" HREF="images/xess.ico">
+<title>XESS Help</title>
+<meta name="KEYWORDS" content="XESS, XILINX, XC4000, XC9500, Spartan, FPGA, CPLD, reconfigurable logic, programmable logic, 8051 microcontroller, demo board, evaluation board">
+<meta name="DESCRIPTION" content="XESS Corp develops and sells low-cost XILINX programmable logic + microcontroller boards with tutorials.">
+<meta http-equiv="Content-Type" content="text/html">
+<link rel="stylesheet" type="text/css" href="xess-1.css">
+<meta name="Microsoft Border" content="none, default">
+</head>
+
+<body>
+
+<table>
+  <!-- MSTableType="nolayout" -->
+	<tr>
+		<td class="StdPageLogo">
+		<!--#include virtual="/logo.html" -->
+		<a href="index-2.html"><img border="0" src="images/xess-138x32.bmp"></a>
+		</td>
+		<td class="StdPageNav">
+		<!--#include virtual="/nav.html" -->
+		<script type="text/javascript" src="xess.js"></script>
+<!-- <script type="text/javascript" src="niftycube_xess.js"></script> -->
+<!-- <script type="text/javascript" src="prototype.js"></script> -->
+<!-- <script type="text/javascript" src="rico.js"></script> -->
+<script type="text/javascript">
+	window.onload=function(){
+		startList("nav");
+		stripe_xess();
+		collapseall();
+		// Nifty("td.StdPageNav","transparent");
+		// Nifty("td.StdPageSidebar","transparent");
+		// Nifty("td.StdPageNavLinks","transparent");
+	};
+	onload=function(){
+		startList("nav");
+		stripe_xess();
+		collapseall();
+		// Nifty("td.StdPageNav","transparent");
+		// Nifty("td.StdPageSidebar","transparent");
+		// Nifty("td.StdPageNavLinks","transparent");
+	};
+</script>
+
+
+
+<table border="0" width="640" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="center" valign="center" width="70%">
+
+<!--
+  -- naviagation bar for browsers with scripting capability
+  -- (make sure there is no whitespace after the '\' on each line and run
+  -- the Javascript console on Firefox to check the syntax.)
+  -->
+<script type="text/javascript">
+nav_text = '\
+  <ul id="nav"> \
+    <li id="first"><a href="ho04000.html">Products</a> \
+      <ul> \
+        <li><a href="ho04000.html"><div>Catalog</div></a></li> \
+        <li><a href="manuals.html"><div>Manuals</div></a></li> \
+        <li><a href="ho07000.html"><div>Software Downloads</div></a></li> \
+      </ul> \
+    </li> \
+    <li><a href="help.html">Support</a> \
+      <ul> \
+        <li><a href="manuals.html" ><div>Product Manuals</div></a></li> \
+        <li><a href="ho03000.html" ><div>Tutorials</div></a></li> \
+        <li><a href="ho03000.html" ><div>Application Notes</div></a></li> \
+        <li><a href="ho03000.html" ><div>Design Examples</div></a></li> \
+        <li><a href="ho01000.html" ><div>FAQ</div></a></li> \
+        <li><a href="list_reg.html"><div>User Forum</div></a></li> \
+        <li><a href="help.html"    ><div>Request Help</div></a></li> \
+      </ul> \
+    </li> \
+    <li><a href="ho01001.html">Purchasing</a> \
+      <ul> \
+        <li><a href="https://xess.com/xess_int_order.php3"><div>Web Orders</div></a></li> \
+        <li><a href="ho01001.html"                       ><div>Purchase Orders</div></a></li> \
+        <li><a href="ho01001.html"                       ><div>Payment Methods</div></a></li> \
+        <li><a href="xess_int_quote.html"                ><div>Get a Quote</div></a></li> \
+        <li><a href="xess_int_quote.html"                ><div>Get a Proforma Invoice</div></a></li> \
+        <li><a href="ho01001.html"                       ><div>How To Buy From Us</div></a></li> \
+      </ul> \
+    </li> \
+    <li id="last"><a href="index-2.html">XESS</a> \
+      <ul> \
+        <li><a href="index-2.html"   ><div>Home</div></a></li> \
+        <li><a href="about_us.html"><div>About Us</div></a></li> \
+        <li><a href="ho00003.html" ><div>Contact Us</div></a></li> \
+<!-- \
+        <li><a href=""              ><div>Announcements</div></a></li> \
+        <li><a href="ho00005.html" ><div>Press Releases</div></a></li> \
+--> \
+      </ul> \
+    </li> \
+    <li id="last"><a href="links.html">Misc.</a> \
+      <ul> \
+        <li><a href="links.html"><div>Links</div></a></li> \
+      </ul> \
+    </li> \
+  </ul> \
+';
+document.writeln(nav_text);
+</script>
+
+<!--
+  -- naviagation bar for browsers with NO scripting capability
+  -->
+<noscript>
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="14%" align="left">
+    <a href="ho04000.html"><img border="0" src="images/menu_arrow.png">Products</a>
+    </td>
+    <td width="16%" align="left">
+    <a href="ho01001.html"><img border="0" src="images/menu_arrow.png">How to Buy</a>
+    </td>
+    <td width="11%" align="left">
+    <a href="help.html"><img border="0" src="images/menu_arrow.png">Help!</a>
+    </td>
+    <td width="14%" align="left">
+    <a href="ho03000.html"><img border="0" src="images/menu_arrow.png">Tutorials</a>
+    </td>
+    <td width="14%" align="left">
+    <a href="index-2.html"><img border="0" src="images/menu_arrow.png">Home</a>
+<!--
+    <a href="/ho00005.html"><img border="0" src="/images/menu_arrow.png">Press&nbsp;Rel.</a>
+-->
+    </td>
+  </tr>
+  <tr>
+    <td>
+    <a href="manuals.html"><img border="0" src="images/menu_arrow.png">Manuals</a>
+    </td>
+    <td>
+    <a href="xess_int_quote.html"><img border="0" src="images/menu_arrow.png">Online Quote</a>
+    </td>
+    <td>
+    <a href="ho01000.html"><img border="0" src="images/menu_arrow.png">FAQ</a>
+    </td>
+    <td>
+    <a href="ho03000.html"><img border="0" src="images/menu_arrow.png">Examples</a>
+    </td>
+    <td>
+    <a href="about_us.html">
+    <img border="0" src="images/menu_arrow.png">About&nbsp;Us</a>
+    </td>
+  </tr>
+  <tr>
+    <td>
+    <a href="ho07000.html"><img border="0" src="images/menu_arrow.png">Downloads</a>
+    </td>
+    <td>
+    <a href="https://xess.com/xess_int_order.php3"><img border="0" src="images/menu_arrow.png">Order Online</a>
+    </td>
+    <td>
+    <a href="list_reg.html"><img border="0" src="images/menu_arrow.png">Forum</a>
+    </td>
+    <td>
+    <a href="links.html"><img border="0" src="images/menu_arrow.png">Links</a>
+    </td>
+    <td>
+    <a href="ho00003.html"><img border="0" src="images/menu_arrow.png">Contact&nbsp;Us</a>
+    </td>
+  </tr>
+</table>
+</noscript>
+
+    </td>
+    <td align="center" valign="center" width="30%" id="srch">
+      <FORM ACTION="http://192.168.0.47/cgi-bin/ksearch/ksearch.cgi" METHOD="GET" NAME="search">
+        <INPUT TYPE="text" value="search" NAME="terms">
+		<input type=image src="images/search_arrow.png" value="Search">
+      </FORM>
+    </td>
+  </tr>
+</table>
+
+		</td>
+	</tr>
+  <tr>
+    <td class="StdPageSidebar">
+    <h1>HELP! </h1>
+    <p>Fill out this form to send a request for help to XESS support. But don&#39;t 
+    forget to try our <a href="ho01000.html">FAQs</a> first! You may find the answer you need in there.</p>
+    </td>
+    <td class="StdPageBody">
+    <h2>Sources of Self-Help Information </h2>
+    <ul>
+      <li><a href="ho01001.html">Answers to questions about buying our products</a></li>
+      <li><a href="faq/user_faq.htm">Answers to questions about using our products</a></li>
+    </ul>
+    <h2>Help Request / Feedback Form</h2>
+      <form method="post" name="XESS Help Form" action="http://192.168.0.47/help.php3">
+
+      <h3>What kind of comment would you like to send?</h3>
+      <dl>
+        <dd>
+        <input type="radio" name="MessageType" value="Problem"
+              checked >Problem
+        <input type="radio" name="MessageType" value="Suggestion"
+               >Suggestion
+        <input type="radio" name="MessageType" value="Praise"
+               >Praise
+        </dd>
+      </dl>
+      <h3>What do you want to comment on?</h3>
+      <dl>
+        <dd>
+        <select name="Subject" size="1">
+<option>Products</option><option>Web Site</option><option>Company</option><option>Employee</option><option>(Other)</option>        </select>
+        Other:
+        <input type="text" size="61" maxlength="256" name="SubjectOther"
+                >
+        </dd>
+      </dl>
+      <h3>Enter your comments or problem description in the space provided below:</h3>
+      <dl>
+        <dd><textarea name="Comment" rows="5" cols="73"></textarea>
+        </dd>
+      </dl>
+      <h3>Provide some additional information about your environment:</h3>
+      <blockquote>
+        <table width="100%">
+          <tr>
+            <td width="30%" align="right" class="label">XESS Order Invoice #:</td>
+            <td width="70%">
+               <input type="text" name="INVOICE" size="32"
+                >
+            </td>
+          </tr>
+          <tr>
+            <td width="30%" align="right" class="label">Operating System: </td>
+            <td width="70%">
+            <select size="1" name="OS_TYPE">
+<option>Win95</option><option>Win98</option><option>WinME</option><option>WinNT</option><option>Win2000</option><option selected>WinXP</option>            </select>
+          </tr>
+          <tr>
+            <td width="30%" align="right" class="label">XSTOOLs Version: </td>
+            <td width="70%">
+            <select size="1" name="XSTOOLS_MAJOR_VERSION">
+<option>1</option><option>2</option><option>3</option><option selected>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option>            </select>
+            <b>.</b>
+            <select size="1" name="XSTOOLS_MINOR_VERSION">
+<option selected>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option>            </select>
+            <b>.</b>
+            <select size="1" name="XSTOOLS_REVISION">
+<option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option selected>6</option><option>7</option><option>8</option><option>9</option>            </select>
+            </td>
+          </tr>
+          <tr>
+            <td width="30%" align="right" class="label">Board Model: </td>
+            <td width="70%"><select size="1" name="BOARD_MODEL">
+<option>XS95-108</option><option>XS95-108+</option><option>XS40-005XL</option><option>XS40-005XL+</option><option>XS40-005E</option><option>XS40-005E+</option><option>XS40-010XL</option><option>XS40-010XL+</option><option>XS40-010E</option><option>XS40-010E+</option><option>XSP-010</option><option>XSP-010+</option><option>XST</option><option selected>XSA-50</option><option>XSA-100</option><option>XSA-200</option><option>XSA-3S1000</option><option>XSB-300E</option><option>XSV-50</option><option>XSV-100</option><option>XSV-300</option><option>XSV-800</option><option>XSTE5</option>            </select>
+            </td>
+          </tr>
+          <tr>
+            <td width="30%" align="right" class="label">Board Version: </td>
+            <td width="70%" align="left">
+            <select size="1" name="BOARD_MAJOR_VERSION">
+<option selected>V1</option><option>V2</option><option>V3</option><option>V4</option><option>V5</option><option>V6</option><option>V7</option><option>V8</option><option>V9</option>            </select>
+            <b>.</b>
+            <select size="1" name="BOARD_MINOR_VERSION">
+<option selected>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option>            </select>
+            <b>.</b>
+            <select size="1" name="BOARD_REVISION">
+<option selected>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option>            </select>
+            </td>
+          </tr>
+          <tr>
+            <td width="30%" align="right" class="label">Printer Port Used: </td>
+            <td width="70%">
+            <select size="1" name="PORT_NUMBER">
+<option selected>LPT1</option><option>LPT2</option><option>LPT3</option>            </select>
+            </td>
+          </tr>
+          <tr>
+            <td width="30%" align="right" class="label">Printer Port Mode: </td>
+            <td width="70%"><select size="1" name="PORT_MODE">
+<option selected>Normal</option><option>Output-only</option><option>Unidirectional</option><option>SPP</option><option>ECP</option><option>EPP</option><option>ECP+EPP</option><option>Bidirectional</option><option>AT</option><option>PS/2</option>            </select></td>
+          </tr>
+          <tr>
+            <td width="30%" align="right" class="label">Board Power Supply:</td>
+            <td width="70%">
+            <select size="1" name="POWER_SUPPLY">
+<option selected>9V DC adapter</option><option>5V DC adapter</option><option>ATX power supply</option><option>+5V / +3.3V directly to board pins</option>            </select>
+            </td>
+          </tr>
+          <tr>
+            <td width="30%" align="right" class="label">Board passes GXSTEST?
+            </td>
+            <td width="70%">
+            <input type="radio" name="PASSES_GXSTEST" value="YES"
+              checked >Yes
+            <input type="radio" name="PASSES_GXSTEST" value="NO"
+               >No
+            </td>
+          </tr>
+        </table>
+      </blockquote>
+      <dl>
+        <h3>Tell us how to get in touch with you:</h3>
+        <blockquote>
+          <table>
+            <tr>
+              <td width="20%" align="right" class="label">Name:</td>
+              <td width="80%">
+                <input type="text" size="62" maxlength="256" name="Name"
+                   >
+              </td>
+            </tr>
+            <tr>
+              <td width="20%" align="right" class="label">E-mail:</td>
+              <td width="80%">
+              <input type="text" size="62" maxlength="256" name="UserEmail"
+                   >
+              </td>
+            </tr>
+            <tr>
+              <td width="20%" align="right" class="label">Tel:</td>
+              <td width="80%">
+              <input type="text" size="62" maxlength="256" name="Telephone"
+                   >
+              </td>
+            </tr>
+            <tr>
+              <td width="20%" align="right" class="label">FAX:</td>
+              <td width="80%">
+              <input type="text" size="62" maxlength="256" name="FAX"
+                   >
+              </td>
+            </tr>
+          </table>
+        </blockquote>
+        <p><input type="submit" name="send" value="Send">
+        <input type="submit" name="clear" value="Clear Form">
+        <input type="hidden" name="here_before" value="1"></p>
+      </dl>
+    </form>
+    </td>
+  </tr>
+	<tr>
+		<td class="StdPageCredits">
+		<!--#include virtual="/credits.html" -->
+		<a href="mailto:webmaster@xess.com"> webmaster@xess.com</a><br>
+© 1998-2006, XESS Corp.<br> 
+All rights reserved.
+<script src="../www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-765812-1";
+urchinTracker();
+</script>		</td>
+		<td class="StdPageNavLinks">
+		<!--#include virtual="/navlinks.html" -->
+		    <a href="ho04000.html">
+    <img border="0" src="images/menu_arrow.png">Products</a>
+    <a href="manuals.html">
+    <img border="0" src="images/menu_arrow.png">Manuals</a>
+    <a href="ho07000.html">
+    <img border="0" src="images/menu_arrow.png">Downloads</a>
+    <a href="ho01001.html">
+    <img border="0" src="images/menu_arrow.png">How to Buy</a>
+    <a href="xess_int_quote.html">
+    <img border="0" src="images/menu_arrow.png">Online Quote</a>
+    <a href="https://xess.com/xess_int_order.php3">
+    <img border="0" src="images/menu_arrow.png">Order Online</a>
+    <br>
+    <a href="help.html">
+    <img border="0" src="images/menu_arrow.png">Help!</a>
+    <a href="ho01000.html">
+    <img border="0" src="images/menu_arrow.png">FAQ</a>
+    <a href="list_reg.html">
+    <img border="0" src="images/menu_arrow.png">Forum</a>
+    <a href="ho03000.html">
+    <img border="0" src="images/menu_arrow.png">Tutorials</a>
+    <a href="ho03000.html">
+    <img border="0" src="images/menu_arrow.png">Examples</a>
+    <a href="links.html">
+    <img border="0" src="images/menu_arrow.png">Links</a>
+    <a href="ho00005.html">
+    <a href="index-2.html">
+    <img border="0" src="images/menu_arrow.png">Home</a>
+    <a href="about_us.html">
+    <img border="0" src="images/menu_arrow.png">About&nbsp;Us</a>
+    <a href="ho00003.html">
+    <img border="0" src="images/menu_arrow.png">Contact&nbsp;Us</a>
+		</td>
+	</tr>
+</table>
+
+</body>
+
+
+<!-- Mirrored from 192.168.0.47/help.php3 by HTTrack Website Copier/3.x [XR&CO'2004], Mon, 04 Dec 2006 16:07:19 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=ISO-8859-1"><!-- /Added by HTTrack -->
+</html>

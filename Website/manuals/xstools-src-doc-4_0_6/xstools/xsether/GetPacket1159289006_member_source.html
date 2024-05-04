@@ -1,0 +1,90 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - GetPacket</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">GetPacket</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xsether0',this)" class="pathLink">xsether</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">GetPacket</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','GetPacket1159289006','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_member','GetPacket1159289006','_source',this)" class="tabLinkActive">Source</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','GetPacket1159289006','_callgraph',this)" class="tabLinkInActive">Call Graph</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<div class="paragraph2NoTopPadding">Start Line: 502</div>
+<pre class="codeExamples">
+bool <a href="#" OnFocus="link('_member','GetPacket1159289006',this)">GetPacket</a>(unsigned int *len, unsigned int *buf)
+{
+//  fprintf(stderr,"GetPacket: looking for packet\n");
+    unsigned int pstart, pstop, bnry, cpr, ck_cpr, len0, len1, rcvStatus, newBnry;
+    <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_CR,PAGE0|ABORT_DMA|START); // make sure we're on register page 0
+    <a href="#" OnFocus="link('_member','ReadRAM3900533032',this)">ReadRAM</a>(AX88796_PSTART,&amp;pstart);   // get start and stop pages of receive buffer
+    pstart &amp;= 0xFF;
+    <a href="#" OnFocus="link('_member','ReadRAM3900533032',this)">ReadRAM</a>(AX88796_PSTOP,&amp;pstop);
+    pstop &amp;= 0xFF;
+    <a href="#" OnFocus="link('_member','ReadRAM3900533032',this)">ReadRAM</a>(AX88796_BNRY,&amp;bnry);   // get read pointer of receive buffer
+    bnry &amp;= 0xFF;
+    // compare read pointer to write pointer to see if a new packet is available
+    ck_cpr = bnry+1;    // increment read pointer 
+    if(ck_cpr&gt;=pstop)   // wrap-around read pointer if gone past end of receive buffer
+        ck_cpr = pstart;
+    <a href="#" OnFocus="link('_member','ReadRAM3900533032',this)">ReadRAM</a>(AX88796_CPR,&amp;cpr); // get write pointer
+    if(ck_cpr == cpr)   // compare read and write pointers
+        return false;   // return false if no new packet
+//  fprintf(stderr,"GetPacket: pstart=%02x, pstop=%02x, bnry=%02x, cpr=%02x, ck_cpr=%02x\n",pstart,pstop,bnry,cpr,ck_cpr);
+//  fprintf(stderr,"GetPacket: getting packet header\n");
+    // a new packet is available so let's get the 4-byte header
+    <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_RSAR0,0x00);   // point to start of packet
+    <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_RSAR1,ck_cpr);
+    <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_RBCR0,0x04);   // read first four bytes
+    <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_RBCR1,0x00);
+    <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_CR,PAGE0|REMOTE_READ|START);
+    <a href="#" OnFocus="link('_member','ReadRAM3900533032',this)">ReadRAM</a>(AX88796_DATAPORT0,&amp;rcvStatus); // status of received packet
+    rcvStatus &amp;= 0xFF;
+    <a href="#" OnFocus="link('_member','ReadRAM3900533032',this)">ReadRAM</a>(AX88796_DATAPORT0,&amp;newBnry);   // address of next packet in receive buffer
+    newBnry &amp;= 0xFF;
+    <a href="#" OnFocus="link('_member','ReadRAM3900533032',this)">ReadRAM</a>(AX88796_DATAPORT0,&amp;len0);      // length of received packet
+    len0 &amp;= 0xFF;
+    <a href="#" OnFocus="link('_member','ReadRAM3900533032',this)">ReadRAM</a>(AX88796_DATAPORT0,&amp;len1);
+    len1 &amp;= 0xFF;
+//  fprintf(stderr,"GetPacket: rcvStatus=%02x, newBnry=%02x, len0=%02x, len1=%02x\n",rcvStatus,newBnry,len0,len1);
+    <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_CR,PAGE0|ABORT_DMA|START);
+    <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_RSAR0,0x04);   // point to remainder of packet data after header
+    <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_RSAR1,ck_cpr);
+    <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_RBCR0,len0);   // update length of DMA with packet length
+    <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_RBCR1,len1);
+    *len = (len1&lt;&lt;8) + len0;
+//  fprintf(stderr,"GetPacket: length of data packet is %04x (%02x%02x)\n",*len,len1,len0);
+//  fprintf(stderr,"GetPacket: getting packet data\n");
+    <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_CR,PAGE0|REMOTE_READ|START);
+    for(unsigned int i=0; i&lt;*len; i++)  // read received packet from receive buffer
+        <a href="#" OnFocus="link('_member','ReadRAM3900533032',this)">ReadRAM</a>(AX88796_DATAPORT0,&amp;buf[i]);
+    <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_CR,PAGE0|ABORT_DMA|START);
+    newBnry--;
+    if(newBnry&lt;pstart)
+        newBnry = pstop-1;
+    <a href="#" OnFocus="link('_member','WriteRAM3363666690',this)">WriteRAM</a>(AX88796_BNRY,newBnry); // update pointer to next received packet
+//  fprintf(stderr,"GetPacket: finished getting packet data\n");
+    return true;
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_member','_source');
+</script>

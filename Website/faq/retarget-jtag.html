@@ -1,0 +1,95 @@
+<html>
+
+
+<!-- Mirrored from 192.168.0.47/faq/retarget-jtag.html by HTTrack Website Copier/3.x [XR&CO'2004], Mon, 04 Dec 2006 16:08:19 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=ISO-8859-1"><!-- /Added by HTTrack -->
+<head>
+<meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<meta NAME="GENERATOR" CONTENT="Microsoft FrontPage 3.0">
+<title>How to Use Different Versions of the XC4000 FPGA in an XS40 Board</title>
+<meta NAME="Template" CONTENT="G:\msoffice\Templates\Normal.dot">
+<link rel="stylesheet" type="text/css" href="../xess-1.css">
+</head>
+
+<body>
+
+<p><img src="../images/questmrk.gif" alt="FAQ Question and Answer" WIDTH="73" HEIGHT="73"></p>
+
+<h3><b><font FACE="Arial" size="5">How to Use Different Versions of the XC4000 FPGA in an
+XS40 Board</font></b></h3>
+
+<hr>
+<font size="3">
+
+<p>The XS40 Board normally comes with an XC4005E, XC4005XL, XC4010E, or XC4010XL FPGA in
+its 84-pin socket. Some of you want to use other versions of the XC4000 series such as an
+XC4008E. You can use any XC4000E or XC4000XL FPGA as long as it comes in an 84-pin PLCC
+package (after all, it does have to fit in the socket).</p>
+
+<p>In order to use a version of the XC4000 FPGA in an XS40 Board, you need to recompile
+the <a href="../projects/jtagproj.zip">JTAG design</a> for your particular FPGA type. The JTAG
+design programs the FPGA with a simplified version of a JTAG circuit. The JTAG circuit is
+used by the XSLOAD downloading program to load the 32 Kbyte RAM with programs or data.
+That's all it's used for -- during the second phase of XSLOAD's operation after the RAM is
+loaded, the JTAG circuitry is overwritten by the your application circuitry.</p>
+
+<p>After the JTAG circuitry for your particular type of XC4000 FPGA is created, you need
+to rename it and place it in a location where XSLOAD can find it and identify it as the
+appropriate JTAG circuit for loading. XSLOAD always looks in the XSTOOLS\BIN directory for
+JTAG circuit bitstream files. All JTAG circuit bitstream files start with 'D' (because
+they are used for 'D'ownloading to the RAM) followed by the first seven letters of the
+chip identifier. For example, the file D4008EPC.BIT is the JTAG circuit bitstream file
+used for downloading the RAM of an XS40 Board with an XC4008E FPGA in its socket.</p>
+
+<p>In order to support a new version of the XC4000 FPGA, you must do the following: 
+
+<ol>
+  <li>Recompile the JTAG design for the particular type of XC4000 FPGA you want to support.
+    The end result of this step will be a JTAG.BIT file that will program the FPGA with the
+    simplified JTAG circuitry.</li>
+  <li>Use the OD.EXE program (or any other tool that will dump the contents of a binary file
+    in an ASCII form) to look at the beginning of the JTAG.BIT file. You should see the
+    designation for the version of the chip you are targeting. For example, when JTAG.BIT has
+    been compiled for an XC4008E FPGA the output from the command <font FACE="Courier New">OD
+    JTAG.BIT</font> looks like this:<br>
+    <font FACE="Courier New">00 09 0F F0 0F F0 0F F0 0F F0 00 00 01 61 00 09
+    ???ð?ð?ð?ð???a?? <br>
+    6A 74 61 67 2E 6E 63 64 00 62 00 0A 34 30 30 38 jtag.ncd?b??4008 <br>
+    65 70 63 38 34 00 63 00 09 39 38 2F 30 38 2F 30 epc84?c??98/08/0 <br>
+    34 00 64 00 09 31 31 3A 31 31 3A 34 38 00 65 00 4?d??11:11:48?e? <br>
+    00 48 0C FF 20 24 05 9F 57 FF 7A BF B7 EB FA FE ?H?ÿ $?&#159;Wÿz¿·ëúþ <br>
+    ....<br>
+    </font>You can see that the target FPGA identifier is listed as &quot;4008epc84&quot;.</li>
+  <li>Rename the JTAG.BIT file to be:<br>
+    &quot;D&quot; + the initial 7 letters of the FPGA identifier + &quot;.BIT&quot;<br>
+    to continue the example from step 2, the JTAG.BIT file would be renamed to D4008EPC.BIT.</li>
+  <li>Place the renamed file into the XSTOOLS/BIN directory.</li>
+</ol>
+
+<p>Now whenever you use XSLOAD to download to your XS40 Board with its XC4008E FPGA,
+XSLOAD will look in the .BIT file for your application to find the FPGA identifier. Then
+it will use the identifier to find the name of the appropriate .BIT file with the JTAG
+circuitry in it. XSLOAD will program the FPGA with the JTAG circuitry using this .BIT file
+and then initialize the RAM through the JTAG interface. Finally, XSLOAD will reprogram the
+FPGA with the original .BIT file you supplied as an argument to XSLOAD.</p>
+
+<p>As an example, the command &quot;XSLOAD FILE1.HEX FILE2.BIT&quot; will cause the
+following sequence of actions: 
+
+<ol>
+  <li>XSLOAD opens FILE2.BIT and looks for the FPGA identifier in it. Assume in this case it
+    is 4008EPC84. XSLOAD will recreate the JTAG circuitry bitstream file name: D4008EPC.BIT.</li>
+  <li>XSLOAD will look in XSTOOLS\BIN for the D4008EPC.BIT file. XSLOAD will download the
+    D4008EPC.BIT file to the XS40 Board.</li>
+  <li>Once the JTAG circuitry is downloaded into the FPGA, XSLOAD uses the JTAG interface to
+    download the data in FILE1.HEX into the RAM.</li>
+  <li>Once the RAM is loaded, XSLOAD downloads FILE2.BIT into the FPGA and then terminates.</font><font SIZE="2"></li>
+</ol>
+</font>
+
+<!--webbot bot="Include" U-Include="footer.html" TAG="BODY" startspan --><strong>[faq/footer.html]</strong><!--webbot bot="Include" endspan i-checksum="38423" -->
+</body>
+
+<!-- Mirrored from 192.168.0.47/faq/retarget-jtag.html by HTTrack Website Copier/3.x [XR&CO'2004], Mon, 04 Dec 2006 16:08:19 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=ISO-8859-1"><!-- /Added by HTTrack -->
+</html>

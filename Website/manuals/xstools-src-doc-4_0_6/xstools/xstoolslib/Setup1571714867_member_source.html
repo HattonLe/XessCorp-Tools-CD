@@ -1,0 +1,65 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - Setup</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">Setup</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_class','PPort0',this)" class="pathLink">PPort</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">Setup</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','Setup1571714867','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_member','Setup1571714867','_source',this)" class="tabLinkActive">Source</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','Setup1571714867','_callgraph',this)" class="tabLinkInActive">Call Graph</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<div class="paragraph2NoTopPadding">Start Line: 144</div>
+<pre class="codeExamples">
+bool <a href="#" OnFocus="link('_member','Setup1571714867',this)">PPort::Setup</a>(<a href="#" OnFocus="link('_class','XSError0',this)">XSError</a> *e, unsigned int n, unsigned int invMask)
+{
+    assert(sizeof(unsigned int)/sizeof(char) &gt;= 3); // value needs to be at least 24-bits wide
+
+    // find out which parallel port driver to use
+    string paramName("LPTDRIVER");
+    string driverName = <a href="#" OnFocus="link('_member','GetXSTOOLSParameter67554305',this)">GetXSTOOLSParameter</a>(paramName);
+    if(driverName =="DRIVERLINX")
+        <a href="#" OnFocus="link('_member','IODriverIndex57972',this)">IODriverIndex</a> = <a href="#" OnFocus="link('_member','DRIVERLINX0',this)">DRIVERLINX</a>;
+    else if(driverName == "TVICHW32")
+        <a href="#" OnFocus="link('_member','IODriverIndex57972',this)">IODriverIndex</a> = <a href="#" OnFocus="link('_member','TVICHW320',this)">TVICHW32</a>;
+    else
+        <a href="#" OnFocus="link('_member','IODriverIndex57972',this)">IODriverIndex</a> = <a href="#" OnFocus="link('_member','UNIIO0',this)">UNIIO</a>; // UNIIO is the default
+
+    // see if the parallel port should be checked for correct operation
+    char s[20];
+    sprintf(s,"LPT%1dCHECK",n); // get the parallel port check flag from the parameter file
+    paramName = (string)s;
+    if(<a href="#" OnFocus="link('_member','GetXSTOOLSParameter67554305',this)">GetXSTOOLSParameter</a>(paramName) == "NO")
+        <a href="#" OnFocus="link('_member','chkCounter57972',this)">chkCounter</a> = 0;               // don't bother to check the port for correct operation
+    else
+        <a href="#" OnFocus="link('_member','chkCounter57972',this)">chkCounter</a> = 100;         // number of times to initially check port for correct operation
+
+    <a href="#" OnFocus="link('_member','updateCounter57972',this)">updateCounter</a> = 0;
+
+    <a href="#" OnFocus="link('_member','SetErr2906956701',this)">SetErr</a>(e);                        // set error reporting channel
+    <a href="#" OnFocus="link('_member','SetInvMask190760768',this)">SetInvMask</a>(invMask);          // set read, write inversion masks
+    return <a href="#" OnFocus="link('_member','SetLPTNum190760768',this)">SetLPTNum</a>(n);         // return false if could not assign to the given parallel port address
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_member','_source');
+</script>

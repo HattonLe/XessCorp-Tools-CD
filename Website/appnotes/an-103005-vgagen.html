@@ -1,0 +1,493 @@
+<html>
+
+
+<!-- Mirrored from 192.168.0.47/appnotes/an-103005-vgagen.html by HTTrack Website Copier/3.x [XR&CO'2004], Mon, 04 Dec 2006 16:07:25 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=ISO-8859-1"><!-- /Added by HTTrack -->
+<head>
+<link rel="SHORTCUT ICON" HREF="../images/xess.ico">
+<title>MAKEFILES FOR XILINX FPGA/CPLD PROJECTS</title>
+<meta name="KEYWORDS" content="VGA generator, dual-port, SDRAM controller, XILINX, FPGA, CPLD">
+<meta name="DESCRIPTION" content="VGA generator that adds a parallel port SDRAM interface for downloading of images while the VGA generator is running.">
+<meta http-equiv="Content-Type" content="text/html">
+<link rel="stylesheet" type="text/css" href="../xess-1.css">
+<meta name="Microsoft Border" content="none, default">
+</head>
+
+<body>
+
+<table>
+	<!-- MSTableType="nolayout" -->
+	<tr>
+		<td class="StdPageLogo">
+		<a href="../index-2.html"><img border="0" src="../images/xess-138x32.bmp"></a>
+
+		<?php 
+			require("logo.html");
+		?>
+		</td>
+		<td class="StdPageNav">
+		<script type="text/javascript" src="xess.js"></script>
+<!-- <script type="text/javascript" src="niftycube_xess.js"></script> -->
+<!-- <script type="text/javascript" src="prototype.js"></script> -->
+<!-- <script type="text/javascript" src="rico.js"></script> -->
+<script type="text/javascript">
+	window.onload=function(){
+		startList("nav");
+		stripe_xess();
+		collapseall();
+		// Nifty("td.StdPageNav","transparent");
+		// Nifty("td.StdPageSidebar","transparent");
+		// Nifty("td.StdPageNavLinks","transparent");
+	};
+	onload=function(){
+		startList("nav");
+		stripe_xess();
+		collapseall();
+		// Nifty("td.StdPageNav","transparent");
+		// Nifty("td.StdPageSidebar","transparent");
+		// Nifty("td.StdPageNavLinks","transparent");
+	};
+</script>
+
+
+
+<table border="0" width="640" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="center" valign="center" width="70%">
+
+<!--
+  -- naviagation bar for browsers with scripting capability
+  -- (make sure there is no whitespace after the '\' on each line and run
+  -- the Javascript console on Firefox to check the syntax.)
+  -->
+<script type="text/javascript">
+nav_text = '\
+  <ul id="nav"> \
+    <li id="first"><a href="../ho04000.html">Products</a> \
+      <ul> \
+        <li><a href="../ho04000.html"><div>Catalog</div></a></li> \
+        <li><a href="../manuals.html"><div>Manuals</div></a></li> \
+        <li><a href="../ho07000.html"><div>Software Downloads</div></a></li> \
+      </ul> \
+    </li> \
+    <li><a href="../help.html">Support</a> \
+      <ul> \
+        <li><a href="../manuals.html" ><div>Product Manuals</div></a></li> \
+        <li><a href="../ho03000.html" ><div>Tutorials</div></a></li> \
+        <li><a href="../ho03000.html" ><div>Application Notes</div></a></li> \
+        <li><a href="../ho03000.html" ><div>Design Examples</div></a></li> \
+        <li><a href="../ho01000.html" ><div>FAQ</div></a></li> \
+        <li><a href="../list_reg.html"><div>User Forum</div></a></li> \
+        <li><a href="../help.html"    ><div>Request Help</div></a></li> \
+      </ul> \
+    </li> \
+    <li><a href="../ho01001.html">Purchasing</a> \
+      <ul> \
+        <li><a href="https://xess.com/xess_int_order.php3"><div>Web Orders</div></a></li> \
+        <li><a href="../ho01001.html"                       ><div>Purchase Orders</div></a></li> \
+        <li><a href="../ho01001.html"                       ><div>Payment Methods</div></a></li> \
+        <li><a href="../xess_int_quote.html"                ><div>Get a Quote</div></a></li> \
+        <li><a href="../xess_int_quote.html"                ><div>Get a Proforma Invoice</div></a></li> \
+        <li><a href="../ho01001.html"                       ><div>How To Buy From Us</div></a></li> \
+      </ul> \
+    </li> \
+    <li id="last"><a href="../index-2.html">XESS</a> \
+      <ul> \
+        <li><a href="../index-2.html"   ><div>Home</div></a></li> \
+        <li><a href="../about_us.html"><div>About Us</div></a></li> \
+        <li><a href="../ho00003.html" ><div>Contact Us</div></a></li> \
+<!-- \
+        <li><a href=""              ><div>Announcements</div></a></li> \
+        <li><a href="../ho00005.html" ><div>Press Releases</div></a></li> \
+--> \
+      </ul> \
+    </li> \
+    <li id="last"><a href="../links.html">Misc.</a> \
+      <ul> \
+        <li><a href="../links.html"><div>Links</div></a></li> \
+      </ul> \
+    </li> \
+  </ul> \
+';
+document.writeln(nav_text);
+</script>
+
+<!--
+  -- naviagation bar for browsers with NO scripting capability
+  -->
+<noscript>
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="14%" align="left">
+    <a href="../ho04000.html"><img border="0" src="../images/menu_arrow.png">Products</a>
+    </td>
+    <td width="16%" align="left">
+    <a href="../ho01001.html"><img border="0" src="../images/menu_arrow.png">How to Buy</a>
+    </td>
+    <td width="11%" align="left">
+    <a href="../help.html"><img border="0" src="../images/menu_arrow.png">Help!</a>
+    </td>
+    <td width="14%" align="left">
+    <a href="../ho03000.html"><img border="0" src="../images/menu_arrow.png">Tutorials</a>
+    </td>
+    <td width="14%" align="left">
+    <a href="../index-2.html"><img border="0" src="../images/menu_arrow.png">Home</a>
+<!--
+    <a href="/ho00005.html"><img border="0" src="/images/menu_arrow.png">Press&nbsp;Rel.</a>
+-->
+    </td>
+  </tr>
+  <tr>
+    <td>
+    <a href="../manuals.html"><img border="0" src="../images/menu_arrow.png">Manuals</a>
+    </td>
+    <td>
+    <a href="../xess_int_quote.html"><img border="0" src="../images/menu_arrow.png">Online Quote</a>
+    </td>
+    <td>
+    <a href="../ho01000.html"><img border="0" src="../images/menu_arrow.png">FAQ</a>
+    </td>
+    <td>
+    <a href="../ho03000.html"><img border="0" src="../images/menu_arrow.png">Examples</a>
+    </td>
+    <td>
+    <a href="../about_us.html">
+    <img border="0" src="../images/menu_arrow.png">About&nbsp;Us</a>
+    </td>
+  </tr>
+  <tr>
+    <td>
+    <a href="../ho07000.html"><img border="0" src="../images/menu_arrow.png">Downloads</a>
+    </td>
+    <td>
+    <a href="https://xess.com/xess_int_order.php3"><img border="0" src="../images/menu_arrow.png">Order Online</a>
+    </td>
+    <td>
+    <a href="../list_reg.html"><img border="0" src="../images/menu_arrow.png">Forum</a>
+    </td>
+    <td>
+    <a href="../links.html"><img border="0" src="../images/menu_arrow.png">Links</a>
+    </td>
+    <td>
+    <a href="../ho00003.html"><img border="0" src="../images/menu_arrow.png">Contact&nbsp;Us</a>
+    </td>
+  </tr>
+</table>
+</noscript>
+
+    </td>
+    <td align="center" valign="center" width="30%" id="srch">
+      <FORM ACTION="http://192.168.0.47/cgi-bin/ksearch/ksearch.cgi" METHOD="GET" NAME="search">
+        <INPUT TYPE="text" value="search" NAME="terms">
+		<input type=image src="../images/search_arrow.png" value="Search">
+      </FORM>
+    </td>
+  </tr>
+</table>
+
+
+		<?php 
+			require("nav.html");
+		?>
+		</td>
+	</tr>
+	<tr>
+
+	
+		<td class="StdPageSidebar">
+		<span lang="en-us">This is a modification of a previous version of the 
+        VGA generator that adds a parallel port SDRAM interface for downloading 
+        of images while the VGA generator is running.</span></td>
+
+
+		<td class="StdPageBody">
+<!-- INDEX BEGIN -->
+
+<ul>
+
+	<li><a href="#vga_generator_test_application_with_an_embedded_parallel_port_interface">VGA GENERATOR TEST APPLICATION WITH AN EMBEDDED PARALLEL PORT INTERFACE</a></li>
+	<li><a href="#source_files">SOURCE FILES</a></li>
+	<li><a href="#compiling_and_running_the_vga_generator_test_application">COMPILING AND RUNNING THE VGA GENERATOR TEST APPLICATION</a></li>
+	<li><a href="#embedding_a_parallel_port_interface_in_other_applications">EMBEDDING A PARALLEL PORT INTERFACE IN OTHER APPLICATIONS</a></li>
+	<li><a href="#see_also">SEE ALSO</a></li>
+	<li><a href="#author">AUTHOR</a></li>
+	<li><a href="#copyright_and_license">COPYRIGHT AND LICENSE</a></li>
+	<li><a href="#history">HISTORY</a></li>
+</ul>
+<!-- INDEX END -->
+
+<hr />
+<p>
+</p>
+<hr />
+<h1><a name="vga_generator_test_application_with_an_embedded_parallel_port_interface">VGA GENERATOR TEST APPLICATION WITH AN EMBEDDED PARALLEL PORT INTERFACE</a></h1>
+<p>This is a modification of the application originally described in
+<a href="http://www.xess.com/appnotes/an-101204-vgagen.pdf">http://www.xess.com/appnotes/an-101204-vgagen.pdf.</a>
+The original application was a combination of a VGA generator with an SDRAM controller
+that could display an image stored in SDRAM on a VGA monitor.
+The image had to be pre-loaded into the SDRAM on the XSA Board before the VGA generator was activated.</p>
+<p>The current design removes that restriction and allows you to upload and download
+images while the VGA generator is active.
+This is achieved by combining the SDRAM controller with the dualport interface described in
+<a href="http://www.xess.com/appnotes/an-071205-dualport.pdf">http://www.xess.com/appnotes/an-071205-dualport.pdf.</a>
+A parallel port interface is attached to one of the ports and the VGA
+generator is attached to the other.
+Images can be transferred through the parallel port of a PC to the SDRAM
+without disturbing the VGA generator as it accesses the SDRAM.</p>
+<p>
+</p>
+<hr />
+<h1><a name="source_files">SOURCE FILES</a></h1>
+<dl>
+<dt><strong><a name="item_xsa_lib_2fvga_2evhd_3a">XSA_LIB/vga.vhd:</a></strong><br />
+</dt>
+<dd>
+This file describes the VGA generator circuit.
+</dd>
+<p></p>
+<dt><strong><a name="item_xsa_lib_2fsdramcntl_2evhd_3a">XSA_LIB/sdramcntl.vhd:</a></strong><br />
+</dt>
+<dd>
+This file describes the core state machine of the SDRAM controller and the dualport module that
+attaches to it to provide dual independent channels to/from the SDRAM.
+See application note <a href="http://www.xess.com/appnotes/an-071205-dualport.pdf">http://www.xess.com/appnotes/an-071205-dualport.pdf</a> for details.
+</dd>
+<p></p>
+<dt><strong><a name="item_xsa_lib_2fxsasdramcntl_2evhd_3a">XSA_LIB/xsasdramcntl.vhd:</a></strong><br />
+</dt>
+<dd>
+This file creates a wrapper around the SDRAM controller core to customize it for
+the XSA Board.
+See application note <a href="http://www.xess.com/appnotes/an-071205-xsasdramcntl.pdf">http://www.xess.com/appnotes/an-071205-xsasdramcntl.pdf</a> for details.
+</dd>
+<p></p>
+<dt><strong><a name="item_xsa_lib_2framintfc_core_2evhd_3a">XSA_LIB/ramintfc_core.vhd:</a></strong><br />
+</dt>
+<dd>
+This file describes an interface that allows SDRAM address and data to be sent over the parallel port.
+</dd>
+<p></p>
+<dt><strong><a name="item_xsa_lib_2fxsasdramcntl_ppintfc_2evhd_3a">XSA_LIB/xsasdramcntl_ppintfc.vhd:</a></strong><br />
+</dt>
+<dd>
+This file combines the XSA SDRAM controller, the dualport interface, and the parallel port interface.
+The resulting module has a single SDRAM interface that is identical to that of the <em>xsasdramcntl.vhd</em> module,
+and an additional port that connects to a few pins of the parallel port to provide access to the SDRAM from
+an attached PC.
+</dd>
+<p></p>
+<dt><strong><a name="item_xsa_lib_2fcommon_2evhd_3a">XSA_LIB/common.vhd:</a></strong><br />
+</dt>
+<dd>
+Some functions and definitions useful in many applications are provided in this file.
+</dd>
+<p></p>
+<dt><strong><a name="item__5b50_2c100_2c200_2c3s1000_5d_2ftest_vga_2ftest_vg">[50,100,200,3S1000]/test_vga/test_vga.vhd:</a></strong><br />
+</dt>
+<dd>
+This is the top-level file that combines the SDRAM controller and the VGA generator 
+to create the complete test application for the XSA-50, XSA-100, XSA-200
+or XSA-3S1000 Board.
+</dd>
+<p></p>
+<dt><strong>[50,100,200,3S1000]/test_vga/test_vga.ucf:</strong><br />
+</dt>
+<dd>
+These are the pin assignments for mapping the VGA generator test application to 
+the XSA-50, XSA-100, XSA-200 or XSA-3S1000 Board.
+These files also show the correct attachment of the pins from the parallel port to the FPGA in
+order to upload/download the SDRAM using the GXSLOAD program.
+</dd>
+<p></p>
+<dt><strong>[50,100,200,3S1000]/test_vga/test_vga.npl:</strong><br />
+</dt>
+<dd>
+This project file tells WebPACK how to combine the source files to create the 
+VGA generator test application for the XSA-50, XSA-100, XSA-200 or XSA-3S1000 Board.
+</dd>
+<p></p>
+<dt><strong>[50,100,200,3S1000]/test_vga/test_vga.bit:</strong><br />
+</dt>
+<dd>
+This is a configuration bitstream that has already been generated for the XSA-50,
+XSA-100, XSA-200 or XSA-3S1000 Board based on the files listed above.
+</dd>
+<p></p>
+<dt><strong><a name="item_image_2exes_3a">image.xes:</a></strong><br />
+</dt>
+<dd>
+This is an image file that can be downloaded into the SDRAM on the XSA Board which
+will then be displayed on a monitor by the VGA generator test application.
+</dd>
+<p></p>
+<dt><strong><a name="item_xsa_lib_2fvga_2dtiming_2exls_3a">XSA_LIB/vga-timing.xls:</a></strong><br />
+</dt>
+<dd>
+This is a simple spreadsheet that calculates the durations of the various portions of 
+the horizontal and vertical sync signals given the height and width of the display and 
+the pixel clock frequency.
+</dd>
+<p></p>
+<dt><strong><a name="item_gxsload_2eexe_3a">GXSLOAD.EXE:</a></strong><br />
+</dt>
+<dd>
+This is a modified version of the standard GXSLOAD.EXE program.
+The standard GXSLOAD program configures the XSA Board with a default SDRAM interface 
+that allows it to upload or download data to the SDRAM via the parallel port.
+In the modified version of GXSLOAD, you can disable this initial configuration step if 
+your design already has the parallel port SDRAM interface embedded within it.
+Then you can upload/download the SDRAM without overwriting the bitstream for your design with
+the default SDRAM interface bitstream.
+</dd>
+<p></p></dl>
+<p>
+</p>
+<hr />
+<h1><a name="compiling_and_running_the_vga_generator_test_application">COMPILING AND RUNNING THE VGA GENERATOR TEST APPLICATION</a></h1>
+<ol>
+<li></li>
+Open the project file for the VGA generator test application by double-clicking the
+<em>test_vga.npl</em> file for your particular model of XSA Board.
+All the compilation options can be set through the Project Navigator interface of WebPACK, and the generic
+parameters that affect the operation of the VGA generator can be set in the test_vga.vhd file.
+(The options for compiling a working application are already set in the files provided.)
+Then double-click the ``Generate Programming File'' icon in the 
+Process pane and the bitstream will be generated.
+<p></p>
+<li></li>
+The VGA generator test application needs a specific clock frequency to operate correctly.
+For the XSA-50 and XSA-100 Boards, use GXSSETCLK to set the clock divisor to 2 so that a
+50 MHz clock is available.
+Nothing needs to be done for the XSA-200 or XSA-3S1000 Boards
+since they have a fixed frequency 100 MHz oscillator.
+<p></p>
+<li></li>
+Open the modified GXSLOAD downloading tool that was provided.
+Drag-and-drop the <em>test_vga.bit</em> bitstream file generated
+in step #1 into the FPGA pane of the GXSLOAD window.
+Then click on the Load button to download this file to the FPGA on the XSA Board.
+<p></p>
+<li></li>
+Connect a monitor to the VGA port of the XSA Board.
+A random pattern of ``snow'' will appear on the monitor screen because the SDRAM has not
+been initialized with image data, yet.
+<p></p>
+<li></li>
+Double-click the <em>test_vga.bit</em> file in the GXSLOAD FPGA pane to de-select it.
+Then drag-and-drop the <em>image.xes</em> file into the RAM pane.
+Uncheck the ``Download RAM/Flash Interface'' box below the RAM pane to stop GXSLOAD
+from overwriting the FPGA with the default SDRAM interface bitstream.
+Then click on the Load button to download the image data to the SDRAM.
+<p></p>
+<li></li>
+An image will appear on the monitor screen (beginning at the top of the screen and proceeding to the bottom)
+as GXSLOAD downloads the contents of <em>image.xes</em> to the SDRAM.
+<p></p></ol>
+<p>
+</p>
+<hr />
+<h1><a name="embedding_a_parallel_port_interface_in_other_applications">EMBEDDING A PARALLEL PORT INTERFACE IN OTHER APPLICATIONS</a></h1>
+<p>You can use the files in this application to provide access between the parallel port and the SDRAM in your own
+application.
+The necessary design files to include in your design are:
+<em>sdramcntl.vhd</em>, <em>xsasdramcntl.vhd</em>, <em>ramintfc_core.vhd</em>, <em>xsasdramcntl_ppintfc.vhd</em>, and <em>common.vhd</em>.
+You can also look in the <em>test_vga.ucf</em> file for your particular model of XSA Board to find the appropriate pin 
+assignments to the SDRAM and parallel port.
+Then connect the logic for your application to the host-side interface shown in the <em>xsasdramcntl_ppintfc.vhd</em>
+file in the same manner as you would the standard SDRAM controller in the <em>xsasdramcntl.vhd</em> file.
+(Look at <a href="http://www.xess.com/appnotes/an-071205-xsasdramcntl.pdf">http://www.xess.com/appnotes/an-071205-xsasdramcntl.pdf</a> for details on how to use the
+SDRAM controller.)</p>
+<p>
+</p>
+<hr />
+<h1><a name="see_also">SEE ALSO</a></h1>
+<p>Use the <em>img2xes.pl</em> Perl script to convert your own graphic files into a format that works
+with the VGA generator circuit.
+The most-current version of <em>img2xes.pl</em> can be found at <a href="http://www.xess.com/ho07000.html.">http://www.xess.com/ho07000.html.</a></p>
+<p>
+</p>
+<hr />
+<h1><a name="author">AUTHOR</a></h1>
+<p>Dave Vanden Bout, X Engineering Software Systems Corp.</p>
+<p>Send bug reports to <a href="mailto:bugs@xess.com.">bugs@xess.com.</a></p>
+<p>
+</p>
+<hr />
+<h1><a name="copyright_and_license">COPYRIGHT AND LICENSE</a></h1>
+<p>Copyright 2005 by X Engineering Software Systems Corporation.</p>
+<p>This library is free software; you may redistribute it and/or modify
+it as long as you do not remove the attributions to the author or his employer.</p>
+<p>
+</p>
+<hr />
+<h1><a name="history">HISTORY</a></h1>
+<p>10/30/05 - Version 1.0</p>
+
+
+		</td>
+
+
+	</tr>
+	<tr>
+		<td class="StdPageCredits">
+		<a href="mailto:webmaster@xess.com"> webmaster@xess.com</a><br>
+© 1998-2006, XESS Corp.<br> 
+All rights reserved.
+<script src="../../www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-765812-1";
+urchinTracker();
+</script>
+		<?php 
+			require("credits.html");
+		?>
+		</td>
+		<td class="StdPageNavLinks">
+		    <a href="../ho04000.html">
+    <img border="0" src="../images/menu_arrow.png">Products</a>
+    <a href="../manuals.html">
+    <img border="0" src="../images/menu_arrow.png">Manuals</a>
+    <a href="../ho07000.html">
+    <img border="0" src="../images/menu_arrow.png">Downloads</a>
+    <a href="../ho01001.html">
+    <img border="0" src="../images/menu_arrow.png">How to Buy</a>
+    <a href="../xess_int_quote.html">
+    <img border="0" src="../images/menu_arrow.png">Online Quote</a>
+    <a href="https://xess.com/xess_int_order.php3">
+    <img border="0" src="../images/menu_arrow.png">Order Online</a>
+    <br>
+    <a href="../help.html">
+    <img border="0" src="../images/menu_arrow.png">Help!</a>
+    <a href="../ho01000.html">
+    <img border="0" src="../images/menu_arrow.png">FAQ</a>
+    <a href="../list_reg.html">
+    <img border="0" src="../images/menu_arrow.png">Forum</a>
+    <a href="../ho03000.html">
+    <img border="0" src="../images/menu_arrow.png">Tutorials</a>
+    <a href="../ho03000.html">
+    <img border="0" src="../images/menu_arrow.png">Examples</a>
+    <a href="../links.html">
+    <img border="0" src="../images/menu_arrow.png">Links</a>
+    <a href="../ho00005.html">
+    <a href="../index-2.html">
+    <img border="0" src="../images/menu_arrow.png">Home</a>
+    <a href="../about_us.html">
+    <img border="0" src="../images/menu_arrow.png">About&nbsp;Us</a>
+    <a href="../ho00003.html">
+    <img border="0" src="../images/menu_arrow.png">Contact&nbsp;Us</a>
+
+		<?php 
+			require("navlinks.html");
+		?>
+		</td>
+	</tr>
+</table>
+
+</body>
+
+
+<!-- Mirrored from 192.168.0.47/appnotes/an-103005-vgagen.html by HTTrack Website Copier/3.x [XR&CO'2004], Mon, 04 Dec 2006 16:07:25 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=ISO-8859-1"><!-- /Added by HTTrack -->
+</html>
+

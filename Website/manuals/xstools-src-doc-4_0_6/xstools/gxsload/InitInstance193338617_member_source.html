@@ -1,0 +1,69 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - InitInstance</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">InitInstance</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','gxsload0',this)" class="pathLink">gxsload</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_class','CGxsloadApp0',this)" class="pathLink">CGxsloadApp</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">InitInstance</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','InitInstance193338617','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_member','InitInstance193338617','_source',this)" class="tabLinkActive">Source</a></span>
+<span class="tabInActiveGrayout"><span class="tabLinkGrayout">Call Graph</span></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<div class="paragraph2NoTopPadding">Start Line: 43</div>
+<pre class="codeExamples">
+virtual BOOL <a href="#" OnFocus="link('_member','InitInstance193338617',this)">CGxsloadApp::InitInstance</a>()
+{
+    AfxEnableControlContainer();
+
+    // Standard initialization
+    // If you are not using these features and wish to reduce the size
+    //  of your final executable, you should remove from the following
+    //  the specific initialization routines you do not need.
+
+#ifdef _AFXDLL
+    Enable3dControls();         // Call this when using MFC in a shared DLL
+#else
+    Enable3dControlsStatic();   // Call this when linking to MFC statically
+#endif
+
+    <a href="#" OnFocus="link('_class','CGxsloadDlg0',this)">CGxsloadDlg</a> dlg;
+    m_pMainWnd = &amp;dlg;
+    int nResponse = dlg.DoModal();
+    if (nResponse == IDOK)
+    {
+        // TODO: Place code here to handle when the dialog is
+        //  dismissed with OK
+    }
+    else if (nResponse == IDCANCEL)
+    {
+        // TODO: Place code here to handle when the dialog is
+        //  dismissed with Cancel
+    }
+
+    // Since the dialog has been closed, return FALSE so that we exit the
+    //  application, rather than start the application's message pump.
+    return FALSE;
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_member','_source');
+</script>

@@ -1,0 +1,2924 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+
+<!-- Mirrored from 192.168.0.47/appnotes/an-103100-ucfpga.htm by HTTrack Website Copier/3.x [XR&CO'2004], Mon, 04 Dec 2006 16:07:40 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=ISO-8859-1"><!-- /Added by HTTrack -->
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="an-103100-ucfpga_files/filelist.xml">
+<link rel=Edit-Time-Data href="an-103100-ucfpga_files/editdata.html">
+<link rel=OLE-Object-Data href="an-103100-ucfpga_files/oledata.mso">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<title>Microcontroller + FPLD Designs with the XS40 &amp; XS95 Boards</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Dave Vanden Bout</o:Author>
+  <o:Template>xs-appnote.dot</o:Template>
+  <o:LastAuthor>Dave Vanden Bout</o:LastAuthor>
+  <o:Revision>2</o:Revision>
+  <o:TotalTime>408</o:TotalTime>
+  <o:LastPrinted>2000-11-04T17:18:00Z</o:LastPrinted>
+  <o:Created>2000-11-05T19:33:00Z</o:Created>
+  <o:LastSaved>2000-11-05T19:33:00Z</o:LastSaved>
+  <o:Pages>16</o:Pages>
+  <o:Words>5325</o:Words>
+  <o:Characters>25031</o:Characters>
+  <o:Company>XESS Corporation</o:Company>
+  <o:Bytes>111616</o:Bytes>
+  <o:Lines>807</o:Lines>
+  <o:Paragraphs>329</o:Paragraphs>
+  <o:CharactersWithSpaces>37280</o:CharactersWithSpaces>
+  <o:Version>9.3821</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:AttachedTemplate
+   HRef="C:\Program Files\Microsoft Office\Templates\Reports\xs-appnote.dot"></w:AttachedTemplate>
+  <w:UpdateStylesOnOpen/>
+  <w:DisplayHorizontalDrawingGridEvery>0</w:DisplayHorizontalDrawingGridEvery>
+  <w:DisplayVerticalDrawingGridEvery>0</w:DisplayVerticalDrawingGridEvery>
+  <w:UseMarginsForDrawingGridOrigin/>
+  <w:Compatibility>
+   <w:FootnoteLayoutLikeWW8/>
+   <w:ShapeLayoutLikeWW8/>
+   <w:AlignTablesRowByRow/>
+   <w:ForgetLastTabAlignment/>
+   <w:LayoutRawTableWidth/>
+   <w:LayoutTableRowsApart/>
+  </w:Compatibility>
+ </w:WordDocument>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+@font-face
+	{font-family:Wingdings;
+	panose-1:5 0 0 0 0 0 0 0 0 0;
+	mso-font-charset:2;
+	mso-generic-font-family:auto;
+	mso-font-pitch:variable;
+	mso-font-signature:0 268435456 0 0 -2147483648 0;}
+@font-face
+	{font-family:"Arial Black";
+	panose-1:2 11 10 4 2 1 2 2 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:647 0 0 0 159 0;}
+@font-face
+	{font-family:"Arial Narrow";
+	panose-1:2 11 5 6 2 2 2 3 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:647 0 0 0 159 0;}
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-update:auto;
+	mso-style-parent:"";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:12.0pt;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+h1
+	{mso-style-next:"Body Text";
+	margin-top:.5in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:1;
+	background:black;
+	mso-shading:windowtext;
+	mso-pattern:solid black;
+	font-size:12.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:Arial;
+	mso-bidi-font-family:"Times New Roman";
+	color:white;
+	mso-font-kerning:14.0pt;
+	mso-bidi-font-weight:normal;}
+h2
+	{mso-style-next:Normal;
+	margin-top:24.0pt;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:2;
+	font-size:10.0pt;
+	font-family:Arial;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-font-weight:normal;
+	font-style:italic;
+	mso-bidi-font-style:normal;}
+h3
+	{mso-style-next:Normal;
+	margin-top:24.0pt;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:3;
+	font-size:10.0pt;
+	font-family:Arial;
+	mso-bidi-font-family:"Times New Roman";
+	font-weight:normal;}
+h4
+	{mso-style-next:Normal;
+	margin-top:.25in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:4;
+	font-size:10.0pt;
+	font-family:Arial;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-font-weight:normal;}
+h5
+	{mso-style-next:Normal;
+	margin-top:.25in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-outline-level:5;
+	font-size:11.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:Arial;
+	mso-bidi-font-family:"Times New Roman";
+	font-weight:normal;}
+h6
+	{mso-style-next:Normal;
+	margin-top:.25in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-outline-level:6;
+	font-size:11.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:Arial;
+	mso-bidi-font-family:"Times New Roman";
+	font-weight:normal;
+	font-style:italic;
+	mso-bidi-font-style:normal;}
+p.MsoHeading7, li.MsoHeading7, div.MsoHeading7
+	{mso-style-next:Normal;
+	margin-top:.25in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-outline-level:7;
+	font-size:10.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.MsoHeading8, li.MsoHeading8, div.MsoHeading8
+	{mso-style-next:Normal;
+	margin-top:.25in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-outline-level:8;
+	font-size:10.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-style:italic;
+	mso-bidi-font-style:normal;}
+p.MsoHeading9, li.MsoHeading9, div.MsoHeading9
+	{mso-style-next:Normal;
+	margin-top:.25in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-outline-level:9;
+	font-size:9.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-weight:bold;
+	mso-bidi-font-weight:normal;
+	font-style:italic;
+	mso-bidi-font-style:normal;}
+p.MsoHeader, li.MsoHeader, div.MsoHeader
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:12.0pt;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	tab-stops:center 3.0in right 6.0in;
+	font-size:10.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.MsoFooter, li.MsoFooter, div.MsoFooter
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:12.0pt;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	tab-stops:center 3.0in right 6.0in;
+	font-size:10.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.MsoCaption, li.MsoCaption, div.MsoCaption
+	{mso-style-next:"Body Text";
+	margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.75in;
+	margin-bottom:.0001pt;
+	text-indent:-.75in;
+	mso-pagination:widow-orphan;
+	border:none;
+	mso-border-bottom-alt:solid windowtext .5pt;
+	padding:0in;
+	mso-padding-alt:0in 0in 1.0pt 0in;
+	font-size:10.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-weight:bold;
+	mso-bidi-font-weight:normal;}
+p.MsoListBullet, li.MsoListBullet, div.MsoListBullet
+	{mso-style-update:auto;
+	margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.25in;
+	margin-bottom:.0001pt;
+	text-indent:-.25in;
+	mso-pagination:widow-orphan;
+	mso-list:l9 level1 lfo15;
+	tab-stops:list .25in;
+	font-size:10.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.MsoBodyText, li.MsoBodyText, div.MsoBodyText
+	{margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;
+	text-underline:single;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:purple;
+	text-decoration:underline;
+	text-underline:single;}
+em
+	{mso-style-parent:DefaultFont;
+	mso-ansi-font-size:10.0pt;
+	mso-ascii-font-family:Arial;
+	mso-hansi-font-family:Arial;
+	mso-bidi-font-style:normal;}
+p.Figure, li.Figure, div.Figure
+	{mso-style-name:Figure;
+	mso-style-update:auto;
+	mso-style-parent:"Body Text";
+	mso-style-next:"Body Text";
+	margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:0in;
+	margin-bottom:.0001pt;
+	text-align:center;
+	mso-pagination:widow-orphan lines-together;
+	page-break-after:avoid;
+	border:none;
+	mso-border-top-alt:solid windowtext .5pt;
+	padding:0in;
+	mso-padding-alt:6.0pt 0in 0in 0in;
+	font-size:10.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+span.CodeListingFont
+	{mso-style-name:CodeListingFont;
+	mso-style-parent:DefaultFont;
+	mso-ansi-font-size:10.0pt;
+	mso-ascii-font-family:"Courier New";
+	mso-hansi-font-family:"Courier New";}
+span.Description
+	{mso-style-name:Description;
+	mso-style-parent:DefaultFont;
+	mso-ansi-font-size:10.0pt;
+	mso-ascii-font-family:Arial;
+	mso-hansi-font-family:Arial;
+	font-weight:bold;}
+span.ExecutableName
+	{mso-style-name:ExecutableName;
+	mso-style-parent:DefaultFont;
+	mso-ansi-font-size:10.0pt;
+	mso-ascii-font-family:"Arial Narrow";
+	mso-hansi-font-family:"Arial Narrow";}
+span.FileName
+	{mso-style-name:FileName;
+	mso-style-parent:DefaultFont;
+	mso-ansi-font-size:10.0pt;
+	mso-ascii-font-family:"Arial Narrow";
+	mso-hansi-font-family:"Arial Narrow";}
+span.FirstUse
+	{mso-style-name:FirstUse;
+	mso-style-parent:DefaultFont;
+	mso-ansi-font-size:10.0pt;
+	mso-ascii-font-family:Arial;
+	mso-hansi-font-family:Arial;
+	font-style:italic;}
+span.Keyword
+	{mso-style-name:Keyword;
+	mso-style-parent:DefaultFont;
+	mso-ansi-font-size:10.0pt;
+	mso-ascii-font-family:Arial;
+	mso-hansi-font-family:Arial;
+	font-weight:bold;}
+span.MenuItem
+	{mso-style-name:MenuItem;
+	mso-ansi-font-size:12.0pt;
+	mso-ascii-font-family:"Arial Narrow";
+	mso-hansi-font-family:"Arial Narrow";}
+span.ModuleName
+	{mso-style-name:ModuleName;
+	mso-style-parent:DefaultFont;
+	mso-ansi-font-size:10.0pt;
+	mso-ascii-font-family:Arial;
+	mso-hansi-font-family:Arial;
+	font-weight:bold;}
+span.Operator
+	{mso-style-name:Operator;
+	mso-style-parent:DefaultFont;
+	mso-ansi-font-size:10.0pt;
+	mso-ascii-font-family:Arial;
+	mso-hansi-font-family:Arial;
+	font-weight:bold;}
+span.Parameter
+	{mso-style-name:Parameter;
+	mso-style-parent:DefaultFont;
+	mso-ansi-font-size:10.0pt;
+	mso-ascii-font-family:"Courier New";
+	mso-hansi-font-family:"Courier New";
+	font-style:italic;}
+span.UserTyping
+	{mso-style-name:UserTyping;
+	mso-style-parent:DefaultFont;
+	mso-ansi-font-size:10.0pt;
+	mso-ascii-font-family:"Courier New";
+	mso-hansi-font-family:"Courier New";}
+span.DefaultFont
+	{mso-style-name:DefaultFont;
+	mso-ansi-font-size:10.0pt;
+	mso-ascii-font-family:Arial;
+	mso-hansi-font-family:Arial;}
+p.FigureCaption, li.FigureCaption, div.FigureCaption
+	{mso-style-name:FigureCaption;
+	mso-style-parent:Caption;
+	mso-style-next:"Body Text";
+	margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:12.0pt;
+	margin-left:.75in;
+	text-indent:-.75in;
+	mso-pagination:widow-orphan lines-together;
+	border:none;
+	mso-border-top-alt:solid windowtext .5pt;
+	padding:0in;
+	mso-padding-alt:1.0pt 0in 0in 0in;
+	font-size:10.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-weight:bold;
+	mso-bidi-font-weight:normal;}
+p.ListingCaption, li.ListingCaption, div.ListingCaption
+	{mso-style-name:ListingCaption;
+	mso-style-parent:Caption;
+	mso-style-next:"Body Text";
+	margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.75in;
+	margin-bottom:.0001pt;
+	text-indent:-.75in;
+	mso-pagination:widow-orphan;
+	border:none;
+	mso-border-bottom-alt:solid windowtext .5pt;
+	padding:0in;
+	mso-padding-alt:0in 0in 1.0pt 0in;
+	font-size:10.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-weight:bold;
+	mso-bidi-font-weight:normal;}
+p.TableCaption, li.TableCaption, div.TableCaption
+	{mso-style-name:TableCaption;
+	mso-style-parent:Caption;
+	mso-style-next:"Body Text";
+	margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:.75in;
+	text-indent:-.75in;
+	mso-pagination:widow-orphan lines-together;
+	page-break-after:avoid;
+	border:none;
+	mso-border-bottom-alt:solid windowtext .5pt;
+	padding:0in;
+	mso-padding-alt:0in 0in 1.0pt 0in;
+	font-size:10.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-weight:bold;
+	mso-bidi-font-weight:normal;}
+span.SignalName
+	{mso-style-name:SignalName;
+	mso-style-parent:DefaultFont;
+	mso-ansi-font-size:10.0pt;
+	mso-ascii-font-family:Arial;
+	mso-hansi-font-family:Arial;
+	font-weight:bold;}
+p.FigureWithNoCaption, li.FigureWithNoCaption, div.FigureWithNoCaption
+	{mso-style-name:FigureWithNoCaption;
+	mso-style-update:auto;
+	mso-style-parent:"Body Text";
+	mso-style-next:"Body Text";
+	margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:0in;
+	margin-bottom:.0001pt;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+span.TableHeading
+	{mso-style-name:TableHeading;
+	mso-style-parent:DefaultFont;
+	mso-ansi-font-size:10.0pt;
+	mso-ascii-font-family:Arial;
+	mso-hansi-font-family:Arial;
+	font-weight:bold;}
+span.TableText
+	{mso-style-name:TableText;
+	mso-style-parent:DefaultFont;
+	mso-ansi-font-size:10.0pt;
+	mso-ascii-font-family:Arial;
+	mso-hansi-font-family:Arial;}
+span.WindowTitle
+	{mso-style-name:WindowTitle;
+	mso-style-parent:DefaultFont;
+	mso-ansi-font-size:10.0pt;
+	mso-ascii-font-family:Arial;
+	mso-hansi-font-family:Arial;
+	font-weight:bold;}
+span.LogicEquation
+	{mso-style-name:"Logic Equation";
+	mso-style-parent:DefaultFont;
+	mso-ansi-font-size:10.0pt;
+	mso-ascii-font-family:"Arial Narrow";
+	mso-hansi-font-family:"Arial Narrow";}
+p.ChapterNumber, li.ChapterNumber, div.ChapterNumber
+	{mso-style-name:ChapterNumber;
+	mso-style-update:auto;
+	mso-style-next:Normal;
+	margin-top:0in;
+	margin-right:5.0in;
+	margin-bottom:0in;
+	margin-left:0in;
+	margin-bottom:.0001pt;
+	text-align:center;
+	page-break-before:always;
+	mso-pagination:none;
+	page-break-after:avoid;
+	mso-outline-level:1;
+	background:black;
+	mso-shading:windowtext;
+	mso-pattern:solid black;
+	font-size:36.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Arial Black";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	color:white;
+	font-weight:bold;
+	mso-bidi-font-weight:normal;}
+p.ChapterTitle, li.ChapterTitle, div.ChapterTitle
+	{mso-style-name:ChapterTitle;
+	mso-style-update:auto;
+	mso-style-next:"Body Text";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:.5in;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	border:none;
+	mso-border-top-alt:solid black 3.0pt;
+	padding:0in;
+	mso-padding-alt:1.0pt 0in 0in 0in;
+	font-size:20.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Arial Black";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+span.DescriptionTerm
+	{mso-style-name:DescriptionTerm;
+	mso-style-parent:DefaultFont;
+	mso-ansi-font-size:10.0pt;
+	mso-ascii-font-family:Arial;
+	mso-hansi-font-family:Arial;
+	font-weight:bold;}
+span.InWindowText
+	{mso-style-name:InWindowText;
+	mso-style-parent:DefaultFont;
+	mso-ansi-font-size:10.0pt;
+	mso-ascii-font-family:"Arial Narrow";
+	mso-hansi-font-family:"Arial Narrow";}
+span.ProjectName
+	{mso-style-name:ProjectName;
+	mso-style-parent:DefaultFont;
+	mso-ansi-font-size:10.0pt;
+	mso-ascii-font-family:Arial;
+	mso-hansi-font-family:Arial;
+	font-weight:bold;
+	font-style:italic;}
+p.DocTitle, li.DocTitle, div.DocTitle
+	{mso-style-name:DocTitle;
+	mso-style-update:auto;
+	mso-style-next:DocAuthor;
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:16.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Arial Black";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.DocAuthor, li.DocAuthor, div.DocAuthor
+	{mso-style-name:DocAuthor;
+	mso-style-update:auto;
+	mso-style-next:Company;
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.Company, li.Company, div.Company
+	{mso-style-name:Company;
+	mso-style-update:auto;
+	mso-style-next:ReleaseDate;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:12.0pt;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.ReleaseDate, li.ReleaseDate, div.ReleaseDate
+	{mso-style-name:ReleaseDate;
+	mso-style-update:auto;
+	mso-style-next:"Body Text";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.SummaryHeader, li.SummaryHeader, div.SummaryHeader
+	{mso-style-name:SummaryHeader;
+	mso-style-update:auto;
+	mso-style-parent:"Body Text";
+	mso-style-next:Summary;
+	margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-weight:bold;
+	mso-bidi-font-weight:normal;}
+p.Summary, li.Summary, div.Summary
+	{mso-style-name:Summary;
+	mso-style-update:auto;
+	mso-style-parent:"Body Text";
+	margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.CodeListing, li.CodeListing, div.CodeListing
+	{mso-style-name:CodeListing;
+	mso-style-parent:"Body Text";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:9.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Courier New";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.CommandLine, li.CommandLine, div.CommandLine
+	{mso-style-name:CommandLine;
+	mso-style-parent:"Body Text";
+	margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Courier New";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.CodeListingEnd, li.CodeListingEnd, div.CodeListingEnd
+	{mso-style-name:CodeListingEnd;
+	mso-style-update:auto;
+	mso-style-parent:CodeListing;
+	mso-style-next:"Body Text";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:12.0pt;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	border:none;
+	mso-border-bottom-alt:solid windowtext .5pt;
+	padding:0in;
+	mso-padding-alt:0in 0in 1.0pt 0in;
+	font-size:9.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Courier New";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:.7in .7in .9in .7in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.4in;
+	mso-title-page:yes;
+	mso-header:url("an-103100-ucfpga_files/header.htm") h1;
+	mso-footer:url("an-103100-ucfpga_files/header.htm") f1;
+	mso-first-footer:url("an-103100-ucfpga_files/header.htm") ff1;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+@page Section2
+	{size:8.5in 11.0in;
+	margin:.7in .7in .9in .7in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.4in;
+	mso-title-page:yes;
+	mso-header:url("an-103100-ucfpga_files/header.htm") h1;
+	mso-footer:url("an-103100-ucfpga_files/header.htm") f1;
+	mso-first-footer:url("an-103100-ucfpga_files/header.htm") ff1;
+	mso-paper-source:0;}
+div.Section2
+	{page:Section2;}
+@page Section3
+	{size:8.5in 11.0in;
+	margin:.7in .7in .9in .7in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.4in;
+	mso-columns:2 even .5in;
+	mso-title-page:yes;
+	mso-header:url("an-103100-ucfpga_files/header.htm") h1;
+	mso-footer:url("an-103100-ucfpga_files/header.htm") f1;
+	mso-first-footer:url("an-103100-ucfpga_files/header.htm") ff1;
+	mso-paper-source:0;}
+div.Section3
+	{page:Section3;}
+@page Section4
+	{size:8.5in 11.0in;
+	margin:.7in .7in .9in .7in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.4in;
+	mso-title-page:yes;
+	mso-header:url("an-103100-ucfpga_files/header.htm") h1;
+	mso-footer:url("an-103100-ucfpga_files/header.htm") f1;
+	mso-first-header:url("an-103100-ucfpga_files/header.htm") fh4;
+	mso-first-footer:url("an-103100-ucfpga_files/header.htm") ff1;
+	mso-paper-source:0;}
+div.Section4
+	{page:Section4;}
+@page Section5
+	{size:8.5in 11.0in;
+	margin:.7in .7in .9in .7in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.4in;
+	mso-columns:2 even .5in;
+	mso-title-page:yes;
+	mso-header:url("an-103100-ucfpga_files/header.htm") h1;
+	mso-footer:url("an-103100-ucfpga_files/header.htm") f1;
+	mso-first-header:url("an-103100-ucfpga_files/header.htm") fh4;
+	mso-first-footer:url("an-103100-ucfpga_files/header.htm") ff1;
+	mso-paper-source:0;}
+div.Section5
+	{page:Section5;}
+@page Section6
+	{size:8.5in 11.0in;
+	margin:.7in .7in .9in .7in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.4in;
+	mso-title-page:yes;
+	mso-header:url("an-103100-ucfpga_files/header.htm") h1;
+	mso-footer:url("an-103100-ucfpga_files/header.htm") f1;
+	mso-first-header:url("an-103100-ucfpga_files/header.htm") fh4;
+	mso-first-footer:url("an-103100-ucfpga_files/header.htm") ff1;
+	mso-paper-source:0;}
+div.Section6
+	{page:Section6;}
+@page Section7
+	{size:8.5in 11.0in;
+	margin:.7in .7in .9in .7in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.4in;
+	mso-columns:2 even .5in;
+	mso-title-page:yes;
+	mso-header:url("an-103100-ucfpga_files/header.htm") h1;
+	mso-footer:url("an-103100-ucfpga_files/header.htm") f1;
+	mso-first-header:url("an-103100-ucfpga_files/header.htm") fh4;
+	mso-first-footer:url("an-103100-ucfpga_files/header.htm") ff1;
+	mso-paper-source:0;}
+div.Section7
+	{page:Section7;}
+@page Section8
+	{size:8.5in 11.0in;
+	margin:.7in .7in .9in .7in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.4in;
+	mso-title-page:yes;
+	mso-header:url("an-103100-ucfpga_files/header.htm") h1;
+	mso-footer:url("an-103100-ucfpga_files/header.htm") f1;
+	mso-first-header:url("an-103100-ucfpga_files/header.htm") fh4;
+	mso-first-footer:url("an-103100-ucfpga_files/header.htm") ff1;
+	mso-paper-source:0;}
+div.Section8
+	{page:Section8;}
+@page Section9
+	{size:8.5in 11.0in;
+	margin:.7in .7in .9in .7in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.4in;
+	mso-line-numbers-count-by:1;
+	mso-line-numbers-restart:new-section;
+	mso-title-page:yes;
+	mso-header:url("an-103100-ucfpga_files/header.htm") h1;
+	mso-footer:url("an-103100-ucfpga_files/header.htm") f1;
+	mso-first-header:url("an-103100-ucfpga_files/header.htm") fh4;
+	mso-first-footer:url("an-103100-ucfpga_files/header.htm") ff1;
+	mso-paper-source:0;}
+div.Section9
+	{page:Section9;}
+@page Section10
+	{size:8.5in 11.0in;
+	margin:.7in .7in .9in .7in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.4in;
+	mso-title-page:yes;
+	mso-header:url("an-103100-ucfpga_files/header.htm") h1;
+	mso-footer:url("an-103100-ucfpga_files/header.htm") f1;
+	mso-first-header:url("an-103100-ucfpga_files/header.htm") fh4;
+	mso-first-footer:url("an-103100-ucfpga_files/header.htm") ff1;
+	mso-paper-source:0;}
+div.Section10
+	{page:Section10;}
+@page Section11
+	{size:8.5in 11.0in;
+	margin:.7in .7in .9in .7in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.4in;
+	mso-line-numbers-count-by:1;
+	mso-line-numbers-restart:new-section;
+	mso-title-page:yes;
+	mso-header:url("an-103100-ucfpga_files/header.htm") h1;
+	mso-footer:url("an-103100-ucfpga_files/header.htm") f1;
+	mso-first-header:url("an-103100-ucfpga_files/header.htm") fh4;
+	mso-first-footer:url("an-103100-ucfpga_files/header.htm") ff1;
+	mso-paper-source:0;}
+div.Section11
+	{page:Section11;}
+@page Section12
+	{size:8.5in 11.0in;
+	margin:.7in .7in .9in .7in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.4in;
+	mso-columns:2 even .5in;
+	mso-title-page:yes;
+	mso-header:url("an-103100-ucfpga_files/header.htm") h1;
+	mso-footer:url("an-103100-ucfpga_files/header.htm") f1;
+	mso-first-header:url("an-103100-ucfpga_files/header.htm") fh4;
+	mso-first-footer:url("an-103100-ucfpga_files/header.htm") ff1;
+	mso-paper-source:0;}
+div.Section12
+	{page:Section12;}
+@page Section13
+	{size:8.5in 11.0in;
+	margin:.7in .7in .9in .7in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.4in;
+	mso-title-page:yes;
+	mso-header:url("an-103100-ucfpga_files/header.htm") h1;
+	mso-footer:url("an-103100-ucfpga_files/header.htm") f1;
+	mso-first-header:url("an-103100-ucfpga_files/header.htm") fh4;
+	mso-first-footer:url("an-103100-ucfpga_files/header.htm") ff1;
+	mso-paper-source:0;}
+div.Section13
+	{page:Section13;}
+@page Section14
+	{size:8.5in 11.0in;
+	margin:.7in .7in .9in .7in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.4in;
+	mso-columns:2 even .5in;
+	mso-title-page:yes;
+	mso-header:url("an-103100-ucfpga_files/header.htm") h1;
+	mso-footer:url("an-103100-ucfpga_files/header.htm") f1;
+	mso-first-header:url("an-103100-ucfpga_files/header.htm") fh4;
+	mso-first-footer:url("an-103100-ucfpga_files/header.htm") ff1;
+	mso-paper-source:0;}
+div.Section14
+	{page:Section14;}
+@page Section15
+	{size:8.5in 11.0in;
+	margin:.7in .7in .9in .7in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.4in;
+	mso-title-page:yes;
+	mso-header:url("an-103100-ucfpga_files/header.htm") h1;
+	mso-footer:url("an-103100-ucfpga_files/header.htm") f1;
+	mso-first-header:url("an-103100-ucfpga_files/header.htm") fh4;
+	mso-first-footer:url("an-103100-ucfpga_files/header.htm") ff1;
+	mso-paper-source:0;}
+div.Section15
+	{page:Section15;}
+@page Section16
+	{size:8.5in 11.0in;
+	margin:.7in .7in .9in .7in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.4in;
+	mso-title-page:yes;
+	mso-header:url("an-103100-ucfpga_files/header.htm") h1;
+	mso-footer:url("an-103100-ucfpga_files/header.htm") f1;
+	mso-first-header:url("an-103100-ucfpga_files/header.htm") fh4;
+	mso-first-footer:url("an-103100-ucfpga_files/header.htm") ff1;
+	mso-paper-source:0;}
+div.Section16
+	{page:Section16;}
+@page Section17
+	{size:8.5in 11.0in;
+	margin:.7in .7in .9in .7in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.4in;
+	mso-line-numbers-count-by:1;
+	mso-title-page:yes;
+	mso-header:url("an-103100-ucfpga_files/header.htm") h1;
+	mso-footer:url("an-103100-ucfpga_files/header.htm") f1;
+	mso-first-header:url("an-103100-ucfpga_files/header.htm") fh4;
+	mso-first-footer:url("an-103100-ucfpga_files/header.htm") ff1;
+	mso-paper-source:0;}
+div.Section17
+	{page:Section17;}
+@page Section18
+	{size:8.5in 11.0in;
+	margin:.7in .7in .9in .7in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.4in;
+	mso-columns:2 even .5in;
+	mso-title-page:yes;
+	mso-header:url("an-103100-ucfpga_files/header.htm") h1;
+	mso-footer:url("an-103100-ucfpga_files/header.htm") f1;
+	mso-first-header:url("an-103100-ucfpga_files/header.htm") fh4;
+	mso-first-footer:url("an-103100-ucfpga_files/header.htm") ff1;
+	mso-paper-source:0;}
+div.Section18
+	{page:Section18;}
+@page Section19
+	{size:8.5in 11.0in;
+	margin:.7in .7in .9in .7in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.4in;
+	mso-title-page:yes;
+	mso-header:url("an-103100-ucfpga_files/header.htm") h1;
+	mso-footer:url("an-103100-ucfpga_files/header.htm") f1;
+	mso-first-header:url("an-103100-ucfpga_files/header.htm") fh4;
+	mso-first-footer:url("an-103100-ucfpga_files/header.htm") ff1;
+	mso-paper-source:0;}
+div.Section19
+	{page:Section19;}
+@page Section20
+	{size:8.5in 11.0in;
+	margin:.7in .7in .9in .7in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.4in;
+	mso-line-numbers-count-by:1;
+	mso-title-page:yes;
+	mso-header:url("an-103100-ucfpga_files/header.htm") h1;
+	mso-footer:url("an-103100-ucfpga_files/header.htm") f1;
+	mso-first-header:url("an-103100-ucfpga_files/header.htm") fh4;
+	mso-first-footer:url("an-103100-ucfpga_files/header.htm") ff1;
+	mso-paper-source:0;}
+div.Section20
+	{page:Section20;}
+@page Section21
+	{size:8.5in 11.0in;
+	margin:.7in .7in .9in .7in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.4in;
+	mso-columns:2 even .5in;
+	mso-title-page:yes;
+	mso-header:url("an-103100-ucfpga_files/header.htm") h1;
+	mso-footer:url("an-103100-ucfpga_files/header.htm") f1;
+	mso-first-header:url("an-103100-ucfpga_files/header.htm") fh4;
+	mso-first-footer:url("an-103100-ucfpga_files/header.htm") ff1;
+	mso-paper-source:0;}
+div.Section21
+	{page:Section21;}
+ /* List Definitions */
+@list l0
+	{mso-list-id:-132;
+	mso-list-type:simple;
+	mso-list-template-ids:1360403074;}
+@list l0:level1
+	{mso-level-tab-stop:1.25in;
+	mso-level-number-position:left;
+	margin-left:1.25in;
+	text-indent:-.25in;}
+@list l1
+	{mso-list-id:-131;
+	mso-list-type:simple;
+	mso-list-template-ids:53668278;}
+@list l1:level1
+	{mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	margin-left:1.0in;
+	text-indent:-.25in;}
+@list l2
+	{mso-list-id:-130;
+	mso-list-type:simple;
+	mso-list-template-ids:-782874226;}
+@list l2:level1
+	{mso-level-tab-stop:.75in;
+	mso-level-number-position:left;
+	margin-left:.75in;
+	text-indent:-.25in;}
+@list l3
+	{mso-list-id:-129;
+	mso-list-type:simple;
+	mso-list-template-ids:-1286801398;}
+@list l3:level1
+	{mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l4
+	{mso-list-id:-128;
+	mso-list-type:simple;
+	mso-list-template-ids:1917895190;}
+@list l4:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:1.25in;
+	mso-level-number-position:left;
+	margin-left:1.25in;
+	text-indent:-.25in;
+	font-family:Symbol;}
+@list l5
+	{mso-list-id:-127;
+	mso-list-type:simple;
+	mso-list-template-ids:-1379613308;}
+@list l5:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	margin-left:1.0in;
+	text-indent:-.25in;
+	font-family:Symbol;}
+@list l6
+	{mso-list-id:-126;
+	mso-list-type:simple;
+	mso-list-template-ids:-840138856;}
+@list l6:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.75in;
+	mso-level-number-position:left;
+	margin-left:.75in;
+	text-indent:-.25in;
+	font-family:Symbol;}
+@list l7
+	{mso-list-id:-125;
+	mso-list-type:simple;
+	mso-list-template-ids:888541086;}
+@list l7:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:Symbol;}
+@list l8
+	{mso-list-id:-120;
+	mso-list-type:simple;
+	mso-list-template-ids:1735445286;}
+@list l8:level1
+	{mso-level-tab-stop:.25in;
+	mso-level-number-position:left;
+	margin-left:.25in;
+	text-indent:-.25in;}
+@list l9
+	{mso-list-id:-119;
+	mso-list-type:simple;
+	mso-list-template-ids:-1119596562;}
+@list l9:level1
+	{mso-level-number-format:bullet;
+	mso-level-style-link:"List Bullet";
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.25in;
+	mso-level-number-position:left;
+	margin-left:.25in;
+	text-indent:-.25in;
+	font-family:Symbol;}
+@list l10
+	{mso-list-id:266735875;
+	mso-list-type:simple;
+	mso-list-template-ids:67698703;}
+@list l10:level1
+	{mso-level-tab-stop:.25in;
+	mso-level-number-position:left;
+	margin-left:.25in;
+	text-indent:-.25in;}
+@list l11
+	{mso-list-id:820803942;
+	mso-list-type:hybrid;
+	mso-list-template-ids:875743888 67698689 67698691 67698693 67698689 67698691 67698693 67698689 67698691 67698693;}
+@list l11:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:Symbol;}
+@list l12
+	{mso-list-id:1094323791;
+	mso-list-type:hybrid;
+	mso-list-template-ids:811372050 67698689 67698691 67698693 67698689 67698691 67698693 67698689 67698691 67698693;}
+@list l12:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:Symbol;}
+@list l13
+	{mso-list-id:1999771454;
+	mso-list-type:simple;
+	mso-list-template-ids:67698703;}
+@list l13:level1
+	{mso-level-tab-stop:.25in;
+	mso-level-number-position:left;
+	margin-left:.25in;
+	text-indent:-.25in;}
+@list l14
+	{mso-list-id:2071071994;
+	mso-list-type:simple;
+	mso-list-template-ids:-1383456522;}
+@list l14:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F071;
+	mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	margin-left:1.0in;
+	text-indent:-.25in;
+	mso-ansi-font-size:8.0pt;
+	font-family:Wingdings;}
+ol
+	{margin-bottom:0in;}
+ul
+	{margin-bottom:0in;}
+-->
+</style>
+<!--[if gte mso 9]><xml>
+ <o:shapedefaults v:ext="edit" spidmax="2050"/>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <o:shapelayout v:ext="edit">
+  <o:idmap v:ext="edit" data="1"/>
+ </o:shapelayout></xml><![endif]-->
+</head>
+
+<body lang=EN-US link=blue vlink=purple style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<table border=1 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ border:none;mso-border-top-alt:solid windowtext 3.0pt;mso-border-bottom-alt:
+ solid windowtext 3.0pt;mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr style='height:58.0pt'>
+  <td width=301 valign=top style='width:225.9pt;border-top:solid windowtext 3.0pt;
+  border-left:none;border-bottom:solid windowtext .25pt;border-right:none;
+  padding:0in 5.4pt 0in 5.4pt;height:58.0pt'>
+  <p class=MsoBodyText><!--[if gte vml 1]><v:shapetype id="_x0000_t75"
+   coordsize="21600,21600" o:spt="75" o:preferrelative="t" path="m@4@5l@4@11@9@11@9@5xe"
+   filled="f" stroked="f">
+   <v:stroke joinstyle="miter"/>
+   <v:formulas>
+    <v:f eqn="if lineDrawn pixelLineWidth 0"/>
+    <v:f eqn="sum @0 1 0"/>
+    <v:f eqn="sum 0 0 @1"/>
+    <v:f eqn="prod @2 1 2"/>
+    <v:f eqn="prod @3 21600 pixelWidth"/>
+    <v:f eqn="prod @3 21600 pixelHeight"/>
+    <v:f eqn="sum @0 0 1"/>
+    <v:f eqn="prod @6 1 2"/>
+    <v:f eqn="prod @7 21600 pixelWidth"/>
+    <v:f eqn="sum @8 21600 0"/>
+    <v:f eqn="prod @7 21600 pixelHeight"/>
+    <v:f eqn="sum @10 21600 0"/>
+   </v:formulas>
+   <v:path o:extrusionok="f" gradientshapeok="t" o:connecttype="rect"/>
+   <o:lock v:ext="edit" aspectratio="t"/>
+  </v:shapetype><v:shape id="_x0000_i1025" type="#_x0000_t75" style='width:129.75pt;
+   height:37.5pt' o:ole="" fillcolor="window">
+   <v:imagedata src="./an-103100-ucfpga_files/image001.wmz" o:title=""/>
+  </v:shape><![endif]--><![if !vml]><img width=173 height=50
+  src="an-103100-ucfpga_files/image002.gif" v:shapes="_x0000_i1025"><![endif]><!--[if gte mso 9]><xml>
+   <o:OLEObject Type="Embed" ProgID="CorelDraw.Graphic.7" ShapeID="_x0000_i1025"
+    DrawAspect="Content" ObjectID="_1034939981">
+   </o:OLEObject>
+  </xml><![endif]--></p>
+  </td>
+  <td width=384 style='width:4.0in;border-top:solid windowtext 3.0pt;
+  border-left:none;border-bottom:solid windowtext .25pt;border-right:none;
+  padding:0in 5.4pt 0in 5.4pt;height:58.0pt'>
+  <p class=DocTitle>Microcontroller + FPLD Designs with the XS40 &amp; XS95
+  Boards</p>
+  </td>
+ </tr>
+ <tr style='height:26.5pt'>
+  <td width=301 style='width:225.9pt;border:none;border-bottom:solid windowtext 3.0pt;
+  padding:0in 5.4pt 0in 5.4pt;height:26.5pt'>
+  <p class=ReleaseDate>October 31, 2000 (Version 2.0)</p>
+  </td>
+  <td width=384 style='width:4.0in;border:none;border-bottom:solid windowtext 3.0pt;
+  padding:0in 5.4pt 0in 5.4pt;height:26.5pt'>
+  <p class=DocAuthor>Application Note by D. Vanden Bout</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<span style='font-size:10.0pt;font-family:Arial;mso-fareast-font-family:"Times New Roman";
+mso-bidi-font-family:"Times New Roman";mso-ansi-language:EN-US;mso-fareast-language:
+EN-US;mso-bidi-language:AR-SA'><br clear=all style='page-break-before:auto;
+mso-break-type:section-break'>
+</span>
+
+<div class=Section2>
+
+<p class=SummaryHeader>Summary</p>
+
+<p class=MsoBodyText>This application note introduces you to the design and
+test of 8031 microcontroller + FPGA/CPLD designs using the XS40 and XS95 Boards<span
+style='font-family:Symbol;mso-ascii-font-family:Arial;mso-hansi-font-family:
+Arial;mso-char-type:symbol;mso-symbol-font-family:Symbol'><span
+style='mso-char-type:symbol;mso-symbol-font-family:Symbol'>ä</span></span>.<span
+style="mso-spacerun: yes">   </span>The material presented in this appnote
+assumes you are familiar with the following topics:</p>
+
+<p class=MsoListBullet><![if !supportLists]><span style='font-family:Symbol'>·<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]>designing logic using the XC4000 FPGA or XC9500 CPLD (<i
+style='mso-bidi-font-style:normal'>The Practical XILINX Designer Lab Book</i>
+from Prentice-Hall is a good introduction to this topic);</p>
+
+<p class=MsoListBullet><![if !supportLists]><span style='font-family:Symbol'>·<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]>the architecture and electrical characteristics of the
+8031 microcontroller (the 8031 is a ROM-less version of Intel’s 8051, so check <a
+href="http://www.intel.com/">www.intel.com</a> for more information);</p>
+
+<p class=MsoListBullet><![if !supportLists]><span style='font-family:Symbol'>·<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]>writing and debugging programs for the 8031.<br
+style='mso-special-character:line-break'>
+<![if !supportLineBreakNewLine]><br style='mso-special-character:line-break'>
+<![endif]></p>
+
+</div>
+
+<span style='font-size:10.0pt;font-family:Arial;mso-fareast-font-family:"Times New Roman";
+mso-bidi-font-family:"Times New Roman";mso-ansi-language:EN-US;mso-fareast-language:
+EN-US;mso-bidi-language:AR-SA'><br clear=all style='page-break-before:auto;
+mso-break-type:section-break'>
+</span>
+
+<div class=Section3>
+
+<h1 style='margin-top:0in'>Microcontroller + FPLD Design Flow</h1>
+
+<p class=MsoBodyText>The basic design flow for building microcontroller + FPLD
+applications is shown in <span style='mso-field-code:"REF _Ref497973944 \\h"'>Figure
+1<!--[if gte mso 9]><xml>
+ <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F005200650066003400390037003900370033003900340034000000</w:data>
+</xml><![endif]--></span>.<span style="mso-spacerun: yes">  </span>(The designs
+in this appnote are applicable to both the CPLD in the XS95 Board and the FPGA
+in the XS40 Board, so we will use FPLD as a single acronym for both types of
+programmable devices.)</p>
+
+<p class=MsoBodyText>Initially you have to get the specifications for the
+system you are trying to design.<span style="mso-spacerun: yes">  </span>Then
+you have to determine what inputs are available to your system and what outputs
+it will generate.</p>
+
+<p class=MsoBodyText>At this point, you have to partition the functions of your
+system between the microcontroller and the FPLD.<span style="mso-spacerun:
+yes">  </span>Some of the input signals will go to the microcontroller, some
+will go to the FPLD, and some will go to both.<span style="mso-spacerun: yes"> 
+</span>Likewise, some of the outputs will be computed by the microcontroller
+and some by the FPLD.<span style="mso-spacerun: yes">  </span>There will also
+be some new intra-system inputs and outputs created by the need for the
+microcontroller and the FPLD to cooperate.</p>
+
+<p class=MsoBodyText>In general, the FPLD will be used for low-level functions
+where signal transitions occur more frequently and the control logic is
+simpler.<span style="mso-spacerun: yes">  </span>A specialized serial
+transmitter/receiver would be a good example.<span style="mso-spacerun: yes"> 
+</span>Conversely, the microcontroller will be used for higher-level functions
+where the responses occur less quickly and the control logic is more
+complex.<span style="mso-spacerun: yes">  </span>Reacting to commands passed in
+by the receiver is a good example.</p>
+
+<p class=MsoBodyText>Once the design has been partitioned and you have assigned
+the various inputs, outputs, and functions to the microcontroller and the FPLD,
+then you can begin doing detailed design of the software and hardware.<span
+style="mso-spacerun: yes">  </span>For the software, you can use your favorite
+editor to create a <span class=FileName><span style='font-family:"Arial Narrow"'>.ASM</span></span>
+assembly-language file and assemble it with <span class=ExecutableName><span
+style='font-family:"Arial Narrow"'>asm51</span></span> to create a <span
+class=FileName><span style='font-family:"Arial Narrow"'>.HEX</span></span> object
+file for the 8031 microcontroller on the XS Board.<span style="mso-spacerun:
+yes">  </span>For the FPLD hardware portion, you will draw schematics and store
+them in <span class=FileName><span style='font-family:"Arial Narrow"'>.SCH</span></span>
+files that are compiled it into a <span class=FileName><span style='font-family:
+"Arial Narrow"'>.BIT</span></span> or <span class=FileName><span
+style='font-family:"Arial Narrow"'>.SVF</span></span> bitstream file using the
+XILINX Foundation programming software.<span style="mso-spacerun: yes"> 
+</span>With the 8031 object file and the FPLD bitstream file in hand, you can
+download them to the XS Board using the <span class=ExecutableName><span
+style='font-family:"Arial Narrow"'>XSLOAD</span></span> program.<span
+style="mso-spacerun: yes">  </span><span class=ExecutableName><span
+style='font-family:"Arial Narrow"'>XSLOAD</span></span> stores the contents of
+the <span class=FileName><span style='font-family:"Arial Narrow"'>.HEX</span></span>
+file into the 32 KByte RAM on the XS Board (128 KByte RAM on the XS+ Board) and
+then it reconfigures the FPLD by loading it with the bitstream file.</p>
+
+<p class=MsoBodyText>After the XS Board is loaded with the hardware and
+software, you need to test it to see if it really works.<span
+style="mso-spacerun: yes">  </span>The answer usually starts as &quot;No'' so
+you need a method of injecting test signals and observing the results.<span
+style="mso-spacerun: yes">  </span><span class=ExecutableName><span
+style='font-family:"Arial Narrow"'>XSPORT</span></span> is a simple program
+that lets you send test signals to the XS Board through the PC parallel
+port.<span style="mso-spacerun: yes">  </span>You can trace the reaction of
+your system to signals from the parallel port by programming the
+microcontroller and the FPLD to output status information on the LED digit
+(much like placing <span style='font-size:9.0pt;mso-bidi-font-size:10.0pt;
+font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'>printf</span>
+statements in your C language programs).<span style="mso-spacerun: yes"> 
+</span>This is admittedly crude but will serve if you don't have access to
+programmable stimulus generators and logic analyzers.</p>
+
+</div>
+
+<span style='font-size:10.0pt;font-family:Arial;mso-fareast-font-family:"Times New Roman";
+mso-bidi-font-family:"Times New Roman";mso-ansi-language:EN-US;mso-fareast-language:
+EN-US;mso-bidi-language:AR-SA'><br clear=all style='page-break-before:auto;
+mso-break-type:section-break'>
+</span>
+
+<div class=Section4>
+
+<div style='border:none;border-top:solid windowtext .5pt;padding:6.0pt 0in 0in 0in'>
+
+<p class=Figure><!--[if gte vml 1]><v:shape id="_x0000_i1026" type="#_x0000_t75"
+ style='width:343.5pt;height:366.75pt' o:ole="" fillcolor="window">
+ <v:imagedata src="./an-103100-ucfpga_files/image003.wmz" o:title=""/>
+</v:shape><![endif]--><![if !vml]><img border=0 width=458 height=489
+src="an-103100-ucfpga_files/image004.gif" v:shapes="_x0000_i1026"><![endif]><!--[if gte mso 9]><xml>
+ <o:OLEObject Type="Embed" ProgID="CorelDraw.Graphic.7" ShapeID="_x0000_i1026"
+  DrawAspect="Content" ObjectID="_1034939982">
+ </o:OLEObject>
+</xml><![endif]--></p>
+
+</div>
+
+<div style='border:none;border-top:solid windowtext .5pt;padding:1.0pt 0in 0in 0in'>
+
+<p class=FigureCaption align=center style='text-align:center'><a
+name="_Ref497973944">Figure <span style='mso-field-code:"SEQ Figure \\* ARABIC"'>1</span></a>:
+Microcontroller + FPLD design flow.</p>
+
+</div>
+
+</div>
+
+<b style='mso-bidi-font-weight:normal'><span style='font-size:10.0pt;
+font-family:Arial;mso-fareast-font-family:"Times New Roman";mso-bidi-font-family:
+"Times New Roman";mso-ansi-language:EN-US;mso-fareast-language:EN-US;
+mso-bidi-language:AR-SA'><br clear=all style='page-break-before:auto;
+mso-break-type:section-break'>
+</span></b>
+
+<div class=Section5>
+
+<h1 style='margin-top:0in'>Microcontroller+FPLD Interconnections</h1>
+
+<p class=MsoBodyText>The 8031 microcontroller and the FPLD on the XS Board are
+already connected together.<span style="mso-spacerun: yes">  </span>These
+existing connections save you the effort of having to wire them yourself, but
+they also impose limitations on how your program and the FPLD hardware will
+interact.<span style="mso-spacerun: yes">  </span>A high-level view of how the
+microcontroller, RAM, and FPGA on the XS40 Board are connected is shown in <span
+style='mso-field-code:"REF _Ref409622951 \\h"'>Figure 2<!--[if gte mso 9]><xml>
+ <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F005200650066003400300039003600320032003900350031000000</w:data>
+</xml><![endif]--></span>.<span style="mso-spacerun: yes">  </span>A similar
+view for the CPLD connections of the XS95 Board is shown in <span
+style='mso-field-code:"REF _Ref497629351 \\h"'>Figure 3<!--[if gte mso 9]><xml>
+ <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F005200650066003400390037003600320039003300350031000000</w:data>
+</xml><![endif]--></span>.</p>
+
+<p class=MsoBodyText>The 100 MHz programmable oscillator output goes directly
+to a synchronous clock input<span style="mso-spacerun: yes">  </span>of the
+FPLD.<span style="mso-spacerun: yes">  </span>The FPLD processes the clock and
+retransmits it to the <span class=SignalName>XTAL1</span> input of the
+microcontroller.</p>
+
+<p class=MsoBodyText>The 8031 multiplexes the lower eight bits of a memory
+address with eight bits of data and outputs this on its <span class=SignalName>P0</span>
+port.<span style="mso-spacerun: yes">  </span>Both the RAM data lines and the
+FPLD are connected to <span class=SignalName>P0</span>.<span
+style="mso-spacerun: yes">  </span>The FPLD is configured to latch the address
+from <span class=SignalName>P0</span> under control of the <span
+class=SignalName>ALE</span> signal and send the latched address bits to the
+lower eight address lines of the RAM.<span style="mso-spacerun: yes"> 
+</span>Then the RAM and 8031 use the bus to exchange data.</p>
+
+<p class=MsoBodyText>Meanwhile, the upper eight bits of the address are output
+on port <span class=SignalName>P2</span> of the 8031.<span style="mso-spacerun:
+yes">  </span>The 32 KByte RAM uses the lower seven of these address bits.<span
+style="mso-spacerun: yes">  </span>(The 128 KByte RAM on the XS+ Boards use all
+eight bits.)<span style="mso-spacerun: yes">  </span>The FPLD also receives the
+upper eight address bits and decodes these along with the <span
+class=SignalName>PSEN</span>, <span class=SignalName>RD</span> and <span
+class=SignalName>WR</span> control lines from the 8031 to generate the <span
+class=SignalName>CE</span> and <span class=SignalName>OE</span> signals that
+enable the RAM and its output drivers, respectively.<span style="mso-spacerun:
+yes">  </span>Either of the <span class=SignalName>CE</span> or <span
+class=SignalName>OE</span> signals can be pulled high to disable the RAM and
+prevent it from having any effect on the rest of the XS Board circuitry.</p>
+
+<p class=MsoBodyText>An output from the FPLD controls the reset line of the
+microcontroller.<span style="mso-spacerun: yes">  </span>The 8031 can be
+prevented from having any effect on the rest of the circuitry by forcing the <span
+class=SignalName>RST</span> pin high through the FPLD.<span
+style="mso-spacerun: yes">  </span>(When <span class=SignalName>RST</span> is
+active, most of the 8031 pins are weakly pulled high.)</p>
+
+<p class=MsoBodyText>Many of the I/O pins of ports <span class=SignalName>P1</span>
+and <span class=SignalName>P3</span> of the 8031 connect to the FPLD and can be
+used for general-purpose I/O between the microcontroller and the FPLD.<span
+style="mso-spacerun: yes">  </span>In addition to being general-purpose I/O,
+the <span class=SignalName>P3</span> pins also have special functions such as
+serial transmitters, receivers, interrupt inputs, timer inputs, and external
+RAM read/write control signals.<span style="mso-spacerun: yes">  </span>If you
+aren't using a particular special function, then you can use the associated pin
+for general-purpose I/O between the microcontroller and the FPLD.<span
+style="mso-spacerun: yes">  </span>In many cases, however, you will program the
+FPLD to make use of the special-purpose 8031 pins.<span style="mso-spacerun:
+yes">  </span>(For example, the FPLD could generate an interrupt for the
+8031.)<span style="mso-spacerun: yes">  </span>If you want to use the
+special-purpose pin with an external circuit, then the FPLD I/O pin connected
+to it must be tristated.</p>
+
+<p class=MsoBodyText>An LED digit connects directly to the FPLD.<span
+style="mso-spacerun: yes">  </span>The FPLD can be programmed so the
+microcontroller can control the LEDs either through <span class=SignalName>P1</span>
+or <span class=SignalName>P3</span> or by memory-mapping a register for the LED
+into the memory space of the 8031.</p>
+
+<p class=MsoBodyText>The PC can transmit signals to the XS Board through the
+eight data output bits of the printer port.<span style="mso-spacerun: yes"> 
+</span>The FPLD has direct access to these signals.<span style="mso-spacerun:
+yes">  </span>The microcontroller can also access them if the FPLD is configured
+to pass the data output bits onto the FPLD I/O pins connected to the 8031.</p>
+
+<p class=MsoBodyText>Communication from the XS Board back to the PC also occurs
+through the parallel port.<span style="mso-spacerun: yes">  </span>Four of the
+parallel port status pins are connected to three pins of <span
+class=SignalName>P1</span> and one pin of <span class=SignalName>P3</span>.<span
+style="mso-spacerun: yes">  </span>Either the microcontroller or the FPLD can
+drive the status pins.<span style="mso-spacerun: yes">  </span>The PC can read
+the status pins to fetch data from the XS Board.</p>
+
+</div>
+
+<span style='font-size:10.0pt;font-family:Arial;mso-fareast-font-family:"Times New Roman";
+mso-bidi-font-family:"Times New Roman";mso-ansi-language:EN-US;mso-fareast-language:
+EN-US;mso-bidi-language:AR-SA'><br clear=all style='page-break-before:auto;
+mso-break-type:section-break'>
+</span>
+
+<div class=Section6>
+
+<div style='border:none;border-top:solid windowtext .5pt;padding:6.0pt 0in 0in 0in'>
+
+<p class=Figure><!--[if gte vml 1]><v:shape id="_x0000_i1027" type="#_x0000_t75"
+ style='width:403.5pt;height:480pt' o:ole="" fillcolor="window">
+ <v:imagedata src="./an-103100-ucfpga_files/image005.wmz" o:title=""/>
+</v:shape><![endif]--><![if !vml]><img border=0 width=538 height=640
+src="an-103100-ucfpga_files/image006.gif" v:shapes="_x0000_i1027"><![endif]><!--[if gte mso 9]><xml>
+ <o:OLEObject Type="Embed" ProgID="CorelDraw.Graphic.7" ShapeID="_x0000_i1027"
+  DrawAspect="Content" ObjectID="_1034939984">
+ </o:OLEObject>
+</xml><![endif]--></p>
+
+</div>
+
+<div style='border:none;border-top:solid windowtext .5pt;padding:1.0pt 0in 0in 0in'>
+
+<p class=FigureCaption align=center style='text-align:center'><a
+name="_Ref409622951">Figure <span style='mso-field-code:"SEQ Figure \\* ARABIC"'>2</span></a>:
+Connections between the 8031 microcontroller, RAM, and FPGA of the XS40 Board.</p>
+
+</div>
+
+<div style='border:none;border-top:solid windowtext .5pt;padding:6.0pt 0in 0in 0in'>
+
+<p class=Figure><!--[if gte vml 1]><v:shape id="_x0000_i1028" type="#_x0000_t75"
+ style='width:405.75pt;height:482.25pt' o:ole="" o:allowoverlap="f"
+ fillcolor="window">
+ <v:imagedata src="./an-103100-ucfpga_files/image007.wmz" o:title=""/>
+ <o:lock v:ext="edit" aspectratio="f"/>
+</v:shape><![endif]--><![if !vml]><img border=0 width=541 height=643
+src="an-103100-ucfpga_files/image008.gif" v:shapes="_x0000_i1028"><![endif]><!--[if gte mso 9]><xml>
+ <o:OLEObject Type="Embed" ProgID="CorelDraw.Graphic.7" ShapeID="_x0000_i1028"
+  DrawAspect="Content" ObjectID="_1034939985">
+ </o:OLEObject>
+</xml><![endif]--></p>
+
+</div>
+
+<div style='border:none;border-top:solid windowtext .5pt;padding:1.0pt 0in 0in 0in'>
+
+<p class=FigureCaption align=center style='text-align:center'><a
+name="_Ref497629351">Figure <span style='mso-field-code:"SEQ Figure \\* ARABIC"'>3</span></a>:
+Connections between the 8031 microcontroller, RAM, and CPLD of the XS95 Board.</p>
+
+</div>
+
+</div>
+
+<b style='mso-bidi-font-weight:normal'><span style='font-size:10.0pt;
+font-family:Arial;mso-fareast-font-family:"Times New Roman";mso-bidi-font-family:
+"Times New Roman";mso-ansi-language:EN-US;mso-fareast-language:EN-US;
+mso-bidi-language:AR-SA'><br clear=all style='page-break-before:auto;
+mso-break-type:section-break'>
+</span></b>
+
+<div class=Section7>
+
+<h1 style='margin-top:0in'>User-Constraint Files for the XS40 and XS95 Boards</h1>
+
+<p class=MsoBodyText>The <span style='font-family:"Courier New";mso-bidi-font-family:
+"Times New Roman"'>UINFC40.UCF</span> file shown in <span style='mso-field-code:
+"REF _Ref497974633 \\h"'>Listing 1<!--[if gte mso 9]><xml>
+ <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F005200650066003400390037003900370034003600330033000000</w:data>
+</xml><![endif]--></span> details how the pins of the XC4000 FPGA connect to
+the other components on the XS40 Board.<span style="mso-spacerun: yes"> 
+</span>The <span style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'>UINFC95.UCF</span>
+file shown in <span style='mso-field-code:"REF _Ref497705434 \\h"'>Listing 2<!--[if gte mso 9]><xml>
+ <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F005200650066003400390037003700300035003400330034000000</w:data>
+</xml><![endif]--></span><span style="mso-spacerun: yes">  </span>details how
+the pins of the XC9500 CPLD connect to the other components on the XS95
+Board.<span style="mso-spacerun: yes">  </span>(The line numbers in each
+listing are provided for explanatory purposes only.<span style="mso-spacerun:
+yes">  </span>They are not part of the actual file contents.)<span
+style="mso-spacerun: yes">  </span>Here is a line-by-line description of what
+is contained in these user-constraint files:</p>
+
+<p class=MsoBodyText><span class=DescriptionTerm>Line 1:</span> The 50 MHz
+clock (this is the default frequency) from the external programmable oscillator
+enters through this pin.</p>
+
+<p class=MsoBodyText><span class=DescriptionTerm>Lines 4–11:</span> These pins
+are outputs which control the individual segments of the LED digit.<span
+style="mso-spacerun: yes">  </span>Note that the decimal-point segment (<span
+class=CodeListingFont><span style='font-family:"Courier New";mso-bidi-font-family:
+"Times New Roman"'>LED&lt;7&gt;</span></span>) is not connected on the XS40
+Board.</p>
+
+<p class=MsoBodyText><span class=DescriptionTerm>Lines 14–21:</span> The eight
+data bits from the PC parallel port enter the FPLD through these pins.<span
+style="mso-spacerun: yes">  </span>For the XS40 Board, the upper-most two data
+bits (<span class=CodeListingFont><span style='font-family:"Courier New";
+mso-bidi-font-family:"Times New Roman"'>PC_D&lt;6&gt;</span></span> and <span
+class=CodeListingFont><span style='font-family:"Courier New";mso-bidi-font-family:
+"Times New Roman"'>PC_D&lt;7&gt;</span></span>) cannot be specified in a
+user-constraints file because these are special-purpose pins.<span
+style="mso-spacerun: yes">  </span>To access these data bits on the XS40 Board
+you will have to use the special-purpose schematic symbols <span
+class=ModuleName>MD0</span> and <span class=ModuleName>MD2</span>.</p>
+
+<p class=MsoBodyText><span class=DescriptionTerm>Line 24:</span> The FPLD sends
+a clock signal to the 8031 clock input through this pin.</p>
+
+<p class=MsoBodyText><span class=DescriptionTerm>Line 25:</span> The FPLD
+controls the active-high reset input of the 8031 through this pin.</p>
+
+<p class=MsoBodyText><span class=DescriptionTerm>Line 26:</span> The FPLD monitors
+this pin for a falling edge which indicates it should latch the lower eight
+bits of an address from the multiplexed address/data bus of the 8031.</p>
+
+<p class=MsoBodyText><span class=DescriptionTerm>Line 27:</span> The FPLD
+monitors this pin for a low level which indicates the 8031 is accessing the
+program segment of memory.</p>
+
+<p class=MsoBodyText><span class=DescriptionTerm>Line 28:</span> The FPLD
+monitors this pin for a low level which indicates the 8031 is reading a byte
+from the data segment of memory.</p>
+
+<p class=MsoBodyText><span class=DescriptionTerm>Line 29:</span> The FPLD
+monitors this pin for a low level which indicates the 8031 is writing a byte to
+the data segment of memory.</p>
+
+<p class=MsoBodyText><span class=DescriptionTerm>Lines 30–37:</span> The
+multiplexed address/data bus of the 8031 appears on these pins of the
+FPLD.<span style="mso-spacerun: yes">  </span>The FPLD can latch the lower
+eight bits of the address on the falling edge of <span class=CodeListingFont><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'>ALE_</span></span>.<span
+style="mso-spacerun: yes">  </span>After that, a byte of data will appear on
+these pins.</p>
+
+<p class=MsoBodyText><span class=DescriptionTerm>Lines 38–45:</span> The FPLD
+can output the latched lower-byte of the address on these pins which are also
+connected to the address pins of the external RAM.</p>
+
+<p class=MsoBodyText><span class=DescriptionTerm>Lines 46–53:</span> The FPLD
+monitors the upper-byte of the address output by the 8031 on these pins uses it
+to generate chip-selects based upon the address values it sees.<span
+style="mso-spacerun: yes">  </span>These address bits also serve as the upper
+address byte for the external RAM.<span style="mso-spacerun: yes">  </span>(The
+XS Board with 32 Kbyte RAM only uses seven of the upper address bits while the
+XS+ Board with 128 KByte RAM uses all eight).<span style="mso-spacerun: yes"> 
+</span></p>
+
+<p class=MsoBodyText><span class=DescriptionTerm>Line 54:</span> The FPLD
+outputs the most-significant address bit for the XS+ Board 128 KByte RAM on
+this pin.<span style="mso-spacerun: yes">  </span>This pin is not used for the
+XS Boards with 32 KByte RAMs.</p>
+
+<p class=MsoBodyText><span class=DescriptionTerm>Line 57:</span> The FPLD
+enables the output drivers of the external memory by placing a low level on
+this pin.</p>
+
+<p class=MsoBodyText><span class=DescriptionTerm>Line 58:</span> The FPLD
+enables the external memory by placing a low level on this pin.<span
+style="mso-spacerun: yes">  </span></p>
+
+<p class=MsoBodyText><span class=DescriptionTerm>Lines 61-66:</span> The CPLD
+on the XS95 Board has six free pins that aren’t connected to anything else, so
+they are listed at the end of <span style='mso-field-code:"REF _Ref497705434 \\h"'>Listing
+2<!--[if gte mso 9]><xml>
+ <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F005200650066003400390037003700300035003400330034000000</w:data>
+</xml><![endif]--></span>.<span style="mso-spacerun: yes">  </span>The pins of
+the XC4000 FPGA on the XS40 Board are all used so there are no entries for free
+pins in the <span style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'>UINFC40.UCF</span>
+file.</p>
+
+</div>
+
+<span style='font-size:10.0pt;font-family:Arial;mso-fareast-font-family:"Times New Roman";
+mso-bidi-font-family:"Times New Roman";mso-ansi-language:EN-US;mso-fareast-language:
+EN-US;mso-bidi-language:AR-SA'><br clear=all style='page-break-before:auto;
+mso-break-type:section-break'>
+</span>
+
+<div class=Section8><br clear=all style='mso-special-character:line-break;
+page-break-before:always'>
+
+<p class=MsoBodyText><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<div style='border:none;border-bottom:solid windowtext .5pt;padding:0in 0in 1.0pt 0in'>
+
+<p class=ListingCaption><a name="_Ref497974633">Listing <span style='mso-field-code:
+"SEQ Listing \\* ARABIC"'>1</span></a>: User-constraint file for the XS40 Board
+(UINFC40.UCF).</p>
+
+</div>
+
+</div>
+
+<span style='font-size:9.0pt;mso-bidi-font-size:10.0pt;font-family:"Courier New";
+mso-fareast-font-family:"Times New Roman";mso-bidi-font-family:"Times New Roman";
+mso-ansi-language:EN-US;mso-fareast-language:EN-US;mso-bidi-language:AR-SA'><br
+clear=all style='page-break-before:auto;mso-break-type:section-break'>
+</span>
+
+<div class=Section9>
+
+<p class=CodeListing>NET CLK<span style='mso-tab-count:2'>              </span>LOC=P13;
+# CLOCK FROM EXTERNAL OSCILLATOR</p>
+
+<p class=CodeListing>#</p>
+
+<p class=CodeListing># LED DRIVER OUTPUTS</p>
+
+<p class=CodeListing>NET LED&lt;0&gt;<span style='mso-tab-count:1'>    </span>LOC=P25;</p>
+
+<p class=CodeListing>NET LED&lt;1&gt;<span style='mso-tab-count:1'>    </span>LOC=P26;</p>
+
+<p class=CodeListing>NET LED&lt;2&gt;<span style='mso-tab-count:1'>    </span>LOC=P24;</p>
+
+<p class=CodeListing>NET LED&lt;3&gt;<span style='mso-tab-count:1'>    </span>LOC=P20;</p>
+
+<p class=CodeListing>NET LED&lt;4&gt;<span style='mso-tab-count:1'>    </span>LOC=P23;</p>
+
+<p class=CodeListing>NET LED&lt;5&gt;<span style='mso-tab-count:1'>    </span>LOC=P18;</p>
+
+<p class=CodeListing>NET LED&lt;6&gt;<span style='mso-tab-count:1'>    </span>LOC=P19;</p>
+
+<p class=CodeListing>//NET LED&lt;7&gt;<span style='mso-tab-count:1'>  </span>LOC=P30;
+# THERE IS NO CONNECTION TO THE DECIMAL-POINT</p>
+
+<p class=CodeListing>#</p>
+
+<p class=CodeListing># DATA BITS FROM THE PC PARALLEL PORT</p>
+
+<p class=CodeListing>NET PC_D&lt;0&gt;<span style='mso-tab-count:1'>   </span>LOC=P44;</p>
+
+<p class=CodeListing>NET PC_D&lt;1&gt;<span style='mso-tab-count:1'>   </span>LOC=P45;</p>
+
+<p class=CodeListing>NET PC_D&lt;2&gt;<span style='mso-tab-count:1'>   </span>LOC=P46;</p>
+
+<p class=CodeListing>NET PC_D&lt;3&gt;<span style='mso-tab-count:1'>   </span>LOC=P47;</p>
+
+<p class=CodeListing>NET PC_D&lt;4&gt;<span style='mso-tab-count:1'>   </span>LOC=P48;</p>
+
+<p class=CodeListing>NET PC_D&lt;5&gt;<span style='mso-tab-count:1'>   </span>LOC=P49;</p>
+
+<p class=CodeListing>//NET PC_D&lt;6&gt;<span style='mso-tab-count:1'> </span>LOC=P32;
+# MUST USE SPECIAL-PURPOSE PINS FOR</p>
+
+<p class=CodeListing>//NET PC_D&lt;7&gt;<span style='mso-tab-count:1'> </span>LOC=P34;
+#<span style="mso-spacerun: yes">   </span>ACCESSING PC_D&lt;6&gt; AND
+PC_D&lt;7&gt;</p>
+
+<p class=CodeListing>#</p>
+
+<p class=CodeListing># MICROCONTROLLER PINS</p>
+
+<p class=CodeListing>NET XTAL1<span style='mso-tab-count:1'>     </span>LOC=P37;
+# INPUT CLOCK</p>
+
+<p class=CodeListing>NET RST<span style='mso-tab-count:1'>       </span>LOC=P36;
+# ACTIVE-HIGH RESET </p>
+
+<p class=CodeListing>NET ALE_<span style='mso-tab-count:1'>      </span>LOC=P29;
+# ACTIVE-LOW ADDRESS LATCH ENABLE </p>
+
+<p class=CodeListing>NET PSEN_<span style='mso-tab-count:1'>     </span>LOC=P14;
+# ACTIVE-LOW PROGRAM-STORE ENABLE</p>
+
+<p class=CodeListing>NET RD_<span style='mso-tab-count:1'>       </span>LOC=P27;
+# ACTIVE-LOW READ</p>
+
+<p class=CodeListing>NET WR_<span style='mso-tab-count:1'>       </span>LOC=P62;
+# ACTIVE-LOW WRITE (ALSO CONTROLS RAM)</p>
+
+<p class=CodeListing>NET AD&lt;0&gt;<span style='mso-tab-count:1'>     </span>LOC=P41;
+# MULTIPLEXED ADDRESS/DATA BUS</p>
+
+<p class=CodeListing>NET AD&lt;1&gt;<span style='mso-tab-count:1'>     </span>LOC=P40;</p>
+
+<p class=CodeListing>NET AD&lt;2&gt;<span style='mso-tab-count:1'>     </span>LOC=P39;</p>
+
+<p class=CodeListing>NET AD&lt;3&gt;<span style='mso-tab-count:1'>     </span>LOC=P38;</p>
+
+<p class=CodeListing>NET AD&lt;4&gt;<span style='mso-tab-count:1'>     </span>LOC=P35;</p>
+
+<p class=CodeListing>NET AD&lt;5&gt;<span style='mso-tab-count:1'>     </span>LOC=P81;</p>
+
+<p class=CodeListing>NET AD&lt;6&gt;<span style='mso-tab-count:1'>     </span>LOC=P80;</p>
+
+<p class=CodeListing>NET AD&lt;7&gt;<span style='mso-tab-count:1'>     </span>LOC=P10;</p>
+
+<p class=CodeListing>NET A&lt;0&gt;<span style='mso-tab-count:1'>      </span>LOC=P3;<span
+style="mso-spacerun: yes">  </span># DEMUXED LOWER BYTE OF ADDRESS</p>
+
+<p class=CodeListing>NET A&lt;1&gt;<span style='mso-tab-count:1'>      </span>LOC=P4;</p>
+
+<p class=CodeListing>NET A&lt;2&gt;<span style='mso-tab-count:1'>      </span>LOC=P5;</p>
+
+<p class=CodeListing>NET A&lt;3&gt;<span style='mso-tab-count:1'>      </span>LOC=P78;</p>
+
+<p class=CodeListing>NET A&lt;4&gt;<span style='mso-tab-count:1'>      </span>LOC=P79;</p>
+
+<p class=CodeListing>NET A&lt;5&gt;<span style='mso-tab-count:1'>      </span>LOC=P82;</p>
+
+<p class=CodeListing>NET A&lt;6&gt;<span style='mso-tab-count:1'>      </span>LOC=P83;</p>
+
+<p class=CodeListing>NET A&lt;7&gt;<span style='mso-tab-count:1'>      </span>LOC=P84;</p>
+
+<p class=CodeListing>NET A&lt;8&gt;<span style='mso-tab-count:1'>      </span>LOC=P59;
+# UPPER BYTE OF ADDRESS</p>
+
+<p class=CodeListing>NET A&lt;9&gt;<span style='mso-tab-count:1'>      </span>LOC=P57;</p>
+
+<p class=CodeListing>NET A&lt;10&gt;<span style='mso-tab-count:1'>     </span>LOC=P51;</p>
+
+<p class=CodeListing>NET A&lt;11&gt;<span style='mso-tab-count:1'>     </span>LOC=P56;</p>
+
+<p class=CodeListing>NET A&lt;12&gt;<span style='mso-tab-count:1'>     </span>LOC=P50;</p>
+
+<p class=CodeListing>NET A&lt;13&gt;<span style='mso-tab-count:1'>     </span>LOC=P58;</p>
+
+<p class=CodeListing>NET A&lt;14&gt;<span style='mso-tab-count:1'>     </span>LOC=P60;</p>
+
+<p class=CodeListing>NET A&lt;15&gt;<span style='mso-tab-count:1'>     </span>LOC=P28;</p>
+
+<p class=CodeListing>NET A16<span style='mso-tab-count:1'>       </span>LOC=P16;
+# MS address bit of the 128K RAM</p>
+
+<p class=CodeListing>#</p>
+
+<p class=CodeListing># RAM CONTROL PINS</p>
+
+<p class=CodeListing>NET OE_<span style='mso-tab-count:1'>       </span>LOC=P61;
+# ACTIVE-LOW OUTPUT ENABLE</p>
+
+<div style='border:none;border-bottom:solid windowtext .5pt;padding:0in 0in 1.0pt 0in'>
+
+<p class=CodeListingEnd>NET CE_<span style='mso-tab-count:1'>       </span>LOC=P65;
+# ACTIVE-LOW CHIP ENABLE</p>
+
+</div>
+
+</div>
+
+<b style='mso-bidi-font-weight:normal'><span style='font-size:10.0pt;
+font-family:Arial;mso-fareast-font-family:"Times New Roman";mso-bidi-font-family:
+"Times New Roman";mso-ansi-language:EN-US;mso-fareast-language:EN-US;
+mso-bidi-language:AR-SA'><br clear=all style='page-break-before:always;
+mso-break-type:section-break'>
+</span></b>
+
+<div class=Section10>
+
+<div style='border:none;border-bottom:solid windowtext .5pt;padding:0in 0in 1.0pt 0in'>
+
+<p class=ListingCaption><a name="_Ref497705434">Listing <span style='mso-field-code:
+"SEQ Listing \\* ARABIC"'>2</span></a>: User-constraint file for the XS95 Board
+(UINFC95.UCF).</p>
+
+</div>
+
+</div>
+
+<b style='mso-bidi-font-weight:normal'><span style='font-size:10.0pt;
+font-family:Arial;mso-fareast-font-family:"Times New Roman";mso-bidi-font-family:
+"Times New Roman";mso-ansi-language:EN-US;mso-fareast-language:EN-US;
+mso-bidi-language:AR-SA'><br clear=all style='page-break-before:auto;
+mso-break-type:section-break'>
+</span></b>
+
+<div class=Section11>
+
+<p class=CodeListing>NET CLK<span style='mso-tab-count:2'>              </span>LOC=P9;
+# CLOCK FROM EXTERNAL OSCILLATOR</p>
+
+<p class=CodeListing>#</p>
+
+<p class=CodeListing># LED DRIVER OUTPUTS</p>
+
+<p class=CodeListing>NET LED&lt;0&gt;<span style='mso-tab-count:1'>    </span>LOC=P21;</p>
+
+<p class=CodeListing>NET LED&lt;1&gt;<span style='mso-tab-count:1'>    </span>LOC=P23;</p>
+
+<p class=CodeListing>NET LED&lt;2&gt;<span style='mso-tab-count:1'>    </span>LOC=P19;</p>
+
+<p class=CodeListing>NET LED&lt;3&gt;<span style='mso-tab-count:1'>    </span>LOC=P17;</p>
+
+<p class=CodeListing>NET LED&lt;4&gt;<span style='mso-tab-count:1'>    </span>LOC=P18;</p>
+
+<p class=CodeListing>NET LED&lt;5&gt;<span style='mso-tab-count:1'>    </span>LOC=P14;</p>
+
+<p class=CodeListing>NET LED&lt;6&gt;<span style='mso-tab-count:1'>    </span>LOC=P15;</p>
+
+<p class=CodeListing>NET LED&lt;7&gt;<span style='mso-tab-count:1'>    </span>LOC=P24;</p>
+
+<p class=CodeListing>#</p>
+
+<p class=CodeListing># DATA BITS FROM THE PC PARALLEL PORT</p>
+
+<p class=CodeListing>NET PC_D&lt;0&gt;<span style='mso-tab-count:1'>   </span>LOC=P46;</p>
+
+<p class=CodeListing>NET PC_D&lt;1&gt;<span style='mso-tab-count:1'>   </span>LOC=P47;</p>
+
+<p class=CodeListing>NET PC_D&lt;2&gt;<span style='mso-tab-count:1'>   </span>LOC=P48;</p>
+
+<p class=CodeListing>NET PC_D&lt;3&gt;<span style='mso-tab-count:1'>   </span>LOC=P50;</p>
+
+<p class=CodeListing>NET PC_D&lt;4&gt;<span style='mso-tab-count:1'>   </span>LOC=P51;</p>
+
+<p class=CodeListing>NET PC_D&lt;5&gt;<span style='mso-tab-count:1'>   </span>LOC=P52;</p>
+
+<p class=CodeListing>NET PC_D&lt;6&gt;<span style='mso-tab-count:1'>   </span>LOC=P81;</p>
+
+<p class=CodeListing>NET PC_D&lt;7&gt;<span style='mso-tab-count:1'>   </span>LOC=P80;</p>
+
+<p class=CodeListing>#</p>
+
+<p class=CodeListing># MICROCONTROLLER PINS</p>
+
+<p class=CodeListing>NET XTAL1<span style='mso-tab-count:1'>     </span>LOC=P10;
+# INPUT CLOCK</p>
+
+<p class=CodeListing>NET RST<span style='mso-tab-count:1'>       </span>LOC=P45;
+# ACTIVE-HIGH RESET</p>
+
+<p class=CodeListing>NET ALE_<span style='mso-tab-count:1'>      </span>LOC=P20;
+# ACTIVE-LOW ADDRESS LATCH ENABLE</p>
+
+<p class=CodeListing>NET PSEN_<span style='mso-tab-count:1'>     </span>LOC=P13;
+# ACTIVE-LOW PROGRAM-STORE ENABLE</p>
+
+<p class=CodeListing>NET RD_<span style='mso-tab-count:1'>       </span>LOC=P32;
+# ACTIVE-LOW READ</p>
+
+<p class=CodeListing>NET WR_<span style='mso-tab-count:1'>       </span>LOC=P63;
+# ACTIVE-LOW WRITE (ALSO CONTROLS RAM)</p>
+
+<p class=CodeListing>NET AD&lt;0&gt;<span style='mso-tab-count:1'>     </span>LOC=P44;
+# MULTIPLEXED ADDRESS/DATA BUS</p>
+
+<p class=CodeListing>NET AD&lt;1&gt;<span style='mso-tab-count:1'>     </span>LOC=P43;</p>
+
+<p class=CodeListing>NET AD&lt;2&gt;<span style='mso-tab-count:1'>     </span>LOC=P41;</p>
+
+<p class=CodeListing>NET AD&lt;3&gt;<span style='mso-tab-count:1'>     </span>LOC=P40;</p>
+
+<p class=CodeListing>NET AD&lt;4&gt;<span style='mso-tab-count:1'>     </span>LOC=P39;</p>
+
+<p class=CodeListing>NET AD&lt;5&gt;<span style='mso-tab-count:1'>     </span>LOC=P37;</p>
+
+<p class=CodeListing>NET AD&lt;6&gt;<span style='mso-tab-count:1'>     </span>LOC=P36;</p>
+
+<p class=CodeListing>NET AD&lt;7&gt;<span style='mso-tab-count:1'>     </span>LOC=P35;</p>
+
+<p class=CodeListing>NET A&lt;0&gt;<span style='mso-tab-count:1'>      </span>LOC=P75;
+# DEMUXED LOWER BYTE OF ADDRESS</p>
+
+<p class=CodeListing>NET A&lt;1&gt;<span style='mso-tab-count:1'>      </span>LOC=P79;</p>
+
+<p class=CodeListing>NET A&lt;2&gt;<span style='mso-tab-count:1'>      </span>LOC=P82;</p>
+
+<p class=CodeListing>NET A&lt;3&gt;<span style='mso-tab-count:1'>      </span>LOC=P84;</p>
+
+<p class=CodeListing>NET A&lt;4&gt;<span style='mso-tab-count:1'>      </span>LOC=P1;</p>
+
+<p class=CodeListing>NET A&lt;5&gt;<span style='mso-tab-count:1'>      </span>LOC=P3;</p>
+
+<p class=CodeListing>NET A&lt;6&gt;<span style='mso-tab-count:1'>      </span>LOC=P83;</p>
+
+<p class=CodeListing>NET A&lt;7&gt;<span style='mso-tab-count:1'>      </span>LOC=P2;</p>
+
+<p class=CodeListing>NET A&lt;8&gt;<span style='mso-tab-count:1'>      </span>LOC=P58;
+# UPPER BYTE OF ADDRESS</p>
+
+<p class=CodeListing>NET A&lt;9&gt;<span style='mso-tab-count:1'>      </span>LOC=P56;</p>
+
+<p class=CodeListing>NET A&lt;10&gt;<span style='mso-tab-count:1'>     </span>LOC=P54;</p>
+
+<p class=CodeListing>NET A&lt;11&gt;<span style='mso-tab-count:1'>     </span>LOC=P55;</p>
+
+<p class=CodeListing>NET A&lt;12&gt;<span style='mso-tab-count:1'>     </span>LOC=P53;</p>
+
+<p class=CodeListing>NET A&lt;13&gt;<span style='mso-tab-count:1'>     </span>LOC=P57;</p>
+
+<p class=CodeListing>NET A&lt;14&gt;<span style='mso-tab-count:1'>     </span>LOC=P61;</p>
+
+<p class=CodeListing>NET A&lt;15&gt;<span style='mso-tab-count:1'>     </span>LOC=P34;</p>
+
+<p class=CodeListing>NET A16<span style='mso-tab-count:1'>       </span>LOC=P74;
+# MS address bit of 128K RAM</p>
+
+<p class=CodeListing>#</p>
+
+<p class=CodeListing># RAM CONTROL PINS</p>
+
+<p class=CodeListing>NET OE_<span style='mso-tab-count:1'>       </span>LOC=P62;
+# ACTIVE-LOW OUTPUT ENABLE</p>
+
+<p class=CodeListing>NET CE_<span style='mso-tab-count:1'>       </span>LOC=P65;
+# ACTIVE-LOW CHIP ENABLE</p>
+
+<p class=CodeListing>#</p>
+
+<p class=CodeListing># THESE ARE FREE PINS THAT DON'T CONNECT TO ANYTHING ELSE</p>
+
+<p class=CodeListing>//NET FREE&lt;0&gt;<span style='mso-tab-count:1'> </span>LOC=P4;</p>
+
+<p class=CodeListing>//NET FREE&lt;1&gt;<span style='mso-tab-count:1'> </span>LOC=P12;</p>
+
+<p class=CodeListing>//NET FREE&lt;2&gt;<span style='mso-tab-count:1'> </span>LOC=P25;</p>
+
+<p class=CodeListing>//NET FREE&lt;3&gt;<span style='mso-tab-count:1'> </span>LOC=P74;
+# also used as MS address bit of 128K RAM</p>
+
+<p class=CodeListing>//NET FREE&lt;4&gt;<span style='mso-tab-count:1'> </span>LOC=P76;</p>
+
+<div style='border:none;border-bottom:solid windowtext .5pt;padding:0in 0in 1.0pt 0in'>
+
+<p class=CodeListingEnd>//NET FREE&lt;5&gt;<span style='mso-tab-count:1'> </span>LOC=P77;</p>
+
+</div>
+
+</div>
+
+<span style='font-size:10.0pt;font-family:Arial;mso-fareast-font-family:"Times New Roman";
+mso-bidi-font-family:"Times New Roman";mso-ansi-language:EN-US;mso-fareast-language:
+EN-US;mso-bidi-language:AR-SA'><br clear=all style='page-break-before:auto;
+mso-break-type:section-break'>
+</span>
+
+<div class=Section12>
+
+<h1 style='margin-top:0in'>General-Purpose FPLD+Microcontroller Interface
+Circuitry</h1>
+
+<p class=MsoBodyText>Before designing a circuit to perform a specific function,
+it makes sense to develop a generic framework which contains the circuitry that
+is needed in every design.<span style="mso-spacerun: yes">  </span>This
+circuitry is shown in <span style='mso-field-code:"REF _Ref409209945 \\h  \\* MERGEFORMAT"'>Figure
+4<!--[if gte mso 9]><xml>
+ <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F005200650066003400300039003200300039003900340035000000</w:data>
+</xml><![endif]--></span>.</p>
+
+<p class=MsoBodyText>At the top of <span style='mso-field-code:"REF _Ref409209945 \\h  \\* MERGEFORMAT"'>Figure
+4<!--[if gte mso 9]><xml>
+ <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F005200650066003400300039003200300039003900340035000000</w:data>
+</xml><![endif]--></span> is the circuitry for bringing the eight bits data
+from the PC parallel port into the FPLD.<span style="mso-spacerun: yes"> 
+</span>Data on the <span class=SignalName>PC_D[7:0]</span> bus is passed
+through a standard byte-wide input buffer (<span class=ModuleName>IBUF8</span>)
+and appears on the internal <span class=SignalName>PC_D_IN[7:0]</span>
+bus.<span style="mso-spacerun: yes">  </span>The same type of circuit is used
+to pass the upper address byte from the 8031 (<span class=SignalName>A[15:8]</span>)
+onto the internal address bus (<span class=SignalName>A_IN[15:8]</span>).<span
+style="mso-spacerun: yes">  </span>Single-bit input buffers are used to
+transfer the <span class=SignalName>ALE_</span>, <span class=SignalName>PSEN_</span>,
+<span class=SignalName>RD_</span>, and <span class=SignalName>WR_</span>
+signals onto the internal <span class=SignalName>ALE_IN_</span>, <span
+class=SignalName>PSEN_IN_</span>, <span class=SignalName>RD_IN_</span>, and <span
+class=SignalName>WR_IN_</span> signals, respectively.</p>
+
+<p class=MsoBodyText>The multiplexed address/data bus (<span class=SignalName>AD[7:0]</span>)
+is bidirectional because the 8031 uses it to both write and read bytes of data
+to and from the RAM and FPLD.<span style="mso-spacerun: yes">  </span>An <span
+class=ModuleName>IBUF8</span> buffer is used to read the values on this bus
+onto the internal address/data bus (<span class=SignalName>AD_IN[7:0]</span>)
+of the FPLD.<span style="mso-spacerun: yes">  </span>The FPLD also has to be
+able to write to the <span class=SignalName>AD[7:0]</span> bus in order to send
+data back to the 8031 or the external memory.<span style="mso-spacerun: yes"> 
+</span>For this reason, a tristate buffer (<span class=ModuleName>OBUFE8</span>)
+is attached to the <span class=SignalName>AD[7:0]</span> pins.<span
+style="mso-spacerun: yes">  </span>The value on the internal data bus (<span
+class=SignalName>D_OUT[7:0]</span>) will be forced onto <span class=SignalName>AD[7:0]</span>
+when the buffer driver-control signal (<span class=SignalName>D_DRV</span>) is
+high.</p>
+
+<p class=MsoBodyText>The FPLD is responsible for de-multiplexing the 8031’s
+address/data bus so that a stable address can be sent to standard addressable
+devices like the external RAM.<span style="mso-spacerun: yes">  </span>A
+byte-wide output register (<span class=ModuleName>OFD8</span>) is used to latch
+the lower byte of the address from the <span class=SignalName>AD_IN[7:0]</span><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'> </span>bus
+on the falling edge of <span class=SignalName>ALE_IN_</span>.<span
+style="mso-spacerun: yes">  </span>The latched address is output on the <span
+class=SignalName>A[7:0]</span> pins.</p>
+
+<p class=MsoBodyText>The 8031’s reset (<span class=SignalName>RST</span>) is
+driven by the value output on the least-significant bit of the PC parallel port
+(<span class=SignalName>PC_D_IN0</span>).<span style="mso-spacerun: yes"> 
+</span>This lets us reset the 8031 using the <span class=ExecutableName><span
+style='font-family:"Arial Narrow"'>XSPORT</span></span> utility.</p>
+
+<p class=MsoBodyText>The active-low chip-select of the external RAM (<span
+class=SignalName>CE_OUT_</span>) is driven by the most-significant address bit
+(<span class=SignalName>A15_IN</span>).<span style="mso-spacerun: yes"> 
+</span>When <span class=SignalName>A15</span>=0, the RAM is selected which
+effectively maps it into the address range<span style='font-family:"Courier New";
+mso-bidi-font-family:"Times New Roman"'> <span class=CodeListingFont>0000H-7FFFH</span></span>.<span
+style="mso-spacerun: yes">  </span>(This simple chip-select scheme wastes much
+of the 128 KByte RAM on an XS+ Board.)<span style="mso-spacerun: yes"> 
+</span>The outputs of the RAM are enabled by a low level on <span
+class=SignalName>OE_</span> whenever the 8031 fetches an instruction (<span
+class=SignalName>PSEN_IN_</span>=0) or performs a data-read operation (<span
+class=SignalName>RD_IN_</span>=0).</p>
+
+<p class=MsoBodyText>The most-significant address bit of the 128 KByte RAM on
+an XS+ Board is driven by the 8031 program store enable (<span
+class=SignalName>PSEN</span>).<span style="mso-spacerun: yes">  </span>This
+partitions the RAM into a lower 64 KByte code segment and an upper 64 KByte
+data segment.<span style="mso-spacerun: yes">  </span>(Only the lower 32 KBytes
+is available in each segment because of the simple RAM chip-select scheme we
+are using.)</p>
+
+<p class=MsoBodyText>The programmable oscillator output enters the FPLD through
+the <span class=SignalName>CLK</span> input.<span style="mso-spacerun: yes"> 
+</span>The oscillator has a factory default frequency of 50 MHz so a
+divide-by-three circuit generates a 16.7 MHz clock that is passed to the 8031
+through the <span class=SignalName>XTAL1</span> pin.<span style="mso-spacerun:
+yes">  </span></p>
+
+</div>
+
+<span style='font-size:10.0pt;font-family:Arial;mso-fareast-font-family:"Times New Roman";
+mso-bidi-font-family:"Times New Roman";mso-ansi-language:EN-US;mso-fareast-language:
+EN-US;mso-bidi-language:AR-SA'><br clear=all style='page-break-before:auto;
+mso-break-type:section-break'>
+</span>
+
+<div class=Section13>
+
+<div style='border:none;border-top:solid windowtext .5pt;padding:6.0pt 0in 0in 0in'>
+
+<p class=Figure><!--[if gte vml 1]><v:shape id="_x0000_i1029" type="#_x0000_t75"
+ style='width:6in;height:361.5pt' fillcolor="window">
+ <v:imagedata src="./an-103100-ucfpga_files/image009.png" o:title=""/>
+</v:shape><![endif]--><![if !vml]><img border=0 width=576 height=482
+src="an-103100-ucfpga_files/image010.jpg" v:shapes="_x0000_i1029"><![endif]></p>
+
+</div>
+
+<div style='border:none;border-top:solid windowtext .5pt;padding:1.0pt 0in 0in 0in'>
+
+<p class=FigureCaption align=center style='text-align:center'><a
+name="_Ref409209945">Figure <span style='mso-field-code:"SEQ Figure \\* ARABIC"'>4</span></a>:
+General-purpose interface circuitry.</p>
+
+</div>
+
+</div>
+
+<b style='mso-bidi-font-weight:normal'><span style='font-size:10.0pt;
+font-family:Arial;mso-fareast-font-family:"Times New Roman";mso-bidi-font-family:
+"Times New Roman";mso-ansi-language:EN-US;mso-fareast-language:EN-US;
+mso-bidi-language:AR-SA'><br clear=all style='page-break-before:auto;
+mso-break-type:section-break'>
+</span></b>
+
+<div class=Section14>
+
+<h1 style='margin-top:0in'>LED Display Design</h1>
+
+<p class=MsoBodyText>Displaying patterns on the LED digit is a simple design
+that will show you how to work with the XS Board.<span style="mso-spacerun:
+yes">  </span>The specifications for the design are that it should sequentially
+light each LED segment for about a second, extinguish it,<span
+style="mso-spacerun: yes">  </span>and proceed with the next segment.<span
+style="mso-spacerun: yes">  </span>After the last segment is tested, the entire
+procedure is repeated in an endless loop.</p>
+
+<p class=MsoBodyText>The system needs a clock input to time the interval each
+segment is active.<span style="mso-spacerun: yes">  </span>Eight outputs are
+needed to drive the eight LED segments.</p>
+
+<p class=MsoBodyText>Now we have to partition the functions for our test system
+between the FPLD and the microcontroller.<span style="mso-spacerun: yes"> 
+</span>Obviously, we can build the entire test system using only the FPLD.<span
+style="mso-spacerun: yes">  </span>A 25-bit counter in the FPLD can be
+incremented by the 50 MHz oscillator.<span style="mso-spacerun: yes"> 
+</span>The counter will roll-over every 0.67s at which time a rotating
+eight-bit shift register (also in the FPLD) will shift its contents.<span
+style="mso-spacerun: yes">  </span>If this shift register is initially loaded
+with <span style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'>00000001</span>
+and the output of each register bit drives one of the LED digital segments,
+then all eight segments will be individually tested after eight shifts.<span
+style="mso-spacerun: yes">  </span>Looping the upper bit of the shift register
+back into the least-significant bit of the shift register insures the testing
+will repeat as long as the clock is active.</p>
+
+<p class=MsoBodyText>Since we wanted to show how to design a system using both
+the FPLD and the microcontroller, let's partition it a bit differently.<span
+style="mso-spacerun: yes">  </span>The FPLD will still be used to drive the LED
+digit segments, but the sequencing of the test will be moved to the microcontroller.<span
+style="mso-spacerun: yes">  </span>The microcontroller will write a rotating
+bit pattern to the LED and time each step in the test sequence using a delay
+loop.<span style="mso-spacerun: yes">  </span>The FPLD will be used to
+implement a writable register within the address space of the microcontroller.</p>
+
+<p class=MsoBodyText>The schematic for the writable LED register is shown in <span
+style='mso-field-code:"REF _Ref409623209 \\h  \\* MERGEFORMAT"'>Figure 5<!--[if gte mso 9]><xml>
+ <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F005200650066003400300039003600320033003200300039000000</w:data>
+</xml><![endif]--></span>.<span style="mso-spacerun: yes">  </span>The input
+data bus (<span class=SignalName>AD_IN</span>) bus carries the data value from
+the 8031 into the LED register (<span class=ModuleName>FD8CE</span>).<span
+style="mso-spacerun: yes">  </span>The register is enabled for writing if the
+upper four address bits are all high.<span style="mso-spacerun: yes"> 
+</span>So any access by the 8031 to the address range <span
+class=CodeListingFont><span style='font-family:"Courier New";mso-bidi-font-family:
+"Times New Roman"'>F000H-FFFFH</span></span> will enable the register.<span
+style="mso-spacerun: yes">  </span>The data is loaded into the LED register at
+the end of a write operation by the rising edge on the <span class=SignalName>WR_IN_</span>
+signal.<span style="mso-spacerun: yes">  </span>The output of the register goes
+through a byte-wide output buffer (<span class=ModuleName>OBUF8</span>) that
+drives the pins attached to the LED display.<span style="mso-spacerun: yes"> 
+</span>Because the register is writable but not readable, the <span
+class=SignalName>D_DRV</span> signal is tied to ground to disable the output
+buffers that would send data from the FPLD to the 8031.</p>
+
+<p class=MsoBodyText>The LED register schematics are exported as <span
+class=FileName><span style='font-family:"Arial Narrow"'>.EDN</span></span>
+files (EDIF format) that are mapped, placed, and routed by the XILINX
+Foundation software to create an <span class=FileName><span style='font-family:
+"Arial Narrow"'>LEDREG.BIT</span></span> bitstream file (for XS40 Boards) or an
+<span class=FileName><span style='font-family:"Arial Narrow"'>LEDREG.SVF</span></span>
+file (for XS95 Boards).</p>
+
+<p class=MsoBodyText>Once the LED register hardware is designed and implemented,
+we can write the assembly code for the 8031 (<span style='mso-field-code:"REF _Ref409624305 \\h"'>Listing
+3<!--[if gte mso 9]><xml>
+ <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F005200650066003400300039003600320034003300300035000000</w:data>
+</xml><![endif]--></span>).<span style="mso-spacerun: yes">  </span>The program
+works as follows:</p>
+
+<p class=MsoBodyText><span class=DescriptionTerm>Line 4:</span> An address for
+the LED register implemented in the FPLD is defined for the 8031.</p>
+
+<p class=MsoBodyText><span class=DescriptionTerm>Line 8:</span> A byte of the
+internal RAM in the 8031 is reserved to serve as a counter in the <span
+class=CodeListingFont><span style='font-family:"Courier New";mso-bidi-font-family:
+"Times New Roman"'>WAIT</span></span> subroutine.</p>
+
+<p class=MsoBodyText><span class=DescriptionTerm>Line 11:</span> The
+microcontroller program is set to start at address <span class=CodeListingFont><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'>0000H</span></span>
+which is the address the 8031 jumps to immediately after a reset.<span
+style="mso-spacerun: yes">  </span>All 8031 programs for the XS Boards must be
+stored in the RAM.<span style="mso-spacerun: yes">  </span>The FPLD was
+configured to map the RAM into the range <span class=CodeListingFont><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'>0000H—7FFFH</span></span>
+so there would be some RAM to hold the instructions where the 8031 expects to
+find them.</p>
+
+<p class=MsoBodyText><span class=DescriptionTerm>Line 16:</span> The
+accumulator is initialized with the bit pattern <span class=CodeListingFont><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'>00000001</span></span>.<span
+style="mso-spacerun: yes">  </span>The '1' bit in the pattern will be rotated
+through all eight positions and loaded into the LED register each time to test
+all the segments of the LED digit.</p>
+
+<p class=MsoBodyText><span class=DescriptionTerm>Lines 19–20:</span> The
+address of the LED register is written into the pointer used for accessing
+external memory, and then the value in the accumulator is indirectly written to
+the register.</p>
+
+<p class=MsoBodyText><span class=DescriptionTerm>Line 22:</span> A call is made
+to the <span class=CodeListingFont><span style='font-family:"Courier New";
+mso-bidi-font-family:"Times New Roman"'>WAIT</span></span> subroutine which
+inserts a delay of approximately one second.<span style="mso-spacerun: yes"> 
+</span>This gives us time to observe the segments of the LED digit before they
+get loaded with the next pattern.</p>
+
+<p class=MsoBodyText><span class=DescriptionTerm>Line 24:</span> The contents
+of the accumulator are rotated so that the next LED segment will be activated
+on the next loop through the program.</p>
+
+<p class=MsoBodyText><span class=DescriptionTerm>Line 26:</span> This transfers
+the program back to the start of the loop so the next LED segment can be
+checked.</p>
+
+<p class=MsoBodyText><span class=DescriptionTerm>Lines 30–43:</span> The <span
+class=CodeListingFont><span style='font-family:"Courier New";mso-bidi-font-family:
+"Times New Roman"'>WAIT</span></span> subroutine counts through 10 <span
+style='font-family:Symbol'>´</span> 256 <span style='font-family:Symbol'>´</span>
+256 = 655,360 loop iterations at approximately 1.5 <span style='font-family:
+Symbol'>m</span>s per iteration.<span style="mso-spacerun: yes">  </span>This
+inserts a delay of about a second. The subroutine pushes and pops the <span
+class=CodeListingFont><span style='font-family:"Courier New";mso-bidi-font-family:
+"Times New Roman"'>A</span></span> and <span class=CodeListingFont><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'>B</span></span>
+registers so they retain the same values upon exit from the subroutine.</p>
+
+<p class=MsoBodyText>The assembly code in the <span class=FileName><span
+style='font-family:"Arial Narrow"'>LEDDISP.ASM</span></span> file is assembled
+using the command:</p>
+
+<p class=MsoBodyText><span class=UserTyping><span style='font-family:"Courier New";
+mso-bidi-font-family:"Times New Roman"'>C:&gt; ASM51 LEDDISP.ASM<o:p></o:p></span></span></p>
+
+<p class=MsoBodyText>This command will create the file <span class=FileName><span
+style='font-family:"Arial Narrow"'>LEDDISP.HEX</span></span>.<span
+style="mso-spacerun: yes">  </span>(Make sure you have a copy of the <span
+class=FileName><span style='font-family:"Arial Narrow"'>mod52</span></span>
+file in the directory where you are performing the assembly.<span
+style="mso-spacerun: yes">  </span><span class=FileName><span style='font-family:
+"Arial Narrow"'>mod52</span></span> contains definitions for many of the
+internal register addresses of the 8052/8031.<span style="mso-spacerun: yes"> 
+</span>You can find <span class=FileName><span style='font-family:"Arial Narrow"'>mod52</span></span>
+in the directory created when you installed the XSTOOLs software utilities.)</p>
+
+<p class=MsoBodyText>Now you can download the <span class=FileName><span
+style='font-family:"Arial Narrow"'>LEDDISP.HEX</span></span> and <span
+class=FileName><span style='font-family:"Arial Narrow"'>LEDREG.BIT</span></span>
+or <span class=FileName><span style='font-family:"Arial Narrow"'>LEDREG.SVF</span></span>
+files to the XS Board.<span style="mso-spacerun: yes">  </span>The downloading
+cable must be attached between the PC printer port and the J1 header of the XS
+Board.<span style="mso-spacerun: yes">  </span>The actual downloading process
+for the XS95 Board is accomplished with the command:</p>
+
+<p class=MsoBodyText><span class=UserTyping><span style='font-family:"Courier New";
+mso-bidi-font-family:"Times New Roman"'>C:&gt; XSLOAD -P 1 LEDDISP.HEX LEDREG.SVF<o:p></o:p></span></span></p>
+
+<p class=MsoBodyText>And the downloading process for the XS40 Board is done
+with this command:</p>
+
+<p class=MsoBodyText><span class=UserTyping><span style='font-family:"Courier New";
+mso-bidi-font-family:"Times New Roman"'>C:&gt; XSLOAD -P 1 LEDDISP.HEX
+LEDREG.BIT<o:p></o:p></span></span></p>
+
+<p class=MsoBodyText><span class=ExecutableName><span style='font-family:"Arial Narrow"'>XSLOAD</span></span>
+loads the RAM with the program found in the <span class=FileName><span
+style='font-family:"Arial Narrow"'>LEDDISP.HEX</span></span> file.<span
+style="mso-spacerun: yes">  </span>Then it configures the FPLD with the circuit
+description stored in the <span class=FileName><span style='font-family:"Arial Narrow"'>.SVF</span></span>
+or <span class=FileName><span style='font-family:"Arial Narrow"'>.BIT</span></span>
+file.<span style="mso-spacerun: yes">  </span>The command given above assumes
+the XS Board is hooked to LPT1 so it uses the option <span
+class=CodeListingFont><span style='font-family:"Courier New";mso-bidi-font-family:
+"Times New Roman"'>-P 1</span></span>.<span style="mso-spacerun: yes"> 
+</span>If the XS Board is hooked to LPT2 or LPT3, then use <span
+class=CodeListingFont><span style='font-family:"Courier New";mso-bidi-font-family:
+"Times New Roman"'>-P 2</span></span> or <span class=CodeListingFont><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'>-P 3</span></span>,
+respectively.<span style="mso-spacerun: yes">  </span>(If you don't use the <span
+class=CodeListingFont><span style='font-family:"Courier New";mso-bidi-font-family:
+"Times New Roman"'>-P</span></span> option at all, <span class=ExecutableName><span
+style='font-family:"Arial Narrow"'>XSLOAD </span></span>will use LPT1 as the
+default printer port.)</p>
+
+<p class=MsoBodyText>Once you have the XS Board completely loaded, you would
+naturally ask: &quot;Now what?''<span style="mso-spacerun: yes">  </span>For
+this simple example all you have to ensure is that the microcontroller is reset
+correctly.<span style="mso-spacerun: yes">  </span>Recall that parallel port
+pin <span class=SignalName>D0</span> is connected to the <span
+class=SignalName>RST</span> line of the 8031 through the FPLD.<span
+style="mso-spacerun: yes">  </span>The 8031 can be reset and released to start
+executing its program with the following command sequence:</p>
+
+<p class=MsoBodyText align=left style='text-align:left'><span class=UserTyping><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'>C:&gt;
+XSPORT 1<br>
+C:&gt; XSPORT 0<o:p></o:p></span></span></p>
+
+<p class=MsoBodyText>After you execute these two commands, you should see the
+LED segments being sequentially activated at one second intervals.</p>
+
+</div>
+
+<span style='font-size:10.0pt;font-family:Arial;mso-fareast-font-family:"Times New Roman";
+mso-bidi-font-family:"Times New Roman";mso-ansi-language:EN-US;mso-fareast-language:
+EN-US;mso-bidi-language:AR-SA'><br clear=all style='page-break-before:auto;
+mso-break-type:section-break'>
+</span>
+
+<div class=Section15>
+
+<div style='border:none;border-top:solid windowtext .5pt;padding:6.0pt 0in 0in 0in'>
+
+<p class=Figure><!--[if gte vml 1]><v:shape id="_x0000_i1030" type="#_x0000_t75"
+ style='width:6in;height:226.5pt' fillcolor="window">
+ <v:imagedata src="./an-103100-ucfpga_files/image011.png" o:title=""/>
+</v:shape><![endif]--><![if !vml]><img border=0 width=576 height=302
+src="an-103100-ucfpga_files/image012.jpg" v:shapes="_x0000_i1030"><![endif]></p>
+
+</div>
+
+<div style='border:none;border-top:solid windowtext .5pt;padding:1.0pt 0in 0in 0in'>
+
+<p class=FigureCaption align=center style='text-align:center'><a
+name="_Ref409623209">Figure <span style='mso-field-code:"SEQ Figure \\* ARABIC"'>5</span></a>:
+Circuitry for the LED register.</p>
+
+</div>
+
+</div>
+
+<b style='mso-bidi-font-weight:normal'><span style='font-size:10.0pt;
+font-family:Arial;mso-fareast-font-family:"Times New Roman";mso-bidi-font-family:
+"Times New Roman";mso-ansi-language:EN-US;mso-fareast-language:EN-US;
+mso-bidi-language:AR-SA'><br clear=all style='page-break-before:always;
+mso-break-type:section-break'>
+</span></b>
+
+<div class=Section16>
+
+<div style='border:none;border-bottom:solid windowtext .5pt;padding:0in 0in 1.0pt 0in'>
+
+<p class=ListingCaption><a name="_Ref409624305">Listing <span style='mso-field-code:
+"SEQ Listing \\* ARABIC"'>3</span></a>: LED tester assembly code for the 8031
+microcontroller (LEDDISP.ASM).</p>
+
+</div>
+
+</div>
+
+<span style='font-size:9.0pt;mso-bidi-font-size:10.0pt;font-family:"Courier New";
+mso-fareast-font-family:"Times New Roman";mso-bidi-font-family:"Times New Roman";
+mso-ansi-language:EN-US;mso-fareast-language:EN-US;mso-bidi-language:AR-SA'><br
+clear=all style='page-break-before:auto;mso-break-type:section-break'>
+</span>
+
+<div class=Section17>
+
+<p class=CodeListing><span style="mso-spacerun: yes">        </span>$MOD51</p>
+
+<p class=CodeListing><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=CodeListing>STACKTOP EQU<span style="mso-spacerun: yes">    </span>70H<span
+style="mso-spacerun: yes">    </span>; start of stack (grows up)</p>
+
+<p class=CodeListing>LEDREG<span style="mso-spacerun: yes">   </span>EQU<span
+style="mso-spacerun: yes">    </span>0F000H ; LED register address</p>
+
+<p class=CodeListing><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=CodeListing><span style="mso-spacerun: yes">        </span>DSEG</p>
+
+<p class=CodeListing><span style="mso-spacerun: yes">        </span>ORG<span
+style="mso-spacerun: yes">     </span>30H</p>
+
+<p class=CodeListing>CNTR:<span style="mso-spacerun: yes">   </span>DS<span
+style="mso-spacerun: yes">      </span>1<span style="mso-spacerun: yes">     
+</span>; counter for wait routine</p>
+
+<p class=CodeListing><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=CodeListing><span style="mso-spacerun: yes">        </span>CSEG</p>
+
+<p class=CodeListing><span style="mso-spacerun: yes">        </span>ORG<span
+style="mso-spacerun: yes">     </span>0000H<span style="mso-spacerun: yes"> 
+</span>; program starts at 0 after reset</p>
+
+<p class=CodeListing>START:</p>
+
+<p class=CodeListing><span style="mso-spacerun: yes">        </span>; initialize
+stack pointer ...</p>
+
+<p class=CodeListing><span style="mso-spacerun: yes">        </span>MOV<span
+style="mso-spacerun: yes">     </span>SP,#STACKTOP</p>
+
+<p class=CodeListing><span style="mso-spacerun: yes">        </span>; and the
+initial bit pattern to display</p>
+
+<p class=CodeListing><span style="mso-spacerun: yes">        </span>MOV<span
+style="mso-spacerun: yes">     </span>A,#1</p>
+
+<p class=CodeListing>LOOP:</p>
+
+<p class=CodeListing><span style="mso-spacerun: yes">        </span>; show the
+bits on the LED digit</p>
+
+<p class=CodeListing><span style="mso-spacerun: yes">        </span>MOV<span
+style="mso-spacerun: yes">     </span>DPTR,#LEDREG</p>
+
+<p class=CodeListing><span style="mso-spacerun: yes">        </span>MOVX<span
+style="mso-spacerun: yes">    </span>@DPTR,A<span style="mso-spacerun:
+yes">       </span></p>
+
+<p class=CodeListing><span style="mso-spacerun: yes">        </span>; wait long
+enough so we can see the bits ...</p>
+
+<p class=CodeListing><span style="mso-spacerun: yes">        </span>CALL<span
+style="mso-spacerun: yes">    </span>WAIT</p>
+
+<p class=CodeListing><span style="mso-spacerun: yes">        </span>; then
+rotate the bit pattern ...</p>
+
+<p class=CodeListing><span style="mso-spacerun: yes">        </span>RL<span
+style="mso-spacerun: yes">      </span>A</p>
+
+<p class=CodeListing><span style="mso-spacerun: yes">        </span>; and then
+do it all again</p>
+
+<p class=CodeListing><span style="mso-spacerun: yes">        </span>JMP<span
+style="mso-spacerun: yes">     </span>LOOP</p>
+
+<p class=CodeListing><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=CodeListing><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=CodeListing>; this subroutine waits about 1 second</p>
+
+<p class=CodeListing>WAIT:<span style="mso-spacerun: yes">   </span></p>
+
+<p class=CodeListing><span style="mso-spacerun: yes">        </span>PUSH<span
+style="mso-spacerun: yes">    </span>ACC</p>
+
+<p class=CodeListing><span style="mso-spacerun: yes">        </span>PUSH<span
+style="mso-spacerun: yes">    </span>B</p>
+
+<p class=CodeListing><span style="mso-spacerun: yes"> </span><span
+style="mso-spacerun: yes">       </span>MOV<span style="mso-spacerun: yes">    
+</span>cntr,#10</p>
+
+<p class=CodeListing>WAIT1:<span style="mso-spacerun: yes">  </span></p>
+
+<p class=CodeListing><span style="mso-spacerun: yes">        </span>MOV<span
+style="mso-spacerun: yes">     </span>B,#0</p>
+
+<p class=CodeListing>WAIT2:</p>
+
+<p class=CodeListing><span style="mso-spacerun: yes">        </span>MOV<span
+style="mso-spacerun: yes">     </span>A,#0</p>
+
+<p class=CodeListing><span style="mso-spacerun: yes">        </span>DJNZ<span
+style="mso-spacerun: yes">    </span>ACC,$</p>
+
+<p class=CodeListing><span style="mso-spacerun: yes">        </span>DJNZ<span
+style="mso-spacerun: yes">    </span>B,WAIT2</p>
+
+<p class=CodeListing><span style="mso-spacerun: yes">        </span>DJNZ<span
+style="mso-spacerun: yes">    </span>CNTR,WAIT1</p>
+
+<p class=CodeListing><span style="mso-spacerun: yes">        </span>POP<span
+style="mso-spacerun: yes">     </span>B</p>
+
+<p class=CodeListing><span style="mso-spacerun: yes">        </span>POP<span
+style="mso-spacerun: yes">     </span>ACC</p>
+
+<p class=CodeListing><span style="mso-spacerun: yes">        </span>RET</p>
+
+<p class=CodeListing><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<div style='border:none;border-bottom:solid windowtext .5pt;padding:0in 0in 1.0pt 0in'>
+
+<p class=CodeListingEnd><span style="mso-spacerun: yes">        </span>END</p>
+
+</div>
+
+</div>
+
+<b style='mso-bidi-font-weight:normal'><span style='font-size:10.0pt;
+font-family:Arial;mso-fareast-font-family:"Times New Roman";mso-bidi-font-family:
+"Times New Roman";mso-ansi-language:EN-US;mso-fareast-language:EN-US;
+mso-bidi-language:AR-SA'><br clear=all style='page-break-before:auto;
+mso-break-type:section-break'>
+</span></b>
+
+<div class=Section18>
+
+<h1 style='margin-top:0in'>Random Number Generator Design</h1>
+
+<p class=MsoBodyText>The LED display example in the previous section is very
+simple.<span style="mso-spacerun: yes">  </span>All that was needed was a
+memory-mapped, writable register in the FPLD.<span style="mso-spacerun: yes"> 
+</span>What if we needed to perform the opposite operation and pass data from
+the FPLD back into the microcontroller?</p>
+
+<p class=MsoBodyText>The example in this section will show the design of a
+simple, eight-bit random number generator (RNG).<span style="mso-spacerun:
+yes">  </span>The 8031 will write a seed value to the RNG.<span
+style="mso-spacerun: yes">  </span>Then it will read a sequence of random numbers
+from the RNG.<span style="mso-spacerun: yes">  </span>The bit pattern output
+from the RNG will be displayed on the LED digit.</p>
+
+<p class=MsoBodyText>The inputs and outputs for this design are the same as for
+the LED display: a clock input and eight LED driver outputs.</p>
+
+<p class=MsoBodyText>The design will be partitioned as follows:</p>
+
+<p class=MsoListBullet><![if !supportLists]><span style='font-family:Symbol'>·<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]>The FPLD will hold the LED register (as before) and
+will also be used to implement a RNG as a linear-feedback shift-register
+(LFSR).<span style="mso-spacerun: yes">  </span>The random number seed is
+written into the LFSR, and every subsequent read of the LFSR will return a new
+random number.</p>
+
+<p class=MsoListBullet><![if !supportLists]><span style='font-family:Symbol'>·<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]>The microcontroller will be responsible for
+initializing the random number generator and then reading random numbers from
+the LFSR and writing the eight-bit patterns to the LED register in an endless
+loop.<span style="mso-spacerun: yes">  </span>The microcontroller will insert a
+one-second delay between each write to the LED register so we have time to
+observe the random numbers.</p>
+
+<p class=MsoBodyText>The FPLD circuitry is shown in <span style='mso-field-code:
+"REF _Ref497972476 \\h"'>Figure 6<!--[if gte mso 9]><xml>
+ <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F005200650066003400390037003900370032003400370036000000</w:data>
+</xml><![endif]--></span>.</p>
+
+<p class=MsoBodyText>The random number generation circuitry is included below
+the LED register from the previous section.<span style="mso-spacerun: yes"> 
+</span>The main component of the random number generator is an eight-bit
+loadable shift-register (<span class=ModuleName>SR8CLE</span>).<span
+style="mso-spacerun: yes">  </span>Because it will change its value whenever it
+is written or read, the shift-register is clocked with the logical AND of the <span
+class=SignalName>RD_IN_</span> or <span class=SignalName>WR_IN_</span> strobes
+so that a clock pulse is generated when either strobe goes low.<span
+style="mso-spacerun: yes">  </span>In order to clock all the flip-flops in the
+shift-register at the same time, a clock buffer (<span class=ModuleName>BUFG</span>)
+is inserted between the <span class=ModuleName>AND</span> gate and the clock
+input.<span style="mso-spacerun: yes">  </span>This reduces clock skew between
+the flip-flops of the shift-register and allows reliable shifting of the
+bits.<span style="mso-spacerun: yes">  </span>(The <span class=ModuleName>BUFG</span>
+is not needed for CPLD-based designs and should be removed if you are targeting
+the XS95 Board.)</p>
+
+<p class=MsoBodyText>The shift-register can be loaded with a seed by having the
+8031 write to an address in the range <span class=CodeListingFont><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'>C000H-CFFFH</span></span>.<span
+style="mso-spacerun: yes">  </span>A write to this address range places a logic
+1 on the load control input (<span class=SignalName>L</span>) of the
+shift-register, sends the seed value over the <span class=SignalName>AD_IN</span>
+bus, and generates a rising edge on the register’s clock input (<span
+class=SignalName>C</span>) at the end of the write operation.</p>
+
+<p class=MsoBodyText>The random number in the shift-register is fetched by
+having the 8031 read an address in the range <span class=CodeListingFont><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'>E000H-EFFFH</span></span>.<span
+style="mso-spacerun: yes">  </span>A read to this address range forces the <span
+class=SignalName>D_DRV</span> signal high, thus turning on the buffer drivers
+in the FPLD (see <span style='mso-field-code:"REF _Ref409209945 \\h  \\* MERGEFORMAT"'>Figure
+4<!--[if gte mso 9]><xml>
+ <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F005200650066003400300039003200300039003900340035000000</w:data>
+</xml><![endif]--></span>) that will send the value on <span class=SignalName>D_OUT</span>
+to the 8031.</p>
+
+<p class=MsoBodyText>Reading the random number generator also causes it to
+generate a new random number.<span style="mso-spacerun: yes">  </span>If the
+address that is read is in the range <span class=CodeListingFont><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'>E000H-EFFFH</span></span>,
+then the shift-enable input (<span class=SignalName>CE</span>) will be raised
+to a logic 1.<span style="mso-spacerun: yes">  </span>The low pulse on <span
+class=SignalName>RD_IN_</span> will clock the shift-register.<span
+style="mso-spacerun: yes">  </span>This causes the contents of the shift
+register to be shifted left and the value on the serial-input (<span
+class=SignalName>SLI</span>) is placed in the least-significant bit of the
+register.<span style="mso-spacerun: yes">  </span>The new LSB is formed from
+the exclusive-OR of bits 3, 4, 5, and 7 of the old value in the
+shift-register.<span style="mso-spacerun: yes">  </span>This combination of
+bits insures that the shift-register will pass through 255 distinct states
+before repeating.</p>
+
+<p class=MsoBodyText>The RNG schematics are exported as <span class=FileName><span
+style='font-family:"Arial Narrow"'>.EDN</span></span> files (EDIF format) that
+are mapped, placed, and routed by the XILINX Foundation software to create a <span
+class=FileName><span style='font-family:"Arial Narrow"'>RANDGEN.BIT</span></span>
+bitstream file (for XS40 Boards) or a <span class=FileName><span
+style='font-family:"Arial Narrow"'>RANDGEN.SVF</span></span> file (for XS95
+Boards).</p>
+
+<p class=MsoBodyText>Once the RNG hardware is designed and implemented, we can
+write the assembly code for the 8031 as shown in <span style='mso-field-code:
+"REF _Ref497974828 \\h"'>Listing 4<!--[if gte mso 9]><xml>
+ <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F005200650066003400390037003900370034003800320038000000</w:data>
+</xml><![endif]--></span>.<span style="mso-spacerun: yes">  </span>It is very
+similar to the one in the previous section so we will only discuss the
+differences:</p>
+
+<p class=MsoBodyText><span class=DescriptionTerm>Line 5:</span> The memory
+address from which new random numbers are read is defined for the rest of the
+program.</p>
+
+<p class=MsoBodyText><span class=DescriptionTerm>Line 6: </span>The memory
+address for writing the seed value to the random number generator is defined
+here.</p>
+
+<p class=MsoBodyText><span class=DescriptionTerm>Lines 18–20:</span> The
+accumulator is loaded with a seed value that is then loaded into the random
+number generator.</p>
+
+<p class=MsoBodyText><span class=DescriptionTerm>Lines 23–24:</span> A random
+number from the LFSR is indirectly read into the accumulator.</p>
+
+<p class=MsoBodyText><span class=DescriptionTerm>Lines 26–27:</span> The bit
+pattern read from the random number generator is written to the LED register so
+we can see it.</p>
+
+<p class=MsoBodyText>As was shown before, you can download the <span
+class=FileName><span style='font-family:"Arial Narrow"'>RNDDISP.HEX</span></span>
+and the <span class=FileName><span style='font-family:"Arial Narrow"'>RANDGEN.SVF</span></span>
+files to the XS95 Board with the command:</p>
+
+<p class=MsoBodyText><span class=UserTyping><span style='font-family:"Courier New";
+mso-bidi-font-family:"Times New Roman"'>C:&gt; XSLOAD -P 1 RNDDISP.HEX
+RANDGEN.SVF<o:p></o:p></span></span></p>
+
+<p class=MsoBodyText>or to the XS40 Board with this command:</p>
+
+<p class=MsoBodyText><span class=UserTyping><span style='font-family:"Courier New";
+mso-bidi-font-family:"Times New Roman"'>C:&gt; XSLOAD -P 1 RNDDISP.HEX
+RANDGEN.BIT<o:p></o:p></span></span></p>
+
+<p class=MsoBodyText>The 8031 is reset and released to start executing its
+program with these commands:</p>
+
+<p class=MsoBodyText align=left style='text-align:left'><span class=UserTyping><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'>C:&gt;
+XSPORT 1<br>
+C:&gt; XSPORT 0<o:p></o:p></span></span></p>
+
+<p class=MsoBodyText>After this, you should see the LED segments being
+activated in random patterns.<span style="mso-spacerun: yes">  </span>You can
+record several patterns and check that they match what would be generated by
+the LFSR of <span style='mso-field-code:"REF _Ref497972476 \\h"'>Figure 6<!--[if gte mso 9]><xml>
+ <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F005200650066003400390037003900370032003400370036000000</w:data>
+</xml><![endif]--></span>.</p>
+
+</div>
+
+<span style='font-size:10.0pt;font-family:Arial;mso-fareast-font-family:"Times New Roman";
+mso-bidi-font-family:"Times New Roman";mso-ansi-language:EN-US;mso-fareast-language:
+EN-US;mso-bidi-language:AR-SA'><br clear=all style='page-break-before:always;
+mso-break-type:section-break'>
+</span>
+
+<div class=Section19>
+
+<div style='border:none;border-top:solid windowtext .5pt;padding:6.0pt 0in 0in 0in'>
+
+<p class=Figure><a name="_Ref409553328"><!--[if gte vml 1]><v:shape id="_x0000_i1031"
+ type="#_x0000_t75" style='width:398.25pt;height:394.5pt' fillcolor="window">
+ <v:imagedata src="./an-103100-ucfpga_files/image013.png" o:title=""/>
+</v:shape><![endif]--><![if !vml]><img border=0 width=531 height=526
+src="an-103100-ucfpga_files/image014.jpg" v:shapes="_x0000_i1031"><![endif]><span
+style="mso-spacerun: yes"> </span></a></p>
+
+</div>
+
+<div style='border:none;border-top:solid windowtext .5pt;padding:1.0pt 0in 0in 0in'>
+
+<p class=FigureCaption><span style='mso-bookmark:_Ref409553328'><a
+name="_Ref497972476">Figure <span style='mso-field-code:"SEQ Figure \\* ARABIC"'>6</span></a></span>:
+Random number generator circuitry.</p>
+
+</div>
+
+<b style='mso-bidi-font-weight:normal'><span style='font-size:10.0pt;
+font-family:Arial;mso-fareast-font-family:"Times New Roman";mso-bidi-font-family:
+"Times New Roman";mso-ansi-language:EN-US;mso-fareast-language:EN-US;
+mso-bidi-language:AR-SA'><br clear=all style='page-break-before:always'>
+</span></b>
+
+<div style='border:none;border-bottom:solid windowtext .5pt;padding:0in 0in 1.0pt 0in'>
+
+<p class=ListingCaption><a name="_Ref497974828">Listing <span style='mso-field-code:
+"SEQ Listing \\* ARABIC"'>4</span></a>: Random number generator test assembly
+code for the 8031 microcontroller (RNDDISP.ASM).</p>
+
+</div>
+
+</div>
+
+<b style='mso-bidi-font-weight:normal'><span style='font-size:10.0pt;
+font-family:Arial;mso-fareast-font-family:"Times New Roman";mso-bidi-font-family:
+"Times New Roman";mso-ansi-language:EN-US;mso-fareast-language:EN-US;
+mso-bidi-language:AR-SA'><br clear=all style='page-break-before:auto;
+mso-break-type:section-break'>
+</span></b>
+
+<div class=Section20>
+
+<p class=CodeListing><span style="mso-spacerun: yes">        </span>$MOD51</p>
+
+<p class=CodeListing><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=CodeListing>STACKTOP EQU<span style="mso-spacerun: yes">   
+</span>70H<span style="mso-spacerun: yes">    </span>; start of stack (grows
+up)</p>
+
+<p class=CodeListing>LEDREG<span style="mso-spacerun: yes">   </span>EQU<span
+style="mso-spacerun: yes">    </span>0F000H ; LED register address</p>
+
+<p class=CodeListing>RNDGEN<span style="mso-spacerun: yes">   </span>EQU<span
+style="mso-spacerun: yes">    </span>0E000H ; address for reading random num.
+gen.</p>
+
+<p class=CodeListing>SEED<span style="mso-spacerun: yes">     </span>EQU<span
+style="mso-spacerun: yes">    </span>0C000H ; address for writing random num.
+gen. seed</p>
+
+<p class=CodeListing><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=CodeListing><span style="mso-spacerun: yes">        </span>DSEG</p>
+
+<p class=CodeListing><span style="mso-spacerun: yes">        </span>ORG<span
+style="mso-spacerun: yes">     </span>30H</p>
+
+<p class=CodeListing>CNTR:<span style="mso-spacerun: yes">   </span>DS<span
+style="mso-spacerun: yes">      </span>1<span style="mso-spacerun: yes">     
+</span>; counter for wait routine</p>
+
+<p class=CodeListing><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=CodeListing><span style="mso-spacerun: yes">        </span>CSEG</p>
+
+<p class=CodeListing><span style="mso-spacerun: yes">        </span>ORG<span
+style="mso-spacerun: yes">     </span>0000H<span style="mso-spacerun: yes"> 
+</span>; program starts at 0 after reset</p>
+
+<p class=CodeListing>START:</p>
+
+<p class=CodeListing><span style="mso-spacerun: yes">        </span>;
+initialize stack pointer ...</p>
+
+<p class=CodeListing><span style="mso-spacerun: yes">        </span>MOV<span
+style="mso-spacerun: yes">     </span>SP,#STACKTOP</p>
+
+<p class=CodeListing><span style="mso-spacerun: yes">        </span>; and the
+random number seed</p>
+
+<p class=CodeListing><span style="mso-spacerun: yes">        </span>MOV<span
+style="mso-spacerun: yes">     </span>A,#1</p>
+
+<p class=CodeListing><span style="mso-spacerun: yes">        </span>MOV<span
+style="mso-spacerun: yes">     </span>DPTR,#SEED</p>
+
+<p class=CodeListing><span style="mso-spacerun: yes">        </span>MOVX<span
+style="mso-spacerun: yes">    </span>@DPTR,A</p>
+
+<p class=CodeListing>LOOP:</p>
+
+<p class=CodeListing><span style="mso-spacerun: yes">        </span>; read a
+new random number from the FPGA ...</p>
+
+<p class=CodeListing><span style="mso-spacerun: yes">        </span>MOV<span
+style="mso-spacerun: yes">     </span>DPTR,#RNDGEN</p>
+
+<p class=CodeListing><span style="mso-spacerun: yes">        </span>MOVX<span
+style="mso-spacerun: yes">    </span>A,@DPTR</p>
+
+<p class=CodeListing><span style="mso-spacerun: yes">        </span>; and show
+the random bits on the LED digit</p>
+
+<p class=CodeListing><span style="mso-spacerun: yes">        </span>MOV<span
+style="mso-spacerun: yes">     </span>DPTR,#LEDREG</p>
+
+<p class=CodeListing><span style="mso-spacerun: yes">        </span>MOVX<span
+style="mso-spacerun: yes">    </span>@DPTR,A<span style="mso-spacerun:
+yes">       </span></p>
+
+<p class=CodeListing><span style="mso-spacerun: yes">        </span>; wait long
+enough so we can see the bits ...</p>
+
+<p class=CodeListing><span style="mso-spacerun: yes">        </span>CALL<span
+style="mso-spacerun: yes">    </span>WAIT</p>
+
+<p class=CodeListing><span style="mso-spacerun: yes">        </span>; and then
+do it all again</p>
+
+<p class=CodeListing><span style="mso-spacerun: yes">        </span>JMP<span
+style="mso-spacerun: yes">     </span>LOOP</p>
+
+<p class=CodeListing><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=CodeListing><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=CodeListing>; this subroutine waits about 1 second</p>
+
+<p class=CodeListing>WAIT:<span style="mso-spacerun: yes">   </span></p>
+
+<p class=CodeListing><span style="mso-spacerun: yes">        </span>PUSH<span
+style="mso-spacerun: yes">    </span>ACC</p>
+
+<p class=CodeListing><span style="mso-spacerun: yes">        </span>PUSH<span
+style="mso-spacerun: yes">    </span>B</p>
+
+<p class=CodeListing><span style="mso-spacerun: yes">        </span>MOV<span
+style="mso-spacerun: yes">     </span>cntr,#10</p>
+
+<p class=CodeListing>WAIT1:<span style="mso-spacerun: yes">  </span></p>
+
+<p class=CodeListing><span style="mso-spacerun: yes">        </span>MOV<span
+style="mso-spacerun: yes">     </span>B,#0</p>
+
+<p class=CodeListing>WAIT2:</p>
+
+<p class=CodeListing><span style="mso-spacerun: yes">        </span>MOV<span
+style="mso-spacerun: yes">     </span>A,#0</p>
+
+<p class=CodeListing><span style="mso-spacerun: yes">        </span>DJNZ<span
+style="mso-spacerun: yes">    </span>ACC,$</p>
+
+<p class=CodeListing><span style="mso-spacerun: yes">        </span>DJNZ<span
+style="mso-spacerun: yes">    </span>B,WAIT2</p>
+
+<p class=CodeListing><span style="mso-spacerun: yes">        </span>DJNZ<span
+style="mso-spacerun: yes">    </span>CNTR,WAIT1</p>
+
+<p class=CodeListing><span style="mso-spacerun: yes">        </span>POP<span
+style="mso-spacerun: yes">  </span><span style="mso-spacerun: yes">   </span>B</p>
+
+<p class=CodeListing><span style="mso-spacerun: yes">        </span>POP<span
+style="mso-spacerun: yes">     </span>ACC</p>
+
+<p class=CodeListing><span style="mso-spacerun: yes">        </span>RET</p>
+
+<p class=CodeListing><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<div style='border:none;border-bottom:solid windowtext .5pt;padding:0in 0in 1.0pt 0in'>
+
+<p class=CodeListingEnd><span style="mso-spacerun: yes">        </span>END</p>
+
+</div>
+
+</div>
+
+<span style='font-size:10.0pt;font-family:Arial;mso-fareast-font-family:"Times New Roman";
+mso-bidi-font-family:"Times New Roman";mso-ansi-language:EN-US;mso-fareast-language:
+EN-US;mso-bidi-language:AR-SA'><br clear=all style='page-break-before:auto;
+mso-break-type:section-break'>
+</span>
+
+<div class=Section21>
+
+<p class=CodeListing><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+</div>
+
+</body>
+
+
+<!-- Mirrored from 192.168.0.47/appnotes/an-103100-ucfpga.htm by HTTrack Website Copier/3.x [XR&CO'2004], Mon, 04 Dec 2006 16:07:41 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=ISO-8859-1"><!-- /Added by HTTrack -->
+</html>

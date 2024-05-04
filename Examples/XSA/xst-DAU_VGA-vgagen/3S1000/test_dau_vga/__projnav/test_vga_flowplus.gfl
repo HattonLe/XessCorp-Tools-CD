@@ -1,0 +1,48 @@
+# XST flow : Creating project file
+test_vga.prj
+# xst flow : RunXST
+test_vga.prj
+__projnav/test_vga.xst
+./xst
+# XST flow : Creating project file
+test_vga.prj
+# xst flow : RunXST
+test_vga.prj
+__projnav/test_vga.xst
+./xst
+# XST flow : Creating project file
+test_vga.prj
+# xst flow : RunXST
+test_vga.prj
+__projnav/test_vga.xst
+./xst
+# XST flow : Creating project file
+test_vga.prj
+# xst flow : RunXST
+test_vga.prj
+__projnav/test_vga.xst
+./xst
+# XST flow : Creating project file
+test_vga.prj
+# xst flow : RunXST
+test_vga.prj
+__projnav/test_vga.xst
+./xst
+# XST flow : Creating project file
+test_vga.prj
+# xst flow : RunXST
+test_vga.prj
+__projnav/test_vga.xst
+./xst
+# XST flow : Creating project file
+test_vga.prj
+# xst flow : RunXST
+test_vga.prj
+__projnav/test_vga.xst
+./xst
+# XST flow : Creating project file
+test_vga.prj
+# xst flow : RunXST
+test_vga.prj
+__projnav/test_vga.xst
+./xst

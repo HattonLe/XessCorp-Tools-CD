@@ -1,0 +1,51 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - ReverseLongBits</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">ReverseLongBits</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">ReverseLongBits</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','ReverseLongBits2590682239','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_member','ReverseLongBits2590682239','_source',this)" class="tabLinkActive">Source</a></span>
+<span class="tabInActiveGrayout"><span class="tabLinkGrayout">Call Graph</span></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<div class="paragraph2NoTopPadding">Start Line: 277</div>
+<pre class="codeExamples">
+unsigned long <a href="#" OnFocus="link('_member','ReverseLongBits2590682239',this)">ReverseLongBits</a>(unsigned long l)
+{
+    // Reverse a long byte-by-byte while reversing the bits within each byte.
+    unsigned char *p1 = (unsigned char*)&amp;l;                     // ptr to first byte of long
+    unsigned char *p2 = (unsigned char*)&amp;l + <a href="#" OnFocus="link('_member','charsPerLong0',this)">charsPerLong</a> - 1;  // ptr to last byte of long
+    unsigned char a;
+    for(int i=0, j=<a href="#" OnFocus="link('_member','charsPerLong0',this)">charsPerLong</a>-1; i&lt;=j; i++,j--,p1++,p2--)
+    {
+        // swap bytes and reverse bits within each byte
+        a = *p1;
+        *p1 = <a href="#" OnFocus="link('_member','reverseByteBits0',this)">reverseByteBits</a>[*p2];
+        *p2 = <a href="#" OnFocus="link('_member','reverseByteBits0',this)">reverseByteBits</a>[a];
+    }
+    return l;
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_member','_source');
+</script>

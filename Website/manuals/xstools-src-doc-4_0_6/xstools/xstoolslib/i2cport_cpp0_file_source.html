@@ -1,0 +1,369 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - i2cport.cpp</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">i2cport.cpp</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">i2cport.cpp</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','i2cport_cpp0','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabInActiveGrayout"><span class="tabLinkGrayout">Overview</span></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','i2cport_cpp0','_includedfiles',this)" class="tabLinkInActive">Included files</a></span>
+<span class="tabInActiveGrayout"><span class="tabLinkGrayout">Included by</span></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_file','i2cport_cpp0','_source',this)" class="tabLinkActive">Source</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<pre class="codeExamples">
+/*----------------------------------------------------------------------------------
+  SOFTWARE LICENSE AGREEMENT
+    1.  Permission to use, copy, modify, and distribute this software
+        and its documentation, with or without modification, for any
+        purpose and without fee or royalty is hereby granted, provided
+        that you include the following on ALL copies of the software
+        and documentation or portions thereof, including
+        modifications, that you make:
+
+            a.  The full text of this license in a location viewable to users
+            of the redistributed or derivative work.
+
+            b.  Notice of any changes or modifications to the files,
+            including the date changes were made.
+
+    2.  The name, servicemarks and trademarks of X Engineering
+        Software Systems Corp. may NOT be used in advertising or
+        publicity pertaining to the software without specific, written
+        prior permission.
+
+    3.  Title to copyright in this software and any associated
+        documentation will at all times remain with X Engineering
+        Software Systems Corp.
+
+    4.  THIS SOFTWARE AND DOCUMENTATION IS PROVIDED "AS IS," AND X
+        Engineering Software Systems Corp MAKES NO REPRESENTATIONS OR
+        WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO,
+        WARRANTIES OF MERCHANTABILITY OR FITNESS FOR ANY PARTICULAR
+        PURPOSE OR THAT THE USE OF THE SOFTWARE OR DOCUMENTATION WILL
+        NOT INFRINGE ANY THIRD PARTY PATENTS, COPYRIGHTS, TRADEMARKS
+        OR OTHER RIGHTS.
+
+    5.  X Engineering Software Systems Corp WILL NOT BE LIABLE FOR ANY
+        DAMAGES, INCLUDING BUT NOT LIMITED TO, DIRECT, INDIRECT,
+        SPECIAL OR CONSEQUENTIAL, ARISING OUT OF ANY USE OF THE
+        SOFTWARE OR DOCUMENTATION.
+
+  ©2006 - X Engineering Software Systems Corp.  All rights reserved.
+----------------------------------------------------------------------------------*/
+
+
+#include &lt;cassert&gt;
+#include &lt;cstdarg&gt;
+
+#include "<a href="#" OnFocus="link('_file','utils_h0',this)">utils.h</a>"
+#include "<a href="#" OnFocus="link('_file','i2cport_h0',this)">i2cport.h</a>"
+
+
+/// Create an I2C port.
+<a href="#" OnFocus="link('_member','I2CPort60241061',this)">I2CPort::I2CPort</a>(void)
+{
+    ;
+}
+
+
+/// Create an I2C port.
+<a href="#" OnFocus="link('_member','I2CPort60241061',this)">I2CPort::I2CPort</a>(<a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>* e,           ///&lt; error reporting channel 
+             unsigned int portNum,      ///&lt; parallel port number
+             unsigned int invMask,      ///&lt; parallel port inversion mask
+             unsigned int sclwPosArg,   ///&lt; bit position of I2C clock pin (data reg)
+             unsigned int sdawPosArg,   ///&lt; bit position of I2C write data pin (data reg)
+             unsigned int sclrPosArg,   ///&lt; bit position of I2C clock read pin (status reg)
+             unsigned int sdarPosArg,   ///&lt; bit position of I2C read data pin (status reg)
+             unsigned int bitDurArg)    ///&lt; duration of I2C bits in microseconds
+{
+    <a href="#" OnFocus="link('_member','Setup1745817787',this)">Setup</a>(e,portNum,invMask,sclwPosArg,sdawPosArg,sclrPosArg,sdarPosArg,bitDurArg);
+}
+
+
+/// Initialize the members of the object.
+int <a href="#" OnFocus="link('_member','Setup1745817787',this)">I2CPort::Setup</a>(<a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>* e,           ///&lt; error reporting channel 
+             unsigned int portNum,      ///&lt; parallel port number
+             unsigned int invMask,      ///&lt; parallel port inversion mask
+             unsigned int sclwPosArg,   ///&lt; bit position of I2C clock pin (data reg)
+             unsigned int sdawPosArg,   ///&lt; bit position of I2C write data pin (data reg)
+             unsigned int sclrPosArg,   ///&lt; bit position of I2C clock read pin (status reg)
+             unsigned int sdarPosArg,   ///&lt; bit position of I2C read data pin (status reg)
+             unsigned int bitDurArg)    ///&lt; duration of I2C bits in microseconds
+{
+    <a href="#" OnFocus="link('_member','sclrPos518706',this)">sclrPos</a>  = sclrPosArg;
+    <a href="#" OnFocus="link('_member','sclwPos518706',this)">sclwPos</a>  = sclwPosArg;
+    <a href="#" OnFocus="link('_member','sdawPos518706',this)">sdawPos</a> = sdawPosArg;
+    <a href="#" OnFocus="link('_member','sdarPos518706',this)">sdarPos</a> = sdarPosArg;
+    <a href="#" OnFocus="link('_member','bitDur518706',this)">bitDur</a>  = bitDurArg;
+    return <a href="#" OnFocus="link('_member','Setup1571714867',this)">PPort::Setup</a>(e,portNum,invMask);
+}
+
+
+/// Force a value onto the clock line.
+void <a href="#" OnFocus="link('_member','SetSCL3135533083',this)">I2CPort::SetSCL</a>(unsigned int bit)
+{
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(bit,sclwPos,sclwPos);
+    // wait if the slave holds the clock line low while the
+    // master tries to raise it
+    while(<a href="#" OnFocus="link('_member','In1210046855',this)">In</a>(sclrPos,sclrPos)!=(bit&amp;1))
+        ;
+}
+
+
+/// Read the current level on the clock line.
+unsigned int <a href="#" OnFocus="link('_member','GetSCL84404763',this)">I2CPort::GetSCL</a>()
+{
+    return <a href="#" OnFocus="link('_member','In1210046855',this)">In</a>(sclrPos,sclrPos);
+}
+
+
+/// Toggle the clock twice to create a pulse.
+void <a href="#" OnFocus="link('_member','PulseSCL60241061',this)">I2CPort::PulseSCL</a>(void)
+{
+    <a href="#" OnFocus="link('_member','SetSCL3135533083',this)">SetSCL</a>(1);
+    <a href="#" OnFocus="link('_member','InsertDelay359930342',this)">InsertDelay</a>(bitDur,MICROSECONDS);
+    <a href="#" OnFocus="link('_member','SetSCL3135533083',this)">SetSCL</a>(0);
+    <a href="#" OnFocus="link('_member','InsertDelay359930342',this)">InsertDelay</a>(bitDur,MICROSECONDS);
+}
+
+
+/// Force a value onto the data line.
+void <a href="#" OnFocus="link('_member','SetSDA3135533083',this)">I2CPort::SetSDA</a>(unsigned int bit)
+{
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(bit,sdawPos,sdawPos);
+}
+
+
+/// Read the current level on the data line.
+unsigned int <a href="#" OnFocus="link('_member','GetSDA84404763',this)">I2CPort::GetSDA</a>()
+{
+    return <a href="#" OnFocus="link('_member','In1210046855',this)">In</a>(sdarPos,sdarPos);
+}
+
+
+/// Sequence the levels on the data and clock to initiate a transfer on the I2C bus.
+void <a href="#" OnFocus="link('_member','StartTransfer84404763',this)">I2CPort::StartTransfer</a>()
+{
+    // check state of SCL and SDA and set them so that
+    // they are both high, but don't raise SDA while
+    // SCL is also high because this is a STOP signal!!
+    if(<a href="#" OnFocus="link('_member','GetSCL84404763',this)">GetSCL</a>()==1)
+    {
+        if(<a href="#" OnFocus="link('_member','GetSDA84404763',this)">GetSDA</a>()==0)
+        {
+            <a href="#" OnFocus="link('_member','SetSCL3135533083',this)">SetSCL</a>(0);
+            <a href="#" OnFocus="link('_member','InsertDelay359930342',this)">InsertDelay</a>(bitDur,MICROSECONDS);
+            <a href="#" OnFocus="link('_member','SetSDA3135533083',this)">SetSDA</a>(1);
+            <a href="#" OnFocus="link('_member','InsertDelay359930342',this)">InsertDelay</a>(bitDur,MICROSECONDS);
+            <a href="#" OnFocus="link('_member','SetSCL3135533083',this)">SetSCL</a>(1);
+        }
+        <a href="#" OnFocus="link('_member','InsertDelay359930342',this)">InsertDelay</a>(bitDur,MICROSECONDS);
+    }
+    else    // SCL is low so raise SDA and then SCL
+    {
+        <a href="#" OnFocus="link('_member','SetSDA3135533083',this)">SetSDA</a>(1);    // don't bother to check SDA; just raise it
+        <a href="#" OnFocus="link('_member','InsertDelay359930342',this)">InsertDelay</a>(bitDur,MICROSECONDS);
+        <a href="#" OnFocus="link('_member','SetSCL3135533083',this)">SetSCL</a>(1);
+        <a href="#" OnFocus="link('_member','InsertDelay359930342',this)">InsertDelay</a>(bitDur,MICROSECONDS);
+    }
+    <a href="#" OnFocus="link('_member','SetSDA3135533083',this)">SetSDA</a>(0);        // lower data while clock is high to start I2C transfer
+    <a href="#" OnFocus="link('_member','InsertDelay359930342',this)">InsertDelay</a>(bitDur,MICROSECONDS);
+    <a href="#" OnFocus="link('_member','SetSCL3135533083',this)">SetSCL</a>(0);        // now lower clock line
+    <a href="#" OnFocus="link('_member','InsertDelay359930342',this)">InsertDelay</a>(bitDur,MICROSECONDS);
+}
+
+
+/// Transfer a single bit over the I2C bus.
+void <a href="#" OnFocus="link('_member','WriteBit3135533083',this)">I2CPort::WriteBit</a>(unsigned int bit)
+{
+    assert(<a href="#" OnFocus="link('_member','GetSCL84404763',this)">GetSCL</a>()==0);  // condition for sending bit
+    <a href="#" OnFocus="link('_member','SetSDA3135533083',this)">SetSDA</a>(bit);  // set data while clock is low
+    <a href="#" OnFocus="link('_member','InsertDelay359930342',this)">InsertDelay</a>(bitDur,MICROSECONDS);
+    <a href="#" OnFocus="link('_member','PulseSCL60241061',this)">PulseSCL</a>();     // pulse clock
+}
+
+
+/// Receive a single bit over the I2C bus.
+///\return the received bit
+unsigned int <a href="#" OnFocus="link('_member','ReadBit60241061',this)">I2CPort::ReadBit</a>(void)
+{
+    assert(<a href="#" OnFocus="link('_member','GetSCL84404763',this)">GetSCL</a>()==0);  // conditions for receiving bit
+    <a href="#" OnFocus="link('_member','SetSCL3135533083',this)">SetSCL</a>(1);        // get bit from slave when clock is high
+    //(bit from slave was probably already stable while the clock was low.)
+    <a href="#" OnFocus="link('_member','InsertDelay359930342',this)">InsertDelay</a>(bitDur,MICROSECONDS);
+    unsigned int bit = <a href="#" OnFocus="link('_member','GetSDA84404763',this)">GetSDA</a>();  // get bit from slave
+    <a href="#" OnFocus="link('_member','SetSCL3135533083',this)">SetSCL</a>(0);
+    <a href="#" OnFocus="link('_member','InsertDelay359930342',this)">InsertDelay</a>(bitDur,MICROSECONDS);
+    return bit;
+}
+
+
+/// Send an ACK or NACK over the I2C bus.
+void <a href="#" OnFocus="link('_member','WriteAck3135533083',this)">I2CPort::WriteAck</a>(unsigned int ack) ///&lt; ACK=0, NACK=1
+{
+    assert(<a href="#" OnFocus="link('_member','GetSCL84404763',this)">GetSCL</a>()==0);
+    <a href="#" OnFocus="link('_member','SetSDA3135533083',this)">SetSDA</a>(ack);  // 0=ACK; 1=NACK
+    <a href="#" OnFocus="link('_member','InsertDelay359930342',this)">InsertDelay</a>(bitDur,MICROSECONDS);
+    <a href="#" OnFocus="link('_member','PulseSCL60241061',this)">PulseSCL</a>();
+}
+
+
+/// Receive an ACK or NACK over the I2C bus.
+///\return the ACK (0) or NACK (1) bit
+unsigned int <a href="#" OnFocus="link('_member','ReadAck84404763',this)">I2CPort::ReadAck</a>()
+{
+    assert(<a href="#" OnFocus="link('_member','GetSCL84404763',this)">GetSCL</a>()==0);  // condition for receiving ack
+    <a href="#" OnFocus="link('_member','SetSDA3135533083',this)">SetSDA</a>(1);    // release the data line so the receiver can ack/nack
+    <a href="#" OnFocus="link('_member','InsertDelay359930342',this)">InsertDelay</a>(bitDur,MICROSECONDS);
+    <a href="#" OnFocus="link('_member','SetSCL3135533083',this)">SetSCL</a>(1);    // raise clock
+    <a href="#" OnFocus="link('_member','InsertDelay359930342',this)">InsertDelay</a>(bitDur,MICROSECONDS);
+    unsigned int ack = <a href="#" OnFocus="link('_member','GetSDA84404763',this)">GetSDA</a>();  // read ack/nack from slave
+    <a href="#" OnFocus="link('_member','SetSCL3135533083',this)">SetSCL</a>(0);    // return to condition for writing bits
+    <a href="#" OnFocus="link('_member','InsertDelay359930342',this)">InsertDelay</a>(bitDur,MICROSECONDS);
+    return ack;
+}
+
+
+/// Terminate an I2C tranfer.
+void <a href="#" OnFocus="link('_member','StopTransfer84404763',this)">I2CPort::StopTransfer</a>()
+{
+    assert(<a href="#" OnFocus="link('_member','GetSCL84404763',this)">GetSCL</a>()==0);
+    <a href="#" OnFocus="link('_member','SetSDA3135533083',this)">SetSDA</a>(0);        // make sure data line is low
+    <a href="#" OnFocus="link('_member','InsertDelay359930342',this)">InsertDelay</a>(bitDur,MICROSECONDS);
+    <a href="#" OnFocus="link('_member','SetSCL3135533083',this)">SetSCL</a>(1);        // raise clock
+    <a href="#" OnFocus="link('_member','InsertDelay359930342',this)">InsertDelay</a>(bitDur,MICROSECONDS);
+    <a href="#" OnFocus="link('_member','SetSDA3135533083',this)">SetSDA</a>(1);        // raise data while clock is high to stop I2C transfer
+    <a href="#" OnFocus="link('_member','InsertDelay359930342',this)">InsertDelay</a>(bitDur,MICROSECONDS);
+}
+
+
+/// Send an entire byte of data over the I2C bus.
+void <a href="#" OnFocus="link('_member','WriteByte3135533083',this)">I2CPort::WriteByte</a>(unsigned int byte)
+{
+    for(unsigned int mask=0x80; mask!=0; mask&gt;&gt;=1)
+        <a href="#" OnFocus="link('_member','WriteBit3135533083',this)">WriteBit</a>((byte &amp; mask) ? 1:0);
+    if(<a href="#" OnFocus="link('_member','ReadAck84404763',this)">ReadAck</a>()!=0)
+    {
+        <a href="#" OnFocus="link('_member','StopTransfer84404763',this)">StopTransfer</a>();
+        string <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a> = "Transmission NACK'ed";
+        <a href="#" OnFocus="link('_member','GetErr259477277',this)">GetErr</a>().<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMinor,errMsg);
+    }
+}
+
+
+/// Receive an entire byte of data over the I2C bus.
+///\return the received byte
+unsigned int <a href="#" OnFocus="link('_member','ReadByte66532513',this)">I2CPort::ReadByte</a>(bool doAck) ///&lt; set to true if an ACK is needed after the reception
+{
+    <a href="#" OnFocus="link('_member','SetSDA3135533083',this)">SetSDA</a>(1);    // release data line so slave can transmit
+    <a href="#" OnFocus="link('_member','InsertDelay359930342',this)">InsertDelay</a>(bitDur,MICROSECONDS);
+    unsigned int byte = 0;
+    for(unsigned int mask=0x80; mask!=0; mask&gt;&gt;=1)
+        byte |= (<a href="#" OnFocus="link('_member','ReadBit60241061',this)">ReadBit</a>() ? mask:0);
+    if(doAck)
+    {
+        // master receiver doesn't ACK the last byte read
+        <a href="#" OnFocus="link('_member','WriteAck3135533083',this)">WriteAck</a>(0);
+        <a href="#" OnFocus="link('_member','SetSDA3135533083',this)">SetSDA</a>(1);
+        <a href="#" OnFocus="link('_member','InsertDelay359930342',this)">InsertDelay</a>(bitDur,MICROSECONDS);
+    }
+    return byte;
+}
+
+
+/// Send a sequence of multi-byte packets over the I2C bus.
+void <a href="#" OnFocus="link('_member','WriteBuffer2491703777',this)">I2CPort::WriteBuffer</a>(unsigned char* buffer,    ///&lt; buffer with multiple packets stuffed in it
+                        unsigned int numBytes1,     ///&lt; number of bytes in first packet
+                        ...)                        ///&lt; number of bytes in succeeding packets, terminated with a 0 or negative number
+{
+    va_list marker;
+    va_start(marker,numBytes1);
+    
+    unsigned int index = 0;
+    for(unsigned int numBytes=numBytes1; numBytes&gt;0; numBytes=va_arg(marker,unsigned int))
+    {
+        <a href="#" OnFocus="link('_member','StartTransfer84404763',this)">StartTransfer</a>();
+        for(unsigned int i=0; i&lt;numBytes; i++, index++)
+        {
+            <a href="#" OnFocus="link('_member','WriteByte3135533083',this)">WriteByte</a>(buffer[index]);
+            if(<a href="#" OnFocus="link('_member','GetErr259477277',this)">GetErr</a>().<a href="#" OnFocus="link('_member','IsError863564933',this)">IsError</a>()==true)
+                return;
+        }
+    }
+    <a href="#" OnFocus="link('_member','StopTransfer84404763',this)">StopTransfer</a>();
+    va_end(marker);
+}
+
+
+/// Receive a sequence of bytes over the I2C bus.
+void <a href="#" OnFocus="link('_member','ReadBuffer461448834',this)">I2CPort::ReadBuffer</a>(unsigned int numWriteBytes,   ///&lt; number of bytes to send 
+                        unsigned char* wrBuffer,        ///&lt; buffer with data to write to device
+                        unsigned int numReadBytes,      ///&lt; number of bytes to receive
+                        unsigned char* rdBuffer)        ///&lt; pointer to buffer for received data
+{
+    <a href="#" OnFocus="link('_member','StartTransfer84404763',this)">StartTransfer</a>();
+    unsigned i;
+    /// send data to device
+    for(i=0; i&lt;numWriteBytes; i++)
+    {
+        if(i==(numWriteBytes-1) &amp;&amp; i&gt;0)
+            <a href="#" OnFocus="link('_member','StartTransfer84404763',this)">StartTransfer</a>();
+        <a href="#" OnFocus="link('_member','WriteByte3135533083',this)">WriteByte</a>(wrBuffer[i]);
+        if(<a href="#" OnFocus="link('_member','GetErr259477277',this)">GetErr</a>().<a href="#" OnFocus="link('_member','IsError863564933',this)">IsError</a>()==true)
+            return;
+    }
+    /// receive data from device in response to previous transmission
+    for(i=0; i&lt;numReadBytes; i++)
+        rdBuffer[i] = <a href="#" OnFocus="link('_member','ReadByte66532513',this)">ReadByte</a>(i!=(numReadBytes-1));    // master-receiver doesn't ACK the last byte received
+    <a href="#" OnFocus="link('_member','StopTransfer84404763',this)">StopTransfer</a>();
+}
+
+
+/// Write a byte of data into a given register in a device on the I2C bus.
+void <a href="#" OnFocus="link('_member','WriteReg389920113',this)">I2CPort::WriteReg</a>(unsigned char devAddr,    ///&lt; I2C address of device
+                    unsigned char regAddr,      ///&lt; address of register in device
+                    unsigned char regData)      ///&lt; data byte to store in register
+{
+    unsigned char buf[3];
+    buf[0] = devAddr &amp; ~0x01;   // create write address
+    buf[1] = regAddr;
+    buf[2] = regData;
+    <a href="#" OnFocus="link('_member','WriteBuffer2491703777',this)">WriteBuffer</a>(buf,3,0);
+}
+
+
+/// Read a byte of data from a register in a device on the I2C bus.
+void <a href="#" OnFocus="link('_member','ReadReg494774107',this)">I2CPort::ReadReg</a>(unsigned char devAddr,    ///&lt; I2C address of device
+                    unsigned char regAddr,      ///&lt; address of register in device
+                    unsigned char* regData)     ///&lt; store the data from the register here
+{
+    unsigned char buf[3];
+    buf[0] = devAddr &amp; ~0x01;   // create write address
+    buf[1] = regAddr;
+    buf[2] = devAddr | 0x01;    // create read address
+    <a href="#" OnFocus="link('_member','ReadBuffer461448834',this)">ReadBuffer</a>(3,buf,1,regData);
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_file','_source');
+</script>

@@ -1,0 +1,223 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - hexrecrd.h</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">hexrecrd.h</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">hexrecrd.h</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','hexrecrd_h0','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','hexrecrd_h0','_overview',this)" class="tabLinkInActive">Overview</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','hexrecrd_h0','_includedfiles',this)" class="tabLinkInActive">Included files</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','hexrecrd_h0','_includedby',this)" class="tabLinkInActive">Included by</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_file','hexrecrd_h0','_source',this)" class="tabLinkActive">Source</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<pre class="codeExamples">
+/*----------------------------------------------------------------------------------
+  SOFTWARE LICENSE AGREEMENT
+    1.  Permission to use, copy, modify, and distribute this software
+        and its documentation, with or without modification, for any
+        purpose and without fee or royalty is hereby granted, provided
+        that you include the following on ALL copies of the software
+        and documentation or portions thereof, including
+        modifications, that you make:
+
+            a.  The full text of this license in a location viewable to users
+            of the redistributed or derivative work.
+
+            b.  Notice of any changes or modifications to the files,
+            including the date changes were made.
+
+    2.  The name, servicemarks and trademarks of X Engineering
+        Software Systems Corp. may NOT be used in advertising or
+        publicity pertaining to the software without specific, written
+        prior permission.
+
+    3.  Title to copyright in this software and any associated
+        documentation will at all times remain with X Engineering
+        Software Systems Corp.
+
+    4.  THIS SOFTWARE AND DOCUMENTATION IS PROVIDED "AS IS," AND X
+        Engineering Software Systems Corp MAKES NO REPRESENTATIONS OR
+        WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO,
+        WARRANTIES OF MERCHANTABILITY OR FITNESS FOR ANY PARTICULAR
+        PURPOSE OR THAT THE USE OF THE SOFTWARE OR DOCUMENTATION WILL
+        NOT INFRINGE ANY THIRD PARTY PATENTS, COPYRIGHTS, TRADEMARKS
+        OR OTHER RIGHTS.
+
+    5.  X Engineering Software Systems Corp WILL NOT BE LIABLE FOR ANY
+        DAMAGES, INCLUDING BUT NOT LIMITED TO, DIRECT, INDIRECT,
+        SPECIAL OR CONSEQUENTIAL, ARISING OUT OF ANY USE OF THE
+        SOFTWARE OR DOCUMENTATION.
+
+  ©2006 - X Engineering Software Systems Corp.  All rights reserved.
+----------------------------------------------------------------------------------*/
+
+
+#ifndef HEXRECORD_H
+#define HEXRECORD_H
+
+#include &lt;iostream&gt;
+
+
+/**
+Supported hex file formats.
+
+This object implements a generic hexadecimal data record with a buffer 
+containing data bytes and a base address that records the starting 
+address in memory for the data. This object has methods for entering 
+data, reading the data back, determining the type of the data and 
+setting/querying the starting address. Operators are also provided that 
+allow storing/loading of HexRecord objects to/from Intel, Motorola and 
+XESS HEX files. 
+
+*/
+typedef enum
+{
+    <a href="#" OnFocus="link('_member','MotorolaFormat0',this)">MotorolaFormat</a>    = 0x00, ///&lt; Motorola EXO format
+    <a href="#" OnFocus="link('_member','IntelFormat0',this)">IntelFormat</a>        = 0x10, ///&lt; Intel MCS or HEX format
+    <a href="#" OnFocus="link('_member','XESSFormat0',this)">XESSFormat</a>        = 0x20, /// XESS XES format
+} <a href="#" OnFocus="link('_member','HexFileFormat0',this)">HexFileFormat</a>;
+
+
+/// Types of records found in a hex file.
+typedef enum
+{
+    <a href="#" OnFocus="link('_member','MotoStartRecord0',this)">MotoStartRecord</a>                    = 0x00, // first record in file
+    <a href="#" OnFocus="link('_member','MotoDataWith16BitAddressRecord0',this)">MotoDataWith16BitAddressRecord</a>    = 0x01, // actual address and data
+    <a href="#" OnFocus="link('_member','MotoDataWith24BitAddressRecord0',this)">MotoDataWith24BitAddressRecord</a>    = 0x02, // actual address and data
+    <a href="#" OnFocus="link('_member','MotoDataWith32BitAddressRecord0',this)">MotoDataWith32BitAddressRecord</a>    = 0x03, // actual address and data
+    <a href="#" OnFocus="link('_member','MotoEndWith16BitAddressRecord0',this)">MotoEndWith16BitAddressRecord</a>    = 0x09, // actual address and data
+    <a href="#" OnFocus="link('_member','MotoEndWith24BitAddressRecord0',this)">MotoEndWith24BitAddressRecord</a>    = 0x08, // actual address and data
+    <a href="#" OnFocus="link('_member','MotoEndWith32BitAddressRecord0',this)">MotoEndWith32BitAddressRecord</a>    = 0x07, // actual address and data
+    <a href="#" OnFocus="link('_member','IntelDataRecord0',this)">IntelDataRecord</a>                    = 0x10, // actual address offset and data
+    <a href="#" OnFocus="link('_member','IntelEOFRecord0',this)">IntelEOFRecord</a>                    = 0x11, // end of file record
+    <a href="#" OnFocus="link('_member','IntelExtSegAddressRecord0',this)">IntelExtSegAddressRecord</a>        = 0x12, // specifies bits 4-19 of 20-bit address
+    <a href="#" OnFocus="link('_member','IntelExtLinAddressRecord0',this)">IntelExtLinAddressRecord</a>        = 0x14, // specifies upper 16 bits of 32-bit address
+    <a href="#" OnFocus="link('_member','IntelStartSegAddressRecord0',this)">IntelStartSegAddressRecord</a>        = 0x13, // specifies 20-bit execution start address
+    <a href="#" OnFocus="link('_member','IntelStartLinAddressRecord0',this)">IntelStartLinAddressRecord</a>        = 0x15, // specifies 32-bit execution start address
+    <a href="#" OnFocus="link('_member','XESSDataWith16BitAddressRecord0',this)">XESSDataWith16BitAddressRecord</a>    = 0x20, // actual address and data
+    <a href="#" OnFocus="link('_member','XESSDataWith24BitAddressRecord0',this)">XESSDataWith24BitAddressRecord</a>    = 0x21, // actual address and data
+    <a href="#" OnFocus="link('_member','XESSDataWith32BitAddressRecord0',this)">XESSDataWith32BitAddressRecord</a>    = 0x22, // actual address and data
+    <a href="#" OnFocus="link('_member','InvalidRecord0',this)">InvalidRecord</a>                    = 0xFF, // erroneous record
+} <a href="#" OnFocus="link('_member','HexRecordType0',this)">HexRecordType</a>;
+
+
+/// Types of errors that can occur when handling hex records.
+typedef enum
+{
+    <a href="#" OnFocus="link('_member','NoHexRecordError0',this)">NoHexRecordError</a>,
+    <a href="#" OnFocus="link('_member','StartHexRecordError0',this)">StartHexRecordError</a>,
+    <a href="#" OnFocus="link('_member','LengthHexRecordError0',this)">LengthHexRecordError</a>,
+    <a href="#" OnFocus="link('_member','AddressHexRecordError0',this)">AddressHexRecordError</a>,
+    <a href="#" OnFocus="link('_member','TypeHexRecordError0',this)">TypeHexRecordError</a>,
+    <a href="#" OnFocus="link('_member','DataHexRecordError0',this)">DataHexRecordError</a>,
+    <a href="#" OnFocus="link('_member','CheckSumHexRecordError0',this)">CheckSumHexRecordError</a>
+} <a href="#" OnFocus="link('_member','HexRecordError0',this)">HexRecordError</a>;
+
+
+/// Extracts hexadecimal records from hex files in Intel, Motorola and XESS formats.
+class <a href="#" OnFocus="link('_class','HexRecord0',this)">HexRecord</a>
+{
+    public:
+
+     <a href="#" OnFocus="link('_member','HexRecord2569703380',this)">HexRecord</a>(void);
+
+     <a href="#" OnFocus="link('_member','tilde_HexRecord2569703380',this)">~HexRecord</a>(void);
+
+    void <a href="#" OnFocus="link('_member','Setup2851010944',this)">Setup</a>(const char* format);
+
+    void <a href="#" OnFocus="link('_member','SetFileFormat1919421449',this)">SetFileFormat</a>(HexFileFormat f);
+
+    <a href="#" OnFocus="link('_member','HexFileFormat0',this)">HexFileFormat</a> <a href="#" OnFocus="link('_member','GetFileFormat2146470179',this)">GetFileFormat</a>(void) const;
+
+    void <a href="#" OnFocus="link('_member','SetRecordType4230118567',this)">SetRecordType</a>(HexRecordType t);
+
+    <a href="#" OnFocus="link('_member','HexRecordType0',this)">HexRecordType</a> <a href="#" OnFocus="link('_member','GetRecordType2146470179',this)">GetRecordType</a>(void) const;
+
+    bool <a href="#" OnFocus="link('_member','IsData2146470179',this)">IsData</a>(void) const;
+
+    bool <a href="#" OnFocus="link('_member','IsValid2146470179',this)">IsValid</a>(void) const;
+
+    void <a href="#" OnFocus="link('_member','SetAddress2774302151',this)">SetAddress</a>(unsigned int addr);
+
+    unsigned int <a href="#" OnFocus="link('_member','GetAddress2146470179',this)">GetAddress</a>(void) const;
+
+    void <a href="#" OnFocus="link('_member','SetBaseAddress2774302151',this)">SetBaseAddress</a>(unsigned int baseAddr);
+
+    unsigned int <a href="#" OnFocus="link('_member','GetBaseAddress2146470179',this)">GetBaseAddress</a>(void) const;
+
+    void <a href="#" OnFocus="link('_member','SetOffsetAddress2774302151',this)">SetOffsetAddress</a>(unsigned int off);
+
+    unsigned int <a href="#" OnFocus="link('_member','GetOffsetAddress2146470179',this)">GetOffsetAddress</a>(void) const;
+
+    unsigned int <a href="#" OnFocus="link('_member','GetAddressLength2569703380',this)">GetAddressLength</a>(void);
+
+    void <a href="#" OnFocus="link('_member','SetAddressMask2774302151',this)">SetAddressMask</a>(unsigned int mask);
+
+    unsigned int <a href="#" OnFocus="link('_member','GetAddressMask2146470179',this)">GetAddressMask</a>(void) const;
+
+    void <a href="#" OnFocus="link('_member','SetLength2774302151',this)">SetLength</a>(unsigned int l);
+
+    unsigned int <a href="#" OnFocus="link('_member','GetLength2146470179',this)">GetLength</a>(void) const;
+
+    unsigned char&amp; <a href="#" OnFocus="link('_member','operatorl_brack_r_brack_2774309358',this)">operator[]</a>(unsigned int index) const;
+
+    void <a href="#" OnFocus="link('_member','CalcCheckSum2569703380',this)">CalcCheckSum</a>(void);
+
+    unsigned char <a href="#" OnFocus="link('_member','GetCheckSum2146470179',this)">GetCheckSum</a>(void) const;
+
+    void <a href="#" OnFocus="link('_member','SetError3731019749',this)">SetError</a>(HexRecordError e);
+
+    <a href="#" OnFocus="link('_member','HexRecordError0',this)">HexRecordError</a> <a href="#" OnFocus="link('_member','GetError2146470179',this)">GetError</a>(void) const;
+
+    bool <a href="#" OnFocus="link('_member','IsError2146470179',this)">IsError</a>(void) const;
+
+    const char* <a href="#" OnFocus="link('_member','GetErrMsg2146470179',this)">GetErrMsg</a>(void) const;
+
+
+    private:
+
+    <a href="#" OnFocus="link('_member','HexRecordError0',this)">HexRecordError</a> <a href="#" OnFocus="link('_member','err239492963',this)">err</a>;          ///&lt; hex record error
+    <a href="#" OnFocus="link('_member','HexFileFormat0',this)">HexFileFormat</a> <a href="#" OnFocus="link('_member','fileFormat239492963',this)">fileFormat</a>;  ///&lt; hex file format (XESS, Intel, Motorola)
+    <a href="#" OnFocus="link('_member','HexRecordType0',this)">HexRecordType</a> <a href="#" OnFocus="link('_member','recordType239492963',this)">recordType</a>;  ///&lt; type of data stored in hex record
+    unsigned int <a href="#" OnFocus="link('_member','length239492963',this)">length</a>;      ///&lt; number of data bytes in the hex record
+    unsigned int <a href="#" OnFocus="link('_member','offset239492963',this)">offset</a>;      ///&lt; destination address for the hex data
+    unsigned int <a href="#" OnFocus="link('_member','base239492963',this)">base</a>;          ///&lt; base address added to offset to create final address
+    unsigned int <a href="#" OnFocus="link('_member','mask239492963',this)">mask</a>;          ///&lt; masks off upper bits for address lengths less than 32-bits
+    bool <a href="#" OnFocus="link('_member','segmented239492963',this)">segmented</a>;              ///&lt; true if record is for Intel 20-bit segmented data
+    unsigned char* <a href="#" OnFocus="link('_member','data239492963',this)">data</a>;        ///&lt; data values stored in the hex record
+    unsigned char <a href="#" OnFocus="link('_member','checkSum239492963',this)">checkSum</a>;     ///&lt; checksum for the entire hex record
+};
+
+
+const char* <a href="#" OnFocus="link('_member','ErrMsg700367614',this)">ErrMsg</a>(HexRecordError e);
+
+extern istream&amp; <a href="#" OnFocus="link('_member','operatorgreat_great_2403082006',this)">operator>> </a>(istream&amp; is, <a href="#" OnFocus="link('_class','HexRecord0',this)">HexRecord</a>&amp; hx);
+
+extern ostream&amp; <a href="#" OnFocus="link('_member','operatorless_less_2307103839',this)">operator<< </a>(ostream&amp; is, <a href="#" OnFocus="link('_class','HexRecord0',this)">HexRecord</a>&amp; hx);
+
+
+#endif
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_file','_source');
+</script>

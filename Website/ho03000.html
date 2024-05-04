@@ -1,0 +1,1483 @@
+<html>
+
+
+<!-- Mirrored from 192.168.0.47/ho03000.html by HTTrack Website Copier/3.x [XR&CO'2004], Mon, 04 Dec 2006 16:07:19 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=ISO-8859-1"><!-- /Added by HTTrack -->
+<head>
+<link rel="SHORTCUT ICON" HREF="images/xess.ico">
+<title>XESS Example Designs for XS40 and XS95 FPGA and CPLD Boards</title>
+<meta name="KEYWORDS" content="XESS, XILINX, XC4000, XC9500, Spartan, FPGA, CPLD, reconfigurable logic, programmable logic, 8051 microcontroller, demo board, evaluation board">
+<meta name="DESCRIPTION" content="XESS Corp develops and sells low-cost XILINX programmable logic + microcontroller boards with tutorials.">
+<meta http-equiv="Content-Type" content="text/html">
+<link rel="stylesheet" type="text/css" href="xess-1.css">
+<style>
+<!--
+BLOCKQUOTE.CITE {margin:0; padding-left:0.5em; border-left:medium none solid 2;}
+-->
+</style>
+<meta name="Microsoft Border" content="none, default">
+</head>
+
+<body>
+
+<table>
+	<!-- MSTableType="nolayout" -->
+	<tr>
+		<td class="StdPageLogo">
+		<a href="index-2.html"><img border="0" src="images/xess-138x32.bmp"></a>
+</td>
+		<td class="StdPageNav">
+		<script type="text/javascript" src="xess.js"></script>
+<!-- <script type="text/javascript" src="niftycube_xess.js"></script> -->
+<!-- <script type="text/javascript" src="prototype.js"></script> -->
+<!-- <script type="text/javascript" src="rico.js"></script> -->
+<script type="text/javascript">
+	window.onload=function(){
+		startList("nav");
+		stripe_xess();
+		collapseall();
+		// Nifty("td.StdPageNav","transparent");
+		// Nifty("td.StdPageSidebar","transparent");
+		// Nifty("td.StdPageNavLinks","transparent");
+	};
+	onload=function(){
+		startList("nav");
+		stripe_xess();
+		collapseall();
+		// Nifty("td.StdPageNav","transparent");
+		// Nifty("td.StdPageSidebar","transparent");
+		// Nifty("td.StdPageNavLinks","transparent");
+	};
+</script>
+
+
+
+<table border="0" width="640" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="center" valign="center" width="70%">
+
+<!--
+  -- naviagation bar for browsers with scripting capability
+  -- (make sure there is no whitespace after the '\' on each line and run
+  -- the Javascript console on Firefox to check the syntax.)
+  -->
+<script type="text/javascript">
+nav_text = '\
+  <ul id="nav"> \
+    <li id="first"><a href="ho04000.html">Products</a> \
+      <ul> \
+        <li><a href="ho04000.html"><div>Catalog</div></a></li> \
+        <li><a href="manuals.html"><div>Manuals</div></a></li> \
+        <li><a href="ho07000.html"><div>Software Downloads</div></a></li> \
+      </ul> \
+    </li> \
+    <li><a href="help.html">Support</a> \
+      <ul> \
+        <li><a href="manuals.html" ><div>Product Manuals</div></a></li> \
+        <li><a href="ho03000.html" ><div>Tutorials</div></a></li> \
+        <li><a href="ho03000.html" ><div>Application Notes</div></a></li> \
+        <li><a href="ho03000.html" ><div>Design Examples</div></a></li> \
+        <li><a href="ho01000.html" ><div>FAQ</div></a></li> \
+        <li><a href="list_reg.html"><div>User Forum</div></a></li> \
+        <li><a href="help.html"    ><div>Request Help</div></a></li> \
+      </ul> \
+    </li> \
+    <li><a href="ho01001.html">Purchasing</a> \
+      <ul> \
+        <li><a href="https://xess.com/xess_int_order.php3"><div>Web Orders</div></a></li> \
+        <li><a href="ho01001.html"                       ><div>Purchase Orders</div></a></li> \
+        <li><a href="ho01001.html"                       ><div>Payment Methods</div></a></li> \
+        <li><a href="xess_int_quote.html"                ><div>Get a Quote</div></a></li> \
+        <li><a href="xess_int_quote.html"                ><div>Get a Proforma Invoice</div></a></li> \
+        <li><a href="ho01001.html"                       ><div>How To Buy From Us</div></a></li> \
+      </ul> \
+    </li> \
+    <li id="last"><a href="index-2.html">XESS</a> \
+      <ul> \
+        <li><a href="index-2.html"   ><div>Home</div></a></li> \
+        <li><a href="about_us.html"><div>About Us</div></a></li> \
+        <li><a href="ho00003.html" ><div>Contact Us</div></a></li> \
+<!-- \
+        <li><a href=""              ><div>Announcements</div></a></li> \
+        <li><a href="ho00005.html" ><div>Press Releases</div></a></li> \
+--> \
+      </ul> \
+    </li> \
+    <li id="last"><a href="links.html">Misc.</a> \
+      <ul> \
+        <li><a href="links.html"><div>Links</div></a></li> \
+      </ul> \
+    </li> \
+  </ul> \
+';
+document.writeln(nav_text);
+</script>
+
+<!--
+  -- naviagation bar for browsers with NO scripting capability
+  -->
+<noscript>
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="14%" align="left">
+    <a href="ho04000.html"><img border="0" src="images/menu_arrow.png">Products</a>
+    </td>
+    <td width="16%" align="left">
+    <a href="ho01001.html"><img border="0" src="images/menu_arrow.png">How to Buy</a>
+    </td>
+    <td width="11%" align="left">
+    <a href="help.html"><img border="0" src="images/menu_arrow.png">Help!</a>
+    </td>
+    <td width="14%" align="left">
+    <a href="ho03000.html"><img border="0" src="images/menu_arrow.png">Tutorials</a>
+    </td>
+    <td width="14%" align="left">
+    <a href="index-2.html"><img border="0" src="images/menu_arrow.png">Home</a>
+<!--
+    <a href="/ho00005.html"><img border="0" src="/images/menu_arrow.png">Press&nbsp;Rel.</a>
+-->
+    </td>
+  </tr>
+  <tr>
+    <td>
+    <a href="manuals.html"><img border="0" src="images/menu_arrow.png">Manuals</a>
+    </td>
+    <td>
+    <a href="xess_int_quote.html"><img border="0" src="images/menu_arrow.png">Online Quote</a>
+    </td>
+    <td>
+    <a href="ho01000.html"><img border="0" src="images/menu_arrow.png">FAQ</a>
+    </td>
+    <td>
+    <a href="ho03000.html"><img border="0" src="images/menu_arrow.png">Examples</a>
+    </td>
+    <td>
+    <a href="about_us.html">
+    <img border="0" src="images/menu_arrow.png">About&nbsp;Us</a>
+    </td>
+  </tr>
+  <tr>
+    <td>
+    <a href="ho07000.html"><img border="0" src="images/menu_arrow.png">Downloads</a>
+    </td>
+    <td>
+    <a href="https://xess.com/xess_int_order.php3"><img border="0" src="images/menu_arrow.png">Order Online</a>
+    </td>
+    <td>
+    <a href="list_reg.html"><img border="0" src="images/menu_arrow.png">Forum</a>
+    </td>
+    <td>
+    <a href="links.html"><img border="0" src="images/menu_arrow.png">Links</a>
+    </td>
+    <td>
+    <a href="ho00003.html"><img border="0" src="images/menu_arrow.png">Contact&nbsp;Us</a>
+    </td>
+  </tr>
+</table>
+</noscript>
+
+    </td>
+    <td align="center" valign="center" width="30%" id="srch">
+      <FORM ACTION="http://192.168.0.47/cgi-bin/ksearch/ksearch.cgi" METHOD="GET" NAME="search">
+        <INPUT TYPE="text" value="search" NAME="terms">
+		<input type=image src="images/search_arrow.png" value="Search">
+      </FORM>
+    </td>
+  </tr>
+</table>
+
+</td>
+	</tr>
+	<tr>
+		<td class="StdPageSidebar">
+		<h1>Example Designs, Tutorials, Application Notes</h1>
+		<p>Here are some example designs that we created. Designs developed by our 
+		customers are listed further <a href="#Outside_Examples">below</a>. And go to the bottom of the page to 
+		find a list of useful <a href="#Tutorials">tutorials</a> and 
+        <a href="#App_Notes">application 
+		notes</a>.</p>
+		</td>
+		<td class="StdPageBody">
+		<ul>
+			<li><a href="#XESS_Examples">Design examples from XESS</a></li>
+			<li><a href="#Outside_Examples">Design examples from our customers</a></li>
+			<li><a href="#Tutorials">Tutorials</a></li>
+			<li><a href="#App_Notes">Application notes</a></li>
+		</ul>
+		<p>&nbsp;</p>
+		<table class="striped" width="100%">
+		  <thead>
+			<tr>
+			  <td><a name="XESS_Examples">Design Examples From XESS</td>
+			  <td align="center">Doc</td>
+			  <td align="center">Design<br>Files</td>
+			  <td align="center">Contact</td>
+			</tr>
+		  </thead>
+		  <tbody>
+			<tr>
+				<td>
+				<img src="images/qs_new.gif" alt="qs_new.gif (125 bytes)"><b>Video </b>is a simple design example for the XST-3.0 Board 
+                that digitizes a frame of video and displays it on a VGA monitor.</td>
+				<td align="center"><a href="appnotes/xst3_video.html">HTML</a></td>
+				<td align="center"><a href="projects/xst3_video.zip">ZIP</a></td>
+				<td align="center"><a href="mailto:help@xess.com"><img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+			<tr>
+				<td>
+				<img src="images/qs_new.gif" alt="qs_new.gif (125 bytes)"><b>IDE
+                </b>is a simple design example that writes data to sectors on an 
+                IDE hard disk and then reads it back to verify it.</td>
+				<td align="center"><a href="appnotes/xst3_IDE.html">HTML</a></td>
+				<td align="center"><a href="projects/xst3_IDE.zip">ZIP</a></td>
+				<td align="center"><a href="mailto:help@xess.com"><img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+			<tr>
+				<td>
+				<img src="images/qs_new.gif" alt="qs_new.gif (125 bytes)"><b>Audio </b>is a simple design example for the XST-3.0 Board 
+                that digitizes a stereo input signal and then converts it back 
+                into an analog output signal (i.e., simple audio loopback).</td>
+				<td align="center"><a href="appnotes/xst3_audio.html">HTML</a></td>
+				<td align="center"><a href="projects/xst3_audio.zip">ZIP</a></td>
+				<td align="center"><a href="mailto:help@xess.com"><img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+			<tr>
+				<td>
+				<img src="images/qs_new.gif" alt="qs_new.gif (125 bytes)"><b>RS232
+                </b>is a simple design example that echoes characters received 
+                through the RS232 port of the XST-3.0 Board back to the sending 
+                terminal.</td>
+				<td align="center"><a href="appnotes/xst3_RS232.html">HTML</a></td>
+				<td align="center"><a href="projects/xst3_RS232.zip">ZIP</a></td>
+				<td align="center"><a href="mailto:help@xess.com"><img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+			<tr>
+				<td>
+				<img src="images/qs_new.gif" alt="qs_new.gif (125 bytes)"><b>Switches 
+                and LEDs </b>is a simple design example for the XST-3.0 Board 
+                that lets you enter two four-bit numbers on the LED switch and 
+                displays the sum or difference on the seven-segment LED digits.</td>
+				<td align="center"><a href="appnotes/xst3_switches_leds.html">HTML</a></td>
+				<td align="center"><a href="projects/xst3_switches_leds.zip">ZIP</a></td>
+				<td align="center"><a href="mailto:help@xess.com"><img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+			<tr>
+				<td>
+				<b>VGA generator with parallel port SDRAM interface</b>
+                that allows downloading an image via the parallel port while the VGA 
+                generator is running.</td>
+				<td align="center"><a href="appnotes/an-103005-vgagen.html">HTML</a></td>
+				<td align="center"><a href="projects/an-103005-vgagen.zip">ZIP</a></td>
+				<td align="center"><a href="mailto:help@xess.com"><img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+			<tr>
+				<td>
+				<b>GNAT module for the XSA-3S1000 Board </b>lets you monitor and control 
+                your FPGA design through the JTAG port.</td>
+				<td align="center"><a href="appnotes/gnat_xsa_3s1000.html">HTML</a></td>
+				<td align="center"><a href="projects/gnat_xsa_3s1000.zip">ZIP</a></td>
+				<td align="center"><a href="mailto:help@xess.com"><img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+			<tr>
+				<td>
+				<b>Dualport module</b> that attaches to the front-end of the SDRAM 
+                controller to provide two or more independent read/write 
+                channels to the SDRAM.</td>
+				<td align="center"><a href="appnotes/an-071205-dualport.html">HTML</a>, <a href="appnotes/an-071205-dualport.pdf">PDF</a></td>
+				<td align="center"><a href="projects/dualporttst-1_0.zip">ZIP</a></td>
+				<td align="center"><a href="mailto:help@xess.com"><img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+			<tr>
+				<td>
+				<b>Pipelined SDRAM controller module</b> for the XSB Board that makes the 
+				SDRAM look like a simple static RAM.</td>
+				<td align="center"><a href="appnotes/an-071205-xsbsdramcntl.pdf">PDF</a></td>
+				<td align="center"><a href="projects/sdramtst-1_4.zip">ZIP</a></td>
+				<td align="center"><a href="mailto:help@xess.com"><img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+            <tr>
+				<td>
+				<b>Pipelined SDRAM controller module</b> for the XSA Board that 
+				makes the SDRAM look like a simple static RAM.</td>
+				<td align="center"><a href="appnotes/an-071205-xsasdramcntl.html">HTML</a>,	<a href="appnotes/an-071205-xsasdramcntl.pdf">PDF</a></td>
+				<td align="center"><a href="projects/sdramtst-1_4.zip">ZIP</a></td>
+				<td align="center"><a href="mailto:help@xess.com"><img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+			<tr>
+				<td>
+				<b>Use makefiles </b>to automate the batch processing of WebPACK / ISE designs.</td>
+				<td align="center"><a href="appnotes/makefile.html">HTML</a></td>
+				<td align="center"><a href="projects/XILINX_MAKEFILES.tar.gz">ZIP</a></td>
+				<td align="center"><a href="mailto:help@xess.com"><img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+			<tr>
+				<td>
+				<b>VGA generator</b> that displays an image from the XSA Board SDRAM on a VGA monitor.</td>
+				<td align="center"><a href="appnotes/an-101204-vgagen.pdf">PDF</a></td>
+				<td align="center"><a href="projects/an-101204-vgagen.zip">ZIP</a></td>
+				<td align="center"><a href="mailto:help@xess.com"><img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+            <tr>
+				<td>
+				<b>PS/2 keyboard interface</b> for the XSA Board that 
+                lets it accept keystrokes from an attached keyboard.</td>
+				<td align="center"><a href="appnotes/an-102104-keybrd.pdf">PDF</a></td>
+				<td align="center"><a href="projects/an-102104-keybrd.zip">ZIP</a></td>
+				<td align="center"><a href="mailto:help@xess.com"><img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+			<tr>
+				<td>
+				<b>XSB Compact Flash / IDE hard disk interface</b> that lets you read and 
+				write data on these non-volatile storage media.</td>
+				<td align="center"><a href="appnotes/an-041404-atacntl.pdf">PDF</a></td>
+				<td align="center"><a href="projects/xsbatacntl.zip">ZIP</a></td>
+				<td align="center"><a href="mailto:help@xess.com"><img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+			<tr>
+				<td>
+				<b>Stereo codec interface</b> for the XSA and XSB Boards.</td>
+				<td align="center"><a href="appnotes/an-032904-codec.pdf">PDF</a></td>
+				<td align="center"><a href="projects/codectst.zip">ZIP</a></td>
+				<td align="center"><a href="mailto:help@xess.com"><img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+			<tr>
+				<td>
+				<b>XSB audio codec configurator</b> that lets you configure the settings 
+				of the AK4565 codec chip.</td>
+				<td align="center"><a href="appnotes/an-111503-xsbaucodec.pdf">PDF</a></td>
+				<td align="center"><a href="projects/aucodec-xsb.zip">ZIP</a></td>
+				<td align="center"><a href="mailto:help@xess.com"><img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+			<tr>
+				<td><b>XSB frame grabber</b> that grabs frames of 
+				video and displays them on a VGA monitor.&nbsp; (Preliminary release 
+				- no documentation.)</td>
+				<td align="center"></td>
+				<td align="center"><a href="projects/framegrabber-xsb.zip">ZIP</a></td>
+				<td align="center"><a href="mailto:help@xess.com"><img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+			<tr>
+				<td><b>XSB parallel port interface</b> that is programmed 
+				into the CPLD.</td>
+				<td align="center"><a href="appnotes/an-102003-xsbpport.pdf">PDF</a></td>
+				<td align="center"><a href="projects/xsbpport.zip">ZIP</a></td>
+				<td align="center"><a href="mailto:help@xess.com"><img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+			<tr>
+				<td><b>XSB PIII Cable interface</b> that configures 
+				the CPLD so it emulates a Xilinx Parallel Cable III interface.&nbsp; 
+				This allows you to use the WebPACK programming tools through the 
+				simple XESS downloading cable.</td>
+				<td align="center"><a href="appnotes/an-100403-xsbpiii.pdf">PDF</a></td>
+				<td align="center"><a href="projects/xsbpiii.zip">ZIP</a></td>
+				<td align="center"><a href="mailto:help@xess.com"><img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+			<tr>
+				<td><b>XSA PIII Cable interface</b> that configures 
+				the CPLD so it emulates a Xilinx Parallel Cable III interface.&nbsp; 
+				This allows you to use the WebPACK programming tools through the 
+				simple XESS downloading cable.</td>
+				<td align="center"><a href="appnotes/an-111801-xsapiii.pdf">PDF</a></td>
+				<td align="center"><a href="projects/xsapiii.zip">ZIP</a></td>
+				<td align="center"><a href="mailto:help@xess.com"><img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+			<tr>
+				<td><b>XSA Flash designs</b> that manage the programming 
+				of the Flash and the configuration of the SpartanII FPGA upon power-up.</td>
+				<td align="center"><a href="appnotes/an-111701-xsaflash.pdf">PDF</a></td>
+				<td align="center"><a href="projects/xsaflash.zip">ZIP</a></td>
+				<td align="center"><a href="mailto:help@xess.com"><img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+			<tr>
+				<td><b>XSA parallel port interface</b> that is programmed 
+				into the CPLD.</td>
+				<td align="center"><a href="appnotes/an-111601-xsapport.pdf">PDF</a></td>
+				<td align="center"><a href="projects/xsapport.zip">ZIP</a></td>
+				<td align="center"><a href="mailto:help@xess.com"><img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+			<tr>
+				<td><b>XSV PIII Cable interface</b> that configures 
+				the CPLD so it emulates a Xilinx Parallel Cable III interface.&nbsp; 
+				This allows you to use the Foundation programming tools through 
+				the simple XESS downloading cable.</td>
+				<td align="center"><a href="appnotes/an-043001-xsvpiii.pdf">PDF</a></td>
+				<td align="center"><a href="projects/xsvpiii.zip">ZIP</a></td>
+				<td align="center"><a href="mailto:help@xess.com"><img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+			<tr>
+				<td><b>Xchecker interface </b>that configures the 
+				CPLD on the XSV Board so the Xchecker interface is enabled.</td>
+				<td align="center"><a href="appnotes/an-050101-xsvxchk.pdf">PDF</a></td>
+				<td align="center"><a href="projects/xsvxchk.zip">ZIP</a></td>
+				<td align="center"><a href="mailto:help@xess.com"><img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+			<tr>
+				<td><b>XSV parallel port interface</b> that is programmed into the CPLD.</td>
+				<td align="center"><a href="appnotes/an-041000-xsvpport.pdf">PDF</a></td>
+				<td align="center"><a href="projects/xsvpport.zip">ZIP</a></td>
+				<td align="center"><a href="mailto:help@xess.com"><img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+			<tr>
+				<td><b>XSV Flash designs</b> that manage the programming 
+				of the Flash and the configuration of the Virtex FPGA upon power-up.</td>
+				<td align="center"><a href="appnotes/an-070501-xsvflash.pdf">PDF</a></td>
+				<td align="center"><a href="projects/xsvflash.zip">ZIP</a></td>
+				<td align="center"><a href="mailto:help@xess.com"><img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+			<tr>
+				<td><b>Loadable LED register</b> showing the interaction 
+				between the microcontroller and the CPLD or FPGA on the XS Board.</td>
+				<td align="center"><a href="appnotes/an-103100-ucfpga.htm">HTML<br></a><a href="appnotes/an-103100-ucfpga.pdf">PDF</a></td>
+				<td align="center"><a href="projects/ledreg.zip">ZIP</a></td>
+				<td align="center"><a href="mailto:help@xess.com"><img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+			<tr>
+				<td><b>Read/write random number generator</b> showing 
+				the interaction between the microcontroller and the CPLD or FPGA 
+				on the XS Board.</td>
+				<td align="center"><a href="appnotes/an-103100-ucfpga.htm">HTML<br></a><a href="appnotes/an-103100-ucfpga.pdf">PDF</a></td>
+				<td align="center"><a href="projects/randgen.zip">ZIP</a></td>
+				<td align="center"><a href="mailto:help@xess.com"><img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+			<tr>
+				<td><b>XStend Board design examples</b> showing use 
+				of buttons/switches, keyboard interface, and VGA port.</td>
+				<td align="center"><a href="manuals/xst-man.pdf">PDF</a></td>
+				<td align="center"><a href="projects/xst-proj.zip">ZIP</a></td>
+				<td align="center"><a href="mailto:help@xess.com"><img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+			<tr>
+				<td><b>VGA Generator</b> that displays an image in the XS Board RAM on a VGA monitor.</td>
+				<td align="center"><a href="appnotes/vga.pdf">PDF</a></td>
+				<td align="center"><a href="projects/vga.zip">ZIP</a></td>
+				<td align="center"><a href="mailto:help@xess.com"><img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+			<tr>
+				<td><b>Stereo loopback circuit</b> that accepts a 
+				digitized stereo signal from the ADC of the XStend Board codec and 
+				loops the signal back to the codec DAC stage for output as a stereo 
+				signal.</td>
+				<td align="center"><a href="manuals/xst-manual-v1_3_2.pdf">PDF</a></td>
+				<td align="center"><a href="projects/loopbk.zip">ZIP</a></td>
+				<td align="center"><a href="mailto:help@xess.com"><img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+		  </tbody>
+		  <thead>
+			<tr>
+			  <td colspan="4" class="spacer">&nbsp;</td>
+			</tr>
+			<tr>
+			  <td><a name="Outside_Examples">Design Examples From Our Customers</td>
+			  <td align="center">Doc</td>
+			  <td align="center">Design<br>Files</td>
+			  <td align="center">Contact</td>
+			</tr>
+		  </thead>
+		  <tbody>
+		  <!--
+			<tr>
+				<td>
+				<img src="images/qs_new.gif" alt="qs_new.gif (125 bytes)"><b>Virtual 
+                LED: </b>A simple example of how to make a debugging tool on the 
+                PC through the parallel port connection to the XSA board.</td>
+				<td align="center">
+				<a href="projects/VLedDemo.html">HTML</a></td>
+				<td align="center">
+				<a href="projects/VLedDemo.zip">ZIP</a></td>
+				<td align="center">
+				<a href="mailto:jenkire1@comcast.net">
+				<img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+		   -->
+			<tr>
+				<td>
+				<strong>XSB 
+                frame grabber</strong> from the&nbsp;University 
+                of Engineering &amp; Technology Taxila, grabs frames of video and 
+                displays them on a VGA monitor.&nbsp; (This 
+                version is written in Verilog.)</td>
+				<td align="center">
+                <a href="projects/fg-hussain.pdf">PDF</a></td>
+				<td align="center">
+				<a href="projects/fg-hussain.zip">ZIP</a></td>
+				<td align="center">
+				<a href="mailto:engrazr@gmail.com">
+				<img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+			<tr>
+				<td>
+				<b>Mic8-Bit 
+                RISC Microprocessor</b>: This tutorial 
+                from AIR University describes the design of a RISC processor 
+                from concept through implementation, simulation and testing on 
+                an XSA-50 Board.</td>
+				<td align="center">
+				<a href="projects/8bitRISC-rahman.pdf">PDF</a></td>
+				<td align="center">
+				&nbsp;</td>
+				<td align="center">
+				<a href="mailto:msaadrahman@yahoo.com">
+				<img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+			<tr>
+				<td>
+				<b>NTSC 
+                Video Generator: </b>This circuit 
+                outputs an 8-bit grayscale image in NTSC format.</td>
+				<td align="center">
+				&nbsp;</td>
+				<td align="center">
+				<a href="projects/ntsc-wv9557.zip">ZIP</a></td>
+				<td align="center">
+				<a href="mailto:wv9557@yahoo.com">
+				<img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+			<tr>
+				<td>
+				<b>OpenRISC 
+                OR1200 SOC</b><b>: </b>This 
+                system-on-a-chip incorporates an OR1200 RISC CPU, UART, SDRAM 
+                controller, PS/2 controller, dumb terminal and jtag debug 
+                interface.</td>
+				<td align="center">
+				&nbsp;</td>
+				<td align="center">
+				<a href="http://openrisc.rdsor.ro/socterm.tar.gz">ZIP</a></td>
+				<td align="center">
+				<a href="mailto:javaguy11111@yahoo.com">
+				<img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+            <tr>
+				<td>
+				<b>MicroBlaze 
+                SOC</b><b>: </b>This system-on-a-chip 
+                incorporates a Xilinx MicroBlaze CPU, SDRAM controller, and VGA 
+                character generator.</td>
+				<td align="center">
+				&nbsp;</td>
+				<td align="center">
+				<a href="http://www.openchip.org/CMS/index.php?option=content&task=view&id=26&Itemid=27">ZIP</a></td>
+				<td align="center">
+				<a href="mailto:avrbasic@hotmail.com">
+				<img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+			<tr>
+				<td>
+				<b>Nexar 
+                / Protel 2004 Interface for the XSA-100 Board: </b>Nexar is a 
+                design environment that provides soft 
+                processor cores complete with integrated build and debugging 
+                tools and virtual instruments that 
+                communicate through the JTAG interface.&nbsp;
+                This interface is an enhancement of 
+                the XSA PIII Cable interface that adds the Nexar Soft 
+                JTAG chain functionality while still remaining backwards 
+                compatible with the Xilinx Impact 
+                software.</td>
+				<td align="center">
+				<a href="projects/Nexar%20Interface%20for%20XESS%20XSA-100%20Development%20Brd1.pdf">PDF</a></td>
+				<td align="center">
+				<a href="projects/XSA_Nexar_IF_V101.zip">ZIP</a></td>
+				<td align="center">
+				<a href="mailto:craigp@infoeng.flinders.edu.au">
+				<img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+			<tr>
+				<td>
+				<b>XSA-50 
+                terminal program: </b>This is an implementation of a 
+                terminal with a VGA monitor, PS/2 keyboard and an RS232 serial 
+                port </td>
+				<td align="center">
+				&nbsp;</td>
+				<td align="center">
+				<a href="projects/Terminal%20project1.zip">ZIP</a></td>
+				<td align="center">
+				<a href="mailto:ale_vita@hotmail.com">
+				<img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+            <tr>
+				<td>
+				<b>FPGA-based oscilloscope: </b>
+				This project descibes a stand-alone digital oscilloscope 
+				that interfaces directly
+				to a VGA monitor.</td>
+				<td align="center">
+				<a href="projects/radjab_oscope.pdf">PDF</a></td>
+				<td align="center">
+				<a href="projects/radjab_oscope.zip">ZIP</a></td>
+				<td align="center">
+				<a href="mailto:radjab@yahoogroups.com">
+				<img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+			<tr>
+				<td><b>xsocXR16:</b>This project 
+				uses the XR16 CPU that Jan Gray originally designed for the XESS 
+				XS40-005XL FPGA Board with SRAM.&nbsp; This project extracts the 
+				CPU fully intact and interfaces it to the SDRAM contained on the 
+				XSA-100 board.</td>
+				<td align="center">
+				<a href="http://www.retromicro.com/files/xsocXR16.pdf">PDF</a></td>
+				<td align="center">
+				<a href="http://www.retromicro.com/files/xsocXR16.zip">ZIP</a></td>
+				<td align="center">
+				<a href="mailto:doug@retromicro.com">
+				<img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+			<tr>
+				<td><b>xsocVGABitmap: </b>Using 
+				Jan Gray&#39;s XSOC vga video circuit and XESS&#39;s SDRAM controller, a 
+				design was assembled to demonstrate how to use SDRAM as a source 
+				of pixel information for the vga controller. This design demonstrates 
+				the basic mechanics of how to interface to SDRAM memory. Also demonstrates 
+				how to mix Verilog and VHDL code in the same design.</td>
+				<td align="center">
+				<a href="http://www.retromicro.com/files/xsocVGABitmap.pdf">PDF</a></td>
+				<td align="center">
+				<a href="http://www.retromicro.com/files/xsocVGABitmap.zip">ZIP</a></td>
+				<td align="center">
+				<a href="mailto:doug@retromicro.com">
+				<img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+			<tr>
+				<td><b>xsocVGAStripes:</b> Using Jan Gray&#39;s XSOC 
+				vga video circuit, a simple design was assembled to demonstrate 
+				how to use it with an XSA-100 board. Good example on how to mix 
+				Verilog (the vga circuit) and VHDL code together in a single design.</td>
+				<td align="center">
+				<a href="http://www.retromicro.com/files/xsocVGAStripes.pdf">PDF</a></td>
+				<td align="center">
+				<a href="http://www.retromicro.com/files/xsocVGAStripes.zip">ZIP</a></td>
+				<td align="center">
+				<a href="mailto:doug@retromicro.com">
+				<img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+			<tr>
+				<td><b>Micro8-XSA</b> is John Kent&#39;s Micro8 CPU running 
+				on an XSA board with XStend. Very neat project that runs a small 
+				custom VHDL CPU interfaced to SRAM on the XStend board and RS232 
+				port. Demonstrates how to properly address decode and memory map 
+				an I/O device. All components are now Wishbone compliant!</td>
+				<td align="center">
+				<a href="http://www.retromicro.com/files/micro8-xsa.pdf">PDF</a></td>
+				<td align="center">
+				<a href="http://www.retromicro.com/files/micro8-xsa.zip">ZIP</a></td>
+				<td align="center">
+				<a href="mailto:doug@retromicro.com">
+				<img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+			<tr>
+				<td><b>RS232 </b>demonstrates how to interface through 
+				the RS232 port on the XESS XStend-2 board. The project echoes characters 
+				received from a terminal.</td>
+				<td align="center">
+				<a href="http://www.retromicro.com/files/rs232.pdf">PDF</a></td>
+				<td align="center">
+				<a href="http://www.retromicro.com/files/rs232.zip">ZIP</a></td>
+				<td align="center">
+				<a href="mailto:doug@retromicro.com">
+				<img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+			<tr>
+				<td><b>vgaBall </b>generates 
+				a VGA signal and creates a &quot;ball&quot; that bounces.</td>
+				<td align="center">
+				<a href="http://www.retromicro.com/files/vgaBall.pdf">PDF</a></td>
+				<td align="center">
+				<a href="http://www.retromicro.com/files/vgaBall.zip">ZIP</a></td>
+				<td align="center">
+				<a href="mailto:doug@retromicro.com">
+				<img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+			<tr>
+				<td><b>vgaChars </b>generates a VGA signal and displays 
+				characters from an onboard character ROM.</td>
+				<td align="center">
+				<a href="http://www.retromicro.com/files/vgaChars.pdf">PDF</a></td>
+				<td align="center">
+				<a href="http://www.retromicro.com/files/vgaChars.zip">ZIP</a></td>
+				<td align="center">
+				<a href="mailto:doug@retromicro.com">
+				<img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+			<tr>
+				<td><b>vgaStrips generates </b>a VGA signal and draws 
+				a series of colored bars..</td>
+				<td align="center">
+				<a href="http://www.retromicro.com/files/vgaStripes.pdf">PDF</a></td>
+				<td align="center">
+				<a href="http://www.retromicro.com/files/vgaStripes.zip">ZIP</a></td>
+				<td align="center">
+				<a href="mailto:doug@retromicro.com">
+				<img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+			<tr>
+				<td><b>PS/2 keyboard controller </b>project.</td>
+				<td align="center">
+				<a href="projects/ps2_ctrl.pdf">PDF</a></td>
+				<td align="center">
+				<a href="projects/PS2_Kbd.zip">ZIP</a></td>
+				<td align="center">
+				<a href="mailto:cuzeau@alse-fr.com">
+				<img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+			<tr>
+				<td><b>Stepper Motor Controller </b>project uses 
+				the CPLD and 8031 microcontroller on the XS95 Board to control the 
+				rotational speed and direction of a stepper motor. (This project 
+				is in Spanish.)</td>
+				<td align="center">
+				<a href="http://gmun.unal.edu.co/~micros/xess/Step_Motor/Step_Motor.pdf">
+				PDF</a></td>
+				<td align="center">
+				<a href="http://gmun.unal.edu.co/~micros/xess/Step_Motor/Step_Motor.zip">
+				ZIP</a></td>
+				<td align="center">
+				<a href="mailto:ccamargo@gmun.unal.edu.co">
+				<img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+			<tr>
+				<td><b>A Collection of Student Projects</b> such 
+				as realtime, compressed video conferencing, the game of life, video 
+				animation, tennis video game, fuzzy logic controller and various 
+				communications systems using the XS40. (Escuela Superior de Ingenieros. 
+				University of Sevilla)</td>
+				<td align="center">
+				<a href="http://woody.us.es/~aguirre/LabMic_eng01.html">HTML</a></td>
+				<td align="center">&nbsp;</td>
+				<td align="center">
+				<a href="mailto:aguirre@gtx10.us.es">
+				<img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+			<tr>
+				<td><b>Reconfigurable Coprocessor for Redundant Radix-4 
+				Arithmetic </b>project implements four arithmetic and four logic 
+				operations using a fast parallel multiplication scheme.&nbsp; The 
+				coprocessor is hosted in an XS40 Board that interfaces to a PC hrough 
+				the parallel port.</td>
+				<td align="center">
+				<a href="projects/RR4Coproc.pdf">PDF</a></td>
+				<td align="center">
+				<a href="projects/RR4Coproc.zip">ZIP</a></td>
+				<td align="center">
+				<a href="mailto:alodeep2k@yahoo.com">
+				<img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+			<tr>
+				<td><b>Handel-C examples </b>for the XS40 Board.</td>
+				<td align="center">
+				<a href="http://www.celoxica.com/programs/university/registered/community/index.htm">
+				HTML1</a><br>
+				<a href="http://www.dtic.ua.es/dtic.local/asignaturas/DCAC/IPXS.htm">
+				HTML2</a></td>
+				<td align="center">&nbsp;</td>
+				<td align="center">
+				<a href="mailto:sergio@dtic.ua.es">
+				<img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+			<tr>
+				<td><b>Digital Camera Interface </b>project shows 
+				how a CMOS ‘Camera On a Chip’ image sensor can be interfaced to 
+				an XSA-100 Board through an I2C bus.&nbsp; The pixel data is buffered 
+				in the XSA-100 SDRAM and is then uploaded through the parallel port 
+				to be displayed on a PC.</td>
+				<td align="center">
+				<a href="projects/Digital_Camera.pdf">PDF</a></td>
+				<td align="center">
+				<a href="projects/Digital_Camera.zip">ZIP</a></td>
+				<td align="center">
+				<a href="mailto:hendersr@oit.edu">
+				<img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+			<tr>
+				<td><b>Audio FIR filter </b>on an XSV-800 Board demonstrates 
+				three different types of filters: low pass, band pass and high pass.</td>
+				<td align="center">
+				<a href="http://www.iss.rwth-aachen.de/Projekte/VLSI/audiodemo_fpga/Filter.pdf">
+				PDF</a><br>
+				<a href="http://www.iss.rwth-aachen.de/Projekte/VLSI/audiodemo_fpga/index.htm">
+				HTML</a></td>
+				<td align="center">
+				<a href="http://www.iss.rwth-aachen.de/Projekte/VLSI/audiodemo_fpga/Files.zip">
+				ZIP</a></td>
+				<td align="center">
+				<a href="mailto:kai_Herbertz@gmx.de">
+				<img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+			<tr>
+				<td><b>Audio volume indicator </b>uses an XS40 Board 
+				and XStend Board to display the volume of an audio input on a bargraph 
+				LED.</td>
+				<td align="center">
+				<a href="projects/barvol.pdf">PDF</a></td>
+				<td align="center"><a href="projects/barvol.zip">
+				ZIP</a></td>
+				<td align="center">&nbsp; </td>
+			</tr>
+			<tr>
+				<td><b>Calculator </b>uses the 8051 microcontroller 
+				and FPGA on the XS40 Board to build a simple calculator.</td>
+				<td align="center">
+				<a href="projects/uccalculator1.pdf">PDF</a></td>
+				<td align="center">
+				<a href="projects/uccalculator1.zip">ZIP</a></td>
+				<td align="center">
+				<a href="mailto:whatupgee@hotmail.com">
+				<img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+			<tr>
+				<td><b>Wavelet image compression</b> for the XSV-300 
+				Board done by Daniel Bachofen at FHS, University of Applied Science 
+				St.Gallen.</td>
+				<td align="center">
+				<a href="projects/FPGA_WaveletTransformation.pdf">PDF</a><br>
+				(German) <br>
+				<a href="projects/FPGA_WaveletTransformation.txt">TXT</a><br>
+				(English)</td>
+				<td align="center">
+				<a href="projects/WaveletCompression.zip">ZIP</a></td>
+				<td align="center">
+				<a href="mailto:daniel.bachofen@fhsg.ch">
+				<img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+			<tr>
+				<td><b>Secure comunication system I </b>transfers 
+				data between two XS40 boards with encryption by means of a smplyfied 
+				DES algorithm. (Escuela Superior de Ingenieros. University of Sevilla)</td>
+				<td align="center">
+				<a href="http://woody.us.es/usr/aguirre/Des/web/home.htm">HTML</a></td>
+				<td align="center">&nbsp;</td>
+				<td align="center">
+				<a href="mailto:aguirre@gte.esi.us.es">
+				<img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+			<tr>
+				<td><b>Secure communication system II </b>transfers 
+				encrypted data between two XS40 boards. (Escuela Superior de Ingenieros. 
+				University of Sevilla)</td>
+				<td align="center">&nbsp;</td>
+				<td align="center">
+				<a href="http://woody.us.es/usr/aguirre/Projects2000/Secure2.zip">
+				ZIP</a></td>
+				<td align="center">
+				<a href="mailto:aguirre@gte.esi.us.es">
+				<img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+			<tr>
+				<td><b>PS/2 mouse driver</b> that shows mouse movements 
+				on a screen using the XS40. (Escuela Superior de Ingenieros. University 
+				of Sevilla)</td>
+				<td align="center">&nbsp;</td>
+				<td align="center">
+				<a href="http://woody.us.es/usr/aguirre/Projects2000/Mouse.zip">
+				ZIP</a></td>
+				<td align="center">
+				<a href="mailto:aguirre@gte.esi.us.es">
+				<img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+			<tr>
+				<td><b>Cordic algorithm</b> for the XS40 Board. (Escuela 
+				Superior de Ingenieros. University of Sevilla)</td>
+				<td align="center">&nbsp;</td>
+				<td align="center">
+				<a href="http://woody.us.es/usr/aguirre/Projects2000/Cordic.zip">
+				ZIP</a></td>
+				<td align="center">
+				<a href="mailto:aguirre@gte.esi.us.es">
+				<img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+			<tr>
+				<td><b>Break Out videogame</b> running on XS40 hardware. 
+				(Escuela Superior de Ingenieros. University of Sevilla)</td>
+				<td align="center">&nbsp;</td>
+				<td align="center">
+				<a href="http://woody.us.es/usr/aguirre/Projects2000/Fronton.zip">
+				ZIP</a></td>
+				<td align="center">
+				<a href="mailto:aguirre@gte.esi.us.es">
+				<img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+			<tr>
+				<td><b>Codec Morse</b> for two XS40 boards. (Escuela 
+				Superior de Ingenieros. University of Sevilla)</td>
+				<td align="center">&nbsp;</td>
+				<td align="center">
+				<a href="http://woody.us.es/usr/aguirre/Projects2000/Morse.zip">
+				ZIP</a></td>
+				<td align="center">
+				<a href="mailto:aguirre@gte.esi.us.es">
+				<img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+			<tr>
+				<td><b>Spinning image effect in 3D</b> turns an image 
+				around a vertical axis using an XS40. (Escuela Superior de Ingenieros. 
+				University of Sevilla)</td>
+				<td align="center">&nbsp; </td>
+				<td align="center">
+				<a href="http://woody.us.es/usr/aguirre/Projects2000/Giro3D.zip">
+				ZIP</a></td>
+				<td align="center">
+				<a href="mailto:aguirre@gte.esi.us.es">
+				<img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+			<tr>
+				<td>A <b>10/100 Mbps Ethernet MAC</b> implemented 
+				in a Virtex XCV300 FPGA with the XSV board. (Bandung Institute of 
+				Technology)</td>
+				<td align="center">
+				<a href="http://ic.ee.itb.ac.id/~hendrag97/ethmac.html">HTML</a>/<a href="http://ic.ee.itb.ac.id/~hendrag97/ethmac.pdf">PDF</a></td>
+				<td align="center">
+				<a href="http://ic.ee.itb.ac.id/~hendrag97/ethmac.zip">Files</a></td>
+				<td align="center">
+				<a href="mailto:hendrag01@students.ee.itb.ac.id">
+				<img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+			<tr>
+				<td><b>
+				<img border="0" src="images/trenz.png" style="float: left; border-right-style: solid" width="69" height="60">USB 
+				macro</b> that combines a complete USB transaction layer with an 
+				8051 microcontroller core and a functional block that implements 
+				the application-specific functions.&nbsp; This macro was developed 
+				and is supported by Trenz Electronics for use with an XSV Board.</td>
+				<td align="center">
+				<a href="projects/trenz-usb.pdf">PDF</a></td>
+				<td align="center">
+				<a href="projects/trenz-usb.zip">ZIP</a></td>
+				<td align="center">
+				<a href="mailto:ip-cores@trenz-electronic.de">
+				<img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+			<tr>
+				<td><b>Introduction to XSV Board designs</b> done 
+				by the University of Queensland</td>
+				<td align="center">
+				<a href="http://www.csee.uq.edu.au/~peters/xsvboard/intro/intro.htm">
+				HTML</a>/<a href="http://www.csee.uq.edu.au/~peters/xsvboard/intro/intro.pdf">PDF</a></td>
+				<td align="center">&nbsp;</td>
+				<td align="center">
+				<a href="mailto:s369604@student.uq.edu.au">
+				<img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+			<tr>
+				<td><b>CPLD interface files</b> for the XSV Board 
+				projects (Univ. of Queensland) </td>
+				<td align="center">
+				<a href="http://www.csee.uq.edu.au/~peters/xsvboard/svffiles/svffiles.htm">
+				HTML</a>/<a href="http://www.csee.uq.edu.au/~peters/xsvboard/svffiles/svffiles.pdf">PDF</a></td>
+				<td align="center">
+				<a href="http://www.csee.uq.edu.au/~peters/xsvboard/svffiles/cpldsvfs.zip">
+				ZIP</a></td>
+				<td align="center">
+				<a href="mailto:s369604@student.uq.edu.au">
+				<img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+			<tr>
+				<td><b>Audio project</b> for the XSV Board (Univ. 
+				of Queensland)</td>
+				<td align="center">
+				<a href="http://www.csee.uq.edu.au/~peters/xsvboard/audio/audio.htm">
+				HTML</a>/<a href="http://www.csee.uq.edu.au/~peters/xsvboard/audio/audio.pdf">PDF</a></td>
+				<td align="center">
+				<a href="http://www.csee.uq.edu.au/~peters/xsvboard/audio/audiofiles.zip">
+				ZIP</a></td>
+				<td align="center">
+				<a href="mailto:s369604@student.uq.edu.au">
+				<img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+			<tr>
+				<td><b>PC to SRAM interface</b> for the XSV Board 
+				(Univ. of Queensland)</td>
+				<td align="center">
+				<a href="http://www.csee.uq.edu.au/~peters/xsvboard/pctosram/pctosram.htm">
+				HTML</a>/<a href="http://www.csee.uq.edu.au/~peters/xsvboard/pctosram/pctosram.pdf">PDF</a></td>
+				<td align="center">
+				<a href="http://www.csee.uq.edu.au/~peters/xsvboard/pctosram/pctosram.zip">
+				ZIP</a></td>
+				<td align="center">
+				<a href="mailto:s369604@student.uq.edu.au">
+				<img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+			<tr>
+				<td><b>PS/2 interface</b> for the XSV Board (Univ. 
+				of Queensland)</td>
+				<td align="center">
+				<a href="http://www.csee.uq.edu.au/~peters/xsvboard/ps2/ps2.htm">
+				HTML</a>/<a href="http://www.csee.uq.edu.au/~peters/xsvboard/ps2/ps2.pdf">PDF</a></td>
+				<td align="center">
+				<a href="http://www.csee.uq.edu.au/~peters/xsvboard/ps2/ps2files.zip">
+				ZIP</a></td>
+				<td align="center">
+				<a href="mailto:s369604@student.uq.edu.au">
+				<img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+			<tr>
+				<td><b>SRAM interface</b> for the XSV Board (Univ. 
+				of Queensland)</td>
+				<td align="center">
+				<a href="http://www.csee.uq.edu.au/~peters/xsvboard/sram/sram.htm">
+				HTML</a>/<a href="http://www.csee.uq.edu.au/~peters/xsvboard/sram/sram.pdf">PDF</a></td>
+				<td align="center">
+				<a href="http://www.csee.uq.edu.au/~peters/xsvboard/sram/sramfiles.zip">
+				ZIP</a></td>
+				<td align="center">
+				<a href="mailto:s369604@student.uq.edu.au">
+				<img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+			<tr>
+				<td><b>Video-In</b> for the XSV Board (Univ. of Queensland)</td>
+				<td align="center">
+				<a href="http://www.csee.uq.edu.au/~peters/xsvboard/videoin/videoin.htm">
+				HTML</a>/<a href="http://www.csee.uq.edu.au/~peters/xsvboard/videoin/videoin.pdf">PDF</a></td>
+				<td align="center">
+				<a href="http://www.csee.uq.edu.au/~peters/xsvboard/videoin/videoinfiles.zip">
+				ZIP</a></td>
+				<td align="center">
+				<a href="mailto:s369604@student.uq.edu.au">
+				<img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+			<tr>
+				<td><b>VGA-out</b> for the XSV Board (Univ. of Queensland)</td>
+				<td align="center">
+				<a href="http://www.csee.uq.edu.au/~peters/xsvboard/vgaout/vgaout.htm">
+				HTML</a>/<a href="http://www.csee.uq.edu.au/~peters/xsvboard/vgaout/vgaout.pdf">PDF</a></td>
+				<td align="center">
+				<a href="http://www.csee.uq.edu.au/~peters/xsvboard/vgaout/vgaoutfiles.zip">
+				ZIP</a></td>
+				<td align="center">
+				<a href="mailto:s369604@student.uq.edu.au">
+				<img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+			<tr>
+				<td><b>VHDL IP stack</b> for the XSV Board (Univ. 
+				of Queensland)</td>
+				<td align="center">
+				<a href="http://www.csee.uq.edu.au/~peters/xsvboard/stack/stack.htm">
+				HTML</a>/<a href="http://www.csee.uq.edu.au/~peters/xsvboard/stack/stack.pdf">PDF</a></td>
+				<td align="center">
+				<a href="http://www.csee.uq.edu.au/~peters/xsvboard/stack/stackfiles.zip">
+				ZIP</a></td>
+				<td align="center">
+				<a href="mailto:s369604@student.uq.edu.au">
+				<img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+			<tr>
+				<td><b>Jbits XHWIF interface</b> for the XSV-100 
+				Board.</td>
+				<td align="center">
+				<a href="projects/xhwif-xsv-100.txt">TXT</a></td>
+				<td align="center">
+				<a href="projects/xhwif-xsv-100.zip">ZIP</a></td>
+				<td align="center">&nbsp;</td>
+			</tr>
+			<tr>
+				<td><b>Jbits XHWIF interface</b> for the XS40-005XL 
+				Board.</td>
+				<td align="center">
+				<a href="projects/xhwif-xs40-005xl.txt">TXT</a></td>
+				<td align="center">
+				<a href="projects/xhwif-xs40-005xl.zip">ZIP</a></td>
+				<td align="center">&nbsp;</td>
+			</tr>
+			<tr>
+				<td><b>JBits XHWIF interface </b>for the XSV Boards 
+				(developed by Xilinx)</td>
+				<td align="center">
+				<a href="projects/XsvXhwifReadMe.html">HTML</a></td>
+				<td align="center">
+				<a href="projects/XSVJBits.zip">ZIP</a></td>
+				<td align="center">&nbsp;</td>
+			</tr>
+			<tr>
+				<td><b>PC/XS Transfer</b>: A circuit and C code for 
+				bidirectional transfer of data between an XS40 Board and a PC.</td>
+				<td align="center">
+				<a href="projects/xs_pc_intfc.pdf">PDF</a></td>
+				<td align="center">
+				<a href="projects/xs_pc_intfc.zip">ZIP</a></td>
+				<td align="center">
+				<a href="mailto:aguirre@gte.esi.us.es">
+				<img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+			<tr>
+				<td><b>16-bit RISC processor </b>with five pipeline 
+				stages.&nbsp; The instruction set implements ALU, immediate, load, 
+				store, and branch instructions.</td>
+				<td align="center">
+				<a href="projects/9903031280.pdf">PDF</a></td>
+				<td align="center">
+				<a href="projects/9903031280.tar">TAR</a></td>
+				<td align="center">
+				<a href="mailto:mathai@ieee.org">
+				<img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+			<tr>
+				<td><b>Walking-bit circuit</b> shifts a 1 through 
+				a register mapped to the 7-segment LED.&nbsp; This design shows 
+				the interactions between the XC4000 FPGA and the 8031 microcontroller 
+				on the XS40 Board.</td>
+				<td align="center">
+				<a href="projects/walkbit.pdf">PDF</a></td>
+				<td align="center">
+				<a href="projects/WalkBit.zip">ZIP</a></td>
+				<td align="center">
+				<a href="mailto:alse@compuserve.com">
+				<img border="0" src="images/QS_MAIL.GIF"></a></td>
+			</tr>
+		  </tbody>
+		  <thead>
+			<tr>
+			  <td colspan="4" class="spacer">&nbsp;</td>
+			</tr>
+			<tr>
+			  <td><a name="Tutorials">Tutorials</td>
+			  <td colspan="3" align="center">Doc</td>
+			</tr>
+		  </thead>
+		  <tbody>
+			<tr>
+				<td>
+				<img src="images/qs_new.gif" alt="qs_new.gif (125 bytes)">Introduction 
+				to WebPACK 8.1 (XSA Board version)</td>
+				<td colspan="3" align="center">
+				<a href="appnotes/webpack-8_1-xsa.html">HTML</a></td>
+			</tr>
+			<tr>
+				<td>
+				Introduction 
+				to WebPACK 6.3 (XSA Board version)</td>
+				<td colspan="3" align="center">
+				<a href="appnotes/webpack-6_3-xsa.html">HTML</a></td>
+			</tr>
+			<tr>
+				<td>
+				Introduction 
+				to WebPACK 6.1 (XSA Board version)</td>
+				<td colspan="3" align="center">
+				<a href="appnotes/webpack-6_1-xsa.pdf">PDF</a></td>
+			</tr>
+			<tr>
+				<td>
+				Introduction 
+				to WebPACK 6.1 (XSB-300E Board version)</td>
+				<td colspan="3" align="center">
+				<a href="appnotes/webpack-6_1-xsb.html">HTML</a></td>
+			</tr>
+			<tr>
+				<td>Introduction to WebPACK 5.2 for FPGAs (XSB-300E 
+				Board version)</td>
+				<td colspan="3" align="center">
+				<a href="appnotes/webpack-5_2-fpga.pdf">PDF</a></td>
+			</tr>
+			<tr>
+				<td>Introduction to WebPACK 4.1 for FPGAs (XSA Board 
+				version)</td>
+				<td colspan="3" align="center">
+				<a href="appnotes/webpack-4_1-fpga.pdf">PDF</a></td>
+			</tr>
+			<tr>
+				<td>Introduction to WebPACK 4.1 for CPLDs (XS95 Board 
+				version)</td>
+				<td colspan="3" align="center">
+				<a href="appnotes/webpack-4_1-cpld.pdf">PDF</a></td>
+			</tr>
+			<tr>
+				<td>Introduction to WebPACK 3.1</td>
+				<td colspan="3" align="center">
+				<a href="appnotes/webpack-3_1.pdf">PDF</a></td>
+			</tr>
+			<tr>
+				<td>Introduction to WebPACK 1.5</td>
+				<td colspan="3" align="center">
+				<a href="appnotes/webpack-1_5.pdf">PDF</a></td>
+			</tr>
+			<tr>
+				<td>&quot;Quickstart Guide to Creating and Testing Designs 
+				for the XESS Boards&quot; by Mel Tsai at Michigan State University</td>
+				<td colspan="3" align="center">
+				<a href="http://www.egr.msu.edu/classes/ece411/vhdl/xess_quickstart/xess_quickstart.htm">
+				HTML</a></td>
+			</tr>
+			<tr>
+				<td>How to Use the XS Boards</td>
+				<td colspan="3" align="center"><a href="ho02002.html">HTML</a></td>
+			</tr>
+			<tr>
+				<td><a href="pragmatic-2_1.html">Pragmatic Logic 
+				Design with Foundation 2.1i</a> (Introduction and Chapter 1)</td>
+				<td colspan="3" align="center">
+				<a href="Pragmatic-2_1/chap-0-1.pdf">PDF</a></td>
+			</tr>
+			<tr>
+				<td><a href="pragmatic-2_1.html">Pragmatic Logic 
+				Design with Foundation 2.1i </a>(Chapter 2)</td>
+				<td colspan="3" align="center">
+				<a href="Pragmatic-2_1/chap-2.pdf">PDF</a></td>
+			</tr>
+			<tr>
+				<td><a href="pragmatic-2_1.html">Pragmatic Logic 
+				Design with Foundation 2.1i</a> (Chapter 3)</td>
+				<td colspan="3" align="center">
+				<a href="Pragmatic-2_1/chap-3.pdf">PDF</a></td>
+			</tr>
+			<tr>
+				<td><a href="pragmatic-2_1.html">Pragmatic Logic 
+				Design with Foundation 2.1i</a> (Chapter 4)</td>
+				<td colspan="3" align="center">
+				<a href="Pragmatic-2_1/chap-4.pdf">PDF</a></td>
+			</tr>
+			<tr>
+				<td><a href="pragmatic-2_1.html">Pragmatic Logic 
+				Design with Foundation 2.1i</a> (Chapter 5)</td>
+				<td colspan="3" align="center">
+				<a href="Pragmatic-2_1/chap-5.pdf">PDF</a></td>
+			</tr>
+			<tr>
+				<td><a href="myCSoC-CDROM.html">myCSoC: Design Explorations 
+				With Your Configurable System on a Chip</a> (Chapter 1-1)</td>
+				<td colspan="3" align="center">
+				<a href="manuals/myCSoC-1_1.pdf">PDF</a></td>
+			</tr>
+			<tr>
+				<td><a href="myCSoC-CDROM.html">myCSoC: Design Explorations 
+				With Your Configurable System on a Chip</a> (Chapter 1-2)</td>
+				<td colspan="3" align="center">
+				<a href="manuals/myCSoC-1_2.pdf">PDF</a></td>
+			</tr>
+			<tr>
+				<td><a href="myCSoC-CDROM.html">myCSoC: Design Explorations 
+				With Your Configurable System on a Chip</a> (Chapter 1-3)</td>
+				<td colspan="3" align="center">
+				<a href="manuals/myCSoC-1_3.pdf">PDF</a></td>
+			</tr>
+			<tr>
+				<td><a href="myCSoC-CDROM.html">myCSoC: Design Explorations 
+				With Your Configurable System on a Chip</a> (Chapter 1-4)</td>
+				<td colspan="3" align="center">
+				<a href="manuals/myCSoC-1_4.pdf">PDF</a></td>
+			</tr>
+			<tr>
+				<td><a href="myCSoC-CDROM.html">myCSoC: Design Explorations 
+				With Your Configurable System on a Chip </a>(Chapter 2-1)</td>
+				<td colspan="3" align="center">
+				<a href="manuals/myCSoC-2_1.pdf">PDF</a></td>
+			</tr>
+			<tr>
+				<td><a href="myCSoC-CDROM.html">myCSoC: Design Explorations 
+				With Your Configurable System on a Chip</a> (Chapter 2-2)</td>
+				<td colspan="3" align="center">
+				<a href="manuals/myCSoC-2_2.pdf">PDF</a></td>
+			</tr>
+			<tr>
+				<td><a href="myCSoC-CDROM.html">myCSoC: Design Explorations 
+				With Your Configurable System on a Chip </a>(Chapter 2-3)</td>
+				<td colspan="3" align="center">
+				<a href="manuals/myCSoC-2_3.pdf">PDF</a></td>
+			</tr>
+			<tr>
+				<td><a href="myCSoC-CDROM.html">myCSoC: Design Explorations 
+				With Your Configurable System on a Chip</a> (Chapter 2-4)</td>
+				<td colspan="3" align="center">
+				<a href="manuals/myCSoC-2_4.pdf">PDF</a></td>
+			</tr>
+			<tr>
+				<td><a href="myCSoC-CDROM.html">myCSoC: Design Explorations 
+				With Your Configurable System on a Chip</a> (Chapter 3-1)</td>
+				<td colspan="3" align="center">
+				<a href="manuals/myCSoC-3_1.pdf">PDF</a></td>
+			</tr>
+			<tr>
+				<td><a href="myCSoC-CDROM.html">myCSoC: Design Explorations 
+				With Your Configurable System on a Chip</a> (Chapter 3-2)</td>
+				<td colspan="3" align="center">
+				<a href="manuals/myCSoC-3_2.pdf">PDF</a></td>
+			</tr>
+			<tr>
+				<td><a href="myCSoC-CDROM.html">myCSoC: Design Explorations 
+				With Your Configurable System on a Chip</a> (Chapter 4-1)</td>
+				<td colspan="3" align="center">
+				<a href="manuals/myCSoC-4_1.pdf">PDF</a></td>
+			</tr>
+		  </tbody>
+		  <thead>
+			<tr>
+			  <td colspan="4" class="spacer">&nbsp;</td>
+			</tr>
+			<tr>
+			  <td><a name="App_Notes">Application Notes</td>
+			  <td colspan="3" align="center">Doc</td>
+			</tr>
+		  </thead>
+		  <tbody>
+			<tr>
+				<td>
+				Using 
+                GNAT on the XSA-3S1000 Board</td>
+				<td colspan="3" align="center">
+				<a href="appnotes/gnat_xsa_3s1000.html">HTML</a></td>
+			</tr>
+			<tr>
+				<td>
+				XSB
+                Board 
+				SDRAM Controller</td>
+				<td colspan="3" align="center">
+				<a href="appnotes/an-071205-xsbsdramcntl.pdf">PDF</a></td>
+			</tr>
+            <tr>
+				<td>
+				XSA Board 
+				SDRAM Controller</td>
+				<td colspan="3" align="center">
+				<a href="appnotes/an-071205-xsasdramcntl.pdf">PDF</a></td>
+			</tr>
+			<tr>
+				<td>
+				Makefiles 
+                for Xilinx FPGA / CPLD Projects</td>
+				<td colspan="3" align="center">
+				<a href="appnotes/makefile.html">HTML</a></td>
+			</tr>
+			<tr>
+				<td>
+				VGA Generator for the XSA Boards</td>
+				<td colspan="3" align="center">
+				<a href="appnotes/an-101204-vgagen.pdf">PDF</a></td>
+			</tr>
+            <tr>
+				<td>
+				PS/2 
+                Keyboard Interface for the XSA Boards</td>
+				<td colspan="3" align="center">
+				<a href="appnotes/an-102104-keybrd.pdf">PDF</a></td>
+			</tr>
+			<tr>
+				<td>
+				Stereo 
+				Codec Interface</td>
+				<td colspan="3" align="center">
+				<a href="appnotes/an-032904-codec.pdf">PDF</a></td>
+			</tr>
+			<tr>
+				<td>
+				Configuring 
+				the Audio Codec on the XSB-300E Board</td>
+				<td colspan="3" align="center">
+				<a href="appnotes/an-111503-xsbaucodec.pdf">PDF</a></td>
+			</tr>
+			<tr>
+				<td>
+				XSB Parallel 
+				Port Interface</td>
+				<td colspan="3" align="center">
+				<a href="appnotes/an-102003-xsbpport.pdf">PDF</a></td>
+			</tr>
+			<tr>
+				<td>
+				Parallel 
+				Cable III Emulator for the XSB Board</td>
+				<td colspan="3" align="center">
+				<a href="appnotes/an-100403-xsbpiii.pdf">PDF</a></td>
+			</tr>
+			<tr>
+				<td>Parallel Cable III Emulator for the XSA Board</td>
+				<td colspan="3" align="center">
+				<a href="appnotes/an-111801-xsapiii.pdf">PDF</a></td>
+			</tr>
+			<tr>
+				<td>XSA Flash Programming and SpartanII Configuration</td>
+				<td colspan="3" align="center">
+				<a href="appnotes/an-111701-xsaflash.pdf">PDF</a></td>
+			</tr>
+			<tr>
+				<td>XSA Parallel Port Interface</td>
+				<td colspan="3" align="center">
+				<a href="appnotes/an-111601-xsapport.pdf">PDF</a></td>
+			</tr>
+			<tr>
+				<td>Parallel Cable III Emulator for the XSV Board</td>
+				<td colspan="3" align="center">
+				<a href="appnotes/an-043001-xsvpiii.pdf">PDF</a></td>
+			</tr>
+			<tr>
+				<td>Using the XSV Board Xchecker Interface</td>
+				<td colspan="3" align="center">
+				<a href="appnotes/an-050101-xsvxchk.pdf">PDF</a></td>
+			</tr>
+			<tr>
+				<td>XSV Parallel Port Interface</td>
+				<td colspan="3" align="center">
+				<a href="appnotes/an-041000-xsvpport.pdf">PDF</a></td>
+			</tr>
+			<tr>
+				<td>XSV Flash Programming and Virtex Configuration</td>
+				<td colspan="3" align="center">
+				<a href="appnotes/an-070501-xsvflash.pdf">PDF</a></td>
+			</tr>
+			<tr>
+				<td>Running Foundation from a Makefile</td>
+				<td colspan="3" align="center">
+				<a href="appnotes/fndmake.pdf">PDF</a></td>
+			</tr>
+		  </tbody>
+		  <thead>
+			<tr>
+			  <td colspan="4" class="spacer">&nbsp;</td>
+			</tr>
+		  </thead>
+		</table>
+		</td>
+	</tr>
+	<tr>
+		<td class="StdPageCredits">
+		<a href="mailto:webmaster@xess.com"> webmaster@xess.com</a><br>
+© 1998-2006, XESS Corp.<br> 
+All rights reserved.
+<script src="../www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-765812-1";
+urchinTracker();
+</script></td>
+		<td class="StdPageNavLinks">
+		    <a href="ho04000.html">
+    <img border="0" src="images/menu_arrow.png">Products</a>
+    <a href="manuals.html">
+    <img border="0" src="images/menu_arrow.png">Manuals</a>
+    <a href="ho07000.html">
+    <img border="0" src="images/menu_arrow.png">Downloads</a>
+    <a href="ho01001.html">
+    <img border="0" src="images/menu_arrow.png">How to Buy</a>
+    <a href="xess_int_quote.html">
+    <img border="0" src="images/menu_arrow.png">Online Quote</a>
+    <a href="https://xess.com/xess_int_order.php3">
+    <img border="0" src="images/menu_arrow.png">Order Online</a>
+    <br>
+    <a href="help.html">
+    <img border="0" src="images/menu_arrow.png">Help!</a>
+    <a href="ho01000.html">
+    <img border="0" src="images/menu_arrow.png">FAQ</a>
+    <a href="list_reg.html">
+    <img border="0" src="images/menu_arrow.png">Forum</a>
+    <a href="ho03000.html">
+    <img border="0" src="images/menu_arrow.png">Tutorials</a>
+    <a href="ho03000.html">
+    <img border="0" src="images/menu_arrow.png">Examples</a>
+    <a href="links.html">
+    <img border="0" src="images/menu_arrow.png">Links</a>
+    <a href="ho00005.html">
+    <a href="index-2.html">
+    <img border="0" src="images/menu_arrow.png">Home</a>
+    <a href="about_us.html">
+    <img border="0" src="images/menu_arrow.png">About&nbsp;Us</a>
+    <a href="ho00003.html">
+    <img border="0" src="images/menu_arrow.png">Contact&nbsp;Us</a>
+</td>
+	</tr>
+</table>
+
+</body>
+
+
+<!-- Mirrored from 192.168.0.47/ho03000.html by HTTrack Website Copier/3.x [XR&CO'2004], Mon, 04 Dec 2006 16:07:19 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=ISO-8859-1"><!-- /Added by HTTrack -->
+</html>

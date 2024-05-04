@@ -1,0 +1,101 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - XSTOOLs</TITLE>
+<script type="text/javascript" src="common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "common/";
+ var relPathToHelpDir = "common/help/";
+ var toSearchPage     = "_search','search";
+ Body1();
+</script>
+<div class="headerPage">XSTOOLs</div>
+<div class="path"><span class="pathNonLink">XSTOOLs</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("divID0","aID0","headerLeftMenuActive","leftMenuLinkHeadActive");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabActive"><a href="#" OnFocus="linkTab('','index','INDEX_DESCRIPTION',this)" class="tabLinkActive">Description</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('','index','_namespaces',this)" class="tabLinkInActive">Namespaces</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('','index','_classes',this)" class="tabLinkInActive">Classes</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('','index','_functions',this)" class="tabLinkInActive">Functions</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<div class="padding"><br>
+<br>
+</div>
+<div class="padding">Source code for the XSTOOLs utilities that are used with the XESS FPGA/CPLD Boards.<br>
+<br>
+</div>
+<div class="padding">You can read an earlier, more linear <a href="#" OnFocus="link('_member','xstools/xsusb/version0',this)">version</a> of the XSTOOLs source code documentation at <a href="http://www.xess.com/manuals/xstools-src-doc-4_0.pdf">http://www.xess.com/manuals/xstools-src-doc-4_0.pdf</a> . However, this HTML document is the most-current documentation for the XSTOOLs source code and supersedes the earlier document.<br>
+<br>
+</div>
+<div class="padding">This code was compiled using Microsoft Visual C++ 6.0. The master workspace for all the utilities is in the xstools directory. Makefiles for each utility are also provided.<br>
+<br>
+</div>
+<div class="padding"><div class="userParagraph2">Active Utilities</div>
+<table cellspacing=0 cellpadding=0 border=0 class="userTableBorder">
+<tr>
+<td class="userPaddingHeadMultiColumn1">&nbsp;<b>Directory</b> </td><td class="userPaddingHeadMultiColumn2">&nbsp;<b>Function</b> </td></tr>
+<tr>
+<td class="userPaddingNormal1">&nbsp;xstools </td><td class="userPaddingNormal2">&nbsp;Directory that contains the master workspace file for all the other utilities. </td></tr>
+<tr>
+<td class="userPaddingNormal1">&nbsp;<a href="#" OnFocus="link('_dir','xstools/xstoolslib/xstoolslib0',this)">xstoolslib</a> </td><td class="userPaddingNormal2">&nbsp;Library of classes and utilities used by all the command-line utilities. </td></tr>
+<tr>
+<td class="userPaddingNormal1">&nbsp;<a href="#" OnFocus="link('_dir','xstools/xstest/xstest0',this)">xstest</a> </td><td class="userPaddingNormal2">&nbsp;Command-line utility for running board diagnostics. </td></tr>
+<tr>
+<td class="userPaddingNormal1">&nbsp;<a href="#" OnFocus="link('_dir','xstools/xssetclk/xssetclk0',this)">xssetclk</a> </td><td class="userPaddingNormal2">&nbsp;Command-line utility for setting the board clock frequency. </td></tr>
+<tr>
+<td class="userPaddingNormal1">&nbsp;<a href="#" OnFocus="link('_dir','xstools/xsload/xsload0',this)">xsload</a> </td><td class="userPaddingNormal2">&nbsp;Command-line utility for uploading/downloading bitstreams/data to/from a board. </td></tr>
+<tr>
+<td class="userPaddingNormal1">&nbsp;<a href="#" OnFocus="link('_dir','xstools/xsport/xsport0',this)">xsport</a> </td><td class="userPaddingNormal2">&nbsp;Command-line utility for forcing bit values onto pins of the board. </td></tr>
+<tr>
+<td class="userPaddingNormal1">&nbsp;<a href="#" OnFocus="link('_dir','xstools/gxstoolslib/gxstoolslib0',this)">gxstoolslib</a> </td><td class="userPaddingNormal2">&nbsp;Same as <a href="#" OnFocus="link('_dir','xstools/xstoolslib/xstoolslib0',this)">xstoolslib</a>, except these are recompiled for the GUI utilities. </td></tr>
+<tr>
+<td class="userPaddingNormal1">&nbsp;<a href="#" OnFocus="link('_dir','xstools/gxstest/gxstest0',this)">gxstest</a> </td><td class="userPaddingNormal2">&nbsp;GUI utility for running board diagnostics. </td></tr>
+<tr>
+<td class="userPaddingNormal1">&nbsp;<a href="#" OnFocus="link('_dir','xstools/gxssetclk/gxssetclk0',this)">gxssetclk</a> </td><td class="userPaddingNormal2">&nbsp;GUI utility for setting the board clock frequency. </td></tr>
+<tr>
+<td class="userPaddingNormal1">&nbsp;<a href="#" OnFocus="link('_dir','xstools/gxsload/gxsload0',this)">gxsload</a> </td><td class="userPaddingNormal2">&nbsp;GUI utility for uploading/downloading bitstreams/data to/from a board. </td></tr>
+<tr>
+<td class="userPaddingNormal1">&nbsp;<a href="#" OnFocus="link('_dir','xstools/gxsport/gxsport0',this)">gxsport</a> </td><td class="userPaddingNormal2">&nbsp;GUI utility for forcing bit values onto pins of the board.</td></tr>
+</table>
+<br>
+</div>
+<div class="padding"><div class="userParagraph2">Miscellaneous Utilities</div>
+<table cellspacing=0 cellpadding=0 border=0 class="userTableBorder">
+<tr>
+<td class="userPaddingHeadMultiColumn1">&nbsp;<b>Directory</b> </td><td class="userPaddingHeadMultiColumn2">&nbsp;<b>Function</b> </td></tr>
+<tr>
+<td class="userPaddingNormal1">&nbsp;<a href="#" OnFocus="link('_dir','xstools/xsatapi/xsatapi0',this)">xsatapi</a> </td><td class="userPaddingNormal2">&nbsp;Command-line utility for reading/writing an IDE hard drive. </td></tr>
+<tr>
+<td class="userPaddingNormal1">&nbsp;<a href="#" OnFocus="link('_dir','xstools/xsether/xsether0',this)">xsether</a> </td><td class="userPaddingNormal2">&nbsp;Command-line utility for reading/writing the XSB-300E Ethernet interface. </td></tr>
+<tr>
+<td class="userPaddingNormal1">&nbsp;<a href="#" OnFocus="link('_dir','xstools/xsi2c/xsi2c0',this)">xsi2c</a> </td><td class="userPaddingNormal2">&nbsp;Command-line utility for reading/writing devices on an I2C bus. </td></tr>
+<tr>
+<td class="userPaddingNormal1">&nbsp;<a href="#" OnFocus="link('_dir','xstools/xsramtest/xsramtest0',this)">xsramtest</a> </td><td class="userPaddingNormal2">&nbsp;Command-line utilities for reading/writing RAM. </td></tr>
+<tr>
+<td class="userPaddingNormal1">&nbsp;<a href="#" OnFocus="link('_dir','xstools/xsrw/xsrw0',this)">xsrw</a> </td><td class="userPaddingNormal2">&nbsp;Command-line utility for reading/writing a single RAM location. </td></tr>
+<tr>
+<td class="userPaddingNormal1">&nbsp;<a href="#" OnFocus="link('_dir','xstools/xssetsaa711X/xssetsaa711X0',this)">xssetsaa711X</a> </td><td class="userPaddingNormal2">&nbsp;Command-line utility for setting control registers in the Philips video decoders. </td></tr>
+<tr>
+<td class="userPaddingNormal1">&nbsp;<a href="#" OnFocus="link('_dir','xstools/xsusb/xsusb0',this)">xsusb</a> </td><td class="userPaddingNormal2">&nbsp;Command-line utility for reading/writing the USB interface. </td></tr>
+<tr>
+<td class="userPaddingNormal1">&nbsp;<a href="#" OnFocus="link('_dir','xstools/gxssetcodec/gxssetcodec0',this)">gxssetcodec</a> </td><td class="userPaddingNormal2">&nbsp;GUI utility for setting control registers in the XSB-300E audio codec.</td></tr>
+</table>
+<br>
+</div>
+<div class="padding"><br>
+</div>
+<div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('','INDEX_DESCRIPTION');
+</script>

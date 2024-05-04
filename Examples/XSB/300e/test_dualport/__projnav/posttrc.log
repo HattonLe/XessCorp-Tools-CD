@@ -1,0 +1,4 @@
+Post Route Timing Report for Module test_dualport . . .
+TRACE command line and options:
+trce -intstyle ise -e 3 -l 3 -xml test_dualport test_dualport.ncd -o test_dualport.twr test_dualport.pcf
+Post Route Timing Report for Module test_dualport : DONE

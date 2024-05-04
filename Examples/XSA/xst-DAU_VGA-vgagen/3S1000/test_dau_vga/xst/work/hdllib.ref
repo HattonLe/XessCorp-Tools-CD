@@ -1,0 +1,17 @@
+PH sdram NULL C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/sdramcntl.vhd sub00/vhpl02
+AR fifo_cc arch C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/vga.vhd sub00/vhpl13
+PH vga_pckg NULL C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/vga.vhd sub00/vhpl08
+PB common common C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/common.vhd sub00/vhpl01
+EN xsasdramcntl NULL C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/xsasdramcntl.vhd sub00/vhpl06
+EN test_vga NULL C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/test_vga.vhd sub00/vhpl15
+EN vga NULL C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/vga.vhd sub00/vhpl09
+EN fifo_cc NULL C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/vga.vhd sub00/vhpl12
+AR vga vga_arch C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/vga.vhd sub00/vhpl14
+EN sync NULL C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/vga.vhd sub00/vhpl10
+PH common NULL C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/common.vhd sub00/vhpl00
+AR xsasdramcntl arch C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/xsasdramcntl.vhd sub00/vhpl07
+AR sdramcntl arch C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/sdramcntl.vhd sub00/vhpl04
+AR test_vga arch C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/test_vga.vhd sub00/vhpl16
+EN sdramcntl NULL C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/sdramcntl.vhd sub00/vhpl03
+AR sync sync_arch C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/vga.vhd sub00/vhpl11
+PH xsasdram NULL C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/xst-DAU_VGA-vgagen/3S1000/test_vga/../../XSA_LIB/xsasdramcntl.vhd sub00/vhpl05

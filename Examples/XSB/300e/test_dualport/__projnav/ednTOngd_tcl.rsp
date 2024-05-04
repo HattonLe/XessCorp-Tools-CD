@@ -1,0 +1,3 @@
+set ADucfFile {test_dualport.ucf}
+set AD {}
+set ADcdcFile {}

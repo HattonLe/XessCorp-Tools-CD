@@ -1,0 +1,58 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - OscPort</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">OscPort</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">OscPort</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("divID503","aID503","LeftMenuActive","leftMenuLinkActive");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_class','OscPort0','_description',this)" class="tabLinkActive">Description</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_class','OscPort0','_public',this)" class="tabLinkInActive">Public</a></span>
+<span class="tabInActiveGrayout"><span class="tabLinkGrayout">Protected</span></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_class','OscPort0','_private',this)" class="tabLinkInActive">Private</a></span>
+<span class="tabInActiveGrayout"><span class="tabLinkGrayout">Related</span></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_class','OscPort0','_all',this)" class="tabLinkInActive">All</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_class','OscPort0','_inheritance',this)" class="tabLinkInActive">Inheritance</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_class','OscPort0','_collaboration',this)" class="tabLinkInActive">Collaboration</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<span class="paragraph1">OscPort</span>
+<span class="padding">( Class  )</span>
+<div class="paragraph2">Set of the divisor on the Dallas/Maxim programmable oscillator, thus determining its output frequency.</div>
+<div class="padding">&nbsp;</div>
+<table cellspacing=0 cellpadding=0 border=0 class="widthAndBorderTop" height=1>
+<TR><TD height=1 width=100% class="oneLine"></TD></TR></TABLE>
+<div class="paragraph2">Description</div>
+<div id="descDesc" class="paddingMembers">Set of the <a href="#" OnFocus="link('_member','../xssetclk/divisor0',this)">divisor</a> on the Dallas/Maxim programmable oscillator, thus determining its output frequency.<br>
+<br>
+This object provides a method for programming the Dallas DS1075 oscillator chip. The specified <a href="#" OnFocus="link('_member','../xssetclk/divisor0',this)">divisor</a> for the master frequency is partitioned into a <a href="#" OnFocus="link('_member','../xssetclk/divisor0',this)">divisor</a> of 513 or less and a frequency prescaler of 2 or 4 (if necessary). The <a href="#" OnFocus="link('_member','../xssetclk/divisor0',this)">divisor</a> value is programmed into the <a href="#" OnFocus="link('_member','../xssetclk/divisor0',this)">divisor</a> register of the oscillator by sending a precisely timed waveform through the parallel <a href="#" OnFocus="link('_member','../xsether/port0',this)">port</a> pin that connects to the oscillator chip output (which operates as an input during the DS1075 programming mode.) Then the prescaler value and the bit that selects the source for the master oscillator are loaded into the multiplexer register.<br>
+<br>
+<br>
+</div>
+<div class="padding">&nbsp;</div>
+<table cellspacing=0 cellpadding=0 border=0 class="widthAndBorderTop" height=1>
+<TR><TD height=1 width=100% class="oneLine"></TD></TR></TABLE>
+<div class="paragraph2">Source</div>
+<div class="paddingMembers">The documentation for this Class was generated from the following file:</div>
+<div class="paddingMembers"><LI><a href="#" OnFocus="link('_file','oscport_h0',this)">oscport.h</a><br></div>
+<div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_class','_description');
+</script>

@@ -1,0 +1,49 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - GetInteger</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">GetInteger</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">GetInteger</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','GetInteger1332633361','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_member','GetInteger1332633361','_source',this)" class="tabLinkActive">Source</a></span>
+<span class="tabInActiveGrayout"><span class="tabLinkGrayout">Call Graph</span></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<div class="paragraph2NoTopPadding">Start Line: 174</div>
+<pre class="codeExamples">
+long unsigned int <a href="#" OnFocus="link('_member','GetInteger1332633361',this)">GetInteger</a>(istream &amp;is, int len=2)
+{
+    assert(len&lt;=4); // can't handle lengths greater than 32 bits
+    long unsigned int lui = 0;
+    for(int i=0; i&lt;len; i++)
+    { // process hex digits starting from MSDigit
+        unsigned char digit;
+        is.read((char*)&amp;digit,1);
+        assert(is.eof()==0);
+        lui = (lui&lt;&lt;8) | (long unsigned int)digit;
+    }
+    return lui;
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_member','_source');
+</script>

@@ -1,0 +1,73 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - LabelToTAPState</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">LabelToTAPState</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_class','JTAGPort0',this)" class="pathLink">JTAGPort</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">LabelToTAPState</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','LabelToTAPState2043650535','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_member','LabelToTAPState2043650535','_source',this)" class="tabLinkActive">Source</a></span>
+<span class="tabInActiveGrayout"><span class="tabLinkGrayout">Call Graph</span></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<div class="paragraph2NoTopPadding">Start Line: 725</div>
+<pre class="codeExamples">
+<a href="#" OnFocus="link('_member','TAPState0',this)">TAPState</a> <a href="#" OnFocus="link('_member','LabelToTAPState2043650535',this)">JTAGPort::LabelToTAPState</a>(string label)
+{
+    if(label == "Test-Logic-Reset" || label == "RESET")
+        return <a href="#" OnFocus="link('_member','TestLogicReset0',this)">TestLogicReset</a>;
+    if(label == "Run-Test/Idle"    || label == "IDLE")
+        return <a href="#" OnFocus="link('_member','RunTestIdle0',this)">RunTestIdle</a>;
+    if(label == "Select_DR-Scan"   || label == "DRSELECT")
+        return <a href="#" OnFocus="link('_member','SelectDRScan0',this)">SelectDRScan</a>;
+    if(label == "Select_IR-Scan"   || label == "IRSELECT")
+        return <a href="#" OnFocus="link('_member','SelectIRScan0',this)">SelectIRScan</a>;
+    if(label == "Capture-DR"       || label == "DRCAPTURE")
+        return <a href="#" OnFocus="link('_member','CaptureDR0',this)">CaptureDR</a>;
+    if(label == "Capture-IR"       || label == "IRCAPTURE")
+        return <a href="#" OnFocus="link('_member','CaptureIR0',this)">CaptureIR</a>;
+    if(label == "Shift-DR"         || label == "DRSHIFT")
+        return <a href="#" OnFocus="link('_member','ShiftDR0',this)">ShiftDR</a>;
+    if(label == "Shift-IR"         || label == "IRSHIFT")
+        return <a href="#" OnFocus="link('_member','ShiftIR0',this)">ShiftIR</a>;
+    if(label == "Exit1-DR"         || label == "DREXIT1")
+        return <a href="#" OnFocus="link('_member','Exit1DR0',this)">Exit1DR</a>;
+    if(label == "Exit1-IR"         || label == "IREXIT1")
+        return <a href="#" OnFocus="link('_member','Exit1IR0',this)">Exit1IR</a>;
+    if(label == "Pause-DR"         || label == "DRPAUSE")
+        return <a href="#" OnFocus="link('_member','PauseDR0',this)">PauseDR</a>;
+    if(label == "Pause-IR"         || label == "IRPAUSE")
+        return <a href="#" OnFocus="link('_member','PauseIR0',this)">PauseIR</a>;
+    if(label == "Exit2-DR"         || label == "DREXIT2")
+        return <a href="#" OnFocus="link('_member','Exit2DR0',this)">Exit2DR</a>;
+    if(label == "Exit2-IR"         || label == "IREXIT2")
+        return <a href="#" OnFocus="link('_member','Exit2IR0',this)">Exit2IR</a>;
+    if(label == "Update-DR"        || label == "DRUPDATE")
+        return <a href="#" OnFocus="link('_member','UpdateDR0',this)">UpdateDR</a>;
+    if(label == "Update-IR"        || label == "IRUPDATE")
+        return <a href="#" OnFocus="link('_member','UpdateIR0',this)">UpdateIR</a>;
+    assert(1==0);
+    return (<a href="#" OnFocus="link('_member','TAPState0',this)">TAPState</a>) -1;
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_member','_source');
+</script>

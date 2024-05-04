@@ -1,0 +1,1017 @@
+<html>
+
+
+<!-- Mirrored from 192.168.0.47/univ.html by HTTrack Website Copier/3.x [XR&CO'2004], Mon, 04 Dec 2006 16:07:53 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=ISO-8859-1"><!-- /Added by HTTrack -->
+<head>
+<link rel="SHORTCUT ICON" HREF="images/xess.ico">
+<title>What Universities Are Using the XESS FPGA and CPLD Boards</title>
+<meta NAME="KEYWORDS" CONTENT="XESS, XILINX, XC4000, XC9500, Spartan, FPGA, CPLD, reconfigurable logic, programmable logic, 8051 microcontroller, demo board, evaluation board">
+<meta NAME="DESCRIPTION" CONTENT="XESS Corp develops and sells low-cost XILINX programmable logic + microcontroller boards with tutorials.">
+<meta http-equiv=Content-Type content="text/html">
+<link rel="stylesheet" type="text/css" href="xess-1.css">
+<meta name="Microsoft Border" content="none, default">
+</head>
+
+<body>
+
+<table>
+  <!-- MSTableType="nolayout" -->
+  <tr>
+    <td class="StdPageLogo">
+    <a href="index-2.html"><img border="0" src="images/xess-138x32.bmp"></a>
+
+    </td>
+    <td class="StdPageNav">
+    <script type="text/javascript" src="xess.js"></script>
+<!-- <script type="text/javascript" src="niftycube_xess.js"></script> -->
+<!-- <script type="text/javascript" src="prototype.js"></script> -->
+<!-- <script type="text/javascript" src="rico.js"></script> -->
+<script type="text/javascript">
+	window.onload=function(){
+		startList("nav");
+		stripe_xess();
+		collapseall();
+		// Nifty("td.StdPageNav","transparent");
+		// Nifty("td.StdPageSidebar","transparent");
+		// Nifty("td.StdPageNavLinks","transparent");
+	};
+	onload=function(){
+		startList("nav");
+		stripe_xess();
+		collapseall();
+		// Nifty("td.StdPageNav","transparent");
+		// Nifty("td.StdPageSidebar","transparent");
+		// Nifty("td.StdPageNavLinks","transparent");
+	};
+</script>
+
+
+
+<table border="0" width="640" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="center" valign="center" width="70%">
+
+<!--
+  -- naviagation bar for browsers with scripting capability
+  -- (make sure there is no whitespace after the '\' on each line and run
+  -- the Javascript console on Firefox to check the syntax.)
+  -->
+<script type="text/javascript">
+nav_text = '\
+  <ul id="nav"> \
+    <li id="first"><a href="ho04000.html">Products</a> \
+      <ul> \
+        <li><a href="ho04000.html"><div>Catalog</div></a></li> \
+        <li><a href="manuals.html"><div>Manuals</div></a></li> \
+        <li><a href="ho07000.html"><div>Software Downloads</div></a></li> \
+      </ul> \
+    </li> \
+    <li><a href="help.html">Support</a> \
+      <ul> \
+        <li><a href="manuals.html" ><div>Product Manuals</div></a></li> \
+        <li><a href="ho03000.html" ><div>Tutorials</div></a></li> \
+        <li><a href="ho03000.html" ><div>Application Notes</div></a></li> \
+        <li><a href="ho03000.html" ><div>Design Examples</div></a></li> \
+        <li><a href="ho01000.html" ><div>FAQ</div></a></li> \
+        <li><a href="list_reg.html"><div>User Forum</div></a></li> \
+        <li><a href="help.html"    ><div>Request Help</div></a></li> \
+      </ul> \
+    </li> \
+    <li><a href="ho01001.html">Purchasing</a> \
+      <ul> \
+        <li><a href="https://xess.com/xess_int_order.php3"><div>Web Orders</div></a></li> \
+        <li><a href="ho01001.html"                       ><div>Purchase Orders</div></a></li> \
+        <li><a href="ho01001.html"                       ><div>Payment Methods</div></a></li> \
+        <li><a href="xess_int_quote.html"                ><div>Get a Quote</div></a></li> \
+        <li><a href="xess_int_quote.html"                ><div>Get a Proforma Invoice</div></a></li> \
+        <li><a href="ho01001.html"                       ><div>How To Buy From Us</div></a></li> \
+      </ul> \
+    </li> \
+    <li id="last"><a href="index-2.html">XESS</a> \
+      <ul> \
+        <li><a href="index-2.html"   ><div>Home</div></a></li> \
+        <li><a href="about_us.html"><div>About Us</div></a></li> \
+        <li><a href="ho00003.html" ><div>Contact Us</div></a></li> \
+<!-- \
+        <li><a href=""              ><div>Announcements</div></a></li> \
+        <li><a href="ho00005.html" ><div>Press Releases</div></a></li> \
+--> \
+      </ul> \
+    </li> \
+    <li id="last"><a href="links.html">Misc.</a> \
+      <ul> \
+        <li><a href="links.html"><div>Links</div></a></li> \
+      </ul> \
+    </li> \
+  </ul> \
+';
+document.writeln(nav_text);
+</script>
+
+<!--
+  -- naviagation bar for browsers with NO scripting capability
+  -->
+<noscript>
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="14%" align="left">
+    <a href="ho04000.html"><img border="0" src="images/menu_arrow.png">Products</a>
+    </td>
+    <td width="16%" align="left">
+    <a href="ho01001.html"><img border="0" src="images/menu_arrow.png">How to Buy</a>
+    </td>
+    <td width="11%" align="left">
+    <a href="help.html"><img border="0" src="images/menu_arrow.png">Help!</a>
+    </td>
+    <td width="14%" align="left">
+    <a href="ho03000.html"><img border="0" src="images/menu_arrow.png">Tutorials</a>
+    </td>
+    <td width="14%" align="left">
+    <a href="index-2.html"><img border="0" src="images/menu_arrow.png">Home</a>
+<!--
+    <a href="/ho00005.html"><img border="0" src="/images/menu_arrow.png">Press&nbsp;Rel.</a>
+-->
+    </td>
+  </tr>
+  <tr>
+    <td>
+    <a href="manuals.html"><img border="0" src="images/menu_arrow.png">Manuals</a>
+    </td>
+    <td>
+    <a href="xess_int_quote.html"><img border="0" src="images/menu_arrow.png">Online Quote</a>
+    </td>
+    <td>
+    <a href="ho01000.html"><img border="0" src="images/menu_arrow.png">FAQ</a>
+    </td>
+    <td>
+    <a href="ho03000.html"><img border="0" src="images/menu_arrow.png">Examples</a>
+    </td>
+    <td>
+    <a href="about_us.html">
+    <img border="0" src="images/menu_arrow.png">About&nbsp;Us</a>
+    </td>
+  </tr>
+  <tr>
+    <td>
+    <a href="ho07000.html"><img border="0" src="images/menu_arrow.png">Downloads</a>
+    </td>
+    <td>
+    <a href="https://xess.com/xess_int_order.php3"><img border="0" src="images/menu_arrow.png">Order Online</a>
+    </td>
+    <td>
+    <a href="list_reg.html"><img border="0" src="images/menu_arrow.png">Forum</a>
+    </td>
+    <td>
+    <a href="links.html"><img border="0" src="images/menu_arrow.png">Links</a>
+    </td>
+    <td>
+    <a href="ho00003.html"><img border="0" src="images/menu_arrow.png">Contact&nbsp;Us</a>
+    </td>
+  </tr>
+</table>
+</noscript>
+
+    </td>
+    <td align="center" valign="center" width="30%" id="srch">
+      <FORM ACTION="http://192.168.0.47/cgi-bin/ksearch/ksearch.cgi" METHOD="GET" NAME="search">
+        <INPUT TYPE="text" value="search" NAME="terms">
+		<input type=image src="images/search_arrow.png" value="Search">
+      </FORM>
+    </td>
+  </tr>
+</table>
+
+
+    </td>
+  </tr>
+  <tr>
+    <td class="StdPageSidebar">
+
+
+<h1>
+ Who Else Is Using the XS Boards? 
+</h1>
+<p>
+Here is a list of the colleges and universities that have purchased or been donated an XS Board.  (There are some duplicates in the list, but you get the idea.)
+</p>
+
+    </td>
+    <td class="StdPageBody">
+
+
+<ul>
+<li>Nanyang Technological University</li>
+<li>A.Mickiewicz University</li>
+<li>AGH Technical University</li>
+<li>AGH, Institute of Automatics</li>
+<li>Aalborg University</li>
+<li>Acadia University</li>
+<li>Alexandria University, Egypt</li>
+<li>American Univ. in Cairo</li>
+<li>Anna University</li>
+<li>Arizona State University</li>
+<li>Arkansas Technical Univ</li>
+<li>Assiut University</li>
+<li>Aston University</li>
+<li>Athlone Institute of Tech</li>
+<li>Auburn University</li>
+<li>Australian National University</li>
+<li>Bandung Inst of Technology</li>
+<li>Bangladesh Univ</li>
+<li>Barkatullah Univ. Bhopal</li>
+<li>Baylor University</li>
+<li>Bebemerita Universidad Autonoma de Puebla</li>
+<li>Beckman Institute</li>
+<li>Beijing Univ of Aero</li>
+<li>Beirut Arab University, Lebanon</li>
+<li>Bell College of Technology</li>
+<li>Benemerita Universidad Autonoma de Puebla</li>
+<li>Bilkent University</li>
+<li>Birmingham University</li>
+<li>Boise State University</li>
+<li>Bolton Inst of Higher Ed.</li>
+<li>Boston College</li>
+<li>Boston University</li>
+<li>Bournemouth University</li>
+<li>Box Hill Inst. TAFE</li>
+<li>Bradley University</li>
+<li>Brandeis University</li>
+<li>Brigham Young University</li>
+<li>Broxtowe College</li>
+<li>Brunel University</li>
+<li>Bucknell University</li>
+<li>Buffalo State College</li>
+<li>Butler County Comm. College</li>
+<li>Byuksung College</li>
+<li>CA Polytechnic State Univ</li>
+<li>Iwate University</li>
+<li>Calif State University Hayward</li>
+<li>California Institute of Technology</li>
+<li>California State University, Long Beach</li>
+<li>Campus Universitario Tafira</li>
+<li>Capitol College</li>
+<li>Cardonald College</li>
+<li>Carleton University</li>
+<li>Carnegie Mellon University</li>
+<li>Central Queensland University</li>
+<li>Chateauroux Inst of Tech</li>
+<li>Chinese University of Hong Kong</li>
+<li>Cittadella Universitaria</li>
+<li>City College of New York</li>
+<li>Ciudad Universitaria</li>
+<li>Clarkson University</li>
+<li>Clemson University</li>
+<li>Cogswell Polytechnical College</li>
+<li>College of Aarhus</li>
+<li>Colorado Technical University</li>
+<li>Concordia University</li>
+<li>Conestoga College</li>
+<li>Connecticut College</li>
+<li>Cornell University</li>
+<li>Coventry University</li>
+<li>Cracow Univ. of Technology</li>
+<li>DE NAYER Institute</li>
+<li>DEIS Universita di Bologna</li>
+<li>DIEE - University of Caligari</li>
+<li>De Montfort University</li>
+<li>DeVry Institute of Technology</li>
+<li>Delft University of Technology</li>
+<li>Denver Technical College</li>
+<li>University of Oslo</li>
+<li>Univ. of Edinburgh</li>
+<li>University of Hong Kong</li>
+<li>National University of Science &amp; Technology</li>
+<li>Dongeui University</li>
+<li>Memorial University of Newfoundland</li>
+<li>Nagasaki University</li>
+<li>Dokuz Eylul University</li>
+<li>Univ. of Sevilla</li>
+<li>Univ. Complutense de Madrid</li>
+<li>Drexel University</li>
+<li>Dublin Institute of Tech</li>
+<li>Duke University</li>
+<li>Dundalk Institute of Tech</li>
+<li>ESIM-Inst. Meditter. Tech.</li>
+<li>ETSI Univ. de Valla</li>
+<li>ETSIT - Universidad de Valladolid</li>
+<li>Eastern Mediterranean Univ</li>
+<li>Eastern Washington University</li>
+<li>Edith Cowan University</li>
+<li>Embry-Riddle Aero Univ</li>
+<li>Eng. College of Copenhagen</li>
+<li>Eng. College of Odense</li>
+<li>Engineering Collage of Aarhus</li>
+<li>Escuela Univ. de Informatica (DISCA)</li>
+<li>Escuela Universitaria de Informatica</li>
+<li>Espoo-Vantaa Institute of Technology</li>
+<li>Ezra Stiles College</li>
+<li>FH Koblenz - University of Applied Science</li>
+<li>Facultad de Fisicas. Universidad Complutense</li>
+<li>Fairfield University</li>
+<li>Feng Chia University</li>
+<li>Fernuniversitat in Hagen</li>
+<li>Flinders University of South Australia</li>
+<li>Florida A&amp;M University</li>
+<li>Florida Atlantic University</li>
+<li>Florida International University</li>
+<li>Florida State University</li>
+<li>Free University of Berlin</li>
+<li>Front Range Community Coll</li>
+<li>Fudan University</li>
+<li>GIK Institute of Tech.</li>
+<li>Gadjah Mada University</li>
+<li>Galway-Mayo Inst. of Tech.</li>
+<li>Gannon University</li>
+<li>GeR Instrumentos, S.L.U.</li>
+<li>George Mason University</li>
+<li>George Washington Univ.</li>
+<li>Georgetown University</li>
+<li>Georgia Institute of Tech</li>
+<li>Georgia Southern University</li>
+<li>Georgia State University</li>
+<li>Gh. Asachi Technical Univ</li>
+<li>Ghulam Ishag Institute</li>
+<li>Goucher College</li>
+<li>Goulburn Ovens Inst.TAFE</li>
+<li>Griffith University</li>
+<li>Grove City College</li>
+<li>HK institute of Vocational Education</li>
+<li>Hamdard Institute of Information Technology</li>
+<li>Handong University</li>
+<li>Hannam University</li>
+<li>Harvard University</li>
+<li>Harvey Mudd College</li>
+<li>Haverford College</li>
+<li>Heriot-Watt University</li>
+<li>Higher Marks Educ. Inst.</li>
+<li>Higher Technology Institute</li>
+<li>Hong Kong Tech College</li>
+<li>Hosei university</li>
+<li>Hunan Normal University</li>
+<li>Hunter Institute</li>
+<li>INDAIN STATISTICAL INSTITUTE</li>
+<li>INSTITUT GALILLEE,</li>
+<li>INSTITUT TEKNOGI NASIONAL MALANG</li>
+<li>IRISA (Rennes university)</li>
+<li>ISMEA, Inst Mediterraneen Tech,</li>
+<li>University of Kansas</li>
+<li>Idaho State University</li>
+<li>Illinois Inst. of Technology</li>
+<li>Imperial College, U London</li>
+<li>Indian Inst Guwahati</li>
+<li>Indian Inst. Tech, Bombay</li>
+<li>Indian Inst. Tech, Kharagpur</li>
+<li>Indian Inst. Tech, Delhi</li>
+<li>Indian Inst. Tech, Kanpur</li>
+<li>Indian Statistical Institute</li>
+<li>Indiana University</li>
+<li>Indiana University - IUPUI</li>
+<li>Inje Univ.</li>
+<li>Inst Nationale PT, Grenobl</li>
+<li>Inst Superior Lisboa</li>
+<li>Inst. Politec de Leiria</li>
+<li>Inst. Univ. de Envigado</li>
+<li>Inst.f.Nachrichtentechnik,</li>
+<li>Institut Montefiore B28</li>
+<li>Institut Teccart Inc.</li>
+<li>Institut fir Experimentelle Mathematik</li>
+<li>Institut fur Informatik</li>
+<li>Institut für Angewandte Informationsverarbeitung, TU-Graz</li>
+<li>Institute Galilee</li>
+<li>Institute Of Gerontology</li>
+<li>Institute for Applied Information Processing, TU-Graz</li>
+<li>Institute of Technology Bandung</li>
+<li>Instituto Nacional de Astrofisica, Optica y Electronica</li>
+<li>Instituto Superior Tecnico</li>
+<li>Instituto Tec de Puebla</li>
+<li>Iowa State University</li>
+<li>Johannes Gutenberg Universität Mainz</li>
+<li>Johns Hopkins University</li>
+<li>Justus Liebig Universitat</li>
+<li>KSU College of Engineering</li>
+<li>Kangnung National University</li>
+<li>Kasetsart University</li>
+<li>Katholieke Univ, Leuven</li>
+<li>Kent State University</li>
+<li>Kettering University (GMI)</li>
+<li>Khaled Benkrid, Univ. Staff</li>
+<li>King Saud University</li>
+<li>Koblenz University</li>
+<li>Kwantlen University College</li>
+<li>Kyoto University</li>
+<li>L.A. Pierce College</li>
+<li>Univ. of Massachusetts</li>
+<li>La Trobe University</li>
+<li>Lafayette College</li>
+<li>Lake Land College</li>
+<li>Lakehead University</li>
+<li>Lamar University</li>
+<li>Lambton College</li>
+<li>Lambton College of Technology</li>
+<li>Lamont-Doherty Earth Observatory of Columbia University</li>
+<li>Lappeenranta university of technology</li>
+<li>Lawrence Tech. university</li>
+<li>Lebanese American Univ</li>
+<li>Lehigh Univ.</li>
+<li>Limerick Institute of Technology</li>
+<li>Linkoping University</li>
+<li>Liverpool John Moores University</li>
+<li>Loras College</li>
+<li>Loughborough Univ of Tech</li>
+<li>Louisianna Tech University</li>
+<li>Loyola College</li>
+<li>Loyola Univ. Chicago</li>
+<li>Lulea University of Technology</li>
+<li>Lund University, IT Dept</li>
+<li>Lunghwa Institute of Technology</li>
+<li>M.A. College of Tech</li>
+<li>MONASH UNIVERSITY</li>
+<li>MSU- Iligan Inst of Techno</li>
+<li>Madras Institute of Tech</li>
+<li>Magee College</li>
+<li>Mahidol University</li>
+<li>Malaspina Univ College</li>
+<li>Manhattan College</li>
+<li>Mansfield University</li>
+<li>Marquette University</li>
+<li>Massachusetts Inst. of Tech.</li>
+<li>Mercer University</li>
+<li>Michigan State University</li>
+<li>Middle East Tech. Univ.</li>
+<li>Midlands Technical College</li>
+<li>Military University of Technology</li>
+<li>Mississippi State Univ</li>
+<li>Monash University</li>
+<li>Mondragon University</li>
+<li>Montana State University</li>
+<li>Morgan State University</li>
+<li>N.Melbourne Inst.Tech</li>
+<li>NC A&amp;T State University</li>
+<li>NORTH UNIV OF BAIA MARE</li>
+<li>Nagasaki University, Dept. of Electrical Engineering</li>
+<li>Nanjing Univ. Post</li>
+<li>Nanyang Technological University</li>
+<li>Napier University Edinburgh</li>
+<li>Nat'l Tech Univ of Ukraine</li>
+<li>Nat. Inst. Tech, Athens</li>
+<li>National Chiao Tung University</li>
+<li>National Technical University of Athens</li>
+<li>National Univ. of Lesotho</li>
+<li>National University of Ireland, Maynooth</li>
+<li>National University of Singapore</li>
+<li>New Mexico Inst of Tech</li>
+<li>New Mexico State University</li>
+<li>New York Institute of Tech</li>
+<li>New York University</li>
+<li>Nicholls State University</li>
+<li>Niigata Inst. of Tech.</li>
+<li>Norfolk State University</li>
+<li>North Carolina State Univ</li>
+<li>Northeastern University</li>
+<li>Northern Illinois Univ</li>
+<li>Northern Territory Univ.</li>
+<li>Northwestern Univ.</li>
+<li>OXFORD BROOKES UNIVERSITY</li>
+<li>Oakland University</li>
+<li>Ohio Northern University</li>
+<li>Ohio State University</li>
+<li>Ohio University</li>
+<li>Oklahoma Christian Univ</li>
+<li>Oklahoma State University</li>
+<li>Oklahoma University</li>
+<li>Open Univ.&nbsp;</li>
+<li>Orange County Community College</li>
+<li>Oregon Graduate Inst.</li>
+<li>Oregon Institute of Tech</li>
+<li>Oregon State Univ.</li>
+<li>POLITEC Univ of Bucharest</li>
+<li>PUCRS, Inst de Informatica</li>
+<li>Penn State Behrend College</li>
+<li>Penn State University</li>
+<li>Petra Christian University</li>
+<li>Bologna University</li>
+<li>Pole Univ Leonard-de-Vinci</li>
+<li>Politechnika Krakowska, Instytut Automatyki</li>
+<li>Pontificia Universidad Católica del Perú</li>
+<li>Pontificia Universidad Javeriana - Cali</li>
+<li>Portsmouth University</li>
+<li>Potchefstroom Univ. for CHE</li>
+<li>Poznan University of Technology</li>
+<li>Prince of Songkhia Univ.</li>
+<li>Princess Sumaya University</li>
+<li>Princeton University</li>
+<li>Purdue University</li>
+<li>Purdue University, Calumet</li>
+<li>Pusan National University</li>
+<li>Queen Mary and Westfield College</li>
+<li>Queen's University of Belfast</li>
+<li>Queen. Univ.Technology</li>
+<li>Queens College of CUNY</li>
+<li>Queensborough Community College</li>
+<li>Queensland University of Technology</li>
+<li>RCC College of Technology</li>
+<li>RMIT University</li>
+<li>RWTH Aachen, Univ of Tech</li>
+<li>Rangsit University</li>
+<li>Reading University</li>
+<li>Reg'l Eng. College Calicut</li>
+<li>Rgnl Tech Colleg, Tallaght</li>
+<li>Rice University</li>
+<li>Ricks College</li>
+<li>Rochester Inst. of Tech</li>
+<li>Rose-Hulman Institute of Technology</li>
+<li>Rowan University</li>
+<li>Royal Inst. of Technology</li>
+<li>Royal Military College</li>
+<li>Rutgers University</li>
+<li>SE Missouri State Univ</li>
+<li>SENECA COLLEGE</li>
+<li>SW Missouri State Univ.</li>
+<li>Saint Louis University</li>
+<li>Salt Lake Community Colle</li>
+<li>San Diego State Univ</li>
+<li>San Francisco State University</li>
+<li>San Jose State University</li>
+<li>Sanata Dharma University</li>
+<li>Sandwell College</li>
+<li>Santa Clara University</li>
+<li>Seattle University</li>
+<li>Sedaya College</li>
+<li>Seet/Behrend College</li>
+<li>Seoul National University</li>
+<li>Seoul Women's University</li>
+<li>Sepuluh Nopember Inst. of Tech.</li>
+<li>Shanghai Jiao Tong Univ</li>
+<li>Sheffield Hallam Univ</li>
+<li>Sheffield univ.</li>
+<li>Shenyang Inst Aero Engi</li>
+<li>Silesian University of Technology</li>
+<li>Simon Fraser University</li>
+<li>Slovak Univ. of Technology</li>
+<li>Snow College</li>
+<li>South China University of Technology</li>
+<li>South Dakota State University</li>
+<li>Southeast Missouri State Univ.</li>
+<li>Southern Illinois University</li>
+<li>Southern Polytechnic State University</li>
+<li>Southwest Research Inst.</li>
+<li>St. Louis Univ.</li>
+<li>St. Petersburg Tech Univ</li>
+<li>Staffordhsire University</li>
+<li>Stanford University</li>
+<li>State Univ. of New York, New Paltz</li>
+<li>State University Of New York</li>
+<li>Stavanger College</li>
+<li>Sultan Qaboos University</li>
+<li>Swansea Inst. of Higher Education</li>
+<li>Swinburne University of Technology</li>
+<li>Syracuse University</li>
+<li>Tallinn Technical University</li>
+<li>Tampa Technical Institutio</li>
+<li>Tech . Univ. of Koszalin</li>
+<li>Tech Univ &quot;Gh.Asachi&quot; Iasi</li>
+<li>Tech Univ of Bialystok</li>
+<li>Tech Univ of Gdansk</li>
+<li>Tech Univ of Koszalin</li>
+<li>Tech. Univ. Braunschweig, Abt. E.I.S.</li>
+<li>Tech. Univ. Szczecin</li>
+<li>Tech. Univ.of Cluj-Napoca</li>
+<li>Tech. Univ. of Zielona Gora</li>
+<li>Technical Univ of Lodz</li>
+<li>Technical Univ. of Brno</li>
+<li>Technical Univ. of Crete</li>
+<li>Technical University of Delft (ITS WgEP)</li>
+<li>Technical University of Denmark</li>
+<li>Technical University of Lodz</li>
+<li>Technisch Universitat Wien</li>
+<li>Technische Univ Muenchen</li>
+<li>Technische Universitat Hamburg-Harburg</li>
+<li>Telecom Paris Univ.(ENST)</li>
+<li>Temple University</li>
+<li>Tennessee Tech University</li>
+<li>Texas A&amp;M Univ - Corpus Christi</li>
+<li>Texas A&amp;M Univ. - Kingsville</li>
+<li>Chinese University of Hong Kong</li>
+<li>Claremont Colleges</li>
+<li>College of New Jersey</li>
+<li>Flinders University of South Australia</li>
+<li>Pennsylvania State University</li>
+<li>Queen's University of Belfast</li>
+<li>Rayne Institute</li>
+<li>Univ. of Melbourne</li>
+<li>University of Calgary</li>
+<li>University of Connecticut</li>
+<li>University of Illinois</li>
+<li>University of Leeds</li>
+<li>University of Manchester</li>
+<li>University of Queensland</li>
+<li>University of Sheffield</li>
+<li>University of Toledo</li>
+<li>University of Wisconsin-Madison</li>
+<li>Tianjin University</li>
+<li>Transilvania University</li>
+<li>Trinity College Dublin</li>
+<li>Trinity Western University</li>
+<li>Tsinghua University</li>
+<li>Tsuruoka National College of Technology</li>
+<li>Tufts University</li>
+<li>Tulane University</li>
+<li>Tuskegee Institute</li>
+<li>UCLA -Univ.CA, Los Angeles</li>
+<li>UNIV NACIONAL DE COLOMBIA</li>
+<li>UNIVERSIDAD DE LOS ANDES</li>
+<li>UNIVERSIDAD DE SONORA, CIFUS</li>
+<li>UNIVERSIDAD PONTIFICIA BOLIVARIANA BUCARAMANGA</li>
+<li>UNIVERSITE CLAUDE BERNARD</li>
+<li>United Arab Emirates University</li>
+<li>Univ Autonoma del Estado</li>
+<li>Univ Catolica de Pelotas</li>
+<li>Univ College Cork, IRELAND</li>
+<li>Univ Complutense de Madrid</li>
+<li>Univ Distric of Columbia</li>
+<li>Univ Fed do Rio de Janeiro</li>
+<li>Univ Luterana do Brazil</li>
+<li>Univ Manchester Inst. S</li>
+<li>Univ ORT del Uruguay</li>
+<li>Univ Pierre et Marie Curie</li>
+<li>Univ Politecnica Valencia</li>
+<li>Univ Ponti Bolivariana</li>
+<li>Univ Ramon Llull</li>
+<li>Univ Techn de Panama</li>
+<li>Univ Teknologi Malaysia</li>
+<li>Univ de Valencia - LISITT</li>
+<li>Univ of British Columbia</li>
+<li>Univ of CA at Davis</li>
+<li>Univ of CA at Riverside</li>
+<li>Univ of CA, Santa Barbara</li>
+<li>Univ of CA, Santa Cruz</li>
+<li>Univ of California</li>
+<li>Univ of Colorado, Boulder</li>
+<li>Univ of Fla</li>
+<li>Univ of Hartford</li>
+<li>Univ of Houston, Downtown</li>
+<li>Univ of Kent at Canterbury</li>
+<li>Univ of Mass. at Amhurst</li>
+<li>Univ of Missouri-Rolla</li>
+<li>Univ of Nebraska, Lincoln</li>
+<li>Univ of New Hampshire</li>
+<li>Univ of North Florida</li>
+<li>Univ of Orleans, France</li>
+<li>Univ of Patras</li>
+<li>Univ of Pennsylvania</li>
+<li>Univ of Quebec-Chicoutimi</li>
+<li>Univ of South Australia</li>
+<li>Univ of South Florida</li>
+<li>Univ of Southern Miss</li>
+<li>Univ of Texas at Austin</li>
+<li>Univ of Texas at Dallas</li>
+<li>Univ of Texas, San Antonio</li>
+<li>Univ of The West Indies</li>
+<li>Univ. Complutense de Madrid</li>
+<li>Univ. Di Milano</li>
+<li>Univ. Engineering College</li>
+<li>Univ. Federal Minas Gerais</li>
+<li>Univ. GHS Wuppertal</li>
+<li>Univ. La Plata</li>
+<li>Univ. Libre de Bruxelles</li>
+<li>Univ. Nac. del Comahue</li>
+<li>Univ. Nacional Patagonia</li>
+<li>Univ. Nova Lisboa- Faculdade Ciencias e Tecnologia</li>
+<li>Univ. Polytehnica</li>
+<li>Univ. Reggio Calabria</li>
+<li>Univ. Science Maylasia</li>
+<li>Univ. Tech. de la Mixteca</li>
+<li>Univ. Valencia</li>
+<li>Univ. de Alicante</li>
+<li>Univ. de Montreal</li>
+<li>Univ. de Palermo</li>
+<li>Univ. de Saint-Etienne</li>
+<li>Univ. de Santiago de Chile</li>
+<li>Univ. de Tech de Belfort</li>
+<li>Univ. de Vic</li>
+<li>Univ. of Alaska Fairbanks</li>
+<li>Univ. of Algarve</li>
+<li>Univ. of Applied Sciences</li>
+<li>Univ. of Arkansas at Little Rock</li>
+<li>Univ. of Aschaffenburg</li>
+<li>Univ. of Ballarat</li>
+<li>Univ. of British colombia</li>
+<li>Univ. of Buffalo (SUNY)</li>
+<li>Univ. of Calif. Santa Barbara</li>
+<li>Univ. of California Santa Barbara</li>
+<li>Univ. of Colorado at Boulder</li>
+<li>Univ. of Colorado at Denver</li>
+<li>Univ. of Connecticut</li>
+<li>Univ. of Dalat</li>
+<li>Univ. of Delaware</li>
+<li>Univ. of Idaho</li>
+<li>Univ. of Illinois-Chicago</li>
+<li>Univ. of Limerick</li>
+<li>Univ. of Ljubljana</li>
+<li>Univ. of Manitoba</li>
+<li>Univ. of Maryland</li>
+<li>Univ. of Memphis</li>
+<li>Univ. of Michigan</li>
+<li>Univ. of Minho</li>
+<li>Univ. of Mississippi</li>
+<li>Univ. of Missouri-Rolla</li>
+<li>Univ. of Nebraska - Lincoln</li>
+<li>Univ. of Nevada Las Vegas</li>
+<li>Univ. of North Dakota</li>
+<li>Univ. of North Florida</li>
+<li>Univ. of Oklahoma</li>
+<li>Univ. of Pennsylvania</li>
+<li>Univ. of Perugia</li>
+<li>Univ. of Pretoria</li>
+<li>Univ. of Puerto Rico Stefani</li>
+<li>Univ. of Rhode Island</li>
+<li>Univ. of South Australia</li>
+<li>Univ. of Southern California</li>
+<li>Univ. of Southern Colorado</li>
+<li>Univ. of Southern Maine</li>
+<li>Univ. of Stellenbosch</li>
+<li>Univ. of Stuttgart</li>
+<li>Univ. of Toledo</li>
+<li>Univ. of Trollhattan</li>
+<li>Univ. of Virginia</li>
+<li>Univ. of Wales,Cardiff</li>
+<li>Univ. of Washington</li>
+<li>Univ. of West Bohemia</li>
+<li>Univ. of West Sydney</li>
+<li>Univ. of Windsor/Physics, 387A Essex Hall</li>
+<li>Univ. of Wisconsin - Madison</li>
+<li>Univ. of Wisconsin - Platteville</li>
+<li>Univ. of Wisconsin-Madison</li>
+<li>Univ.Politecnica Catalunya</li>
+<li>Univ/ETH Zurich</li>
+<li>UnivFederal daParaiba-UFPb</li>
+<li>Univdad Autonoma de Pueblo</li>
+<li>Universidad Autonoma Metropolitana</li>
+<li>Universidad Catolica de Chile</li>
+<li>Universidad Complutense de Madrid</li>
+<li>Universidad Distrital</li>
+<li>Universidad Iberoamericana</li>
+<li>Universidad Politecnica de Valencia</li>
+<li>Universidad Pontifica Boliviariana</li>
+<li>Universidad Rey Juan Carlos</li>
+<li>Universidad Tecnologica Nacional</li>
+<li>Universidad Veracruzana</li>
+<li>Universidad de Alicante</li>
+<li>Universidad de Antioquia</li>
+<li>Universidad de Castilla- La Mancha</li>
+<li>Universidad de Extremadura</li>
+<li>Universidad de Guanajuato</li>
+<li>Universidad de Los Andes</li>
+<li>Universidad de Murcia</li>
+<li>Universidad de Sao Carlos</li>
+<li>Universidad de Sevilla</li>
+<li>Universidad de Sonora</li>
+<li>Universidad de Valladolid</li>
+<li>Universidad de Vigo</li>
+<li>Universidad de Zaragoza</li>
+<li>Universidad de los Andes</li>
+<li>Universidad dela Republica</li>
+<li>Universidade Federal de Pernambuco</li>
+<li>Universidade de Aveiro</li>
+<li>Universidade de Brasilia</li>
+<li>Universit of Twente</li>
+<li>Universita Degli Studi di Ferrara</li>
+<li>Universita degli Studi di Cassino</li>
+<li>Universitat Bielefeld</li>
+<li>Universitat Essen</li>
+<li>Universitat GH Essen</li>
+<li>Universitat Jaume I</li>
+<li>Universitat Leipzig</li>
+<li>Universitat Politecnica de Catalunya</li>
+<li>Universitat Stuttgart</li>
+<li>Universitat de Barcelona</li>
+<li>Universitat of Technology, Graz</li>
+<li>Universite Laval</li>
+<li>Universite Paris-Nord</li>
+<li>Universite de Haute Alsace</li>
+<li>Universite de Sherbrooke</li>
+<li>Universite de la Reunion</li>
+<li>Universite du Quebec a Chicoutimi</li>
+<li>University Kempten</li>
+<li>University Laval</li>
+<li>University Lille</li>
+<li>University Linz</li>
+<li>University Of Idaho</li>
+<li>University Siegen, GERMANY</li>
+<li>University de Nancy</li>
+<li>University of Alabama at H</li>
+<li>University of Alberta</li>
+<li>University of Amazonas</li>
+<li>University of Arizona</li>
+<li>University of Balamand</li>
+<li>University of Birmingham</li>
+<li>University of Bologna</li>
+<li>University of Bradford</li>
+<li>University of Bridgeport</li>
+<li>University of British Colombia</li>
+<li>University of Cagliari</li>
+<li>University of Calgary</li>
+<li>University of California Santa Barbara</li>
+<li>University of California, Irvine</li>
+<li>University of California, Riverside</li>
+<li>University of California, San Diego</li>
+<li>University of Canterbury</li>
+<li>University of Cartagena</li>
+<li>University of Central Florida</li>
+<li>University of Cincinnati</li>
+<li>University of Colorado at Colorado Springs</li>
+<li>University of Colorado, Boulder</li>
+<li>University of Connecticut</li>
+<li>University of Craiova</li>
+<li>University of Dayton</li>
+<li>University of Delaware</li>
+<li>University of Denver</li>
+<li>University of Dundee</li>
+<li>University of Edinburgh</li>
+<li>University of Essex</li>
+<li>University of Exeter</li>
+<li>University of Gadjah Mada</li>
+<li>University of Genova</li>
+<li>University of Glasgow</li>
+<li>University of Guelph</li>
+<li>University of Hawaii at Manoa</li>
+<li>University of Hong Kong</li>
+<li>University of Houston - Downtown</li>
+<li>University of Huddersfield (School of Eng)</li>
+<li>University of Idaho</li>
+<li>University of Illinois</li>
+<li>University of Indonesia</li>
+<li>University of Iowa</li>
+<li>University of Kalmar, Dept. of Technology</li>
+<li>University of Kansas</li>
+<li>University of Karlstad</li>
+<li>University of Kentucky</li>
+<li>University of Las Palmas G. C.</li>
+<li>University of Leeds</li>
+<li>University of Liege</li>
+<li>University of Limerick</li>
+<li>University of Ljubljana</li>
+<li>University of Mainz</li>
+<li>University of Malaysia</li>
+<li>University of Manchester</li>
+<li>University of Manitoba</li>
+<li>University of Maryland</li>
+<li>University of Massachusetts</li>
+<li>University of Melbourne</li>
+<li>University of Michigan</li>
+<li>University of Minho</li>
+<li>University of Minnesota</li>
+<li>University of Missouri-Columbia</li>
+<li>University of Murcia</li>
+<li>University of Naples</li>
+<li>University of Nebraska</li>
+<li>University of New Haven</li>
+<li>University of New Mexico</li>
+<li>University of North Carolina at Charlotte</li>
+<li>University of North Dakota</li>
+<li>University of North Florida</li>
+<li>University of Northumbria at Newcastle</li>
+<li>University of Notre Dame</li>
+<li>University of Oklahoma</li>
+<li>University of Oradea</li>
+<li>University of Oslo</li>
+<li>University of Ottawa</li>
+<li>University of Pernambuco</li>
+<li>University of Pittsburgh</li>
+<li>University of Plymouth</li>
+<li>University of Portland</li>
+<li>University of Puerto Rico</li>
+<li>University of Quebec</li>
+<li>University of Queensland</li>
+<li>University of Regina</li>
+<li>University of Rochester</li>
+<li>University of Rousse</li>
+<li>University of Salford</li>
+<li>University of San Carlos</li>
+<li>University of San Diego</li>
+<li>University of Saskatchewan</li>
+<li>University of Sheffield</li>
+<li>University of Sherbrooke</li>
+<li>University of South Australia</li>
+<li>University of South Florida</li>
+<li>University of Southern California</li>
+<li>University of Strathclyde</li>
+<li>University of Surrey</li>
+<li>University of Sussex</li>
+<li>University of Sydney</li>
+<li>University of Tasmania</li>
+<li>University of Technology</li>
+<li>University of Texas at Dallas</li>
+<li>University of Toledo</li>
+<li>University of Toronto</li>
+<li>University of Tuebingen</li>
+<li>University of Tulsa</li>
+<li>University of Ulster</li>
+<li>University of Utah</li>
+<li>University of WI-Madison</li>
+<li>University of Warwick</li>
+<li>University of Washington</li>
+<li>University of Waterloo</li>
+<li>University of West Bohemia</li>
+<li>University of Westminster</li>
+<li>University of Windsor</li>
+<li>University of Wisconsin-Madison</li>
+<li>University of Wuppertal</li>
+<li>University of Wyoming</li>
+<li>University of York</li>
+<li>University of Zagreb</li>
+<li>University of the Pacific</li>
+<li>University of the West Indies</li>
+<li>Università di Padova</li>
+<li>Universtity of Tasmania</li>
+<li>Univesidad Técnica Federico Santa María</li>
+<li>Utrecht University</li>
+<li>Vanderbilt University</li>
+<li>Victoria Univ of Tech.</li>
+<li>Vienna Univ of Technology</li>
+<li>Villanova University</li>
+<li>Vincennes University</li>
+<li>Virginia Commonwealth University</li>
+<li>Virginia Military Inst</li>
+<li>Virginia Polytechnic Inst. and State Univ.</li>
+<li>Vladimir State Tech. Univ.</li>
+<li>Vrije Universiteit Brussel</li>
+<li>Washington State Univ</li>
+<li>Washington University</li>
+<li>Waterford Institute of Technology</li>
+<li>Weber State University</li>
+<li>West Virginia State Univ.</li>
+<li>West Virginia University</li>
+<li>West. Melbourne Inst.TAFE</li>
+<li>Westen Michigan University</li>
+<li>Wichita State University</li>
+<li>Wilfrid Laurier University</li>
+<li>Wright State University</li>
+<li>Xiamen University</li>
+<li>Yale University</li>
+<li>Yamaguchi University</li>
+<li>Zhejiang University</li>
+<li>King Saud University</li>
+</ul>
+
+
+    </td>
+  </tr>
+  <tr>
+    <td class="StdPageCredits">
+    <a href="mailto:webmaster@xess.com"> webmaster@xess.com</a><br>
+© 1998-2006, XESS Corp.<br> 
+All rights reserved.
+<script src="../www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-765812-1";
+urchinTracker();
+</script>
+    </td>
+    <td class="StdPageNavLinks">
+        <a href="ho04000.html">
+    <img border="0" src="images/menu_arrow.png">Products</a>
+    <a href="manuals.html">
+    <img border="0" src="images/menu_arrow.png">Manuals</a>
+    <a href="ho07000.html">
+    <img border="0" src="images/menu_arrow.png">Downloads</a>
+    <a href="ho01001.html">
+    <img border="0" src="images/menu_arrow.png">How to Buy</a>
+    <a href="xess_int_quote.html">
+    <img border="0" src="images/menu_arrow.png">Online Quote</a>
+    <a href="https://xess.com/xess_int_order.php3">
+    <img border="0" src="images/menu_arrow.png">Order Online</a>
+    <br>
+    <a href="help.html">
+    <img border="0" src="images/menu_arrow.png">Help!</a>
+    <a href="ho01000.html">
+    <img border="0" src="images/menu_arrow.png">FAQ</a>
+    <a href="list_reg.html">
+    <img border="0" src="images/menu_arrow.png">Forum</a>
+    <a href="ho03000.html">
+    <img border="0" src="images/menu_arrow.png">Tutorials</a>
+    <a href="ho03000.html">
+    <img border="0" src="images/menu_arrow.png">Examples</a>
+    <a href="links.html">
+    <img border="0" src="images/menu_arrow.png">Links</a>
+    <a href="ho00005.html">
+    <a href="index-2.html">
+    <img border="0" src="images/menu_arrow.png">Home</a>
+    <a href="about_us.html">
+    <img border="0" src="images/menu_arrow.png">About&nbsp;Us</a>
+    <a href="ho00003.html">
+    <img border="0" src="images/menu_arrow.png">Contact&nbsp;Us</a>
+
+    </td>
+  </tr>
+</table>
+
+</body>
+
+
+<!-- Mirrored from 192.168.0.47/univ.html by HTTrack Website Copier/3.x [XR&CO'2004], Mon, 04 Dec 2006 16:07:53 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=ISO-8859-1"><!-- /Added by HTTrack -->
+</html>
+

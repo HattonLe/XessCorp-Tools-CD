@@ -1,0 +1,3 @@
+set ADucfFile {test_board.ucf}
+set AD {}
+set ADcdcFile {}

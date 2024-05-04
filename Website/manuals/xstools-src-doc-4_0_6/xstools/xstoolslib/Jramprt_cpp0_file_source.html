@@ -1,0 +1,561 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - jramprt.cpp</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">jramprt.cpp</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">jramprt.cpp</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','jramprt_cpp0','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','jramprt_cpp0','_overview',this)" class="tabLinkInActive">Overview</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','jramprt_cpp0','_includedfiles',this)" class="tabLinkInActive">Included files</a></span>
+<span class="tabInActiveGrayout"><span class="tabLinkGrayout">Included by</span></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_file','jramprt_cpp0','_source',this)" class="tabLinkActive">Source</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<pre class="codeExamples">
+/*----------------------------------------------------------------------------------
+  SOFTWARE LICENSE AGREEMENT
+    1.  Permission to use, copy, modify, and distribute this software
+        and its documentation, with or without modification, for any
+        purpose and without fee or royalty is hereby granted, provided
+        that you include the following on ALL copies of the software
+        and documentation or portions thereof, including
+        modifications, that you make:
+
+            a.  The full text of this license in a location viewable to users
+            of the redistributed or derivative work.
+
+            b.  Notice of any changes or modifications to the files,
+            including the date changes were made.
+
+    2.  The name, servicemarks and trademarks of X Engineering
+        Software Systems Corp. may NOT be used in advertising or
+        publicity pertaining to the software without specific, written
+        prior permission.
+
+    3.  Title to copyright in this software and any associated
+        documentation will at all times remain with X Engineering
+        Software Systems Corp.
+
+    4.  THIS SOFTWARE AND DOCUMENTATION IS PROVIDED "AS IS," AND X
+        Engineering Software Systems Corp MAKES NO REPRESENTATIONS OR
+        WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO,
+        WARRANTIES OF MERCHANTABILITY OR FITNESS FOR ANY PARTICULAR
+        PURPOSE OR THAT THE USE OF THE SOFTWARE OR DOCUMENTATION WILL
+        NOT INFRINGE ANY THIRD PARTY PATENTS, COPYRIGHTS, TRADEMARKS
+        OR OTHER RIGHTS.
+
+    5.  X Engineering Software Systems Corp WILL NOT BE LIABLE FOR ANY
+        DAMAGES, INCLUDING BUT NOT LIMITED TO, DIRECT, INDIRECT,
+        SPECIAL OR CONSEQUENTIAL, ARISING OUT OF ANY USE OF THE
+        SOFTWARE OR DOCUMENTATION.
+
+  ©2006 - X Engineering Software Systems Corp.  All rights reserved.
+----------------------------------------------------------------------------------*/
+
+
+#include &lt;fstream&gt;
+#include &lt;cassert&gt;
+
+#include "<a href="#" OnFocus="link('_file','utils_h0',this)">utils.h</a>"
+#include "<a href="#" OnFocus="link('_file','hexrecrd_h0',this)">hexrecrd.h</a>"
+#include "<a href="#" OnFocus="link('_file','jramprt_h0',this)">jramprt.h</a>"
+
+
+// length of JTAG boundary scan instruction register in XC9572,XC95108 CPLDs
+static const unsigned int bsirLength[] = {8,8};
+
+// length of JTAG boundary scan data register in XC9572 CPLD
+static const unsigned int bsdrLength[] = {216,324};
+
+// position of cells in the BSDR which affect the address bits of the RAM on the XS95 board
+static unsigned int ramAddressBitPos[][<a href="#" OnFocus="link('_member','numRAMAddressBits0',this)">numRAMAddressBits</a>] =
+{
+    // A0 ... A16 for the XC9572
+    {132,126,114,111,210,198,117,201,18,12,36,33,21,24,15,90,135},
+    // A0 ... A16 for the XC95108
+    {252,237,225,219,318,309,222,315,153,3,12,9,18,156,147,93,255},
+};
+
+// position of the cells in the BSDR which affect the data bits of the RAM on the XS95 board
+static unsigned int ramDataBitPos[][<a href="#" OnFocus="link('_member','numRAMDataBits0',this)">numRAMDataBits</a>] =
+{
+    // D0 ... D7 for the XC9572
+    {48,69,72,78,57,63,66,87},
+    // D0 ... D7 for the XC95108
+    {57,63,66,72,75,81,84,90},
+};
+
+// position of the cells in the BSDR which affect the CS, OE, and WE
+// bits of the RAM on the XS95 board
+static unsigned int ramControlBitPos[][<a href="#" OnFocus="link('_member','numRAMControlBits0',this)">numRAMControlBits</a>] =
+{
+    // CS, OE, WE for the XC9572
+    {  9,  6,  159},
+    // CS, OE, WE for the XC95108
+    {135, 144, 138},
+};
+
+
+/// Create a RAM upload/download port.
+<a href="#" OnFocus="link('_member','JTAGRAMPort2638599904',this)">JTAGRAMPort::JTAGRAMPort</a>(void)
+{
+    <a href="#" OnFocus="link('_member','progressGauge222607087',this)">progressGauge</a> = NULL;
+    <a href="#" OnFocus="link('_member','bsirPtr222607087',this)">bsirPtr</a> = <a href="#" OnFocus="link('_member','bsdrPtr222607087',this)">bsdrPtr</a> = NULL;
+}
+
+
+/// Create a RAM upload/download port.
+<a href="#" OnFocus="link('_member','JTAGRAMPort2638599904',this)">JTAGRAMPort::JTAGRAMPort</a>(int xc95Type,      ///&lt; type of XC9500 CPLD
+                    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>* e,                ///&lt; pointer to error reporting object
+                    unsigned int portNum,   ///&lt; parallel port number
+                    unsigned int invMask,   ///&lt; inversion mask for the parallel port
+                    unsigned int pos_tck,   ///&lt; bit position in parallel port of TCK pin
+                    unsigned int pos_tms,   ///&lt; bit position in parallel port of TMS pin
+                    unsigned int pos_tdi,   ///&lt; bit position in parallel port of TDI pin
+                    unsigned int pos_tdo)   ///&lt; bit position in parallel port of TDO pin
+{
+    <a href="#" OnFocus="link('_member','progressGauge222607087',this)">progressGauge</a> = NULL;
+    <a href="#" OnFocus="link('_member','bsirPtr222607087',this)">bsirPtr</a> = <a href="#" OnFocus="link('_member','bsdrPtr222607087',this)">bsdrPtr</a> = NULL;
+    <a href="#" OnFocus="link('_member','Setup3118790128',this)">Setup</a>(xc95Type,e,portNum,invMask,pos_tck,pos_tms,pos_tdi,pos_tdo);
+}
+
+
+/// Initialize the members of the object.
+bool <a href="#" OnFocus="link('_member','Setup3118790128',this)">JTAGRAMPort::Setup</a>(int xc95Type,     ///&lt; type of XC9500 CPLD
+                    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>* e,                ///&lt; pointer to error reporting object
+                    unsigned int portNum,   ///&lt; parallel port number
+                    unsigned int invMask,   ///&lt; inversion mask for the parallel port
+                    unsigned int pos_tck,   ///&lt; bit position in parallel port of TCK pin
+                    unsigned int pos_tms,   ///&lt; bit position in parallel port of TMS pin
+                    unsigned int pos_tdi,   ///&lt; bit position in parallel port of TDI pin
+                    unsigned int pos_tdo)   ///&lt; bit position in parallel port of TDO pin
+{
+    if(<a href="#" OnFocus="link('_member','bsirPtr222607087',this)">bsirPtr</a> != NULL)
+        delete <a href="#" OnFocus="link('_member','bsirPtr222607087',this)">bsirPtr</a>;
+    if(<a href="#" OnFocus="link('_member','bsdrPtr222607087',this)">bsdrPtr</a> != NULL)
+        delete <a href="#" OnFocus="link('_member','bsdrPtr222607087',this)">bsdrPtr</a>;
+    <a href="#" OnFocus="link('_member','bsirPtr222607087',this)">bsirPtr</a> = new <a href="#" OnFocus="link('_class','Bitstream0',this)">Bitstream</a>(bsirLength[xc95Type]);
+    assert(bsirPtr != NULL);
+    <a href="#" OnFocus="link('_member','bsdrPtr222607087',this)">bsdrPtr</a> = new <a href="#" OnFocus="link('_class','XCBSDR0',this)">XCBSDR</a>(bsdrLength[xc95Type],
+                        ramAddressBitPos[xc95Type],
+                        ramDataBitPos[xc95Type],
+                        ramControlBitPos[xc95Type]);
+    assert(bsdrPtr != NULL);
+    return <a href="#" OnFocus="link('_member','Setup1927970358',this)">LPTJTAG::Setup</a>(e,portNum,invMask,pos_tck,pos_tms,pos_tdi,pos_tdo);
+}
+
+
+/// Download the RAM with the contents of a HEX file.
+///\return true if operation was successul, false otherwise
+bool <a href="#" OnFocus="link('_member','DownloadRAM1745454770',this)">JTAGRAMPort::DownloadRAM</a>(string&amp; hexfileName,  ///&lt; receive data to download from this file
+                        bool bigEndianBytes,    ///&lt; if true, data is stored in RAM with most-significant byte at lower address
+                        bool bigEndianBits)     ///&lt; if true, data is stored in RAM with most-significant bit in position 0
+{
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> = <a href="#" OnFocus="link('_member','GetErr60045135',this)">GetErr</a>();
+    
+    if(hexfileName.length()==0)
+        return false;  // stop if no hex file was given
+    
+    ifstream is(hexfileName.c_str());  // otherwise open hex file
+    if(!is || is.fail() || is.eof()!=0)
+    { // error - couldn't open hex file
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','SetSeverity3409672334',this)">SetSeverity</a>(XSErrorMajor);
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> &lt;&lt; "could not open " &lt;&lt; hexfileName.c_str() &lt;&lt; "\n";
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','EndMsg60232619',this)">EndMsg</a>();
+        return false;
+    }
+    
+    // determine the size of the file
+    is.seekg(0,ios::end);   // move pointer to end of file
+    streampos streamEndPos = is.tellg();    // pointer position = position of end of file
+    is.seekg(0,ios::beg);   // return pointer to beginning of file
+
+    string desc("RAM Download"), subdesc("Downloading "+<a href="#" OnFocus="link('_member','StripPrefix67554305',this)">StripPrefix</a>(hexfileName));
+    <a href="#" OnFocus="link('_member','progressGauge222607087',this)">progressGauge</a> = new <a href="#" OnFocus="link('_class','Progress0',this)">Progress</a>(&amp;err,desc,subdesc,0,streamEndPos);
+
+    bool status = <a href="#" OnFocus="link('_member','DownloadRAM1745454770',this)">DownloadRAM</a>(is,bigEndianBytes,bigEndianBits);
+    
+    delete <a href="#" OnFocus="link('_member','progressGauge222607087',this)">progressGauge</a>;
+    
+    is.close();  // close-up the hex file
+    
+    return status;
+}
+
+
+/// Download the XS Board RAM with the contents arriving through a stream.
+///\return true if operation was successul, false otherwise
+bool <a href="#" OnFocus="link('_member','DownloadRAM1745454770',this)">JTAGRAMPort::DownloadRAM</a>(istream&amp; is,  ///&lt; receive data to download through this stream
+                    bool bigEndianBytes,    ///&lt; if true, data is stored in RAM with most-significant byte at lower address
+                    bool bigEndianBits)     ///&lt; if true, data is stored in RAM with most-significant bit in position 0
+{
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> = <a href="#" OnFocus="link('_member','GetErr60045135',this)">GetErr</a>();
+
+    assert(progressGauge != NULL);  //  make sure progress indicator is initialized
+    <a href="#" OnFocus="link('_member','progressGauge222607087',this)">progressGauge</a>-&gt;<a href="#" OnFocus="link('_member','Report2561259521',this)">Report</a>(0);  // start progress indicator at zero
+
+    <a href="#" OnFocus="link('_class','XCBSDR0',this)">XCBSDR</a>&amp; bsdr = *<a href="#" OnFocus="link('_member','bsdrPtr222607087',this)">bsdrPtr</a>;
+    <a href="#" OnFocus="link('_class','Bitstream0',this)">Bitstream</a>&amp; bsir = *<a href="#" OnFocus="link('_member','bsirPtr222607087',this)">bsirPtr</a>;
+    <a href="#" OnFocus="link('_class','Bitstream0',this)">Bitstream</a> null(0);
+    <a href="#" OnFocus="link('_member','InitTAP141716444',this)">InitTAP</a>();  // reset the TAP state controller
+    // get to a state where the controller will accept an instruction
+    <a href="#" OnFocus="link('_member','GoThruTAPSequence1124965842',this)">GoThruTAPSequence</a>(RunTestIdle,SelectDRScan,SelectIRScan,CaptureIR,ShiftIR, -1);
+    // first load an EXTEST instruction into the BSIR
+    bsir.<a href="#" OnFocus="link('_member','Clear2605346622',this)">Clear</a>();    // all-zeroes is the EXTEST opcode
+    <a href="#" OnFocus="link('_member','SendRcvBitstream109185014',this)">SendRcvBitstream</a>(bsir, null);  // after this, TAP state is Exit1-IR
+    // activate the EXTEST instruction and get ready to send data to the DR
+    <a href="#" OnFocus="link('_member','GoThruTAPSequence1124965842',this)">GoThruTAPSequence</a>(UpdateIR, SelectDRScan, CaptureDR, ShiftDR, -1);
+    
+    // enable the RAM
+    bsdr.<a href="#" OnFocus="link('_member','Clear2605346622',this)">Clear</a>();
+    bsdr.<a href="#" OnFocus="link('_member','SetRAMControls3431548137',this)">SetRAMControls</a>(0,1,1); // enable RAM, disable writing
+    <a href="#" OnFocus="link('_member','SendRcvBitstream109185014',this)">SendRcvBitstream</a>(bsdr,null);
+    <a href="#" OnFocus="link('_member','GoThruTAPSequence1124965842',this)">GoThruTAPSequence</a>(UpdateDR,SelectDRScan,CaptureDR,ShiftDR,-1);
+
+    // read hex records from file and place data in the RAM of the board
+    while(is.eof()==0)
+    {
+        <a href="#" OnFocus="link('_class','HexRecord0',this)">HexRecord</a> hx;
+        is &gt;&gt; hx;
+        if(is.eof()!=0)
+            break; // terminate loading loop when stream goes dry
+        if(<a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','IsError863564933',this)">IsError</a>())
+            break;
+        if(is.fail())
+        {
+            <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','SetSeverity3409672334',this)">SetSeverity</a>(XSErrorMajor);
+            <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> &lt;&lt; "error reading stream\n";
+            <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','EndMsg60232619',this)">EndMsg</a>();
+            break;
+        }
+        if(hx.<a href="#" OnFocus="link('_member','IsError2146470179',this)">IsError</a>())
+        { // some error in the hex record itself
+            <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','SetSeverity3409672334',this)">SetSeverity</a>(XSErrorMajor);
+            <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> &lt;&lt; "hex record: " &lt;&lt; hx.<a href="#" OnFocus="link('_member','GetErrMsg2146470179',this)">GetErrMsg</a>() &lt;&lt; "\n";
+            <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','EndMsg60232619',this)">EndMsg</a>();
+            break;
+        }
+        else
+        { // send out an indication for each hex record that's loaded
+            <a href="#" OnFocus="link('_member','progressGauge222607087',this)">progressGauge</a>-&gt;<a href="#" OnFocus="link('_member','Report2561259521',this)">Report</a>(is.tellg());
+            <a href="#" OnFocus="link('_member','DownloadHexRecordToRAM1728329283',this)">DownloadHexRecordToRAM</a>(hx,bigEndianBytes,bigEndianBits);
+        }
+    }
+    <a href="#" OnFocus="link('_member','progressGauge222607087',this)">progressGauge</a>-&gt;<a href="#" OnFocus="link('_member','Report2561259521',this)">Report</a>(is.tellg()); // should set gauge to 100%
+    
+    bsdr.<a href="#" OnFocus="link('_member','SetRAMControls3431548137',this)">SetRAMControls</a>(1,1,1); // disable RAM
+    <a href="#" OnFocus="link('_member','SendRcvBitstream109185014',this)">SendRcvBitstream</a>(bsdr,null);
+    <a href="#" OnFocus="link('_member','GoThruTAPSequence1124965842',this)">GoThruTAPSequence</a>(UpdateDR,-1);
+    
+    <a href="#" OnFocus="link('_member','InitTAP141716444',this)">InitTAP</a>();  // reset the TAP state controller
+    
+    return <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','IsError863564933',this)">IsError</a>() ? false:true;
+}
+
+
+/// Upload the XS Board RAM to a file.
+///\return true if operation was successul, false otherwise
+bool <a href="#" OnFocus="link('_member','UploadRAM2771819634',this)">JTAGRAMPort::UploadRAM</a>(string&amp; hexfileName,  ///&lt; dump uploaded data to this file.
+                        const char* format,     ///&lt; hex file format.
+                        unsigned long loAddr,   ///&lt; start fetching data from this address.
+                        unsigned long hiAddr,   ///&lt; stop at this address.
+                        bool bigEndianBytes,    ///&lt; if true, data is stored in RAM with most-significant byte at lower address.
+                        bool bigEndianBits)     ///&lt; if true, data is stored in RAM with most-significant bit in position 0.
+{
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> = <a href="#" OnFocus="link('_member','GetErr60045135',this)">GetErr</a>();
+    
+    if(hexfileName.length()==0)
+        return false;  // stop if no hex file was given
+    
+    ofstream os(hexfileName.c_str());  // otherwise open hex file
+    if(os.fail() || os.eof()!=0)
+    { // error - couldn't open hex file
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','SetSeverity3409672334',this)">SetSeverity</a>(XSErrorMajor);
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> &lt;&lt; "could not open " &lt;&lt; hexfileName.c_str() &lt;&lt; "\n";
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','EndMsg60232619',this)">EndMsg</a>();
+        return false;
+    }
+
+    string desc("RAM Upload"), subdesc("Uploading "+<a href="#" OnFocus="link('_member','StripPrefix67554305',this)">StripPrefix</a>(hexfileName));
+    <a href="#" OnFocus="link('_member','progressGauge222607087',this)">progressGauge</a> = new <a href="#" OnFocus="link('_class','Progress0',this)">Progress</a>(&amp;err,desc,subdesc,loAddr,hiAddr);
+    
+    <a href="#" OnFocus="link('_member','UploadRAM2771819634',this)">UploadRAM</a>(os,format,loAddr,hiAddr,bigEndianBytes,bigEndianBits);
+    
+    delete <a href="#" OnFocus="link('_member','progressGauge222607087',this)">progressGauge</a>;
+
+    os.close();  // close-up the hex file
+    
+    return true;
+}
+
+
+/// Upload the XS Board RAM to a stream.
+///\return true if operation was successul, false otherwise
+bool <a href="#" OnFocus="link('_member','UploadRAM2771819634',this)">JTAGRAMPort::UploadRAM</a>(ostream&amp; os,      ///&lt; dump uploaded data to this stream
+                        const char* format,     ///&lt; hex file format
+                        unsigned long loAddr,   ///&lt; start fetching data from this address
+                        unsigned long hiAddr,   ///&lt; stop at this address
+                        bool bigEndianBytes,    ///&lt; if true, data is stored in RAM with most-significant byte at lower address
+                        bool bigEndianBits)     ///&lt; if true, data is stored in RAM with most-significant bit in position 0
+{
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> = <a href="#" OnFocus="link('_member','GetErr60045135',this)">GetErr</a>();
+
+    assert(progressGauge != NULL);  //  make sure progress indicator is initialized
+    <a href="#" OnFocus="link('_member','progressGauge222607087',this)">progressGauge</a>-&gt;<a href="#" OnFocus="link('_member','Report2561259521',this)">Report</a>(0);  // start progress indicator at zero
+
+    <a href="#" OnFocus="link('_class','XCBSDR0',this)">XCBSDR</a>&amp; bsdr = *<a href="#" OnFocus="link('_member','bsdrPtr222607087',this)">bsdrPtr</a>;
+    <a href="#" OnFocus="link('_class','Bitstream0',this)">Bitstream</a>&amp; bsir = *<a href="#" OnFocus="link('_member','bsirPtr222607087',this)">bsirPtr</a>;
+    <a href="#" OnFocus="link('_class','Bitstream0',this)">Bitstream</a> null(0);
+    <a href="#" OnFocus="link('_member','InitTAP141716444',this)">InitTAP</a>();  // reset the TAP state controller
+    // get to a state where the TAP controller will accept an instruction
+    <a href="#" OnFocus="link('_member','GoThruTAPSequence1124965842',this)">GoThruTAPSequence</a>(RunTestIdle,SelectDRScan,SelectIRScan,CaptureIR,ShiftIR, -1);
+    // first load an EXTEST instruction into the BSIR
+    bsir.<a href="#" OnFocus="link('_member','Clear2605346622',this)">Clear</a>();    // all-zeroes is the EXTEST opcode
+    <a href="#" OnFocus="link('_member','SendRcvBitstream109185014',this)">SendRcvBitstream</a>(bsir, null);  // after this, TAP state is Exit1-IR
+    // activate the EXTEST instruction and get ready to send data to the DR
+    <a href="#" OnFocus="link('_member','GoThruTAPSequence1124965842',this)">GoThruTAPSequence</a>(UpdateIR, SelectDRScan, CaptureDR, ShiftDR, -1);
+    
+    // enable the RAM so data can be read out of it
+    bsdr.<a href="#" OnFocus="link('_member','Clear2605346622',this)">Clear</a>();
+    bsdr.<a href="#" OnFocus="link('_member','SetRAMControls3431548137',this)">SetRAMControls</a>(0,1,1); // enable RAM, disable writing
+    <a href="#" OnFocus="link('_member','SendRcvBitstream109185014',this)">SendRcvBitstream</a>(bsdr,null);
+    // transfer TAP to ShiftDR state so RAM data can be extracted via JTAG
+    <a href="#" OnFocus="link('_member','GoThruTAPSequence1124965842',this)">GoThruTAPSequence</a>(UpdateDR,SelectDRScan,CaptureDR,ShiftDR,-1);
+    
+    // read hex records from RAM and place data in the hex file
+    <a href="#" OnFocus="link('_class','HexRecord0',this)">HexRecord</a> hx;
+    hx.<a href="#" OnFocus="link('_member','Setup2851010944',this)">Setup</a>(format);
+    unsigned long addr;
+    for(addr=<a href="#" OnFocus="link('_member','../xsload/loAddr0',this)">loAddr</a>; (addr|0xF)&lt;=<a href="#" OnFocus="link('_member','../xsload/hiAddr0',this)">hiAddr</a>; addr=(addr+16)&amp;~0xF)
+    {
+        if(<a href="#" OnFocus="link('_member','UploadHexRecordFromRAM2188468879',this)">UploadHexRecordFromRAM</a>(hx,addr,addr|0xF,bigEndianBytes,bigEndianBits) == false) // get 16 bytes from RAM
+            return false;   // an error occurred while uploading the hex record
+        os &lt;&lt; hx;       // send hex record to output stream
+        <a href="#" OnFocus="link('_member','progressGauge222607087',this)">progressGauge</a>-&gt;<a href="#" OnFocus="link('_member','Report2561259521',this)">Report</a>(addr);   // give feedback on progress
+    }
+    if(addr&lt;=<a href="#" OnFocus="link('_member','../xsload/hiAddr0',this)">hiAddr</a>)
+    { // handle the last few bytes of an upload
+        if(<a href="#" OnFocus="link('_member','UploadHexRecordFromRAM2188468879',this)">UploadHexRecordFromRAM</a>(hx,addr,hiAddr,bigEndianBytes,bigEndianBits) == false)
+            return false;   // an error occurred while uploading the hex record
+        os &lt;&lt; hx;       // send hex record to output stream
+    }
+    <a href="#" OnFocus="link('_member','progressGauge222607087',this)">progressGauge</a>-&gt;<a href="#" OnFocus="link('_member','Report2561259521',this)">Report</a>(hiAddr); // should set gauge to 100%
+    
+    bsdr.<a href="#" OnFocus="link('_member','SetRAMControls3431548137',this)">SetRAMControls</a>(1,1,1); // disable RAM
+    <a href="#" OnFocus="link('_member','SendRcvBitstream109185014',this)">SendRcvBitstream</a>(bsdr,null);
+    <a href="#" OnFocus="link('_member','GoThruTAPSequence1124965842',this)">GoThruTAPSequence</a>(UpdateDR,-1);
+    
+    <a href="#" OnFocus="link('_member','InitTAP141716444',this)">InitTAP</a>();  // reset the TAP state controller
+    
+    return true;
+}
+
+
+/// Load RAM data at the addresses given in a hex record.
+///\return true if operation was successul, false otherwise
+bool <a href="#" OnFocus="link('_member','DownloadHexRecordToRAM1728329283',this)">JTAGRAMPort::DownloadHexRecordToRAM</a>(<a href="#" OnFocus="link('_class','HexRecord0',this)">HexRecord</a>&amp; hx, ///&lt; hex record with data to be downloaded
+                    bool bigEndianBytes,    ///&lt; if true, data is stored in RAM with most-significant byte at lower address
+                    bool bigEndianBits)     ///&lt; if true, data is stored in RAM with most-significant bit in position 0
+{
+    if(!hx.<a href="#" OnFocus="link('_member','IsData2146470179',this)">IsData</a>()) // don't download unless this is RAM data
+        return true;
+    
+    // process the bytes from a data-type hex record
+    for(unsigned int i=0; i&lt;hx.<a href="#" OnFocus="link('_member','GetLength2146470179',this)">GetLength</a>(); i++)
+    {
+        <a href="#" OnFocus="link('_class','XCBSDR0',this)">XCBSDR</a>&amp; bsdr = *<a href="#" OnFocus="link('_member','bsdrPtr222607087',this)">bsdrPtr</a>;
+        <a href="#" OnFocus="link('_class','Bitstream0',this)">Bitstream</a> null(0);
+        
+        // load address and data onto the FPLD pins
+        bsdr.<a href="#" OnFocus="link('_member','Clear2605346622',this)">Clear</a>();    // set all the BSDR bits to zero
+        bsdr.<a href="#" OnFocus="link('_member','SetRAMAddress451307805',this)">SetRAMAddress</a>(hx.<a href="#" OnFocus="link('_member','GetAddress2146470179',this)">GetAddress</a>()+i);
+        bsdr.<a href="#" OnFocus="link('_member','SetRAMData451307805',this)">SetRAMData</a>(<a href="#" OnFocus="link('_member','RearrangeData127079845',this)">RearrangeData</a>(hx[i],8,bigEndianBytes,bigEndianBits));
+        bsdr.<a href="#" OnFocus="link('_member','SetRAMControls3431548137',this)">SetRAMControls</a>(0,1,1); // enable RAM, disable outputs, raise write line
+        <a href="#" OnFocus="link('_member','SendRcvBitstream109185014',this)">SendRcvBitstream</a>(bsdr,null);
+        <a href="#" OnFocus="link('_member','GoThruTAPSequence1124965842',this)">GoThruTAPSequence</a>(UpdateDR,SelectDRScan,CaptureDR,ShiftDR,-1);
+        
+        bsdr.<a href="#" OnFocus="link('_member','SetRAMControls3431548137',this)">SetRAMControls</a>(0,1,0); // bring write enable low
+        <a href="#" OnFocus="link('_member','SendRcvBitstream109185014',this)">SendRcvBitstream</a>(bsdr,null);
+        <a href="#" OnFocus="link('_member','GoThruTAPSequence1124965842',this)">GoThruTAPSequence</a>(UpdateDR,SelectDRScan,CaptureDR,ShiftDR,-1);
+        
+        bsdr.<a href="#" OnFocus="link('_member','SetRAMControls3431548137',this)">SetRAMControls</a>(0,1,1); // bring write enable high again
+        <a href="#" OnFocus="link('_member','SendRcvBitstream109185014',this)">SendRcvBitstream</a>(bsdr,null);
+        <a href="#" OnFocus="link('_member','GoThruTAPSequence1124965842',this)">GoThruTAPSequence</a>(UpdateDR,SelectDRScan,CaptureDR,ShiftDR,-1);
+    }
+    return true;
+}
+
+
+/// Write contents of a single location in RAM.
+///\return true if operation was successul, false otherwise
+bool <a href="#" OnFocus="link('_member','WriteRAM3927601562',this)">JTAGRAMPort::WriteRAM</a>(unsigned int addr,    ///&lt; address of RAM location
+                        unsigned int data,      ///&lt; data to be written into RAM location
+                        bool bigEndianBytes,    ///&lt; if true, data is stored in RAM with most-significant byte at lower address
+                        bool bigEndianBits)     ///&lt; if true, data is stored in RAM with most-significant bit in position 0
+{
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> = <a href="#" OnFocus="link('_member','GetErr60045135',this)">GetErr</a>();
+
+    <a href="#" OnFocus="link('_class','XCBSDR0',this)">XCBSDR</a>&amp; bsdr = *<a href="#" OnFocus="link('_member','bsdrPtr222607087',this)">bsdrPtr</a>;
+    <a href="#" OnFocus="link('_class','Bitstream0',this)">Bitstream</a>&amp; bsir = *<a href="#" OnFocus="link('_member','bsirPtr222607087',this)">bsirPtr</a>;
+    <a href="#" OnFocus="link('_class','Bitstream0',this)">Bitstream</a> null(0);
+
+    <a href="#" OnFocus="link('_member','InitTAP141716444',this)">InitTAP</a>();  // reset the TAP state controller
+    // get to a state where the controller will accept an instruction
+    <a href="#" OnFocus="link('_member','GoThruTAPSequence1124965842',this)">GoThruTAPSequence</a>(RunTestIdle,SelectDRScan,SelectIRScan,CaptureIR,ShiftIR, -1);
+    // first load an EXTEST instruction into the BSIR
+    bsir.<a href="#" OnFocus="link('_member','Clear2605346622',this)">Clear</a>();    // all-zeroes is the EXTEST opcode
+    <a href="#" OnFocus="link('_member','SendRcvBitstream109185014',this)">SendRcvBitstream</a>(bsir, null);  // after this, TAP state is Exit1-IR
+    // activate the EXTEST instruction and get ready to send data to the DR
+    <a href="#" OnFocus="link('_member','GoThruTAPSequence1124965842',this)">GoThruTAPSequence</a>(UpdateIR, SelectDRScan, CaptureDR, ShiftDR, -1);
+    
+    // load address and data onto the FPLD pins
+    bsdr.<a href="#" OnFocus="link('_member','Clear2605346622',this)">Clear</a>();    // set all the BSDR bits to zero
+    bsdr.<a href="#" OnFocus="link('_member','SetRAMAddress451307805',this)">SetRAMAddress</a>(addr);
+    bsdr.<a href="#" OnFocus="link('_member','SetRAMData451307805',this)">SetRAMData</a>(<a href="#" OnFocus="link('_member','RearrangeData127079845',this)">RearrangeData</a>(data,8,bigEndianBytes,bigEndianBits));
+    bsdr.<a href="#" OnFocus="link('_member','SetRAMControls3431548137',this)">SetRAMControls</a>(0,1,1); // enable RAM, disable outputs, raise write line
+    <a href="#" OnFocus="link('_member','SendRcvBitstream109185014',this)">SendRcvBitstream</a>(bsdr,null);
+    <a href="#" OnFocus="link('_member','GoThruTAPSequence1124965842',this)">GoThruTAPSequence</a>(UpdateDR,SelectDRScan,CaptureDR,ShiftDR,-1);
+    
+    bsdr.<a href="#" OnFocus="link('_member','SetRAMControls3431548137',this)">SetRAMControls</a>(0,1,0); // bring write enable low
+    <a href="#" OnFocus="link('_member','SendRcvBitstream109185014',this)">SendRcvBitstream</a>(bsdr,null);
+    <a href="#" OnFocus="link('_member','GoThruTAPSequence1124965842',this)">GoThruTAPSequence</a>(UpdateDR,SelectDRScan,CaptureDR,ShiftDR,-1);
+    
+    bsdr.<a href="#" OnFocus="link('_member','SetRAMControls3431548137',this)">SetRAMControls</a>(0,1,1); // bring write enable high again
+    <a href="#" OnFocus="link('_member','SendRcvBitstream109185014',this)">SendRcvBitstream</a>(bsdr,null);
+    <a href="#" OnFocus="link('_member','GoThruTAPSequence1124965842',this)">GoThruTAPSequence</a>(UpdateDR,SelectDRScan,CaptureDR,ShiftDR,-1);
+
+    bsdr.<a href="#" OnFocus="link('_member','SetRAMControls3431548137',this)">SetRAMControls</a>(1,1,1); // disable RAM
+    <a href="#" OnFocus="link('_member','SendRcvBitstream109185014',this)">SendRcvBitstream</a>(bsdr,null);
+    <a href="#" OnFocus="link('_member','GoThruTAPSequence1124965842',this)">GoThruTAPSequence</a>(UpdateDR,-1);
+    
+    <a href="#" OnFocus="link('_member','InitTAP141716444',this)">InitTAP</a>();  // reset the TAP state controller
+
+    return true;
+}
+
+
+/// Get RAM data at the addresses given and store it in a hex record.
+///\return true if operation was successul, false otherwise
+bool <a href="#" OnFocus="link('_member','UploadHexRecordFromRAM2188468879',this)">JTAGRAMPort::UploadHexRecordFromRAM</a>(<a href="#" OnFocus="link('_class','HexRecord0',this)">HexRecord</a>&amp; hx, ///&lt; hex record to store data in
+                        unsigned long loAddr,   ///&lt; begin upload from this address (inclusive)
+                        unsigned long hiAddr,   ///&lt; end upload at this address (inclusive)
+                        bool bigEndianBytes,    ///&lt; if true, data is stored in RAM with most-significant byte at lower address
+                        bool bigEndianBits)     ///&lt; if true, data is stored in RAM with most-significant bit in position 0
+{
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> = <a href="#" OnFocus="link('_member','GetErr60045135',this)">GetErr</a>();
+    
+    hx.<a href="#" OnFocus="link('_member','SetAddress2774302151',this)">SetAddress</a>(loAddr);
+    hx.<a href="#" OnFocus="link('_member','SetLength2774302151',this)">SetLength</a>(hiAddr-loAddr+1);
+    
+    <a href="#" OnFocus="link('_class','XCBSDR0',this)">XCBSDR</a>&amp; bsdrOut = *<a href="#" OnFocus="link('_member','bsdrPtr222607087',this)">bsdrPtr</a>;
+    <a href="#" OnFocus="link('_class','XCBSDR0',this)">XCBSDR</a>&amp; bsdrIn = *<a href="#" OnFocus="link('_member','bsdrPtr222607087',this)">bsdrPtr</a>;
+    <a href="#" OnFocus="link('_class','Bitstream0',this)">Bitstream</a> null(0);
+    
+    // process the bytes from a data-type hex record
+    for(unsigned long i=<a href="#" OnFocus="link('_member','../xsload/loAddr0',this)">loAddr</a>; i&lt;=<a href="#" OnFocus="link('_member','../xsload/hiAddr0',this)">hiAddr</a>; i++)
+    {
+        // load address and data onto the FPLD pins
+        bsdrOut.<a href="#" OnFocus="link('_member','Clear2605346622',this)">Clear</a>();
+        bsdrOut.<a href="#" OnFocus="link('_member','SetRAMAddress451307805',this)">SetRAMAddress</a>(i);
+        bsdrOut.<a href="#" OnFocus="link('_member','ReadRAMData142801607',this)">ReadRAMData</a>();  // tristate FPLD data lines so RAM has control
+        bsdrOut.<a href="#" OnFocus="link('_member','SetRAMControls3431548137',this)">SetRAMControls</a>(0,0,1); // enable RAM, enable outputs, keep write high
+        <a href="#" OnFocus="link('_member','SendRcvBitstream109185014',this)">SendRcvBitstream</a>(bsdrOut,null);
+        <a href="#" OnFocus="link('_member','GoThruTAPSequence1124965842',this)">GoThruTAPSequence</a>(UpdateDR,SelectDRScan,CaptureDR,ShiftDR,-1);
+        
+        bsdrOut.<a href="#" OnFocus="link('_member','SetRAMControls3431548137',this)">SetRAMControls</a>(0,1,1); // disable RAM outputs
+        <a href="#" OnFocus="link('_member','SendRcvBitstream109185014',this)">SendRcvBitstream</a>(bsdrOut,bsdrIn); // shift out RAM data while loading new data
+        unsigned long drivenAddress = bsdrIn.GetRAMAddress();
+        if(drivenAddress != i)
+        {
+            <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','SetSeverity3409672334',this)">SetSeverity</a>(XSErrorMajor);
+            <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> &lt;&lt; "specified memory address = " &lt;&lt; (long int)i
+                &lt;&lt; " but actual address = " &lt;&lt; (long int)drivenAddress &lt;&lt; "\n";
+            <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','EndMsg60232619',this)">EndMsg</a>();
+            return false;
+        }
+        else
+            hx[i-<a href="#" OnFocus="link('_member','../xsload/loAddr0',this)">loAddr</a>] = <a href="#" OnFocus="link('_member','RearrangeData127079845',this)">RearrangeData</a>(bsdrIn.GetRAMData(),8,bigEndianBytes,bigEndianBits);
+        
+        <a href="#" OnFocus="link('_member','GoThruTAPSequence1124965842',this)">GoThruTAPSequence</a>(UpdateDR,SelectDRScan,CaptureDR,ShiftDR,-1);
+    }
+    hx.<a href="#" OnFocus="link('_member','CalcCheckSum2569703380',this)">CalcCheckSum</a>();
+    return true;
+}
+
+
+/// Read contents of a single location in RAM.
+///\return true if operation was successul, false otherwise
+bool <a href="#" OnFocus="link('_member','ReadRAM615582957',this)">JTAGRAMPort::ReadRAM</a>(unsigned int addr,    ///&lt; address of RAM location
+                    unsigned int* data,     ///&lt; data returned from RAM location
+                    bool bigEndianBytes,    ///&lt; if true, data is stored in RAM with most-significant byte at lower address
+                    bool bigEndianBits)     ///&lt; if true, data is stored in RAM with most-significant bit in position 0
+{
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> = <a href="#" OnFocus="link('_member','GetErr60045135',this)">GetErr</a>();
+    
+    <a href="#" OnFocus="link('_class','XCBSDR0',this)">XCBSDR</a>&amp; bsdr = *<a href="#" OnFocus="link('_member','bsdrPtr222607087',this)">bsdrPtr</a>;
+    <a href="#" OnFocus="link('_class','Bitstream0',this)">Bitstream</a>&amp; bsir = *<a href="#" OnFocus="link('_member','bsirPtr222607087',this)">bsirPtr</a>;
+    <a href="#" OnFocus="link('_class','Bitstream0',this)">Bitstream</a> null(0);
+    
+    <a href="#" OnFocus="link('_member','InitTAP141716444',this)">InitTAP</a>();  // reset the TAP state controller
+    // get to a state where the TAP controller will accept an instruction
+    <a href="#" OnFocus="link('_member','GoThruTAPSequence1124965842',this)">GoThruTAPSequence</a>(RunTestIdle,SelectDRScan,SelectIRScan,CaptureIR,ShiftIR, -1);
+    // first load an EXTEST instruction into the BSIR
+    bsir.<a href="#" OnFocus="link('_member','Clear2605346622',this)">Clear</a>();    // all-zeroes is the EXTEST opcode
+    <a href="#" OnFocus="link('_member','SendRcvBitstream109185014',this)">SendRcvBitstream</a>(bsir, null);  // after this, TAP state is Exit1-IR
+    // activate the EXTEST instruction and get ready to send data to the DR
+    <a href="#" OnFocus="link('_member','GoThruTAPSequence1124965842',this)">GoThruTAPSequence</a>(UpdateIR, SelectDRScan, CaptureDR, ShiftDR, -1);
+
+    // load address and data onto the FPLD pins
+    bsdr.<a href="#" OnFocus="link('_member','Clear2605346622',this)">Clear</a>();
+    bsdr.<a href="#" OnFocus="link('_member','SetRAMAddress451307805',this)">SetRAMAddress</a>(addr);
+    bsdr.<a href="#" OnFocus="link('_member','ReadRAMData142801607',this)">ReadRAMData</a>();  // tristate FPLD data lines so RAM has control
+    bsdr.<a href="#" OnFocus="link('_member','SetRAMControls3431548137',this)">SetRAMControls</a>(0,0,1); // enable RAM, enable outputs, keep write high
+    <a href="#" OnFocus="link('_member','SendRcvBitstream109185014',this)">SendRcvBitstream</a>(bsdr,null);
+    <a href="#" OnFocus="link('_member','GoThruTAPSequence1124965842',this)">GoThruTAPSequence</a>(UpdateDR,SelectDRScan,CaptureDR,ShiftDR,-1);
+    
+    bsdr.<a href="#" OnFocus="link('_member','SetRAMControls3431548137',this)">SetRAMControls</a>(0,1,1); // disable RAM outputs
+    <a href="#" OnFocus="link('_member','SendRcvBitstream109185014',this)">SendRcvBitstream</a>(bsdr,bsdr); // shift out RAM data while loading new data
+    unsigned long drivenAddress = bsdr.<a href="#" OnFocus="link('_member','GetRAMAddress142801607',this)">GetRAMAddress</a>();
+    if(drivenAddress != addr)
+    {
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','SetSeverity3409672334',this)">SetSeverity</a>(XSErrorMajor);
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> &lt;&lt; "specified memory address = " &lt;&lt; (long int)addr
+            &lt;&lt; " but actual address = " &lt;&lt; (long int)drivenAddress &lt;&lt; "\n";
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','EndMsg60232619',this)">EndMsg</a>();
+        return false;
+    }
+    else
+        *<a href="#" OnFocus="link('_member','../xsatapi/data0',this)">data</a> = <a href="#" OnFocus="link('_member','RearrangeData127079845',this)">RearrangeData</a>(bsdr.<a href="#" OnFocus="link('_member','GetRAMData142801607',this)">GetRAMData</a>(),8,bigEndianBytes,bigEndianBits);
+    <a href="#" OnFocus="link('_member','GoThruTAPSequence1124965842',this)">GoThruTAPSequence</a>(UpdateDR,SelectDRScan,CaptureDR,ShiftDR,-1);
+    
+    bsdr.<a href="#" OnFocus="link('_member','SetRAMControls3431548137',this)">SetRAMControls</a>(1,1,1); // disable RAM
+    <a href="#" OnFocus="link('_member','SendRcvBitstream109185014',this)">SendRcvBitstream</a>(bsdr,null);
+    <a href="#" OnFocus="link('_member','GoThruTAPSequence1124965842',this)">GoThruTAPSequence</a>(UpdateDR,-1);
+    
+    <a href="#" OnFocus="link('_member','InitTAP141716444',this)">InitTAP</a>();  // reset the TAP state controller
+
+    return true;
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_file','_source');
+</script>

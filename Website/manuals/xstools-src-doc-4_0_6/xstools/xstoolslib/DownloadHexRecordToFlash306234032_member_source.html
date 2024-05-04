@@ -1,0 +1,71 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - DownloadHexRecordToFlash</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">DownloadHexRecordToFlash</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_class','FlashPort0',this)" class="pathLink">FlashPort</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">DownloadHexRecordToFlash</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','DownloadHexRecordToFlash306234032','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_member','DownloadHexRecordToFlash306234032','_source',this)" class="tabLinkActive">Source</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','DownloadHexRecordToFlash306234032','_callgraph',this)" class="tabLinkInActive">Call Graph</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<div class="paragraph2NoTopPadding">Start Line: 197</div>
+<pre class="codeExamples">
+bool <a href="#" OnFocus="link('_member','DownloadHexRecordToFlash306234032',this)">FlashPort::DownloadHexRecordToFlash</a>(<a href="#" OnFocus="link('_class','HexRecord0',this)">HexRecord</a> &amp;hx, bool bigEndianBytes, bool bigEndianBits)
+{
+    if(hx.<a href="#" OnFocus="link('_member','IsData2146470179',this)">IsData</a>()) // don't download unless this is Flash data
+    {
+        unsigned int i;
+        unsigned int address = hx.<a href="#" OnFocus="link('_member','GetAddress2146470179',this)">GetAddress</a>();   // get starting address for hex record
+//      for(int j=sizeof(flashBlocks)/sizeof(struct flashBlock)-1; j&gt;=0; j--)
+//      {
+//          unsigned int addresshi = address + hx.GetLength()-1;
+//          if( ((flashBlocks[j].address &lt;= address  ) &amp;&amp; (address   &lt; (flashBlocks[j].address+flashBlocks[j].length))) ||
+//              ((flashBlocks[j].address &lt;= addresshi) &amp;&amp; (addresshi &lt; (flashBlocks[j].address+flashBlocks[j].length))) )
+//          {
+//              if(flashBlocks[j].erased==false)
+//                  EraseFlashBlock(j);
+//          }
+//      }
+        for(i=0; i&lt;hx.<a href="#" OnFocus="link('_member','GetLength2146470179',this)">GetLength</a>(); i++)
+        {
+            if(<a href="#" OnFocus="link('_member','ProgramFlash3255642504',this)">ProgramFlash</a>(address+i,hx[i],bigEndianBytes,bigEndianBits) == false)
+            {
+                int testStatus = 0;
+                int j;
+                for(j=0; j&lt;100; j++)
+                    testStatus += <a href="#" OnFocus="link('_member','Test2569718309',this)">Test</a>();
+                <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> = <a href="#" OnFocus="link('_member','GetErr259477277',this)">GetErr</a>();
+                <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','SetSeverity3409672334',this)">SetSeverity</a>(XSErrorMajor);
+                <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> &lt;&lt; "Failure in DownloadHexRecordToFlash at address " &lt;&lt; (long int)(address+i) &lt;&lt; "\n";
+                <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> &lt;&lt; "Parallel port response factor = " &lt;&lt; (float)testStatus/j &lt;&lt; "\n";
+                <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','EndMsg60232619',this)">EndMsg</a>();
+                return false;
+            }
+        }
+    }
+    return true;
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_member','_source');
+</script>

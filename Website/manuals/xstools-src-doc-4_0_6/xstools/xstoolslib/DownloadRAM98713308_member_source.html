@@ -1,0 +1,100 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - DownloadRAM</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">DownloadRAM</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_class','JTAGRAMPort0',this)" class="pathLink">JTAGRAMPort</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">DownloadRAM</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','DownloadRAM98713308','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_member','DownloadRAM98713308','_source',this)" class="tabLinkActive">Source</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','DownloadRAM98713308','_callgraph',this)" class="tabLinkInActive">Call Graph</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<div class="paragraph2NoTopPadding">Start Line: 177</div>
+<pre class="codeExamples">
+bool <a href="#" OnFocus="link('_member','DownloadRAM1745454770',this)">JTAGRAMPort::DownloadRAM</a>(istream &amp;is, bool bigEndianBytes, bool bigEndianBits)
+{
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> = <a href="#" OnFocus="link('_member','GetErr60045135',this)">GetErr</a>();
+
+    assert(progressGauge != NULL);  //  make sure progress indicator is initialized
+    <a href="#" OnFocus="link('_member','progressGauge222607087',this)">progressGauge</a>-&gt;<a href="#" OnFocus="link('_member','Report2561259521',this)">Report</a>(0);  // start progress indicator at zero
+
+    <a href="#" OnFocus="link('_class','XCBSDR0',this)">XCBSDR</a>&amp; bsdr = *<a href="#" OnFocus="link('_member','bsdrPtr222607087',this)">bsdrPtr</a>;
+    <a href="#" OnFocus="link('_class','Bitstream0',this)">Bitstream</a>&amp; bsir = *<a href="#" OnFocus="link('_member','bsirPtr222607087',this)">bsirPtr</a>;
+    <a href="#" OnFocus="link('_class','Bitstream0',this)">Bitstream</a> null(0);
+    <a href="#" OnFocus="link('_member','InitTAP141716444',this)">InitTAP</a>();  // reset the TAP state controller
+    // get to a state where the controller will accept an instruction
+    <a href="#" OnFocus="link('_member','GoThruTAPSequence1124965842',this)">GoThruTAPSequence</a>(RunTestIdle,SelectDRScan,SelectIRScan,CaptureIR,ShiftIR, -1);
+    // first load an EXTEST instruction into the BSIR
+    bsir.<a href="#" OnFocus="link('_member','Clear2605346622',this)">Clear</a>();    // all-zeroes is the EXTEST opcode
+    <a href="#" OnFocus="link('_member','SendRcvBitstream109185014',this)">SendRcvBitstream</a>(bsir, null);  // after this, TAP state is Exit1-IR
+    // activate the EXTEST instruction and get ready to send data to the DR
+    <a href="#" OnFocus="link('_member','GoThruTAPSequence1124965842',this)">GoThruTAPSequence</a>(UpdateIR, SelectDRScan, CaptureDR, ShiftDR, -1);
+    
+    // enable the RAM
+    bsdr.<a href="#" OnFocus="link('_member','Clear2605346622',this)">Clear</a>();
+    bsdr.<a href="#" OnFocus="link('_member','SetRAMControls3431548137',this)">SetRAMControls</a>(0,1,1); // enable RAM, disable writing
+    <a href="#" OnFocus="link('_member','SendRcvBitstream109185014',this)">SendRcvBitstream</a>(bsdr,null);
+    <a href="#" OnFocus="link('_member','GoThruTAPSequence1124965842',this)">GoThruTAPSequence</a>(UpdateDR,SelectDRScan,CaptureDR,ShiftDR,-1);
+
+    // read hex records from file and place data in the RAM of the board
+    while(is.eof()==0)
+    {
+        <a href="#" OnFocus="link('_class','HexRecord0',this)">HexRecord</a> hx;
+        is &gt;&gt; hx;
+        if(is.eof()!=0)
+            break; // terminate loading loop when stream goes dry
+        if(<a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','IsError863564933',this)">IsError</a>())
+            break;
+        if(is.fail())
+        {
+            <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','SetSeverity3409672334',this)">SetSeverity</a>(XSErrorMajor);
+            <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> &lt;&lt; "error reading stream\n";
+            <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','EndMsg60232619',this)">EndMsg</a>();
+            break;
+        }
+        if(hx.<a href="#" OnFocus="link('_member','IsError2146470179',this)">IsError</a>())
+        { // some error in the hex record itself
+            <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','SetSeverity3409672334',this)">SetSeverity</a>(XSErrorMajor);
+            <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> &lt;&lt; "hex record: " &lt;&lt; hx.<a href="#" OnFocus="link('_member','GetErrMsg2146470179',this)">GetErrMsg</a>() &lt;&lt; "\n";
+            <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','EndMsg60232619',this)">EndMsg</a>();
+            break;
+        }
+        else
+        { // send out an indication for each hex record that's loaded
+            <a href="#" OnFocus="link('_member','progressGauge222607087',this)">progressGauge</a>-&gt;<a href="#" OnFocus="link('_member','Report2561259521',this)">Report</a>(is.tellg());
+            <a href="#" OnFocus="link('_member','DownloadHexRecordToRAM1728329283',this)">DownloadHexRecordToRAM</a>(hx,bigEndianBytes,bigEndianBits);
+        }
+    }
+    <a href="#" OnFocus="link('_member','progressGauge222607087',this)">progressGauge</a>-&gt;<a href="#" OnFocus="link('_member','Report2561259521',this)">Report</a>(is.tellg()); // should set gauge to 100%
+    
+    bsdr.<a href="#" OnFocus="link('_member','SetRAMControls3431548137',this)">SetRAMControls</a>(1,1,1); // disable RAM
+    <a href="#" OnFocus="link('_member','SendRcvBitstream109185014',this)">SendRcvBitstream</a>(bsdr,null);
+    <a href="#" OnFocus="link('_member','GoThruTAPSequence1124965842',this)">GoThruTAPSequence</a>(UpdateDR,-1);
+    
+    <a href="#" OnFocus="link('_member','InitTAP141716444',this)">InitTAP</a>();  // reset the TAP state controller
+    
+    return <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','IsError863564933',this)">IsError</a>() ? false:true;
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_member','_source');
+</script>

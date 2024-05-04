@@ -1,0 +1,30 @@
+xst -ise "C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/adder/adder.ise" -intstyle ise -ifn adder.xst -ofn adder.syr
+xst -ise "C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/adder/adder.ise" -intstyle ise -ifn adder.xst -ofn adder.syr
+ngdbuild -ise "C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/adder/adder.ise" -intstyle ise -dd _ngo -nt timestamp -i -p xc3s1000-ft256-4 "adder.ngc" adder.ngd
+map -ise "C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/adder/adder.ise" -intstyle ise -p xc3s1000-ft256-4 -cm area -pr b -k 4 -c 100 -o adder_map.ncd adder.ngd adder.pcf
+par -ise "C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/adder/adder.ise" -w -intstyle ise -ol std -t 1 adder_map.ncd adder.ncd adder.pcf
+trce -ise "C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/adder/adder.ise" -intstyle ise -e 3 -l 3 -s 4 -xml adder adder.ncd -o adder.twr adder.pcf
+bitgen -ise "C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/adder/adder.ise" -intstyle ise -f adder.ut adder.ncd
+ngdbuild -ise "C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/adder/adder.ise" -intstyle ise -dd _ngo -nt timestamp -uc "adder.ucf" -p xc3s1000-ft256-4 "adder.ngc" adder.ngd
+map -ise "C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/adder/adder.ise" -intstyle ise -p xc3s1000-ft256-4 -cm area -pr b -k 4 -c 100 -o adder_map.ncd adder.ngd adder.pcf
+par -ise "C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/adder/adder.ise" -w -intstyle ise -ol std -t 1 adder_map.ncd adder.ncd adder.pcf
+trce -ise "C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/adder/adder.ise" -intstyle ise -e 3 -l 3 -s 4 -xml adder adder.ncd -o adder.twr adder.pcf -ucf adder.ucf
+bitgen -ise "C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/adder/adder.ise" -intstyle ise -f adder.ut adder.ncd
+xst -ise "C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/adder/adder.ise" -intstyle ise -ifn adder.xst -ofn adder.syr
+xst -ise "C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/adder/adder.ise" -intstyle ise -ifn adder.xst -ofn adder.syr
+ngdbuild -ise "C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/adder/adder.ise" -intstyle ise -dd _ngo -nt timestamp -uc "adder.ucf" -p xc3s1000-ft256-4 "adder.ngc" adder.ngd
+map -ise "C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/adder/adder.ise" -intstyle ise -p xc3s1000-ft256-4 -cm area -pr b -k 4 -c 100 -o adder_map.ncd adder.ngd adder.pcf
+par -ise "C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/adder/adder.ise" -w -intstyle ise -ol std -t 1 adder_map.ncd adder.ncd adder.pcf
+trce -ise "C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/adder/adder.ise" -intstyle ise -e 3 -l 3 -s 4 -xml adder adder.ncd -o adder.twr adder.pcf -ucf adder.ucf
+bitgen -ise "C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/adder/adder.ise" -intstyle ise -f adder.ut adder.ncd
+bitgen -ise "C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/adder/adder.ise" -intstyle ise -f adder.ut adder.ncd
+xst -ise "C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/adder/adder.ise" -intstyle ise -ifn adder.xst -ofn adder.syr
+ngdbuild -ise "C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/adder/adder.ise" -intstyle ise -dd _ngo -nt timestamp -uc "adder.ucf" -p xc3s1000-ft256-4 "adder.ngc" adder.ngd
+map -ise "C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/adder/adder.ise" -intstyle ise -p xc3s1000-ft256-4 -cm area -pr b -k 4 -c 100 -o adder_map.ncd adder.ngd adder.pcf
+par -ise "C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/adder/adder.ise" -w -intstyle ise -ol std -t 1 adder_map.ncd adder.ncd adder.pcf
+trce -ise "C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/adder/adder.ise" -intstyle ise -e 3 -l 3 -s 4 -xml adder adder.ncd -o adder.twr adder.pcf -ucf adder.ucf
+bitgen -ise "C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/adder/adder.ise" -intstyle ise -f adder.ut adder.ncd
+par -ise "C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/adder/adder.ise" -w -intstyle ise -ol std -t 1 adder_map.ncd adder.ncd adder.pcf
+trce -ise "C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/adder/adder.ise" -intstyle ise -e 3 -l 3 -s 4 -xml adder adder.ncd -o adder.twr adder.pcf -ucf adder.ucf
+bitgen -ise "C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/adder/adder.ise" -intstyle ise -f adder.ut adder.ncd
+bitgen -ise "C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/3S1000/adder/adder.ise" -intstyle ise -f adder.ut adder.ncd

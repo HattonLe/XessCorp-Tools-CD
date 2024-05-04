@@ -1,0 +1,195 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - saa711x.cpp</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">saa711x.cpp</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">saa711x.cpp</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','saa711x_cpp0','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','saa711x_cpp0','_overview',this)" class="tabLinkInActive">Overview</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','saa711x_cpp0','_includedfiles',this)" class="tabLinkInActive">Included files</a></span>
+<span class="tabInActiveGrayout"><span class="tabLinkGrayout">Included by</span></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_file','saa711x_cpp0','_source',this)" class="tabLinkActive">Source</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<pre class="codeExamples">
+/*----------------------------------------------------------------------------------
+  SOFTWARE LICENSE AGREEMENT
+    1.  Permission to use, copy, modify, and distribute this software
+        and its documentation, with or without modification, for any
+        purpose and without fee or royalty is hereby granted, provided
+        that you include the following on ALL copies of the software
+        and documentation or portions thereof, including
+        modifications, that you make:
+
+            a.  The full text of this license in a location viewable to users
+            of the redistributed or derivative work.
+
+            b.  Notice of any changes or modifications to the files,
+            including the date changes were made.
+
+    2.  The name, servicemarks and trademarks of X Engineering
+        Software Systems Corp. may NOT be used in advertising or
+        publicity pertaining to the software without specific, written
+        prior permission.
+
+    3.  Title to copyright in this software and any associated
+        documentation will at all times remain with X Engineering
+        Software Systems Corp.
+
+    4.  THIS SOFTWARE AND DOCUMENTATION IS PROVIDED "AS IS," AND X
+        Engineering Software Systems Corp MAKES NO REPRESENTATIONS OR
+        WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO,
+        WARRANTIES OF MERCHANTABILITY OR FITNESS FOR ANY PARTICULAR
+        PURPOSE OR THAT THE USE OF THE SOFTWARE OR DOCUMENTATION WILL
+        NOT INFRINGE ANY THIRD PARTY PATENTS, COPYRIGHTS, TRADEMARKS
+        OR OTHER RIGHTS.
+
+    5.  X Engineering Software Systems Corp WILL NOT BE LIABLE FOR ANY
+        DAMAGES, INCLUDING BUT NOT LIMITED TO, DIRECT, INDIRECT,
+        SPECIAL OR CONSEQUENTIAL, ARISING OUT OF ANY USE OF THE
+        SOFTWARE OR DOCUMENTATION.
+
+  ©2006 - X Engineering Software Systems Corp.  All rights reserved.
+----------------------------------------------------------------------------------*/
+
+
+#include &lt;dos.h&gt;
+#include &lt;cstdlib&gt;
+#include &lt;cstdio&gt;
+#include &lt;fstream&gt;
+#include &lt;sstream&gt;
+#include &lt;ctime&gt;
+#include &lt;string&gt;
+using namespace std;
+
+#ifdef WIN32
+#include &lt;afxwin.h&gt;
+#endif
+
+#include "<a href="#" OnFocus="link('_file','saa711x_h0',this)">saa711x.h</a>"
+#include "<a href="#" OnFocus="link('_file','utils_h0',this)">utils.h</a>"
+
+
+const unsigned int <a href="#" OnFocus="link('_member','BitDuration0',this)">BitDuration</a> = 30;   // programming bit duration
+const unsigned <a href="#" OnFocus="link('_member','deviceAddr0',this)">deviceAddr</a> = 0x42;     // I2C address for the SAA711X video decoder
+
+
+/// Create an SAA711X controller port.
+<a href="#" OnFocus="link('_member','SAA711X60109383',this)">SAA711X::SAA711X</a>(void)
+{
+    ;
+}
+
+
+/// Create an SAA711X controller port.
+<a href="#" OnFocus="link('_member','SAA711X60109383',this)">SAA711X::SAA711X</a>(<a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>* e,   ///&lt; pointer to error reporting object
+           unsigned int portNum,        ///&lt; parallel port number
+           unsigned int invMask,        ///&lt; inversion mask for the parallel port
+           unsigned int pos_saaSCLW,    ///&lt; bit position in parallel port of osc. clock write pin
+           unsigned int pos_saaSDAW,    ///&lt; bit position in parallel port of osc. data write pin
+           unsigned int pos_saaSCLR,    ///&lt; bit position in parallel port of osc. clock read pin
+           unsigned int pos_saaSDAR)    ///&lt; bit position in parallel port of osc. data read pin
+{
+    <a href="#" OnFocus="link('_member','Setup1928035134',this)">Setup</a>(e,portNum,invMask,pos_saaSCLW,pos_saaSCLR,pos_saaSDAW,pos_saaSDAR);
+}
+
+
+/// Initialize an SAA711X controller port.
+int <a href="#" OnFocus="link('_member','Setup1928035134',this)">SAA711X::Setup</a>(<a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>* e,   ///&lt; pointer to error reporting object
+           unsigned int portNum,        ///&lt; parallel port number
+           unsigned int invMask,        ///&lt; inversion mask for the parallel port
+           unsigned int pos_saaSCLW,    ///&lt; bit position in parallel port of osc. clock write pin
+           unsigned int pos_saaSDAW,    ///&lt; bit position in parallel port of osc. data write pin
+           unsigned int pos_saaSCLR,    ///&lt; bit position in parallel port of osc. clock read pin
+           unsigned int pos_saaSDAR)    ///&lt; bit position in parallel port of osc. data read pin
+{
+    <a href="#" OnFocus="link('_member','posSAASCLW388304',this)">posSAASCLW</a> = pos_saaSCLW;
+    <a href="#" OnFocus="link('_member','posSAASCLR388304',this)">posSAASCLR</a> = pos_saaSCLR;
+    <a href="#" OnFocus="link('_member','posSAASDAW388304',this)">posSAASDAW</a> = pos_saaSDAW;
+    <a href="#" OnFocus="link('_member','posSAASDAR388304',this)">posSAASDAR</a> = pos_saaSDAR;
+    return <a href="#" OnFocus="link('_member','Setup1745817787',this)">I2CPort::Setup</a>(e,portNum,invMask,pos_saaSCLW,pos_saaSDAW,pos_saaSCLR,pos_saaSDAR,BitDuration);
+}
+
+
+/// Load the registers of the SAA711X.
+///\return true if the operation is successful, false if not.
+bool <a href="#" OnFocus="link('_member','Configure36512822',this)">SAA711X::Configure</a>(string&amp; fileName) ///&lt; file containing values to load into video decoder registers
+{
+    assert(<a href="#" OnFocus="link('_member','../xssetsaa711X/fileName0',this)">fileName</a>.length()&gt;0);
+
+    ifstream is(<a href="#" OnFocus="link('_member','../xssetsaa711X/fileName0',this)">fileName</a>.c_str());  // open file with register addresses and values
+
+    assert(!(is.fail() || is.eof()));
+
+    int regAddr, regData, i;
+    int regs[256];
+
+    for(i=0; i&lt;256; i++)
+        regs[i] = -1;
+
+    for(i=1; !is.eof(); i++)
+    {
+        is &gt;&gt; hex &gt;&gt; regAddr &gt;&gt; regData;
+        regs[regAddr] = regData;    // save register values for comparison
+        fprintf(stderr,"(%02x)&lt;=%02x%c",regAddr,regData,(i%8)==0 ? '\n':' ');
+        <a href="#" OnFocus="link('_member','WriteReg389920113',this)">WriteReg</a>(deviceAddr, regAddr, regData);
+    }
+    fprintf(stderr,"\n\n");
+
+    unsigned char cRegData;
+
+    for(i=1; i&lt;=0x19; i++)
+    {
+        <a href="#" OnFocus="link('_member','ReadReg494774107',this)">ReadReg</a>(deviceAddr,i,&amp;cRegData);
+        if((cRegData != regs[i]) &amp;&amp; (regs[i]!=-1))
+            fprintf(stderr,"Mismatch: (%02x)=%02x instead of %02x\n",i,(int)cRegData,regs[i]);
+    }
+    for(i=0x30; i&lt;=0x3A; i++)
+    {
+        <a href="#" OnFocus="link('_member','ReadReg494774107',this)">ReadReg</a>(deviceAddr,i,&amp;cRegData);
+        if((cRegData != regs[i]) &amp;&amp; (regs[i]!=-1))
+            fprintf(stderr,"Mismatch: (%02x)=%02x instead of %02x\n",i,(int)cRegData,regs[i]);
+    }
+    for(i=0x40; i&lt;=0x62; i++)
+    {
+        <a href="#" OnFocus="link('_member','ReadReg494774107',this)">ReadReg</a>(deviceAddr,i,&amp;cRegData);
+        if((cRegData != regs[i]) &amp;&amp; (regs[i]!=-1))
+            fprintf(stderr,"Mismatch: (%02x)=%02x instead of %02x\n",i,(int)cRegData,regs[i]);
+    }
+    for(i=0x80; i&lt;=0xEF; i++)
+    {
+        <a href="#" OnFocus="link('_member','ReadReg494774107',this)">ReadReg</a>(deviceAddr,i,&amp;cRegData);
+        if((cRegData != regs[i]) &amp;&amp; (regs[i]!=-1))
+            fprintf(stderr,"Mismatch: (%02x)=%02x instead of %02x\n",i,(int)cRegData,regs[i]);
+    }
+
+    <a href="#" OnFocus="link('_member','ReadReg494774107',this)">ReadReg</a>(deviceAddr,0x1F,&amp;cRegData);
+    fprintf(stderr,"Status = %02x\n",(int)cRegData);
+    <a href="#" OnFocus="link('_member','ReadReg494774107',this)">ReadReg</a>(deviceAddr,0x00,&amp;cRegData);
+    fprintf(stderr,"SAA7114 version = %02x\n",(int)cRegData);
+
+    return true;
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_file','_source');
+</script>

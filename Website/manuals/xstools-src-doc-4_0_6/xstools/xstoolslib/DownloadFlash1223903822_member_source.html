@@ -1,0 +1,132 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - DownloadFlash</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">DownloadFlash</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_class','XSABoard0',this)" class="pathLink">XSABoard</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">DownloadFlash</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','DownloadFlash1223903822','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_member','DownloadFlash1223903822','_source',this)" class="tabLinkActive">Source</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','DownloadFlash1223903822','_callgraph',this)" class="tabLinkInActive">Call Graph</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<div class="paragraph2NoTopPadding">Start Line: 542</div>
+<pre class="codeExamples">
+bool <a href="#" OnFocus="link('_member','DownloadFlash1223903822',this)">XSABoard::DownloadFlash</a>(string &amp;fileName, bool bigEndianBytes, bool bigEndianBits, bool doStart, bool doEnd)
+{
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a> = <a href="#" OnFocus="link('_member','fpga210218145',this)">fpga</a>.<a href="#" OnFocus="link('_member','GetErr259477277',this)">GetErr</a>(); // setup error channel
+
+    // check the file suffix to see if it is appropriate for downloading to Flash
+    string suffix = <a href="#" OnFocus="link('_member','GetSuffix67554305',this)">GetSuffix</a>(fileName);
+    if(suffix!="HEX" &amp;&amp; suffix!="EXO" &amp;&amp; suffix!="XES" &amp;&amp; suffix!="MCS")
+    {
+        <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,"Only .HEx, .MCS, .EXO or .HEX files can be downloaded into the Flash on the XSA Board!!\n");
+        return false;
+    }
+    
+    // use the board model name to find the corresponding index into the list of boards
+    int brdIndex;
+    for(brdIndex=0; brdIndex&lt;<a href="#" OnFocus="link('_member','numBoards_1138',this)">numBoards</a>; brdIndex++)
+    {
+        if(strcmp(brdModel,brdInfo[brdIndex].brdModel) == 0)
+            break;
+    }
+    if(brdIndex&gt;=<a href="#" OnFocus="link('_member','numBoards_1138',this)">numBoards</a>)
+    {
+        <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,"Unknown type of XSA Board!\n");
+        return false;
+    }
+
+    // get the name of the file that contains a bitstream that will configure the CPLD to provide an interface
+    // between the parallel port and the Flash.
+    if(strlen(brdInfo[brdIndex].flashBitstreamFile)==0)
+    {
+        string msg = <a href="#" OnFocus="link('_member','brdModel210218145',this)">brdModel</a> + (string)" does not support Flash programming!!\n";
+        <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,msg);
+        return false;
+    }
+
+    // check the ID of the interface CPLD to see if it matches the type on this particular board.
+    if(<a href="#" OnFocus="link('_member','CheckChipID175267903',this)">CheckChipID</a>() == false)
+        return false;
+
+    // get the USERCODE from the interface CPLD to see if it supports downloading to the Flash
+    bool loadFlashIntfc;
+    string usercode = <a href="#" OnFocus="link('_member','cpld210218145',this)">cpld</a>.<a href="#" OnFocus="link('_member','GetUSERCODE215401329',this)">GetUSERCODE</a>();
+    if((usercode==<a href="#" OnFocus="link('_member','oscIntfcCode_1132',this)">oscIntfcCode</a>) || (usercode==<a href="#" OnFocus="link('_member','dwnldIntfcCode_1136',this)">dwnldIntfcCode</a>) || 
+        (usercode==<a href="#" OnFocus="link('_member','flashConfigIntfcCode_1134',this)">flashConfigIntfcCode</a>) || (usercode==<a href="#" OnFocus="link('_member','testIntfcCode_1135',this)">testIntfcCode</a>))
+    { // the interface CPLD is not configured with the standard Flash downloading interface ...
+        loadFlashIntfc = true; // so force it to be loaded
+    }
+    else if(usercode==<a href="#" OnFocus="link('_member','flashIntfcCode_1133',this)">flashIntfcCode</a>)
+    { // the CPLD already contains the Flash programming interface bitstream
+        loadFlashIntfc = false;
+    }
+    else
+    { // can't tell what the CPLD contains, so load the Flash programming interface
+        loadFlashIntfc = true;
+    }
+
+    // get the directory where the Flash interface files are kept
+    const char* xstoolsBinDir = <a href="#" OnFocus="link('_member','FindXSTOOLSBinDir53616',this)">FindXSTOOLSBinDir</a>();
+    // concat the file name with the directory to form a complete path to the Flash interface bitstream file
+    string bitFileName;
+    bitFileName = xstoolsBinDir;
+    bitFileName += "/";
+    bitFileName += <a href="#" OnFocus="link('_member','brdInfo_1137',this)">brdInfo</a>[brdIndex].<a href="#" OnFocus="link('_member','flashBitstreamFile1254770407',this)">flashBitstreamFile</a>;
+    
+    // If this is the first data file being downloaded to the Flash, then configure the CPLD with the Flash interface
+    if(doStart || loadFlashIntfc)
+    {
+        if(<a href="#" OnFocus="link('_member','ConfigureInterface2073856546',this)">ConfigureInterface</a>(bitFileName) == false)
+        {
+            <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(<a href="#" OnFocus="link('_member','XSErrorMajor0',this)">XSErrorMajor</a>,"Error configuring CPLD with Flash programming circuit!\n");
+            return false;
+        }
+    }
+    
+    // download data into the Flash
+    if(<a href="#" OnFocus="link('_member','flash210218145',this)">flash</a>.<a href="#" OnFocus="link('_member','DownloadFlash2788146746',this)">DownloadFlash</a>(fileName,bigEndianBytes,bigEndianBits,doStart) == false)
+    {
+        <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,"Error programming the Flash on the XSA Board!\n");
+        return false;
+    }
+
+    // if this is the last file to be downloaded to Flash, then reprogram the CPLD with a circuit
+    // that will make the CPLD load the FPGA with the contents of the Flash upon power-up.
+    bitFileName = xstoolsBinDir;
+    bitFileName += "/";
+    bitFileName += <a href="#" OnFocus="link('_member','brdInfo_1137',this)">brdInfo</a>[brdIndex].<a href="#" OnFocus="link('_member','flashConfigBitstreamFile1254770407',this)">flashConfigBitstreamFile</a>;
+    if(doEnd)
+    {
+        if(<a href="#" OnFocus="link('_member','ConfigureInterface2073856546',this)">ConfigureInterface</a>(bitFileName) == false)
+        {
+            <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,"Error configuring CPLD with Flash configuration circuit!\n");
+            return false;
+        }
+    }
+
+    return true;
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_member','_source');
+</script>

@@ -1,0 +1,58 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - JTAGRAMPort</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">JTAGRAMPort</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">JTAGRAMPort</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("divID498","aID498","LeftMenuActive","leftMenuLinkActive");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_class','JTAGRAMPort0','_description',this)" class="tabLinkActive">Description</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_class','JTAGRAMPort0','_public',this)" class="tabLinkInActive">Public</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_class','JTAGRAMPort0','_protected',this)" class="tabLinkInActive">Protected</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_class','JTAGRAMPort0','_private',this)" class="tabLinkInActive">Private</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_class','JTAGRAMPort0','_related',this)" class="tabLinkInActive">Related</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_class','JTAGRAMPort0','_all',this)" class="tabLinkInActive">All</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_class','JTAGRAMPort0','_inheritance',this)" class="tabLinkInActive">Inheritance</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_class','JTAGRAMPort0','_collaboration',this)" class="tabLinkInActive">Collaboration</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<span class="paragraph1">JTAGRAMPort</span>
+<span class="padding">( Class  )</span>
+<div class="paragraph2">Uploading and downloading the XS95 Board RAM through via JTAG.</div>
+<div class="padding">&nbsp;</div>
+<table cellspacing=0 cellpadding=0 border=0 class="widthAndBorderTop" height=1>
+<TR><TD height=1 width=100% class="oneLine"></TD></TR></TABLE>
+<div class="paragraph2">Description</div>
+<div id="descDesc" class="paddingMembers">Uploading and downloading the XS95 Board RAM through via JTAG.<br>
+<br>
+This object specializes the <a href="#" OnFocus="link('_class','LPTJTAG0',this)">LPTJTAG</a> by adding methods to support RAM <a href="#" OnFocus="link('_member','../xsramtest/upload0',this)">upload</a> and download operations using the JTAG circuitry of the XC9500 CPLD. The levels for the RAM <a href="#" OnFocus="link('_member','address57972',this)">address</a>, <a href="#" OnFocus="link('_member','../xsusb/data0',this)">data</a> and control pins are shifted into the appropriate bits of the XC9500 boundary-scan <a href="#" OnFocus="link('_member','../xsusb/data0',this)">data</a> register (BSDR) through the parallel <a href="#" OnFocus="link('_member','../xsether/port0',this)">port</a>. The JTAG EXTEST instruction outputs these levels onto the XC9500 pins that connect to the RAM chip. Then the levels on the RAM pins are sampled back into the XC9500 BSDR and are sent back through the parallel <a href="#" OnFocus="link('_member','../xsether/port0',this)">port</a>. This low-level <a href="#" OnFocus="link('_member','../xsusb/operation0',this)">operation</a> for reading and writing RAM locations via the JTAG circuitry forms the basis of the higher-level methods for downloading and uploading Intel, Motorola and XESS HEX files to and from the RAM.<br>
+<br>
+<br>
+</div>
+<div class="padding">&nbsp;</div>
+<table cellspacing=0 cellpadding=0 border=0 class="widthAndBorderTop" height=1>
+<TR><TD height=1 width=100% class="oneLine"></TD></TR></TABLE>
+<div class="paragraph2">Source</div>
+<div class="paddingMembers">The documentation for this Class was generated from the following file:</div>
+<div class="paddingMembers"><LI><a href="#" OnFocus="link('_file','jramprt_h0',this)">jramprt.h</a><br></div>
+<div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_class','_description');
+</script>

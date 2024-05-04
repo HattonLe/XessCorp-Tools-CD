@@ -1,0 +1,153 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - testRAM</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">testRAM</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xsramtest0',this)" class="pathLink">xsramtest</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">testRAM</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','testRAM2809384717','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_member','testRAM2809384717','_source',this)" class="tabLinkActive">Source</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','testRAM2809384717','_callgraph',this)" class="tabLinkInActive">Call Graph</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<div class="paragraph2NoTopPadding">Start Line: 292</div>
+<pre class="codeExamples">
+bool <a href="#" OnFocus="link('_member','testRAM2809384717',this)">testRAM</a>(<a href="#" OnFocus="link('_class','../xstoolslib/XSBoard0',this)">XSBoard</a> *brdPtr, unsigned startAddr, unsigned numAddrBits, unsigned numDataBits, unsigned *addrBitErrs, unsigned *dataBitErrs, bool *fullPass, unsigned *failAddress)
+{
+    unsigned int b, <a href="#" OnFocus="link('_member','../xsatapi/data0',this)">data</a>, dataRead, dataErr;
+    for(b=1, dataErr=0, <a href="#" OnFocus="link('_member','../xsatapi/data0',this)">data</a>=1; b&lt;=numDataBits; b++, <a href="#" OnFocus="link('_member','../xsatapi/data0',this)">data</a>&lt;&lt;=1)
+    {
+        if(<a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/WriteRAM3747285768',this)">WriteRAM</a>(startAddr,data,BIG_ENDIAN_BYTES,LITTLE_ENDIAN_BITS))
+        {
+            <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/WriteRAM3747285768',this)">WriteRAM</a>(startAddr+1,~data,BIG_ENDIAN_BYTES,LITTLE_ENDIAN_BITS);  // purge any dynamic data on the data lines
+            if(<a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/ReadRAM3707204181',this)">ReadRAM</a>(startAddr,&amp;dataRead,BIG_ENDIAN_BYTES,LITTLE_ENDIAN_BITS))
+                dataErr |= (<a href="#" OnFocus="link('_member','../xsatapi/data0',this)">data</a> ^ dataRead);
+            else
+                return false;
+        }
+        else
+            return false;
+    }
+    *dataBitErrs = dataErr; // send back the data bit error mask
+    
+    // setup the data patterns for the address bit test.  Mask off any data bit errors
+    // so these don't propagate through to cause erroneous address bit errors.
+    unsigned int data0, data1, data2, data3, dataRead0, dataRead1, dataRead2, dataRead3;
+    data0 = 0x33333333 &amp; ~dataErr &amp; ((1&lt;&lt;numDataBits)-1);
+    data1 = 0x55555555 &amp; ~dataErr &amp; ((1&lt;&lt;numDataBits)-1);
+    data2 = 0xAAAAAAAA &amp; ~dataErr &amp; ((1&lt;&lt;numDataBits)-1);
+    data3 = 0xCCCCCCCC &amp; ~dataErr &amp; ((1&lt;&lt;numDataBits)-1);
+
+    unsigned int addr1, addrErr;
+    for(b=2, addrErr=0, addr1=2; b&lt;=numAddrBits; b++, addr1&lt;&lt;=1)
+    {
+        unsigned int addr0;
+        for(addr0=(addr1&gt;&gt;1); addr0&gt;0; addr0&gt;&gt;=1)
+        {
+            bool opStatus = true;
+            opStatus &amp;= <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/WriteRAM3747285768',this)">WriteRAM</a>(startAddr             ,data0,      BIG_ENDIAN_BYTES,LITTLE_ENDIAN_BITS);
+            opStatus &amp;= <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/WriteRAM3747285768',this)">WriteRAM</a>(startAddr|      addr0 ,data1,      BIG_ENDIAN_BYTES,LITTLE_ENDIAN_BITS);
+            opStatus &amp;= <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/WriteRAM3747285768',this)">WriteRAM</a>(startAddr|addr1       ,data2,      BIG_ENDIAN_BYTES,LITTLE_ENDIAN_BITS);
+            opStatus &amp;= <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/WriteRAM3747285768',this)">WriteRAM</a>(startAddr|addr1|addr0 ,data3,      BIG_ENDIAN_BYTES,LITTLE_ENDIAN_BITS);
+            opStatus &amp;= <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/ReadRAM3707204181',this)">ReadRAM</a> (startAddr             ,&amp;dataRead0, BIG_ENDIAN_BYTES,LITTLE_ENDIAN_BITS);
+            opStatus &amp;= <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/ReadRAM3707204181',this)">ReadRAM</a> (startAddr|      addr0 ,&amp;dataRead1, BIG_ENDIAN_BYTES,LITTLE_ENDIAN_BITS);
+            opStatus &amp;= <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/ReadRAM3707204181',this)">ReadRAM</a> (startAddr|addr1       ,&amp;dataRead2, BIG_ENDIAN_BYTES,LITTLE_ENDIAN_BITS);
+            opStatus &amp;= <a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/ReadRAM3707204181',this)">ReadRAM</a> (startAddr|addr1|addr0 ,&amp;dataRead3, BIG_ENDIAN_BYTES,LITTLE_ENDIAN_BITS);
+            if(opStatus == false)
+                return false;
+
+            if(dataRead0 == data0)
+                ;
+            else if(dataRead0 == data1)
+                addrErr |= addr0;
+            else if(dataRead0 == data2)
+                addrErr |= addr1;
+            else if(dataRead0 == data3)
+                addrErr |= (addr1 | addr0);
+            else
+                addrErr |= (addr1 | addr0);
+
+            if(dataRead1 == data1)
+                ;
+            else if(dataRead1 == data0)
+                addrErr |= addr0;
+            else if(dataRead1 == data2)
+                addrErr |= (addr1 | addr0);
+            else if(dataRead1 == data3)
+                addrErr |= addr1;
+            else
+                addrErr |= (addr1 | addr0);
+
+            if(dataRead2 == data2)
+                ;
+            else if(dataRead2 == data0)
+                addrErr |= addr1;
+            else if(dataRead2 == data1)
+                addrErr |= (addr1 | addr0);
+            else if(dataRead2 == data3)
+                addrErr |= addr0;
+            else
+                addrErr |= (addr1 | addr0);
+
+            if(dataRead3 == data3)
+                ;
+            else if(dataRead3 == data0)
+                addrErr |= (addr1 | addr0);
+            else if(dataRead3 == data1)
+                addrErr |= addr1;
+            else if(dataRead3 == data2)
+                addrErr |= addr0;
+            else
+                addrErr |= (addr1 | addr0);
+        }
+    }
+
+    *addrBitErrs = addrErr;
+
+    *fullPass = true;
+    if(<a href="#" OnFocus="link('_member','doFullRAMTest0',this)">doFullRAMTest</a>)
+    {
+        unsigned int a, d, mask;
+        mask = (1&lt;&lt;numDataBits)-1;
+        for(a=startAddr; a&lt;(startAddr+(1&lt;&lt;numAddrBits)); a++)
+        {
+            if(!<a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/WriteRAM3747285768',this)">WriteRAM</a>(a,a,BIG_ENDIAN_BYTES,LITTLE_ENDIAN_BITS))
+                return false;
+        }
+        for(a=startAddr; a&lt;(startAddr+(1&lt;&lt;numAddrBits)); a++)
+        {
+            if(!<a href="#" OnFocus="link('_member','../gxssetcodec/brdPtr0',this)">brdPtr</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/ReadRAM3707204181',this)">ReadRAM</a>(a,&amp;d,BIG_ENDIAN_BYTES,LITTLE_ENDIAN_BITS))
+                return false;
+            if((d&amp;mask)!=(a&amp;mask))
+            {
+                *failAddress = a;
+                *fullPass = false;
+                return true;
+            }
+        }
+    }
+
+    return true;
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_member','_source');
+</script>

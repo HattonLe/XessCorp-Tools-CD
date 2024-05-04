@@ -1,0 +1,3 @@
+Place & Route Module test_regio . . .
+PAR command line: par -w -intstyle ise -ol std -t 1 test_regio_map.ncd test_regio.ncd test_regio.pcf
+PAR completed successfully

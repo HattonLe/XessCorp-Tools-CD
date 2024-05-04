@@ -1,0 +1,121 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - DownloadFlash</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">DownloadFlash</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_class','XS40Board0',this)" class="pathLink">XS40Board</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">DownloadFlash</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','DownloadFlash2355595962','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_member','DownloadFlash2355595962','_source',this)" class="tabLinkActive">Source</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','DownloadFlash2355595962','_callgraph',this)" class="tabLinkInActive">Call Graph</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<div class="paragraph2NoTopPadding">Start Line: 447</div>
+<pre class="codeExamples">
+bool <a href="#" OnFocus="link('_member','DownloadFlash2355595962',this)">XS40Board::DownloadFlash</a>(string &amp;fileName, bool bigEndianBytes, bool bigEndianBits, bool doStart, bool doEnd)
+{
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a> = <a href="#" OnFocus="link('_member','fpga239500920',this)">fpga</a>.<a href="#" OnFocus="link('_member','GetErr259477277',this)">GetErr</a>(); // setup error channel
+
+    // check the type of the file that is going to be downloaded
+    string suffix = <a href="#" OnFocus="link('_member','GetSuffix67554305',this)">GetSuffix</a>(fileName);
+    if(suffix!="BIT")
+    {
+        <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,"Only .BIT files can be downloaded into the serial EEPROM on the XS40 Board!!\n");
+        return false;
+    }
+
+    // get the directory where the serial EEPROM interface files are kept
+    const char* xstoolsBinDir = <a href="#" OnFocus="link('_member','FindXSTOOLSBinDir53616',this)">FindXSTOOLSBinDir</a>();
+    
+    // use the board model name to find the corresponding index into the list of boards
+    int brdIndex;
+    for(brdIndex=0; brdIndex&lt;<a href="#" OnFocus="link('_member','numBoards0',this)">numBoards</a>; brdIndex++)
+    {
+        if(strcmp(brdModel,brdInfo[brdIndex].brdModel) == 0)
+            break;
+    }
+    if(brdIndex&gt;=<a href="#" OnFocus="link('_member','numBoards0',this)">numBoards</a>)
+    {
+        <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,"Unknown type of XS40 Board!\n");
+        return false;
+    }
+
+    // use the board model name to find the corresponding index into the list of boards
+    if(strlen(brdInfo[brdIndex].flashBitstreamFile)==0)
+    {
+        string msg;
+        msg = <a href="#" OnFocus="link('_member','brdModel239500920',this)">brdModel</a> + (string)" does not support serial EEPROM programming!!\n";
+        <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,msg);
+        return false;
+    }
+
+    // If this is the first data file being downloaded to the serial EEPROM, then give the user some instructions
+    // that will initialize the hardware.
+    string instructions;
+    if(doStart)
+    {
+        instructions = "Before programming the XS40 Board serial EEPROM you must:\n";
+        instructions += "1) Place shunts on jumpers J4, J6 and J11\n";
+        instructions += "2) Remove any shunt on jumper J10\n";
+        instructions += "3) Apply power to the board\n";
+        if(<a href="#" OnFocus="link('_member','PromptUser2517124797',this)">PromptUser</a>(instructions,PROMPT_OKCANCEL) == <a href="#" OnFocus="link('_member','RESPONSE_CANCEL0',this)">RESPONSE_CANCEL</a>)
+            return false;
+        
+        // concat the file name with the directory to form a complete path to the EEPROM interface bitstream file
+        string bitFileName;
+        bitFileName = xstoolsBinDir;
+        bitFileName += "/";
+        bitFileName += <a href="#" OnFocus="link('_member','brdInfo0',this)">brdInfo</a>[brdIndex].<a href="#" OnFocus="link('_member','flashBitstreamFile1254770407',this)">flashBitstreamFile</a>;
+        
+        // configure the FPGA with the EEPROM interface
+        if(<a href="#" OnFocus="link('_member','Configure3913018450',this)">Configure</a>(bitFileName) == false)
+        {
+            <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,"Error downloading serial EEPROM interface circuit!!\n");
+            return false;
+        }
+    }
+
+    // download data into the serial EEPROM
+    if(<a href="#" OnFocus="link('_member','seeprom239500920',this)">seeprom</a>.<a href="#" OnFocus="link('_member','ProgramEEPROM2040293066',this)">ProgramEEPROM</a>(fileName) == false)
+    {
+        <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>.<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,"Error downloading into serial EEPROM!!\n");
+        return false;
+    }
+
+    // If this was the last data file to download to the serial EEPROM, then give the user some instructions
+    // that will reset the hardware.
+    if(doEnd)
+    {
+        instructions = "The XS40 Board serial EEPROM has been programmed!!\n";
+        instructions += "Now do these steps to enable configuration of your XS40 Board from the serial EEPROM:\n";
+        instructions += "1) Remove the shunts from jumpers J4, J6 and J11\n";
+        instructions += "2) Place a shunt on jumper J10\n";
+        instructions += "3) Disconnect the parallel port cable\n";
+        instructions += "4) Apply power to the board\n";
+        <a href="#" OnFocus="link('_member','PromptUser2517124797',this)">PromptUser</a>(instructions,PROMPT_OK);
+    }
+
+    return true;
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_member','_source');
+</script>

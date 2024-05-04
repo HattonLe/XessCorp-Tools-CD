@@ -1,0 +1,247 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - mchpport.h</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">mchpport.h</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">mchpport.h</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','mchpport_h0','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','mchpport_h0','_overview',this)" class="tabLinkInActive">Overview</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','mchpport_h0','_includedfiles',this)" class="tabLinkInActive">Included files</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','mchpport_h0','_includedby',this)" class="tabLinkInActive">Included by</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_file','mchpport_h0','_source',this)" class="tabLinkActive">Source</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<pre class="codeExamples">
+/*----------------------------------------------------------------------------------
+  SOFTWARE LICENSE AGREEMENT
+    1.  Permission to use, copy, modify, and distribute this software
+        and its documentation, with or without modification, for any
+        purpose and without fee or royalty is hereby granted, provided
+        that you include the following on ALL copies of the software
+        and documentation or portions thereof, including
+        modifications, that you make:
+
+            a.  The full text of this license in a location viewable to users
+            of the redistributed or derivative work.
+
+            b.  Notice of any changes or modifications to the files,
+            including the date changes were made.
+
+    2.  The name, servicemarks and trademarks of X Engineering
+        Software Systems Corp. may NOT be used in advertising or
+        publicity pertaining to the software without specific, written
+        prior permission.
+
+    3.  Title to copyright in this software and any associated
+        documentation will at all times remain with X Engineering
+        Software Systems Corp.
+
+    4.  THIS SOFTWARE AND DOCUMENTATION IS PROVIDED "AS IS," AND X
+        Engineering Software Systems Corp MAKES NO REPRESENTATIONS OR
+        WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO,
+        WARRANTIES OF MERCHANTABILITY OR FITNESS FOR ANY PARTICULAR
+        PURPOSE OR THAT THE USE OF THE SOFTWARE OR DOCUMENTATION WILL
+        NOT INFRINGE ANY THIRD PARTY PATENTS, COPYRIGHTS, TRADEMARKS
+        OR OTHER RIGHTS.
+
+    5.  X Engineering Software Systems Corp WILL NOT BE LIABLE FOR ANY
+        DAMAGES, INCLUDING BUT NOT LIMITED TO, DIRECT, INDIRECT,
+        SPECIAL OR CONSEQUENTIAL, ARISING OUT OF ANY USE OF THE
+        SOFTWARE OR DOCUMENTATION.
+
+  ©2006 - X Engineering Software Systems Corp.  All rights reserved.
+----------------------------------------------------------------------------------*/
+
+
+#ifndef MCHPPORT_H
+#define MCHPPORT_H
+
+#include "<a href="#" OnFocus="link('_file','hexrecrd_h0',this)">hexrecrd.h</a>"
+#include "<a href="#" OnFocus="link('_file','xserror_h0',this)">xserror.h</a>"
+// make sure Progress.h comes before PPort.h or else "MFC apps should not include windows.h" error occurs
+#include "<a href="#" OnFocus="link('_file','progress_h0',this)">progress.h</a>"
+#include "<a href="#" OnFocus="link('_file','pport_h0',this)">pport.h</a>"
+
+
+/**
+MchpPort objects add Microchip ICSP capabilities to a parallel port object.
+
+A Microchip port can control the MCLR, PGM, PGC and PGD pins.
+*/ 
+class <a href="#" OnFocus="link('_class','MchpPort0',this)">MchpPort</a> : public <a href="#" OnFocus="link('_class','PPort0',this)">PPort</a>
+{
+    public:
+
+    /* begin MchpPort methods */
+
+    /* method: MchpPort */
+    // Create a Microchip port
+    <a href="#" OnFocus="link('_member','MchpPort141690661',this)">MchpPort</a>();
+
+    /* method: MchpPort */
+    // Create a parallel port-based Microchip port
+    <a href="#" OnFocus="link('_member','MchpPort141690661',this)">MchpPort</a>(<a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>* e, // pointer to error reporting object
+        unsigned int portNum); // parallel port number
+
+    /* method: Setup */
+    // Setup a parallel port-based JTAG controller port
+    bool <a href="#" OnFocus="link('_member','Setup3097650972',this)">Setup</a>(<a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>* e, // pointer to error reporting object
+        unsigned int portNum); // parallel port number
+
+    /* method: SetTraceOnOff */
+    // enables/disables trace of JTAG signals
+    void <a href="#" OnFocus="link('_member','SetTraceOnOff3476385018',this)">SetTraceOnOff</a>(bool f, // trace if true, no trace if false
+        ostream&amp; os // trace info goes to this stream
+        );
+
+    /* method: SetMCLR */
+    // Set the value of the MCLR_N bit
+    void <a href="#" OnFocus="link('_member','SetMCLR_N822568860',this)">SetMCLR_N</a>(unsigned int b);
+
+    /* method: GetMCLR */
+    // Get the value output on the MCLR_N bit
+    unsigned int <a href="#" OnFocus="link('_member','GetMCLR_N141690661',this)">GetMCLR_N</a>(void);
+
+    /* method: SetPGM */
+    // Set the value of the PGM bit
+    void <a href="#" OnFocus="link('_member','SetPGM822568860',this)">SetPGM</a>(unsigned int b);
+
+    /* method: GetPGM */
+    // Get the value output on the PGM bit
+    unsigned int <a href="#" OnFocus="link('_member','GetPGM141690661',this)">GetPGM</a>(void);
+
+    /* method: SetPGC */
+    // Set the value of the PGC bit
+    void <a href="#" OnFocus="link('_member','SetPGC822568860',this)">SetPGC</a>(unsigned int b);
+
+    /* method: GetPGC */
+    // Get the value output on the PGC bit
+    unsigned int <a href="#" OnFocus="link('_member','GetPGC141690661',this)">GetPGC</a>(void);
+
+    /* method: SetPGD */
+    // Set the value of the PGD bit
+    void <a href="#" OnFocus="link('_member','SetPGD822568860',this)">SetPGD</a>(unsigned int b);
+
+    /* method: GetPGD */
+    // Get the value output on the PGD bit
+    unsigned int <a href="#" OnFocus="link('_member','GetPGD141690661',this)">GetPGD</a>(void);
+
+    /* method: EnterICSP */
+    // Enter the Microchip in-circuit programming state
+    void <a href="#" OnFocus="link('_member','EnterICSP141690661',this)">EnterICSP</a>(void);
+
+    /* method: ExitICSP */
+    // Exit the Microchip in-circuit programming state
+    void <a href="#" OnFocus="link('_member','ExitICSP141690661',this)">ExitICSP</a>(void);
+
+    /* method: ICSPIO */
+    // Output a command+operand to the Microchip device and return the 8-bit result
+    unsigned int <a href="#" OnFocus="link('_member','ICSPIO853750225',this)">ICSPIO</a>(
+        unsigned int cmd,
+        unsigned int operand
+        );
+
+    /* method: WaitWhileProgramming */
+    // Output NOP instruction but hold PGC high for programming to complete
+    void <a href="#" OnFocus="link('_member','WaitWhileProgramming141690661',this)">WaitWhileProgramming</a>(void);
+
+    /* method: BulkErase */
+    // Erase area of Microchip device
+    void <a href="#" OnFocus="link('_member','BulkErase822568860',this)">BulkErase</a>(unsigned int area);
+
+    /* method: RowErase */
+    // Erase rows of program memory in the Microchip device
+    void <a href="#" OnFocus="link('_member','RowErase853750225',this)">RowErase</a>(unsigned int loAddr, unsigned int hiAddr);
+
+
+    /* method: Program */
+    // Program Microchip device with data from hex record
+    bool <a href="#" OnFocus="link('_member','Program1948129642',this)">Program</a>(<a href="#" OnFocus="link('_class','HexRecord0',this)">HexRecord</a>&amp; hx);
+
+    /* method: Read */
+    // Read contents of Microchip device into a hex record
+    bool <a href="#" OnFocus="link('_member','Read1421823919',this)">Read</a>(
+        <a href="#" OnFocus="link('_class','HexRecord0',this)">HexRecord</a>&amp; hx,           // hex record to store data in
+        unsigned long loAddr,   // begin reading at this address
+        unsigned long hiAddr    // end reading at this address
+        );
+
+    /* method: Download */
+    // download the Microchip device with the contents of a HEX file
+    bool <a href="#" OnFocus="link('_member','Download2040327480',this)">Download</a>(string&amp; hexfileName);
+
+    /* method: Download */
+    // download the Microchip device with the contents arriving through a stream
+    bool <a href="#" OnFocus="link('_member','Download2040327480',this)">Download</a>(istream&amp; is);
+
+    /* method: Upload */
+    // upload the Microchip device to a hex file
+    bool <a href="#" OnFocus="link('_member','Upload3387394307',this)">Upload</a>(
+        string&amp; hexfileName,    // dump uploaded data to this file
+        const char* format,     // hex file format
+        unsigned long loAddr,   // start fetching data from this address
+        unsigned long hiAddr    // stop at this address
+        );
+
+    /* method: Upload */
+    // upload the Microchip device to a stream
+    bool <a href="#" OnFocus="link('_member','Upload3387394307',this)">Upload</a>(
+        ostream&amp; os,            // dump uploaded data to this stream
+        const char* format,     // hex file format
+        unsigned long loAddr,   // start fetching data from this address
+        unsigned long hiAddr    // stop at this address
+        );
+
+    /* method: Erase */
+    // Erase contents of Microchip device
+    bool <a href="#" OnFocus="link('_member','Erase141690661',this)">Erase</a>(void);
+
+    /* end MchpPort methods */
+
+    protected:
+
+    <a href="#" OnFocus="link('_class','Progress0',this)">Progress</a> *<a href="#" OnFocus="link('_member','progressGauge243780539',this)">progressGauge</a>; // indicates progress of operations
+
+
+    private:
+
+    bool <a href="#" OnFocus="link('_member','traceFlag243780539',this)">traceFlag</a>;                  // trace JTAG states on/off
+    ostream* <a href="#" OnFocus="link('_member','osTrace243780539',this)">osTrace</a>;              // output stream for trace info
+
+    // These store the current values of the Microchip programming signals
+    unsigned int <a href="#" OnFocus="link('_member','oscVal243780539',this)">oscVal</a>;  // current value of OSC signal
+    unsigned int <a href="#" OnFocus="link('_member','mclr_nVal243780539',this)">mclr_nVal</a>;  // current value of MCLR_N signal
+    unsigned int <a href="#" OnFocus="link('_member','pgmVal243780539',this)">pgmVal</a>;  // current value of PGM signal
+    unsigned int <a href="#" OnFocus="link('_member','pgcVal243780539',this)">pgcVal</a>;  // current value of PGC signal
+    unsigned int <a href="#" OnFocus="link('_member','pgd_oVal243780539',this)">pgd_oVal</a>;  // current value of PGD output signal
+    unsigned int <a href="#" OnFocus="link('_member','pgd_iVal243780539',this)">pgd_iVal</a>;  // current value of PGD input signal
+};
+
+/* begin MchpPort functions */
+
+/* end MchpPort functions */
+
+#endif
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_file','_source');
+</script>

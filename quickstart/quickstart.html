@@ -1,0 +1,369 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+<link rel="SHORTCUT ICON" href="images/xess.ico">
+
+<title>XESS QuickStart Guide</title><meta name="KEYWORDS" content="QuickStart, XESS, development, evaluation, board, XSA, XSB, XSV, XS95, XS40, XILINX">
+<meta name="DESCRIPTION" content="Quick-start guide to using the XESS FPGA/CPLD development boards.">
+<meta http-equiv="Content-Type" content="text/html">
+<link rel="stylesheet" type="text/css" href="xess-1.css">
+<meta name="Microsoft Border" content="b, default"></head>
+
+<body>
+
+<script src="xess.js"></script>
+<script type="text/javascript">
+	window.onload=function(){collapseall();};
+	onload=function(){collapseall();};
+</script>
+
+<table>
+	<!-- MSTableType="nolayout" -->
+	<tbody><tr>
+		<td class="StdPageLogo">
+		<img src="images/xess-150x57.bmp" border="0">
+		</td>
+		<td class="StdPageNav">
+		<h1 align="center">QuickStart Guide</h1>
+		</td>
+	</tr>
+	<tr>
+
+	
+		<td class="StdPageSidebar">
+		This is a short guide to show you how to set up your XESS board and to direct you to the documentation.
+		</td>
+
+
+		<td class="StdPageBody">
+
+		<p><font color="#003399"><b><a onclick="expandall()">[Expand all]</a>&nbsp;
+		&nbsp;<a onclick="collapseall()">[Collapse all]</a></b></font></p>
+		
+		<h1>
+			<img class="trigger" alt="Open/Close section" id="trigger_brdsetup" src="images/open.gif" onclick="toggle('trigger_brdsetup', 'toggle_brdsetup');">
+			&nbsp;XESS Board Setup
+		</h1>
+		<div class="toggle" id="toggle_brdsetup">
+		
+		<blockquote>
+		<h1>
+			<img class="trigger" alt="Open/Close section" id="trigger_xsasetup" src="images/open.gif" onclick="toggle('trigger_xsasetup', 'toggle_xsasetup');">
+			&nbsp;Setup for XSA, XS40 and XS95 Boards
+		</h1>
+		<div class="toggle" id="toggle_xsasetup">
+        <table style="border-collapse: collapse;" border="1" bordercolor="#c0c0c0" cellpadding="5" cellspacing="5" width="100%">
+          <tbody><tr>
+            <td bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" align="center" bgcolor="#003399" width="33%">
+            <i><b><span lang="en-us"><font color="#ffffff" size="4">Attach Cables</font></span></b></i></td>
+            <td bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" align="center" bgcolor="#003399" width="33%">
+            <i><b><span lang="en-us"><font color="#ffffff" size="4">Test Board</font></span></b></i></td>
+            <td bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" align="center" bgcolor="#003399" width="34%">
+            <i><b><span lang="en-us"><font color="#ffffff" size="4">Get Result</font></span></b></i></td>
+          </tr>
+          <tr>
+            <td bordercolor="#000000" bordercolorlight="#C0C0C0" bordercolordark="#C0C0C0" valign="top">
+            <p align="center">
+            <img src="images/xsa-hookup.png" border="0" height="139" width="121"></p>
+            <ol>
+              <li style="margin-bottom: 10px;"><span lang="en-us">Attach a power 
+              adapter to the power jack of 
+              your board.</span></li>
+              <li style="margin-bottom: 10px;"><span lang="en-us">Attach the download cable from the PC 
+              parallel port to your board.</span></li>
+            </ol>
+            </td>
+            <td bordercolor="#000000" bordercolorlight="#C0C0C0" bordercolordark="#C0C0C0" valign="top">
+            <p align="center">
+            <img src="images/GXSTEST.png" border="0" height="57" width="59"></p>
+            <ol>
+              <li style="margin-bottom: 10px;"><span lang="en-us">Double-click the GXSTEST icon.</span></li>
+              <li style="margin-bottom: 10px;"><span lang="en-us">Select the type of your XESS board.</span></li>
+              <li style="margin-bottom: 10px;"><span lang="en-us">Select the parallel port number (usually 
+              LPT1).</span></li>
+              <li style="margin-bottom: 10px;"><span lang="en-us">Click the TEST button.</span></li>
+              <li style="margin-bottom: 10px;"><span lang="en-us">Testing will take less than a minute.</span></li>
+            </ol>
+            </td>
+            <td bordercolor="#000000" bordercolorlight="#C0C0C0" bordercolordark="#C0C0C0" valign="top">
+            <h2>
+            <img src="images/info-circle.png" border="0" height="23" width="23"><span lang="en-us"> 
+            Good!</span></h2>
+            <p><span lang="en-us">Your board passed the test.&nbsp; It is ready 
+            for use as a logic circuit prototyping station.</span></p>
+            <h2>
+            <img src="images/exclaim-triangle.png" border="0" height="20" width="25"><span lang="en-us"> 
+            Uh-Oh!</span></h2>
+            <p><span lang="en-us">Your board failed the test.&nbsp; Try the 
+            following:</span></p>
+            <ol>
+              <li style="margin-bottom: 10px;"><span lang="en-us">Check the list of common problems displayed 
+              by GXSTEST.</span></li>
+              <li style="margin-bottom: 10px;"><span lang="en-us">Remove the cables, then reconnect and 
+              re-run GXSTEST.</span></li>
+              <li style="margin-bottom: 10px;"><span lang="en-us">Look in the 
+              README.TXT file.</span></li>
+              <li style="margin-bottom: 10px;"><span lang="en-us">Request help at
+              <a href="http://www.xess.com/help.php3">www.xess.com/help.php3</a>.</span></li>
+            </ol>
+            </td>
+          </tr>
+        </tbody></table>
+        </div>
+		<h1>
+			<img class="trigger" alt="Open/Close section" id="trigger_xsbsetup" src="images/open.gif" onclick="toggle('trigger_xsbsetup', 'toggle_xsbsetup');">
+			&nbsp;Setup for XSB and XSV Boards
+		</h1>
+		<div class="toggle" id="toggle_xsbsetup">
+        <table style="border-collapse: collapse;" border="1" bordercolor="#c0c0c0" cellpadding="5" cellspacing="5" width="100%">
+          <tbody><tr>
+            <td bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" align="center" bgcolor="#003399" width="33%">
+            <i><b><span lang="en-us"><font color="#ffffff" size="4">Attach Cables</font></span></b></i></td>
+            <td bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" align="center" bgcolor="#003399" width="33%">
+            <i><b><span lang="en-us"><font color="#ffffff" size="4">Test Board</font></span></b></i></td>
+            <td bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" align="center" bgcolor="#003399" width="34%">
+            <i><b><span lang="en-us"><font color="#ffffff" size="4">Get Result</font></span></b></i></td>
+          </tr>
+          <tr>
+            <td bordercolor="#000000" bordercolorlight="#C0C0C0" bordercolordark="#C0C0C0" valign="top">
+            <p align="center">
+            <img src="images/xsb-hookup.png" border="0" height="133" width="150"></p>
+            <ol>
+              <li style="margin-bottom: 10px;"><span lang="en-us">Attach an ATX power supply to the power 
+              connector of 
+              your board.</span></li>
+              <li style="margin-bottom: 10px;"><span lang="en-us">Attach the download cable from the PC 
+              parallel port to your board.</span></li>
+            </ol>
+            </td>
+            <td bordercolor="#000000" bordercolorlight="#C0C0C0" bordercolordark="#C0C0C0" valign="top">
+            <p align="center">
+            <img src="images/GXSTEST.png" border="0" height="57" width="59"></p>
+            <ol>
+              <li style="margin-bottom: 10px;"><span lang="en-us">Double-click the GXSTEST icon.</span></li>
+              <li style="margin-bottom: 10px;"><span lang="en-us">Select the type of your XESS board.</span></li>
+              <li style="margin-bottom: 10px;"><span lang="en-us">Select the parallel port number (usually 
+              LPT1).</span></li>
+              <li style="margin-bottom: 10px;"><span lang="en-us">Click the TEST button.</span></li>
+              <li style="margin-bottom: 10px;"><span lang="en-us">Testing will take less than a minute.</span></li>
+            </ol>
+            </td>
+            <td bordercolor="#000000" bordercolorlight="#C0C0C0" bordercolordark="#C0C0C0" valign="top">
+            <h2>
+            <img src="images/info-circle.png" border="0" height="23" width="23"><span lang="en-us"> 
+            Good!</span></h2>
+            <p><span lang="en-us">Your board passed the test.&nbsp; It is ready 
+            for use as a logic circuit prototyping station.</span></p>
+            <h2>
+            <img src="images/exclaim-triangle.png" border="0" height="20" width="25"><span lang="en-us"> 
+            Uh-Oh!</span></h2>
+            <p><span lang="en-us">Your board failed the test.&nbsp; Try the 
+            following:</span></p>
+            <ol>
+              <li style="margin-bottom: 10px;"><span lang="en-us">Check the list of common problems displayed 
+              by GXSTEST.</span></li>
+              <li style="margin-bottom: 10px;"><span lang="en-us">Remove the cables, then reconnect and 
+              re-run GXSTEST.</span></li>
+              <li style="margin-bottom: 10px;"><span lang="en-us">Look in the 
+              README.TXT file.</span></li>
+              <li style="margin-bottom: 10px;"><span lang="en-us">Request help at
+              <a href="http://www.xess.com/help.php3">www.xess.com/help.php3</a>.</span></li>
+            </ol>
+            </td>
+          </tr>
+        </tbody></table>
+        </div>
+        </blockquote>
+        </div>
+
+		<h1>
+			<img class="trigger" alt="Open/Close section" id="trigger_addsfw" src="images/open.gif" onclick="toggle('trigger_addsfw', 'toggle_addsfw');">
+			&nbsp;Installing Additional Software
+		</h1>
+		<div class="toggle" id="toggle_addsfw">
+			<blockquote>
+              The ISE DVD contains several FPGA design-related software packages 
+              from Xilinx.&nbsp; (If you don't have the DVD, you can download 
+              all the Xilinx software from <a href="http://www.xilinx.com">
+              www.xilinx.com</a>.)<blockquote>
+                <p><b>WebPACK</b> provides a complete FPGA design environment 
+                for all the devices found on our XSA, XSB, XSV and XS95 Boards.&nbsp;
+			If you don't already have any Xilinx FPGA design software on your PC, then you
+			should install WebPACK.&nbsp;&nbsp;&nbsp; </p>
+                <p><b>Foundation</b> has some advanced features not found in 
+                WebPACK, but is otherwise identical.&nbsp; But it is an
+			evaluation version that&nbsp;expires in 60 days, so you may not want 
+                to grow accustomed to its added capabilities. </p>
+                <p><b>ChipScope</b> allows you to examine logic signals inside 
+                the FPGA while it is running, but it is not necessary to install 
+                this tool immediately.&nbsp; This software can be installed 
+                after you gain some experience with FPGA design.&nbsp; </p>
+              </blockquote>
+              <h1>
+				<img class="trigger" alt="Open/Close section" id="trigger_xs40only" src="images/open.gif" onclick="toggle('trigger_xs40only', 'toggle_xs40only');">
+              	For XS40 Board Owners Only
+              </h1>
+              <div class="toggle" id="toggle_xs40only">
+              <blockquote>
+                <p>WebPACK and Foundation do not support the XC4000-series FPGAs 
+                on the older XS40 Boards.&nbsp; Your only no-cost design software
+                for these older FPGAs is to download the
+                <a href="http://www.xilinx.com/xlnx/xebiz/designResources/ip_product_details.jsp?sGlobalNavPick=PRODUCTS&sSecondaryNavPick=Design+Tools&key=dr_dt_iseclassics_index">
+                ISE Classic tools</a>.&nbsp; These tools only do the back-end 
+                place &amp; route function that maps a netlist into the FPGA 
+                circuitry and generates the configuration bitstream.&nbsp; You will 
+                need to supply the front-end design-entry tool that generates 
+                the netlist that describes your design.&nbsp; You will have to find a 
+                free VHDL or Verilog synthesizer, but then you have to figure 
+                out how to interface that to the Xilinx place &amp; route tools.&nbsp; 
+                In summary, this is not recommended for beginners.</p>
+              </blockquote>
+              </div>
+            </blockquote>
+		</div>
+
+		<h1>
+			<img class="trigger" alt="Open/Close section" id="trigger_docguide" src="images/open.gif" onclick="toggle('trigger_docguide', 'toggle_docguide');">
+			&nbsp;Guide to Documentation
+		</h1>
+		<div class="toggle" id="toggle_docguide">
+
+        <blockquote>
+        
+    		<h1>
+    			<img class="trigger" alt="Open/Close section" id="trigger_readme" src="images/open.gif" onclick="toggle('trigger_readme', 'toggle_readme');">
+    			&nbsp;README.TXT
+    		</h1>
+    		<div class="toggle" id="toggle_readme">
+    		<blockquote>
+                <p>The README.TXT file contains very important information that 
+                may help you if you have difficulties getting your board or FPGA 
+                designs to work.&nbsp; There is also a link to this file in the 
+                XSTOOLs start menu.</p>
+                <p>
+                <iframe name="I1" src="README.TXT" height="500" width="100%" title="XESS README text file">
+                Your browser does not support inline frames or is currently configured not to display inline frames.  Look at C:\Program Files\XSTOOLs\quickstart\README.TXT for this content.
+                </iframe></p>
+              </blockquote>
+			</div>
+
+    		<h1>
+    			<img class="trigger" alt="Open/Close section" id="trigger_manuals" src="images/open.gif" onclick="toggle('trigger_manuals', 'toggle_manuals');">
+    			&nbsp;Manuals
+    		</h1>
+    		<div class="toggle" id="toggle_manuals">
+    			<blockquote>
+                  <p>The most-recent manuals for all the XESS boards and 
+                  software are stored in the C:\Program Files\XSTOOLs\Manuals 
+                  folder (if you elected to install this documentation during 
+                  the XSTOOLs setup).&nbsp; You will need the Adobe Acrobat 
+                  Reader to view these files.&nbsp; There is also a link to this 
+                  folder in the XSTOOLs start menu.</p>
+                  <p>You can also find all XESS product manuals
+                  <a href="http://www.xess.com/manuals.html">online</a> or on 
+                  your local copy of the XESS website (if you installed it 
+                  during the XSTOOLs setup).</p>
+                </blockquote>
+    		</div>
+
+    		<h1>
+    			<img class="trigger" alt="Open/Close section" id="trigger_tutorials" src="images/open.gif" onclick="toggle('trigger_tutorials', 'toggle_tutorials');">
+    			&nbsp;Tutorials</h1>
+    		<div class="toggle" id="toggle_tutorials">
+    			<blockquote>
+                  <p>There are several tutorials available to help you learn how 
+                  to use the XESS boards with the Xilinx FPGA design software:</p>
+                  <blockquote>
+                    <p><b>XSA Board</b>: 
+                    <a href="http://www.xess.com/appnotes/webpack-6_3-xsa.pdf">Here</a> is a tutorial that shows how to 
+                    build an LED display and a counter and combine them into a 
+                    hierarchical design using WebPACK.&nbsp; The example designs 
+                    run on all the XSA Boards.</p>
+                    <p><b>XSB Board</b>: 
+                    <a href="http://www.xess.com/appnotes/webpack-6_1-xsb.pdf">Here</a> is a tutorial that is similar to 
+                    the XSA Board tutorial, except that it is geared toward the 
+                    XSB Board.</p>
+                    <p><b>XS40 and XS95 Boards</b>: 
+                    <a href="http://www.xess.com/pragmatic-2_1.html">The Pragmatic Logic Design 
+                    online text </a>demonstrates a range of designs that employ 
+                    features of the FPGAs and CPLDs on the XS40 and XS95 Boards.</p>
+                    <p><b>XSV Board</b>: There is no tutorial for the XSV Board.&nbsp; 
+                    Sorry.&nbsp; You might want to check
+                    <a href="http://www.itee.uq.edu.au/~peters/xsvboard/index.html">
+                    this</a> series of design examples created by the University 
+                    of Queensland for the XSV Board.</p>
+                  </blockquote>
+                </blockquote>
+    		</div>
+
+    		<h1>
+    			<img class="trigger" alt="Open/Close section" id="trigger_designexamples" src="images/open.gif" onclick="toggle('trigger_designexamples', 'toggle_designexamples');">
+    			&nbsp;Design Examples
+    		</h1>
+    		<div class="toggle" id="toggle_designexamples">
+    			<blockquote>
+                  <p>You can find many design examples for the various XESS 
+                  boards <a href="http://www.xess.com/ho03000.html">online</a> 
+                  or on your local copy of the XESS website (if you installed it 
+                  during the XSTOOLs setup).</p>
+                  <p>In addition, some designs for the XSA and XSB Boards are 
+                  stored in the C:\Program Files\XSTOOLs\Examples folder (if you 
+                  installed these during the XSTOOLs setup).</p>
+                </blockquote>
+    		</div>
+
+    		<h1>
+    			<img class="trigger" alt="Open/Close section" id="trigger_FAQ" src="images/open.gif" onclick="toggle('trigger_FAQ', 'toggle_FAQ');">
+    			&nbsp;Frequently Asked Questions
+    		</h1>
+    		<div class="toggle" id="toggle_FAQ">
+    			<blockquote>
+                  <p>We maintain an
+                  <a href="http://www.xess.com/faq/user_faq.htm">online FAQ</a> 
+                  with questions and answers from our customers.&nbsp; This FAQ 
+                  is also in your local copy of the XESS website (if you 
+                  installed it during the XSTOOLs setup). </p>
+                </blockquote>
+    		</div>
+
+    		<h1>
+    			<img class="trigger" alt="Open/Close section" id="trigger_search" src="images/open.gif" onclick="toggle('trigger_search', 'toggle_search');">
+    			&nbsp;Search
+    		</h1>
+    		<div class="toggle" id="toggle_search">
+    			<blockquote>
+                  <p>You can perform simple searches across the entire XESS 
+                  website by typing keywords into the search box at the top of 
+                  each page.&nbsp; More sophisticated searches can be done on 
+                  the
+                  <a href="http://www.xess.com/cgi-bin/ksearch/ksearch.cgi?terms=search&p=1&help=1&display=10&showm=2&b=1&t=1&d=1&sort=Scores#form">
+                  search page</a>.</p>
+                </blockquote>
+    		</div>
+
+        </blockquote>
+
+		</div>
+
+        <h1>
+        	<img class="trigger" alt="Open/Close section" id="trigger_warranty" src="images/open.gif" onclick="toggle('trigger_warranty', 'toggle_warranty');"> 
+        	&nbsp;Warranty
+        </h1>
+        <blockquote>
+    		<div class="toggle" id="toggle_warranty">
+    			<p>
+    				<font color="#003399"><b><a onclick="parent.I2.print()">[Print warranty]</a></b></font> 
+    			</p>
+    			<p>
+                <iframe name="I2" height="500" width="100%" title="XESS License and Warranty" src="xess-lic-warr.txt" id="Warranty">
+                Your browser does not support inline frames or is currently configured not to display inline frames.  Look at C:\Program Files\XSTOOLs\quickstart\xess-lic-warr.txt for this content.
+                </iframe></p>
+    		</div>
+        </blockquote>
+
+        </td>
+
+
+	</tr>
+</tbody></table>
+
+</body></html>

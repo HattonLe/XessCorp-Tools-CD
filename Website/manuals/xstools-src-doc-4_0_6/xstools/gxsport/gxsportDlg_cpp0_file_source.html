@@ -1,0 +1,482 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - gxsportDlg.cpp</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">gxsportDlg.cpp</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','gxsport0',this)" class="pathLink">gxsport</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">gxsportDlg.cpp</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','gxsportDlg_cpp0','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','gxsportDlg_cpp0','_overview',this)" class="tabLinkInActive">Overview</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','gxsportDlg_cpp0','_includedfiles',this)" class="tabLinkInActive">Included files</a></span>
+<span class="tabInActiveGrayout"><span class="tabLinkGrayout">Included by</span></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_file','gxsportDlg_cpp0','_source',this)" class="tabLinkActive">Source</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<pre class="codeExamples">
+/*----------------------------------------------------------------------------------
+  SOFTWARE LICENSE AGREEMENT
+    1.  Permission to use, copy, modify, and distribute this software
+        and its documentation, with or without modification, for any
+        purpose and without fee or royalty is hereby granted, provided
+        that you include the following on ALL copies of the software
+        and documentation or portions thereof, including
+        modifications, that you make:
+
+            a.  The full text of this license in a location viewable to users
+            of the redistributed or derivative work.
+
+            b.  Notice of any changes or modifications to the files,
+            including the date changes were made.
+
+    2.  The name, servicemarks and trademarks of X Engineering
+        Software Systems Corp. may NOT be used in advertising or
+        publicity pertaining to the software without specific, written
+        prior permission.
+
+    3.  Title to copyright in this software and any associated
+        documentation will at all times remain with X Engineering
+        Software Systems Corp.
+
+    4.  THIS SOFTWARE AND DOCUMENTATION IS PROVIDED "AS IS," AND X
+        Engineering Software Systems Corp MAKES NO REPRESENTATIONS OR
+        WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO,
+        WARRANTIES OF MERCHANTABILITY OR FITNESS FOR ANY PARTICULAR
+        PURPOSE OR THAT THE USE OF THE SOFTWARE OR DOCUMENTATION WILL
+        NOT INFRINGE ANY THIRD PARTY PATENTS, COPYRIGHTS, TRADEMARKS
+        OR OTHER RIGHTS.
+
+    5.  X Engineering Software Systems Corp WILL NOT BE LIABLE FOR ANY
+        DAMAGES, INCLUDING BUT NOT LIMITED TO, DIRECT, INDIRECT,
+        SPECIAL OR CONSEQUENTIAL, ARISING OUT OF ANY USE OF THE
+        SOFTWARE OR DOCUMENTATION.
+
+  ©2006 - X Engineering Software Systems Corp.  All rights reserved.
+----------------------------------------------------------------------------------*/
+
+// gxsportDlg.cpp : implementation file
+//
+
+#include &lt;cassert&gt;
+#include &lt;cstdlib&gt;
+#include &lt;strstream&gt;
+#include &lt;fstream&gt;
+#include &lt;string&gt;
+#include &lt;afxole.h&gt;
+#include &lt;shlobj.h&gt;
+using namespace std;
+
+#include "<a href="#" OnFocus="link('_file','../xstoolslib/utils_h0',this)">utils.h</a>"
+#include "<a href="#" OnFocus="link('_file','../xstoolslib/xserror_h0',this)">xserror.h</a>"
+#include "<a href="#" OnFocus="link('_file','../xstoolslib/pport_h0',this)">pport.h</a>"
+#include "stdafx.h"
+#include "<a href="#" OnFocus="link('_file','gxsport_h0',this)">gxsport.h</a>"
+#include "gxsportdlg.h"
+
+#ifdef _DEBUG
+#define new DEBUG_NEW
+#undef THIS_FILE
+static char THIS_FILE[] = __FILE__;
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+// CAboutDlg dialog used for App About
+
+class <a href="#" OnFocus="link('_class','../gxsload/CAboutDlg0',this)">CAboutDlg</a> : public CDialog
+{
+public:
+    <a href="#" OnFocus="link('_member','../gxsload/CAboutDlg253019763',this)">CAboutDlg</a>();
+
+// Dialog Data
+    //{{AFX_DATA(CAboutDlg)
+    enum { <a href="#" OnFocus="link('_member','../gxsload/IDD226793075',this)">IDD</a> = IDD_ABOUTBOX };
+    //}}AFX_DATA
+
+    // ClassWizard generated virtual function overrides
+    //{{AFX_VIRTUAL(CAboutDlg)
+    protected:
+    virtual void <a href="#" OnFocus="link('_member','../gxsload/DoDataExchange2240984102',this)">DoDataExchange</a>(CDataExchange* pDX);    // DDX/DDV support
+    //}}AFX_VIRTUAL
+
+// Implementation
+protected:
+    //{{AFX_MSG(CAboutDlg)
+    //}}AFX_MSG
+    DECLARE_MESSAGE_MAP()
+};
+
+<a href="#" OnFocus="link('_member','../gxsload/CAboutDlg253019763',this)">CAboutDlg::CAboutDlg</a>() : CDialog(<a href="#" OnFocus="link('_class','../gxsload/CAboutDlg0',this)">CAboutDlg</a>::IDD)
+{
+    //{{AFX_DATA_INIT(CAboutDlg)
+    //}}AFX_DATA_INIT
+}
+
+void <a href="#" OnFocus="link('_member','../gxsload/DoDataExchange2240984102',this)">CAboutDlg::DoDataExchange</a>(CDataExchange* pDX)
+{
+    CDialog::DoDataExchange(pDX);
+    //{{AFX_DATA_MAP(CAboutDlg)
+    //}}AFX_DATA_MAP
+}
+
+BEGIN_MESSAGE_MAP(<a href="#" OnFocus="link('_class','../gxsload/CAboutDlg0',this)">CAboutDlg</a>, CDialog)
+    //{{AFX_MSG_MAP(CAboutDlg)
+        // No message handlers
+    //}}AFX_MSG_MAP
+END_MESSAGE_MAP()
+
+/////////////////////////////////////////////////////////////////////////////
+// CGxsportDlg dialog
+
+<a href="#" OnFocus="link('_member','CGxsportDlg3903157818',this)">CGxsportDlg::CGxsportDlg</a>(CWnd* pParent /*=NULL*/)
+    : CDialog(<a href="#" OnFocus="link('_class','CGxsportDlg0',this)">CGxsportDlg</a>::IDD, pParent)
+{
+    //{{AFX_DATA_INIT(CGxsportDlg)
+    //}}AFX_DATA_INIT
+    // Note that LoadIcon does not require a subsequent DestroyIcon in Win32
+    m_hIcon = AfxGetApp()-&gt;LoadIcon(IDR_MAINFRAME);
+}
+
+void <a href="#" OnFocus="link('_member','DoDataExchange3529355110',this)">CGxsportDlg::DoDataExchange</a>(CDataExchange* pDX)
+{
+    CDialog::DoDataExchange(pDX);
+    //{{AFX_DATA_MAP(CGxsportDlg)
+    DDX_Control(pDX, IDC_COMBO_LPT, m_cmbLpt);
+    DDX_Control(pDX, IDC_CHK_COUNT, m_chkCount);
+    DDX_Control(pDX, IDC_BTN_STROBE, m_btnStrobe);
+    DDX_Control(pDX, IDC_BTN_DATA7, m_btnData7);
+    DDX_Control(pDX, IDC_BTN_DATA6, m_btnData6);
+    DDX_Control(pDX, IDC_BTN_DATA5, m_btnData5);
+    DDX_Control(pDX, IDC_BTN_DATA4, m_btnData4);
+    DDX_Control(pDX, IDC_BTN_DATA3, m_btnData3);
+    DDX_Control(pDX, IDC_BTN_DATA2, m_btnData2);
+    DDX_Control(pDX, IDC_BTN_DATA1, m_btnData1);
+    DDX_Control(pDX, IDC_BTN_DATA0, m_btnData0);
+    //}}AFX_DATA_MAP
+}
+
+BEGIN_MESSAGE_MAP(<a href="#" OnFocus="link('_class','CGxsportDlg0',this)">CGxsportDlg</a>, CDialog)
+    //{{AFX_MSG_MAP(CGxsportDlg)
+    ON_WM_SYSCOMMAND()
+    ON_WM_PAINT()
+    ON_WM_QUERYDRAGICON()
+    ON_WM_ACTIVATE()
+    ON_BN_CLICKED(IDC_BTN_DATA0, OnBtnData0)
+    ON_BN_CLICKED(IDC_BTN_DATA1, OnBtnData1)
+    ON_BN_CLICKED(IDC_BTN_DATA2, OnBtnData2)
+    ON_BN_CLICKED(IDC_BTN_DATA3, OnBtnData3)
+    ON_BN_CLICKED(IDC_BTN_DATA4, OnBtnData4)
+    ON_BN_CLICKED(IDC_BTN_DATA5, OnBtnData5)
+    ON_BN_CLICKED(IDC_BTN_DATA6, OnBtnData6)
+    ON_BN_CLICKED(IDC_BTN_DATA7, OnBtnData7)
+    ON_BN_CLICKED(IDC_BTN_STROBE, OnBtnStrobe)
+    ON_BN_CLICKED(IDC_CHK_COUNT, OnChkCount)
+    ON_CBN_DBLCLK(IDC_COMBO_LPT, OnDblclkComboLpt)
+    ON_CBN_SELCHANGE(IDC_COMBO_LPT, OnSelchangeComboLpt)
+    //}}AFX_MSG_MAP
+END_MESSAGE_MAP()
+
+int <a href="#" OnFocus="link('_member','active0',this)">active</a>=0;
+
+/////////////////////////////////////////////////////////////////////////////
+// CGxsportDlg message handlers
+
+BOOL <a href="#" OnFocus="link('_member','OnInitDialog150410464',this)">CGxsportDlg::OnInitDialog</a>()
+{
+    CDialog::OnInitDialog();
+
+    // Add "About..." menu item to system menu.
+
+    // IDM_ABOUTBOX must be in the system command range.
+    ASSERT((IDM_ABOUTBOX &amp; 0xFFF0) == IDM_ABOUTBOX);
+    ASSERT(IDM_ABOUTBOX &lt; 0xF000);
+
+    CMenu* pSysMenu = GetSystemMenu(FALSE);
+    if (pSysMenu != NULL)
+    {
+        CString strAboutMenu;
+        strAboutMenu.LoadString(IDS_ABOUTBOX);
+        if (!strAboutMenu.IsEmpty())
+        {
+            pSysMenu-&gt;AppendMenu(MF_SEPARATOR);
+            pSysMenu-&gt;AppendMenu(MF_STRING, IDM_ABOUTBOX, strAboutMenu);
+        }
+    }
+
+    // Set the icon for this dialog.  The framework does this automatically
+    //  when the application's main window is not a dialog
+    SetIcon(m_hIcon, TRUE);         // Set big icon
+    SetIcon(m_hIcon, FALSE);        // Set small icon
+    
+    // TODO: Add extra initialization here
+
+    // strobe button starts off disabled because there is no new data to output
+    // to the parallel port
+    <a href="#" OnFocus="link('_member','m_btnStrobe150410393',this)">m_btnStrobe</a>.EnableWindow(false);
+
+    // place parallel port numbers into the list box
+    <a href="#" OnFocus="link('_member','m_cmbLpt150410393',this)">m_cmbLpt</a>.AddString("LPT1");
+    <a href="#" OnFocus="link('_member','m_cmbLpt150410393',this)">m_cmbLpt</a>.AddString("LPT2");
+    <a href="#" OnFocus="link('_member','m_cmbLpt150410393',this)">m_cmbLpt</a>.AddString("LPT3");
+
+    // get the last setting for the parallel port
+    string lptNum;
+    if((lptNum=<a href="#" OnFocus="link('_member','../xstoolslib/GetXSTOOLSParameter86138908',this)">GetXSTOOLSParameter</a>((string)"LPT")) == "")
+    { // set the default value if no previous value exists
+        if(<a href="#" OnFocus="link('_member','../xstoolslib/SetXSTOOLSParameter1183990257',this)">SetXSTOOLSParameter</a>((string)"LPT",(string)"LPT1") == false)
+        {
+            AfxMessageBox("LPT value was not set",MB_ICONSTOP);
+            exit(0);
+        }
+        lptNum = <a href="#" OnFocus="link('_member','../xstoolslib/GetXSTOOLSParameter86138908',this)">GetXSTOOLSParameter</a>((string)"LPT");
+        assert(lptNum != "");
+    }
+    <a href="#" OnFocus="link('_member','m_cmbLpt150410393',this)">m_cmbLpt</a>.SelectString(-1,(const char*)(lptNum.c_str()));
+
+    // initialize the parallel port object
+    <a href="#" OnFocus="link('_class','../xstoolslib/XSError0',this)">XSError</a> <a href="#" OnFocus="link('_member','../xsatapi/errMsg0',this)">errMsg</a>(cerr); // setup error channel
+    int <a href="#" OnFocus="link('_member','../xsatapi/portNum0',this)">portNum</a> = <a href="#" OnFocus="link('_member','m_cmbLpt150410393',this)">m_cmbLpt</a>.GetCurSel()+1;  // get parallel port number
+    <a href="#" OnFocus="link('_member','parPort150410393',this)">parPort</a> = new <a href="#" OnFocus="link('_class','../xstoolslib/PPort0',this)">PPort</a>(&amp;errMsg,portNum,0x03); // create parallel port object
+
+    // initialize array of button pointers to the parallel port data buttons
+    <a href="#" OnFocus="link('_member','dataBtn150410393',this)">dataBtn</a>[0] = &amp;<a href="#" OnFocus="link('_member','m_btnData0150410393',this)">m_btnData0</a>;
+    <a href="#" OnFocus="link('_member','dataBtn150410393',this)">dataBtn</a>[1] = &amp;<a href="#" OnFocus="link('_member','m_btnData1150410393',this)">m_btnData1</a>;
+    <a href="#" OnFocus="link('_member','dataBtn150410393',this)">dataBtn</a>[2] = &amp;<a href="#" OnFocus="link('_member','m_btnData2150410393',this)">m_btnData2</a>;
+    <a href="#" OnFocus="link('_member','dataBtn150410393',this)">dataBtn</a>[3] = &amp;<a href="#" OnFocus="link('_member','m_btnData3150410393',this)">m_btnData3</a>;
+    <a href="#" OnFocus="link('_member','dataBtn150410393',this)">dataBtn</a>[4] = &amp;<a href="#" OnFocus="link('_member','m_btnData4150410393',this)">m_btnData4</a>;
+    <a href="#" OnFocus="link('_member','dataBtn150410393',this)">dataBtn</a>[5] = &amp;<a href="#" OnFocus="link('_member','m_btnData5150410393',this)">m_btnData5</a>;
+    <a href="#" OnFocus="link('_member','dataBtn150410393',this)">dataBtn</a>[6] = &amp;<a href="#" OnFocus="link('_member','m_btnData6150410393',this)">m_btnData6</a>;
+    <a href="#" OnFocus="link('_member','dataBtn150410393',this)">dataBtn</a>[7] = &amp;<a href="#" OnFocus="link('_member','m_btnData7150410393',this)">m_btnData7</a>;
+
+    // display the parallel port data on the buttons
+    <a href="#" OnFocus="link('_member','newPortDataVal150410393',this)">newPortDataVal</a> = <a href="#" OnFocus="link('_member','parPort150410393',this)">parPort</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/In1210046855',this)">In</a>(0,7);
+    <a href="#" OnFocus="link('_member','DisplayBtnData4245494786',this)">DisplayBtnData</a>(newPortDataVal);
+
+    return TRUE;  // return TRUE  unless you set the focus to a control
+}
+
+void <a href="#" OnFocus="link('_member','OnSysCommand1123068344',this)">CGxsportDlg::OnSysCommand</a>(UINT nID, LPARAM lParam)
+{
+    if ((nID &amp; 0xFFF0) == IDM_ABOUTBOX)
+    {
+        <a href="#" OnFocus="link('_class','../gxsload/CAboutDlg0',this)">CAboutDlg</a> dlgAbout;
+        dlgAbout.DoModal();
+    }
+    else
+    {
+        CDialog::OnSysCommand(nID, lParam);
+    }
+}
+
+// If you add a minimize button to your dialog, you will need the code below
+//  to draw the icon.  For MFC applications using the document/view model,
+//  this is automatically done for you by the framework.
+
+void <a href="#" OnFocus="link('_member','OnPaint150410464',this)">CGxsportDlg::OnPaint</a>() 
+{
+    if (IsIconic())
+    {
+        CPaintDC dc(this); // device context for painting
+
+        SendMessage(WM_ICONERASEBKGND, (WPARAM) dc.GetSafeHdc(), 0);
+
+        // Center icon in client rectangle
+        int cxIcon = GetSystemMetrics(SM_CXICON);
+        int cyIcon = GetSystemMetrics(SM_CYICON);
+        CRect rect;
+        GetClientRect(&amp;rect);
+        int x = (rect.Width() - cxIcon + 1) / 2;
+        int y = (rect.Height() - cyIcon + 1) / 2;
+
+        // Draw the icon
+        dc.DrawIcon(x, y, m_hIcon);
+    }
+    else
+    {
+        CDialog::OnPaint();
+    }
+}
+
+// The system calls this to obtain the cursor to display while the user drags
+//  the minimized window.
+HCURSOR <a href="#" OnFocus="link('_member','OnQueryDragIcon150410464',this)">CGxsportDlg::OnQueryDragIcon</a>()
+{
+    return (HCURSOR) <a href="#" OnFocus="link('_member','m_hIcon150410393',this)">m_hIcon</a>;
+}
+
+
+// initialize the button text to reflect the data value 
+void <a href="#" OnFocus="link('_member','DisplayBtnData4245494786',this)">CGxsportDlg::DisplayBtnData</a>(unsigned int data)
+{
+    ASSERT(data&gt;=0 &amp;&amp; data&lt;=255);
+    int i;
+    for(i=0; i&lt;8; i++,data&gt;&gt;=1)
+    {
+        if((<a href="#" OnFocus="link('_member','../xsatapi/data0',this)">data</a>&amp;1) == 0)
+            <a href="#" OnFocus="link('_member','dataBtn150410393',this)">dataBtn</a>[i]-&gt;SetWindowText("0");
+        else
+            <a href="#" OnFocus="link('_member','dataBtn150410393',this)">dataBtn</a>[i]-&gt;SetWindowText("1");
+    }
+
+}
+
+void <a href="#" OnFocus="link('_member','OnBtnData1224733856',this)">CGxsportDlg::OnBtnData</a>(int bitPos)
+{
+    ASSERT(bitPos&gt;=0 &amp;&amp; bitPos&lt;=7);
+
+    // toggle the data bit and show the new value on the button
+    if(<a href="#" OnFocus="link('_member','newPortDataVal150410393',this)">newPortDataVal</a> &amp; (1&lt;&lt;bitPos))
+    { // data bit is 1 so reset it to 0
+        <a href="#" OnFocus="link('_member','newPortDataVal150410393',this)">newPortDataVal</a> &amp;= (~(1&lt;&lt;bitPos));
+        <a href="#" OnFocus="link('_member','dataBtn150410393',this)">dataBtn</a>[bitPos]-&gt;SetWindowText("0");
+    }
+    else
+    { // data bit is 0 so set it to 1
+        <a href="#" OnFocus="link('_member','newPortDataVal150410393',this)">newPortDataVal</a> |= (1&lt;&lt;bitPos);
+        <a href="#" OnFocus="link('_member','dataBtn150410393',this)">dataBtn</a>[bitPos]-&gt;SetWindowText("1");
+    }
+
+    <a href="#" OnFocus="link('_member','HandleStrobe150410464',this)">HandleStrobe</a>();
+}
+
+void <a href="#" OnFocus="link('_member','OnBtnData0150410464',this)">CGxsportDlg::OnBtnData0</a>() 
+{
+    <a href="#" OnFocus="link('_member','OnBtnData1224733856',this)">OnBtnData</a>(0);
+}
+
+void <a href="#" OnFocus="link('_member','OnBtnData1150410464',this)">CGxsportDlg::OnBtnData1</a>() 
+{
+    <a href="#" OnFocus="link('_member','OnBtnData1224733856',this)">OnBtnData</a>(1);
+}
+
+void <a href="#" OnFocus="link('_member','OnBtnData2150410464',this)">CGxsportDlg::OnBtnData2</a>() 
+{
+    <a href="#" OnFocus="link('_member','OnBtnData1224733856',this)">OnBtnData</a>(2);
+}
+
+void <a href="#" OnFocus="link('_member','OnBtnData3150410464',this)">CGxsportDlg::OnBtnData3</a>() 
+{
+    <a href="#" OnFocus="link('_member','OnBtnData1224733856',this)">OnBtnData</a>(3);
+}
+
+void <a href="#" OnFocus="link('_member','OnBtnData4150410464',this)">CGxsportDlg::OnBtnData4</a>() 
+{
+    <a href="#" OnFocus="link('_member','OnBtnData1224733856',this)">OnBtnData</a>(4);
+}
+
+void <a href="#" OnFocus="link('_member','OnBtnData5150410464',this)">CGxsportDlg::OnBtnData5</a>() 
+{
+    <a href="#" OnFocus="link('_member','OnBtnData1224733856',this)">OnBtnData</a>(5);
+}
+
+void <a href="#" OnFocus="link('_member','OnBtnData6150410464',this)">CGxsportDlg::OnBtnData6</a>() 
+{
+    <a href="#" OnFocus="link('_member','OnBtnData1224733856',this)">OnBtnData</a>(6);
+}
+
+void <a href="#" OnFocus="link('_member','OnBtnData7150410464',this)">CGxsportDlg::OnBtnData7</a>() 
+{
+    <a href="#" OnFocus="link('_member','OnBtnData1224733856',this)">OnBtnData</a>(7);
+}
+
+void <a href="#" OnFocus="link('_member','HandleStrobe150410464',this)">CGxsportDlg::HandleStrobe</a>()
+{
+    // enable strobe button when counting or if the new data value
+    // is different from the current parallel port data
+    if(<a href="#" OnFocus="link('_member','m_chkCount150410393',this)">m_chkCount</a>.GetCheck()==BST_UNCHECKED)
+    { // just setting data value with buttons
+        if(<a href="#" OnFocus="link('_member','newPortDataVal150410393',this)">newPortDataVal</a>==<a href="#" OnFocus="link('_member','parPort150410393',this)">parPort</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/In1210046855',this)">In</a>(0,7))
+            <a href="#" OnFocus="link('_member','m_btnStrobe150410393',this)">m_btnStrobe</a>.EnableWindow(false);
+        else
+            <a href="#" OnFocus="link('_member','m_btnStrobe150410393',this)">m_btnStrobe</a>.EnableWindow(true);
+    }
+    else
+    { // here we are counting up the data value on the port
+        <a href="#" OnFocus="link('_member','m_btnStrobe150410393',this)">m_btnStrobe</a>.EnableWindow(true);
+    }
+}
+
+void <a href="#" OnFocus="link('_member','OnBtnStrobe150410464',this)">CGxsportDlg::OnBtnStrobe</a>() 
+{
+    if(<a href="#" OnFocus="link('_member','m_chkCount150410393',this)">m_chkCount</a>.GetCheck()==BST_UNCHECKED)
+    {
+        // place the new data value on the parallel port when strobe is clicked
+        <a href="#" OnFocus="link('_member','parPort150410393',this)">parPort</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/Out2912582438',this)">Out</a>(newPortDataVal,0,7);
+        // then display the strobe button appropriately 
+        <a href="#" OnFocus="link('_member','HandleStrobe150410464',this)">HandleStrobe</a>();
+        // now the written value should match the value that is out there
+        ASSERT(newPortDataVal == <a href="#" OnFocus="link('_member','parPort150410393',this)">parPort</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/In1210046855',this)">In</a>(0,7));
+        // remove focus from this window
+        CWnd::SetFocus();
+    }
+    else
+    { // incrementing data port value
+        <a href="#" OnFocus="link('_member','parPort150410393',this)">parPort</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/Out2912582438',this)">Out</a>(newPortDataVal+1,0,7);
+        <a href="#" OnFocus="link('_member','newPortDataVal150410393',this)">newPortDataVal</a> = <a href="#" OnFocus="link('_member','parPort150410393',this)">parPort</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/In1210046855',this)">In</a>(0,7);
+        <a href="#" OnFocus="link('_member','DisplayBtnData4245494786',this)">DisplayBtnData</a>(newPortDataVal);
+    }
+}
+
+void <a href="#" OnFocus="link('_member','OnDblclkComboLpt150410464',this)">CGxsportDlg::OnDblclkComboLpt</a>() 
+{
+    int selection = <a href="#" OnFocus="link('_member','m_cmbLpt150410393',this)">m_cmbLpt</a>.GetCurSel();
+    if(selection != CB_ERR)
+    {
+        ASSERT(selection&gt;=0 &amp;&amp; selection&lt;=2);
+        <a href="#" OnFocus="link('_member','parPort150410393',this)">parPort</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/SetLPTNum190760768',this)">SetLPTNum</a>(selection+1);
+        <a href="#" OnFocus="link('_member','newPortDataVal150410393',this)">newPortDataVal</a> = <a href="#" OnFocus="link('_member','parPort150410393',this)">parPort</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/In1210046855',this)">In</a>(0,7);
+        <a href="#" OnFocus="link('_member','DisplayBtnData4245494786',this)">DisplayBtnData</a>(newPortDataVal);
+        <a href="#" OnFocus="link('_member','HandleStrobe150410464',this)">HandleStrobe</a>();
+    }
+}
+
+void <a href="#" OnFocus="link('_member','OnSelchangeComboLpt150410464',this)">CGxsportDlg::OnSelchangeComboLpt</a>() 
+{
+    int selection = <a href="#" OnFocus="link('_member','m_cmbLpt150410393',this)">m_cmbLpt</a>.GetCurSel();
+    if(selection != CB_ERR)
+    {
+        ASSERT(selection&gt;=0 &amp;&amp; selection&lt;=2);
+        <a href="#" OnFocus="link('_member','parPort150410393',this)">parPort</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/SetLPTNum190760768',this)">SetLPTNum</a>(selection+1);
+        <a href="#" OnFocus="link('_member','newPortDataVal150410393',this)">newPortDataVal</a> = <a href="#" OnFocus="link('_member','parPort150410393',this)">parPort</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/In1210046855',this)">In</a>(0,7);
+        <a href="#" OnFocus="link('_member','DisplayBtnData4245494786',this)">DisplayBtnData</a>(newPortDataVal);
+        <a href="#" OnFocus="link('_member','HandleStrobe150410464',this)">HandleStrobe</a>();
+    }
+    CString <a href="#" OnFocus="link('_member','../xsatapi/lpt0',this)">lpt</a>;
+    <a href="#" OnFocus="link('_member','m_cmbLpt150410393',this)">m_cmbLpt</a>.GetLBText(<a href="#" OnFocus="link('_member','m_cmbLpt150410393',this)">m_cmbLpt</a>.GetCurSel(),<a href="#" OnFocus="link('_member','../xsatapi/lpt0',this)">lpt</a>);
+    <a href="#" OnFocus="link('_member','../xstoolslib/SetXSTOOLSParameter1183990257',this)">SetXSTOOLSParameter</a>((string)"LPT",(string)LPCTSTR(lpt));
+}
+
+void <a href="#" OnFocus="link('_member','OnChkCount150410464',this)">CGxsportDlg::OnChkCount</a>() 
+{
+    <a href="#" OnFocus="link('_member','HandleStrobe150410464',this)">HandleStrobe</a>(); 
+}
+
+void <a href="#" OnFocus="link('_member','OnActivate1513500589',this)">CGxsportDlg::OnActivate</a>(UINT nState, CWnd* pWndOther, BOOL bMinimized)
+{
+    if(nState != WA_INACTIVE)
+    { // window is being re-activated, so update display of port data
+        <a href="#" OnFocus="link('_member','newPortDataVal150410393',this)">newPortDataVal</a> = <a href="#" OnFocus="link('_member','parPort150410393',this)">parPort</a>-&gt;<a href="#" OnFocus="link('_member','../xstoolslib/In1210046855',this)">In</a>(0,7);
+        <a href="#" OnFocus="link('_member','DisplayBtnData4245494786',this)">DisplayBtnData</a>(newPortDataVal);
+        <a href="#" OnFocus="link('_member','HandleStrobe150410464',this)">HandleStrobe</a>();
+    }
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_file','_source');
+</script>

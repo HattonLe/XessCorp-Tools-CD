@@ -1,0 +1,63 @@
+V1 31
+FL C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/an-101204-vgagen/3S1000/test_vga/../../XSA_LIB/xsasdramcntl.vhd 2006/04/27.17:47:52
+PH work/XSASDRAM \
+      FL C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/an-101204-vgagen/3S1000/test_vga/../../XSA_LIB/xsasdramcntl.vhd \
+      PB ieee/STD_LOGIC_1164 PH ieee/NUMERIC_STD PH unisim/VCOMPONENTS \
+      PH work/SDRAM     PB work/COMMON
+EN work/XSASDRAMCNTL \
+      FL C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/an-101204-vgagen/3S1000/test_vga/../../XSA_LIB/xsasdramcntl.vhd \
+      PB ieee/STD_LOGIC_1164 PH ieee/NUMERIC_STD PH unisim/VCOMPONENTS \
+      PH work/SDRAM     PB work/COMMON
+AR work/XSASDRAMCNTL/ARCH \
+      FL C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/an-101204-vgagen/3S1000/test_vga/../../XSA_LIB/xsasdramcntl.vhd \
+      EN work/XSASDRAMCNTL CP IBUFG       CP CLKDLL         CP BUFG           CP SDRAMCNTL
+FL C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/an-101204-vgagen/3S1000/test_vga/../../XSA_LIB/vga.vhd 2006/04/27.17:47:52
+PH work/VGA_PCKG \
+      FL C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/an-101204-vgagen/3S1000/test_vga/../../XSA_LIB/vga.vhd \
+      PB ieee/STD_LOGIC_1164 PH ieee/NUMERIC_STD PH unisim/VCOMPONENTS \
+      PB work/COMMON
+EN work/VGA \
+      FL C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/an-101204-vgagen/3S1000/test_vga/../../XSA_LIB/vga.vhd \
+      PB ieee/STD_LOGIC_1164 PH ieee/NUMERIC_STD PH unisim/VCOMPONENTS \
+      PB work/COMMON
+AR work/VGA/VGA_ARCH \
+      FL C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/an-101204-vgagen/3S1000/test_vga/../../XSA_LIB/vga.vhd \
+      EN work/VGA       CP FIFO_CC        CP SYNC
+EN work/SYNC \
+      FL C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/an-101204-vgagen/3S1000/test_vga/../../XSA_LIB/vga.vhd \
+      PB ieee/STD_LOGIC_1164 PH ieee/NUMERIC_STD PH unisim/VCOMPONENTS \
+      PB work/COMMON
+AR work/SYNC/SYNC_ARCH \
+      FL C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/an-101204-vgagen/3S1000/test_vga/../../XSA_LIB/vga.vhd \
+      EN work/SYNC
+EN work/FIFO_CC \
+      FL C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/an-101204-vgagen/3S1000/test_vga/../../XSA_LIB/vga.vhd \
+      PB ieee/STD_LOGIC_1164 PB ieee/STD_LOGIC_UNSIGNED PH unisim/VCOMPONENTS
+AR work/FIFO_CC/ARCH \
+      FL C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/an-101204-vgagen/3S1000/test_vga/../../XSA_LIB/vga.vhd \
+      EN work/FIFO_CC   CP RAMB4_S16_S16
+FL C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/an-101204-vgagen/3S1000/test_vga/../../XSA_LIB/sdramcntl.vhd 2006/04/27.17:47:52
+PH work/SDRAM \
+      FL C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/an-101204-vgagen/3S1000/test_vga/../../XSA_LIB/sdramcntl.vhd \
+      PB ieee/STD_LOGIC_1164 PH ieee/NUMERIC_STD PB work/COMMON
+EN work/SDRAMCNTL \
+      FL C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/an-101204-vgagen/3S1000/test_vga/../../XSA_LIB/sdramcntl.vhd \
+      PB ieee/STD_LOGIC_1164 PH ieee/NUMERIC_STD PB work/COMMON
+AR work/SDRAMCNTL/ARCH \
+      FL C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/an-101204-vgagen/3S1000/test_vga/../../XSA_LIB/sdramcntl.vhd \
+      EN work/SDRAMCNTL
+FL C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/an-101204-vgagen/3S1000/test_vga/test_vga.vhd 2006/04/27.17:47:52
+EN work/TEST_VGA \
+      FL C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/an-101204-vgagen/3S1000/test_vga/test_vga.vhd \
+      PB ieee/STD_LOGIC_1164 PH ieee/NUMERIC_STD PH unisim/VCOMPONENTS \
+      PH work/VGA_PCKG  PH work/XSASDRAM  PB work/COMMON
+AR work/TEST_VGA/ARCH \
+      FL C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/an-101204-vgagen/3S1000/test_vga/test_vga.vhd \
+      EN work/TEST_VGA  CP XSASDRAMCNTL   CP VGA
+FL C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/an-101204-vgagen/3S1000/test_vga/../../XSA_LIB/common.vhd 2006/04/27.17:47:52
+PH work/COMMON \
+      FL C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/an-101204-vgagen/3S1000/test_vga/../../XSA_LIB/common.vhd \
+      PB ieee/STD_LOGIC_1164 PH ieee/NUMERIC_STD
+PB work/COMMON \
+      FL C:/xesscorp/PRODUCTS/BITSTREAMS/XSA/an-101204-vgagen/3S1000/test_vga/../../XSA_LIB/common.vhd \
+      PH work/COMMON    PB ieee/STD_LOGIC_1164 PH ieee/NUMERIC_STD

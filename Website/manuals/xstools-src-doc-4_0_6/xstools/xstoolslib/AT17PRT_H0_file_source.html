@@ -1,0 +1,149 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - at17prt.h</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">at17prt.h</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">at17prt.h</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','at17prt_h0','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','at17prt_h0','_overview',this)" class="tabLinkInActive">Overview</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','at17prt_h0','_includedfiles',this)" class="tabLinkInActive">Included files</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','at17prt_h0','_includedby',this)" class="tabLinkInActive">Included by</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_file','at17prt_h0','_source',this)" class="tabLinkActive">Source</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<pre class="codeExamples">
+/*----------------------------------------------------------------------------------
+  SOFTWARE LICENSE AGREEMENT
+    1.  Permission to use, copy, modify, and distribute this software
+        and its documentation, with or without modification, for any
+        purpose and without fee or royalty is hereby granted, provided
+        that you include the following on ALL copies of the software
+        and documentation or portions thereof, including
+        modifications, that you make:
+
+            a.  The full text of this license in a location viewable to users
+            of the redistributed or derivative work.
+
+            b.  Notice of any changes or modifications to the files,
+            including the date changes were made.
+
+    2.  The name, servicemarks and trademarks of X Engineering
+        Software Systems Corp. may NOT be used in advertising or
+        publicity pertaining to the software without specific, written
+        prior permission.
+
+    3.  Title to copyright in this software and any associated
+        documentation will at all times remain with X Engineering
+        Software Systems Corp.
+
+    4.  THIS SOFTWARE AND DOCUMENTATION IS PROVIDED "AS IS," AND X
+        Engineering Software Systems Corp MAKES NO REPRESENTATIONS OR
+        WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO,
+        WARRANTIES OF MERCHANTABILITY OR FITNESS FOR ANY PARTICULAR
+        PURPOSE OR THAT THE USE OF THE SOFTWARE OR DOCUMENTATION WILL
+        NOT INFRINGE ANY THIRD PARTY PATENTS, COPYRIGHTS, TRADEMARKS
+        OR OTHER RIGHTS.
+
+    5.  X Engineering Software Systems Corp WILL NOT BE LIABLE FOR ANY
+        DAMAGES, INCLUDING BUT NOT LIMITED TO, DIRECT, INDIRECT,
+        SPECIAL OR CONSEQUENTIAL, ARISING OUT OF ANY USE OF THE
+        SOFTWARE OR DOCUMENTATION.
+
+  ©2006 - X Engineering Software Systems Corp.  All rights reserved.
+----------------------------------------------------------------------------------*/
+
+#ifndef AT17PORT_H
+#define AT17PORT_H
+
+#include "<a href="#" OnFocus="link('_file','progress_h0',this)">progress.h</a>"
+#include "<a href="#" OnFocus="link('_file','hexrecrd_h0',this)">hexrecrd.h</a>"
+#include "<a href="#" OnFocus="link('_file','pport_h0',this)">pport.h</a>"
+
+
+/**
+Downloading of configuration bitstreams into an AT17CXXX serial EEPROM on the XS40 Board.
+
+This object provides methods for downloading a configuration bitstream 
+to an Atmel AT17CXXX serial EEPROM. The bitstream file is opened and the 
+field containing the configuration bits is extracted and partitioned 
+into 64-byte page. Each page of data is transmitted serially through the 
+parallel port where the FPGA connects the clock and data streams to the 
+programming pins of the AT17CXXX chip. 
+
+*/
+class <a href="#" OnFocus="link('_class','AT17Port0',this)">AT17Port</a> : public <a href="#" OnFocus="link('_class','PPort0',this)">PPort</a>
+{
+    public:
+
+     <a href="#" OnFocus="link('_member','AT17Port141724887',this)">AT17Port</a>(void);
+
+     <a href="#" OnFocus="link('_member','AT17Port141724887',this)">AT17Port</a>(
+            <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>* e,    
+            unsigned int portNum,   
+            unsigned int invMask,   
+            unsigned int pos_clk,   
+            unsigned int pos_eece,  
+            unsigned int pos_eeoe,  
+            unsigned int pos_din        
+            );
+
+    int <a href="#" OnFocus="link('_member','Setup2737948323',this)">Setup</a>(
+            <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>* e,    
+            unsigned int portNum,   
+            unsigned int invMask,   
+            unsigned int pos_clk,   
+            unsigned int pos_eece,  
+            unsigned int pos_eeoe,  
+            unsigned int pos_din        
+            );
+
+    bool <a href="#" OnFocus="link('_member','ProgramEEPROM2040293066',this)">ProgramEEPROM</a>(string&amp; bitfileName);
+
+    bool <a href="#" OnFocus="link('_member','ProgramEEPROM2040293066',this)">ProgramEEPROM</a>(istream&amp; is);
+
+    void <a href="#" OnFocus="link('_member','SendEEPROMByte912620763',this)">SendEEPROMByte</a>(unsigned char byte);
+
+    void <a href="#" OnFocus="link('_member','ProgramEEPROMPage649310900',this)">ProgramEEPROMPage</a>(
+            unsigned char* buf, 
+            unsigned int pageAddr,  
+            unsigned int len        
+            );
+
+
+    protected:
+
+    <a href="#" OnFocus="link('_class','Progress0',this)">Progress</a> *<a href="#" OnFocus="link('_member','progressGauge243744841',this)">progressGauge</a>; ///&lt; indicates progress of operations
+
+    
+    private:
+
+    unsigned int <a href="#" OnFocus="link('_member','posCLK243744841',this)">posCLK</a>;  ///&lt; bit position in parallel port of EEPROM clock pin
+    unsigned int <a href="#" OnFocus="link('_member','posEECE243744841',this)">posEECE</a>;  ///&lt; bit position in parallel port of EEPROM chip-enable
+    unsigned int <a href="#" OnFocus="link('_member','posEEOE243744841',this)">posEEOE</a>;  ///&lt; bit position in parallel port of EEPROM output-enable
+    unsigned int <a href="#" OnFocus="link('_member','posDIN243744841',this)">posDIN</a>;  ///&lt; bit position in parallel port of EEPROM serial data input
+};
+
+#endif
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_file','_source');
+</script>

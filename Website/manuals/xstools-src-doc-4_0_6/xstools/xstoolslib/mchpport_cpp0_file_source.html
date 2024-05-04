@@ -1,0 +1,689 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - mchpport.cpp</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">mchpport.cpp</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','xstoolslib0',this)" class="pathLink">xstoolslib</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">mchpport.cpp</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','mchpport_cpp0','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','mchpport_cpp0','_overview',this)" class="tabLinkInActive">Overview</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_file','mchpport_cpp0','_includedfiles',this)" class="tabLinkInActive">Included files</a></span>
+<span class="tabInActiveGrayout"><span class="tabLinkGrayout">Included by</span></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_file','mchpport_cpp0','_source',this)" class="tabLinkActive">Source</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<pre class="codeExamples">
+/*----------------------------------------------------------------------------------
+  SOFTWARE LICENSE AGREEMENT
+    1.  Permission to use, copy, modify, and distribute this software
+        and its documentation, with or without modification, for any
+        purpose and without fee or royalty is hereby granted, provided
+        that you include the following on ALL copies of the software
+        and documentation or portions thereof, including
+        modifications, that you make:
+
+            a.  The full text of this license in a location viewable to users
+            of the redistributed or derivative work.
+
+            b.  Notice of any changes or modifications to the files,
+            including the date changes were made.
+
+    2.  The name, servicemarks and trademarks of X Engineering
+        Software Systems Corp. may NOT be used in advertising or
+        publicity pertaining to the software without specific, written
+        prior permission.
+
+    3.  Title to copyright in this software and any associated
+        documentation will at all times remain with X Engineering
+        Software Systems Corp.
+
+    4.  THIS SOFTWARE AND DOCUMENTATION IS PROVIDED "AS IS," AND X
+        Engineering Software Systems Corp MAKES NO REPRESENTATIONS OR
+        WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO,
+        WARRANTIES OF MERCHANTABILITY OR FITNESS FOR ANY PARTICULAR
+        PURPOSE OR THAT THE USE OF THE SOFTWARE OR DOCUMENTATION WILL
+        NOT INFRINGE ANY THIRD PARTY PATENTS, COPYRIGHTS, TRADEMARKS
+        OR OTHER RIGHTS.
+
+    5.  X Engineering Software Systems Corp WILL NOT BE LIABLE FOR ANY
+        DAMAGES, INCLUDING BUT NOT LIMITED TO, DIRECT, INDIRECT,
+        SPECIAL OR CONSEQUENTIAL, ARISING OUT OF ANY USE OF THE
+        SOFTWARE OR DOCUMENTATION.
+
+  ©2006 - X Engineering Software Systems Corp.  All rights reserved.
+----------------------------------------------------------------------------------*/
+
+//
+// MchpPort objects add Microchip ICSP capabilities to a parallel port object.
+// A Microchip port can control the MCLR, PGM, PGC and PGD pins.
+// 
+
+
+#include &lt;string&gt;
+#include &lt;fstream&gt;
+#include &lt;cassert&gt;
+#include &lt;ctime&gt;
+#include &lt;cstdarg&gt;
+using namespace std;
+
+#include "<a href="#" OnFocus="link('_file','utils_h0',this)">utils.h</a>"
+#include "<a href="#" OnFocus="link('_file','mchpport_h0',this)">mchpport.h</a>"
+
+#define CMD_LENGTH      4
+#define OPERAND_LENGTH  16
+#define RESULT_LENGTH   8
+
+enum
+{
+    <a href="#" OnFocus="link('_member','CORE_INSTRUCTION0',this)">CORE_INSTRUCTION</a>            = 0x0,
+    <a href="#" OnFocus="link('_member','SHIFTOUT_TABLAT0',this)">SHIFTOUT_TABLAT</a>                = 0x2,
+    <a href="#" OnFocus="link('_member','TABLE_READ0',this)">TABLE_READ</a>                    = 0x8,
+    <a href="#" OnFocus="link('_member','TABLE_READ_POSTINC0',this)">TABLE_READ_POSTINC</a>            = 0x9,
+    <a href="#" OnFocus="link('_member','TABLE_READ_POSTDEC0',this)">TABLE_READ_POSTDEC</a>            = 0xa,
+    <a href="#" OnFocus="link('_member','TABLE_READ_PREINC0',this)">TABLE_READ_PREINC</a>            = 0xb,
+    <a href="#" OnFocus="link('_member','TABLE_WRITE0',this)">TABLE_WRITE</a>                    = 0xc,
+    <a href="#" OnFocus="link('_member','TABLE_WRITE_POSTINC20',this)">TABLE_WRITE_POSTINC2</a>        = 0xd,
+    <a href="#" OnFocus="link('_member','START_PROGRAMMING_POSTINC20',this)">START_PROGRAMMING_POSTINC2</a>    = 0xe,
+    <a href="#" OnFocus="link('_member','START_PROGRAMMING0',this)">START_PROGRAMMING</a>            = 0xf
+};
+
+#define TIME_P5     40,NANOSECONDS
+#define TIME_P5A    40,NANOSECONDS
+#define TIME_P9     1,MILLISECONDS
+#define TIME_P10    100,MICROSECONDS
+#define TIME_P11    5,MILLISECONDS
+//#define TIME_P12  2,MICROSECONDS
+//#define TIME_P15  2,MICROSECONDS
+#define TIME_P12    10000,MICROSECONDS
+#define TIME_P15    10000,MICROSECONDS
+//#define TIME_P16  0,MICROSECONDS
+//#define TIME_P18  0,MICROSECONDS
+#define TIME_P16    10000,MICROSECONDS
+#define TIME_P18    10000,MICROSECONDS
+
+#define WRITE_BUFFER_SIZE   32
+
+#define CONFIGBITS_ADDRESS  0x300000
+
+static const unsigned int DEFAULT_INVMASK = 0x0B8000; // invert C0, C1, C2 and S7
+
+// These store the bit positions of the Microchip programming signals
+#if 1
+const unsigned int <a href="#" OnFocus="link('_member','posMCLR_N0',this)">posMCLR_N</a> = 16; // position of MCLR_N (C0)
+const unsigned int <a href="#" OnFocus="link('_member','posPGM0',this)">posPGM</a>     = 17; // position of PGM (C1)
+const unsigned int <a href="#" OnFocus="link('_member','posPGC0',this)">posPGC</a>     = 6;  // position of PGC (D6)
+const unsigned int <a href="#" OnFocus="link('_member','posPGD_O0',this)">posPGD_O</a>     = 2;  // position of PGD output (D2)
+const unsigned int <a href="#" OnFocus="link('_member','posPGD_I0',this)">posPGD_I</a>     = 11; // position of PGD input (S3)
+const unsigned int <a href="#" OnFocus="link('_member','inversionMask0',this)">inversionMask</a>      = DEFAULT_INVMASK;
+#else
+const unsigned int <a href="#" OnFocus="link('_member','posMCLR_N0',this)">posMCLR_N</a> = 5; // position of MCLR_N (D5)
+const unsigned int <a href="#" OnFocus="link('_member','posPGM0',this)">posPGM</a>     = 4; // position of PGM (D4)
+const unsigned int <a href="#" OnFocus="link('_member','posPGC0',this)">posPGC</a>     = 3;  // position of PGC (D3)
+const unsigned int <a href="#" OnFocus="link('_member','posPGD_O0',this)">posPGD_O</a>     = 2;  // position of PGD output (D2)
+const unsigned int <a href="#" OnFocus="link('_member','posPGD_I0',this)">posPGD_I</a>     = 11; // position of PGD input (S3)
+const unsigned int <a href="#" OnFocus="link('_member','inversionMask0',this)">inversionMask</a>      = DEFAULT_INVMASK ^ 0x083C;
+#endif
+
+
+// begin methods and functions
+
+
+// Create a JTAG controller port
+<a href="#" OnFocus="link('_member','MchpPort141690661',this)">MchpPort::MchpPort</a>(void)
+{
+    ;
+}
+
+
+// Create a parallel port-based JTAG controller port
+<a href="#" OnFocus="link('_member','MchpPort141690661',this)">MchpPort::MchpPort</a>(
+                    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>* e,    // pointer to error reporting object
+                    unsigned int portNum    // parallel port number
+                   )
+                   : <a href="#" OnFocus="link('_class','PPort0',this)">PPort</a>(e,<a href="#" OnFocus="link('_member','../xsatapi/portNum0',this)">portNum</a>,<a href="#" OnFocus="link('_member','inversionMask0',this)">inversionMask</a>)
+{
+    <a href="#" OnFocus="link('_member','Setup2928848075',this)">Setup</a>(e,portNum);
+}
+
+
+// Setup the parallel port-based JTAG controller port
+bool <a href="#" OnFocus="link('_member','Setup3097650972',this)">MchpPort::Setup</a>(
+                    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>* e,    // pointer to error reporting object
+                    unsigned int portNum    // parallel port number
+                 )
+{
+    <a href="#" OnFocus="link('_member','SetTraceOnOff3476385018',this)">SetTraceOnOff</a>(false,cerr);   // don't trace TAP signals
+    <a href="#" OnFocus="link('_member','progressGauge243780539',this)">progressGauge</a> = NULL;        // no gauge to show progress of operations at this time
+    return <a href="#" OnFocus="link('_member','Setup1571714867',this)">PPort::Setup</a>(e,portNum,inversionMask);   // return non-zero if error occurs
+}
+
+
+// enables/disables trace
+void <a href="#" OnFocus="link('_member','SetTraceOnOff3476385018',this)">MchpPort::SetTraceOnOff</a>(
+                    bool f,     // trace if true, no trace if false
+                    ostream&amp; os // trace info goes to this stream
+                    )
+{
+    <a href="#" OnFocus="link('_member','traceFlag243780539',this)">traceFlag</a> = f;
+    <a href="#" OnFocus="link('_member','osTrace243780539',this)">osTrace</a> = &amp;os;  // trace messages go to this output stream
+}
+
+
+// Set the value of the MCLR_N bit
+void <a href="#" OnFocus="link('_member','SetMCLR_N822568860',this)">MchpPort::SetMCLR_N</a>(unsigned int b)
+{
+    <a href="#" OnFocus="link('_member','mclr_nVal243780539',this)">mclr_nVal</a> = b;
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(b,posMCLR_N,posMCLR_N);
+}
+
+// Get the value output on the MCLR_N bit
+unsigned int <a href="#" OnFocus="link('_member','GetMCLR_N141690661',this)">MchpPort::GetMCLR_N</a>(void)
+{
+    <a href="#" OnFocus="link('_member','mclr_nVal243780539',this)">mclr_nVal</a> = <a href="#" OnFocus="link('_member','In1210046855',this)">In</a>(posMCLR_N,posMCLR_N);
+    return <a href="#" OnFocus="link('_member','mclr_nVal243780539',this)">mclr_nVal</a>;
+}
+
+
+// Set the value of the PGM bit
+void <a href="#" OnFocus="link('_member','SetPGM822568860',this)">MchpPort::SetPGM</a>(unsigned int b)
+{
+    <a href="#" OnFocus="link('_member','pgmVal243780539',this)">pgmVal</a> = b;
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(b,posPGM,posPGM);
+}
+
+// Get the value output on the PGM bit
+unsigned int <a href="#" OnFocus="link('_member','GetPGM141690661',this)">MchpPort::GetPGM</a>(void)
+{
+    <a href="#" OnFocus="link('_member','pgmVal243780539',this)">pgmVal</a> = <a href="#" OnFocus="link('_member','In1210046855',this)">In</a>(posPGM,posPGM);
+    return <a href="#" OnFocus="link('_member','pgmVal243780539',this)">pgmVal</a>;
+}
+
+
+// Set the value of the PGC bit
+void <a href="#" OnFocus="link('_member','SetPGC822568860',this)">MchpPort::SetPGC</a>(unsigned int b)
+{
+    <a href="#" OnFocus="link('_member','pgcVal243780539',this)">pgcVal</a> = b;
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(b,posPGC,posPGC);
+//  printf("%d %d %d\n",pgcVal,pgd_oVal,pgd_iVal);
+}
+
+// Get the value output on the PGC bit
+unsigned int <a href="#" OnFocus="link('_member','GetPGC141690661',this)">MchpPort::GetPGC</a>(void)
+{
+    <a href="#" OnFocus="link('_member','pgcVal243780539',this)">pgcVal</a> = <a href="#" OnFocus="link('_member','In1210046855',this)">In</a>(posPGC,posPGC);
+    return <a href="#" OnFocus="link('_member','pgcVal243780539',this)">pgcVal</a>;
+}
+
+
+// Set the value of the PGD bit
+void <a href="#" OnFocus="link('_member','SetPGD822568860',this)">MchpPort::SetPGD</a>(unsigned int b)
+{
+    <a href="#" OnFocus="link('_member','pgd_oVal243780539',this)">pgd_oVal</a> = b;
+    <a href="#" OnFocus="link('_member','Out2912582438',this)">Out</a>(b,posPGD_O,posPGD_O);
+}
+
+// Get the value on the PGD bit
+unsigned int <a href="#" OnFocus="link('_member','GetPGD141690661',this)">MchpPort::GetPGD</a>(void)
+{
+    <a href="#" OnFocus="link('_member','pgd_iVal243780539',this)">pgd_iVal</a> = <a href="#" OnFocus="link('_member','In1210046855',this)">In</a>(posPGD_I,posPGD_I);
+    return <a href="#" OnFocus="link('_member','pgd_iVal243780539',this)">pgd_iVal</a>;
+}
+
+
+// Enter the Microchip in-circuit programming state
+void <a href="#" OnFocus="link('_member','EnterICSP141690661',this)">MchpPort::EnterICSP</a>(void)
+{
+    // Set all the ICSP inputs to 0
+    <a href="#" OnFocus="link('_member','SetPGC822568860',this)">SetPGC</a>(0);
+    <a href="#" OnFocus="link('_member','SetPGD822568860',this)">SetPGD</a>(0);
+    <a href="#" OnFocus="link('_member','SetMCLR_N822568860',this)">SetMCLR_N</a>(0);
+    <a href="#" OnFocus="link('_member','SetPGM822568860',this)">SetPGM</a>(0);
+
+    // Raise PGM and then MCLR_N to start ICSP
+    <a href="#" OnFocus="link('_member','SetPGM822568860',this)">SetPGM</a>(1);
+    <a href="#" OnFocus="link('_member','InsertDelay359930342',this)">InsertDelay</a>(TIME_P15);
+    <a href="#" OnFocus="link('_member','SetMCLR_N822568860',this)">SetMCLR_N</a>(1);
+    <a href="#" OnFocus="link('_member','InsertDelay359930342',this)">InsertDelay</a>(TIME_P12);
+//  InsertDelay(200,MILLISECONDS);
+}
+
+
+// Exit the Microchip in-circuit programming state
+void <a href="#" OnFocus="link('_member','ExitICSP141690661',this)">MchpPort::ExitICSP</a>(void)
+{
+    <a href="#" OnFocus="link('_member','SetPGC822568860',this)">SetPGC</a>(0);        // lower the PGC and PGD pins
+    <a href="#" OnFocus="link('_member','SetPGD822568860',this)">SetPGD</a>(0);
+    <a href="#" OnFocus="link('_member','InsertDelay359930342',this)">InsertDelay</a>(TIME_P16);
+    <a href="#" OnFocus="link('_member','SetMCLR_N822568860',this)">SetMCLR_N</a>(0);    // lower the MCLR_N pin
+    <a href="#" OnFocus="link('_member','InsertDelay359930342',this)">InsertDelay</a>(TIME_P18);
+//  InsertDelay(200,MILLISECONDS);
+    <a href="#" OnFocus="link('_member','SetPGM822568860',this)">SetPGM</a>(0);        // lower the PGM pin to exit ICSP
+}
+
+
+// Output a command+operand to the Microchip device and return the 8-bit result
+unsigned int <a href="#" OnFocus="link('_member','ICSPIO853750225',this)">MchpPort::ICSPIO</a>(
+                unsigned int cmd,
+                unsigned int operand
+                )
+{
+    assert(mclr_nVal==1);
+    assert(pgmVal==1);
+    assert(pgcVal==0);
+    assert(pgd_oVal==0);
+
+//  printf("ICSPIO: %01x %04x\n",cmd,operand);
+
+    int bitCnt;
+    for(bitCnt=0; bitCnt&lt;CMD_LENGTH; bitCnt++)
+    {
+        <a href="#" OnFocus="link('_member','SetPGD822568860',this)">SetPGD</a>(cmd &amp; 1);
+        <a href="#" OnFocus="link('_member','SetPGC822568860',this)">SetPGC</a>(1);
+        <a href="#" OnFocus="link('_member','SetPGC822568860',this)">SetPGC</a>(0);
+        cmd &gt;&gt;= 1;
+    }
+    <a href="#" OnFocus="link('_member','InsertDelay359930342',this)">InsertDelay</a>(TIME_P5);
+
+    unsigned int result = 0;
+    for(bitCnt=0; bitCnt&lt;OPERAND_LENGTH; bitCnt++)
+    {
+        <a href="#" OnFocus="link('_member','SetPGD822568860',this)">SetPGD</a>(operand &amp; 1);
+        <a href="#" OnFocus="link('_member','SetPGC822568860',this)">SetPGC</a>(1);
+        <a href="#" OnFocus="link('_member','SetPGC822568860',this)">SetPGC</a>(0);
+        // only record the final 8 bits output from the Microchip device
+        result = (<a href="#" OnFocus="link('_member','GetPGD141690661',this)">GetPGD</a>() ? (1&lt;&lt;(RESULT_LENGTH-1)):0) | ((result&gt;&gt;1) &amp; ((1&lt;&lt;(RESULT_LENGTH-1))-1));
+        operand &gt;&gt;= 1;
+    }
+    <a href="#" OnFocus="link('_member','SetPGD822568860',this)">SetPGD</a>(0);
+    <a href="#" OnFocus="link('_member','InsertDelay359930342',this)">InsertDelay</a>(TIME_P5A);
+
+    return result;
+}
+
+
+// Output NOP instruction but hold PGC high for programming to complete
+void <a href="#" OnFocus="link('_member','WaitWhileProgramming141690661',this)">MchpPort::WaitWhileProgramming</a>(void)
+{
+    assert(mclr_nVal==1);
+    assert(pgmVal==1);
+    assert(pgcVal==0);
+    assert(pgd_oVal==0);
+
+//  printf("WaitWhileProgramming:\n");
+
+    <a href="#" OnFocus="link('_member','SetPGD822568860',this)">SetPGD</a>(0); // PGD is 0 for all four command bits so as to issue a CORE_INSTRUCTION command
+    <a href="#" OnFocus="link('_member','SetPGC822568860',this)">SetPGC</a>(1); // first command bit
+    <a href="#" OnFocus="link('_member','SetPGC822568860',this)">SetPGC</a>(0);
+    <a href="#" OnFocus="link('_member','SetPGC822568860',this)">SetPGC</a>(1); // second command bit
+    <a href="#" OnFocus="link('_member','SetPGC822568860',this)">SetPGC</a>(0);
+    <a href="#" OnFocus="link('_member','SetPGC822568860',this)">SetPGC</a>(1); // third command bit
+    <a href="#" OnFocus="link('_member','SetPGC822568860',this)">SetPGC</a>(0);
+    <a href="#" OnFocus="link('_member','SetPGC822568860',this)">SetPGC</a>(1); // hold PGC high on 4th command bit while programming occurs
+    <a href="#" OnFocus="link('_member','InsertDelay359930342',this)">InsertDelay</a>(TIME_P9);
+    <a href="#" OnFocus="link('_member','SetPGC822568860',this)">SetPGC</a>(0); // lower PGC after programming is done
+    <a href="#" OnFocus="link('_member','InsertDelay359930342',this)">InsertDelay</a>(TIME_P10); // let memory array discharge after programming
+
+    // output NOP instruction (0x0000) to the core
+    for(int bitCnt=0; bitCnt&lt;OPERAND_LENGTH; bitCnt++)
+    {
+        <a href="#" OnFocus="link('_member','SetPGC822568860',this)">SetPGC</a>(1);
+        <a href="#" OnFocus="link('_member','SetPGC822568860',this)">SetPGC</a>(0);
+    }
+    <a href="#" OnFocus="link('_member','InsertDelay359930342',this)">InsertDelay</a>(TIME_P5A);
+}
+
+
+// Erase entire Microchip device
+void <a href="#" OnFocus="link('_member','BulkErase822568860',this)">MchpPort::BulkErase</a>(unsigned int area)
+{
+//  printf("BulkErase:\n");
+    <a href="#" OnFocus="link('_member','ICSPIO853750225',this)">ICSPIO</a>(CORE_INSTRUCTION,0x0e3c); // MOVLW 0x3c
+    <a href="#" OnFocus="link('_member','ICSPIO853750225',this)">ICSPIO</a>(CORE_INSTRUCTION,0x6ef8); // MOVWF TBLPTRU
+    <a href="#" OnFocus="link('_member','ICSPIO853750225',this)">ICSPIO</a>(CORE_INSTRUCTION,0x0e00); // MOVLW 0x00
+    <a href="#" OnFocus="link('_member','ICSPIO853750225',this)">ICSPIO</a>(CORE_INSTRUCTION,0x6ef7); // MOVWF TBLPTRH
+    <a href="#" OnFocus="link('_member','ICSPIO853750225',this)">ICSPIO</a>(CORE_INSTRUCTION,0x0e05); // MOVLW 0x05
+    <a href="#" OnFocus="link('_member','ICSPIO853750225',this)">ICSPIO</a>(CORE_INSTRUCTION,0x6ef6); // MOVWF TBLPTRL
+    <a href="#" OnFocus="link('_member','ICSPIO853750225',this)">ICSPIO</a>(TABLE_WRITE,(area&amp;0xFF00)|((area&gt;&gt;8)&amp;0x00FF)); // write to 0x3c0005
+    <a href="#" OnFocus="link('_member','ICSPIO853750225',this)">ICSPIO</a>(CORE_INSTRUCTION,0x0e3c); // MOVLW 0x3c
+    <a href="#" OnFocus="link('_member','ICSPIO853750225',this)">ICSPIO</a>(CORE_INSTRUCTION,0x6ef8); // MOVWF TBLPTRU
+    <a href="#" OnFocus="link('_member','ICSPIO853750225',this)">ICSPIO</a>(CORE_INSTRUCTION,0x0e00); // MOVLW 0x00
+    <a href="#" OnFocus="link('_member','ICSPIO853750225',this)">ICSPIO</a>(CORE_INSTRUCTION,0x6ef7); // MOVWF TBLPTRH
+    <a href="#" OnFocus="link('_member','ICSPIO853750225',this)">ICSPIO</a>(CORE_INSTRUCTION,0x0e04); // MOVLW 0x04
+    <a href="#" OnFocus="link('_member','ICSPIO853750225',this)">ICSPIO</a>(CORE_INSTRUCTION,0x6ef6); // MOVWF TBLPTRL
+    <a href="#" OnFocus="link('_member','ICSPIO853750225',this)">ICSPIO</a>(TABLE_WRITE,((area&lt;&lt;8)&amp;0xFF00)|(area&amp;0x00FF)); // write to 0x3c0004
+    <a href="#" OnFocus="link('_member','ICSPIO853750225',this)">ICSPIO</a>(CORE_INSTRUCTION,0x0000); // NOP
+    int i;
+    for(i=0; i&lt;CMD_LENGTH; i++)
+    {
+        <a href="#" OnFocus="link('_member','SetPGC822568860',this)">SetPGC</a>(1);
+        <a href="#" OnFocus="link('_member','SetPGC822568860',this)">SetPGC</a>(0);
+    }
+    <a href="#" OnFocus="link('_member','InsertDelay359930342',this)">InsertDelay</a>(TIME_P11);          // wait for bulk erase to complete
+    <a href="#" OnFocus="link('_member','InsertDelay359930342',this)">InsertDelay</a>(TIME_P10);
+    for(i=0; i&lt;OPERAND_LENGTH; i++)
+    {
+        <a href="#" OnFocus="link('_member','SetPGC822568860',this)">SetPGC</a>(1);
+        <a href="#" OnFocus="link('_member','SetPGC822568860',this)">SetPGC</a>(0);
+    }
+
+}
+
+
+// Erase rows of program memory in the Microchip device
+void <a href="#" OnFocus="link('_member','RowErase853750225',this)">MchpPort::RowErase</a>(unsigned int loAddr, unsigned int hiAddr)
+{
+    for(unsigned int addr=<a href="#" OnFocus="link('_member','../xsload/loAddr0',this)">loAddr</a>&amp;0xffffffc0; addr&lt;=<a href="#" OnFocus="link('_member','../xsload/hiAddr0',this)">hiAddr</a>; addr+=64)
+    {
+        // Flash prog. spec says you only need to issue these three instructions at the start,
+        // but you actually need to issue them for every row erase.
+        <a href="#" OnFocus="link('_member','ICSPIO853750225',this)">ICSPIO</a>(CORE_INSTRUCTION,0x8ea6);  // BSF EECON1, EEPGD
+        <a href="#" OnFocus="link('_member','ICSPIO853750225',this)">ICSPIO</a>(CORE_INSTRUCTION,0x9ca6);  // BCF EECON1, CFGS
+        <a href="#" OnFocus="link('_member','ICSPIO853750225',this)">ICSPIO</a>(CORE_INSTRUCTION,0x84a6);  // BSF EECON1, WREN
+        <a href="#" OnFocus="link('_member','ICSPIO853750225',this)">ICSPIO</a>(CORE_INSTRUCTION,(0x0e&lt;&lt;8) | ((addr&gt;&gt;16)&amp;0xff)); // MOVLW address[21:16]
+        <a href="#" OnFocus="link('_member','ICSPIO853750225',this)">ICSPIO</a>(CORE_INSTRUCTION,0x6ef8);                      // MOVWF TBLPTRU
+        <a href="#" OnFocus="link('_member','ICSPIO853750225',this)">ICSPIO</a>(CORE_INSTRUCTION,(0x0e&lt;&lt;8) | ((addr&gt;&gt;8)&amp;0xff));  // MOVLW address[15:8]
+        <a href="#" OnFocus="link('_member','ICSPIO853750225',this)">ICSPIO</a>(CORE_INSTRUCTION,0x6ef7);                      // MOVWF TBLPTRH
+        <a href="#" OnFocus="link('_member','ICSPIO853750225',this)">ICSPIO</a>(CORE_INSTRUCTION,(0x0e&lt;&lt;8) | (addr&amp;0xff));       // MOVLW address[7:0]
+        <a href="#" OnFocus="link('_member','ICSPIO853750225',this)">ICSPIO</a>(CORE_INSTRUCTION,0x6ef6);                      // MOVWF TBLPTRL
+        <a href="#" OnFocus="link('_member','ICSPIO853750225',this)">ICSPIO</a>(CORE_INSTRUCTION,0x88a6);                      // BSF EECON1, FREE
+        <a href="#" OnFocus="link('_member','ICSPIO853750225',this)">ICSPIO</a>(CORE_INSTRUCTION,0x82a6);                      // BSF EECON1, WR
+        <a href="#" OnFocus="link('_member','WaitWhileProgramming141690661',this)">WaitWhileProgramming</a>();
+    }
+}
+
+
+// Program Microchip device with data from hex record
+bool <a href="#" OnFocus="link('_member','Program1948129642',this)">MchpPort::Program</a>(<a href="#" OnFocus="link('_class','HexRecord0',this)">HexRecord</a>&amp; hx)
+{
+    unsigned long address = hx.<a href="#" OnFocus="link('_member','GetAddress2146470179',this)">GetAddress</a>();
+    unsigned long length = hx.<a href="#" OnFocus="link('_member','GetLength2146470179',this)">GetLength</a>();
+
+//  printf("Program:\n");
+
+    if(length==0)
+        return true; // nothing to do
+
+    if(length &gt; WRITE_BUFFER_SIZE)
+    {
+        char s[100];
+        sprintf(s,"Hex record at %06x is too large (%d bytes)",address,length);
+        string msg(s);
+        <a href="#" OnFocus="link('_member','GetErr259477277',this)">GetErr</a>().<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,msg);
+        return false;
+    }
+
+    if(address &gt;= CONFIGBITS_ADDRESS)
+    {
+        // programming configuration bits
+        <a href="#" OnFocus="link('_member','ICSPIO853750225',this)">ICSPIO</a>(CORE_INSTRUCTION,0x8ea6); // BSF EECON1,EEPGD
+        <a href="#" OnFocus="link('_member','ICSPIO853750225',this)">ICSPIO</a>(CORE_INSTRUCTION,0x8ca6); // BSF EECON1,CFGS
+        for(int l=0; l&lt;length-1; l++,address++)
+        {
+            <a href="#" OnFocus="link('_member','ICSPIO853750225',this)">ICSPIO</a>(CORE_INSTRUCTION,(0x0e&lt;&lt;8) | ((address&gt;&gt;16)&amp;0xff)); // MOVLW address[21:16]
+            <a href="#" OnFocus="link('_member','ICSPIO853750225',this)">ICSPIO</a>(CORE_INSTRUCTION,0x6ef8); // MOVWF TBLPTRU
+            <a href="#" OnFocus="link('_member','ICSPIO853750225',this)">ICSPIO</a>(CORE_INSTRUCTION,(0x0e&lt;&lt;8) | ((address&gt;&gt;8)&amp;0xff));  // MOVLW address[15:8]
+            <a href="#" OnFocus="link('_member','ICSPIO853750225',this)">ICSPIO</a>(CORE_INSTRUCTION,0x6ef7); // MOVWF TBLPTRH
+            <a href="#" OnFocus="link('_member','ICSPIO853750225',this)">ICSPIO</a>(CORE_INSTRUCTION,(0x0e&lt;&lt;8) | (address&amp;0xff));       // MOVLW address[7:0]
+            <a href="#" OnFocus="link('_member','ICSPIO853750225',this)">ICSPIO</a>(CORE_INSTRUCTION,0x6ef6); // MOVWF TBLPTRL
+            if(address%2) // odd address requires config data in the MSB
+                <a href="#" OnFocus="link('_member','ICSPIO853750225',this)">ICSPIO</a>(START_PROGRAMMING,hx[l]&lt;&lt;8);
+            else // even address requires config data in the LSB
+                <a href="#" OnFocus="link('_member','ICSPIO853750225',this)">ICSPIO</a>(START_PROGRAMMING,hx[l]);
+            <a href="#" OnFocus="link('_member','WaitWhileProgramming141690661',this)">WaitWhileProgramming</a>();
+        }
+    }
+    else
+    {
+        // programming code space or ID bits
+        if(length%2)
+        {
+            char s[100];
+            sprintf(s,"Hex record at %06x has an odd length (%d bytes)",address,length);
+            string msg(s);
+            <a href="#" OnFocus="link('_member','GetErr259477277',this)">GetErr</a>().<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,msg);
+            return false;
+        }
+        if(address%2)
+        {
+            char s[100];
+            sprintf(s,"Hex record at %06x starts at an odd address",address);
+            string msg(s);
+            <a href="#" OnFocus="link('_member','GetErr259477277',this)">GetErr</a>().<a href="#" OnFocus="link('_member','SimpleMsg3476940419',this)">SimpleMsg</a>(XSErrorMajor,msg);
+            return false;
+        }
+        
+        <a href="#" OnFocus="link('_member','ICSPIO853750225',this)">ICSPIO</a>(CORE_INSTRUCTION,0x8ea6); // BSF EECON1,EEPGD
+        <a href="#" OnFocus="link('_member','ICSPIO853750225',this)">ICSPIO</a>(CORE_INSTRUCTION,0x9ca6); // BCF EECON1,CFGS
+        <a href="#" OnFocus="link('_member','ICSPIO853750225',this)">ICSPIO</a>(CORE_INSTRUCTION,(0x0e&lt;&lt;8) | ((address&gt;&gt;16)&amp;0xff)); // MOVLW address[21:16]
+        <a href="#" OnFocus="link('_member','ICSPIO853750225',this)">ICSPIO</a>(CORE_INSTRUCTION,0x6ef8); // MOVWF TBLPTRU
+        <a href="#" OnFocus="link('_member','ICSPIO853750225',this)">ICSPIO</a>(CORE_INSTRUCTION,(0x0e&lt;&lt;8) | ((address&gt;&gt;8)&amp;0xff));  // MOVLW address[15:8]
+        <a href="#" OnFocus="link('_member','ICSPIO853750225',this)">ICSPIO</a>(CORE_INSTRUCTION,0x6ef7); // MOVWF TBLPTRH
+        <a href="#" OnFocus="link('_member','ICSPIO853750225',this)">ICSPIO</a>(CORE_INSTRUCTION,(0x0e&lt;&lt;8) | (address&amp;0xff));       // MOVLW address[7:0]
+        <a href="#" OnFocus="link('_member','ICSPIO853750225',this)">ICSPIO</a>(CORE_INSTRUCTION,0x6ef6); // MOVWF TBLPTRL
+        int l;
+        for(l=0; l&lt;length-2; l+=2)
+            <a href="#" OnFocus="link('_member','ICSPIO853750225',this)">ICSPIO</a>(TABLE_WRITE_POSTINC2,(hx[l+1]&lt;&lt;8)|hx[l]);
+        <a href="#" OnFocus="link('_member','ICSPIO853750225',this)">ICSPIO</a>(START_PROGRAMMING,(hx[l+1]&lt;&lt;8)|hx[l]);
+        <a href="#" OnFocus="link('_member','WaitWhileProgramming141690661',this)">WaitWhileProgramming</a>();
+    }
+
+    return true;
+}
+
+
+// Read contents of Microchip device into a hex record
+bool <a href="#" OnFocus="link('_member','Read1421823919',this)">MchpPort::Read</a>(
+                <a href="#" OnFocus="link('_class','HexRecord0',this)">HexRecord</a>&amp; hx,           // hex record to store data in
+                unsigned long loAddr,   // begin reading at this address
+                unsigned long hiAddr    // end reading at this address
+                )
+{
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> = <a href="#" OnFocus="link('_member','GetErr259477277',this)">GetErr</a>();
+
+//  printf("Read:\n");
+
+    hx.<a href="#" OnFocus="link('_member','SetAddress2774302151',this)">SetAddress</a>(loAddr);    // set beginning and ending addresses for the hex record
+    unsigned long length = <a href="#" OnFocus="link('_member','../xsload/hiAddr0',this)">hiAddr</a> - <a href="#" OnFocus="link('_member','../xsload/loAddr0',this)">loAddr</a> + 1;
+    hx.<a href="#" OnFocus="link('_member','SetLength2774302151',this)">SetLength</a>(length);
+
+    if(length==0)
+        return true; // nothing to do
+
+//  fprintf(stderr,"Reading %08x to %08x\n",loAddr,hiAddr);
+
+    // table pointer loaded with starting address
+    <a href="#" OnFocus="link('_member','ICSPIO853750225',this)">ICSPIO</a>(CORE_INSTRUCTION,(0x0e&lt;&lt;8) | ((loAddr&gt;&gt;16)&amp;0xff)); // MOVLW address[21:16]
+    <a href="#" OnFocus="link('_member','ICSPIO853750225',this)">ICSPIO</a>(CORE_INSTRUCTION,0x6ef8); // MOVWF TBLPTRU
+    <a href="#" OnFocus="link('_member','ICSPIO853750225',this)">ICSPIO</a>(CORE_INSTRUCTION,(0x0e&lt;&lt;8) | ((loAddr&gt;&gt;8)&amp;0xff));  // MOVLW address[15:8]
+    <a href="#" OnFocus="link('_member','ICSPIO853750225',this)">ICSPIO</a>(CORE_INSTRUCTION,0x6ef7); // MOVWF TBLPTRH
+    <a href="#" OnFocus="link('_member','ICSPIO853750225',this)">ICSPIO</a>(CORE_INSTRUCTION,(0x0e&lt;&lt;8) | (loAddr&amp;0xff));       // MOVLW address[7:0]
+    <a href="#" OnFocus="link('_member','ICSPIO853750225',this)">ICSPIO</a>(CORE_INSTRUCTION,0x6ef6); // MOVWF TBLPTRL
+
+    for(unsigned long l=0; l&lt;length; l++)
+        hx[l] = <a href="#" OnFocus="link('_member','ICSPIO853750225',this)">ICSPIO</a>(TABLE_READ_POSTINC,0x0);
+
+    hx.<a href="#" OnFocus="link('_member','CalcCheckSum2569703380',this)">CalcCheckSum</a>();  // put the checksum into the hex record
+    return true;
+}
+
+
+// download the Microchip device with the contents of a HEX file
+bool <a href="#" OnFocus="link('_member','Download2040327480',this)">MchpPort::Download</a>(string&amp; hexfileName)
+{
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> = <a href="#" OnFocus="link('_member','GetErr259477277',this)">GetErr</a>();
+    
+    if(hexfileName.length()==0)
+        return false;  // stop if no hex file was given
+    
+    ifstream is(hexfileName.c_str());  // otherwise open hex file
+    if(!is || is.fail() || is.eof()!=0)
+    { // error - couldn't open hex file
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','SetSeverity3409672334',this)">SetSeverity</a>(XSErrorMajor);
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> &lt;&lt; "could not open " &lt;&lt; hexfileName.c_str() &lt;&lt; "\n";
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','EndMsg60232619',this)">EndMsg</a>();
+        return false;
+    }
+    
+    // determine the size of the file
+    is.seekg(0,ios::end);   // move pointer to end of file
+    streampos streamEndPos = is.tellg();    // pointer position = position of end of file
+    is.seekg(0,ios::beg);   // return pointer to beginning of file
+
+    string desc("Microchip Download"), subdesc("Downloading "+<a href="#" OnFocus="link('_member','StripPrefix67554305',this)">StripPrefix</a>(hexfileName));
+    <a href="#" OnFocus="link('_member','progressGauge243780539',this)">progressGauge</a> = new <a href="#" OnFocus="link('_class','Progress0',this)">Progress</a>(&amp;err,desc,subdesc,0,streamEndPos);
+
+    bool status = <a href="#" OnFocus="link('_member','Download2040327480',this)">Download</a>(is);
+    
+    delete <a href="#" OnFocus="link('_member','progressGauge243780539',this)">progressGauge</a>;
+    
+    is.close();  // close-up the hex file
+    
+    return status;
+}
+
+
+// download the Microchip device with the contents arriving through a stream
+bool <a href="#" OnFocus="link('_member','Download2040327480',this)">MchpPort::Download</a>(istream&amp; is)
+{
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> = <a href="#" OnFocus="link('_member','GetErr259477277',this)">GetErr</a>();
+
+    assert(progressGauge != NULL);  //  make sure progress indicator is initialized
+    <a href="#" OnFocus="link('_member','progressGauge243780539',this)">progressGauge</a>-&gt;<a href="#" OnFocus="link('_member','Report2561259521',this)">Report</a>(0);  // start progress indicator at zero
+
+    // read hex records from file and place data in the Microchip device
+    <a href="#" OnFocus="link('_class','HexRecord0',this)">HexRecord</a> hx;
+    while(is.eof()==0)
+    {
+        is &gt;&gt; hx;
+        if(is.eof()!=0)
+            break; // terminate loading loop when stream goes dry
+        if(<a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','IsError863564933',this)">IsError</a>())
+            break;
+        if(is.fail())
+        {
+            <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','SetSeverity3409672334',this)">SetSeverity</a>(XSErrorMajor);
+            <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> &lt;&lt; "error reading stream\n";
+            <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','EndMsg60232619',this)">EndMsg</a>();
+            break;
+        }
+        if(hx.<a href="#" OnFocus="link('_member','IsError2146470179',this)">IsError</a>())
+        { // some error in the hex record itself
+            <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','SetSeverity3409672334',this)">SetSeverity</a>(XSErrorMajor);
+            <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> &lt;&lt; "hex record: " &lt;&lt; hx.<a href="#" OnFocus="link('_member','GetErrMsg2146470179',this)">GetErrMsg</a>() &lt;&lt; "\n";
+            <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','EndMsg60232619',this)">EndMsg</a>();
+            break;
+        }
+        else if(!hx.<a href="#" OnFocus="link('_member','IsData2146470179',this)">IsData</a>())  // skip non-data records (like address offsets in Intel format)
+            ;
+        else
+        { // send out an indication for each hex record that's loaded
+            <a href="#" OnFocus="link('_member','progressGauge243780539',this)">progressGauge</a>-&gt;<a href="#" OnFocus="link('_member','Report2561259521',this)">Report</a>(is.tellg());
+            if(<a href="#" OnFocus="link('_member','Program1948129642',this)">Program</a>(hx) == false) // download hex record
+                return false;   // an error occurred while downloading the hex record
+        }
+    }
+    <a href="#" OnFocus="link('_member','progressGauge243780539',this)">progressGauge</a>-&gt;<a href="#" OnFocus="link('_member','Report2561259521',this)">Report</a>(is.tellg()); // should set gauge to 100%
+    
+    return <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','IsError863564933',this)">IsError</a>() ? false:true;
+}
+
+
+// upload the Microchip device to a hex file
+bool <a href="#" OnFocus="link('_member','Upload3387394307',this)">MchpPort::Upload</a>(
+                string&amp; hexfileName,    // dump uploaded data to this file
+                const char* format,     // hex file format
+                unsigned long loAddr,   // start fetching data from this address
+                unsigned long hiAddr    // stop at this address
+                )
+{
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> = <a href="#" OnFocus="link('_member','GetErr259477277',this)">GetErr</a>();
+    
+    if(hexfileName.length()==0)
+        return false;  // stop if no hex file was given
+    
+    ofstream os(hexfileName.c_str());  // otherwise open hex file
+    if(os.fail() || os.eof()!=0)
+    { // error - couldn't open hex file
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','SetSeverity3409672334',this)">SetSeverity</a>(XSErrorMajor);
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> &lt;&lt; "could not open " &lt;&lt; hexfileName.c_str() &lt;&lt; "\n";
+        <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a>.<a href="#" OnFocus="link('_member','EndMsg60232619',this)">EndMsg</a>();
+        return false;
+    }
+
+    string desc("Microchip Upload"), subdesc("Uploading "+<a href="#" OnFocus="link('_member','StripPrefix67554305',this)">StripPrefix</a>(hexfileName));
+    <a href="#" OnFocus="link('_member','progressGauge243780539',this)">progressGauge</a> = new <a href="#" OnFocus="link('_class','Progress0',this)">Progress</a>(&amp;err,desc,subdesc,loAddr,hiAddr);
+    
+    bool status = <a href="#" OnFocus="link('_member','Upload3387394307',this)">Upload</a>(os,format,loAddr,hiAddr);
+    
+    delete <a href="#" OnFocus="link('_member','progressGauge243780539',this)">progressGauge</a>;
+
+    os.close();  // close-up the hex file
+
+    return status;
+}
+
+
+// upload the Microchip device to a stream
+bool <a href="#" OnFocus="link('_member','Upload3387394307',this)">MchpPort::Upload</a>(
+                ostream&amp; os,            // dump uploaded data to this stream
+                const char* format,     // hex file format
+                unsigned long loAddr,   // start fetching data from this address
+                unsigned long hiAddr    // stop at this address
+                )
+{
+    <a href="#" OnFocus="link('_class','XSError0',this)">XSError</a>&amp; <a href="#" OnFocus="link('_member','../xsi2c/err0',this)">err</a> = <a href="#" OnFocus="link('_member','GetErr259477277',this)">GetErr</a>();
+
+    assert(progressGauge != NULL);  //  make sure progress indicator is initialized
+    <a href="#" OnFocus="link('_member','progressGauge243780539',this)">progressGauge</a>-&gt;<a href="#" OnFocus="link('_member','Report2561259521',this)">Report</a>(0);  // start progress indicator at zero
+    
+    // read hex records from Microchip device and place data in the hex file
+    <a href="#" OnFocus="link('_class','HexRecord0',this)">HexRecord</a> hx;
+    hx.<a href="#" OnFocus="link('_member','Setup2851010944',this)">Setup</a>(format);
+    unsigned long addr;
+    for(addr=<a href="#" OnFocus="link('_member','../xsload/loAddr0',this)">loAddr</a>; (addr|0xF)&lt;=<a href="#" OnFocus="link('_member','../xsload/hiAddr0',this)">hiAddr</a>; addr=(addr+16)&amp;~0xF)
+    {
+        if(<a href="#" OnFocus="link('_member','Read1421823919',this)">Read</a>(hx,addr,addr|0xF) == false) // get 16 bytes from device
+            return false;   // an error occurred while uploading the hex record
+        os &lt;&lt; hx;       // send hex record to output stream
+        <a href="#" OnFocus="link('_member','progressGauge243780539',this)">progressGauge</a>-&gt;<a href="#" OnFocus="link('_member','Report2561259521',this)">Report</a>(addr);   // give feedback on progress
+    }
+    if(addr&lt;=<a href="#" OnFocus="link('_member','../xsload/hiAddr0',this)">hiAddr</a>)
+    { // handle the last few bytes of an upload
+        if(<a href="#" OnFocus="link('_member','Read1421823919',this)">Read</a>(hx,addr,hiAddr) == false) // get the last few bytes
+            return false;   // an error occurred while uploading the hex record
+        os &lt;&lt; hx;       // send hex record to output stream
+    }
+    <a href="#" OnFocus="link('_member','progressGauge243780539',this)">progressGauge</a>-&gt;<a href="#" OnFocus="link('_member','Report2561259521',this)">Report</a>(hiAddr); // should set gauge to 100%
+    
+    return true;
+}
+
+
+// Erase contents of Microchip device
+bool <a href="#" OnFocus="link('_member','Erase141690661',this)">MchpPort::Erase</a>(void)
+{
+    <a href="#" OnFocus="link('_member','BulkErase822568860',this)">BulkErase</a>(0x0f87);
+    return true;
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_file','_source');
+</script>

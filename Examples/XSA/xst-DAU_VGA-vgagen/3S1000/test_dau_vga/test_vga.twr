@@ -1,0 +1,146 @@
+--------------------------------------------------------------------------------
+Release 6.3.03i Trace G.38
+Copyright (c) 1995-2004 Xilinx, Inc.  All rights reserved.
+
+C:/ISE6/bin/nt/trce.exe -intstyle ise -e 3 -l 3 -xml test_vga test_vga.ncd -o
+test_vga.twr test_vga.pcf
+
+
+Design file:              test_vga.ncd
+Physical constraint file: test_vga.pcf
+Device,speed:             xc3s1000,-4 (PRODUCTION 1.35 2004-11-11)
+Report level:             error report
+
+Environment Variable      Effect 
+--------------------      ------ 
+NONE                      No environment variables were set
+--------------------------------------------------------------------------------
+
+INFO:Timing:2752 - To get complete path coverage, use the unconstrained paths
+   option. All paths that are not constrained will be reported in the
+   unconstrained paths section(s) of the report.
+
+================================================================================
+Timing constraint: TS_clk = PERIOD TIMEGRP "clk"  10 nS   HIGH 50.000000 % ;
+
+ 0 items analyzed, 0 timing errors detected.
+--------------------------------------------------------------------------------
+
+================================================================================
+Timing constraint: TS_u0_int_clk1x = PERIOD TIMEGRP "u0_int_clk1x" TS_clk * 1.000000 HIGH 50.000 % 
+;
+
+ 9273 items analyzed, 1 timing error detected. (1 setup error, 0 hold errors)
+ Minimum period is  10.207ns.
+--------------------------------------------------------------------------------
+Slack:                  -0.207ns (requirement - (data path - clock path skew + uncertainty))
+  Source:               u1_fifo_level_i_4 (FF)
+  Destination:          u0_u1_cmd_r_4 (FF)
+  Requirement:          10.000ns
+  Data Path Delay:      10.207ns (Levels of Logic = 5)
+  Clock Path Skew:      0.000ns
+  Source Clock:         clk1x rising at 0.000ns
+  Destination Clock:    clk1x rising at 10.000ns
+  Clock Uncertainty:    0.000ns
+
+  Data Path: u1_fifo_level_i_4 to u0_u1_cmd_r_4
+    Location             Delay type         Delay(ns)  Physical Resource
+                                                       Logical Resource(s)
+    -------------------------------------------------  -------------------
+    SLICE_X45Y70.XQ      Tcko                  0.720   u1_fifo_level_i<4>
+                                                       u1_fifo_level_i_4
+    SLICE_X44Y71.G3      net (fanout=4)        0.483   u1_fifo_level_i<4>
+    SLICE_X44Y71.Y       Tilo                  0.608   full
+                                                       u1__n0009_SW0
+    SLICE_X44Y71.F3      net (fanout=1)        0.015   u1__n0009_SW0/O
+    SLICE_X44Y71.X       Tilo                  0.608   full
+                                                       u1__n0009
+    SLICE_X25Y89.F3      net (fanout=19)       2.515   full
+    SLICE_X25Y89.X       Tilo                  0.550   N19266
+                                                       u0_u1__n0120_SW1
+    SLICE_X24Y88.F2      net (fanout=1)        0.525   N19266
+    SLICE_X24Y88.X       Tilo                  0.608   CHOICE209
+                                                       u0_u1_Ker1214410
+    SLICE_X36Y86.F1      net (fanout=3)        1.072   CHOICE209
+    SLICE_X36Y86.X       Tilo                  0.608   u0_u1_cmd_x<4>/O
+                                                       u0_u1_cmd_x<4>
+    A9.O1                net (fanout=1)        1.147   u0_u1_cmd_x<4>/O
+    A9.OTCLK1            Tioock                0.748   ras_n
+                                                       u0_u1_cmd_r_4
+    -------------------------------------------------  ---------------------------
+    Total                                     10.207ns (4.450ns logic, 5.757ns route)
+                                                       (43.6% logic, 56.4% route)
+
+--------------------------------------------------------------------------------
+Slack:                  -0.201ns (requirement - (data path - clock path skew + uncertainty))
+  Source:               u1_fifo_level_i_3 (FF)
+  Destination:          u0_u1_cmd_r_4 (FF)
+  Requirement:          10.000ns
+  Data Path Delay:      10.201ns (Levels of Logic = 5)
+  Clock Path Skew:      0.000ns
+  Source Clock:         clk1x rising at 0.000ns
+  Destination Clock:    clk1x rising at 10.000ns
+  Clock Uncertainty:    0.000ns
+
+  Data Path: u1_fifo_level_i_3 to u0_u1_cmd_r_4
+    Location             Delay type         Delay(ns)  Physical Resource
+                                                       Logical Resource(s)
+    -------------------------------------------------  -------------------
+    SLICE_X45Y69.YQ      Tcko                  0.720   u1_fifo_level_i<2>
+                                                       u1_fifo_level_i_3
+    SLICE_X44Y71.G4      net (fanout=4)        0.477   u1_fifo_level_i<3>
+    SLICE_X44Y71.Y       Tilo                  0.608   full
+                                                       u1__n0009_SW0
+    SLICE_X44Y71.F3      net (fanout=1)        0.015   u1__n0009_SW0/O
+    SLICE_X44Y71.X       Tilo                  0.608   full
+                                                       u1__n0009
+    SLICE_X25Y89.F3      net (fanout=19)       2.515   full
+    SLICE_X25Y89.X       Tilo                  0.550   N19266
+                                                       u0_u1__n0120_SW1
+    SLICE_X24Y88.F2      net (fanout=1)        0.525   N19266
+    SLICE_X24Y88.X       Tilo                  0.608   CHOICE209
+                                                       u0_u1_Ker1214410
+    SLICE_X36Y86.F1      net (fanout=3)        1.072   CHOICE209
+    SLICE_X36Y86.X       Tilo                  0.608   u0_u1_cmd_x<4>/O
+                                                       u0_u1_cmd_x<4>
+    A9.O1                net (fanout=1)        1.147   u0_u1_cmd_x<4>/O
+    A9.OTCLK1            Tioock                0.748   ras_n
+                                                       u0_u1_cmd_r_4
+    -------------------------------------------------  ---------------------------
+    Total                                     10.201ns (4.450ns logic, 5.751ns route)
+                                                       (43.6% logic, 56.4% route)
+
+--------------------------------------------------------------------------------
+
+
+1 constraint not met.
+
+
+Data Sheet report:
+-----------------
+All values displayed in nanoseconds (ns)
+
+Clock to Setup on destination clock clk
+---------------+---------+---------+---------+---------+
+               | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
+Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
+---------------+---------+---------+---------+---------+
+clk            |   11.148|         |         |         |
+---------------+---------+---------+---------+---------+
+
+
+Timing summary:
+---------------
+
+Timing errors: 1  Score: 207
+
+Constraints cover 9273 paths, 0 nets, and 1654 connections
+
+Design statistics:
+   Minimum period:  10.207ns (Maximum frequency:  97.972MHz)
+
+
+Analysis completed Mon Feb 05 08:02:34 2007
+--------------------------------------------------------------------------------
+
+Peak Memory Usage: 71 MB

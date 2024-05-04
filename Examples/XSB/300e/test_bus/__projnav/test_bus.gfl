@@ -1,0 +1,122 @@
+# XST (Creating Lso File) : 
+test_bus.lso
+# xst flow : RunXST
+test_bus.syr
+test_bus.prj
+test_bus.sprj
+test_bus.ana
+test_bus.stx
+test_bus.cmd_log
+# XST (Creating Lso File) : 
+test_bus.lso
+# xst flow : RunXST
+test_bus.syr
+test_bus.prj
+test_bus.sprj
+test_bus.ana
+test_bus.stx
+test_bus.cmd_log
+# XST (Creating Lso File) : 
+test_bus.lso
+# xst flow : RunXST
+test_bus.syr
+test_bus.prj
+test_bus.sprj
+test_bus.ana
+test_bus.stx
+test_bus.cmd_log
+# XST (Creating Lso File) : 
+test_bus.lso
+# xst flow : RunXST
+test_bus.syr
+test_bus.prj
+test_bus.sprj
+test_bus.ana
+test_bus.stx
+test_bus.cmd_log
+test_bus.ngc
+test_bus.ngr
+# XST (Creating Lso File) : 
+test_bus.lso
+# xst flow : RunXST
+test_bus.syr
+test_bus.prj
+test_bus.sprj
+test_bus.ana
+test_bus.stx
+test_bus.cmd_log
+test_bus.ngc
+test_bus.ngr
+# XST (Creating Lso File) : 
+test_bus.lso
+# xst flow : RunXST
+test_bus.syr
+test_bus.prj
+test_bus.sprj
+test_bus.ana
+test_bus.stx
+test_bus.cmd_log
+test_bus.ngc
+test_bus.ngr
+# Implmentation : Translate
+__projnav/ngdbuild.err
+__projnav/ednTOngd_tcl.rsp
+c:\xesscorp\products\bitstreams\xsb\300e\test_bus/_ngo
+test_bus.ngd
+test_bus_ngdbuild.nav
+test_bus.bld
+test_bus.ucf.untf
+test_bus.cmd_log
+# Implementation : Map
+test_bus_map.ncd
+test_bus.ngm
+test_bus.pcf
+test_bus.nc1
+test_bus.mrp
+test_bus_map.mrp
+test_bus.mdf
+__projnav/map.log
+test_bus.cmd_log
+MAP_NO_GUIDE_FILE_CPF "test_bus"
+# Implmentation : Post-Place & Route Timing
+__projnav/ncdTOtwr_tcl.rsp
+__projnav/posttrc.log
+test_bus.twr
+test_bus.twx
+test_bus.tsi
+test_bus.cmd_log
+# Implmentation : Place & Route
+__projnav/nc1TOncd_tcl.rsp
+test_bus.ncd
+test_bus.par
+test_bus.pad
+test_bus_pad.txt
+test_bus_pad.csv
+test_bus.pad_txt
+test_bus.dly
+reportgen.log
+test_bus.xpi
+test_bus.grf
+test_bus.itr
+test_bus_last_par.ncd
+__projnav/par.log
+test_bus.placed_ncd_tracker
+test_bus.routed_ncd_tracker
+test_bus.cmd_log
+PAR_NO_GUIDE_FILE_CPF "test_bus"
+# Generate Programming File
+__projnav/test_bus_ncdTOut_tcl.rsp
+__projnav/bitgen.rsp
+bitgen.ut
+test_bus.ut
+# Generate Programming File
+test_bus.bgn
+test_bus.rbt
+test_bus.ll
+test_bus.msk
+test_bus.drc
+test_bus.nky
+test_bus.bit
+test_bus.bin
+test_bus.isc
+test_bus.cmd_log

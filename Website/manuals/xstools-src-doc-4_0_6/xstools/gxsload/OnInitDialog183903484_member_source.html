@@ -1,0 +1,162 @@
+<HTML>
+<HEAD>
+<TITLE>XSTOOLs Source Code - OnInitDialog</TITLE>
+<script type="text/javascript" src="../../common/js.js" language="JavaScript"></script>
+<script type="text/javascript" src="leftmenu.js" language="JavaScript"></script>
+<script type="text/javascript">
+ var relPathToCommmon = "../../common/";
+ var relPathToHelpDir = "../../common/help/";
+ var toSearchPage     = "_search','../../search";
+ Body1();
+</script>
+<div class="headerPage">OnInitDialog</div>
+<div class="path"><a href="#" OnFocus="link('','../../index',this)" class="pathLink">XSTOOLs</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_dir','gxsload0',this)" class="pathLink">gxsload</A><img src="../../common/path-arrow.gif" class="path-arrow"><a href="#" OnFocus="link('_class','CGxsloadDlg0',this)" class="pathLink">CGxsloadDlg</A><img src="../../common/path-arrow.gif" class="path-arrow"><span class="pathNonLink">OnInitDialog</span></div>
+<script type="text/javascript">
+ Body2();
+ BodyLeftMenuStart();
+WriteLeftMenu("","","","");
+ BodyLeftMenuEnd();
+ Body3();
+</script>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','OnInitDialog183903484','_description',this)" class="tabLinkInActive">Description</a></span>
+<span class="tabActive"><a href="#" OnFocus="linkTab('_member','OnInitDialog183903484','_source',this)" class="tabLinkActive">Source</a></span>
+<span class="tabInActive"><a href="#" OnFocus="linkTab('_member','OnInitDialog183903484','_callgraph',this)" class="tabLinkInActive">Call Graph</a></span>
+<script type="text/javascript">
+ Body4();
+</script>
+<div class="contentAirTop"></div>
+<div class="paragraph2NoTopPadding">Start Line: 164</div>
+<pre class="codeExamples">
+virtual BOOL <a href="#" OnFocus="link('_member','OnInitDialog183903484',this)">CGxsloadDlg::OnInitDialog</a>()
+{
+    CDialog::OnInitDialog();
+
+    // initialize for drag-and-drop operations
+    OleInitialize(NULL);
+
+    // Add "About..." menu item to system menu.
+
+    // IDM_ABOUTBOX must be in the system command range.
+    ASSERT((IDM_ABOUTBOX &amp; 0xFFF0) == IDM_ABOUTBOX);
+    ASSERT(IDM_ABOUTBOX &lt; 0xF000);
+
+    CMenu* pSysMenu = GetSystemMenu(FALSE);
+    if (pSysMenu != NULL)
+    {
+        CString strAboutMenu;
+        strAboutMenu.LoadString(IDS_ABOUTBOX);
+        if (!strAboutMenu.IsEmpty())
+        {
+            pSysMenu-&gt;AppendMenu(MF_SEPARATOR);
+            pSysMenu-&gt;AppendMenu(MF_STRING, IDM_ABOUTBOX, strAboutMenu);
+        }
+    }
+
+    // Set the icon for this dialog.  The framework does this automatically
+    //  when the application's main window is not a dialog
+    SetIcon(m_hIcon, TRUE);         // Set big icon
+    SetIcon(m_hIcon, FALSE);        // Set small icon
+    
+    // setup the list of XS Boards in the pulldown list
+    <a href="#" OnFocus="link('_class','../xstoolslib/brdModel_struct0',this)">XSBoardInfo</a>* brdInfo;
+    int numBoards;
+    numBoards = <a href="#" OnFocus="link('_member','../xstoolslib/GetXSBoardInfo2867269968',this)">GetXSBoardInfo</a>(&amp;brdInfo);
+    for(int i=0; i&lt;numBoards; i++)
+        <a href="#" OnFocus="link('_member','m_cmbBoard183903365',this)">m_cmbBoard</a>.AddString(brdInfo[i].brdModel);
+
+    // setup the list of parallel ports in the pulldown list
+    <a href="#" OnFocus="link('_member','m_cmbLpt183903365',this)">m_cmbLpt</a>.AddString("LPT1");
+    <a href="#" OnFocus="link('_member','m_cmbLpt183903365',this)">m_cmbLpt</a>.AddString("LPT2");
+    <a href="#" OnFocus="link('_member','m_cmbLpt183903365',this)">m_cmbLpt</a>.AddString("LPT3");
+
+    // setup the list of Flash file formats in the pulldown list
+    <a href="#" OnFocus="link('_member','m_flashFormat183903365',this)">m_flashFormat</a>.AddString("HEX");
+    <a href="#" OnFocus="link('_member','m_flashFormat183903365',this)">m_flashFormat</a>.AddString("MCS");
+    <a href="#" OnFocus="link('_member','m_flashFormat183903365',this)">m_flashFormat</a>.AddString("EXO-16");
+    <a href="#" OnFocus="link('_member','m_flashFormat183903365',this)">m_flashFormat</a>.AddString("EXO-24");
+    <a href="#" OnFocus="link('_member','m_flashFormat183903365',this)">m_flashFormat</a>.AddString("EXO-32");
+    <a href="#" OnFocus="link('_member','m_flashFormat183903365',this)">m_flashFormat</a>.AddString("XESS-16");
+    <a href="#" OnFocus="link('_member','m_flashFormat183903365',this)">m_flashFormat</a>.AddString("XESS-24");
+    <a href="#" OnFocus="link('_member','m_flashFormat183903365',this)">m_flashFormat</a>.AddString("XESS-32");
+    <a href="#" OnFocus="link('_member','m_flashFormat183903365',this)">m_flashFormat</a>.SelectString(-1,"HEX");  // select the default Flash file format upon 
+
+    // setup the list of Flash file formats in the pulldown list
+    <a href="#" OnFocus="link('_member','m_ramFormat183903365',this)">m_ramFormat</a>.AddString("HEX");
+    <a href="#" OnFocus="link('_member','m_ramFormat183903365',this)">m_ramFormat</a>.AddString("MCS");
+    <a href="#" OnFocus="link('_member','m_ramFormat183903365',this)">m_ramFormat</a>.AddString("EXO-16");
+    <a href="#" OnFocus="link('_member','m_ramFormat183903365',this)">m_ramFormat</a>.AddString("EXO-24");
+    <a href="#" OnFocus="link('_member','m_ramFormat183903365',this)">m_ramFormat</a>.AddString("EXO-32");
+    <a href="#" OnFocus="link('_member','m_ramFormat183903365',this)">m_ramFormat</a>.AddString("XESS-16");
+    <a href="#" OnFocus="link('_member','m_ramFormat183903365',this)">m_ramFormat</a>.AddString("XESS-24");
+    <a href="#" OnFocus="link('_member','m_ramFormat183903365',this)">m_ramFormat</a>.AddString("XESS-32");
+    <a href="#" OnFocus="link('_member','m_ramFormat183903365',this)">m_ramFormat</a>.SelectString(-1,"HEX");  // select the default Flash file format upon startup
+
+    // get the last setting for the board type
+    string brdType;
+    if((brdType=<a href="#" OnFocus="link('_member','../xstoolslib/GetXSTOOLSParameter67554305',this)">GetXSTOOLSParameter</a>((string)"BoardType")) == "")
+    { // set the default value if no previous value exists
+        if(<a href="#" OnFocus="link('_member','../xstoolslib/SetXSTOOLSParameter3292873876',this)">SetXSTOOLSParameter</a>((string)"BoardType",(string)brdInfo[0].<a href="#" OnFocus="link('_member','../xsatapi/brdModel0',this)">brdModel</a>) == false)
+        {
+            AfxMessageBox("BoardType value was not set",MB_ICONSTOP);
+            exit(0);
+        }
+        brdType = <a href="#" OnFocus="link('_member','../xstoolslib/GetXSTOOLSParameter67554305',this)">GetXSTOOLSParameter</a>((string)"BoardType");
+        assert(brdType != "");
+    }
+    <a href="#" OnFocus="link('_member','m_cmbBoard183903365',this)">m_cmbBoard</a>.SelectString(-1,(const char*)(brdType.c_str()));
+
+    // get the last setting for the parallel port
+    string lptNum;
+    if((lptNum=<a href="#" OnFocus="link('_member','../xstoolslib/GetXSTOOLSParameter67554305',this)">GetXSTOOLSParameter</a>((string)"LPT")) == "")
+    { // set the default value if no previous value exists
+        if(<a href="#" OnFocus="link('_member','../xstoolslib/SetXSTOOLSParameter3292873876',this)">SetXSTOOLSParameter</a>((string)"LPT",(string)"LPT1") == false)
+        {
+            AfxMessageBox("LPT value was not set",MB_ICONSTOP);
+            exit(0);
+        }
+        lptNum = <a href="#" OnFocus="link('_member','../xstoolslib/GetXSTOOLSParameter67554305',this)">GetXSTOOLSParameter</a>((string)"LPT");
+        assert(lptNum != "");
+    }
+    <a href="#" OnFocus="link('_member','m_cmbLpt183903365',this)">m_cmbLpt</a>.SelectString(-1,(const char*)(lptNum.c_str()));
+
+    // get the last setting for the Flash upload format from the registry
+    string flashFmt;
+    if((flashFmt=<a href="#" OnFocus="link('_member','../xstoolslib/GetXSTOOLSParameter67554305',this)">GetXSTOOLSParameter</a>((string)"FlashFormat")) == "")
+    { // set the default value if no previous value exists
+        if(<a href="#" OnFocus="link('_member','../xstoolslib/SetXSTOOLSParameter3292873876',this)">SetXSTOOLSParameter</a>((string)"FlashFormat",(string)"HEX") == false)
+        {
+            AfxMessageBox("Flash upload format value was not set",MB_ICONSTOP);
+            exit(0);
+        }
+        flashFmt = <a href="#" OnFocus="link('_member','../xstoolslib/GetXSTOOLSParameter67554305',this)">GetXSTOOLSParameter</a>((string)"FlashFormat");
+        assert(flashFmt != "");
+    }
+    <a href="#" OnFocus="link('_member','m_flashFormat183903365',this)">m_flashFormat</a>.SelectString(-1,(const char*)(flashFmt.c_str()));
+    <a href="#" OnFocus="link('_member','m_flashIntfcDownload183903365',this)">m_flashIntfcDownload</a>.SetCheck(1);
+
+    // get the last setting for the RAM upload format from the registry
+    string ramFmt;
+    if((ramFmt=<a href="#" OnFocus="link('_member','../xstoolslib/GetXSTOOLSParameter67554305',this)">GetXSTOOLSParameter</a>((string)"RAMFormat")) == "")
+    { // set the default value if no previous value exists
+        if(<a href="#" OnFocus="link('_member','../xstoolslib/SetXSTOOLSParameter3292873876',this)">SetXSTOOLSParameter</a>((string)"RAMFormat",(string)"HEX") == false)
+        {
+            AfxMessageBox("RAM upload format value was not set",MB_ICONSTOP);
+            exit(0);
+        }
+        ramFmt = <a href="#" OnFocus="link('_member','../xstoolslib/GetXSTOOLSParameter67554305',this)">GetXSTOOLSParameter</a>((string)"RAMFormat");
+        assert(ramFmt != "");
+    }
+    <a href="#" OnFocus="link('_member','m_ramFormat183903365',this)">m_ramFormat</a>.SelectString(-1,(const char*)(ramFmt.c_str()));
+    <a href="#" OnFocus="link('_member','m_ramIntfcDownload183903365',this)">m_ramIntfcDownload</a>.SetCheck(1);
+
+    <a href="#" OnFocus="link('_member','m_btnLoad183903365',this)">m_btnLoad</a>.EnableWindow(FALSE);   // no files selected, so no way to reload
+    
+    return TRUE;  // return TRUE  unless you set the focus to a control
+}
+</pre><div class="contentAirBottom"></div>
+<script type="text/javascript">
+ Body5();
+Statistics("","","","","");
+ Body6();
+SetPageTab('_member','_source');
+</script>
